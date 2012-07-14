@@ -38,6 +38,15 @@ if ($set=="delete" && $doit==1) {
 	$_MAIN_MESSAGE.="<br>".___("Eintrag wurde gelöscht.");
 }
 
+if ($user_is_manager  && $set=="delete_history" && $doit==1) {
+	if (!DEMO) $QUEUE->clearH(Array("nl_id"=>$nl_id));
+	$_MAIN_MESSAGE.="<br>".___("Historie wurde gelöscht.");
+	//und nun wie unten bei delete_queue:
+	//aber stattdessen setzen wir einfach set auf =queue_delete
+	$set="queue_delete";
+	//deswegen MUSS das vor queue_delete stehen!!!
+}//del history single
+
 if ($set=="delete_img" && $doit==1) {
 	$NL=$NEWSLETTER->getNL($nl_id);
 	if (!DEMO && @unlink($tm_nlimgpath."/nl_".date_convert_to_string($NL[0]['created'])."_1.jpg")) {
@@ -159,6 +168,10 @@ $delqURLPara=$mSTDURL;
 $delqURLPara->addParam("act","nl_list");
 $delqURLPara->addParam("set","queue_delete");
 
+$delHistoryURLPara=$mSTDURL;
+$delHistoryURLPara->addParam("act","nl_list");
+$delHistoryURLPara->addParam("set","delete_history");
+
 $showqURLPara=$mSTDURL;
 $showqURLPara->addParam("act","queue_list");
 
@@ -261,6 +274,9 @@ for ($ncc=0;$ncc<$nc;$ncc++) {
 	$delqURLPara->addParam("nl_id",$NL[$ncc]['id']);
 	$delqURLPara_=$delqURLPara->getAllParams();
 
+	$delHistoryURLPara->addParam("nl_id",$NL[$ncc]['id']);
+	$delHistoryURLPara_=$delHistoryURLPara->getAllParams();
+	
 	$showqURLPara->addParam("nl_id",$NL[$ncc]['id']);
 	$showqURLPara_=$showqURLPara->getAllParams();
 
@@ -344,6 +360,7 @@ for ($ncc=0;$ncc<$nc;$ncc++) {
 	$_MAIN_OUTPUT.= "<div id=\"tt_nl_list_".$NL[$ncc]['id']."\" class=\"tooltip\">\n";
 	$_MAIN_OUTPUT.= "<b>".display($NL[$ncc]['subject'])."</b>\n";
 	$_MAIN_OUTPUT.= "<br>ID: ".$NL[$ncc]['id']." \n";
+	$_MAIN_OUTPUT.=  "<br>".tm_icon("user_comment.png",___("Empfängername"))."&nbsp;".___("Empfängername").":".display($NL[$ncc]['rcpt_name']);
 	if ($NL[$ncc]['aktiv']==1) {
 		$_MAIN_OUTPUT.=  "<br>".tm_icon("tick.png",___("Aktiv"))."&nbsp;";
 		$_MAIN_OUTPUT.=  ___("(aktiv)");
@@ -525,6 +542,9 @@ for ($ncc=0;$ncc<$nc;$ncc++) {
 			$_MAIN_OUTPUT.= "<a class=\"list_edit_entry\" href=\"".$tm_URL."/".$statURLPara_."\" title=\"".___("Statistik anzeigen")."\">".tm_icon("chart_pie.png",___("Statistik anzeigen"))."&nbsp;";
 			if (!$user_is_expert) $_MAIN_OUTPUT.=___("Statistik");
 			$_MAIN_OUTPUT.= "</a>";
+			if ($user_is_manager) {
+				$_MAIN_OUTPUT.= "<a class=\"list_edit_entry\" href=\"".$tm_URL."/".$delHistoryURLPara_."\" onclick=\"return confirmLink(this, '".___("Historie löschen")."')\" title=\"".___("Historie löschen")."\">".tm_icon("chart_bar_delete.png",___("Historie löschen"))."</a>";
+			}
 		}
 
 		$_MAIN_OUTPUT.= "\n</font><br>\n";

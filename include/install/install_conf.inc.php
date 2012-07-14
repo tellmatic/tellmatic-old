@@ -11,6 +11,10 @@
 /* check Homepage for Updates and more Infos                                    */
 /* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
 /********************************************************************************/
+
+define("DEBUG",FALSE);
+define("DEMO",FALSE);
+
 /***********************************************************/
 //guess path
 /***********************************************************/
@@ -87,6 +91,7 @@ require_once ("./include/Errorhandling.inc.php");
 require_once ("./include/Class_mSimpleForm.inc.php");
 require_once ("./include/Functions.inc.php");
 require_once ("./include/GetText.inc.php");
+require_once ("./include/tm_version.inc.php");
 
 /***********************************************************/
 //default siteid
@@ -144,6 +149,11 @@ $$InputName_DBPort=getVar($InputName_DBPort);
 if (empty($$InputName_DBPort)) {
 	$$InputName_DBPort="3306";
 }
+$InputName_DBSocket="db_socket";
+$$InputName_DBSocket=getVar($InputName_DBSocket);
+
+$InputName_DBType="db_type";
+$$InputName_DBType=getVar($InputName_DBType);
 
 $InputName_DBName="db_name";
 $$InputName_DBName=getVar($InputName_DBName);
@@ -160,6 +170,12 @@ if (empty($$InputName_SMTPHost)) {
 	$$InputName_SMTPHost="127.0.0.1";
 }
 
+$InputName_SMTPPort="smtp_port";
+$$InputName_SMTPPort=getVar($InputName_SMTPPort);
+if (empty($$InputName_SMTPPort)) {
+	$$InputName_SMTPPort=25;
+}
+
 $InputName_SMTPUser="smtp_user";
 $$InputName_SMTPUser=getVar($InputName_SMTPUser);
 
@@ -168,6 +184,9 @@ $$InputName_SMTPPass=getVar($InputName_SMTPPass);
 
 $InputName_SMTPDomain="smtp_domain";
 $$InputName_SMTPDomain=getVar($InputName_SMTPDomain);
+
+$InputName_SMTPAuth="smtp_auth";
+$$InputName_SMTPAuth=getVar($InputName_SMTPAuth);
 
 $InputName_License="license";
 
@@ -197,9 +216,6 @@ $exec_time=ini_get("max_execution_time");
 
 /***********************************************************/
 $created=date("Y-m-d H:i:s");
-
-define("DEBUG",FALSE);
-define("DEMO",FALSE);
 
 	if (DEBUG) $debug_translated=Array();
 	if (DEBUG) $debug_not_translated=Array();

@@ -1,4 +1,4 @@
-<?
+<?php
     // Example:
     // Dumps nodes from testfile.html.
     // To run: php < ex_dumpurl.php

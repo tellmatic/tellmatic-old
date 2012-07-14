@@ -11,6 +11,7 @@
 /* check Homepage for Updates and more Infos                                    */
 /* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
 /********************************************************************************/
+$_MAIN_OUTPUT.="\n\n<!-- adr_list.inc -->\n\n";
 
 $_MAIN_DESCR=___("Adressen verwalten");
 $_MAIN_MESSAGE.="";
@@ -32,9 +33,9 @@ if (empty($limit)) {
 
 $ADDRESS=new tm_ADR();
 $QUEUE=new tm_Q();
+$BLACKLIST=new tm_BLACKLIST();
 
 $adr_grp_id=getVar("adr_grp_id");
-
 $adr_id=getVar("adr_id");
 $set=getVar("set");
 $val=getVar("val");
@@ -45,8 +46,6 @@ if (!isset($search)) {
 
 require_once (TM_INCLUDEPATH."/adr_search.inc.php");
 
-
-
 if ($set=="aktiv") {
 	$ADDRESS->setAktiv($adr_id,$val);
 	if ($val==1) {
@@ -54,11 +53,197 @@ if ($set=="aktiv") {
 	} else  {
 		$_MAIN_MESSAGE.="<br>".___("Eintrag wurde de-aktiviert.");
 	}
-}
+}//aktiv single
 if ($set=="delete" && $doit==1) {
 	if (!DEMO) $ADDRESS->delAdr($adr_id);
 	$_MAIN_MESSAGE.="<br>".___("Eintrag wurde gelöscht.");
-}
+}//del single
+if ($user_is_manager  && $set=="delete_history" && $doit==1) {
+	if (!DEMO) $QUEUE->clearH(Array("adr_id"=>$adr_id));
+	$_MAIN_MESSAGE.="<br>".___("Historie wurde gelöscht.");
+}//del history single
+
+if ($user_is_manager && $set=="blacklist") {
+				$ADR_BL=$ADDRESS->getAdr($adr_id);
+				//dublettencheck
+				//	function isBlacklisted($str,$type="all")
+				if (!$BLACKLIST->isBlacklisted($ADR_BL[0]['email'],"email",0)) {//only_active=0, also alle, nicht nur aktive, was default waere
+					$BLACKLIST->addBL(Array(
+							"siteid"=>TM_SITEID,
+							"expr"=>$ADR_BL[0]['email'],
+							"aktiv"=>1,
+							"type"=>"email"
+							));
+					$_MAIN_MESSAGE.="<br>".sprintf(___("Die E-Mail-Adresse %s wurde in die Blacklist eingetragen."),display($ADR_BL[0]['email']));
+				} else {
+					$_MAIN_MESSAGE.="<br>".sprintf(___("Die E-Mail-Adresse %s ist bereits in der Blacklist vorhanden."),display($ADR_BL[0]['email']));
+				}
+}//blacklist single
+if ($user_is_manager && $set=="blacklist_domain") {
+				$ADR_BL=$ADDRESS->getAdr($adr_id);
+				$bl_domainname=getDomainFromEMail($ADR_BL[0]['email']);
+				//dublettencheck
+				//	function isBlacklisted($str,$type="all")
+				if (!$BLACKLIST->isBlacklisted($ADR_BL[0]['email'],"domain",0)) {//only_active=0, also alle, nicht nur aktive, was default waere
+					//wenn noch nicht vorhanden einfuegen:
+					$BLACKLIST->addBL(Array(
+							"siteid"=>TM_SITEID,
+							"expr"=>$bl_domainname,
+							"aktiv"=>1,
+							"type"=>"domain"
+							));
+					$_MAIN_MESSAGE.="<br>".sprintf(___("Die Domain %s wurde in die Blacklist eingetragen."),display($bl_domainname));
+				} else {
+					$_MAIN_MESSAGE.="<br>".sprintf(___("Die Domain %s ist bereits in der Blacklist vorhanden."),display($bl_domainname));
+				}
+}//blacklist domain single
+//delete email from blacklist
+if ($user_is_manager && $set=="blacklist_del") {
+				$ADR_BL=$ADDRESS->getAdr($adr_id);
+				$BL=$BLACKLIST->getBL(0,Array("expr"=>$ADR_BL[0]['email'], "type"=>"email"));
+				$BLACKLIST->delBL($BL[0]['id']);
+				$_MAIN_MESSAGE.="<br>".sprintf(___("Die E-Mail-Adresse %s wurde aus der Blacklist gelöscht."),display($ADR_BL[0]['email']));
+}//blacklist adr delete
+//delete domain from adr from blacklist!
+if ($user_is_manager && $set=="blacklist_domain_del") {
+				$ADR_BL=$ADDRESS->getAdr($adr_id);
+				$bl_domainname=getDomainFromEMail($ADR_BL[0]['email']);
+				$BL=$BLACKLIST->getBL(0,Array("expr"=>$bl_domainname, "type"=>"domain"));
+				$BLACKLIST->delBL($BL[0]['id']);
+				$_MAIN_MESSAGE.="<br>".sprintf(___("Die Domain %s wurde aus der Blacklist gelöscht."),display($bl_domainname));
+}//blacklist domain delete
+
+
+
+require_once(TM_INCLUDEPATH."/adr_list_form_head.inc.php");
+
+$ac_multi=count($adr_id_arr);
+
+if ($ac_multi>0) { // wenn min 1 adr gewaehlt
+	// && $doit==1
+	//meldungen ausgeben
+	$_MAIN_MESSAGE.="<br>".sprintf(___("%s Adressen ausgewählt."),$ac_multi);
+	if ($set=="aktiv_1_multi") {
+		$_MAIN_MESSAGE.="<br>".___("Ausgewählte Adressen werden aktiviert");
+	}
+	if ($set=="aktiv_0_multi") {
+		$_MAIN_MESSAGE.="<br>".___("Ausgewählte Adressen werden deaktiviert.");
+	}
+	if ($set=="set_status_multi") {
+		$_MAIN_MESSAGE.="<br>".sprintf(___("Setze neuen Status für ausgewählte Adressen auf %s"),tm_icon($STATUS['adr']['statimg'][$status_multi],$STATUS['adr']['status'][$status_multi])."&nbsp;\"<b>".$STATUS['adr']['status'][$status_multi])."</b>\"";
+	}
+	if ($set=="delete_multi") {
+		$_MAIN_MESSAGE.="<br>".___("Ausgewählte Adressen werden gelöscht.");
+	}
+	if ($user_is_manager  && $set=="delete_history_multi") {
+		$_MAIN_MESSAGE.="<br>".___("Historie ausgewählter Adressen werden gelöscht.");
+	}
+	if ($set=="copy_grp_multi") {
+		$_MAIN_MESSAGE.="<br>".___("Ausgewählte Adressen werden in die gewählten Gruppen kopiert.");
+	}
+	if ($set=="move_grp_multi") {
+		$_MAIN_MESSAGE.="<br>".___("Ausgewählte Adressen werden in die gewählten Gruppen verschoben.");
+	}
+	if ($set=="delete_grp_multi") {
+		$_MAIN_MESSAGE.="<br>".___("Ausgewählte Adressen werden aus den gewählten Gruppen gelöscht.");
+	}
+	if ($user_is_manager && $set=="blacklist_multi") {
+		$_MAIN_MESSAGE.="<br>".___("Ausgewählte Adressen werden zur Blacklist hinzgefügt.");
+	}
+	if ($user_is_manager && $set=="blacklist_domain_multi") {
+		$bl_domains=Array();//array mit domainnamen
+		$_MAIN_MESSAGE.="<br>".___("Domains der ausgewählten Adressen werden zur Blacklist hinzgefügt.");
+	}
+	//array durchwandern
+	for ($acc_m=0;$acc_m<$ac_multi;$acc_m++) {
+		#$_MAIN_OUTPUT.="<br>ID".$adr_id_arr[$acc_m];
+		//activate adr
+		if ($set=="aktiv_1_multi") {
+			$ADDRESS->setAktiv($adr_id_arr[$acc_m],1);
+		}//aktiv 1 multi
+		//deactivate adr
+		if ($set=="aktiv_0_multi") {
+			$ADDRESS->setAktiv($adr_id_arr[$acc_m],0);
+		}//aktiv 0 multi
+		//set status
+		if ($set=="set_status_multi") {
+			$ADDRESS->setStatus($adr_id_arr[$acc_m],$status_multi);
+		}//status multi
+		//del adr
+		if ($set=="delete_multi") {
+			if (!DEMO) $ADDRESS->delAdr($adr_id_arr[$acc_m]);
+		}//del multi
+		//del hostiry multi
+		if ($user_is_manager  &&  $set=="delete_history_multi") {
+			if (!DEMO) $QUEUE->clearH(Array("adr_id"=>$adr_id_arr[$acc_m]));
+		}//del history single
+
+		//copy adr to selected grps
+		if ($set=="copy_grp_multi") {
+			//get old groups
+			$adr_groups=$ADDRESS->getGroupID(0,$adr_id_arr[$acc_m],0);
+			//set new groups
+			$ADDRESS->setGroup($adr_id_arr[$acc_m],$adr_grp_id_multi,$adr_groups,1);//set groups, merge=1=merge groups
+		}//copy grp multi
+		//move adr to selected grps
+		if ($set=="move_grp_multi") {
+			//set new groups
+			$ADDRESS->setGroup($adr_id_arr[$acc_m],$adr_grp_id_multi,0);//merge=0=move
+		}//move grp multi
+		//delete adr ref from selected grps
+		if ($set=="delete_grp_multi") {
+			//get old groups
+			$adr_groups=$ADDRESS->getGroupID(0,$adr_id_arr[$acc_m],0);
+			//set new groups
+			$ADDRESS->setGroup($adr_id_arr[$acc_m],$adr_grp_id_multi,$adr_groups,2);//set groups, merge=2=diff
+		}//del grp multi
+		if ($user_is_manager && $set=="blacklist_multi") {
+				$ADR_BL=$ADDRESS->getAdr($adr_id_arr[$acc_m]);
+				//dublettencheck
+				//	function isBlacklisted($str,$type="all")
+				if (!$BLACKLIST->isBlacklisted($ADR_BL[0]['email'],"email",0)) {//only_active=0, also alle, nicht nur aktive, was default waere
+					//wenn noch nicht vorhanden einfuegen:
+					$BLACKLIST->addBL(Array(
+							"siteid"=>TM_SITEID,
+							"expr"=>$ADR_BL[0]['email'],
+							"aktiv"=>1,
+							"type"=>"email"
+							));
+					$_MAIN_MESSAGE.="<br>".sprintf(___("Die E-Mail-Adresse %s wurde in die Blacklist eingetragen."),display($ADR_BL[0]['email']));
+				} else {
+					$_MAIN_MESSAGE.="<br>".sprintf(___("Die E-Mail-Adresse %s ist bereits in der Blacklist vorhanden."),display($ADR_BL[0]['email']));
+				}//if blacklisted
+		}//blacklist multi
+		if ($user_is_manager && $set=="blacklist_domain_multi") {
+				//hier wird ein aray erzeugt mit allen domainnamen, auch doppelte!
+				$ADR_BL=$ADDRESS->getAdr($adr_id_arr[$acc_m]);
+				$bl_domains[$acc_m]=getDomainFromEMail($ADR_BL[0]['email']);
+		}//blacklist domain multi
+	}//for acc_m
+
+	if ($user_is_manager && $set=="blacklist_domain_multi") {	
+		//hier nun blacklist domains array unifien und dann erst eintragen!
+		$bl_domains=array_unique($bl_domains);//unify!
+		foreach ($bl_domains as $bl_domainname) {
+			//dublettencheck! per getBL diesmal da wir nur domainnamen haben, is blacklisted sich aber auf email bezieht!
+			$BL=$BLACKLIST->getBL(0,Array("type"=>"domain","expr"=>$bl_domainname));
+			//wenn nix gefunden, eintragen:
+			if (count($BL)<1) {
+				$BLACKLIST->addBL(Array(
+								"siteid"=>TM_SITEID,
+								"expr"=>$bl_domainname,
+								"aktiv"=>1,
+								"type"=>"domain"
+								));
+				$_MAIN_MESSAGE.="<br>".sprintf(___("Die Domain %s wurde in die Blacklist eingetragen."),display($bl_domainname));
+			} else {
+				$_MAIN_MESSAGE.="<br>".sprintf(___("Die Domain %s ist bereits in der Blacklist vorhanden."),display($bl_domainname));
+			}//if count<1
+		}//foreach bl_domains as bl_domain
+	}//blacklist domain multi
+} else {
+		#$_MAIN_MESSAGE.="<br>".___("Es wurden keine Adressen ausgewählt.");
+}//if ac_multi>0
 
 
 if ($adr_grp_id>0)
@@ -69,7 +254,6 @@ if ($adr_grp_id>0)
 } else {
 	$ADR=$ADDRESS->getAdr(0,$offset,$limit,0,$search,$sortIndex,$sortType);//id,offset,limit,group,$search_array
 }
-#print_r($search);
 $ac=count($ADR);
 $entrys=$ac; // fuer pager.inc!!!
 $entrys_total=$ADDRESS->countADR($adr_grp_id,$search);
@@ -144,15 +328,40 @@ $delURLPara->addParam("limit",$limit);
 $delURLPara->addParam("act","adr_list");
 $delURLPara->addParam("set","delete");
 
+$delHistoryURLPara=$mSTDURL;
+$delHistoryURLPara->addParam("adr_grp_id",$adr_grp_id);
+$delHistoryURLPara->addParam("offset",$offset);
+$delHistoryURLPara->addParam("limit",$limit);
+$delHistoryURLPara->addParam("act","adr_list");
+$delHistoryURLPara->addParam("set","delete_history");
+
 $statURLPara=$mSTDURL;
 $statURLPara->addParam("act","statistic");
 $statURLPara->addParam("set","adr");
+
+$blacklistURLPara=$mSTDURL;
+$blacklistURLPara->addParam("adr_grp_id",$adr_grp_id);
+$blacklistURLPara->addParam("offset",$offset);
+$blacklistURLPara->addParam("limit",$limit);
+$blacklistURLPara->addParam("set","blacklist");
+$blacklistURLPara->addParam("act","adr_list");
+
+$blacklistDomainURLPara=$blacklistURLPara;
+$blacklistDomainURLPara->addParam("set","blacklist_domain");
+
+$blacklistDelURLPara=$blacklistURLPara;
+$blacklistDelURLPara->addParam("set","blacklist_del");
+
+$blacklistDomainDelURLPara=$blacklistURLPara;
+$blacklistDomainDelURLPara->addParam("set","blacklist_domain_del");
+
 
 include(TM_INCLUDEPATH."/pager.inc.php");
 
 $_MAIN_OUTPUT.="<table border=\"0\" cellpadding=\"1\" cellspacing=\"1\" width=\"100%\">";
 $_MAIN_OUTPUT.= "<thead>".
 						"<tr>".
+						"<td>&nbsp;</td>".
 						"<td><b>".___("E-Mail")."</b>".
 						"<a href=\"".$tm_URL."/".$sortURLPara_."&amp;si=email&amp;st=0\">".$img_arrowup."</a>".
 						"<a href=\"".$tm_URL."/".$sortURLPara_."&amp;si=email&amp;st=1\">".$img_arrowdown."</a>".
@@ -209,12 +418,102 @@ for ($acc=0;$acc<$ac;$acc++) {
 	$delURLPara->addParam("adr_id",$ADR[$acc]['id']);
 	$delURLPara_=$delURLPara->getAllParams();
 
+	$delHistoryURLPara->addParam("adr_id",$ADR[$acc]['id']);
+	$delHistoryURLPara_=$delHistoryURLPara->getAllParams();
+
 	$statURLPara->addParam("adr_id",$ADR[$acc]['id']);
 	$statURLPara_=$statURLPara->getAllParams();
 
-	$row_bgcolor_hilite;
+	$blacklistURLPara->addParam("adr_id",$ADR[$acc]['id']);
+	$blacklistURLPara_=$blacklistURLPara->getAllParams();
+
+	$blacklistDomainURLPara->addParam("adr_id",$ADR[$acc]['id']);
+	$blacklistDomainURLPara_=$blacklistDomainURLPara->getAllParams();
+
+	$blacklistDelURLPara->addParam("adr_id",$ADR[$acc]['id']);
+	$blacklistDelURLPara_=$blacklistDelURLPara->getAllParams();
+
+	$blacklistDomainDelURLPara->addParam("adr_id",$ADR[$acc]['id']);
+	$blacklistDomainDelURLPara_=$blacklistDomainDelURLPara->getAllParams();
+
+	#$row_bgcolor_hilite;
 
 	$_MAIN_OUTPUT.= "<tr id=\"row_".$acc."\" bgcolor=\"".$bgcolor."\" onmouseover=\"setBGColor('row_".$acc."','".$row_bgcolor_hilite."');\" onmouseout=\"setBGColor('row_".$acc."','".$bgcolor."');\">";
+
+	//checkbox
+	$_MAIN_OUTPUT.= "<td onmousemove=\"showToolTip('tt_adr_list_id_".$ADR[$acc]['id']."')\" onmouseout=\"setBGColor('row_".$acc."','".$bgcolor."');hideToolTip();\">";
+	$Form->set_InputValue($FormularName,$InputName_AdrID,$ADR[$acc]['id']);
+	$Form->render_Input($FormularName,$InputName_AdrID);
+	$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_AdrID]['html'];
+	
+	//BLACKLIST Details
+	//zeigt an ob adresse AKTIV!!!!! geblacklisted ist:
+	if ($BLACKLIST->isBlacklisted($ADR[$acc]['email'])) {
+		$_MAIN_OUTPUT.=  "&nbsp;".tm_icon("ruby.png",___("Blacklist"));
+	} else {
+		$_MAIN_OUTPUT.=  "&nbsp;".tm_icon("bullet_white.png","--");
+	}
+
+	//zeigt an ob adresse geblacklisted ist und welchen typs:
+	$blacklisted=$BLACKLIST->checkBL($ADR[$acc]['email'],"",0);
+	$bl_email=false;//flag f. edit links
+	$bl_domain=false;//flag f. edit links
+	$bl_expr=false;//flag f. edit links
+	if ($blacklisted[0]) {
+		$bl_types=Array();
+		foreach($blacklisted[1] as $blacklist_entry) {
+			$bl_types[]=$blacklist_entry['type'];
+		}//foreach as ...
+		//unify!
+		$bl_types=array_unique($bl_types);
+		//sort
+		sort($bl_types);
+		foreach ($bl_types as $bl_type) {
+			if ($bl_type=="email") {
+				$bl_email=true;//flag f. edit links
+				$_MAIN_OUTPUT.=  "&nbsp;".tm_icon("ruby_key.png",___("Blacklist E-Mail"));
+			}
+		
+			if ($bl_type=="domain") {
+				$bl_domain=true;//flag f. edit links
+				$_MAIN_OUTPUT.=  "&nbsp;".tm_icon("ruby_link.png",___("Blacklist Domain"));
+			}
+			if ($bl_type=="expr") {
+				$bl_expr=true;//flag f. edit links
+				$_MAIN_OUTPUT.=  "&nbsp;".tm_icon("ruby_gear.png",___("Blacklist RegEx"));
+			}
+		}//foreach
+	}//blacklisted 0 == true
+
+	$_MAIN_OUTPUT.= "<div id=\"tt_adr_list_id_".$ADR[$acc]['id']."\" class=\"tooltip\">";
+	$_MAIN_OUTPUT.="ID:".$ADR[$acc]['id'];
+	//show blacklist details in mouseover div
+	if ($blacklisted[0]) {
+		$_MAIN_OUTPUT.= "<br><b>".___("Blacklist")."</b>:";
+		foreach($blacklisted[1] as $blacklist_entry) {
+			$_MAIN_OUTPUT.= "<br>";
+			if ($blacklist_entry['type']=="email") {
+				$_MAIN_OUTPUT.=  tm_icon("ruby_key.png",___("Blacklist E-Mail"));
+				$_MAIN_OUTPUT.= "&nbsp;".___("E-Mail").":";
+			}
+			if ($blacklist_entry['type']=="domain") {
+				$_MAIN_OUTPUT.=  tm_icon("ruby_link.png",___("Blacklist Domain"));
+				$_MAIN_OUTPUT.= "&nbsp;".___("Domain").":";
+			}
+			if ($blacklist_entry['type']=="expr") {
+				$_MAIN_OUTPUT.=  tm_icon("ruby_gear.png",___("Blacklist RegEx"));
+				$_MAIN_OUTPUT.= "&nbsp;".___("RegEx").":";
+			}
+			$_MAIN_OUTPUT.= display($blacklist_entry['expr']);
+			if ($blacklist_entry['aktiv']==1) {
+				$_MAIN_OUTPUT.= "&nbsp;".tm_icon("tick.png",___("Aktiv"));
+			} else {
+				$_MAIN_OUTPUT.= "&nbsp;".tm_icon("cancel.png",___("Inaktiv"))."(na)";
+			}
+		}//foreach as ...
+	}			
+	$_MAIN_OUTPUT.= "</div>";
+	$_MAIN_OUTPUT.= "</td>";
 
 	$_MAIN_OUTPUT.= "<td onmousemove=\"showToolTip('tt_adr_list_".$ADR[$acc]['id']."')\" onmouseout=\"setBGColor('row_".$acc."','".$bgcolor."');hideToolTip();\">";
 	$_MAIN_OUTPUT.= "<a href=\"".$tm_URL."/".$editURLPara_."\">".$ADR[$acc]['email']."</a>";
@@ -279,12 +578,35 @@ for ($acc=0;$acc<$ac;$acc++) {
 	$_MAIN_OUTPUT.= "<td>";
 	$_MAIN_OUTPUT.= "<a href=\"".$tm_URL."/".$editURLPara_."\" title=\"".___("Adresse bearbeiten")."\">".tm_icon("pencil.png",___("Adresse bearbeiten"))."</a>";
 	$_MAIN_OUTPUT.=  "&nbsp;<a href=\"".$tm_URL."/".$statURLPara_."\" title=\"".___("Statistik anzeigen")."\">".tm_icon("chart_pie.png",___("Statistik anzeigen"))."</a>";
+	if ($user_is_manager) {
+		$_MAIN_OUTPUT.= "<a href=\"".$tm_URL."/".$delHistoryURLPara_."\" onclick=\"return confirmLink(this, '".___("Historie löschen")."')\" title=\"".___("Historie löschen")."\">".tm_icon("chart_bar_delete.png",___("Historie löschen"))."</a>";
+	}
+
+
+	if ($user_is_manager && !$bl_email) {
+		//wenn adr noch nicht in blacklist, flag wird oben gesetzt
+		$_MAIN_OUTPUT.= "<a href=\"".$tm_URL."/".$blacklistURLPara_."\" title=\"".___("Adresse in Blacklist eintragen")."\">".tm_icon("bullet_add.png",___("Adresse in Blacklist eintragen"),"","","","ruby_key.png")."</a>";
+	}
+	if ($user_is_manager && $bl_email) {
+		//wenn adr noch nicht in blacklist, flag wird oben gesetzt
+		$_MAIN_OUTPUT.= "<a href=\"".$tm_URL."/".$blacklistDelURLPara_."\" title=\"".___("Adresse aus Blacklist löschen")."\">".tm_icon("bullet_delete.png",___("Adresse aus Blacklist löschen"),"","","","ruby_key.png")."</a>";
+	}
+	if ($user_is_manager && !$bl_domain) {
+		//wenn adr noch nicht in blacklist, flag wird oben gesetzt
+		$_MAIN_OUTPUT.= "<a href=\"".$tm_URL."/".$blacklistDomainURLPara_."\" title=\"".___("Domain in Blacklist eintragen")."\">".tm_icon("bullet_add.png",___("Domain in Blacklist eintragen"),"","","","ruby_link.png")."</a>";
+	}
+	if ($user_is_manager && $bl_domain) {
+		//wenn adr noch nicht in blacklist, flag wird oben gesetzt
+		$_MAIN_OUTPUT.= "<a href=\"".$tm_URL."/".$blacklistDomainDelURLPara_."\" title=\"".___("Domain aus Blacklist löschen")."\">".tm_icon("bullet_delete.png",___("Domain aus Blacklist löschen"),"","","","ruby_link.png")."</a>";
+	}
 	$_MAIN_OUTPUT.= "&nbsp;<a href=\"".$tm_URL."/".$delURLPara_."\" onclick=\"return confirmLink(this, '".___("Adresse löschen")."')\" title=\"".___("Adresse löschen")."\">".tm_icon("cross.png",___("Adresse löschen"))."</a>";
 	$_MAIN_OUTPUT.= "</td>";
 	$_MAIN_OUTPUT.= "</tr>";
 }
 
 $_MAIN_OUTPUT.= "</tbody></table>";
+
+require_once(TM_INCLUDEPATH."/adr_list_form.inc.php");
 
 include(TM_INCLUDEPATH."/pager.inc.php");
 require_once(TM_INCLUDEPATH."/adr_list_legende.inc.php");

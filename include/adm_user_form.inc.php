@@ -50,18 +50,18 @@ $Form->new_Input($FormularName,"u_id", "hidden", $u_id);
 //////////////////
 
 //Name
-$Form->new_Input($FormularName,$InputName_Name,"text",$$InputName_Name);
+$Form->new_Input($FormularName,$InputName_Name,"text",display($$InputName_Name));
 $Form->set_InputJS($FormularName,$InputName_Name," onChange=\"flash('submit','#ff0000');\" onkeyup=\"RemoveInvalidChars(this, '[^A-Za-z0-9\ \_\.\-]'); ForceLowercase(this);\"");
 $Form->set_InputStyleClass($FormularName,$InputName_Name,"mFormText","mFormTextFocus");
 $Form->set_InputSize($FormularName,$InputName_Name,48,256);
-$Form->set_InputDesc($FormularName,$InputName_Name,___("E-Mail"));
+$Form->set_InputDesc($FormularName,$InputName_Name,___("Name"));
 $Form->set_InputReadonly($FormularName,$InputName_Name,false);
 $Form->set_InputOrder($FormularName,$InputName_Name,1);
 $Form->set_InputLabel($FormularName,$InputName_Name,"");
 
 
 //EMAIL
-$Form->new_Input($FormularName,$InputName_EMail,"text",$$InputName_EMail);
+$Form->new_Input($FormularName,$InputName_EMail,"text",display($$InputName_EMail));
 $Form->set_InputJS($FormularName,$InputName_EMail," onChange=\"flash('submit','#ff0000');\" onkeyup=\"RemoveInvalidChars(this, '[^A-Za-z0-9\_\@\.\-]'); ForceLowercase(this);\"");
 $Form->set_InputStyleClass($FormularName,$InputName_EMail,"mFormText","mFormTextFocus");
 $Form->set_InputSize($FormularName,$InputName_EMail,48,256);

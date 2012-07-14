@@ -32,7 +32,7 @@ class tm_NL {
 						created, author, updated, editor,
 						link, status, massmail, clicks, views, attm, track_image,
 						grp_id, aktiv,
-						content_type
+						content_type, rcpt_name
 						FROM ".TM_TABLE_NL."
 						WHERE ".TM_TABLE_NL.".siteid='".TM_SITEID."'
 					";
@@ -79,6 +79,7 @@ class tm_NL {
 			$this->NL[$ac]['attm']=$this->DB->Record['attm'];
 			$this->NL[$ac]['content_type']=$this->DB->Record['content_type'];
 			$this->NL[$ac]['track_image']=$this->DB->Record['track_image'];
+			$this->NL[$ac]['rcpt_name']=$this->DB->Record['rcpt_name'];
 			$ac++;
 		}
 		return $this->NL;
@@ -92,7 +93,7 @@ class tm_NL {
 						created,author,updated,editor,
 						link,grp_id,status,attm,track_image,
 						massmail,clicks,views,
-						content_type,
+						content_type, rcpt_name,
 						siteid
 						)
 						VALUES
@@ -101,7 +102,7 @@ class tm_NL {
 						'".dbesc($nl["created"])."', '".dbesc($nl["author"])."', '".dbesc($nl["created"])."', '".dbesc($nl["author"])."',
 						'".dbesc($nl["link"])."','".dbesc($nl["grp_id"])."','".dbesc($nl["status"])."', '".dbesc($nl["attm"])."', '".dbesc($nl["track_image"])."',
 						'".dbesc($nl["massmail"])."', 0, 0,
-						'".dbesc($nl["content_type"])."',
+						'".dbesc($nl["content_type"])."',	'".dbesc($nl["rcpt_name"])."',
 						'".TM_SITEID."'
 						)";
 		if ($this->DB->Query($Query)) {
@@ -124,7 +125,8 @@ class tm_NL {
 						massmail='".dbesc($nl["massmail"])."',
 						link='".dbesc($nl["link"])."',
 						content_type='".dbesc($nl["content_type"])."',
-						grp_id='".dbesc($nl["grp_id"])."'
+						grp_id='".dbesc($nl["grp_id"])."',
+						rcpt_name='".dbesc($nl["rcpt_name"])."'
 						WHERE siteid='".TM_SITEID."'
 						AND id='".$nl["id"]."'";
 			if ($this->DB->Query($Query)) {

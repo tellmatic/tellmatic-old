@@ -11,6 +11,7 @@
 /* check Homepage for Updates and more Infos                                    */
 /* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
 /********************************************************************************/
+$_MAIN_OUTPUT.="\n\n<!-- adr_search.inc -->\n\n";
 
 $set=getVar("set");
 $search_array=Array();

@@ -25,6 +25,9 @@ if (is_writeable(TM_INCLUDEPATH."/tm_config.inc.php")) {
 	}
 }
 
+if (!is_writeable(TM_PATH."/admin/tmp")) {
+	$_MAIN_MESSAGE.="<br><font size=2 color=red><b>".sprintf(___("Keine Schreibrechte für %s"),TM_PATH."/admin/tmp")."</b></font>";
+}
 if (!is_writeable($tm_datapath)) {
 	$_MAIN_MESSAGE.="<br><font size=2 color=red><b>".sprintf(___("Keine Schreibrechte für %s"),$tm_datapath)."</b></font>";
 }
@@ -82,9 +85,15 @@ if ($logged_in) {
 		case 'adm_user_list' :  if ($user_is_admin) require_once (TM_INCLUDEPATH."/adm_user_list.inc.php"); break;
 		case 'adm_user_edit' :  if ($user_is_admin) require_once (TM_INCLUDEPATH."/adm_user_edit.inc.php"); break;
 		case 'adm_user_new' :  if ($user_is_admin) require_once (TM_INCLUDEPATH."/adm_user_new.inc.php"); break;
+		case 'host_list' : if ($user_is_admin) require_once (TM_INCLUDEPATH."/host_list.inc.php"); break;
+		case 'host_new' : if ($user_is_admin) require_once (TM_INCLUDEPATH."/host_new.inc.php"); break;
+		case 'host_edit' : if ($user_is_admin) require_once (TM_INCLUDEPATH."/host_edit.inc.php"); break;
 		//user
 		case 'user' : require_once (TM_INCLUDEPATH."/user.inc.php"); break;
 		//verwaltung
+		case 'bl_list' : if ($user_is_manager) require_once (TM_INCLUDEPATH."/bl_list.inc.php"); break;
+		case 'bl_new' : if ($user_is_manager) require_once (TM_INCLUDEPATH."/bl_new.inc.php"); break;
+		case 'bl_edit' : if ($user_is_manager) require_once (TM_INCLUDEPATH."/bl_edit.inc.php"); break;
 		case 'bounce' : if ($user_is_manager) require_once (TM_INCLUDEPATH."/bounce.inc.php"); break;
 		case 'adr_clean' : if ($user_is_manager) require_once (TM_INCLUDEPATH."/adr_clean.inc.php"); break;
 		//newsletter
@@ -175,5 +184,5 @@ $_Tpl_Main->setParseValue("_MAIN_MESSAGE", $_MAIN_MESSAGE);
 $_Tpl_Main->setParseValue("_MAIN_HELP", $_MAIN_HELP);
 $_Tpl_Main->setParseValue("_MAIN_OUTPUT", $_MAIN_OUTPUT);
 $_MAIN=$_Tpl_Main->renderTemplate("Main.html")."\n";
-$_MAIN.= "<br><br><center>&copy;-left 2007 <a href=\"http://www.tellmatic.org\" target=\"blank\">".$ApplicationText."</a></center><br><br>";
+$_MAIN.= "<br><br><center>&copy;-left 2006/8 <a href=\"http://www.tellmatic.org\" target=\"blank\">".$ApplicationText."</a></center><br><br>";
 ?>

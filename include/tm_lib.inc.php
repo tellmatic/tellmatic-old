@@ -11,24 +11,6 @@
 /* check Homepage for Updates and more Infos                                    */
 /* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
 /********************************************************************************/
-
-if (!isset($tm_config)) {
-    $tm_config=false;
-}
-
-if (!$tm_config) {
-
-	/***********************************************************/
-	//Messages
-	/***********************************************************/
-
-	$MSG['subscribe']['update']='E-Mail-Adresse existiert bereits. Ihre Daten wurden aktualisiert.';
-	$MSG['unsubscribe']['unsubscribe']='Sie wurden abgemeldet.';
-	$MSG['unsubscribe']['error']='Fehler!';
-	$MSG['unsubscribe']['invalid']='Ungültig!';
-	$MSG['unsubscribe']['already_unsubscribed']='Sie sind nicht mehr angemeldet.';
-	$MSG['unsubscribe']['invalid_email']='Ungültige E-Mail-Adresse';
-
 /**/
 /**/
 /**/
@@ -46,6 +28,12 @@ if (!$tm_config) {
 /**/
 /**/
 /**/
+if (!isset($tm_config)) {
+    $tm_config=false;
+}
+
+if (!$tm_config) {
+
 
 	/***********************************************************/
 	//siteid
@@ -124,6 +112,8 @@ if (!$tm_config) {
 	define("TM_ICONDIR","img/icons");
 	//verzeichnis fuer docs
 	define("TM_DOCDIR","doc");
+	//verzeichnis fuer files
+	define("TM_FILEDIR","files");
 /***********************************************************/
 //pfade
 /***********************************************************/
@@ -139,26 +129,28 @@ if (!$tm_config) {
 	define("TM_ICONPATH",TM_PATH."/".TM_ICONDIR);
 	//templates intern
 	define("TM_TPLPATH",TM_PATH."/".TM_TPLDIR);
+	//files
+	define("TM_FILEPATH",TM_PATH."/".TM_FILEDIR);
 
 /***********************************************************/
 //sitespezifische dirs....! fuer multicustomer
 /***********************************************************/
 	//verzeichnis fuer gespeicherte newsletter:
-	$tm_nldir="files/newsletter";
+	$tm_nldir=TM_FILEDIR."/newsletter";
 	//verzeichnis fuer gespeicherte newsletter-bilder unterhalb von $tm_nldir:
-	$tm_nlimgdir="files/newsletter/images";
+	$tm_nlimgdir=TM_FILEDIR."/newsletter/images";
 	//verzeichnis fuer attachements
-	$tm_nlattachdir="files/attachements";
+	$tm_nlattachdir=TM_FILEDIR."/attachements";
 	//verzeichnis fuer formular-templates
-	$tm_formdir="files/forms";
+	$tm_formdir=TM_FILEDIR."/forms";
 	//verzeichnis fuer import/export dateien
-	$tm_datadir="files/import_export";
+	$tm_datadir=TM_FILEDIR."/import_export";
 	//verzeichnis fuer send logs
-	$tm_logdir="files/log";
+	$tm_logdir=TM_FILEDIR."/log";
 	//sessions, tmp
-	$tm_tmpdir="files/tmp";
+	$tm_tmpdir=TM_FILEDIR."/tmp";
 	//reports, statistic images
-	$tm_reportdir="files/reports";
+	$tm_reportdir=TM_FILEDIR."/reports";
 
 /***********************************************************/
 //pfade
@@ -215,6 +207,8 @@ if (!$tm_config) {
 	define ("TM_TABLE_FRM", $tm_tablePrefix."frm");
 	define ("TM_TABLE_FRM_GRP_REF", $tm_tablePrefix."frm_grp_ref");
 	define ("TM_TABLE_FRM_S", $tm_tablePrefix."frm_s");
+	define ("TM_TABLE_HOST", $tm_tablePrefix."hosts");
+	define ("TM_TABLE_BLACKLIST", $tm_tablePrefix."blacklist");
 
 /***********************************************************/
 //includes: funktionen, klassen
@@ -283,12 +277,6 @@ if (!$tm_config) {
 	$CONFIG=new tm_CFG();
 	$C=$CONFIG->getCFG(TM_SITEID);
 
-	$send_notification_subscribe=$C[0]['notify_subscribe'];
-	$send_notification_unsubscribe=$C[0]['notify_unsubscribe'];
-	$send_notification_email=$C[0]['notify_mail'];
-	$From=$C[0]['sender_email'];
-	$FromName=$C[0]['sender_name'];
-	$ReturnPath=$C[0]['return_mail'];
 	$max_mails_atonce=$C[0]['max_mails_atonce'];
 	$max_mails_bcc=$C[0]['max_mails_bcc'];
 	$max_mails_retry=$C[0]['max_mails_retry'];
@@ -299,20 +287,11 @@ if (!$tm_config) {
 
 /***********************************************************/
 //SMTP/POP3 Config
-//solange nur 1 mailserver f. pop3 und smtp
+//default, f. interne mails
 /***********************************************************/
-	//MTA Hostname
-	$SMTPHost=$C[0]['smtp_host'];
-	//SMTP-Username
-	$SMTPUser=$C[0]['smtp_user'];
-	//SMTP-Passwort
-	$SMTPPasswd=$C[0]['smtp_pass'];
+	$use_SMTPmail=true;//fuer interne smtp mail function! sendMail()
 	//Benutze POP before SMTP zur Authentifizierung? NEIN!
 	$SMTPPopB4SMTP=false;
-	//Absenderdomain, HELO
-	$SMTPDomain=$C[0]['smtp_domain'];
-	//
-	$use_SMTPmail=true;//fuer smtp mail function!
 
 /***********************************************************/
 //mindestlänge für passwoerter
@@ -332,15 +311,16 @@ if (!$tm_config) {
 	$EMAILCHECK['subscribe'][3]="Syntax, MX/DNS + Validate";
 
 /***********************************************************/
-//Tellmatic Name
+//Tellmatic Name/Version
 /***********************************************************/
-	$ApplicationName="tellmatic";
-	$ApplicationVersion="1.0.7.4 Tellmatic";
-	$ApplicationDescr=___("Die Newsletter Maschine");
-	$ApplicationUrl="www.tellmatic.org";
-	$ApplicationText=$ApplicationName." v".$ApplicationVersion." - ".$ApplicationDescr." (".$ApplicationUrl.")";
+	require_once (TM_INCLUDEPATH."/tm_version.inc.php");
 
 /***********************************************************/
+/***********************************************************/
+//Messages, f. subscribe/unsubscribe
+/***********************************************************/
+
+	require_once(TM_INCLUDEPATH."/Messages.inc.php");
 
 /***********************************************************/
 	if (DEBUG) $debug_translated=Array();

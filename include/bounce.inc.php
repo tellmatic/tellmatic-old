@@ -16,16 +16,6 @@ $_MAIN_DESCR=___("Bounce Management");
 $_MAIN_MESSAGE.="";
 
 $set=getVar("set");
-if (empty($set)) {
-	$set="connect";
-}
-
-$InputName_Host="host";//
-$$InputName_Host=getVar($InputName_Host);
-if (empty($$InputName_Host)) {
-	$$InputName_Host=$SMTPHost;
-}
-
 $InputName_Limit="limit";
 $$InputName_Limit=getVar($InputName_Limit);
 if ($$InputName_Limit <1 || empty($$InputName_Limit)) {
@@ -44,6 +34,9 @@ $$InputName_Bounce=getVar($InputName_Bounce,1);
 $InputName_FilterTo="filter_to";//
 $$InputName_FilterTo=getVar($InputName_FilterTo,1);
 //
+$InputName_Host="host";//
+$$InputName_Host=getVar($InputName_Host,0);
+$HOSTS=new tm_HOST();
 
 $InputName_Mail="mailno";//
 pt_register("POST","mailno");
@@ -74,16 +67,17 @@ if ($set=="connect") {
 	$Mailer=new tm_Mail();
 	$Bounce=new tm_Bounce();
 	$ADDRESS=new tm_ADR();
+	$HOST=$HOSTS->getHost($host);
 
 	$search_mail=Array();
 	//filter? emails suchen?
 	if ($filter_to==1) {
 		//nur mails an aktuelle return adesse fuer host
-		$search_mail['to']=$ReturnPath;
+		$search_mail['to']=$C[0]['return_mail'];
 	}
 
-	$_MAIN_OUTPUT .= "<br>".sprintf(___("Verbindung zum Server %s wird aufgebaut..."),$SMTPHost);
-	$Mailer->Connect($SMTPHost, $SMTPUser, $SMTPPasswd);
+	$_MAIN_OUTPUT .= "<br>".sprintf(___("Verbindung zum Server %s wird aufgebaut..."),$HOST[0]['name']." (".$HOST[0]['host'].":".$HOST[0]['port']."/".$HOST[0]['type'].")");
+	$Mailer->Connect($HOST[0]['host'], $HOST[0]['user'], $HOST[0]['pass'],$HOST[0]['type'],$HOST[0]['port'],$HOST[0]['options']);
 	if (!empty($Mailer->Error)) {
 		$_MAIN_MESSAGE .= "<br><b>".sprintf(___("Servermeldung: %s"),"".$Mailer->Error."")."</b>";
 	}

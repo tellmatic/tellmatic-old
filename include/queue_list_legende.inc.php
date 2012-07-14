@@ -23,15 +23,15 @@ $_MAIN_OUTPUT.= tm_icon("email_go.png",___("Diesen Eintrag versenden"))."&nbsp;"
 $_MAIN_OUTPUT.= tm_icon("control_stop.png",___("Anhalten"))."&nbsp;".___("Anhalten")."<br>";
 $_MAIN_OUTPUT.= tm_icon("control_play.png",___("Fortfahren"))."&nbsp;".___("Fortfahren")."<br>";
 $_MAIN_OUTPUT.= tm_icon("cross.png",___("Löschen"))."&nbsp;".___("Q löschen")."<br>";
+$_MAIN_OUTPUT.= tm_icon("bullet_delete.png",___("Q komplett Löschen"),"","","","cross.png")."&nbsp;".___("Q Komplett löschen, auch Historie")."<br>";
 $_MAIN_OUTPUT.= tm_icon("arrow_refresh.png",___("Ansicht aktualisieren"))."&nbsp;".___("Ansicht aktualisieren")."<br>";
-
+$_MAIN_OUTPUT.= tm_icon("ruby.png",___("Blacklist prüfen"))."&nbsp;".___("Blacklist prüfen")."<br>";
 $_MAIN_OUTPUT.= "<h3>".___("Status")."</h3>";
 
 $sc=count($STATUS['q']['status']);
 for ($scc=1; $scc<=$sc; $scc++)//0
 {
-	$_MAIN_OUTPUT.= "<img src=\"".$tm_iconURL."/".$STATUS['q']['statimg'][$scc]."\" border=\"0\"  title=\"".$STATUS['q']['descr'][$scc]."\" alt=\"".$STATUS['q']['descr'][$scc]."\">";
-	$_MAIN_OUTPUT.= "  ".$STATUS['q']['status'][$scc]."  (".$STATUS['q']['descr'][$scc].")<br>";
+	$_MAIN_OUTPUT.= tm_icon($STATUS['q']['statimg'][$scc], display($STATUS['q']['descr'][$scc]))."&nbsp;".display($STATUS['q']['descr'][$scc])."<br>";
 }
 
 $_MAIN_OUTPUT.= "</div><br><br>";

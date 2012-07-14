@@ -1,8 +1,8 @@
-<?
+<?php
 /*
  * test_multibyte_message.php
  *
- * @(#) $Header: /cvsroot/tellmatic/tellmatic/include/mimemessage/test_multibyte_message.php,v 1.1 2007/11/29 23:50:53 mcms09 Exp $
+ * @(#) $Header: /cvsroot/tellmatic/tellmatic/include/mimemessage/test_multibyte_message.php,v 1.2 2008/07/03 10:15:13 mcms09 Exp $
  *
  */
 

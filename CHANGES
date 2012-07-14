@@ -11,6 +11,66 @@
 /* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
 /********************************************************************************/
 
+*+*+*+*+*+*+*+*+*+*+*+ CHANGES V1.0.8.0  +*+*+*+*+*+*+*+*+*+*+*+*
+	24.06.008 - 03-07-008, 01.09.2008:
+
+		* New Features:
+	
+			- Newsletter Recipients Name:
+			-- Added field to define recipients name (shown as rcpt name in email client). 
+				Global rcpt name in settings is used as default in new newsletters. You can use parsed values {F0}-{F9} in personalized Newsletters!
+	
+			- Newsletter Subject:
+			-- Added support to use parsed values {F0}-{F9} in subject for personalized Newsletters!
+	
+			- Multiple SMTP/POP/IMAP  Hosts: Now supporting multiple userdefined Mail-Servers for Sending Mails and Bouncemanagement:
+			-- Uses different IMAP/POP3 Hosts for Bouncemanagement
+			-- Uses different SMTP-Servers to send Mails (select different SMTP-Mail-Servers for Queue)
+			-- On install, the default smtp-server is inserted into the hosts table too, also as default pop3 server.
+			-- using SMTP-Server defined in settings only for internal mails like notofications and logs etc.
+			-- added smtp_auth and smtp_port to default smtp server (defined in install/settings, now only used to send internal mails, like notifications, logs etc)
+			--- DBS: added table 'hosts', added host_id to nl_h, nl_q (int)
+			--- Install: create Table 'hosts', added host_id to nl_h, nl_q
+			--- Menu: add Entry to list and add Mail-Servers, added Mail-server list/add/edit masks and forms
+			--- Create Queue/Recipients list: Select Mail-Server (active SMTP) / save host_id
+			--- Bouncemanagement: Select Mail-Server (active POP3 or IMAP)
+			--- send_it: use SMTP-Host defined in Queue, check if Host is active and exists. If not exists or not active, stop Q
+	
+			- CSS for subcribe forms: 
+				subscribe forms layout: use css classes to define style of inputfields: tm_form[_focus]_f0 to f9, tm_form[_focus]_email, tm_form[_focus]_captcha, tm_form[_focus]_memo, tm_form[_focus]_submit, tm_form[_focus]_reset
+				you can find a default example css in css/form.css
+			-- added HTML Header in Form Templates for use of css, to update, just copy form and use new generated form or template
+	
+			- Public Groups: 
+				User can select from preselected address-groups. You can define a set of groups the user will always get subscribed to, and some groups the user can choose. The group must be public to make it selectable by the subscriber!
+			-- added flag 'public' and 'public_name' to adr_grp table (used with forms and user defineable groups to subscribe to)
+
+			- Blacklist:
+				Use 3 Types of Blacklist: 
+					per E-Mail-Address: Blacklist single E-Mail-Addresses
+					per Domain: Blacklist Domains, e.g. 'msn.com', 'aol.com', 'googlemail.com' etc.
+					per regular expression (ereg): Blacklist Addresses which matches the regex
+				-- Added Menu Entry Addresses/Blacklist
+					
+		* GUI:
+			- show address count in addressgrouplist and sort by name, addresses, id, aktiv	
+			- Select multiple addresses in addresslist and set status/delete/activate/deactivate
+			
+		* General Code changes:		
+			- "simplify" code in subscribe_form.inc.php and form_form.inc.php
+			- "simplify" code in subscribe.inc.php
+			- split click.php, subscribe.php, unsubscribe.php, news_blank.png.php and use includefiles from /include/click.inc.php, subscribe.inc.php etc
+			- use sockets instead of tcp port to connect to mysql (untested!!!) (tm["DB"]["Socket"]=1 in tm_config.inc.php)
+			- install: choose from MyISAM or InnoDB type for db
+			- subscribe messages and mailsubject can be defined in include/Messages.inc.php
+			
+		* Bugs fixed:
+			- subscribe.php: Captcha Code with leading 0 gives error and was displayed as n-1 dgits. fixed.
+			- Install: Version Number in Install-Mail
+			- subscribe.php: Checkboxes are not longer checked by default.
+			- forms: form_form.inc.php: use display() to set values in textinput. (")
+			- etc.	
+		
 *+*+*+*+*+*+*+*+*+*+*+ CHANGES V1.0.7.4  +*+*+*+*+*+*+*+*+*+*+*+*
 	24.06.2008
 		- Menu: add Entry to watch complete Queue

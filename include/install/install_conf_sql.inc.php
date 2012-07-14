@@ -21,6 +21,7 @@ if ($check && $checkDB) {
 $tm["DB"]["Name"]=$db_name;
 $tm["DB"]["Host"]=$db_host;
 $tm["DB"]["Port"]=$db_port;
+$tm["DB"]["Socket"]=$db_socket;//1|0
 $tm["DB"]["User"]=$db_user;
 $tm["DB"]["Pass"]=$db_pass;
 require_once ("./include/Classes.inc.php");
@@ -55,7 +56,7 @@ CREATE TABLE ".$tm_tablePrefix."adr (
   KEY adr_siteid_status (siteid,`status`),
   KEY adr_siteid_email (siteid,email),
   KEY adr_siteid_id (id,siteid)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=".$db_type."  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 ";
 
 $sql[1]['name']=___("Tabelle")." '".$tm_tablePrefix."adr_details' ".___("Adressen - Details");
@@ -79,14 +80,16 @@ CREATE TABLE ".$tm_tablePrefix."adr_details (
   KEY adr_id (adr_id),
   KEY siteid (siteid),
   KEY adrd_siteid_adrid (adr_id,siteid)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=".$db_type."  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 ";
 
 $sql[2]['name']=___("Tabelle")." '".$tm_tablePrefix."adr_grp' ".___("Adressen - Gruppen");
 $sql[2]['sql']="
 CREATE TABLE ".$tm_tablePrefix."adr_grp (
   id int NOT NULL auto_increment,
-  name varchar(128) collate utf8_bin NOT NULL default '',
+  name varchar(255) collate utf8_bin NOT NULL default '',
+  public tinyint NOT NULL default '0',
+  public_name varchar(255) collate utf8_bin NOT NULL default '',
   descr mediumtext collate utf8_bin,
   aktiv tinyint NOT NULL default '0',
   siteid varchar(64) collate utf8_bin NOT NULL default '',
@@ -101,7 +104,7 @@ CREATE TABLE ".$tm_tablePrefix."adr_grp (
   KEY aktiv (aktiv),
   KEY siteid (siteid),
   KEY standard (standard)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=".$db_type."  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 ";
 
@@ -118,7 +121,7 @@ CREATE TABLE ".$tm_tablePrefix."adr_grp_ref (
   KEY siteid (siteid),
   KEY grp_site_id (grp_id,siteid),
   KEY aref_adrid_siteid (adr_id,siteid)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=".$db_type."  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 ";
 
 $sql[4]['name']=___("Tabelle")." '".$tm_tablePrefix."config' ".___("Einstellungen");
@@ -127,9 +130,11 @@ CREATE TABLE ".$tm_tablePrefix."config (
   id int NOT NULL auto_increment,
   name varchar(255) collate utf8_bin NOT NULL default '',
   smtp_host varchar(255) collate utf8_bin NOT NULL default '',
+  smtp_port smallint NOT NULL default '25',
   smtp_domain varchar(255) collate utf8_bin NOT NULL default '',
   smtp_user varchar(255) collate utf8_bin NOT NULL default '',
   smtp_pass varchar(255) collate utf8_bin NOT NULL default '',
+  smtp_auth varchar(32) collate utf8_bin NOT NULL default '',
   sender_name varchar(255) collate utf8_bin NOT NULL default '',
   sender_email varchar(255) collate utf8_bin NOT NULL default '',
   return_mail varchar(128) collate utf8_bin NOT NULL default '',
@@ -144,9 +149,10 @@ CREATE TABLE ".$tm_tablePrefix."config (
   max_mails_retry tinyint NOT NULL default '5',
   check_version tinyint NOT NULL default '1',
   track_image varchar(255) collate utf8_bin NOT NULL default '',
+  rcpt_name varchar( 255 ) NOT NULL default 'Newsletter',
   PRIMARY KEY  (id),
   KEY siteid (siteid)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=".$db_type."  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 ";
 
 $sql[5]['name']=___("Tabelle")." '".$tm_tablePrefix."frm' ".___("Formulare");
@@ -168,6 +174,7 @@ CREATE TABLE ".$tm_tablePrefix."frm (
   submit_value varchar(255) collate utf8_bin NOT NULL default '',
   reset_value varchar(255) collate utf8_bin NOT NULL default '',
   subscribe_aktiv tinyint NOT NULL default '1',
+  check_blacklist tinyint NOT NULL default '1',
   email varchar(255) collate utf8_bin NOT NULL default '',
   f0 varchar(128) collate utf8_bin default NULL,
   f1 varchar(128) collate utf8_bin default NULL,
@@ -211,6 +218,7 @@ CREATE TABLE ".$tm_tablePrefix."frm (
   f9_value text collate utf8_bin,
   email_errmsg varchar(255) collate utf8_bin default '',
   captcha_errmsg varchar(255) collate utf8_bin default '',
+  blacklist_errmsg varchar(255) collate utf8_bin default '',
   f0_errmsg varchar(255) collate utf8_bin default '',
   f1_errmsg varchar(255) collate utf8_bin default '',
   f2_errmsg varchar(255) collate utf8_bin default '',
@@ -235,7 +243,7 @@ CREATE TABLE ".$tm_tablePrefix."frm (
   KEY name (name),
   KEY siteid (siteid),
   KEY aktiv (aktiv)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=".$db_type."  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 ";
 
 $sql[6]['name']=___("Tabelle")." '".$tm_tablePrefix."frm_grp_ref' ".___("Formulare - Referenzen");
@@ -244,13 +252,14 @@ CREATE TABLE ".$tm_tablePrefix."frm_grp_ref (
   id int NOT NULL auto_increment,
   frm_id int NOT NULL default '0',
   grp_id int NOT NULL default '0',
+  public tinyint NOT NULL default '0',
   siteid varchar(64) collate utf8_bin NOT NULL default '',
   PRIMARY KEY  (id),
   KEY frm_id (frm_id),
   KEY grp_id (grp_id),
   KEY siteid (siteid),
   KEY grp_site_id (grp_id,siteid)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=".$db_type."  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 ";
 
@@ -266,6 +275,7 @@ CREATE TABLE ".$tm_tablePrefix."nl (
   updated datetime default NULL,
   status tinyint default '0',
   massmail tinyint NOT NULL default '0',
+  rcpt_name varchar( 255 ) NOT NULL default 'Newsletter',
   clicks int default '0',
   views int default '0',
   author varchar(128) collate utf8_bin default NULL,
@@ -281,7 +291,7 @@ CREATE TABLE ".$tm_tablePrefix."nl (
   KEY grp_id (grp_id),
   KEY siteid (siteid),
   KEY `status` (`status`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=".$db_type."  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 ";
 
 $sql[8]['name']=___("Tabelle")." '".$tm_tablePrefix."nl_grp' ".___("Newsleter - Gruppen");
@@ -303,7 +313,7 @@ CREATE TABLE ".$tm_tablePrefix."nl_grp (
   KEY aktiv (aktiv),
   KEY siteid (siteid),
   KEY standard (standard)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=".$db_type."  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 ";
 
 $sql[9]['name']=___("Tabelle")." '".$tm_tablePrefix."nl_h' History";
@@ -314,6 +324,7 @@ CREATE TABLE ".$tm_tablePrefix."nl_h (
   nl_id int NOT NULL default '0',
   grp_id int NOT NULL default '0',
   adr_id int NOT NULL default '0',
+  host_id int NOT NULL default '0',
   status tinyint default NULL,
   created datetime default NULL,
   errors tinyint default NULL,
@@ -327,13 +338,14 @@ CREATE TABLE ".$tm_tablePrefix."nl_h (
   KEY grp_id (grp_id),
   KEY nl_id (nl_id),
   KEY q_id (q_id),
+  KEY host_id (host_id),
   KEY nlh_siteid_status (siteid,`status`),
   KEY h_nlid_adrid_stat (`status`,nl_id,adr_id),
   KEY nlh_siteid_ip (siteid,ip),
   KEY nlh_siteid_qid_ip (siteid,ip,q_id),
   KEY nlh_siteid_ip_grpid (siteid,ip,grp_id),
   KEY nlh_siteid_ip_qid_nlid (siteid,ip,q_id,nl_id)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=".$db_type."  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 ";
 
 $sql[10]['name']=___("Tabelle")." '".$tm_tablePrefix."nl_q' - Queue ";
@@ -342,17 +354,20 @@ CREATE TABLE ".$tm_tablePrefix."nl_q (
   id int NOT NULL auto_increment,
   nl_id int NOT NULL default '0',
   grp_id int NOT NULL default '0',
+  host_id int NOT NULL default '0',
   status tinyint NOT NULL default '0',
   created datetime default NULL,
   send_at datetime default NULL,
+  check_blacklist tinyint NOT NULL default '1',
   sent datetime default NULL,
   author varchar(64) collate utf8_bin default NULL,
   siteid varchar(64) collate utf8_bin NOT NULL default '',
   PRIMARY KEY  (id),
   KEY nl_id (nl_id,grp_id,`status`),
   KEY siteid (siteid),
+  KEY host_id (host_id),
   KEY send_at (send_at)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=".$db_type."  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 ";
 
 $sql[11]['name']=___("Tabelle")." '".$tm_tablePrefix."user' - ".___("Benutzer");
@@ -374,7 +389,7 @@ CREATE TABLE ".$tm_tablePrefix."user (
   PRIMARY KEY  (id),
   KEY name (name,passwd,aktiv,siteid),
   KEY lang (lang)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=".$db_type."  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 ";
 
 $sql[12]['name']=___("Tabelle")." '".$tm_tablePrefix."frm_s' - ".___("Formulare - Anmeldungen");
@@ -390,7 +405,42 @@ CREATE TABLE ".$tm_tablePrefix."frm_s (
   KEY frm_id (frm_id,adr_id,siteid),
   KEY frms_siteid_ip (siteid,ip),
   KEY frms_siteid_ip_frmid (siteid,ip,frm_id)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=".$db_type."  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+";
+
+$sql[13]['name']=___("Tabelle")." '".$tm_tablePrefix."hosts' - ".___("Mail-Server");
+$sql[13]['sql']="
+CREATE TABLE ".$tm_tablePrefix."hosts (
+  id int NOT NULL auto_increment,
+  name varchar(255) collate utf8_bin NOT NULL default '',
+  aktiv tinyint(1) NOT NULL default '1',
+  host varchar(255) collate utf8_bin NOT NULL default '',
+  port smallint(6) NOT NULL default '0',
+  type enum('smtp','pop3','imap') collate utf8_bin NOT NULL default 'smtp',
+  options varchar(255) collate utf8_bin NOT NULL default '',
+  smtp_auth varchar(32) collate utf8_bin NOT NULL default '',
+  smtp_domain varchar(255) collate utf8_bin NOT NULL default '',
+  user varchar(64) collate utf8_bin default NULL,
+  pass varchar(64) collate utf8_bin default NULL,
+  siteid varchar(64) collate utf8_bin NOT NULL default '',
+  PRIMARY KEY  (id),
+  KEY aktiv (aktiv),
+  KEY siteid (siteid),
+  KEY hosts_aktiv_siteid (aktiv,siteid)
+) ENGINE=".$db_type."  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+";
+
+$sql[14]['name']=___("Tabelle")." '".$tm_tablePrefix."blacklist' - ".___("Blacklist");
+$sql[14]['sql']="
+CREATE TABLE ".$tm_tablePrefix."blacklist (
+  id int(11) NOT NULL auto_increment,
+  type enum('email','domain','expr') collate utf8_bin NOT NULL default 'email',
+  expr varchar(255) collate utf8_bin NOT NULL default '',
+  aktiv tinyint(1) NOT NULL default '1',
+  siteid varchar(64) collate utf8_bin NOT NULL default '',
+  PRIMARY KEY  (id),
+  KEY type (type)
+) ENGINE=".$db_type."  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 ";
 
 /***********************************************************/

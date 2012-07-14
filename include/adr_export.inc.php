@@ -27,6 +27,9 @@ $$InputName_File=clear_text(getVar($InputName_File));
 //status
 $InputName_Status="status";//
 $$InputName_Status=getVar($InputName_Status);
+//blacklist
+$InputName_Blacklist="check_blacklist";//
+$$InputName_Blacklist=getVar($InputName_Blacklist);
 
 //usr limit
 $InputName_Limit="export_limit_user";//
@@ -80,6 +83,7 @@ if ($set=="export" && $adr_grp_id>0) {
 	$export_limit_run=$adr_row_limit;//default limit adressen im array pro durchgang
 	//addressen initialisieren
 	$ADDRESS=new tm_ADR();
+	$BLACKLIST=new tm_BLACKLIST();
 	//ggf nach status filtern?
 	$search['status']=$status;
 	$code=0;
@@ -127,6 +131,16 @@ if ($set=="export" && $adr_grp_id>0) {
 	$_MAIN_MESSAGE.= "<br>".sprintf(___("%s Einträge gesamt."),$adc);
 	$_MAIN_MESSAGE.= "<br>".sprintf(___("Maximal %s Einträge werden exportiert."),($export_total));
 	$_MAIN_MESSAGE.= "<br>".sprintf(___("Offset: %s"),$export_offset_user);
+
+	if ($check_blacklist=="all") {
+		$_MAIN_MESSAGE.= "<br>".___("Keine Überprüfung der Blacklist. Alle Adressen werden exportiert.");
+	}
+	if ($check_blacklist=="blacklisted") {
+		$_MAIN_MESSAGE.= "<br>".___("Überprüfung der Blacklist, nur Adressen auf der Blacklist werden exportiert.");
+	}
+	if ($check_blacklist=="not_blacklisted") {
+		$_MAIN_MESSAGE.= "<br>".___("Überprüfung der Blacklist, nur Adressen die nicht auf der Blacklist stehen werden exportiert.");
+	}
 
 	if ($export_total>0) {	//wenn min 1 eintrag:
 		 $_MAIN_MESSAGE.= "<br>".sprintf(___("Exportiere %s"),"<b>".$CSV_Filename."</b>");
@@ -180,40 +194,51 @@ if ($set=="export" && $adr_grp_id>0) {
 						if (DEBUG) $_MAIN_MESSAGE.="<br>export_run $export_run von $export_run_max , Found: $ac Adr: $export_offset - ".($export_offset+$ac)." , Total: $adc Adr, Limit: $export_limit_run, Offset: $export_offset<br>";
 						//loop 2
 						for ($acc=0;$acc<$ac;$acc++) {
-							//CSV Zeile erstellen:
-							$CSV="";
-							$memo=str_replace("\n"," --|-- ",$ADR[$acc]['memo']);
-							$memo=str_replace("\r"," --|-- ",$memo);
-							$CSV.="\"".$ADR[$acc]['email']."\"$delimiter";
-							$CSV.="\"".$ADR[$acc]['f0']."\"$delimiter";
-							$CSV.="\"".$ADR[$acc]['f1']."\"$delimiter";
-							$CSV.="\"".$ADR[$acc]['f2']."\"$delimiter";
-							$CSV.="\"".$ADR[$acc]['f3']."\"$delimiter";
-							$CSV.="\"".$ADR[$acc]['f4']."\"$delimiter";
-							$CSV.="\"".$ADR[$acc]['f5']."\"$delimiter";
-							$CSV.="\"".$ADR[$acc]['f6']."\"$delimiter";
-							$CSV.="\"".$ADR[$acc]['f7']."\"$delimiter";
-							$CSV.="\"".$ADR[$acc]['f8']."\"$delimiter";
-							$CSV.="\"".$ADR[$acc]['f9']."\"$delimiter";
-							$CSV.="\"".$ADR[$acc]['id']."\"$delimiter";
-							$CSV.="\"".$ADR[$acc]['created']."\"$delimiter";
-							$CSV.="\"".$ADR[$acc]['author']."\"$delimiter";
-							$CSV.="\"".$ADR[$acc]['updated']."\"$delimiter";
-							$CSV.="\"".$ADR[$acc]['editor']."\"$delimiter";
-							$CSV.="\"".$ADR[$acc]['aktiv']."\"$delimiter";
-							$CSV.="\"".$ADR[$acc]['status']."\"$delimiter";
-							$CSV.="\"".$ADR[$acc]['code']."\"$delimiter";
-							$CSV.="\"".$ADR[$acc]['errors']."\"$delimiter";
-							$CSV.="\"".$ADR[$acc]['clicks']."\"$delimiter";
-							$CSV.="\"".$ADR[$acc]['views']."\"$delimiter";
-							$CSV.="\"".$ADR[$acc]['newsletter']."\"$delimiter";
-							$CSV.="\"".$memo."\"$delimiter";
-							$CSV.="\n";
-							//free some memory ;-)
-							unset($ADR[$acc]);
-							//und in file schreiben:
-							fputs($fp,$CSV,strlen($CSV));
-							$exported++;
+							//blacklist einstellungen pruefen
+							//wenn "alle" exportieren, oder "blacklisted" und isblacklisted=true oder nur not_blacklisted und isblacklisted=false
+							$blacklisted=false;
+							if ($check_blacklist=="blacklisted" || $check_blacklist=="not_blacklisted") {
+								$blacklisted=$BLACKLIST->isBlacklisted($ADR[$acc]['email'],"email");
+							}
+							if ($check_blacklist=="all" || 
+								($check_blacklist=="blacklisted" && $blacklisted) || 
+								($check_blacklist=="not_blacklisted" && !$blacklisted) 
+								) {
+									//CSV Zeile erstellen:
+									$CSV="";
+									$memo=str_replace("\n"," --|-- ",$ADR[$acc]['memo']);
+									$memo=str_replace("\r"," --|-- ",$memo);
+									$CSV.="\"".$ADR[$acc]['email']."\"$delimiter";
+									$CSV.="\"".$ADR[$acc]['f0']."\"$delimiter";
+									$CSV.="\"".$ADR[$acc]['f1']."\"$delimiter";
+									$CSV.="\"".$ADR[$acc]['f2']."\"$delimiter";
+									$CSV.="\"".$ADR[$acc]['f3']."\"$delimiter";
+									$CSV.="\"".$ADR[$acc]['f4']."\"$delimiter";
+									$CSV.="\"".$ADR[$acc]['f5']."\"$delimiter";
+									$CSV.="\"".$ADR[$acc]['f6']."\"$delimiter";
+									$CSV.="\"".$ADR[$acc]['f7']."\"$delimiter";
+									$CSV.="\"".$ADR[$acc]['f8']."\"$delimiter";
+									$CSV.="\"".$ADR[$acc]['f9']."\"$delimiter";
+									$CSV.="\"".$ADR[$acc]['id']."\"$delimiter";
+									$CSV.="\"".$ADR[$acc]['created']."\"$delimiter";
+									$CSV.="\"".$ADR[$acc]['author']."\"$delimiter";
+									$CSV.="\"".$ADR[$acc]['updated']."\"$delimiter";
+									$CSV.="\"".$ADR[$acc]['editor']."\"$delimiter";
+									$CSV.="\"".$ADR[$acc]['aktiv']."\"$delimiter";
+									$CSV.="\"".$ADR[$acc]['status']."\"$delimiter";
+									$CSV.="\"".$ADR[$acc]['code']."\"$delimiter";
+									$CSV.="\"".$ADR[$acc]['errors']."\"$delimiter";
+									$CSV.="\"".$ADR[$acc]['clicks']."\"$delimiter";
+									$CSV.="\"".$ADR[$acc]['views']."\"$delimiter";
+									$CSV.="\"".$ADR[$acc]['newsletter']."\"$delimiter";
+									$CSV.="\"".$memo."\"$delimiter";
+									$CSV.="\n";
+									//free some memory ;-)
+									unset($ADR[$acc]);
+									//und in file schreiben:
+									fputs($fp,$CSV,strlen($CSV));
+									$exported++;
+							}
 						}//for	$acc
 						//datei schreiben:	war: append_file($tm_datapath,$CSV_Filename,$CSV);, verbraucht aber da die werte in CSV gesammelt werde zu viel RAM, wir schreiben innerhalb der schleife einfach direkt ins file
 						//neuer offset:

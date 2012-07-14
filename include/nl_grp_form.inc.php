@@ -30,7 +30,7 @@ $Form->new_Input($FormularName,"nl_grp_id", "hidden", $nl_grp_id);
 //add inputfields and buttons....
 //////////////////
 //Name
-$Form->new_Input($FormularName,$InputName_Name,"text", $$InputName_Name);
+$Form->new_Input($FormularName,$InputName_Name,"text", display($$InputName_Name));
 $Form->set_InputJS($FormularName,$InputName_Name," onChange=\"flash('submit','#ff0000');\" ");
 $Form->set_InputStyleClass($FormularName,$InputName_Name,"mFormText","mFormTextFocus");
 $Form->set_InputSize($FormularName,$InputName_Name,48,256);
@@ -55,7 +55,7 @@ if ($standard==1) {
 }
 
 //Name
-$Form->new_Input($FormularName,$InputName_Descr,"textarea", $$InputName_Descr);
+$Form->new_Input($FormularName,$InputName_Descr,"textarea", display($$InputName_Descr));
 $Form->set_InputJS($FormularName,$InputName_Descr," onChange=\"flash('submit','#ff0000');\" ");
 $Form->set_InputStyleClass($FormularName,$InputName_Descr,"mFormTextarea","mFormTextareaFocus");
 $Form->set_InputSize($FormularName,$InputName_Descr,20,5);

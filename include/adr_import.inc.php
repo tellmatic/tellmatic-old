@@ -84,7 +84,7 @@ $IMPORT_MESSAGE="";
 $IMPORT_LOG="";
 
 if ($set=="import") {
-
+	$BLACKLIST=new tm_BLACKLIST();
 	$created=date("Y-m-d H:i:s");
 	$author=$LOGIN->USER['name'];
 	$CSV_Filename="import_".date_convert_to_string($created).".csv";
@@ -154,7 +154,7 @@ if ($set=="import") {
 
 
 
-	if ($check && $delete!=1) {
+	if ($check && $delete!=1 && $blacklist!=1) {
 		$IMPORT_MESSAGE.="<br>".___("Status für neue Adressen: ");
 		$IMPORT_MESSAGE.=tm_icon($STATUS['adr']['statimg'][$status_new],$STATUS['adr']['descr'][$status_new]);
 		$IMPORT_MESSAGE.= "  ".$STATUS['adr']['status'][$status_new]."  (".$STATUS['adr']['descr'][$status_new].")";
@@ -193,7 +193,7 @@ if ($set=="import") {
 			$IMPORT_MESSAGE.= "&nbsp;".___("Bestehende Adressen werden de-aktiviert.");
 		}
 
-	}//check && delete !=1
+	}//check && delete !=1 && blacklist!=1
 
 /******************************************************************************/
 
@@ -383,12 +383,13 @@ if ($set=="import") {
 
 //neue addressen anlegen
 	//wenn min. 1 adresse gefudnen wurde//lines=anzahl adressen
-	if ($lines>0) { //!empty($adr_grp) &&
+	if ($check && $lines>0) { //!empty($adr_grp) &&
 		$ADDRESS=new tm_ADR();
 		$iok=0;
 		#$ifail=0;//oben!!! vor dem einlesen, da email check schon beim einlesen
 		$idouble=0;
 		$idelete=0;
+		$iblacklist=0;
 		for ($i=0;$i<$lines;$i++) {
 			srand((double)microtime()*1000000);
 			$code=rand(111111,999999);
@@ -417,8 +418,12 @@ if ($set=="import") {
 								$old_adr_grp = $ADDRESS->getGroupID(0,$ADR[0]['id'],0);//alte gruppen
 								//neue gruppen nur die die neu sind, denen die adr noch nicht angehoert!
 								//adr_grp=gruppen aus dem formular
-								$new_adr_grp = array_diff($adr_grp,$old_adr_grp);//nur neue gruppen
-								$all_adr_grp = array_merge($old_adr_grp, $new_adr_grp);//alte+neue gruppen zusammenfuegen
+								
+								//old:
+								#$new_adr_grp = array_diff($adr_grp,$old_adr_grp);//nur neue gruppen
+								#$all_adr_grp = array_merge($old_adr_grp, $new_adr_grp);//alte+neue gruppen zusammenfuegen
+								//next we should use method mergeGroups
+								$all_adr_grp=$ADDRESS->mergeGroups($adr_grp,$old_adr_grp);//testing!
 							} else {// merge groups
 								$all_adr_grp=$new_adr_grp;//gruppe aus formular uebernehmen, ueberschreiben!
 							}//merge
@@ -480,6 +485,20 @@ if ($set=="import") {
 
 					}//adr_exists true
 
+					if ($blacklist==1) {
+							if (!$BLACKLIST->isBlacklisted($addr[$i]['email'],"email",0)) {//only_active=0, also alle, nicht nur aktive, was default waere
+								$BLACKLIST->addBL(Array(
+										"siteid"=>TM_SITEID,
+										"expr"=>$addr[$i]['email'],
+										"aktiv"=>1,
+										"type"=>"email"
+										));
+								$IMPORT_LOG.="<br>".sprintf(___("Zeile %s: E-Mail %s wurde zur Blacklist hinzugefügt."),($i+1),"<em>".$addr[$i]['email']."</em>");
+								$iblacklist++;
+							} else {
+								$IMPORT_LOG.="<br>".sprintf(___("Zeile %s: E-Mail %s ist bereits in der Blacklist vorhanden."),($i+1),"<em>".$addr[$i]['email']."</em>");
+							}
+					}
 					if ($delete==1 && !$adr_exists) { // not exists
 						$IMPORT_LOG.="<br>".sprintf(___("Zeile %s: E-Mail %s existiert nicht."),($i+1),"<em>".$addr[$i]['email']."</em>");
 					}
@@ -520,6 +539,9 @@ if ($set=="import") {
 		//adressen vergessen
 		unset ($addr);
 		
+		if ($blacklist==1) {
+			$IMPORT_MESSAGE.= "<br><br>".sprintf(___("Es wurden %s von %s Einträgen in die Blacklist eingefügt."),$iblacklist,($i));//i-1
+		}
 		if ($delete==1) {
 			$IMPORT_MESSAGE.= "<br><br>".sprintf(___("Es wurden %s von %s Einträgen gelöscht."),$idelete,($i));//i-1
 		} else {
@@ -534,11 +556,11 @@ if ($set=="import") {
 		//import messages vor log einfuegen
 		$IMPORT_LOG=$IMPORT_MESSAGE.$IMPORT_LOG;
 		//logdatei schreiben:
-		$logfilename="import_".date_convert_to_string($created).".txt";
+		$logfilename="import_".date_convert_to_string($created).".html";
 		$IMPORT_MESSAGE.= "<br>".___("Logdatei für Import wurde gespeichert unter:")." <a href=\"".$tm_URL_FE."/".$tm_logdir."/".$logfilename."\" target=\"_preview\">".$tm_logdir."/".$logfilename."</a>";
 		//$IMPORT_LOG nach text convertieren
-	    $htmlToText=new Html2Text($IMPORT_LOG, 1024);
-	    $IMPORT_LOG=$htmlToText->convert();
+	    #$htmlToText=new Html2Text($IMPORT_LOG, 1024);
+	    #$IMPORT_LOG=$htmlToText->convert();
 		//logdatei speichern
 		write_file($tm_logpath,$logfilename,$IMPORT_LOG);
 	} else {//if lines>0

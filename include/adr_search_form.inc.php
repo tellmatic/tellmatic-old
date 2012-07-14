@@ -11,13 +11,14 @@
 /* check Homepage for Updates and more Infos                                    */
 /* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
 /********************************************************************************/
+$_MAIN_OUTPUT.="\n\n<!-- adr_search_form.inc -->\n\n";
 
 $InputName_Submit="submit";
 $InputName_Reset="reset";
 
 //Form
 $Form=new tm_SimpleForm();
-$FormularName="adr_new";
+$FormularName="adr_search";
 //make new Form
 $Form->new_Form($FormularName,$_SERVER["PHP_SELF"],"get","_self");
 $Form->set_FormJS($FormularName," onSubmit=\"switchSection('div_loader');\" ");

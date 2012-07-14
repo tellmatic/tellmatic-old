@@ -11,6 +11,7 @@
 /* check Homepage for Updates and more Infos                                    */
 /* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
 /********************************************************************************/
+$_MAIN_OUTPUT.="\n\n<!-- bounce_mail_form_head.inc -->\n\n";
 
 $InputName_Submit="submit2";
 $InputName_Reset="reset";

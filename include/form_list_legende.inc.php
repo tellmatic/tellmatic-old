@@ -18,6 +18,7 @@ $_MAIN_OUTPUT.= "<div id=\"legende\" class=\"legende\">";
 $_MAIN_OUTPUT.= "<h3>".___("Legende")."</h3>";
 $_MAIN_OUTPUT.= tm_icon("user_green.png",___("Neuangemeldete Adressen sind aktiv"))."&nbsp;/&nbsp;<img src=\"".$tm_iconURL."/user_red.png\" border=\"0\" title=\"".___("Neuangemeldete Adressen sind inaktiv")."\" alt=\"".___("Neuangemeldete Adressen sind inaktiv")."\">&nbsp;".___("Neuangemeldete Adressen sind aktiv/deaktiviert")."<br>";
 $_MAIN_OUTPUT.= tm_icon("sport_8ball.png",___("Captcha Spamschutz aktiviert"))."&nbsp;".___("Captcha Spamschutz aktiviert")."<br>";
+$_MAIN_OUTPUT.= tm_icon("ruby.png",___("Blacklist prüfen"))."&nbsp;".___("Blacklist Überprüfung aktiv")."<br>";
 $_MAIN_OUTPUT.= tm_icon("arrow_refresh.png",___("Double-Opt-In"))."&nbsp;".___("Double-Opt-In aktiviert")."<br>";
 //link zur dynamischen onlineversion!
 $_MAIN_OUTPUT.= tm_icon("eye.png",___("Online"))."&nbsp;".___("Dynamische Onlineversion anzeigen:")." subscribe.php?fid=[FORMULAR-ID]<br>";

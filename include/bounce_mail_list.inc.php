@@ -43,14 +43,14 @@ if ($mc>0) {
 		if ($mcc%2==0) {$bgcolor=$row_bgcolor;} else {$bgcolor=$row_bgcolor2;}
 		$_MAIN_OUTPUT.= "<tr id=\"row_".$mcc."\" bgcolor=\"".$bgcolor."\" onmousemove=\"showToolTip('tt_bouncemail_list_".$mcc."')\" onmouseover=\"setBGColor('row_".$mcc."','".$row_bgcolor_hilite."');\" onmouseout=\"setBGColor('row_".$mcc."','".$bgcolor."');hideToolTip();\">";
 		$_MAIN_OUTPUT.= "<td valign=\"top\">";
-		if ($Mail[$mcc]['to']==$ReturnPath || $Mail[$mcc]['is_bouncemail']==1) {
+		if ($Mail[$mcc]['to']==$C[0]['return_mail'] || $Mail[$mcc]['is_bouncemail']==1) {
 			$Form->set_InputDefault($FormularName,$InputName_Mail,$Mail[$mcc]['no']);
 		}
 		$Form->set_InputValue($FormularName,$InputName_Mail,$Mail[$mcc]['no']);
 		$Form->render_Input($FormularName,$InputName_Mail);
 		$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Mail]['html'];
 		$_MAIN_OUTPUT.= $Mail[$mcc]['no'].".";
-		if ($Mail[$mcc]['to']==$ReturnPath) {
+		if ($Mail[$mcc]['to']==$C[0]['return_mail']) {
 			$_MAIN_OUTPUT.=  tm_icon("status_offline.png",___("Return Mail"));
 		}
 		if ($Mail[$mcc]['is_bouncemail']==1) {

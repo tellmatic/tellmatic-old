@@ -99,18 +99,6 @@ $MENU=Array(
 										),
 									4 => Array(
 										'js' => 0,
-										'link' => $_SERVER["PHP_SELF"]."?act=queue_new",
-										'name' => ___("Neue Queue"),
-										'description' => ___("neuen Newsletter in die Queue / Warteschlange eintragen"),
-										'text' => ___("Hier bereiten Sie den Versand Ihres Newsletter vor"),
-										'icon' => 'hourglass_add.png',
-										'target' => '_self',
-										'indent' => '0',
-										'admin' => '0',
-										'manager' => '0',
-										),
-									5 => Array(
-										'js' => 0,
 										'link' => $_SERVER["PHP_SELF"]."?act=queue_list",
 										'name' => ___("Queue"),
 										'description' => ___("Queue / Warteschlange anzeigen"),
@@ -120,6 +108,18 @@ $MENU=Array(
 										'indent' => '0',
 										'admin' => '1',
 										'manager' => '1',
+										),
+									5 => Array(
+										'js' => 0,
+										'link' => $_SERVER["PHP_SELF"]."?act=queue_new",
+										'name' => ___("Neue Queue"),
+										'description' => ___("neuen Newsletter in die Queue / Warteschlange eintragen"),
+										'text' => ___("Hier bereiten Sie den Versand Ihres Newsletter vor"),
+										'icon' => 'hourglass_add.png',
+										'target' => '_self',
+										'indent' => '16',
+										'admin' => '0',
+										'manager' => '0',
 										),
 
 									),
@@ -322,6 +322,30 @@ $MENU=Array(
 										'manager' => '1',
 										),
 									2 => Array(
+										'js' => 0,
+										'link' => $_SERVER["PHP_SELF"]."?act=bl_list",
+										'name' => ___("Blacklist"),
+										'description' => ___("Blackliste/Robinsonliste"),
+										'text' => ___("Blacklist/Robinsonliste verwalten"),
+										'icon' => 'ruby.png',
+										'target' => '_self',
+										'indent' => '0',
+										'admin' => '0',
+										'manager' => '1',
+										),
+									3 => Array(
+										'js' => 0,
+										'link' => $_SERVER["PHP_SELF"]."?act=bl_new",
+										'name' => ___("Neuer Blacklisteintrag"),
+										'description' => ___("Neueintrag in Blackliste/Robinsonliste"),
+										'text' => ___("Neuen Eintrag (E-Mail, Domain, ...) der Blacklist/Robinsonliste  hinzufügen"),
+										'icon' => 'ruby_add.png',
+										'target' => '_self',
+										'indent' => '16',
+										'admin' => '0',
+										'manager' => '1',
+										),
+									4 => Array(
 										'js' => 1,
 										'link' => $tm_URL_FE."/include/send_it.php",
 										'name' => ___("manueller Versand"),
@@ -333,7 +357,7 @@ $MENU=Array(
 										'admin' => '0',
 										'manager' => '1',
 										),
-									3 => Array(
+									5 => Array(
 										'js' => 1,
 										'link' => $tm_URL_FE."/unsubscribe.php",
 										'name' => ___("Abmeldeformular"),
@@ -407,6 +431,30 @@ $MENU=Array(
 						'links' => Array(
 									0 => Array(
 										'js' => 0,
+										'link' => $_SERVER["PHP_SELF"]."?act=host_list",
+										'name' => ___("Mail-Server"),
+										'description' => ___("Mail-Server verwalten"),
+										'text' => ___("Mail-Server verwalten"),
+										'icon' => 'server.png',
+										'target' => '_self',
+										'indent' => '0',
+										'admin' => '1',
+										'manager' => '0',
+										),
+									1 => Array(
+										'js' => 0,
+										'link' => $_SERVER["PHP_SELF"]."?act=host_new",
+										'name' => ___("Neuer Mail-Server"),
+										'description' => ___("Neuen Mail-Server anlegen"),
+										'text' => ___("Neuen Mail-Server anlegen"),
+										'icon' => 'server_add.png',
+										'target' => '_self',
+										'indent' => '16',
+										'admin' => '1',
+										'manager' => '0',
+										),
+									2 => Array(
+										'js' => 0,
 										'link' => $_SERVER["PHP_SELF"]."?act=adm_user_list",
 										'name' => ___("Benutzer"),
 										'description' => ___("Benutzer verwalten"),
@@ -417,7 +465,7 @@ $MENU=Array(
 										'admin' => '1',
 										'manager' => '0',
 										),
-									1 => Array(
+									3 => Array(
 										'js' => 0,
 										'link' => $_SERVER["PHP_SELF"]."?act=adm_user_new",
 										'name' => ___("Neuer Benutzer"),
@@ -429,7 +477,7 @@ $MENU=Array(
 										'admin' => '1',
 										'manager' => '0',
 										),
-									2 => Array(
+									4 => Array(
 										'js' => 0,
 										'link' => $_SERVER["PHP_SELF"]."?act=adm_set",
 										'name' => ___("Einstellungen"),
@@ -441,7 +489,7 @@ $MENU=Array(
 										'admin' => '1',
 										'manager' => '0',
 										),
-									3 => Array(
+									5 => Array(
 										'js' => 1,
 										'link' => "javascript:switchSection('div_debug');",
 										'name' => ___("Serverinfo"),
@@ -453,7 +501,7 @@ $MENU=Array(
 										'admin' => '0',
 										'manager' => '0',
 										),
-									4 => Array(
+									6 => Array(
 										'js' => 1,
 										'link' => $tm_URL_FE."/".TM_INCLUDEDIR."/phpinfo.php",
 										'name' => ___("PHP Info"),
@@ -465,7 +513,7 @@ $MENU=Array(
 										'admin' => '0',
 										'manager' => '0',
 										),
-									5 => Array(
+									7 => Array(
 										'js' => 1,
 										'link' => "http://www.tellmatic.org/donate",
 										'name' => ___("Spende"),

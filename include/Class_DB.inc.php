@@ -15,7 +15,11 @@
 
 /*DB*/
 define ("DBDB",$tm["DB"]["Name"]);
-define ("DBHOST", $tm["DB"]["Host"].":".$tm["DB"]["Port"]);
+if ($tm["DB"]["Socket"]==1) {
+	define ("DBHOST", $tm["DB"]["Host"]);
+} else {
+	define ("DBHOST", $tm["DB"]["Host"].":".$tm["DB"]["Port"]);
+}
 define ("DBUSER",$tm["DB"]["User"]);
 define ("DBPASS",$tm["DB"]["Pass"]);
 
@@ -38,15 +42,15 @@ class tm_DB extends DB_Sql
  	}
 }
 
-
-
+//however, the db class itself used here is very old, but works fine and very comfortable :)
+//taken from phplib
 /*
  * Session Management for PHP3
  *
  * Copyright (c) 1998-2000 NetUSE AG
  *                    Boris Erdmann, Kristian Koehntopp
  *
- * $Id: Class_DB.inc.php,v 1.2 2007/12/11 22:36:46 mcms09 Exp $
+ * $Id: Class_DB.inc.php,v 1.3 2008/09/29 18:01:43 mcms09 Exp $
  *
  */ 
 

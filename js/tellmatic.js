@@ -11,11 +11,33 @@
 /* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
 /********************************************************************************/
 
+function checkHostType() {
+	form=document.getElementById('edit_host');
+	field=document.getElementById('type');
+	if (field.value=='smtp')  {
+		var changefield=document.getElementById('smtp_auth');
+	    changefield.disabled = false;
+		var changefield=document.getElementById('smtp_domain');
+	    changefield.disabled = false;
+		var changefield=document.getElementById('options');
+	    changefield.disabled = true;
+	} else {
+		var changefield=document.getElementById('smtp_auth');
+	    changefield.disabled = true;
+		var changefield=document.getElementById('smtp_domain');
+	    changefield.disabled = true;
+		var changefield=document.getElementById('options');
+	    changefield.disabled = false;
+	}
+}
+
 // bei import und delete diverse felder deaktivieren:
 function checkImport() {
 	form=document.getElementById('adr_import');
 	field=document.getElementById('delete');
-	if (field.checked)  {
+	field2=document.getElementById('blacklist');
+	if (field.checked || field2.checked)  {
+	//disable
 		var changefield=document.getElementById('merge_groups');
 	    changefield.disabled = true;
 		var changefield=document.getElementById('adr_grp');
@@ -31,6 +53,7 @@ function checkImport() {
 		var changefield=document.getElementById('check_double');
 	    changefield.disabled = true;
 	} else {
+	//enable
 		var changefield=document.getElementById('merge_groups');
 	    changefield.disabled = false;
 		var changefield=document.getElementById('adr_grp');

@@ -29,7 +29,7 @@ Class tm_Mail {
 	function getError() {
 		$this->Error=imap_last_error();
 	}
-	function connect($Host, $User, $Pass,$type="pop3",$port="110",$options="novalidate-cert")  {
+	function connect($Host, $User, $Pass,$type="pop3",$port="110",$options="")  {//"novalidate-cert"
 		//port, type: imap/pop3! 
 		$this->Srv="$Host:$port/$type";
 		if (!empty($options))	{
@@ -51,7 +51,7 @@ Class tm_Mail {
 	}
 	function reconnect() {
 		$this->disconnect();
-		$this->connect($this->Host,$this->User,$this->Pass);
+		$this->connect($this->Host,$this->User,$this->Pass,$this->Type,$this->Port,$this->Options);
 	}
 	
 	function expunge() {

@@ -27,6 +27,13 @@ if (!isset($adr_grp)) {
 	$adr_grp=Array();
 }
 
+//public groups the subscriber can choose....
+$InputName_GroupPub="adr_grp_pub";
+pt_register("POST",$InputName_GroupPub);
+if (!isset($$InputName_GroupPub)) {
+	$$InputName_GroupPub=Array();
+}
+
 $InputName_Name="name";//betreff
 $$InputName_Name=getVar($InputName_Name);
 
@@ -47,6 +54,9 @@ $$InputName_DigitsCaptcha=getVar($InputName_DigitsCaptcha);
 
 $InputName_SubAktiv="subscribe_aktiv";
 $$InputName_SubAktiv=getVar($InputName_SubAktiv);
+
+$InputName_Blacklist="check_blacklist";
+$$InputName_Blacklist=getVar($InputName_Blacklist);
 
 $InputName_SubmitValue="submit_value";
 $$InputName_SubmitValue=getVar($InputName_SubmitValue);
@@ -145,6 +155,8 @@ $InputName_email_errmsg="email_errmsg";
 $$InputName_email_errmsg=getVar($InputName_email_errmsg);
 $InputName_captcha_errmsg="captcha_errmsg";
 $$InputName_captcha_errmsg=getVar($InputName_captcha_errmsg);
+$InputName_Blacklist_errmsg="blacklist_errmsg";
+$$InputName_Blacklist_errmsg=getVar($InputName_Blacklist_errmsg);
 
 $InputName_F0_errmsg="f0_errmsg";
 $$InputName_F0_errmsg=getVar($InputName_F0_errmsg);
@@ -205,6 +217,7 @@ if ($set=="save") {
 				"digits_captcha"=>$digits_captcha,
 				"double_optin"=>$double_optin,
 				"subscribe_aktiv"=>$subscribe_aktiv,
+				"check_blacklist"=>$check_blacklist,
 				"submit_value"=>$submit_value,
 				"reset_value"=>$reset_value,
 				"email"=>$email,
@@ -250,6 +263,7 @@ if ($set=="save") {
 				"f9_value"=>$f9_value,
 				"email_errmsg"=>$email_errmsg,
 				"captcha_errmsg"=>$captcha_errmsg,
+				"blacklist_errmsg"=>$blacklist_errmsg,
 				"f0_errmsg"=>$f0_errmsg,
 				"f1_errmsg"=>$f1_errmsg,
 				"f2_errmsg"=>$f2_errmsg,
@@ -271,7 +285,8 @@ if ($set=="save") {
 				"f8_expr"=>$f8_expr,
 				"f9_expr"=>$f9_expr
 				),
-				$adr_grp);
+				$adr_grp,
+				$adr_grp_pub);//+öffentliche gruppen
 		$_MAIN_MESSAGE.="<br>".sprintf(___("Formular %s wurde bearbeitet."),"'<b>".display($name)."</b>'");
 		$action="form_list";
 		include_once (TM_INCLUDEPATH."/form_list.inc.php");
@@ -284,7 +299,12 @@ if ($set=="save") {
 	$FORMULAR=new tm_FRM();
 	$FRM=$FORMULAR->getForm($frm_id);
 	$ADDRESS=new tm_ADR();
+	$adr_grp_pub=$ADDRESS->getGroupID(0,0,$frm_id,Array("public_frm_ref"=>1));
 	$adr_grp=$ADDRESS->getGroupID(0,0,$frm_id);
+	//hier diffen, da die adressen die als public gewaehlt sind nict als default markiert werden sollen...., öhm, ja!
+	//und adr_grp neu arrangieren
+	$adr_grp=array_diff($adr_grp,$adr_grp_pub);
+	$adr_grp=array_values($adr_grp);
 	//print_r($adr_grp);
 	$name=$FRM[0]['name'];
 	$descr=display($FRM[0]['descr']);
@@ -293,6 +313,7 @@ if ($set=="save") {
 	$use_captcha=$FRM[0]['use_captcha'];
 	$digits_captcha=$FRM[0]['digits_captcha'];
 	$subscribe_aktiv=$FRM[0]['subscribe_aktiv'];
+	$check_blacklist=$FRM[0]['check_blacklist'];
 	$submit_value=$FRM[0]['submit_value'];
 	$reset_value=$FRM[0]['reset_value'];
 	$email=$FRM[0]['email'];
@@ -338,6 +359,7 @@ if ($set=="save") {
 	$f9_value=$FRM[0]['f9_value'];
 	$email_errmsg=$FRM[0]['email_errmsg'];
 	$captcha_errmsg=$FRM[0]['captcha_errmsg'];
+	$blacklist_errmsg=$FRM[0]['blacklist_errmsg'];
 	$f0_errmsg=$FRM[0]['f0_errmsg'];
 	$f1_errmsg=$FRM[0]['f1_errmsg'];
 	$f2_errmsg=$FRM[0]['f2_errmsg'];

@@ -1,4 +1,4 @@
-<?
+<?php
     include ("htmlparser.inc");
     $htmlText = "<html><!-- comment --><body>This is the body</body></html>";
     $parser = new HtmlParser($htmlText);

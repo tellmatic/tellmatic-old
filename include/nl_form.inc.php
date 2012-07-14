@@ -59,7 +59,7 @@ $Form->set_InputOrder($FormularName,$InputName_Attach1,1);
 $Form->set_InputLabel($FormularName,$InputName_Attach1,"");
 
 //Subject
-$Form->new_Input($FormularName,$InputName_Name,"text", $$InputName_Name);
+$Form->new_Input($FormularName,$InputName_Name,"text", display($$InputName_Name));
 $Form->set_InputJS($FormularName,$InputName_Name," onChange=\"flash('submit','#ff0000');\" ");
 $Form->set_InputStyleClass($FormularName,$InputName_Name,"mFormText","mFormTextFocus");
 $Form->set_InputSize($FormularName,$InputName_Name,48,255);
@@ -69,7 +69,7 @@ $Form->set_InputOrder($FormularName,$InputName_Name,1);
 $Form->set_InputLabel($FormularName,$InputName_Name,"");
 
 //Link
-$Form->new_Input($FormularName,$InputName_Link,"text", $$InputName_Link);
+$Form->new_Input($FormularName,$InputName_Link,"text", display($$InputName_Link));
 $Form->set_InputJS($FormularName,$InputName_Link," onChange=\"flash('submit','#ff0000');\" ");
 $Form->set_InputStyleClass($FormularName,$InputName_Link,"mFormText","mFormTextFocus");
 $Form->set_InputSize($FormularName,$InputName_Link,48,1024);
@@ -184,6 +184,16 @@ $Form->add_InputOption($FormularName,$InputName_ContentType,"text/html","TEXT/HT
 $Form->add_InputOption($FormularName,$InputName_ContentType,"html","HTML");
 $Form->add_InputOption($FormularName,$InputName_ContentType,"text","TEXT");
 
+//rcpt_name etc
+$Form->new_Input($FormularName,$InputName_RCPTName,"text", display($$InputName_RCPTName));
+$Form->set_InputJS($FormularName,$InputName_RCPTName," onChange=\"flash('submit','#ff0000');\" ");
+$Form->set_InputStyleClass($FormularName,$InputName_RCPTName,"mFormText","mFormTextFocus");
+$Form->set_InputSize($FormularName,$InputName_RCPTName,48,256);
+$Form->set_InputDesc($FormularName,$InputName_RCPTName,___("Erscheint als Empfängername in der E-Mail"));
+$Form->set_InputReadonly($FormularName,$InputName_RCPTName,false);
+$Form->set_InputOrder($FormularName,$InputName_RCPTName,1);
+$Form->set_InputLabel($FormularName,$InputName_RCPTName,"");
+
 //submit button
 $Form->new_Input($FormularName,$InputName_Submit,"submit",___("Speichern"));
 $Form->set_InputStyleClass($FormularName,$InputName_Submit,"mFormSubmit","mFormSubmitFocus");
@@ -233,6 +243,15 @@ $_MAIN_OUTPUT.= tm_icon("sum.png",___("Betreff"))."&nbsp;".___("Betreff");
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "<td valign=top>";
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Name]['html'];
+$_MAIN_OUTPUT.= "</td>";
+$_MAIN_OUTPUT.= "</tr>";
+
+$_MAIN_OUTPUT.= "<tr>";
+$_MAIN_OUTPUT.= "<td valign=top width=\"200\">";
+$_MAIN_OUTPUT.= tm_icon("user_comment.png",___("Empfängername"))."&nbsp;".___("Empfängername");
+$_MAIN_OUTPUT.= "</td>";
+$_MAIN_OUTPUT.= "<td valign=top>";
+$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_RCPTName]['html'];
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "</tr>";
 

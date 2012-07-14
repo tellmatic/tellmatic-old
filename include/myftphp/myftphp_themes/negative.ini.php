@@ -1,4 +1,4 @@
-<? //defines colors for myftphp
+<?php //defines colors for myftphp
 // negative theme
 $c['txt']     = '#EEE';
 $c['o'] = '#220';

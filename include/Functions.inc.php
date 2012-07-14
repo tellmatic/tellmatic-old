@@ -40,9 +40,11 @@ function ___($s) {
 }
 
 function dbesc($val) {
+	//escape function for mysql/dbs
 	return mysql_real_escape_string($val);
 }
 function display($val) {
+	//function to display strings and values from db
 	$Return=htmlentities($val,ENT_QUOTES,"UTF-8");
 	return $Return;
 }
@@ -86,7 +88,7 @@ function remove_old_admin_files() {
 	return $Return;
 }
 
-function tm_icon($iconname,$title="",$alt="",$id="") {
+function tm_icon($iconname,$title="",$alt="",$id="",$bgcolor="",$bgimage="") {
 	global $tm_iconURL;
 	if (empty($iconname)) $iconname="asterisk_orange.png";
 	if (empty($title)) $title=___("Kein Titel");
@@ -94,6 +96,10 @@ function tm_icon($iconname,$title="",$alt="",$id="") {
 	$Return="";
 	$Return.=  "<img src=\"".$tm_iconURL."/".$iconname."\" title=\"".$title."\" border=\"0\" alt=\"Icon: ".$alt."\"";
 	if (!empty($id)) $Return.=" id=\"".$id."\"";
+	if (!empty($bgcolor) || !empty($bgimage)) $Return.=" style=\"";
+	if (!empty($bgcolor)) $Return.=" background-color:".$bgcolor.";";
+	if (!empty($bgimage)) $Return.=" background-image: url(".$tm_iconURL."/".$bgimage.");";
+	if (!empty($bgcolor) || !empty($bgimage)) $Return.="\"";
 	$Return.=">";
 	return $Return;
 }
@@ -173,6 +179,13 @@ function array_unset($array,$index) {
     $i++;
   }
   return $res;
+}
+
+//get domainname from email
+function getDomainFromEmail($str) {
+	$return="";
+	$domain=split("@",$str);
+	return $domain[1];
 }
 
 //calculate x,y coordinates from londitude $lon and latitude $lat depending on image size $width and $height
@@ -603,19 +616,19 @@ function strip_specialchar($x) {
 }
 
 
-function SendMail($From,$FromName,$To,$ToName,$Subject,$Text,$Html,$AttmFiles=Array()){
+function SendMail($from_address,$from_name,$to_address,$to_name,$subject,$text,$html,$AttmFiles=Array()){
 	global $use_SMTPmail;
 	$return=false;
 	//Name darf nicht = email sein und auch kein komma enthalten, plaintext!
-	$ToName=str_replace($To,"",$ToName);
-	$ToName=clear_text($ToName);
-	$ToName=str_replace(",","",$ToName);
+	$to_name=str_replace($to_address,"",$to_name);
+	$to_name=clear_text($to_name);
+	$to_name=str_replace(",","",$to_name);
 	if ($use_SMTPmail) {
-	 	if (SendMail_smtp($From,$FromName,$To,$ToName,$Subject,$Text,$Html,$AttmFiles)) {
+	 	if (SendMail_smtp($from_address,$from_name,$to_address,$to_name,$subject,$text,$html,$AttmFiles)) {
 	 		$return=true;
 	 	}
 	 } else {
-	 	if (SendMail_mail($From,$FromName,$To,$ToName,$Subject,$Text,$Html,$AttmFiles)) {
+	 	if (SendMail_mail($from_address,$from_name,$to_address,$to_name,$subject,$text,$html,$AttmFiles)) {
 	 		$return=true;
 	 	}
  	}
@@ -623,92 +636,67 @@ function SendMail($From,$FromName,$To,$ToName,$Subject,$Text,$Html,$AttmFiles=Ar
 }
 
 
-function SendMail_smtp($From,$FromName,$To,$ToName,$Subject,$Text,$Html,$AttmFiles) {
-	global $AbsPath;
-	global $SMTPHost;
-	global $SMTPUser;
-	global $SMTPPasswd;
-	global $SMTPPopB4SMTP;
-	global $SMTPDomain;
+function SendMail_smtp($from_address,$from_name,$to_address,$to_name,$subject,$text,$html,$AttmFiles) {
 	global $ApplicationText;
-	global $encoding;
+	global $encoding;//use default encoding
+	global $C;//site config array
 	$return=false;
 
 	//using http://www.phpclasses.org/trackback/browse/package/9.html http://www.phpclasses.org/browse/package/14.html http://www.phpclasses.org/trackback/browse/package/14.html
 	//Class: MIME E-mail message composing and sending
 	//thx to Manuel Lemos <mlemos at acm dot org>
 	//look at: http://freshmeat.net/projects/mimemessageclass/
-	//i believe its great work done!!! :)
-	//i put all classes togehter in one big file ,-) to include in the cms
 	require_once("Class_SMTP.inc.php");
 
-	$from_name=$FromName;
-	$from_address=$From;
 	$reply_name=$from_name;
 	$reply_address=$from_address;
 	$reply_address=$from_address;
 	$error_delivery_name=$from_name;
 	$error_delivery_address=$from_address;
-	$to_name=$ToName;
-	$to_address=$To;
-	$subject=$Subject;
-	$message=$Html;
 	$email_message=new smtp_message_class;
 	$email_message->default_charset=$encoding;
-	$email_message->authentication_mechanism="LOGIN";
+	$email_message->authentication_mechanism=$C[0]['smtp_auth'];;
 	/* This computer address */
-	$email_message->localhost=$SMTPDomain;
-
+	$email_message->localhost=$C[0]['smtp_domain'];;
 	/* SMTP server address, probably your ISP address */
-	$email_message->smtp_host=$SMTPHost;
-
+	$email_message->smtp_host=$C[0]['smtp_host'];
+	$email_message->smtp_port=$C[0]['smtp_port'];
 	/* authentication user name */
-	$email_message->smtp_user=$SMTPUser;
-
+	$email_message->smtp_user=$C[0]['smtp_user'];
 	/* authentication realm or Windows domain when using NTLM authentication */
 	$email_message->smtp_realm="";
-
 	/* authentication workstation name when using NTLM authentication */
 	$email_message->smtp_workstation="";
-
 	/* authentication password */
-	$email_message->smtp_password=$SMTPPasswd;
-
+	$email_message->smtp_password=$C[0]['smtp_pass'];
 	/* if you need POP3 authetntication before SMTP delivery,
 	 * specify the host name here. The smtp_user and smtp_password above
 	 * should set to the POP3 user and password*/
-
 	$email_message->smtp_pop3_auth_host="";
 	if ($SMTPPopB4SMTP==1)
 	{
-		$email_message->smtp_pop3_auth_host=$SMTPHost;
+		$email_message->smtp_pop3_auth_host=$C[0]['smtp_host'];
 	}
-
 	/* Output dialog with SMTP server */
 	$email_message->smtp_debug=0;
-
 	/* if smtp_debug is 1,
 	 * set this to 1 to make the debug output appear in HTML */
 	$email_message->mailer=$ApplicationText." using smtp";
 	$email_message->smtp_html_debug=1;
-
 	$email_message->SetEncodedEmailHeader("To",$to_address,$to_name);
 	$email_message->SetEncodedEmailHeader("From",$from_address,$from_name);
 	$email_message->SetEncodedEmailHeader("Reply-To",$reply_address,$reply_name);
 	$email_message->SetHeader("Return-Path",$error_delivery_address);
 	$email_message->SetEncodedEmailHeader("Errors-To",$error_delivery_address,$error_delivery_name);
 	$email_message->SetEncodedHeader("Subject",$subject);
-	$email_message->AddQuotedPrintableHtmlPart($message);
+	$email_message->AddQuotedPrintableHtmlPart($html);
 	//$email_message->WrapText($message)
-	$email_message->AddQuotedPrintableTextPart($Text);
+	$email_message->AddQuotedPrintableTextPart($text);
 	//$email_message->WrapText($Text)
-
 	//attachements
 	//filenames stored in Array $AttmFiles
-	
 	if($AttmFiles){
 	 foreach($AttmFiles as $AttmFile){
-	
 		$attachment=array(
 			"FileName"=>$AbsPath."/".$AttmFile,
 			"Content-Type"=>"automatic/name",
@@ -717,9 +705,6 @@ function SendMail_smtp($From,$FromName,$To,$ToName,$Subject,$Text,$Html,$AttmFil
 		$email_message->AddFilePart($attachment);
 		}//for each
 	}//ifAttmFiles
-
-
-
 	$error=$email_message->Send();
 	for($recipient=0,Reset($email_message->invalid_recipients);$recipient<count($email_message->invalid_recipients);Next($email_message->invalid_recipients),$recipient++)
 		echo "Invalid recipient: ",Key($email_message->invalid_recipients)," Error: ",$email_message->invalid_recipients[Key($email_message->invalid_recipients)],"\n";
@@ -1026,4 +1011,83 @@ if (PHPWIN && !function_exists('getmxrr')) {
 	}
 }
 
+function getDirectories($path) {
+	$Return=Array();
+	$dc=0;
+	$handle=opendir($path);
+	while (($file = readdir($handle))!==false) {
+		if (($file != ".")) {//&& ($file != "..")) 
+			if (opendir($path."/".$file)) { //is_dir is false for some reasons for some directories!
+				$Return[$dc]=$file;
+				$dc++;
+				closedir($path."/".$file);
+			}
+		}
+	}
+	@closedir($handle);
+	return $Return;
+}//getDirectories
+
+function getFiles($path) {
+	$Return=Array();
+	$fc=0;
+	$handle=opendir($path);
+	while (($file = readdir($handle))!==false) {
+		if (($file != ".") && ($file != "..") && is_file($path."/".$file)) {
+			$Return[$fc]=$file;
+			$fc++;
+		}//is file
+	}//readdir
+	@closedir($handle);
+	return $Return;
+}//getFiles
+
+ function getMime($file,$host='',$port=80)  { 
+ 	global $ApplicationText;
+   $host = $host ? $host : TM_DOMAIN; 
+	$host=str_replace("http://","",$host);
+	$host=str_replace("https://","",$host);
+ 	#return $host." | ".$file;
+
+   $response = send_http_request("HEAD $file HTTP/1.0\r\nUser-Agent: 
+ ".$ApplicationText."\r\n". 
+                                 "Host: $host:$port\r\n\r\n"); 
+   if($response['header']['HTTP_STATUS_CODE'] == 200) { 
+   	return $response['header']['HTTP_CONTENT-TYPE']; 
+   } else { 
+   	return $response['header']['HTTP_STATUS_CODE']; 
+   } 
+ } 
+
+ function send_http_request($request='',$host='',$port=80)  { 
+   $host = $host ? $host : TM_DOMAIN;
+	$host=str_replace("http://","",$host);
+	$host=str_replace("https://","",$host);
+    if(!$fp=fsockopen($host, $port)) 
+     return 0; 
+   if (!fputs($fp, $request, strlen($request))) 
+     return 0; 
+	$data="";
+   while(!feof($fp)) $data .= fread($fp, 256); //win32 limit 2048 
+     fclose($fp); 
+  
+   $http_response = get_http_response($data); 
+   return $http_response; 
+} 
+  
+ function get_http_response($data)  { 
+   $pos = strpos($data,"\r\n\r\n"); 
+   $data = array(substr($data,0,$pos),substr($data,$pos+4)); 
+   $tmp = explode("\r\n", $data[0]); 
+   $response['content'] = $data[1]; 
+   ereg("^(.*) ([[:digit:]]*) (.*)",$tmp[0],$http); 
+   $response['header']['HTTP_VERSION']       = $http[1]; 
+   $response['header']['HTTP_STATUS_CODE']   = $http[2]; 
+   $response['header']['HTTP_REASON_PHRASE'] = $http[3]; 
+   for($i=1;$i<count($tmp);$i++)  { 
+     list($env,$value) = explode(':',$tmp[$i]); 
+     $response['header']["HTTP_".strtoupper($env)] = ltrim($value); 
+   } 
+   return $response; 
+} 
 ?>

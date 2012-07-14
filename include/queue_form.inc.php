@@ -83,6 +83,16 @@ for ($accg=0; $accg<$acg; $accg++)
 	}
 }
 
+//use blacklist?
+	$Form->new_Input($FormularName,$InputName_Blacklist,"checkbox", 1);
+	$Form->set_InputJS($FormularName,$InputName_Blacklist," onChange=\"flash('submit','#ff0000');\"");
+	$Form->set_InputDefault($FormularName,$InputName_Blacklist,1);
+	$Form->set_InputStyleClass($FormularName,$InputName_Blacklist,"mFormText","mFormTextFocus");
+	$Form->set_InputSize($FormularName,$InputName_Blacklist,48,256);
+	$Form->set_InputDesc($FormularName,$InputName_Blacklist,___("Blacklist prüfen"));
+	$Form->set_InputReadonly($FormularName,$InputName_Blacklist,false);
+	$Form->set_InputOrder($FormularName,$InputName_Blacklist,2);
+	$Form->set_InputLabel($FormularName,$InputName_Blacklist,"");
 
 //send now
 	$Form->new_Input($FormularName,$InputName_Send,"checkbox", 1);
@@ -161,6 +171,26 @@ $Form->set_InputReadonly($FormularName,$InputName_Limit,false);
 $Form->set_InputOrder($FormularName,$InputName_Limit,4);
 $Form->set_InputLabel($FormularName,$InputName_Limit,"");
 
+//HOST
+$Form->new_Input($FormularName,$InputName_Host,"select", "");
+$Form->set_InputJS($FormularName,$InputName_Host," onChange=\"flash('submit','#ff0000');\" ");
+$Form->set_InputDefault($FormularName,$InputName_Host,$$InputName_Host);
+$Form->set_InputStyleClass($FormularName,$InputName_Host,"mFormSelect","mFormSelectFocus");
+$Form->set_InputSize($FormularName,$InputName_Host,1,1);
+$Form->set_InputDesc($FormularName,$InputName_Host,___("SMTP Server auswählen"));
+$Form->set_InputReadonly($FormularName,$InputName_Host,false);
+$Form->set_InputOrder($FormularName,$InputName_Host,1);
+$Form->set_InputLabel($FormularName,$InputName_Host,"");
+$Form->set_InputMultiple($FormularName,$InputName_Host,false);
+#Hostliste....
+//smtp hosts
+$HOST_=$HOSTS->getHost("",Array("aktiv"=>1, "type"=>"smtp"));//id,filter
+$hcg=count($HOST_);
+for ($hccg=0; $hccg<$hcg; $hccg++)
+{
+		$Form->add_InputOption($FormularName,$InputName_Host,$HOST_[$hccg]['id'],$HOST_[$hccg]['name']);
+}
+
 //submit button
 $Form->new_Input($FormularName,$InputName_Submit,"submit",___("Speichern"));
 $Form->set_InputStyleClass($FormularName,$InputName_Submit,"mFormSubmit","mFormSubmitFocus");
@@ -215,16 +245,25 @@ $_MAIN_OUTPUT.= "</tr>";
 
 $_MAIN_OUTPUT.= "<tr>";
 $_MAIN_OUTPUT.= "<td valign=top colspan=1>";
-$_MAIN_OUTPUT.= "<br>".tm_icon("hourglass.png",___("Versandliste"))."&nbsp;".___("Versandliste sofort erstellen");
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Send]['html']."&nbsp;&nbsp;";
-$_MAIN_OUTPUT.= tm_icon("control_fastforward.png",___("Offset"))."&nbsp;";
-$_MAIN_OUTPUT.= ___("Offset").":";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Offset]['html']."&nbsp;&nbsp;";
-$_MAIN_OUTPUT.= tm_icon("control_end.png",___("Limit"))."&nbsp;";
-$_MAIN_OUTPUT.= ___("Limit").":";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Limit]['html']."&nbsp;&nbsp;";
+$_MAIN_OUTPUT.= "<br>".tm_icon("ruby.png",___("Blacklist"))."&nbsp;".___("Blacklist prüfen");
+$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Blacklist]['html']."&nbsp;&nbsp;";
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "</tr>";
+
+$_MAIN_OUTPUT.= "<tr>";
+$_MAIN_OUTPUT.= "<td valign=top colspan=1>";
+$_MAIN_OUTPUT.= "<br>".tm_icon("hourglass.png",___("Versandliste"))."&nbsp;".___("Versandliste sofort erstellen");
+$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Send]['html']."&nbsp;&nbsp;";
+$_MAIN_OUTPUT.= "</td>";
+$_MAIN_OUTPUT.= "</tr>";
+
+$_MAIN_OUTPUT.= "<tr>";
+$_MAIN_OUTPUT.= "<td valign=top colspan=1>";
+$_MAIN_OUTPUT.= "<br>".tm_icon("server.png",___("Mail-Server"))."&nbsp;".___("Mail-Server");
+$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Host]['html']."&nbsp;&nbsp;";
+$_MAIN_OUTPUT.= "</td>";
+$_MAIN_OUTPUT.= "</tr>";
+
 
 $_MAIN_OUTPUT.= "<tr>";
 $_MAIN_OUTPUT.= "<td valign=top colspan=2>";

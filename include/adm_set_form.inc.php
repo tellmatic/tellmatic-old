@@ -139,6 +139,15 @@ $Form->set_InputOrder($FormularName,$InputName_SMTPHost,1);
 $Form->set_InputLabel($FormularName,$InputName_SMTPHost,"");
 
 //smtp
+$Form->new_Input($FormularName,$InputName_SMTPPort,"text", $$InputName_SMTPPort);
+$Form->set_InputStyleClass($FormularName,$InputName_SMTPPort,"mFormText","mFormTextFocus");
+$Form->set_InputSize($FormularName,$InputName_SMTPPort,40,40);
+$Form->set_InputDesc($FormularName,$InputName_SMTPPort,___("SMTP Port, normalerweise 25 o. 587"));
+$Form->set_InputReadonly($FormularName,$InputName_SMTPPort,false);
+$Form->set_InputOrder($FormularName,$InputName_SMTPPort,12);
+$Form->set_InputLabel($FormularName,$InputName_SMTPPort,"");
+
+//smtp
 $Form->new_Input($FormularName,$InputName_SMTPUser,"text", $$InputName_SMTPUser);
 $Form->set_InputJS($FormularName,$InputName_SMTPUser," onChange=\"flash('submit','#ff0000');\" ");
 $Form->set_InputStyleClass($FormularName,$InputName_SMTPUser,"mFormText","mFormTextFocus");
@@ -167,6 +176,24 @@ $Form->set_InputDesc($FormularName,$InputName_SMTPDomain,___("SMTP Domain"));
 $Form->set_InputReadonly($FormularName,$InputName_SMTPDomain,false);
 $Form->set_InputOrder($FormularName,$InputName_SMTPDomain,1);
 $Form->set_InputLabel($FormularName,$InputName_SMTPDomain,"");
+
+//SMTP-AuthType
+$Form->new_Input($FormularName,$InputName_SMTPAuth,"select", "");
+$Form->set_InputJS($FormularName,$InputName_SMTPAuth," onChange=\"flash('submit','#ff0000');\" ");
+$Form->set_InputDefault($FormularName,$InputName_SMTPAuth,$$InputName_SMTPAuth);
+$Form->set_InputStyleClass($FormularName,$InputName_SMTPAuth,"mFormSelect","mFormSelectFocus");
+$Form->set_InputDesc($FormularName,$InputName_SMTPAuth,___("SMTP-Auth"));
+$Form->set_InputReadonly($FormularName,$InputName_SMTPAuth,false);
+$Form->set_InputOrder($FormularName,$InputName_SMTPAuth,15);
+$Form->set_InputLabel($FormularName,$InputName_SMTPAuth,"");
+$Form->set_InputSize($FormularName,$InputName_SMTPAuth,0,1);
+$Form->set_InputMultiple($FormularName,$InputName_SMTPAuth,false);
+//add Data
+$Form->add_InputOption($FormularName,$InputName_SMTPAuth,"LOGIN","LOGIN");
+$Form->add_InputOption($FormularName,$InputName_SMTPAuth,"PLAIN","PLAIN");
+$Form->add_InputOption($FormularName,$InputName_SMTPAuth,"CRAM-MD5","CRAM-MD5");
+#$Form->add_InputOption($FormularName,$InputName_SMTPAuth,"Digest","Digest");
+#$Form->add_InputOption($FormularName,$InputName_SMTPAuth,"NTML","NTML");
 
 
 //Retries
@@ -276,6 +303,16 @@ $Form->set_InputDesc($FormularName,$InputName_TrackImageNew,___("neues Bild hoch
 $Form->set_InputReadonly($FormularName,$InputName_TrackImageNew,false);
 $Form->set_InputOrder($FormularName,$InputName_TrackImageNew,91);
 $Form->set_InputLabel($FormularName,$InputName_TrackImageNew,"");
+
+//rcpt_name etc
+$Form->new_Input($FormularName,$InputName_RCPTName,"text", $$InputName_RCPTName);
+$Form->set_InputJS($FormularName,$InputName_RCPTName," onChange=\"flash('submit','#ff0000');\" ");
+$Form->set_InputStyleClass($FormularName,$InputName_RCPTName,"mFormText","mFormTextFocus");
+$Form->set_InputSize($FormularName,$InputName_RCPTName,48,256);
+$Form->set_InputDesc($FormularName,$InputName_RCPTName,___("Erscheint als Empfängername in der E-Mail"));
+$Form->set_InputReadonly($FormularName,$InputName_RCPTName,false);
+$Form->set_InputOrder($FormularName,$InputName_RCPTName,1);
+$Form->set_InputLabel($FormularName,$InputName_RCPTName,"");
 
 //submit button
 $Form->new_Input($FormularName,$InputName_Submit,"submit",___("Speichern"));
@@ -416,6 +453,15 @@ $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "</tr>";
 
 $_MAIN_OUTPUT.= "<tr>";
+$_MAIN_OUTPUT.= "<td valign=\"top\">";
+$_MAIN_OUTPUT.= tm_icon("server_connect.png",___("SMTP Port"))."&nbsp;".___("SMTP Port");
+$_MAIN_OUTPUT.= "</td>";
+$_MAIN_OUTPUT.= "<td valign=top>";
+$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_SMTPPort]['html'];
+$_MAIN_OUTPUT.= "</td>";
+$_MAIN_OUTPUT.= "</tr>";
+
+$_MAIN_OUTPUT.= "<tr>";
 $_MAIN_OUTPUT.= "<td valign=top>";
 $_MAIN_OUTPUT.= tm_icon("server_connect.png",___("SMTP Benutzername"))."&nbsp;".___("SMTP Benutzername");
 $_MAIN_OUTPUT.= "</td>";
@@ -443,6 +489,16 @@ $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "</tr>";
 
 $_MAIN_OUTPUT.= "<tr>";
+$_MAIN_OUTPUT.= "<td valign=top>";
+$_MAIN_OUTPUT.= "".tm_icon("server_lightning.png",___("SMTP-Auth"))."&nbsp;";
+$_MAIN_OUTPUT.= ___("SMTP-Auth Methode");
+$_MAIN_OUTPUT.= "</td>";
+$_MAIN_OUTPUT.= "<td valign=top>";
+$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_SMTPAuth]['html'];
+$_MAIN_OUTPUT.= "</td>";
+$_MAIN_OUTPUT.= "</tr>";
+
+$_MAIN_OUTPUT.= "<tr>";
 $_MAIN_OUTPUT.= "<td style=\"border-top:1px dashed grey\" valign=\"top\">";
 $_MAIN_OUTPUT.= tm_icon("information.png",___("Versionsabfrage und News"))."&nbsp;".___("Versionsabfrage und News auf der Startseite");
 $_MAIN_OUTPUT.= "</td>";
@@ -458,6 +514,16 @@ $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "<td valign=top>";
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_TrackImageExisting]['html']."&nbsp; oder<br>";
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_TrackImageNew]['html'];
+$_MAIN_OUTPUT.= "</td>";
+$_MAIN_OUTPUT.= "</tr>";
+
+
+$_MAIN_OUTPUT.= "<tr>";
+$_MAIN_OUTPUT.= "<td valign=top>";
+$_MAIN_OUTPUT.= tm_icon("user_comment.png",___("Name"))."&nbsp;".___("Empfänger-Name");
+$_MAIN_OUTPUT.= "</td>";
+$_MAIN_OUTPUT.= "<td valign=top>";
+$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_RCPTName]['html'];
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "</tr>";
 

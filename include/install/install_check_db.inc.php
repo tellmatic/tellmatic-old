@@ -18,7 +18,11 @@ if (DEMO) {
 }
 
 if ($check && !DEMO) {
-    if(!@mysql_connect($db_host.":".$db_port, $db_user, $db_pass)) {
+	$db_connect_host=$db_host;
+	if ($db_socket!=1) {
+		$db_connect_host.=":".$db_port;
+	}
+    if(!@mysql_connect($db_connect_host, $db_user, $db_pass)) {
 		$MESSAGE.="<p><font color=red>".___("Fehler! Es konnte keine Verbindung zur Datenbank aufgebaut werden");
 		$MESSAGE.="<pre>".mysql_error()."</pre>";
 		$MESSAGE.="</font></p>";

@@ -21,10 +21,18 @@ $created=date("Y-m-d H:i:s");
 $author=$LOGIN->USER['name'];
 
 //field names for query
+//default groups the subscriber gets added to....
 $InputName_Group="adr_grp";
-pt_register("POST","adr_grp");
-if (!isset($adr_grp)) {
-	$adr_grp=Array();
+pt_register("POST",$InputName_Group);
+if (!isset($$InputName_Group)) {
+	$$InputName_Group=Array();
+}
+
+//public groups the subscriber can choose....
+$InputName_GroupPub="adr_grp_pub";
+pt_register("POST",$InputName_GroupPub);
+if (!isset($$InputName_GroupPub)) {
+	$$InputName_GroupPub=Array();
 }
 
 $InputName_Name="name";//betreff
@@ -47,6 +55,9 @@ $$InputName_DigitsCaptcha=getVar($InputName_DigitsCaptcha);
 
 $InputName_SubAktiv="subscribe_aktiv";
 $$InputName_SubAktiv=getVar($InputName_SubAktiv);
+
+$InputName_Blacklist="check_blacklist";
+$$InputName_Blacklist=getVar($InputName_Blacklist);
 
 $InputName_SubmitValue="submit_value";
 $$InputName_SubmitValue=getVar($InputName_SubmitValue);
@@ -146,6 +157,8 @@ $$InputName_email_errmsg=getVar($InputName_email_errmsg);
 
 $InputName_captcha_errmsg="captcha_errmsg";
 $$InputName_captcha_errmsg=getVar($InputName_captcha_errmsg);
+$InputName_Blacklist_errmsg="blacklist_errmsg";
+$$InputName_Blacklist_errmsg=getVar($InputName_Blacklist_errmsg);
 
 $InputName_F0_errmsg="f0_errmsg";
 $$InputName_F0_errmsg=getVar($InputName_F0_errmsg);
@@ -205,6 +218,7 @@ if ($set=="save") {
 				"use_captcha"=>$use_captcha,
 				"digits_captcha"=>$digits_captcha,
 				"subscribe_aktiv"=>$subscribe_aktiv,
+				"check_blacklist"=>$check_blacklist,
 				"submit_value"=>$submit_value,
 				"reset_value"=>$reset_value,
 				"email"=>$email,
@@ -250,6 +264,7 @@ if ($set=="save") {
 				"f9_value"=>$f9_value,
 				"email_errmsg"=>$email_errmsg,
 				"captcha_errmsg"=>$captcha_errmsg,
+				"blacklist_errmsg"=>$blacklist_errmsg,
 				"f0_errmsg"=>$f0_errmsg,
 				"f1_errmsg"=>$f1_errmsg,
 				"f2_errmsg"=>$f2_errmsg,
@@ -271,7 +286,8 @@ if ($set=="save") {
 				"f8_expr"=>$f8_expr,
 				"f9_expr"=>$f9_expr
 				),
-				$adr_grp);
+				$adr_grp,
+				$adr_grp_pub);//details, references adr_group, adr_grp_pub!
 		$_MAIN_MESSAGE.="<br>".sprintf(___("Neues Formular %s wurde erstellt."),"'<b>".display($name)."</b>'");
 		$action="form_list";
 		include_once (TM_INCLUDEPATH."/form_list.inc.php");

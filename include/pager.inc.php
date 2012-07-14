@@ -11,6 +11,7 @@
 /* check Homepage for Updates and more Infos                                    */
 /* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
 /********************************************************************************/
+$_MAIN_OUTPUT.="\n\n<!-- pager.inc.php -->\n\n";
 
 // entrys = anzahl eintraege, muss in jeder liste an der stelle wo noetig vor pager.inc eingefuegt und definiert werden!
 // dient der berechnung zur letzten seite... ;-) und anzeige anzahl eintraege!

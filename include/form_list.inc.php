@@ -145,15 +145,21 @@ for ($acc=0;$acc<$ac;$acc++) {
 	$_MAIN_OUTPUT.= "<td onmousemove=\"showToolTip('tt_adr_list_".$FRM[$acc]['id']."')\" onmouseout=\"hideToolTip();\">";
 	$_MAIN_OUTPUT.= "<b>".$FRM[$acc]['id']."</b>&nbsp;&nbsp;";
 
+	//markierung aktiv bei subscribe
 	if ($FRM[$acc]['subscribe_aktiv']==1) {
 		$_MAIN_OUTPUT.=  tm_icon("user_green.png",___("Aktiv"))."&nbsp;";
 	} else {
 		$_MAIN_OUTPUT.=  tm_icon("user_red.png",___("Inaktiv"))."&nbsp;";
 	}
-	//markierung doubleoptin
+	//markierung captcha
 	if ($FRM[$acc]['use_captcha']==1) {
 		$_MAIN_OUTPUT.=  tm_icon("sport_8ball.png",___("Captcha")).$FRM[$acc]['digits_captcha']."&nbsp;";
 	}
+	//markierung blacklist
+	if ($FRM[$acc]['check_blacklist']==1) {
+		$_MAIN_OUTPUT.=  tm_icon("ruby.png",___("Blacklist"));
+	}
+	//markierung doubleoptin
 	if ($FRM[$acc]['double_optin']==1) {
 		$_MAIN_OUTPUT.=  tm_icon("arrow_refresh_small.png",___("Double-Opt-In"));
 	}
@@ -183,8 +189,14 @@ for ($acc=0;$acc<$ac;$acc++) {
 	if ($FRM[$acc]['use_captcha']==1) {
 		$_MAIN_OUTPUT.=  "<br>".tm_icon("sport_8ball.png",___("Captcha"))."&nbsp;".___("Captcha").",&nbsp;";
 		$_MAIN_OUTPUT.=  sprintf(___("%s Ziffern"),$FRM[$acc]['digits_captcha']);
-		$_MAIN_OUTPUT.=  "<br>".___("Fehlermeldung").": <em>".$FRM[$acc]['captcha_errmsg']."</em>";
+		$_MAIN_OUTPUT.=  "<br>&nbsp;&nbsp;&nbsp;".___("Fehlermeldung").": <em>".$FRM[$acc]['captcha_errmsg']."</em>";
 	}
+	//markierung blacklist
+	if ($FRM[$acc]['check_blacklist']==1) {
+		$_MAIN_OUTPUT.=  "<br>".tm_icon("ruby.png",___("Blacklist"))."&nbsp;".___("Blacklist prüfen").",&nbsp;";
+		$_MAIN_OUTPUT.=  "<br>&nbsp;&nbsp;&nbsp;".___("Fehlermeldung").": <em>".$FRM[$acc]['blacklist_errmsg']."</em>";
+	}
+
 	//markierung doubleoptin
 	if ($FRM[$acc]['double_optin']==1) {
 		$_MAIN_OUTPUT.=  "<br>".tm_icon("arrow_refresh_small.png",___("Double-Opt-In"))."&nbsp;".___("Double-Opt-In");
@@ -204,12 +216,21 @@ for ($acc=0;$acc<$ac;$acc++) {
 							"<br><br>".sprintf(___("Erstellt am: %s von %s"),$created_date,$author).
 							"<br>".sprintf(___("Bearbeitet am: %s von %s"),$updated_date,$editor);
 	$_MAIN_OUTPUT.= "<br><br>".___("Anmeldungen über dieses Formular werden in die folgenden Gruppen eingeordnet:")."<br>";
-
-	$GRP=$ADDRESS->getGroup(0,0,$FRM[$acc]['id']);
+	$GRP=$ADDRESS->getGroup(0,0,$FRM[$acc]['id'],0,Array("public_frm_ref"=>0));
 	$acg=count($GRP);
 	for ($accg=0;$accg<$acg;$accg++) {
 		$_MAIN_OUTPUT.= "".display($GRP[$accg]['name'])."<br>";
 	}
+	$_MAIN_OUTPUT.= "<br><br>".___("Der Abonnent kann aus folgenden Gruppen wählen:")."<br>";
+	$GRP=$ADDRESS->getGroup(0,0,$FRM[$acc]['id'],0,Array("public_frm_ref"=>1));
+	$acg=count($GRP);
+	for ($accg=0;$accg<$acg;$accg++) {
+		$_MAIN_OUTPUT.= "".display($GRP[$accg]['name'])."<br>";
+	}
+
+	$GRP=$ADDRESS->getGroup(0,0,$FRM[$acc]['id']);
+	$acg=count($GRP);
+
 
 	$_MAIN_OUTPUT.= "</font>";
 	$_MAIN_OUTPUT.= "</div>";
@@ -221,7 +242,33 @@ for ($acc=0;$acc<$ac;$acc++) {
 	$_MAIN_OUTPUT.= "<td>";
 
 	for ($accg=0;$accg<$acg;$accg++) {
-		$_MAIN_OUTPUT.= "".display($GRP[$accg]['name']).", ";
+		//pretag
+		if ($GRP[$accg]['aktiv']!=1) {
+			$_MAIN_OUTPUT.= "<span style=\"color:#ff0000;\">";
+		}
+		if ($GRP[$accg]['public_frm_ref']==1) {
+			$_MAIN_OUTPUT.= "<em>";
+		}
+		if ($GRP[$accg]['public']==0 && $GRP[$accg]['aktiv']==1) {
+			$_MAIN_OUTPUT.= "<strong>";
+		}
+
+		//name of group
+		$_MAIN_OUTPUT.= "".display($GRP[$accg]['name']);
+
+		//posttag
+		if ($GRP[$accg]['public']==0 && $GRP[$accg]['aktiv']==1) {
+			$_MAIN_OUTPUT.= "</strong>";
+		}
+		if ($GRP[$accg]['public_frm_ref']==1) {
+			$_MAIN_OUTPUT.= " (p)</em>";
+		}
+		if ($GRP[$accg]['aktiv']!=1) {
+			$_MAIN_OUTPUT.= " (na)</span>";
+		}
+
+		$_MAIN_OUTPUT.= ",";
+
 	}
 
 	$_MAIN_OUTPUT.= "</td>";

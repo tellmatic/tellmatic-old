@@ -30,6 +30,7 @@ if ($check && $checkDB) {
 	define ("TM_TABLE_FRM", $tm_tablePrefix."frm");
 	define ("TM_TABLE_FRM_GRP_REF", $tm_tablePrefix."frm_grp_ref");
 	define ("TM_TABLE_FRM_S", $tm_tablePrefix."frm_s");
+	define ("TM_TABLE_HOST", $tm_tablePrefix."hosts");
 
 /***********************************************************/
 //add user
@@ -57,6 +58,7 @@ if ($check && $checkDB) {
 //add config
 /***********************************************************/
 	if (!DEMO) {
+		//insert config	
 		$CONFIG->addCFG(Array(
 				"siteid"=>TM_SITEID,
 				"name"=>"Tellmatic_0",
@@ -70,14 +72,50 @@ if ($check && $checkDB) {
 				"max_mails_bcc"=>50,
 				"max_mails_retry"=>5,
 				"smtp_host"=>$smtp_host,
+				"smtp_port"=>$smtp_port,
 				"smtp_domain"=>$smtp_domain,
+				"smtp_auth"=>$smtp_auth,
 				"smtp_user"=>$smtp_user,
 				"smtp_pass"=>$smtp_pass,
 				"emailcheck_intern"=>2,
 				"emailcheck_subscribe"=>2,
 				"check_version"=>1,
+				"rcpt_name"=>"Newsletter",
 				"track_image"=>'_blank'
 				));
+		//add mailservers, use default settings for config and create smtp/pop3 host entries...
+				$HOSTS=new tm_HOST();
+				//add smtp host
+				$HOSTS->addHost(Array(
+							"siteid"=>TM_SITEID,
+							"name"=>"default smtp",
+							"aktiv"=>1,
+							"host"=>$smtp_host,
+							"port"=>$smtp_port,
+							"options"=>"",
+							"smtp_auth"=>$smtp_auth,
+							"smtp_domain"=>$smtp_domain,
+							"type"=>"smtp",
+							"user"=>$smtp_user,
+							"pass"=>$smtp_pass
+							));
+				//add pop3 host
+				$HOSTS->addHost(Array(
+							"siteid"=>TM_SITEID,
+							"name"=>"default pop3",
+							"aktiv"=>1,
+							"host"=>$smtp_host,
+							"port"=>110,
+							"options"=>"novalidate-cert",
+							"smtp_auth"=>"",
+							"smtp_domain"=>"",
+							"type"=>"pop3",
+							"user"=>$smtp_user,
+							"pass"=>$smtp_pass
+							));
+		
+		
+	
 	}
 	$MESSAGE.="<br>".___("Einstellungen wurden gespeichert.");
 
@@ -98,6 +136,7 @@ $tm_tablePrefix=\''.$tm_tablePrefix_cfg.'\';
 $tm["DB"]["Name"]=\''.$db_name.'\';
 $tm["DB"]["Host"]=\''.$db_host.'\';
 $tm["DB"]["Port"]=\''.$db_port.'\';
+$tm["DB"]["Socket"]=\''.$db_socket.'\';
 $tm["DB"]["User"]=\''.$db_user.'\';
 $tm["DB"]["Pass"]=\''.$db_pass.'\';
 
@@ -130,7 +169,7 @@ require valid-user
 	if (!DEMO) write_file(TM_INCLUDEPATH,".htpasswd",$tm_htpasswd);
 	$MESSAGE.="<br>".___(".htpasswd Datei wurden erstellt.");
 	if (DEBUG) $MESSAGE.="<pre>".htmlentities($tm_htpasswd)."</pre>";
-	if (!DEMO) write_file(TM_PATH."/admin/tmp/",".htaccess",$tm_htaccess);
+	#not used yet: if (!DEMO) write_file(TM_PATH."/admin/tmp/",".htaccess",$tm_htaccess);
 	if (!DEMO) write_file(TM_INCLUDEPATH,".htaccess",$tm_htaccess);
 	if (!DEMO) write_file($tm_datapath,".htaccess",$tm_htaccess);
 	if (!DEMO) write_file($tm_nlattachpath,".htaccess",$tm_htaccess);

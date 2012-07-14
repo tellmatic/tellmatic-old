@@ -86,6 +86,7 @@ if ($check) {
 									"author"=>"example",
 									"grp_id"=>1,
 									"attm"=>"",
+									"rcpt_name"=>"Newsletter",
 									"track_image"=>"_blank",
 									"content_type"=>"text/html"
 									)
@@ -94,9 +95,9 @@ if ($check) {
 //adr gruppe
 		$ADDRESS=new tm_ADR();
 
-		$ADDRESS->addGrp(Array("name"=>"ADR Group 1", "descr"=>"zum testen / for testings", "aktiv"=>1, "author"=>"install", "created"=>$created, "editor"=>"install", "updated"=>$created));
+		$ADDRESS->addGrp(Array("name"=>"ADR Group 1", "descr"=>"zum testen / for testings", "aktiv"=>1, "author"=>"install", "created"=>$created, "editor"=>"install", "updated"=>$created, "public"=>1, "public_name"=>"Test 1"));
 		$ADDRESS->setGRPStd(1,1);
-		$ADDRESS->addGrp(Array("name"=>"ADR Group 2", "descr"=>"zum testen / for testings", "aktiv"=>0, "author"=>"install", "created"=>$created, "editor"=>"install", "updated"=>$created));
+		$ADDRESS->addGrp(Array("name"=>"ADR Group 2", "descr"=>"zum testen / for testings", "aktiv"=>0, "author"=>"install", "created"=>$created, "editor"=>"install", "updated"=>$created, "public"=>0, "public_name"=>"Test 2"));
 //adr : ok, bounce
 			$code=rand(111111,999999);
 			$new_adr_grp[0]=1;
@@ -157,6 +158,7 @@ if ($check) {
 				"double_optin"=>0,
 				"use_captcha"=>1,
 				"digits_captcha"=>4,
+				"check_blacklist"=>1,
 				"subscribe_aktiv"=>1,
 				"submit_value"=>"Abschicken",
 				"reset_value"=>"Eingaben zurücksetzen",
@@ -213,6 +215,7 @@ if ($check) {
 				"f9_expr"=>"",
 				"email_errmsg"=>"Ungültige E-Mail-Adresse",
 				"captcha_errmsg"=>"Spamschutz! Bitte geben Sie untenstehenden Zahlencode ein.",
+				"blacklist_errmsg"=>"Blacklisted",
 				"f0_errmsg"=>"Bitte füllen Sie das Feld Anrede aus",
 				"f1_errmsg"=>"Bitte füllen Sie das Feld Name aus",
 				"f2_errmsg"=>"Bitte füllen Sie das Feld Name2 aus",

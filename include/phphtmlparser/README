@@ -12,7 +12,7 @@ codebase where you'd like to be able to include it.
 The PHP file which uses the parser might look like
 this:
 
-<?
+<?php
   include ("htmlparser.inc");
 
   $htmlText = "... HTML text here ...";

@@ -824,13 +824,13 @@ $file = &$_POST['file'];
 	<input type="button" name="cancel" value="  <?=$l['cancel']?>  " onClick="window.close()">
 </form>
 
-<? } ?>
+<?php } ?>
 	</td>
 </tr>
 
 </table>
 
-<?
+<?php
 break;
 //^^del^^
 
@@ -1080,19 +1080,19 @@ $title = $l['title']['find'];
 					<form name="myftphp_form" action="javascript:window.close()">
 					<table>
 
-					<? //dirs
+					<?php //dirs
 					if($matches['dirs']->getCount()>0) {
 						$matches['dirs']->printout();
 					} else {	?>
 						<tr>
 							<td colspan="11"><?=$l['err']['nodirs']?></td>
 						</tr>
-					<? } ?>
+					<?php } ?>
 
 				<tr style="border-top:1px <?=$c['border']['ruler']?> solid;">
 					<td colspan="11">&nbsp;</td>
 				</tr>
-					<? //files
+					<?php //files
 					if($matches['files']->getCount()>0) {
 						$matches['files']->printout();
 					} else {	?>
@@ -1100,7 +1100,7 @@ $title = $l['title']['find'];
 
 							<td colspan="11"><?=$l['err']['nofiles']?></td>
 						</tr>
-					<? } ?>
+					<?php } ?>
 
 					</table>
 					</form>
@@ -1248,7 +1248,7 @@ $dir = &$_GET['dir'];
 
 			<tr><td colspan="<?=$perline?>">&nbsp;</td></tr>
 
-				<? //files
+				<?php //files
 				$oe = $i = $block = 0;
 				foreach($thumbfiles->getArray() as $file) {
 					$newline = !($i % $perline);
@@ -1637,7 +1637,7 @@ $file = &$_GET['file'];
 		<?
 		foreach($asrc as $line) { ?>
 			<li><?=($line)?><br></li>
-		<? } ?>
+		<?php } ?>
 		</ol>
 
 		</div>
@@ -1962,7 +1962,7 @@ if(isset($_POST['upload'])) {
 		<input type="button" value=" <?=$l['cancel']?> " onClick="window.close();">&nbsp;
 		<label for="over"><input type="checkbox" name="over" id="over"><?=$l['overwrite']?></label>
 	</form>
-<? } ?>
+<?php } ?>
 
 	</td>
 </tr>
@@ -2142,7 +2142,7 @@ case 'view':
 				<td><a href="<?=$session->dosid(SELF.'?a=view&amp;sort=+lmod&amp;dir='.$dir)?>"><img src="<?=img('asc')?>" width="16" height="16"></a><a href="<?=$session->dosid(SELF.'?a=view&amp;sort=-lmod&amp;dir='.$dir)?>"><img src="<?=img('desc')?>" width="16" height="16"></a></td>
 			</tr>
 
-		<? if(allowed(dirname($dir))) { ?>
+		<?php if(allowed(dirname($dir))) { ?>
 			<tr class="l" style="border-bottom:1px <?=$c['border']['dark']?> solid;">
 				<td></td>
 				<td><a href="<?=$session->dosid(SELF.'?a=rem&amp;dir='.$dir);?>" onClick="popUp(this.href, 'remwin'); return false;"><img src="<?=img('rem')?>" width="16" height="16"></a></td>
@@ -2155,7 +2155,7 @@ case 'view':
 				<td></td><td></td>
 				<td></td><td></td>
 			</tr>
-		<? } // /check for root
+		<?php } // /check for root
 		$viewdirs->sortlist($sort);
 		$viewdirs->printout();
 
@@ -2192,7 +2192,7 @@ $title = $l['title']['default'];
 <a href="<?=$session->dosid(SELF.'?a=bout')?>" title="<?=$l['help']?>" onClick="popUp(this.href, 'helpwin'); return false;"><img src="<?=img('info')?>" width="16" height="16"></a>
 &nbsp;&nbsp;|&nbsp;&nbsp;
 <img src="<?=img('drive')?>" width="16" height="16">
-<? //free space
+<?php //free space
 	//bytes:
 	$freespace = @disk_free_space($home);
 	$location  = relativePath($home, $_SERVER['DOCUMENT_ROOT']);
@@ -2207,7 +2207,7 @@ $title = $l['title']['default'];
 <table width="100%" height="500px"cellspacing="0" cellpadding="0" style="padding:0px; border-collapse:collapse; margin:0px; margin-top:2em;">
 <tr>
 
-	<? if($tree) {?><td width="185px" height="100%"><iframe src="<?=$session->dosid(SELF.'?a=tree&amp;dir='.$home)?>" height="100%" width="100%" name="tree" frameborder="0">Browser needs to understand inlineframes</iframe>
+	<?php if($tree) {?><td width="185px" height="100%"><iframe src="<?=$session->dosid(SELF.'?a=tree&amp;dir='.$home)?>" height="100%" width="100%" name="tree" frameborder="0">Browser needs to understand inlineframes</iframe>
 	</td><?}?>
 	<td height="100%"><iframe src="<?=$session->dosid(SELF.'?a=view&amp;dir='.$home)?>" height="100%" width="100%" name="view" frameborder="0">
 	Browser needs to understand inlineframes<br>
@@ -2275,7 +2275,7 @@ break;
 
 ?>
 
-<? // get output buffer
+<?php // get output buffer
 $buffer = ob_get_contents();
 ob_end_clean();
 ?>
@@ -2325,12 +2325,12 @@ ob_end_clean();
 </head>
 
 <body>
-<?
+<?php
 	// print buffer
 	print($buffer);
 ?>
 </body>
 </html>
 
-<? //end compressed buffer
+<?php //end compressed buffer
 ob_end_flush();?>

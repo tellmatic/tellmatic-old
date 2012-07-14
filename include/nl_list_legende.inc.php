@@ -47,6 +47,7 @@ $_MAIN_OUTPUT.= tm_icon("pencil.png",___("Bearbeiten"))."&nbsp;".___("Newsletter
 $_MAIN_OUTPUT.= tm_icon("bullet_add.png",___("Newsletter kopieren"))."&nbsp;".___("Newsletter kopieren (ohne Dateien)")."<br>";
 $_MAIN_OUTPUT.= tm_icon("add.png",___("Newsletter und Dateien kopieren"))."&nbsp;".___("Newsletter und Dateien kopieren")."<br>";
 $_MAIN_OUTPUT.= tm_icon("chart_pie.png",___("Statistik"))."&nbsp;".___("Statistik anzeigen")."<br>";
+$_MAIN_OUTPUT.= tm_icon("chart_bar_delete.png",___("Historie löschen"))."&nbsp;".___("Historie löschen")."<br>";
 $_MAIN_OUTPUT.= tm_icon("cross.png",___("Löschen"))."&nbsp;".___("Newsletter löschen")."<br>";
 
 $_MAIN_OUTPUT.= "<h3>Status</h3>";

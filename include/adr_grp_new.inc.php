@@ -31,6 +31,12 @@ $$InputName_Descr=getVar($InputName_Descr);
 
 $InputName_Aktiv="aktiv";//range from
 $$InputName_Aktiv=getVar($InputName_Aktiv);
+
+$InputName_Public="public";//range from
+$$InputName_Public=getVar($InputName_Public);
+
+$InputName_PublicName="public_name";//range from
+$$InputName_PublicName=getVar($InputName_PublicName);
 //
 
 $check=true;
@@ -41,6 +47,8 @@ if ($set=="save") {
 		$ADDRESS=new tm_ADR();
 		$ADDRESS->addGrp(Array(
 					"name"=>$name,
+					"public"=>$public,
+					"public_name"=>$public_name,
 					"descr"=>$descr,
 					"aktiv"=>$aktiv,
 					"created"=>$created,

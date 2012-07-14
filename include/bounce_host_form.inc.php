@@ -43,8 +43,21 @@ $Form->set_InputReadonly($FormularName,$InputName_Host,false);
 $Form->set_InputOrder($FormularName,$InputName_Host,1);
 $Form->set_InputLabel($FormularName,$InputName_Host,"");
 $Form->set_InputMultiple($FormularName,$InputName_Host,false);
-$Form->add_InputOption($FormularName,$InputName_Host,$$InputName_Host,$$InputName_Host);
-
+#Hostliste....
+//pop3 hosts
+$HOST_=$HOSTS->getHost("",Array("aktiv"=>1, "type"=>"imap"));//id,filter
+$hcg=count($HOST_);
+for ($hccg=0; $hccg<$hcg; $hccg++)
+{
+		$Form->add_InputOption($FormularName,$InputName_Host,$HOST_[$hccg]['id'],$HOST_[$hccg]['name']);
+}
+//imap hosts
+$HOST_=$HOSTS->getHost("",Array("aktiv"=>1, "type"=>"pop3"));//id,filter
+$hcg=count($HOST_);
+for ($hccg=0; $hccg<$hcg; $hccg++)
+{
+		$Form->add_InputOption($FormularName,$InputName_Host,$HOST_[$hccg]['id'],$HOST_[$hccg]['name']);
+}
 //Offset
 $Form->new_Input($FormularName,$InputName_Offset,"select", "");
 $Form->set_InputJS($FormularName,$InputName_Offset," onChange=\"flash('submit','#ff0000');\" ");

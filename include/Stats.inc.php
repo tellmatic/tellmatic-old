@@ -117,7 +117,7 @@
 												"5"=>___("Angehalten")
 								),
 								"descr"=>Array(
-												"1"=>"",
+												"1"=>___("Neu"),
 												"2"=>___("Wird versendet"),
 												"3"=>___("In Arbeit"),
 												"4"=>___("Versendet"),

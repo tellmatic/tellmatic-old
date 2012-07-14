@@ -64,6 +64,12 @@ if ($user_is_admin) {
 	$InputName_SMTPHost="smtp_host";
 	$$InputName_SMTPHost=getVar($InputName_SMTPHost);
 
+	$InputName_SMTPPort="smtp_port";
+	$$InputName_SMTPPort=getVar($InputName_SMTPPort);
+	if (empty($$InputName_SMTPPort)) {
+		$$InputName_SMTPPort=25;
+	}
+
 	$InputName_SMTPUser="smtp_user";
 	$$InputName_SMTPUser=getVar($InputName_SMTPUser);
 
@@ -72,6 +78,9 @@ if ($user_is_admin) {
 
 	$InputName_SMTPDomain="smtp_domain";
 	$$InputName_SMTPDomain=getVar($InputName_SMTPDomain);
+
+	$InputName_SMTPAuth="smtp_auth";
+	$$InputName_SMTPAuth=getVar($InputName_SMTPAuth);
 
 	$InputName_CheckVersion="check_version";
 	$$InputName_CheckVersion=getVar($InputName_CheckVersion);
@@ -82,6 +91,8 @@ if ($user_is_admin) {
 	$InputName_TrackImageNew="track_image_new";//trackimage upload
 	pt_register("POST","track_image_new");
 
+	$InputName_RCPTName="rcpt_name";//name
+	$$InputName_RCPTName=getVar($InputName_RCPTName);
 
 
 	$CONFIG=new tm_CFG();
@@ -161,13 +172,16 @@ if ($user_is_admin) {
 					"max_mails_bcc"=>$max_mails_bcc,
 					"max_mails_retry"=>$max_retry,
 					"smtp_host"=>$smtp_host,
+					"smtp_port"=>$smtp_port,
 					"smtp_domain"=>$smtp_domain,
+					"smtp_auth"=>$smtp_auth,
 					"smtp_user"=>$smtp_user,
 					"smtp_pass"=>$smtp_pass,
 					"emailcheck_intern"=>$emailcheck_intern,
 					"emailcheck_subscribe"=>$emailcheck_subscribe,
 					"check_version"=>$check_version,
-					"track_image"=>$track_image
+					"track_image"=>$track_image,
+					"rcpt_name"=>$rcpt_name
 					));
 			$_MAIN_MESSAGE.="<br>".___("Die Einstellungen wurden gespeichert und sind ab sofort gültig")."!";
 			$action="adm_set";
@@ -188,19 +202,24 @@ if ($user_is_admin) {
 		$$InputName_MaxRetry=$C[0]['max_mails_retry'];//
 		if (!DEMO) {
 			$$InputName_SMTPHost=$C[0]['smtp_host'];//
+			$$InputName_SMTPPort=$C[0]['smtp_port'];//
 			$$InputName_SMTPUser=$C[0]['smtp_user'];//
 			$$InputName_SMTPPass=$C[0]['smtp_pass'];//
 			$$InputName_SMTPDomain=$C[0]['smtp_domain'];//
+			$$InputName_SMTPAuth=$C[0]['smtp_auth'];//
 		} else {
 			$$InputName_SMTPHost="mail.virtualhost.de";//
+			$$InputName_SMTPPort="25";//
 			$$InputName_SMTPUser="smtp username";//
 			$$InputName_SMTPPass="smtp passwd";//
 			$$InputName_SMTPDomain="sender domainname";//
+			$$InputName_SMTPAuth="LOGIN";
 		}
 		$$InputName_ECheckIntern=$C[0]['emailcheck_intern'];//
 		$$InputName_ECheckSubscribe=$C[0]['emailcheck_subscribe'];//
 		$$InputName_CheckVersion=$C[0]['check_version'];//
 		$$InputName_TrackImageExisting=$C[0]['track_image'];
+		$$InputName_RCPTName=$C[0]['rcpt_name'];
 		require_once (TM_INCLUDEPATH."/adm_set_form.inc.php");
 		$_MAIN_OUTPUT.="<br><br><a href=\"javascript:switchSection('div_debug');\">".tm_icon("information.png",___("Serverinfo"))."&nbsp;".___("Serverinfo")."</a>";
 	}

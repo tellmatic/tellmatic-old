@@ -13,6 +13,70 @@
 
 UPDATE
 
+*+*+*+*+*+*+*+*+*+*+*+ 1.0.8.0
+--en
+	copy newer files and don't forget to set path in *.php in / and include/send_it.php after updating if you plan to use cronjobs!
+	To update earlier Versions than 1.0.7.4 please follow instructions for update to 1.0.7.4
+	Update Database, see below
+	Enter Mailservers for smtp (send mails) and pop3/imap (bouncemanagement). The Server set in the mainsettings is used for internal mails now. 
+--de
+	Kopieren Sie die neuen Dateien auf Ihren Server. Vergessen Sie nicht den Pfad in den *.php Dateien in / und include/send_it.php anzupassen wenn Cronjobs genutzt werden sollen
+	Zum Update auf 1.0.7.4 von einer frueheren Verison als 1.0.7.4 befolgen Sie bitte die Anweisungen fuer 1.0.7.4
+	Aktualisieren Sie die Datenbank, s.u.
+	Tragen Sie die  Mailserver für smtp (Mails senden) und pop3/imap (Bouncemanagement) ein. Der in den Einstellungen angegebene SMTP-Serger wird weiterhin fuer interne Mails verwendet!
+------------------------------
+Edit include/tm_config.inc
+	after $tm["DB"]["port"]...
+	add: $tm["DB"]["Socket"]=0;
+	or set to 1 if you want to use sockets
+
+Datenbank aktualisieren: / Update Database:
+
+CREATE TABLE `hosts` (
+  id int(11) NOT NULL auto_increment,
+  name varchar(255) collate utf8_bin NOT NULL default '',
+  aktiv tinyint(1) NOT NULL default '1',
+  host varchar(255) collate utf8_bin NOT NULL default '',
+  port smallint(6) NOT NULL default '0',
+  `type` enum('smtp','pop3','imap') collate utf8_bin NOT NULL default 'smtp',
+  options varchar(255) collate utf8_bin NOT NULL default '',
+  smtp_auth varchar(255) collate utf8_bin NOT NULL default '',
+  smtp_domain varchar(255) collate utf8_bin NOT NULL default '',
+  `user` varchar(64) collate utf8_bin default NULL,
+  pass varchar(64) collate utf8_bin default NULL,
+  siteid varchar(64) collate utf8_bin NOT NULL default '',
+  PRIMARY KEY  (id),
+  KEY aktiv (aktiv),
+  KEY siteid (siteid),
+  KEY hosts_aktiv_siteid (aktiv,siteid)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+ALTER TABLE `nl_q` ADD `host_id` INT( 11 ) NOT NULL AFTER `grp_id` ;
+ALTER TABLE `nl_q` ADD INDEX ( `host_id` ) ;
+ALTER TABLE `nl_h` ADD `host_id` INT( 11 ) NOT NULL AFTER `adr_id` ;
+ALTER TABLE `nl_h` ADD INDEX ( `host_id` ) ;
+ALTER TABLE `config` ADD `smtp_port` SMALLINT NOT NULL DEFAULT '25' AFTER `smtp_host` 
+ALTER TABLE `config` ADD `smtp_auth` VARCHAR( 32 ) NOT NULL AFTER `smtp_pass` ;
+
+ALTER TABLE `nl` ADD `rcpt_name` VARCHAR( 255 ) NOT NULL DEFAULT 'Newsletter' AFTER `massmail` ;
+ALTER TABLE `config` ADD `rcpt_name` VARCHAR( 255 ) NOT NULL DEFAULT 'Newsletter' AFTER `track_image` ;
+
+ALTER TABLE `adr_grp` ADD `public` TINYINT( 1 ) NOT NULL DEFAULT '0' AFTER `name` , ADD `public_name` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_bin NULL AFTER `public` ;
+ALTER TABLE `frm_grp_ref` ADD `public` TINYINT NOT NULL DEFAULT '0' AFTER `grp_id` ;
+
+CREATE TABLE blacklist (
+  id int(11) NOT NULL auto_increment,
+  `type` enum('email','domain','expr') collate utf8_bin NOT NULL default 'email',
+  expr varchar(255) collate utf8_bin NOT NULL default '',
+  aktiv tinyint(1) NOT NULL default '1',
+  siteid varchar(64) collate utf8_bin NOT NULL default '',
+  PRIMARY KEY  (id),
+  KEY `type` (`type`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+ALTER TABLE `frm` ADD `check_blacklist` TINYINT( 1 ) NOT NULL DEFAULT '0' AFTER `subscribe_aktiv` ;
+ALTER TABLE `frm` ADD `blacklist_errmsg` VARCHAR( 255 ) NOT NULL AFTER `captcha_errmsg` ;
+ALTER TABLE `nl_q` ADD `check_blacklist` TINYINT NOT NULL DEFAULT '0' AFTER `send_at` ;
+
+
 *+*+*+*+*+*+*+*+*+*+*+ 1.0.7.4
 --en
 	copy newer files and don't forget to set path in *.php in / and include/send_it.php after updating if you plan to use cronjobs!

@@ -204,12 +204,12 @@ $Form->set_InputLabel($FormularName,$InputName_Delete,"");
 
 //blacklist
 $Form->new_Input($FormularName,$InputName_Blacklist,"checkbox", 1);
-$Form->set_InputJS($FormularName,$InputName_Blacklist," onChange=\"flash('submit','#ff0000');\"");
+$Form->set_InputJS($FormularName,$InputName_Blacklist," onChange=\"flash('submit','#ff0000');checkImport();\" onClick=\"checkImport();\"");
 $Form->set_InputDefault($FormularName,$InputName_Blacklist,$$InputName_Blacklist);
 $Form->set_InputStyleClass($FormularName,$InputName_Blacklist,"mFormText","mFormTextFocus");
 $Form->set_InputSize($FormularName,$InputName_Blacklist,48,256);
-$Form->set_InputDesc($FormularName,$InputName_Blacklist,___("Importierte Adressen in die Robinsonliste eintragen"));
-$Form->set_InputReadonly($FormularName,$InputName_Blacklist,true);
+$Form->set_InputDesc($FormularName,$InputName_Blacklist,___("Importierte Adressen in die Blacklist eintragen"));
+$Form->set_InputReadonly($FormularName,$InputName_Blacklist,false);
 $Form->set_InputOrder($FormularName,$InputName_Blacklist,2);
 $Form->set_InputLabel($FormularName,$InputName_Blacklist,"");
 

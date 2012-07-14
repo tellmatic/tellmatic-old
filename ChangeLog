@@ -1,6 +1,1000 @@
-2008-06-24 Tuesday 11:27  tag r-1-0-7-4
+2008-10-01 Wednesday 16:15  tag r-1-0-8-0
 
-2008-06-24 Tuesday 11:27  mcms09
+2008-10-01 Wednesday 16:15  mcms09
+
+	Changed:
+		include/install/install_install.inc.php (1.6), "Exp", lines: +1 -1
+
+	admin/tmp not used yet, not checked on install
+
+2008-10-01 Wednesday 16:11  mcms09
+
+	Changed:
+		locale/mkpo.sh (1.2), "Exp", lines: +5 -3
+
+	--join-existing to preserver already translated strings
+
+2008-10-01 Wednesday 16:09  mcms09
+
+	Changed:
+		locale/tellmatic-de.po (1.2), "Exp", lines: +1443 -590
+		locale/tellmatic-en.po (1.2), "Exp", lines: +3755 -3737
+		locale/tellmatic-es.po (1.2), "Exp", lines: +3755 -3739
+		locale/tellmatic-it.po (1.2), "Exp", lines: +3755 -3738
+
+	added strings for tm108, es and it contain english translation for
+	not yet translated messages, alot of double entries.... but ok to
+	use
+
+2008-10-01 Wednesday 12:43  mcms09
+
+	Deleted:
+		tpl/Form_0_os.html (1.2)
+
+	not needed
+
+2008-10-01 Wednesday 12:42  mcms09
+
+	Changed:
+		tpl/Unsubscribe.html (1.2), "Exp", lines: +2 -2
+
+	typo
+
+2008-10-01 Wednesday 12:42  mcms09
+
+	Changed:
+		include/libchart-1.1/classes/Color.php (1.2), "Exp", lines: +1 -1
+
+	removed php shorttags
+
+2008-10-01 Wednesday 12:37  mcms09
+
+	Changed:
+		UPDATE (1.8), "Exp", lines: +30 -3
+
+	update instructions for 1.0.8.0
+
+2008-10-01 Wednesday 12:37  mcms09
+
+	Changed:
+		INSTALL.DE (1.5), "Exp", lines: +2 -0
+		INSTALL.EN (1.4), "Exp", lines: +2 -0
+
+	changes for 1.0.8.0
+
+2008-10-01 Wednesday 12:36  mcms09
+
+	Changed:
+		include/tm_version.inc.php (1.2), "Exp", lines: +2 -2
+
+	1.0.8.0
+
+2008-10-01 Wednesday 09:48  mcms09
+
+	Changed:
+		CHANGES (1.7), "Exp", lines: +58 -11
+
+	changes for 1.0.8.0
+
+2008-09-30 Tuesday 12:54  mcms09
+
+	Changed:
+		include/install/install_install.inc.php (1.5), "Exp", lines: +1 -0
+
+	rcpt_name
+
+2008-09-30 Tuesday 12:53  mcms09
+
+	Changed:
+		include/install/install_examples.inc.php (1.3), "Exp", lines: +5 -2
+
+	 rcpt_name, smtp port, rcpt name, blacklist
+
+2008-09-30 Tuesday 12:52  mcms09
+
+	Changed:
+		include/install/install_conf_sql.inc.php (1.11), "Exp", lines: +0 -4
+
+	 rcpt_name, global smtp port
+
+2008-09-29 Monday 20:41  mcms09
+
+	Changed:
+		include/send_it.php (1.13), "Exp", lines: +39 -8
+
+	smtp_port, blacklist, parse rcpt name, parse subject
+
+2008-09-29 Monday 20:38  mcms09
+
+	Changed:
+		include/form_list.inc.php (1.3), "Exp", lines: +52 -5
+
+	public groups, blacklist
+
+2008-09-29 Monday 20:37  mcms09
+
+	Changed:
+		include/form_form.inc.php (1.2), "Exp", lines: +172 -774
+
+	public groups, blacklist, use display(), simplified code to show
+	fields f0-f9
+
+2008-09-29 Monday 20:33  mcms09
+
+	Changed:
+		include/form_edit.inc.php (1.3), "Exp", lines: +23 -1
+		include/form_new.inc.php (1.3), "Exp", lines: +20 -4
+
+	public groups, blacklist
+
+2008-09-29 Monday 20:31  mcms09
+
+	Changed:
+		include/queue_send.inc.php (1.7), "Exp", lines: +99 -88
+		include/form_list_legende.inc.php (1.2), "Exp", lines: +1 -0
+
+	blacklist
+
+2008-09-29 Monday 20:27  mcms09
+
+	Changed:
+		include/queue_new.inc.php (1.7), "Exp", lines: +97 -89
+
+	blacklist
+
+2008-09-29 Monday 20:25  mcms09
+
+	Changed:
+		include/queue_list.inc.php (1.6), "Exp", lines: +25 -3
+
+	del all including history, blacklist
+
+2008-09-29 Monday 20:24  mcms09
+
+	Changed:
+		include/queue_list_legende.inc.php (1.3), "Exp", lines: +3 -3
+
+	blacklist, use tm_icon()
+
+2008-09-29 Monday 20:23  mcms09
+
+	Changed:
+		include/queue_form.inc.php (1.4), "Exp", lines: +18 -7
+
+	blacklist
+
+2008-09-29 Monday 20:20  mcms09
+
+	Changed:
+		include/nl_list_legende.inc.php (1.3), "Exp", lines: +1 -0
+
+	del history
+
+2008-09-29 Monday 20:19  mcms09
+
+	Changed:
+		include/nl_grp_form.inc.php (1.3), "Exp", lines: +2 -2
+
+	display()
+
+2008-09-29 Monday 20:18  mcms09
+
+	Changed:
+		include/pager.inc.php (1.2), "Exp", lines: +1 -0
+
+	...
+
+2008-09-29 Monday 20:17  mcms09
+
+	Changed:
+		include/nl_list.inc.php (1.4), "Exp", lines: +20 -0
+
+	del history, rcpt name
+
+2008-09-29 Monday 20:16  mcms09
+
+	Changed:
+		include/nl_form.inc.php (1.4), "Exp", lines: +21 -2
+
+	display(), rcpt name
+
+2008-09-29 Monday 20:15  mcms09
+
+	Changed:
+		include/nl_edit.inc.php (1.3), "Exp", lines: +6 -1
+		include/nl_new.inc.php (1.4), "Exp", lines: +4 -1
+
+	rcpt name
+
+2008-09-29 Monday 20:14  mcms09
+
+	Changed:
+		include/Main.inc.php (1.4), "Exp", lines: +6 -0
+
+	include blacklist stuff
+
+2008-09-29 Monday 20:12  mcms09
+
+	Changed:
+		include/host_form.inc.php (1.2), "Exp", lines: +1 -1
+
+	use display()
+
+2008-09-29 Monday 20:11  mcms09
+
+	Changed:
+		include/Functions.inc.php (1.6), "Exp", lines: +92 -1
+
+	added bgcolor/bgimage in tm_icon(), getDomainFromEMail()
+	getDirctories() getFiles() getMime() sendHttpResponse()
+	getHttpResponse()
+
+2008-09-29 Monday 20:07  mcms09
+
+	Changed:
+		include/Classes.inc.php (1.4), "Exp", lines: +1 -0
+
+	include class for blacklist
+
+2008-09-29 Monday 20:07  mcms09
+
+	Changed:
+		include/Class_Q.inc.php (1.5), "Exp", lines: +45 -6
+
+	added method: clearH() for delete history of nl/q/adr
+
+2008-09-29 Monday 20:05  mcms09
+
+	Changed:
+		include/Class_NL.inc.php (1.4), "Exp", lines: +6 -4
+
+	rcpt name
+
+2008-09-29 Monday 20:04  mcms09
+
+	Changed:
+		include/Class_Form.inc.php (1.4), "Exp", lines: +47 -12
+
+	public group references, blacklist
+
+2008-09-29 Monday 20:01  mcms09
+
+	Changed:
+		include/Class_DB.inc.php (1.3), "Exp", lines: +8 -4
+
+	socket
+
+2008-09-29 Monday 20:01  mcms09
+
+	Changed:
+		include/Class_CFG.inc.php (1.3), "Exp", lines: +13 -2
+
+	smtp_port, rcpt name
+
+2008-09-29 Monday 20:00  mcms09
+
+	Changed:
+		include/Class_Adr.inc.php (1.4), "Exp", lines: +105 -53
+
+	public groups, added method: setGroup(), mergeGroups()
+
+2008-09-29 Monday 19:52  mcms09
+
+	Changed:
+		include/adr_search_form.inc.php (1.2), "Exp", lines: +2 -1
+		include/adr_search.inc.php (1.3), "Exp", lines: +1 -0
+		include/bounce_mail_form_head.inc.php (1.2), "Exp", lines: +1 -0
+
+	...
+
+2008-09-29 Monday 19:51  mcms09
+
+	Changed:
+		include/adr_list.inc.php (1.4), "Exp", lines: +328 -6
+
+	mark blacklist, do actions
+
+2008-09-29 Monday 17:54  mcms09
+
+	Changed:
+		include/adr_list_legende.inc.php (1.2), "Exp", lines: +18 -7
+
+	use tm_icon(), blacklist
+
+2008-09-29 Monday 17:53  mcms09
+
+	Changed:
+		include/adr_import.inc.php (1.4), "Exp", lines: +31 -9
+
+	import to blacklist, use merge methods for groups...
+
+2008-09-29 Monday 17:51  mcms09
+
+	Changed:
+		include/adr_import_form.inc.php (1.2), "Exp", lines: +3 -3
+
+	enabled blacklist option
+
+2008-09-29 Monday 17:49  mcms09
+
+	Changed:
+		include/adr_grp_list.inc.php (1.3), "Exp", lines: +49 -3
+
+	mark public, show adr count, sort list
+
+2008-09-29 Monday 17:47  mcms09
+
+	Changed:
+		include/adr_grp_list_legende.inc.php (1.2), "Exp", lines: +11 -10
+
+	use tm_icon(), public
+
+2008-09-29 Monday 17:46  mcms09
+
+	Changed:
+		include/adr_grp_form.inc.php (1.2), "Exp", lines: +40 -2
+
+	display(), public group flag and name
+
+2008-09-29 Monday 17:44  mcms09
+
+	Changed:
+		include/adr_grp_edit.inc.php (1.3), "Exp", lines: +12 -0
+		include/adr_grp_new.inc.php (1.3), "Exp", lines: +8 -0
+
+	public group flag and name
+
+2008-09-29 Monday 17:44  mcms09
+
+	Changed:
+		include/adr_form.inc.php (1.2), "Exp", lines: +21 -186
+
+	display(), simplified code for f0-f9
+
+2008-09-29 Monday 17:41  mcms09
+
+	Changed:
+		include/adr_export_form.inc.php (1.2), "Exp", lines: +22 -0
+		include/adr_export.inc.php (1.5), "Exp", lines: +59 -34
+
+	blacklist
+
+2008-09-29 Monday 17:40  mcms09
+
+	Changed:
+		include/adr_clean.inc.php (1.3), "Exp", lines: +116 -39
+
+	blacklist, actions:delete,aktiv,status,move2grp,copy2grp,remove from
+	grp,del history
+
+2008-09-29 Monday 17:37  mcms09
+
+	Changed:
+		include/adr_clean_form.inc.php (1.2), "Exp", lines: +90 -34
+
+	blacklist, actions:delete,aktiv,status,move2grp,copy2grp,remove from
+	grp,del history
+
+2008-09-29 Monday 17:32  mcms09
+
+	Changed:
+		include/adm_user_new.inc.php (1.3), "Exp", lines: +3 -3
+
+	require_omce instead include_once
+
+2008-09-29 Monday 17:30  mcms09
+
+	Changed:
+		include/adm_user_form.inc.php (1.4), "Exp", lines: +2 -2
+
+	use display()
+
+2008-09-29 Monday 17:29  mcms09
+
+	Changed:
+		include/adm_set_form.inc.php (1.3), "Exp", lines: +38 -0
+
+	smtp port, default recipient name
+
+2008-09-29 Monday 17:27  mcms09
+
+	Added:
+		include/Class_Blacklist.inc.php (1.1)
+
+	class for blacklist
+
+2008-09-29 Monday 17:26  mcms09
+
+	Added:
+		include/bl_edit.inc.php (1.1)
+		include/bl_export.inc.php (1.1)
+		include/bl_form.inc.php (1.1)
+		include/bl_list.inc.php (1.1)
+		include/bl_list_form.inc.php (1.1)
+		include/bl_list_legende.inc.php (1.1)
+		include/bl_new.inc.php (1.1)
+
+	blacklist, list, edit, new, export etc
+
+2008-09-29 Monday 17:24  mcms09
+
+	Added:
+		include/adr_list_form.inc.php (1.1)
+		include/adr_list_form_head.inc.php (1.1)
+
+	select adr and choose action
+
+2008-09-29 Monday 17:23  mcms09
+
+	Changed:
+		include/Menu.inc.php (1.5), "Exp", lines: +25 -1
+
+	blacklist
+
+2008-09-29 Monday 17:22  mcms09
+
+	Changed:
+		include/host_test.inc.php (1.3), "Exp", lines: +1 -0
+
+	smtp port
+
+2008-09-29 Monday 17:21  mcms09
+
+	Added:
+		include/Messages.inc.php (1.1)
+
+	define fe messages
+
+2008-09-29 Monday 17:20  mcms09
+
+	Changed:
+		include/tm_lib.inc.php (1.13), "Exp", lines: +24 -26
+
+	constants for filedir/path, blacklist, require Messages.inc.php
+
+2008-09-29 Monday 17:17  mcms09
+
+	Added:
+		include/click.inc.php (1.1)
+		include/news_blank.png.inc.php (1.1)
+		include/subscribe.inc.php (1.1)
+		include/unsubscribe.inc.php (1.1)
+
+	new includes for fe
+
+2008-09-29 Monday 17:14  mcms09
+
+	Changed:
+		include/subscribe_form.inc.php (1.2), "Exp", lines: +78 -234
+
+	simplified code
+
+2008-09-29 Monday 16:24  mcms09
+
+	Changed:
+		include/Stats.inc.php (1.3), "Exp", lines: +1 -1
+
+	status neu
+
+2008-09-29 Monday 16:23  mcms09
+
+	Changed:
+		include/install/install_install.inc.php (1.4), "Exp", lines: +36 -0
+
+	dbsocket, smtp port, create default smtp/pop3 hosts entry
+
+2008-09-29 Monday 16:22  mcms09
+
+	Changed:
+		include/install/install_form.inc.php (1.3), "Exp", lines: +53 -5
+
+	dbtype, dbsocket, smtp port
+
+2008-09-29 Monday 16:18  mcms09
+
+	Changed:
+		include/install/install_conf.inc.php (1.6), "Exp", lines: +11 -0
+
+	dbtype, dbsocket, smtp port
+
+2008-09-29 Monday 16:12  mcms09
+
+	Changed:
+		include/install/install_conf_sql.inc.php (1.10), "Exp", lines: +20 -0
+
+	blacklist
+
+2008-09-29 Monday 16:11  mcms09
+
+	Changed:
+		include/install/install_conf_sql.inc.php (1.9), "Exp", lines: +4 -1
+
+	 rcpt_name, global smtp port
+
+2008-09-29 Monday 15:51  mcms09
+
+	Changed:
+		include/install/install_conf_sql.inc.php (1.8), "Exp", lines: +4 -1
+
+	sql stuff f. public groups
+
+2008-09-29 Monday 15:49  mcms09
+
+	Changed:
+		include/install/install_conf_sql.inc.php (1.7), "Exp", lines: +15 -14
+
+	socket/dbtype=myisam/innodb
+
+2008-09-29 Monday 15:47  mcms09
+
+	Changed:
+		include/install/install_check_db.inc.php (1.2), "Exp", lines: +5 -1
+		include/install/install_check_input.inc.php (1.2), "Exp", lines: +3 -1
+
+	check if socket should be used
+
+2008-09-29 Monday 15:45  mcms09
+
+	Changed:
+		include/libchart-1.1/classes/Axis.php (1.2), "Exp", lines: +1 -1
+		include/libchart-1.1/classes/BarChart.php (1.2), "Exp", lines: +1 -1
+		include/libchart-1.1/classes/Chart.php (1.2), "Exp", lines: +1 -1
+		include/libchart-1.1/classes/HorizontalChart.php (1.2), "Exp", lines: +1 -1
+		include/libchart-1.1/classes/LineChart.php (1.2), "Exp", lines: +1 -1
+		include/libchart-1.1/classes/PieChart.php (1.2), "Exp", lines: +1 -1
+		include/libchart-1.1/classes/Point.php (1.2), "Exp", lines: +1 -1
+		include/libchart-1.1/classes/Primitive.php (1.2), "Exp", lines: +1 -1
+		include/libchart-1.1/classes/Text.php (1.2), "Exp", lines: +1 -1
+		include/libchart-1.1/classes/VerticalChart.php (1.2), "Exp", lines: +1 -1
+
+	remove php shorttags
+
+2008-09-29 Monday 15:42  mcms09
+
+	Changed:
+		include/smtp/smtp.php (1.2), "Exp", lines: +4 -1
+
+	added debug message
+
+2008-09-29 Monday 15:38  mcms09
+
+	Changed:
+		tpl/Form.html (1.2), "Exp", lines: +23 -13
+		tpl/Form_o.html (1.2), "Exp", lines: +19 -1
+		tpl/Form_os.html (1.2), "Exp", lines: +19 -1
+		tpl/Form_s.html (1.2), "Exp", lines: +19 -1
+
+	added html full headers
+
+2008-09-29 Monday 15:36  mcms09
+
+	Changed:
+		unsubscribe.php (1.8), "Exp", lines: +1 -118
+
+	use unsubscribe.inc.php
+
+2008-09-29 Monday 15:36  mcms09
+
+	Changed:
+		subscribe.php (1.7), "Exp", lines: +1 -411
+
+	use subscribe.inc.php
+
+2008-09-29 Monday 15:35  mcms09
+
+	Changed:
+		news_blank.png.php (1.6), "Exp", lines: +13 -156
+
+	use news_blank.inc.php
+
+2008-09-29 Monday 15:34  mcms09
+
+	Changed:
+		click.php (1.6), "Exp", lines: +2 -54
+
+	use click.inc.php
+
+2008-09-29 Monday 15:27  mcms09
+
+	Changed:
+		js/tellmatic.js (1.4), "Exp", lines: +4 -1
+
+	added check for blacklist option on import
+
+2008-09-29 Monday 15:24  mcms09
+
+	Added:
+		doc/de/bl_edit.html (1.1)
+		doc/de/bl_list.html (1.1)
+		doc/de/bl_new.html (1.1)
+		doc/en/bl_edit.html (1.1)
+		doc/en/bl_list.html (1.1)
+		doc/en/bl_new.html (1.1)
+
+	quickhelp for blacklist
+
+2008-09-29 Monday 15:21  mcms09
+
+	Added:
+		css/form.css (1.1)
+
+	css for forms
+
+2008-09-29 Monday 15:16  mcms09
+
+	Added:
+		doc/en/host_edit.html (1.1)
+		doc/en/host_list.html (1.1)
+		doc/en/host_new.html (1.1)
+
+	quickhelp for hosts
+
+2008-09-29 Monday 15:14  mcms09
+
+	Changed:
+		include/adm_set.inc.php (1.4), "Exp", lines: +14 -1
+
+	smtp port
+
+2008-07-04 Friday 10:12  mcms09
+
+	Changed:
+		ChangeLog (1.2), "Exp", lines: +130 -0
+
+	update
+
+2008-07-03 Thursday 18:49  mcms09
+
+	Changed:
+		files/forms/Form_1.html (1.2), "Exp", lines: +6 -0
+
+	added tpl var to display form description
+
+2008-07-03 Thursday 18:48  mcms09
+
+	Changed:
+		include/install/install_install.inc.php (1.3), "Exp", lines: +2 -0
+
+	added smtp_auth, define hosts table
+
+2008-07-03 Thursday 18:47  mcms09
+
+	Changed:
+		include/install/install_form.inc.php (1.2), "Exp", lines: +24 -0
+
+	added smtp_auth select input
+
+2008-07-03 Thursday 18:46  mcms09
+
+	Changed:
+		include/install/install_finish.inc.php (1.3), "Exp", lines: +1 -1
+
+	changed subject in install mail to display version
+
+2008-07-03 Thursday 18:45  mcms09
+
+	Changed:
+		include/install/install_conf.inc.php (1.5), "Exp", lines: +8 -3
+
+	added smtp_auth, include tm_version
+
+2008-07-03 Thursday 18:44  mcms09
+
+	Changed:
+		include/install/install_conf_sql.inc.php (1.6), "Exp", lines: +1 -0
+
+	added smtp_auth to config table
+
+2008-07-03 Thursday 18:42  mcms09
+
+	Changed:
+		include/adm_set.inc.php (1.3), "Exp", lines: +6 -0
+
+	added smtp_auth
+
+2008-07-03 Thursday 18:42  mcms09
+
+	Changed:
+		include/adm_set_form.inc.php (1.2), "Exp", lines: +28 -0
+
+	added smtp_auth select input
+
+2008-07-03 Thursday 17:41  mcms09
+
+	Changed:
+		include/Class_CFG.inc.php (1.2), "Exp", lines: +7 -1
+
+	added smtp_auth
+
+2008-07-03 Thursday 17:36  mcms09
+
+	Changed:
+		include/tm_lib.inc.php (1.12), "Exp", lines: +2 -6
+
+	require tm_version
+
+2008-07-03 Thursday 17:35  mcms09
+
+	Added:
+		include/tm_version.inc.php (1.1)
+
+	initial
+
+2008-07-03 Thursday 16:59  mcms09
+
+	Changed:
+		include/tm_lib.inc.php (1.11), "Exp", lines: +2 -17
+
+	do not define double vars, use $C instead
+
+2008-07-03 Thursday 16:57  mcms09
+
+	Changed:
+		include/send_it.php (1.12), "Exp", lines: +26 -14
+
+	support multiple smtp-hosts, check for valid host, use global
+	settings from $C for internal sendmail() function
+
+2008-07-03 Thursday 16:55  mcms09
+
+	Changed:
+		include/Functions.inc.php (1.5), "Exp", lines: +19 -46
+
+	use global settings from $C for internal Mail function sendmail(),
+	chg var names
+
+2008-07-03 Thursday 16:52  mcms09
+
+	Changed:
+		include/host_test.inc.php (1.2), "Exp", lines: +4 -4
+
+	use user email o send testmails
+
+2008-07-03 Thursday 16:50  mcms09
+
+	Changed:
+		include/bounce_mail_list.inc.php (1.3), "Exp", lines: +2 -2
+		include/bounce.inc.php (1.5), "Exp", lines: +1 -1
+
+	use global settings from $C for bouncemailaddress
+
+2008-07-03 Thursday 16:48  mcms09
+
+	Changed:
+		subscribe.php (1.6), "Exp", lines: +3 -3
+		unsubscribe.php (1.7), "Exp", lines: +2 -2
+
+	use global settings from $C for sendmail() parameters
+
+2008-07-03 Thursday 12:59  mcms09
+
+	Added:
+		ChangeLog (1.1)
+
+	#
+
+2008-07-03 Thursday 12:52  mcms09
+
+	Changed:
+		include/queue_vars.inc.php (1.3), "Exp", lines: +1 -0
+
+	added hosts
+
+2008-07-03 Thursday 12:50  mcms09
+
+	Changed:
+		include/queue_new.inc.php (1.6), "Exp", lines: +17 -5
+		include/queue_send.inc.php (1.6), "Exp", lines: +5 -0
+
+	save selected host_id for smtp-server
+
+2008-07-03 Thursday 12:43  mcms09
+
+	Changed:
+		include/queue_list.inc.php (1.5), "Exp", lines: +3 -3
+
+	make use of display() function for output strings
+
+2008-07-03 Thursday 12:42  mcms09
+
+	Changed:
+		include/queue_list.inc.php (1.4), "Exp", lines: +39 -2
+
+	show smtp-server, check if smtp exists/is active
+
+2008-07-03 Thursday 12:40  mcms09
+
+	Changed:
+		include/queue_form.inc.php (1.3), "Exp", lines: +28 -0
+
+	added input to select smtp-server
+
+2008-07-03 Thursday 12:39  mcms09
+
+	Changed:
+		include/Menu.inc.php (1.4), "Exp", lines: +41 -17
+
+	chg order, add link to list/add hosts
+
+2008-07-03 Thursday 12:37  mcms09
+
+	Changed:
+		include/Main.inc.php (1.3), "Exp", lines: +4 -1
+
+	chg cr, load host list/form
+
+2008-07-03 Thursday 12:33  mcms09
+
+	Added:
+		include/host_edit.inc.php (1.1)
+		include/host_form.inc.php (1.1)
+		include/host_list_legende.inc.php (1.1)
+		include/host_list.inc.php (1.1)
+		include/host_new.inc.php (1.1)
+		include/host_test.inc.php (1.1)
+
+	initial release
+
+2008-07-03 Thursday 12:31  mcms09
+
+	Added:
+		include/Class_Host.inc.php (1.1)
+
+	initial
+
+2008-07-03 Thursday 12:30  mcms09
+
+	Changed:
+		include/Foot.inc.php (1.3), "Exp", lines: +1 -1
+
+	chg cr
+
+2008-07-03 Thursday 12:30  mcms09
+
+	Changed:
+		include/Classes.inc.php (1.3), "Exp", lines: +1 -0
+
+	load Class for hosts
+
+2008-07-03 Thursday 12:29  mcms09
+
+	Changed:
+		include/Class_Q.inc.php (1.4), "Exp", lines: +12 -2
+
+	added host_id to queries and return array
+
+2008-07-03 Thursday 12:27  mcms09
+
+	Changed:
+		include/Class_Mail.inc.php (1.5), "Exp", lines: +2 -2
+
+	pass options to reconnect method, connect options defaults now to ""
+
+2008-07-03 Thursday 12:26  mcms09
+
+	Changed:
+		include/bounce.inc.php (1.4), "Exp", lines: +6 -9
+
+	support multiple imap/pop3 servers
+
+2008-07-03 Thursday 12:24  mcms09
+
+	Changed:
+		include/bounce.inc.php (1.3), "Exp", lines: +0 -3
+
+	do not connect to server by default
+
+2008-07-03 Thursday 12:22  mcms09
+
+	Changed:
+		include/bounce_host_form.inc.php (1.2), "Exp", lines: +15 -2
+
+	add select input for defined active imap/pop3 hosts
+
+2008-07-03 Thursday 12:21  mcms09
+
+	Changed:
+		include/adr_list.inc.php (1.3), "Exp", lines: +1 -1
+
+	#
+
+2008-07-03 Thursday 12:18  mcms09
+
+	Changed:
+		include/myftphp/myftphp_4.php (1.4), "Exp", lines: +16 -16
+		include/phphtmlparser/ex_dumptags.php (1.2), "Exp", lines: +1 -1
+		include/phphtmlparser/ex_dumpurl.php (1.2), "Exp", lines: +1 -1
+		include/phphtmlparser/html2text.inc (1.3), "Exp", lines: +1 -1
+		include/phphtmlparser/README (1.2), "Exp", lines: +1 -1
+
+	no more php shorttag
+
+2008-07-03 Thursday 12:14  mcms09
+
+	Changed:
+		include/libchart-1.1/libchart.php (1.3), "Exp", lines: +1 -1
+		include/mimemessage/test_multibyte_message.php (1.2), "Exp", lines: +2 -2
+		include/myftphp/myftphp_themes/light.ini.php (1.2), "Exp", lines: +1 -1
+		include/myftphp/myftphp_themes/negative.ini.php (1.2), "Exp", lines: +1 -1
+
+	no more php shorttag
+
+2008-07-03 Thursday 12:13  mcms09
+
+	Changed:
+		include/adm_user_form.inc.php (1.3), "Exp", lines: +1 -1
+
+	descr of name input should be name not e-mail
+
+2008-07-03 Thursday 12:11  mcms09
+
+	Changed:
+		include/tm_lib.inc.php (1.10), "Exp", lines: +1 -1
+
+	chg version to 1.0.8.0-dev, sid
+
+2008-07-03 Thursday 12:11  mcms09
+
+	Changed:
+		include/tm_lib.inc.php (1.9), "Exp", lines: +1 -0
+
+	add table hosts
+
+2008-07-03 Thursday 12:10  mcms09
+
+	Changed:
+		include/wysiwyg.inc.php (1.6), "Exp", lines: +1 -1
+
+	no more php shorttag
+
+2008-07-02 Wednesday 23:10  mcms09
+
+	Changed:
+		include/install/install_conf_sql.inc.php (1.5), "Exp", lines: +26 -0
+
+	create table hosts, added host_id to nl_h and nl_q
+
+2008-07-02 Wednesday 23:02  mcms09
+
+	Changed:
+		CHANGES (1.6), "Exp", lines: +13 -0
+		UPDATE (1.7), "Exp", lines: +37 -0
+
+	update
+
+2008-07-02 Wednesday 22:57  mcms09
+
+	Changed:
+		js/tellmatic.js (1.3), "Exp", lines: +24 -0
+
+	add check for hostype
+
+2008-07-02 Wednesday 22:55  mcms09
+
+	Added:
+		doc/de/host_list.html (1.1)
+		doc/de/host_edit.html (1.1)
+		doc/de/host_new.html (1.1)
+
+	initial
+
+2008-06-25 Wednesday 14:04  mcms09
+
+	Changed:
+		include/nl_new.inc.php (1.3), "Exp", lines: +2 -2
+
+	fixed link after creating new nl, bug 1882015
+
+2008-06-25 Wednesday 13:59  mcms09
+
+	Changed:
+		include/Class_Form.inc.php (1.3), "Exp", lines: +5 -3
+
+	check geoip for undefined vars, bug 1965940
+
+2008-06-24 Tuesday 13:27  tag r-1-0-7-4
+
+2008-06-24 Tuesday 13:27  mcms09
 
 	Changed:
 		CHANGES (1.5), "Exp", lines: +8 -0
@@ -10,42 +1004,42 @@
 
 	V1.0.7.4
 
-2008-06-24 Tuesday 11:26  mcms09
+2008-06-24 Tuesday 13:26  mcms09
 
 	Changed:
 		include/myftphp/myftphp_4.php (1.3), "Exp", lines: +1 -1
 
 	fixed Path to use Constants
 
-2008-06-24 Tuesday 10:29  mcms09
+2008-06-24 Tuesday 12:29  mcms09
 
 	Changed:
 		include/Menu.inc.php (1.3), "Exp", lines: +12 -0
 
 	add Entry to list complete Q
 
-2008-06-24 Tuesday 10:27  mcms09
+2008-06-24 Tuesday 12:27  mcms09
 
 	Changed:
 		include/install/install_conf.inc.php (1.4), "Exp", lines: +1 -1
 
 	fix path problem on installation for subdomains etc
 
-2008-06-24 Tuesday 10:26  mcms09
+2008-06-24 Tuesday 12:26  mcms09
 
 	Changed:
 		include/tm_lib.inc.php (1.8), "Exp", lines: +1 -1
 
 	changed Version to 1.0.7.4
 
-2008-06-24 Tuesday 10:26  mcms09
+2008-06-24 Tuesday 12:26  mcms09
 
 	Changed:
 		include/send_it.php (1.11), "Exp", lines: +2 -1
 
 	fixed important bug with undefined array for massmails
 
-2008-06-24 Tuesday 10:25  mcms09
+2008-06-24 Tuesday 12:25  mcms09
 
 	Changed:
 		include/queue_send.inc.php (1.5), "Exp", lines: +2 -2
@@ -53,21 +1047,21 @@
 
 	changed Text
 
-2008-06-24 Tuesday 10:24  mcms09
+2008-06-24 Tuesday 12:24  mcms09
 
 	Changed:
 		include/adr_export.inc.php (1.4), "Exp", lines: +2 -2
 
 	fix export bug with delimiter
 
-2008-06-24 Tuesday 10:24  mcms09
+2008-06-24 Tuesday 12:24  mcms09
 
 	Changed:
 		install.php (1.5), "Exp", lines: +1 -1
 
 	use ApplicationText with current Version in Mail
 
-2008-06-24 Tuesday 10:23  mcms09
+2008-06-24 Tuesday 12:23  mcms09
 
 	Changed:
 		news_blank.png.php (1.5), "Exp", lines: +1 -1
@@ -77,30 +1071,30 @@
 
 	use require_once instead of include
 
-2007-12-12 Wednesday 23:04  tag r-1-0-7-3
+2007-12-13 Thursday 00:04  tag r-1-0-7-3
 
-2007-12-12 Wednesday 23:04  mcms09
+2007-12-13 Thursday 00:04  mcms09
 
 	Changed:
 		CHANGES (1.4), "Exp", lines: +20 -0
 
 	CHANGES for 1.0.7.3
 
-2007-12-12 Wednesday 21:02  mcms09
+2007-12-12 Wednesday 22:02  mcms09
 
 	Changed:
 		UPDATE (1.5), "Exp", lines: +66 -4
 
 	UPDATE for 1.0.7.3
 
-2007-12-12 Wednesday 20:30  mcms09
+2007-12-12 Wednesday 21:30  mcms09
 
 	Added:
 		include/queue_vars.inc.php (1.1)
 
 	add queue_vars.inc.php
 
-2007-12-12 Wednesday 20:28  mcms09
+2007-12-12 Wednesday 21:28  mcms09
 
 	Changed:
 		click.php (1.4), "Exp", lines: +5 -1
@@ -109,7 +1103,7 @@
 
 	save memo
 
-2007-12-12 Wednesday 20:26  mcms09
+2007-12-12 Wednesday 21:26  mcms09
 
 	Changed:
 		install.php (1.4), "Exp", lines: +3 -0
@@ -117,7 +1111,7 @@
 
 	check for register_globals, safe_mode, magic quotes
 
-2007-12-12 Wednesday 20:25  mcms09
+2007-12-12 Wednesday 21:25  mcms09
 
 	Changed:
 		include/adr_export.inc.php (1.3), "Exp", lines: +10 -3
@@ -128,14 +1122,14 @@
 
 	save created, author, editor, stats data views,clicks,nl
 
-2007-12-12 Wednesday 20:21  mcms09
+2007-12-12 Wednesday 21:21  mcms09
 
 	Changed:
 		include/Class_Adr.inc.php (1.3), "Exp", lines: +17 -5
 
 	add method addMemo()
 
-2007-12-12 Wednesday 20:20  mcms09
+2007-12-12 Wednesday 21:20  mcms09
 
 	Changed:
 		include/queue_list.inc.php (1.3), "Exp", lines: +13 -5
@@ -143,7 +1137,7 @@
 
 	add refresh link
 
-2007-12-12 Wednesday 20:20  mcms09
+2007-12-12 Wednesday 21:20  mcms09
 
 	Changed:
 		include/queue_new.inc.php (1.5), "Exp", lines: +10 -16
@@ -151,7 +1145,7 @@
 
 	add queue_vars.inc.php, show q list instead nl list after submit
 
-2007-12-12 Wednesday 20:17  mcms09
+2007-12-12 Wednesday 21:17  mcms09
 
 	Changed:
 		include/statistic_adr.inc.php (1.3), "Exp", lines: +2 -2
@@ -160,49 +1154,49 @@
 
 	add stat icons
 
-2007-12-12 Wednesday 20:16  mcms09
+2007-12-12 Wednesday 21:16  mcms09
 
 	Changed:
 		include/status.inc.php (1.3), "Exp", lines: +3 -3
 
 	add list and stat icons
 
-2007-12-12 Wednesday 20:16  mcms09
+2007-12-12 Wednesday 21:16  mcms09
 
 	Changed:
 		include/tm_lib_admin.inc.php (1.4), "Exp", lines: +1 -1
 
 	set max session lifetime to 360 min
 
-2007-12-12 Wednesday 20:15  mcms09
+2007-12-12 Wednesday 21:15  mcms09
 
 	Changed:
 		include/wysiwyg.inc.php (1.5), "Exp", lines: +1 -1
 
 	use entities again, without it would lead into weird html code... :P
 
-2007-12-11 Tuesday 23:39  mcms09
+2007-12-12 Wednesday 00:39  mcms09
 
 	Changed:
 		include/send_it.php (1.10), "Exp", lines: +80 -82
 
 	add datetime before each line in logfile
 
-2007-12-11 Tuesday 23:07  mcms09
+2007-12-12 Wednesday 00:07  mcms09
 
 	Changed:
 		include/send_it.php (1.9), "Exp", lines: +1 -1
 
 	set h_status to 5 just before validating email
 
-2007-12-11 Tuesday 23:04  mcms09
+2007-12-12 Wednesday 00:04  mcms09
 
 	Changed:
 		include/send_it.php (1.8), "Exp", lines: +10 -0
 
 	set h_status to 5 just before validating email
 
-2007-12-11 Tuesday 22:36  mcms09
+2007-12-11 Tuesday 23:36  mcms09
 
 	Changed:
 		click.php (1.3), "Exp", lines: +1 -1
@@ -280,21 +1274,21 @@
 
 	make file and dir vars a constant
 
-2007-12-05 Wednesday 21:16  mcms09
+2007-12-05 Wednesday 22:16  mcms09
 
 	Changed:
 		include/Index.inc.php (1.2), "Exp", lines: +0 -8
 
 	removed remove_old_admin_files(), not used
 
-2007-12-05 Wednesday 21:14  mcms09
+2007-12-05 Wednesday 22:14  mcms09
 
 	Deleted:
 		include/mimemessage/smtp_message.php~ (1.2)
 
 	remove temp files
 
-2007-12-05 Wednesday 21:09  mcms09
+2007-12-05 Wednesday 22:09  mcms09
 
 	Changed:
 		CHANGES (1.3), "Exp", lines: +12 -0
@@ -302,14 +1296,14 @@
 
 	UPDATE/CHANGES 1.0.7.2
 
-2007-12-05 Wednesday 20:53  mcms09
+2007-12-05 Wednesday 21:53  mcms09
 
 	Changed:
 		include/Class_NL.inc.php (1.2), "Exp", lines: +2 -2
 
 	remove more tags
 
-2007-12-05 Wednesday 20:51  mcms09
+2007-12-05 Wednesday 21:51  mcms09
 
 	Changed:
 		include/Lang.inc.php (1.3), "Exp", lines: +1 -1
@@ -317,161 +1311,161 @@
 
 	fixed php warning
 
-2007-12-05 Wednesday 20:47  mcms09
+2007-12-05 Wednesday 21:47  mcms09
 
 	Changed:
 		include/wysiwyg.inc.php (1.3), "Exp", lines: +2 -1
 
 	do not set a default title for fullpage
 
-2007-12-05 Wednesday 20:45  mcms09
+2007-12-05 Wednesday 21:45  mcms09
 
 	Changed:
 		click.php (1.2), "Exp", lines: +9 -3
 
 	only set h/adr viewed status if status is not -unsubscribed-
 
-2007-12-05 Wednesday 20:45  mcms09
+2007-12-05 Wednesday 21:45  mcms09
 
 	Changed:
 		news_blank.png.php (1.3), "Exp", lines: +1 -1
 
 	addview has only 1 param
 
-2007-12-05 Wednesday 20:40  mcms09
+2007-12-05 Wednesday 21:40  mcms09
 
 	Changed:
 		unsubscribe.php (1.3), "Exp", lines: +5 -9
 
 	use exact match when looking up email, set h status 7:unsubscribe
 
-2007-12-05 Wednesday 20:39  mcms09
+2007-12-05 Wednesday 21:39  mcms09
 
 	Changed:
 		subscribe.php (1.3), "Exp", lines: +1 -0
 
 	use exact match when looking up email
 
-2007-12-05 Wednesday 20:38  mcms09
+2007-12-05 Wednesday 21:38  mcms09
 
 	Changed:
 		news_blank.png.php (1.2), "Exp", lines: +8 -2
 
 	only set h/adr viewed status if status is not -unsubscribed-
 
-2007-12-05 Wednesday 20:32  mcms09
+2007-12-05 Wednesday 21:32  mcms09
 
 	Changed:
 		include/tm_lib.inc.php (1.6), "Exp", lines: +1 -1
 
 	set version 1.0.7.2
 
-2007-12-05 Wednesday 20:31  mcms09
+2007-12-05 Wednesday 21:31  mcms09
 
 	Changed:
 		include/Stats.inc.php (1.2), "Exp", lines: +6 -3
 
 	added status 7: unsubscribed
 
-2007-12-05 Wednesday 20:30  mcms09
+2007-12-05 Wednesday 21:30  mcms09
 
 	Changed:
 		include/send_it.php (1.6), "Exp", lines: +1 -1
 
 	fixed warning for undefined var
 
-2007-12-05 Wednesday 20:28  mcms09
+2007-12-05 Wednesday 21:28  mcms09
 
 	Changed:
 		include/mimemessage/smtp_message.php (1.5), "Exp", lines: +7 -7
 
 	fixed warning for undefined $error
 
-2007-12-05 Wednesday 15:55  mcms09
+2007-12-05 Wednesday 16:55  mcms09
 
 	Changed:
 		include/queue_new.inc.php (1.3), "Exp", lines: +2 -2
 
 	fixed problem with time set to 0h or similar
 
-2007-12-05 Wednesday 15:45  mcms09
+2007-12-05 Wednesday 16:45  mcms09
 
 	Changed:
 		include/Class_Adr.inc.php (1.2), "Exp", lines: +8 -8
 
 	force lowercase for email
 
-2007-12-05 Wednesday 15:31  mcms09
+2007-12-05 Wednesday 16:31  mcms09
 
 	Changed:
 		js/tellmatic.js (1.2), "Exp", lines: +17 -0
 
 	check input queue_new offset/limit
 
-2007-12-05 Wednesday 15:25  mcms09
+2007-12-05 Wednesday 16:25  mcms09
 
 	Changed:
 		include/wysiwyg.inc.php (1.2), "Exp", lines: +5 -2
 
 	do not use htmlentities, prevent conversion of special chars
 
-2007-12-05 Wednesday 15:24  mcms09
+2007-12-05 Wednesday 16:24  mcms09
 
 	Changed:
 		include/tm_lib.inc.php (1.5), "Exp", lines: +1 -1
 
 	uppercase UTF-8
 
-2007-12-05 Wednesday 15:23  mcms09
+2007-12-05 Wednesday 16:23  mcms09
 
 	Changed:
 		include/tm_lib_admin.inc.php (1.3), "Exp", lines: +5 -1
 
 	add check for max_execution_time
 
-2007-12-05 Wednesday 15:22  mcms09
+2007-12-05 Wednesday 16:22  mcms09
 
 	Changed:
 		include/send_it.php (1.5), "Exp", lines: +18 -9
 
 	use multipart-mixed-alternative-mime ;-)
 
-2007-12-05 Wednesday 15:20  mcms09
+2007-12-05 Wednesday 16:20  mcms09
 
 	Changed:
 		include/queue_send.inc.php (1.2), "Exp", lines: +35 -10
 
 	added counter, ac_total, ac_total_ok etc
 
-2007-12-05 Wednesday 15:19  mcms09
+2007-12-05 Wednesday 16:19  mcms09
 
 	Changed:
 		include/queue_new.inc.php (1.2), "Exp", lines: +27 -23
 
 	added offset and limit, not used yet
 
-2007-12-05 Wednesday 15:17  mcms09
+2007-12-05 Wednesday 16:17  mcms09
 
 	Changed:
 		include/queue_form.inc.php (1.2), "Exp", lines: +41 -10
 
 	added offset and limit to form
 
-2007-12-05 Wednesday 15:14  mcms09
+2007-12-05 Wednesday 16:14  mcms09
 
 	Changed:
 		include/nl_upload.inc.php (1.2), "Exp", lines: +65 -41
 
 	use move_uploaded_file instead of copy, additional check
 
-2007-12-05 Wednesday 15:11  mcms09
+2007-12-05 Wednesday 16:11  mcms09
 
 	Changed:
 		include/nl_list.inc.php (1.2), "Exp", lines: +6 -2
 
 	do not add edit link if nl gets actually send
 
-2007-12-02 Sunday 18:43  mcms09
+2007-12-02 Sunday 19:43  mcms09
 
 	Changed:
 		CHANGES (1.2), "Exp", lines: +6 -0
@@ -480,14 +1474,14 @@
 
 	UPDATE, CHANGES 1.0.7.1
 
-2007-12-01 Saturday 17:41  mcms09
+2007-12-01 Saturday 18:41  mcms09
 
 	Changed:
 		include/Class_Mail.inc.php (1.4), "Exp", lines: +1 -1
 
 	fixed typo, = isset($header->to[0]->host) ...
 
-2007-12-01 Saturday 16:25  mcms09
+2007-12-01 Saturday 17:25  mcms09
 
 	Added:
 		include/sasl/documentation/sasl_class.html (1.1)
@@ -496,7 +1490,7 @@
 
 	added missing doc file include/sasl/documentation/sasl_class.html
 
-2007-12-01 Saturday 16:24  mcms09
+2007-12-01 Saturday 17:24  mcms09
 
 	Changed:
 		include/send_it.php (1.4), "Exp", lines: +3 -0
@@ -504,35 +1498,35 @@
 	added alternative method renderContent() to render body from db
 	instead of file, disabled
 
-2007-12-01 Saturday 16:23  mcms09
+2007-12-01 Saturday 17:23  mcms09
 
 	Changed:
 		include/Class_Tpl.inc.php (1.2), "Exp", lines: +15 -8
 
 	added method renderContent()
 
-2007-12-01 Saturday 14:52  mcms09
+2007-12-01 Saturday 15:52  mcms09
 
 	Changed:
 		include/mimemessage/smtp_message.php (1.4), "Exp", lines: +5 -5
 
 	typo: header_data.= should be header_data=
 
-2007-12-01 Saturday 14:45  mcms09
+2007-12-01 Saturday 15:45  mcms09
 
 	Changed:
 		include/Class_Mail.inc.php (1.3), "Exp", lines: +1 -1
 
 	check if subject isset
 
-2007-12-01 Saturday 14:37  mcms09
+2007-12-01 Saturday 15:37  mcms09
 
 	Changed:
 		include/mimemessage/smtp_message.php (1.3), "Exp", lines: +29 -5
 
 	added missing maximum_piped_recipients
 
-2007-12-01 Saturday 14:36  mcms09
+2007-12-01 Saturday 15:36  mcms09
 
 	Changed:
 		include/send_it.php (1.3), "Exp", lines: +3 -0
@@ -540,7 +1534,7 @@
 	$email_obj->maximum_piped_recipients=1;//sends only XX rcpt to
 	before waiting for ok from server!
 
-2007-12-01 Saturday 12:12  mcms09
+2007-12-01 Saturday 13:12  mcms09
 
 	Changed:
 		include/Class_Mail.inc.php (1.2), "Exp", lines: +4 -4
@@ -548,14 +1542,14 @@
 	check if to and date etc in header is set to avoid undefined indexes
 	and properties...
 
-2007-12-01 Saturday 12:11  mcms09
+2007-12-01 Saturday 13:11  mcms09
 
 	Changed:
 		include/Functions.inc.php (1.3), "Exp", lines: +38 -0
 
 	added functions array_remove_empty, array_unset
 
-2007-12-01 Saturday 12:10  mcms09
+2007-12-01 Saturday 13:10  mcms09
 
 	Changed:
 		include/adr_import.inc.php (1.2), "Exp", lines: +8 -8
@@ -563,14 +1557,14 @@
 
 	use tm_icon() instead of img src
 
-2007-12-01 Saturday 12:09  mcms09
+2007-12-01 Saturday 13:09  mcms09
 
 	Changed:
 		include/bounce_mail_list.inc.php (1.2), "Exp", lines: +20 -5
 
 	use tm_icon() instead of img src - added div for email header
 
-2007-12-01 Saturday 12:08  mcms09
+2007-12-01 Saturday 13:08  mcms09
 
 	Changed:
 		include/mimemessage/email_message.php (1.2), "Exp", lines: +5 -5
@@ -580,28 +1574,28 @@
 	addresses for bcc are set, an empty index was created, this breaks
 	smtp when sending messages
 
-2007-12-01 Saturday 12:07  mcms09
+2007-12-01 Saturday 13:07  mcms09
 
 	Changed:
 		include/send_it.php (1.2), "Exp", lines: +20 -4
 
 	do not set to-header for class when send via bcc
 
-2007-11-30 Friday 14:13  mcms09
+2007-11-30 Friday 15:13  mcms09
 
 	Added:
 		include/tellmatic.sql (1.1)
 
 	added tellmatic.sql
 
-2007-11-30 Friday 14:13  mcms09
+2007-11-30 Friday 15:13  mcms09
 
 	Changed:
 		include/install/install_conf_sql.inc.php (1.3), "Exp", lines: +1 -2
 
 	no fulltext index needed here
 
-2007-11-30 Friday 10:44  mcms09
+2007-11-30 Friday 11:44  mcms09
 
 	Changed:
 		INSTALL.DE (1.3), "Exp", lines: +0 -2
@@ -611,14 +1605,14 @@
 	stripped blanklines, added commented testcode, etc, small changes
 	without an effect now
 
-2007-11-30 Friday 10:35  mcms09
+2007-11-30 Friday 11:35  mcms09
 
 	Changed:
 		include/Class_SMTP.inc.php (1.2), "Exp", lines: +28 -5822
 
 	use multiple class files smtp,mimemessage,sasl
 
-2007-11-29 Thursday 23:52  mcms09
+2007-11-30 Friday 00:52  mcms09
 
 	Added:
 		include/smtp/getmxrr.php (1.1)
@@ -629,7 +1623,7 @@
 
 	added smtp class
 
-2007-11-29 Thursday 23:52  mcms09
+2007-11-30 Friday 00:52  mcms09
 
 	Added:
 		include/sasl/LICENSE (1.1)
@@ -643,7 +1637,7 @@
 
 	added sasl class
 
-2007-11-29 Thursday 23:50  mcms09
+2007-11-30 Friday 00:50  mcms09
 
 	Added:
 		include/mimemessage/email_message.php (1.1)
@@ -683,7 +1677,7 @@
 
 	added mimemessage class
 
-2007-11-29 Thursday 23:39  mcms09
+2007-11-30 Friday 00:39  mcms09
 
 	Added:
 		files/forms/index.html (1.1)
@@ -691,14 +1685,14 @@
 
 	added dummy index.php .html in files/forms
 
-2007-11-29 Thursday 23:38  mcms09
+2007-11-30 Friday 00:38  mcms09
 
 	Added:
 		api_example.php (1.1)
 
 	added api example to create newsletter
 
-2007-11-29 Thursday 16:58  mcms09
+2007-11-29 Thursday 17:58  mcms09
 
 	Added:
 		index.html (1.1)
@@ -746,7 +1740,7 @@
 	added dummy index.php and index.html in some dirs to avoid directory
 	listing if enabled
 
-2007-11-29 Thursday 15:04  mcms09
+2007-11-29 Thursday 16:04  mcms09
 
 	Changed:
 		include/status_map.inc.php (1.2), "Exp", lines: +47 -34
@@ -755,7 +1749,7 @@
 	usermap png, so i decided to just fill out the jpeg earthmap image
 	and save this without copy and overlay...
 
-2007-11-28 Wednesday 20:07  mcms09
+2007-11-28 Wednesday 21:07  mcms09
 
 	Changed:
 		INSTALL.DE (1.2), "Exp", lines: +1 -0
@@ -769,42 +1763,42 @@
 
 	added dummy index.php and .html
 
-2007-11-28 Wednesday 20:06  mcms09
+2007-11-28 Wednesday 21:06  mcms09
 
 	Added:
 		index_example.php (1.1)
 
 	example index
 
-2007-11-28 Wednesday 20:05  mcms09
+2007-11-28 Wednesday 21:05  mcms09
 
 	Changed:
 		index.php (1.2), "Exp", lines: +1 -53
 
 	dummy index.php, example index.php renamed to index_example.php
 
-2007-11-28 Wednesday 20:02  mcms09
+2007-11-28 Wednesday 21:02  mcms09
 
 	Changed:
 		include/nl_list_legende.inc.php (1.2), "Exp", lines: +1 -1
 
 	deleted -a- at top of source
 
-2007-11-28 Wednesday 20:02  mcms09
+2007-11-28 Wednesday 21:02  mcms09
 
 	Changed:
 		include/install/install_examples.inc.php (1.2), "Exp", lines: +2 -0
 
 	make the first nl and adr group the default group
 
-2007-11-28 Wednesday 20:01  mcms09
+2007-11-28 Wednesday 21:01  mcms09
 
 	Changed:
 		include/nl_form.inc.php (1.2), "Exp", lines: +2 -2
 
 	corrected wrong order for author,editor,created,updated
 
-2007-11-25 Sunday 19:06  mcms09
+2007-11-25 Sunday 20:06  mcms09
 
 	Changed:
 		include/install/install_check_pre.inc.php (1.3), "Exp", lines: +15 -16
@@ -812,37 +1806,37 @@
 	if check fails in the first steps, a message was not generated, now
 	it does
 
-2007-11-25 Sunday 13:31  mcms09
+2007-11-25 Sunday 14:31  mcms09
 
 	Changed:
 		include/install/install_conf_sql.inc.php (1.2), "Exp", lines: +76 -76
 
 	changed/corrected types int smallint tinyint
 
-2007-11-25 Sunday 12:26  mcms09
+2007-11-25 Sunday 13:26  mcms09
 
 	Changed:
 		include/tm_lib_admin.inc.php (1.2), "Exp", lines: +5 -0
 
 	check for unlimited memory (0) and set row limit to 4k lines
 
-2007-11-25 Sunday 12:25  mcms09
+2007-11-25 Sunday 13:25  mcms09
 
 	Changed:
 		include/install/install_check_pre.inc.php (1.2), "Exp", lines: +11 -3
 
 	check for unlimited memory (0)
 
-2007-11-25 Sunday 12:10  mcms09
+2007-11-25 Sunday 13:10  mcms09
 
 	Changed:
 		install.php (1.2), "Exp", lines: +69 -46
 
 	added comments, changed path to install_check_pre.inc.php
 
-2007-11-21 Wednesday 22:57  tag start
+2007-11-21 Wednesday 23:57  tag start
 
-2007-11-21 Wednesday 22:57  mcms09
+2007-11-21 Wednesday 23:57  mcms09
 
 	Added:
 		.htaccess (1.1)

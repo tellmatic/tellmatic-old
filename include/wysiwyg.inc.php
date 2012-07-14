@@ -1,4 +1,4 @@
-<?
+<?php
 /********************************************************************************/
 /* this file is part of: / diese Datei ist ein Teil von:                        */
 /* tellmatic, the newslettermachine                                             */

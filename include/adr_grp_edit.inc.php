@@ -30,7 +30,15 @@ $$InputName_Descr=getVar($InputName_Descr);
 
 $InputName_Aktiv="aktiv";//range from
 $$InputName_Aktiv=getVar($InputName_Aktiv);
+
+$InputName_Public="public";//range from
+$$InputName_Public=getVar($InputName_Public);
+
+$InputName_PublicName="public_name";//range from
+$$InputName_PublicName=getVar($InputName_PublicName);
 //
+//wenn sich public aender loeschen wir dennoch keine referenzen von public groups zu den formularen, das wird in subscribe eh ueberprueft und beim naechsten bearbeiten des formulares bereinigt! (da edit methode alte refs loescht und komplett neu anlegt!)
+
 
 $check=true;
 if ($set=="save") {
@@ -41,6 +49,8 @@ if ($set=="save") {
 		$ADDRESS->updateGrp(Array(
 					"id"=>$adr_grp_id,
 					"name"=>$name,
+					"public"=>$public,
+					"public_name"=>$public_name,
 					"descr"=>$descr,
 					"aktiv"=>$aktiv,
 					"created"=>$created,
@@ -57,6 +67,8 @@ if ($set=="save") {
 	$ADDRESS=new tm_ADR();
 	$GRP=$ADDRESS->getGroup($adr_grp_id,0,0,0);
 	$name=$GRP[0]['name'];
+	$public=$GRP[0]['public'];
+	$public_name=$GRP[0]['public_name'];
 	$descr=$GRP[0]['descr'];
 	$aktiv=$GRP[0]['aktiv'];
 	$standard=$GRP[0]['standard'];

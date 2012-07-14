@@ -92,11 +92,11 @@ if ($set=="save") {
 		$_MAIN_MESSAGE.="<br>".sprintf(___("Neuer Benutzer %s wurde angelegt."),"'<b>".display($name)."</b>'");
 		$_MAIN_MESSAGE.="<br>".___("Eine neue .htpasswd Datei wurde erzeugt.")."<br>";
 		$action="adm_user_list";
-		include_once (TM_INCLUDEPATH."/adm_user_list.inc.php");
+		require_once (TM_INCLUDEPATH."/adm_user_list.inc.php");
 	} else {//check
-		include_once (TM_INCLUDEPATH."/adm_user_form.inc.php");
+		require_once (TM_INCLUDEPATH."/adm_user_form.inc.php");
 	}//check
 } else {//set==save
-	include_once (TM_INCLUDEPATH."/adm_user_form.inc.php");
+	require_once (TM_INCLUDEPATH."/adm_user_form.inc.php");
 }//set==save
 ?>

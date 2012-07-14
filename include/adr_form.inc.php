@@ -43,7 +43,7 @@ $Form->new_Input($FormularName,"si2", "hidden", $si2);
 //add inputfields and buttons....
 //////////////////
 //EMAIL
-$Form->new_Input($FormularName,$InputName_Name,"text", $$InputName_Name);
+$Form->new_Input($FormularName,$InputName_Name,"text", display($$InputName_Name));
 $Form->set_InputJS($FormularName,$InputName_Name," onChange=\"flash('submit','#ff0000');\" onkeyup=\"RemoveInvalidChars(this, '[^A-Za-z0-9\_\@\.\-]'); ForceLowercase(this);\"");
 $Form->set_InputStyleClass($FormularName,$InputName_Name,"mFormText","mFormTextFocus");
 $Form->set_InputSize($FormularName,$InputName_Name,48,256);
@@ -102,8 +102,8 @@ for ($scc=1; $scc<=$sc; $scc++)//0
 }
 
 //MEMO
-$Form->new_Input($FormularName,$InputName_Memo,"textarea", $$InputName_Memo);
-$Form->set_InputDefault($FormularName,$InputName_Memo,$$InputName_Memo);
+$Form->new_Input($FormularName,$InputName_Memo,"textarea", display($$InputName_Memo));
+$Form->set_InputDefault($FormularName,$InputName_Memo,display($$InputName_Memo));
 $Form->set_InputStyleClass($FormularName,$InputName_Memo,"mFormText","mFormTextFocus");
 $Form->set_InputSize($FormularName,$InputName_Memo,80,5);
 $Form->set_InputDesc($FormularName,$InputName_Memo,"");
@@ -111,107 +111,18 @@ $Form->set_InputReadonly($FormularName,$InputName_Memo,false);
 $Form->set_InputOrder($FormularName,$InputName_Memo,1);
 $Form->set_InputLabel($FormularName,$InputName_Memo,"");
 
-//F
-$Form->new_Input($FormularName,$InputName_F0,"text", $$InputName_F0);
-$Form->set_InputJS($FormularName,$InputName_F0," onChange=\"flash('submit','#ff0000');\" ");
-$Form->set_InputStyleClass($FormularName,$InputName_F0,"mFormText","mFormTextFocus");
-$Form->set_InputSize($FormularName,$InputName_F0,48,256);
-$Form->set_InputDesc($FormularName,$InputName_F0,"F0");
-$Form->set_InputReadonly($FormularName,$InputName_F0,false);
-$Form->set_InputOrder($FormularName,$InputName_F0,1);
-$Form->set_InputLabel($FormularName,$InputName_F0,"");
-
-//F
-$Form->new_Input($FormularName,$InputName_F1,"text", $$InputName_F1);
-$Form->set_InputJS($FormularName,$InputName_F1," onChange=\"flash('submit','#ff0000');\" ");
-$Form->set_InputStyleClass($FormularName,$InputName_F1,"mFormText","mFormTextFocus");
-$Form->set_InputSize($FormularName,$InputName_F1,48,256);
-$Form->set_InputDesc($FormularName,$InputName_F1,"F1");
-$Form->set_InputReadonly($FormularName,$InputName_F1,false);
-$Form->set_InputOrder($FormularName,$InputName_F1,1);
-$Form->set_InputLabel($FormularName,$InputName_F1,"");
-
-//F
-$Form->new_Input($FormularName,$InputName_F2,"text", $$InputName_F2);
-$Form->set_InputJS($FormularName,$InputName_F2," onChange=\"flash('submit','#ff0000');\" ");
-$Form->set_InputStyleClass($FormularName,$InputName_F2,"mFormText","mFormTextFocus");
-$Form->set_InputSize($FormularName,$InputName_F2,48,256);
-$Form->set_InputDesc($FormularName,$InputName_F2,"F2");
-$Form->set_InputReadonly($FormularName,$InputName_F2,false);
-$Form->set_InputOrder($FormularName,$InputName_F2,1);
-$Form->set_InputLabel($FormularName,$InputName_F2,"");
-
-//F
-$Form->new_Input($FormularName,$InputName_F3,"text", $$InputName_F3);
-$Form->set_InputJS($FormularName,$InputName_F3," onChange=\"flash('submit','#ff0000');\" ");
-$Form->set_InputStyleClass($FormularName,$InputName_F3,"mFormText","mFormTextFocus");
-$Form->set_InputSize($FormularName,$InputName_F3,48,256);
-$Form->set_InputDesc($FormularName,$InputName_F3,"F3");
-$Form->set_InputReadonly($FormularName,$InputName_F3,false);
-$Form->set_InputOrder($FormularName,$InputName_F3,1);
-$Form->set_InputLabel($FormularName,$InputName_F3,"");
-
-//F
-$Form->new_Input($FormularName,$InputName_F4,"text", $$InputName_F4);
-$Form->set_InputJS($FormularName,$InputName_F4," onChange=\"flash('submit','#ff0000');\" ");
-$Form->set_InputStyleClass($FormularName,$InputName_F4,"mFormText","mFormTextFocus");
-$Form->set_InputSize($FormularName,$InputName_F4,48,256);
-$Form->set_InputDesc($FormularName,$InputName_F4,"F4");
-$Form->set_InputReadonly($FormularName,$InputName_F4,false);
-$Form->set_InputOrder($FormularName,$InputName_F4,1);
-$Form->set_InputLabel($FormularName,$InputName_F4,"");
-
-//F
-$Form->new_Input($FormularName,$InputName_F5,"text", $$InputName_F5);
-$Form->set_InputJS($FormularName,$InputName_F5," onChange=\"flash('submit','#ff0000');\" ");
-$Form->set_InputStyleClass($FormularName,$InputName_F5,"mFormText","mFormTextFocus");
-$Form->set_InputSize($FormularName,$InputName_F5,48,256);
-$Form->set_InputDesc($FormularName,$InputName_F5,"F5");
-$Form->set_InputReadonly($FormularName,$InputName_F5,false);
-$Form->set_InputOrder($FormularName,$InputName_F5,1);
-$Form->set_InputLabel($FormularName,$InputName_F5,"");
-
-//F
-$Form->new_Input($FormularName,$InputName_F6,"text", $$InputName_F6);
-$Form->set_InputJS($FormularName,$InputName_F6," onChange=\"flash('submit','#ff0000');\" ");
-$Form->set_InputStyleClass($FormularName,$InputName_F6,"mFormText","mFormTextFocus");
-$Form->set_InputSize($FormularName,$InputName_F6,48,256);
-$Form->set_InputDesc($FormularName,$InputName_F6,"F6");
-$Form->set_InputReadonly($FormularName,$InputName_F6,false);
-$Form->set_InputOrder($FormularName,$InputName_F6,1);
-$Form->set_InputLabel($FormularName,$InputName_F6,"");
-
-//F
-$Form->new_Input($FormularName,$InputName_F7,"text", $$InputName_F7);
-$Form->set_InputJS($FormularName,$InputName_F7," onChange=\"flash('submit','#ff0000');\" ");
-$Form->set_InputStyleClass($FormularName,$InputName_F7,"mFormText","mFormTextFocus");
-$Form->set_InputSize($FormularName,$InputName_F7,48,256);
-$Form->set_InputDesc($FormularName,$InputName_F7,"F7");
-$Form->set_InputReadonly($FormularName,$InputName_F7,false);
-$Form->set_InputOrder($FormularName,$InputName_F7,1);
-$Form->set_InputLabel($FormularName,$InputName_F7,"");
-
-//F
-$Form->new_Input($FormularName,$InputName_F8,"text", $$InputName_F8);
-$Form->set_InputJS($FormularName,$InputName_F8," onChange=\"flash('submit','#ff0000');\" ");
-$Form->set_InputStyleClass($FormularName,$InputName_F8,"mFormText","mFormTextFocus");
-$Form->set_InputSize($FormularName,$InputName_F8,48,256);
-$Form->set_InputDesc($FormularName,$InputName_F8,"F8");
-$Form->set_InputReadonly($FormularName,$InputName_F8,false);
-$Form->set_InputOrder($FormularName,$InputName_F8,1);
-$Form->set_InputLabel($FormularName,$InputName_F8,"");
-
-//F
-$Form->new_Input($FormularName,$InputName_F9,"text", $$InputName_F9);
-$Form->set_InputJS($FormularName,$InputName_F9," onChange=\"flash('submit','#ff0000');\" ");
-$Form->set_InputStyleClass($FormularName,$InputName_F9,"mFormText","mFormTextFocus");
-$Form->set_InputSize($FormularName,$InputName_F9,48,256);
-$Form->set_InputDesc($FormularName,$InputName_F9,"F9");
-$Form->set_InputReadonly($FormularName,$InputName_F9,false);
-$Form->set_InputOrder($FormularName,$InputName_F9,1);
-$Form->set_InputLabel($FormularName,$InputName_F9,"");
-
-
+//F, neu f0-9
+for ($fc=0;$fc<=9;$fc++) {
+	$FInputName="InputName_F".$fc;
+	$Form->new_Input($FormularName,$$FInputName,"text", $$$FInputName);
+	$Form->set_InputJS($FormularName,$$FInputName," onChange=\"flash('submit','#ff0000');\" ");
+	$Form->set_InputStyleClass($FormularName,$$FInputName,"mFormText","mFormTextFocus");
+	$Form->set_InputSize($FormularName,$$FInputName,48,256);
+	$Form->set_InputDesc($FormularName,$$FInputName,"F".$fc);
+	$Form->set_InputReadonly($FormularName,$$FInputName,false);
+	$Form->set_InputOrder($FormularName,$$FInputName,1);
+	$Form->set_InputLabel($FormularName,$$FInputName,"");
+}
 
 //submit button
 $Form->new_Input($FormularName,$InputName_Submit,"submit",___("Speichern"));
@@ -297,95 +208,19 @@ $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Status]['html'];
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "</tr>";
 
+//F, neu f0-9
+for ($fc=0;$fc<=9;$fc++) {
+	$FInputName="InputName_F".$fc;
 $_MAIN_OUTPUT.= "<tr>";
 $_MAIN_OUTPUT.= "<td valign=top>";
-$_MAIN_OUTPUT.= "F0";
+$_MAIN_OUTPUT.= "F".$fc;
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "<td valign=top colspan=1 align=left>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_F0]['html'];
+$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$FInputName]['html'];
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "</tr>";
 
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top>";
-$_MAIN_OUTPUT.= "F1";
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "<td valign=top colspan=1>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_F1]['html'];
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top>";
-$_MAIN_OUTPUT.= "F2";
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "<td valign=top colspan=1>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_F2]['html'];
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top>";
-$_MAIN_OUTPUT.= "F3";
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "<td valign=top colspan=1>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_F3]['html'];
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top>";
-$_MAIN_OUTPUT.= "F4";
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "<td valign=top colspan=1>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_F4]['html'];
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top>";
-$_MAIN_OUTPUT.= "F5";
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "<td valign=top colspan=1>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_F5]['html'];
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top>";
-$_MAIN_OUTPUT.= "F6";
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "<td valign=top colspan=1>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_F6]['html'];
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top>";
-$_MAIN_OUTPUT.= "F7";
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "<td valign=top colspan=1>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_F7]['html'];
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top>";
-$_MAIN_OUTPUT.= "F8";
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "<td valign=top colspan=1>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_F8]['html'];
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top>";
-$_MAIN_OUTPUT.= "F9";
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "<td valign=top colspan=1>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_F9]['html'];
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
+}
 
 $_MAIN_OUTPUT.= "<tr>";
 $_MAIN_OUTPUT.= "<td valign=top>";

@@ -43,6 +43,19 @@ if ($set=="deleteall" && $doit==1) {
 	$_MAIN_MESSAGE.="<br>".___("Eintrag und die zugeordneten Adressen wurden gelöscht.");
 }
 $GRP=$ADDRESS->getGroup(0,0,0,1);
+
+//sort array:
+	$sortIndex=getVar("si");
+if (empty($sortIndex)) {
+	$sortIndex="id";
+}
+$sortType=getVar("st");
+if (empty($sortType)) {
+	$sortType="0";//asc
+}
+$GRP=sort_array($GRP,$sortIndex,$sortType);
+
+//count entries:
 $acg=count($GRP);
 
 $editURLPara=$mSTDURL;
@@ -74,16 +87,34 @@ $statURLPara=$mSTDURL;
 $statURLPara->addParam("act","statistic");
 $statURLPara->addParam("set","adrg");
 
+$sortURLPara=$mSTDURL;
+$sortURLPara->addParam("act","adr_grp_list");
+$sortURLPara_=$sortURLPara->getAllParams();
+
 $_MAIN_OUTPUT="<table border=\"0\" cellpadding=\"1\" cellspacing=\"1\" width=\"100%\">";
 $_MAIN_OUTPUT.= "<thead>".
 						"<tr>".
-						"<td><b>&nbsp;</b>".
+						"<td><b>ID</b>".
+						"<a href=\"".$tm_URL."/".$sortURLPara_."&amp;si=id&amp;st=0\">".$img_arrowup."</a>".
+						"<a href=\"".$tm_URL."/".$sortURLPara_."&amp;si=id&amp;st=1\">".$img_arrowdown."</a>".
 						"</td>".
 						"<td><b>".___("Name")."</b>".
+						"<a href=\"".$tm_URL."/".$sortURLPara_."&amp;si=name&amp;st=0\">".$img_arrowup."</a>".
+						"<a href=\"".$tm_URL."/".$sortURLPara_."&amp;si=name&amp;st=1\">".$img_arrowdown."</a>".
+						"</td>".
+						"<td><b>".___("Name (öffentlich)")."</b>".
+						"<a href=\"".$tm_URL."/".$sortURLPara_."&amp;si=public_name&amp;st=0\">".$img_arrowup."</a>".
+						"<a href=\"".$tm_URL."/".$sortURLPara_."&amp;si=public_name&amp;st=1\">".$img_arrowdown."</a>".
 						"</td>".
 						"<td><b>".___("Beschreibung")."</b>".
 						"</td>".
+						"<td><b>".___("Adressen")."</b>".
+						"<a href=\"".$tm_URL."/".$sortURLPara_."&amp;si=adr_count&amp;st=0\">".$img_arrowup."</a>".
+						"<a href=\"".$tm_URL."/".$sortURLPara_."&amp;si=adr_count&amp;st=1\">".$img_arrowdown."</a>".
+						"</td>".
 						"<td><b>".___("Aktiv")."</b>".
+						"<a href=\"".$tm_URL."/".$sortURLPara_."&amp;si=aktiv&amp;st=0\">".$img_arrowup."</a>".
+						"<a href=\"".$tm_URL."/".$sortURLPara_."&amp;si=aktiv&amp;st=1\">".$img_arrowdown."</a>".
 						"</td>".
 						"<td>...</td>".
 						"</tr>".
@@ -128,14 +159,22 @@ for ($accg=0;$accg<$acg;$accg++) {
 	$_MAIN_OUTPUT.= "<td onmousemove=\"showToolTip('tt_adr_grp_list_".$GRP[$accg]['id']."')\" onmouseout=\"hideToolTip();\">";
 
 	//wenn standardgruppe, dann icon anzeigen
+	$_MAIN_OUTPUT.=  $GRP[$accg]['id'];
 	if ($GRP[$accg]['standard']==1) {
-		$_MAIN_OUTPUT.=  "&nbsp;".tm_icon("page_white_lightning.png",___("Diese Gruppe ist die Standardgruppe"));
+		$_MAIN_OUTPUT.= "&nbsp;".tm_icon("page_white_lightning.png",___("Diese Gruppe ist die Standardgruppe"));
+	}
+	if ($GRP[$accg]['public']==1) {
+		$_MAIN_OUTPUT.= "&nbsp;".tm_icon("cup.png",___("Diese Gruppe ist die öffentlich"));
 	}
 	$_MAIN_OUTPUT.= "</td>";
 	$_MAIN_OUTPUT.= "<td onmousemove=\"showToolTip('tt_adr_grp_list_".$GRP[$accg]['id']."')\" onmouseout=\"hideToolTip();\">";
 	$_MAIN_OUTPUT.= "<a href=\"".$tm_URL."/".$editURLPara_."\"  title=\"".___("Adressgruppe bearbeiten")."\">".display($GRP[$accg]['name'])."</a>";
 	$_MAIN_OUTPUT.= "<div id=\"tt_adr_grp_list_".$GRP[$accg]['id']."\" class=\"tooltip\">";
 	$_MAIN_OUTPUT.="<b>".display($GRP[$accg]['name'])."</b>";
+	if ($GRP[$accg]['public']==1) {
+		$_MAIN_OUTPUT.= "<br>".tm_icon("cup.png",___("Diese Gruppe ist die öffentlich"))."&nbsp;".___("Diese Gruppe ist die öffentlich");
+		$_MAIN_OUTPUT.="<br>".___("Name (öffentlich)").": <b>".display($GRP[$accg]['name'])."</b>";
+	}
 	$_MAIN_OUTPUT.= "<br><font size=\"-1\">".display($GRP[$accg]['descr'])."</font>";
 	$_MAIN_OUTPUT.= "<br>ID: ".$GRP[$accg]['id']." ";
 	if ($GRP[$accg]['aktiv']==1) {
@@ -157,7 +196,13 @@ for ($accg=0;$accg<$acg;$accg++) {
 	$_MAIN_OUTPUT.= "</div>";
 	$_MAIN_OUTPUT.= "</td>";
 	$_MAIN_OUTPUT.= "<td>";
+	$_MAIN_OUTPUT.= display($GRP[$accg]['public_name']);
+	$_MAIN_OUTPUT.= "</td>";
+	$_MAIN_OUTPUT.= "<td>";
 	$_MAIN_OUTPUT.= display($GRP[$accg]['descr']);
+	$_MAIN_OUTPUT.= "</td>";
+	$_MAIN_OUTPUT.= "<td>";
+	$_MAIN_OUTPUT.= display($GRP[$accg]['adr_count']);
 	$_MAIN_OUTPUT.= "</td>";
 	$_MAIN_OUTPUT.= "<td>";
 	//wenn gruppe keine standardgruppe ist, dann link zum deaktivieren, deaktivierete gruppen koennen naemlich keine standardgruppe sein
@@ -179,7 +224,8 @@ for ($accg=0;$accg<$acg;$accg++) {
 	$_MAIN_OUTPUT.= "<td>";
 	$_MAIN_OUTPUT.= "&nbsp;<a href=\"".$tm_URL."/".$editURLPara_."\" title=\"".___("Adressgruppe bearbeiten")."\">".tm_icon("pencil.png",___("Adressgruppe bearbeiten"))."</a>";
 	$_MAIN_OUTPUT.= "&nbsp;<a href=\"".$tm_URL."/".$addadrURLPara_."\" title=\"".___("Neue Adresse in dieser Gruppe anlegen")."\">".tm_icon("vcard_add.png",___("Neue Adresse in dieser Gruppe anlegen"))."</a>";
-	$_MAIN_OUTPUT.= "&nbsp;<a href=\"".$tm_URL."/".$showadrURLPara_."\" title=\"".___("Alle Adressen in dieser Gruppe anzeigen")."\">".tm_icon("group_go.png",___("Alle Adressen in dieser Gruppe anzeigen"))."&nbsp;".$GRP[$accg]['adr_count']."</a>";
+	$_MAIN_OUTPUT.= "&nbsp;<a href=\"".$tm_URL."/".$showadrURLPara_."\" title=\"".___("Alle Adressen in dieser Gruppe anzeigen")."\">".tm_icon("group_go.png",___("Alle Adressen in dieser Gruppe anzeigen"))."</a>";;
+	#."&nbsp;".$GRP[$accg]['adr_count']."</a>";
 	$_MAIN_OUTPUT.=  "&nbsp;<a href=\"".$tm_URL."/".$statURLPara_."\" title=\"".___("Statistik anzeigen")."\">".tm_icon("chart_pie.png",___("Statistik anzeigen"))."</a>";
 	if ($GRP[$accg]['standard']==1) {
 		//wenn gruppe standard ist, dann bildchen anzeigen, wird auch neben id angezeigt

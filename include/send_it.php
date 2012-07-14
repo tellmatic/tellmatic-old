@@ -12,7 +12,7 @@
 /* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
 /********************************************************************************/
 
-//send_it.php version 3, smtp direkt + massenmailing!
+//send_it.php version 4, smtp direkt + massenmailing! offset und limit, sowie blacklist!
 
 require_once ("./tm_config.inc.php");
 require_once(TM_INCLUDEPATH."/Class_SMTP.inc.php");
@@ -20,7 +20,8 @@ require_once(TM_INCLUDEPATH."/Class_SMTP.inc.php");
 $QUEUE=new tm_Q();
 $NEWSLETTER=new tm_NL();
 $ADDRESS=new tm_ADR();
-
+$HOSTS=new tm_HOST();
+$BLACKLIST=new tm_BLACKLIST();
 $T=new Timer();//zeitmessung
 
 $LOG="";
@@ -33,7 +34,7 @@ function send_log($text) {
 
 //Q holen
 $limitQ=1;//nur ein q eintrag bearbeiten!
-$Q=$QUEUE->getQtoSend(0,0,$limitQ,0);//id offse limit nl-id
+$Q=$QUEUE->getQtoSend(0,0,$limitQ,0);//id offset limit nl-id
 $qc=count($Q);//wieviel zu sendende q eintraege gibt es?
 
 //Schleife Qs
@@ -41,11 +42,21 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 	$logfilename="q_".$Q[$qcc]['id']."_".$Q[$qcc]['grp_id']."_".date_convert_to_string($Q[$qcc]['created']).".log.html";
 
 	send_log("<pre>\n".date("Y-m-d H:i:s").": ".($qcc+1)." of $qc Qs\nbegin\n");
+	$HOST=$HOSTS->getHost($Q[$qcc]['host_id'],Array("aktiv"=>1,"type"=>"smtp"));
 	//wenn Q status gestartet oder running // 2 oder 3
 		send_log( "\n".date("Y-m-d H:i:s").": QID=".$Q[$qcc]['id']);
 		send_log(  "\n".date("Y-m-d H:i:s").": Status=".$Q[$qcc]['status']);
 		send_log(  "\n".date("Y-m-d H:i:s").": nl_id=".$Q[$qcc]['nl_id']);
 		send_log(  "\n".date("Y-m-d H:i:s").": grp_id=".$Q[$qcc]['grp_id']);
+		send_log(  "\n".date("Y-m-d H:i:s").": host_id=".$Q[$qcc]['host_id']);
+	if (!isset($HOST[0]))	{ //wenn kein gueltiger smtp host, filter: aktiv=1 und typ=smtp
+		send_log(  "\n".date("Y-m-d H:i:s").": host id:".$Q[$qcc]['host_id']." inactive / not from type smtp or does not exist! skipping!");
+		$QUEUE->setStatus($Q[$qcc]['id'],5);//stopped
+		send_log(  "\n".date("Y-m-d H:i:s").": Q ID ".$Q[$qcc]['host_id']." stopped!");
+	}
+	
+	if (isset($HOST[0]))	{ //wenn gueltiger smtp host, filter: aktiv=1 und typ=smtp
+		send_log(  "\n".date("Y-m-d H:i:s").":     hostname/ip=".$HOST[0]['name']."(".$HOST[0]['host'].":".$HOST[0]['port'].")");
 
 		//set status = running =3
 		send_log(  "\n".date("Y-m-d H:i:s").": set q status=3");
@@ -77,7 +88,7 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 									"<br>Versand terminiert fuer: / Send at: ".$Q[$qcc]['send_at'].
 									"<br>Gestartet: / Started: ".date("Y-m-d H:i:s").
 									"<br>Logfile: ".$tm_URL_FE."/".$tm_logdir."/".$logfilename;
-			if (!DEMO) @SendMail($From,$From,$From,$From,$ReportMail_Subject,clear_text($ReportMail_HTML),$ReportMail_HTML);
+			if (!DEMO) @SendMail($C[0]['sender_email'],$C[0]['sender_name'],$C[0]['sender_email'],$C[0]['sender_name'],$ReportMail_Subject,clear_text($ReportMail_HTML),$ReportMail_HTML);
 		}
 
 		//filenames zusammensetzen
@@ -131,20 +142,21 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 		//unsubscribe ist auch personalisiert
 		//blindimage ist auch personalisiert
 
-		send_log(  "\n".date("Y-m-d H:i:s").": prepare e-Mailobject");
+		send_log(  "\n".date("Y-m-d H:i:s").": prepare E-Mail-Object");
 		send_log(  "\n".date("Y-m-d H:i:s").": From $FromName ($From)");
 		send_log(  "\n".date("Y-m-d H:i:s").": Subject".display($NL[0]['subject']));
 
 		//emailobjekt vorbereiten, wird dann kopiert, hier globale einstellungen
 		$email_obj=new smtp_message_class;//use SMTP!
 		$email_obj->default_charset=$encoding;
-		$email_obj->authentication_mechanism="LOGIN";
-		$email_obj->localhost=$SMTPDomain;
-		$email_obj->smtp_host=$SMTPHost;
-		$email_obj->smtp_user=$SMTPUser;
+		$email_obj->authentication_mechanism=$HOST[0]['smtp_auth'];
+		$email_obj->localhost=$HOST[0]['smtp_domain'];
+		$email_obj->smtp_host=$HOST[0]['host'];
+		$email_obj->smtp_port=$HOST[0]['port'];
+		$email_obj->smtp_user=$HOST[0]['user'];
 		$email_obj->smtp_realm="";
 		$email_obj->smtp_workstation="";
-		$email_obj->smtp_password=$SMTPPasswd;
+		$email_obj->smtp_password=$HOST[0]['pass'];
 		$email_obj->smtp_pop3_auth_host="";
 		//important! max 1 rcpt to before waiting for ok, tarpiting!
 		$email_obj->maximum_piped_recipients=1;//sends only XX rcpt to before waiting for ok from server!
@@ -165,10 +177,10 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 		$email_obj->SetBulkMail=1;
 		$email_obj->smtp_html_debug=0;
 		$email_obj->mailer=$ApplicationText;
-		$email_obj->SetEncodedEmailHeader("From",$From,$FromName);
-		$email_obj->SetEncodedEmailHeader("Reply-To",$From,$FromName);
-		$email_obj->SetHeader("Return-Path",$ReturnPath);
-		$email_obj->SetEncodedEmailHeader("Errors-To",$ReturnPath,$ReturnPath);
+		$email_obj->SetEncodedEmailHeader("From",$C[0]['sender_email'],$C[0]['sender_name']);
+		$email_obj->SetEncodedEmailHeader("Reply-To",$C[0]['sender_email'],$C[0]['sender_name']);
+		$email_obj->SetHeader("Return-Path",$C[0]['return_mail']);
+		$email_obj->SetEncodedEmailHeader("Errors-To",$C[0]['return_mail'],$C[0]['return_mail']);
 		$email_obj->SetEncodedHeader("Subject",$NL[0]['subject']);
 
 		//H holen
@@ -212,13 +224,15 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 		if ($massmail) {
 			//to fuer massenmailing
 			send_log(  "\n".date("Y-m-d H:i:s").": prepare Massmail");
+
+			$email_obj->SetEncodedHeader("Subject",$NL[0]['subject']);
+			
 			//argh, this class forces us to add a to header which is definitely not needed if we have bcc or cc!!!
 			$To=$From;
-			$ToName="Newsletter";
-
+			$ToName=$NL[0]['rcpt_name'];
+			send_log(  "\n".date("Y-m-d H:i:s").": rcpt_name=".$NL[0]['rcpt_name']);
 			send_log(  "\n".date("Y-m-d H:i:s").":  TO: NOT SET, USING BCC");
 			//dont add to: header in massmails, only use bcc! but:
-			#$email_obj->SetEncodedEmailHeader("To",$To,$ToName);
 
 			send_log(  "\n".date("Y-m-d H:i:s").": prepare Template Vars for Massmail");
 			$BLINDIMAGE_URL=$tm_URL_FE."/news_blank.png.php?nl_id=".$Q[$qcc]['nl_id'];
@@ -336,16 +350,32 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 							$a_error=false;
 							$h_error=false;
 							$a_status=$ADR[0]['status'];
+////todo optimierung: check errors vor blacklist und vor mx, spart ggf zeit und abfragen von adressen die eh zu viele fehler haben oder geblacklisted wurden!
+
+							//BLACKLIST prüfen
+							if ($Q[$qcc]['check_blacklist']) {
+								send_log(  "\n".date("Y-m-d H:i:s").":     checking blacklist: ");	
+								if ($BLACKLIST->isBlacklisted($ADR[0]['email'])) {
+									//wenn adr auf blacklist steht, fehler setzen und abbrechen
+									send_log(  "email $ADR[0]['email'] matches the active blacklist.");	
+									$a_error=true;
+								} else {
+									send_log(  "OK, does not match the active blacklist");	
+								}
+							}
+
 							//vor der pruefung auf valide email status schon auf 5 setzen, 
 							//ist ggf doppelt gemobbelt, kann aber ggf. unter bestimmten Umstaenden dazu fuehren
 							// das eine validierung auf gueltigen mx etwas laenger dauert, 
 							//der job mit einem anderen konkurriert und waehrend die 
 							//pruefung und mx abfrage laeuft der konkurrierende job sich die adresse krallt, man weiss nix genaues nich ;)
+							//h eintrag wird zum bearbeiten gesperrt, status 5!
 							send_log(  "\n".date("Y-m-d H:i:s").":  setHStatus 5 ");
 							$QUEUE->setHStatus($H[$bcc]['id'],5);
 							//email pruefen
 							$check_mail=checkEmailAdr($ADR[0]['email'],$EMailcheck_Intern);
-							if ($check_mail[0] && $ADR[0]['errors']<=$max_mails_retry) {
+							//if !a_error auch abfragen wegen blacklist pruefung oben!
+							if (!$a_error && $check_mail[0] && $ADR[0]['errors']<=$max_mails_retry) {
 								send_log(  "\n".date("Y-m-d H:i:s").":   checkemail: OK");
 								//wenn adresse auch wirklich aktiv etc.
 								if ($ADR[0]['aktiv']==1) {
@@ -379,7 +409,7 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 								$a_error=true;
 								$h_status=4;//fehler
 								$h_error=true;
-								send_log(  "\n".date("Y-m-d H:i:s").": 	ERROR: invalid email: ".$ADR[0]['email']." ".$check_mail[1]);
+								send_log(  "\n".date("Y-m-d H:i:s").": 	ERROR: invalid email: ".$ADR[0]['email']." ".$check_mail[1]." or reached max errors:".$ADR[0]['errors']."/".$max_mails_retry);
 							}//wenn errors < max errors
 
 							if ($a_error) {
@@ -471,9 +501,21 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 								send_log(  "\n".date("Y-m-d H:i:s").":      prepare Header for");
 								//to etc fuer personalisiertes nl:
 								if (!$massmail) {
+
+									$SUBJ_search = array("{F0}","{F1}","{F2}","{F3}","{F4}","{F5}","{F6}","{F7}","{F8}","{F9}");
+									$SUBJ_replace = array($ADR[0]['f0'], $ADR[0]['f1'], $ADR[0]['f2'], $ADR[0]['f3'], $ADR[0]['f4'], $ADR[0]['f5'], $ADR[0]['f6'], $ADR[0]['f7'], $ADR[0]['f8'], $ADR[0]['f9'], );
+									$SUBJ = str_replace($SUBJ_search, $SUBJ_replace, $NL[0]['subject']);
+									send_log(  "\n".date("Y-m-d H:i:s").": subject=".$NL[0]['subject']." | parsed: ".$SUBJ);
+									$email_message->SetEncodedHeader("Subject",$SUBJ);
+
+						
 									send_log(  "\n".date("Y-m-d H:i:s").": personal Mailing, add TO: ");
 									$To=$ADR[0]['email'];
-									$ToName="Newsletter";
+									$RCPT_Name_search = array("{F0}","{F1}","{F2}","{F3}","{F4}","{F5}","{F6}","{F7}","{F8}","{F9}");
+									$RCPT_Name_replace = array($ADR[0]['f0'], $ADR[0]['f1'], $ADR[0]['f2'], $ADR[0]['f3'], $ADR[0]['f4'], $ADR[0]['f5'], $ADR[0]['f6'], $ADR[0]['f7'], $ADR[0]['f8'], $ADR[0]['f9'], );
+									$RCPT_Name = str_replace($RCPT_Name_search, $RCPT_Name_replace, $NL[0]['rcpt_name']);
+									send_log(  "\n".date("Y-m-d H:i:s").": rcpt_name=".$NL[0]['rcpt_name']." | parsed: ".$RCPT_Name);
+									$ToName=$RCPT_Name;
 									$email_message->SetEncodedEmailHeader("To",$To,$ToName);//bei massenmailing tun wir das schon oben
 								}
 								if ($massmail) {
@@ -652,11 +694,12 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 									"<br>erstellt (nur versand vorbereitet)/created (prepared): ".$created_date.
 									"<br>Log: ".$tm_URL_FE."/".$tm_logdir."/".$logfilename.
 									"</ul>";
-			if (!DEMO) @SendMail($From,$From,$From,$From,$ReportMail_Subject,clear_text($ReportMail_HTML),$ReportMail_HTML);
-		}
+			if (!DEMO) @SendMail($C[0]['sender_email'],$C[0]['sender_name'],$C[0]['sender_email'],$C[0]['sender_name'],$ReportMail_Subject,clear_text($ReportMail_HTML),$ReportMail_HTML);
+		}//hc==0
 //	}//q status 2 o 3
 
 	send_log(  "\n\n".date("Y-m-d H:i:s").": ".($qcc+1)." of $qc Qs \nend\n");
+	} //isset HOST[0]!!!!
 	send_log(  "</pre>\n");
 	send_log( "\n\n\n\n".date("Y-m-d H:i:s").": write Log to ".$tm_URL_FE."/".$tm_logdir."/".$logfilename);
 

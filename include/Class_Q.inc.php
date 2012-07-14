@@ -31,10 +31,12 @@ class tm_Q {
 		$Query ="SELECT ".TM_TABLE_NL_Q.".id, "
 											.TM_TABLE_NL_Q.".nl_id, "
 											.TM_TABLE_NL_Q.".grp_id, "
+											.TM_TABLE_NL_Q.".host_id, "
 											.TM_TABLE_NL_Q.".created, "
 											.TM_TABLE_NL_Q.".author, "
 											.TM_TABLE_NL_Q.".status, "
 											.TM_TABLE_NL_Q.".send_at, "
+											.TM_TABLE_NL_Q.".check_blacklist, "
 											.TM_TABLE_NL_Q.".sent
 						FROM ".TM_TABLE_NL_Q."
 					";
@@ -64,9 +66,11 @@ class tm_Q {
 			$this->Q[$ac]['author']=$this->DB->Record['author'];
 			$this->Q[$ac]['status']=$this->DB->Record['status'];
 			$this->Q[$ac]['send_at']=$this->DB->Record['send_at'];
+			$this->Q[$ac]['check_blacklist']=$this->DB->Record['check_blacklist'];
 			$this->Q[$ac]['sent']=$this->DB->Record['sent'];
 			$this->Q[$ac]['nl_id']=$this->DB->Record['nl_id'];
 			$this->Q[$ac]['grp_id']=$this->DB->Record['grp_id'];
+			$this->Q[$ac]['host_id']=$this->DB->Record['host_id'];
 			$ac++;
 		}
 		return $this->Q;
@@ -102,9 +106,11 @@ class tm_Q {
 		$Query ="SELECT ".TM_TABLE_NL_Q.".id, "
 											.TM_TABLE_NL_Q.".nl_id, "
 											.TM_TABLE_NL_Q.".grp_id, "
+											.TM_TABLE_NL_Q.".host_id, "
 											.TM_TABLE_NL_Q.".created, "
 											.TM_TABLE_NL_Q.".author, "
 											.TM_TABLE_NL_Q.".status, "
+											.TM_TABLE_NL_Q.".check_blacklist, "
 											.TM_TABLE_NL_Q.".send_at
 						FROM ".TM_TABLE_NL_Q."
 					";
@@ -143,8 +149,10 @@ class tm_Q {
 			$this->Q[$qc]['author']=$this->DB->Record['author'];
 			$this->Q[$qc]['status']=$this->DB->Record['status'];
 			$this->Q[$qc]['send_at']=$this->DB->Record['send_at'];
+			$this->Q[$qc]['check_blacklist']=$this->DB->Record['check_blacklist'];
 			$this->Q[$qc]['nl_id']=$this->DB->Record['nl_id'];
 			$this->Q[$qc]['grp_id']=$this->DB->Record['grp_id'];
+			$this->Q[$qc]['host_id']=$this->DB->Record['host_id'];
 			$qc++;
 		}
 		return $this->Q;
@@ -185,6 +193,7 @@ class tm_Q {
 											.TM_TABLE_NL_H.".nl_id, "
 											.TM_TABLE_NL_H.".grp_id, "
 											.TM_TABLE_NL_H.".adr_id, "
+											.TM_TABLE_NL_H.".host_id, "
 											.TM_TABLE_NL_H.".created, "
 											.TM_TABLE_NL_H.".status, "
 											.TM_TABLE_NL_H.".sent
@@ -223,6 +232,7 @@ class tm_Q {
 			$this->H[$hc]['nl_id']=$this->DB->Record['nl_id'];
 			$this->H[$hc]['grp_id']=$this->DB->Record['grp_id'];
 			$this->H[$hc]['adr_id']=$this->DB->Record['adr_id'];
+			$this->H[$hc]['host_id']=$this->DB->Record['host_id'];
 			$this->H[$hc]['sent']=$this->DB->Record['sent'];
 			$hc++;
 		}
@@ -239,6 +249,7 @@ class tm_Q {
 											.TM_TABLE_NL_H.".nl_id, "
 											.TM_TABLE_NL_H.".grp_id, "
 											.TM_TABLE_NL_H.".adr_id, "
+											.TM_TABLE_NL_H.".host_id, "
 											.TM_TABLE_NL_H.".created, "
 											.TM_TABLE_NL_H.".status, "
 											.TM_TABLE_NL_H.".sent
@@ -281,6 +292,7 @@ class tm_Q {
 			$this->H[$ac]['nl_id']=$this->DB->Record['nl_id'];
 			$this->H[$ac]['grp_id']=$this->DB->Record['grp_id'];
 			$this->H[$ac]['adr_id']=$this->DB->Record['adr_id'];
+			$this->H[$ac]['host_id']=$this->DB->Record['host_id'];
 			$this->H[$ac]['sent']=$this->DB->Record['sent'];
 			$ac++;
 		}
@@ -320,7 +332,7 @@ class tm_Q {
 	}//getH
 
 
-	function delQ($id) {
+	function delQ($id,$delH=0) {
 		$Return=false;
 		if (check_dbid($id)) {
 			//q loeschen
@@ -332,10 +344,15 @@ class tm_Q {
 					$Return=false;
 					return $Return;
 				}
-			//versandliste, history h loeschen
-			//historie loeschen? .....hmmmmm , nein, nur wenn nl oder adresse
-			//stattdessen markieren wir einen abbruch!
-			$Query ="UPDATE ".TM_TABLE_NL_H."
+			//historie loeschen?
+			if ($delH==1) {
+				//versandliste, history h loeschen
+				$this->clearH(Array("q_id"=>$id));
+			}//delH
+			if ($delH!=1) {
+				//wenn historie nicht geloescht wird.....:
+				//markieren wir einen abbruch bei laufenden nicht abgeschlossenen eintraegen set status=6(canceled) where status=1(neu) oder 5(running)!
+				$Query ="UPDATE ".TM_TABLE_NL_H."
 								SET status=6
 								WHERE siteid='".TM_SITEID."'
 								AND q_id='".$id."'
@@ -347,6 +364,7 @@ class tm_Q {
 					$Return=false;
 					return $Return;
 				}
+			}//delH
 		}
 		return $Return;
 	}//delQ
@@ -357,11 +375,13 @@ class tm_Q {
 		$gc=count($grp);
 		for ($gcc=0;$gcc<$gc;$gcc++) {
 			if (check_dbid($q['nl_id'])) {
-				$Query ="INSERT INTO ".TM_TABLE_NL_Q." (nl_id,grp_id,status,send_at,author,created,siteid)
+				$Query ="INSERT INTO ".TM_TABLE_NL_Q." (nl_id,grp_id,host_id,status,send_at,check_blacklist,author,created,siteid)
 									VALUES ('".$q["nl_id"]."', '"
 													.dbesc($grp[$gcc])."', '"
+													.dbesc($q["host_id"])."', '"
 													.dbesc($q["status"])."', '"
 													.dbesc($q["send_at"])."', '"
+													.dbesc($q["check_blacklist"])."', '"
 													.dbesc($q["author"])."', '"
 													.dbesc($q["created"])."', '"
 													.TM_SITEID."'
@@ -381,11 +401,12 @@ class tm_Q {
 		$Return=false;
 		if (check_dbid($h['q_id']) && check_dbid($h['nl_id']) && check_dbid($h['grp_id']) &&	check_dbid($h['adr_id'])	) {
 			//neue History, Versandliste
-			$Query ="INSERT INTO ".TM_TABLE_NL_H." (q_id,nl_id,grp_id,adr_id,status,created,sent,siteid)
+			$Query ="INSERT INTO ".TM_TABLE_NL_H." (q_id,nl_id,grp_id,adr_id,host_id,status,created,sent,siteid)
 						VALUES ( '".$h["q_id"]."',
 									'".$h["nl_id"]."',
 									'".$h["grp_id"]."',
 									'".$h["adr_id"]."',
+									'".$h["host_id"]."',
 									'".dbesc($h["status"])."',
 									'".dbesc($h["created"])."',
 									'',
@@ -457,6 +478,34 @@ class tm_Q {
 		}
 		return $Return;
 	}
+
+	function clearH($search=Array()) {
+		$Return=false;
+		//versandliste, history h loeschen
+		if ( 
+				( isset($search['adr_id']) && check_dbid($search['adr_id']) ) ||
+				( isset($search['nl_id']) && check_dbid($search['nl_id']) ) ||
+				( isset($search['q_id']) && check_dbid($search['q_id']) ) 
+			) {
+				$Query ="DELETE FROM ".TM_TABLE_NL_H." WHERE siteid='".TM_SITEID."'";
+				if (isset($search['adr_id'])) {
+					$Query .=" AND adr_id='".$search['adr_id']."'";
+				}
+				if (isset($search['nl_id'])) {
+					$Query .=" AND nl_id='".$search['nl_id']."'";
+				}
+				if (isset($search['q_id'])) {
+					$Query .=" AND q_id='".$search['q_id']."'";
+				}
+				if ($this->DB->Query($Query)) {
+					$Return=true;
+				} else {
+					$Return=false;
+					return $Return;
+				}
+		}//isset und check_dbid
+		return $Return;
+	}//clearH
 
 	function makeMap(&$img,&$gi,$q_id,$width,$height) {
 		$Query ="SELECT ip FROM ".TM_TABLE_NL_H."

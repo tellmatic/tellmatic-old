@@ -84,6 +84,22 @@ $Form->add_InputOption($FormularName,$InputName_Delimiter,",",",");
 $Form->add_InputOption($FormularName,$InputName_Delimiter,";",";");
 $Form->add_InputOption($FormularName,$InputName_Delimiter,"|","|");
 
+//Blacklist
+$Form->new_Input($FormularName,$InputName_Blacklist,"select", "");
+$Form->set_InputJS($FormularName,$InputName_Blacklist," onChange=\"flash('submit','#ff0000');\" ");
+$Form->set_InputDefault($FormularName,$InputName_Blacklist,$$InputName_Blacklist);
+$Form->set_InputStyleClass($FormularName,$InputName_Blacklist,"mFormSelect","mFormSelectFocus");
+$Form->set_InputDesc($FormularName,$InputName_Blacklist,___("Blacklist Überprüfung"));
+$Form->set_InputReadonly($FormularName,$InputName_Blacklist,false);
+$Form->set_InputOrder($FormularName,$InputName_Blacklist,3);
+$Form->set_InputLabel($FormularName,$InputName_Blacklist,"");
+$Form->set_InputSize($FormularName,$InputName_Blacklist,0,1);
+$Form->set_InputMultiple($FormularName,$InputName_Blacklist,false);
+//add Data
+$Form->add_InputOption($FormularName,$InputName_Blacklist,"all",___("Keine Überprüfung. Alle exportieren."));
+$Form->add_InputOption($FormularName,$InputName_Blacklist,"blacklisted",___("Blacklist prüfen. Nur Adressen auf der Blacklist exportieren."));
+$Form->add_InputOption($FormularName,$InputName_Blacklist,"not_blacklisted",___("Blacklist prüfen. Nur Adressen die nicht auf der Blacklist stehen exportieren."));
+
 //Dateiname
 $Form->new_Input($FormularName,$InputName_File,"text", $$InputName_File);
 $Form->set_InputJS($FormularName,$InputName_File," onChange=\"flash('submit','#ff0000');\" onKeyUp=\"RemoveInvalidChars(this, '[^A-Za-z0-9\_\,\:\+\~\#\.\-]');\"");
@@ -188,6 +204,12 @@ $_MAIN_OUTPUT.= "<tr>";
 $_MAIN_OUTPUT.= "<td valign=top>";
 $_MAIN_OUTPUT.= tm_icon("lightbulb.png",___("Status"))."&nbsp;".___("Adressen mit folgendem Status").":<br>";
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Status]['html'];
+$_MAIN_OUTPUT.= "</td>";
+$_MAIN_OUTPUT.= "</tr>";
+$_MAIN_OUTPUT.= "<tr>";
+$_MAIN_OUTPUT.= "<td valign=top>";
+$_MAIN_OUTPUT.= tm_icon("ruby.png",___("Blacklist"))."&nbsp;".___("Blacklist Überprüfen").":<br>";
+$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Blacklist]['html'];
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "</tr>";
 $_MAIN_OUTPUT.= "<tr>";

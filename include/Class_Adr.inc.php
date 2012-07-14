@@ -200,9 +200,6 @@ class tm_ADR {
 	}//getAdrID
 
 	function countADR($group_id=0,$search=Array()) {
-	//liefert NUR die IDs zurueck als Array!!! Benoetigt fuer die Formulare
-	//keine suche ueber f0_9 !!!!! da wir speicher sparen wollen... nur ids!
-	//bzw neue query testen!
 		$Query ="
 						SELECT count(".TM_TABLE_ADR.".id) as c
 						FROM ".TM_TABLE_ADR."
@@ -237,11 +234,13 @@ class tm_ADR {
 	}//countADR
 
 
-	function getGroup($id=0,$adr_id=0,$frm_id=0,$count=0) {
+	function getGroup($id=0,$adr_id=0,$frm_id=0,$count=0,$search=Array()) {
 		$this->GRP=Array();
 		$Query ="
 			SELECT ".TM_TABLE_ADR_GRP.".id, "
 							.TM_TABLE_ADR_GRP.".name, "
+							.TM_TABLE_ADR_GRP.".public, "
+							.TM_TABLE_ADR_GRP.".public_name, "
 							.TM_TABLE_ADR_GRP.".descr, "
 							.TM_TABLE_ADR_GRP.".aktiv, "
 							.TM_TABLE_ADR_GRP.".standard,
@@ -260,6 +259,8 @@ class tm_ADR {
 			$Query .= "
 				SELECT DISTINCT ".TM_TABLE_ADR_GRP.".id, "
 												.TM_TABLE_ADR_GRP.".name, "
+												.TM_TABLE_ADR_GRP.".public, "
+												.TM_TABLE_ADR_GRP.".public_name, "
 												.TM_TABLE_ADR_GRP.".descr, "
 												.TM_TABLE_ADR_GRP.".aktiv, "
 												.TM_TABLE_ADR_GRP.".standard,
@@ -279,28 +280,48 @@ class tm_ADR {
 			$Query .= "
 				SELECT DISTINCT ".TM_TABLE_ADR_GRP.".id, "
 												.TM_TABLE_ADR_GRP.".name, "
+											.TM_TABLE_ADR_GRP.".public, "
+											.TM_TABLE_ADR_GRP.".public_name, "
 												.TM_TABLE_ADR_GRP.".descr, "
 												.TM_TABLE_ADR_GRP.".aktiv, "
 												.TM_TABLE_ADR_GRP.".standard,
 				".TM_TABLE_ADR_GRP.".author,
 				".TM_TABLE_ADR_GRP.".editor,
 				".TM_TABLE_ADR_GRP.".created,
-				".TM_TABLE_ADR_GRP.".updated
-
+				".TM_TABLE_ADR_GRP.".updated,
+				".TM_TABLE_FRM_GRP_REF.".public as public_frm_ref
 				FROM ".TM_TABLE_ADR_GRP.", ".TM_TABLE_FRM_GRP_REF."
 				WHERE ".TM_TABLE_ADR_GRP.".id=".TM_TABLE_FRM_GRP_REF.".grp_id
 				AND ".TM_TABLE_ADR_GRP.".siteid='".TM_SITEID."'
 				AND ".TM_TABLE_FRM_GRP_REF.".siteid='".TM_SITEID."'
 				AND ".TM_TABLE_FRM_GRP_REF.".frm_id='".dbesc($frm_id)."'
 			";
+			//nur opublic groups? 0/1
+			if ( isset($search['public']) ) {
+				$Query .= "
+				AND ".TM_TABLE_ADR_GRP.".public=".$search['public']."
+				";
+			}
+			//nur pub groups references
+			if ( isset($search['public_frm_ref']) ) {
+				$Query .= "
+				AND ".TM_TABLE_FRM_GRP_REF.".public=".$search['public_frm_ref']."
+				";
+			
+			}
 		}
-
+		
+		if (isset($search['aktiv'])) {
+			$Query .= " AND ".TM_TABLE_ADR_GRP.".aktiv='".$search['aktiv']."'";
+		}
 		$Query .= "	ORDER BY ".TM_TABLE_ADR_GRP.".name";
 		$this->DB->Query($Query);
 		$ac=0;
 		while ($this->DB->next_record()) {
 			$this->GRP[$ac]['id']=$this->DB->Record['id'];
 			$this->GRP[$ac]['name']=$this->DB->Record['name'];
+			$this->GRP[$ac]['public']=$this->DB->Record['public'];
+			$this->GRP[$ac]['public_name']=$this->DB->Record['public_name'];
 			$this->GRP[$ac]['descr']=$this->DB->Record['descr'];
 			$this->GRP[$ac]['aktiv']=$this->DB->Record['aktiv'];
 			$this->GRP[$ac]['standard']=$this->DB->Record['standard'];
@@ -308,6 +329,9 @@ class tm_ADR {
 			$this->GRP[$ac]['editor']=$this->DB->Record['editor'];
 			$this->GRP[$ac]['created']=$this->DB->Record['created'];
 			$this->GRP[$ac]['updated']=$this->DB->Record['updated'];
+			if ( check_dbid($frm_id) ) {
+				$this->GRP[$ac]['public_frm_ref']=$this->DB->Record['public_frm_ref'];
+			}
 			if ($count==1) {
 				$this->GRP[$ac]['adr_count']=$this->countADR($this->GRP[$ac]['id']);
 			}
@@ -316,10 +340,10 @@ class tm_ADR {
 		return $this->GRP;
 	}//getGroup
 
-	function getGroupID($id=0,$adr_id=0,$frm_id=0) {
+	function getGroupID($id=0,$adr_id=0,$frm_id=0,$search=Array()) {
 	//liefert NUR die IDs zurueck als Array!!! Beoetigt fuer die Formulare
 		$GRPID=Array();
-		$GRP=$this->getGroup($id,$adr_id,$frm_id,0);
+		$GRP=$this->getGroup($id,$adr_id,$frm_id,0,$search);
 		$acg=count($GRP);
 		for ($accg=0;$accg<$acg;$accg++) {
 			$GRPID[$accg]=$GRP[$accg]['id'];
@@ -375,14 +399,17 @@ class tm_ADR {
 	function addGrp($group) {
 		$Return=false;
 		$Query ="INSERT INTO ".TM_TABLE_ADR_GRP." (
-					name,descr,aktiv,
+					name,public,public_name,descr,aktiv,
 					standard,
 					created,author,
 					updated,editor,
 					siteid
 					)
 					VALUES (
-					'".dbesc($group["name"])."', '".dbesc($group["descr"])."',
+					'".dbesc($group["name"])."',
+					'".dbesc($group["public"])."',
+					'".dbesc($group["public_name"])."',
+					'".dbesc($group["descr"])."',
 					'".dbesc($group["aktiv"])."', 0,
 					'".dbesc($group["created"])."', '".dbesc($group["author"])."',
 					'".dbesc($group["created"])."', '".dbesc($group["author"])."',
@@ -398,7 +425,10 @@ class tm_ADR {
 		if (isset($group['id']) && check_dbid($group['id'])) {
 			$Query ="UPDATE ".TM_TABLE_ADR_GRP."
 					SET
-					name='".dbesc($group["name"])."', descr='".dbesc($group["descr"])."',
+					name='".dbesc($group["name"])."',
+					public='".dbesc($group["public"])."',
+					public_name='".dbesc($group["public_name"])."',
+					descr='".dbesc($group["descr"])."',
 					aktiv='".dbesc($group["aktiv"])."',
 					updated='".dbesc($group["created"])."',
 					editor='".dbesc($group["author"])."'
@@ -511,7 +541,6 @@ class tm_ADR {
 					$limit=$adr_row_limit;
 					for ($offset=0; $offset <= $total; $offset+=$limit) {
 						$adr=$this->getAdr(0,$offset,$limit,$id,Array(),"","",0);
-						//neu
 						//referenzen zur Standardgruppe dieser adressen suchen und aufloesen:
 						$ac=count($adr);
 						//schleife drumherum mit adr_row_limit
@@ -695,7 +724,9 @@ class tm_ADR {
 			return $Return;
 		}
 		//Abfragen! und ID suchen, die brauchen wir fuer die Verknuepfung zu den Adressgruppen
+		//search for new id:
 		//neu:
+		//neu, use lastinsertid!!!:
 		if ($this->DB->LastInsertID != 0) {
 		//neu
 			$new_adr_id=$this->DB->LastInsertID;
@@ -723,42 +754,35 @@ class tm_ADR {
 				}//if query
 
 			//gruppen eintragen
-			$acg=count($grp);
-			for ($accg=0;$accg<$acg;$accg++) {
-				$Query="INSERT 
-								INTO ".TM_TABLE_ADR_GRP_REF.
-								" (adr_id,grp_id,siteid)".
-								" VALUES "
-								."('".$new_adr_id."',
-								'".$grp[$accg]."',
-								'".TM_SITEID."')";
-				if ($this->DB->Query($Query)) {
-					$Return=true;
-				} else {//if query
-					$Return=false;
-					return $Return;
-				}//if query
-			}//for
+			//use internal method addref instead:
+			$this->addRef($new_adr_id,$grp);
 		}//get id, next record, bzw if $this->DB->LastInsertID!=0
 		$Return=$new_adr_id;
 		return $Return;
 	}//addAdr
 
+	//addRef: Gruppenreferenzen anlegen, keine pruefung auf doppelte refs!!! nur geeignet zum neuanlegen der rerefenzen bei ersteintrag! setGroup() fuer updates etc! setGroup unterstuetzt auch merge etc.
+	//wird auch von setgroup aufgerufen ! ;-)
+	//adr_id= address id, grp: array with group_ids
 	function addRef($adr_id,$grp) {
 		$Return=false;
 		if (check_dbid($adr_id)) {
 			//gruppen eintragen
 			$acg=count($grp);
-			for ($accg=0;$accg<$acg;$accg++) {
-				$Query="INSERT INTO ".TM_TABLE_ADR_GRP_REF." (adr_id,grp_id,siteid) VALUES ('".$adr_id."','".$grp[$accg]."','".TM_SITEID."')";
-				if ($this->DB->Query($Query)) {
-					$Return=true;
-				} else {
-					$Return=false;
-					return $Return;
-				}
-			}
-		}
+			if ($acg>0) {
+				for ($accg=0;$accg<$acg;$accg++) {
+					if (isset($grp[$accg])) {
+						$Query="INSERT INTO ".TM_TABLE_ADR_GRP_REF." (adr_id,grp_id,siteid) VALUES ('".$adr_id."','".$grp[$accg]."','".TM_SITEID."')";
+						if ($this->DB->Query($Query)) {
+							$Return=true;
+						} else {
+							$Return=false;
+							return $Return;
+						}//if query
+					}//if isset grp
+				}//for
+			}//if acg>0
+		}//if check_dbid
 		return $Return;
 	}
 
@@ -824,28 +848,56 @@ class tm_ADR {
 				$Return=false;
 				return $Return;
 			}
+			//update group references
+			//use setGroup instead!:
+			$this->setGroup($adr['id'],$grp);
+		}//if adr_id
+		return $Return;
+	}//updateAdr
+//setGroup: set Address references, delete old refs, create new
+//takes at least 2 params, adr_id and $new_group (array with group_ids!)
+//if 3. parameter  $old_grp is set and 4th param $merge is 1, then new and old groups will be merged and unified
+function setGroup($adr_id,$new_grp,$old_grp=Array(),$merge=0) {
+		$Return=false;
+		if (isset($adr_id) && check_dbid($adr_id)) {
 			//alle refs loeschen
-			$Query ="DELETE FROM ".TM_TABLE_ADR_GRP_REF." WHERE siteid='".TM_SITEID."' AND adr_id='".$adr['id']."'";
+			$Query ="DELETE FROM ".TM_TABLE_ADR_GRP_REF." WHERE siteid='".TM_SITEID."' AND adr_id='".$adr_id."'";
 			if ($this->DB->Query($Query)) {
 				$Return=true;
 			} else {
 				$Return=false;
 				return $Return;
 			}
-			//neue refs anlegen
-			$acg=count($grp);
-			for ($accg=0;$accg<$acg;$accg++) {
-				$Query="INSERT INTO ".TM_TABLE_ADR_GRP_REF." (adr_id,grp_id,siteid) VALUES ('".$adr['id']."','".$grp[$accg]."','".TM_SITEID."')";
-				if ($this->DB->Query($Query)) {
-					$Return=true;
-				} else {
-					$Return=false;
-					return $Return;
-				}
+
+			if ($merge==0) {
+				//set only new groups!
+				//do nothing special, default
+				$groups=$new_grp;
 			}
-		}
-		return $Return;
-	}//updateAdr
+			if ($merge==1) {
+				//merge old and new groups!
+				$groups=$this->mergeGroups($old_grp,$new_grp);
+			}
+			if ($merge==2) {
+				//diff old and new groups! set only groups from old groups not in new groups!
+				$groups=array_diff($old_grp,$new_grp);
+				//re-index!!! important!
+				$groups=array_values($groups);
+			}
+			//neue refs anlegen
+			$this->addRef($adr_id,$groups);
+		}//if adr_id
+	return $Return;
+}//setGroup
+
+//merge groups, merge 2 arrays with ids and unify
+function mergeGroups($grp1,$grp2) {
+	$grp=Array();
+	$grp_diff = array_diff($grp1,$grp2);//nur diff
+	$grp = array_merge($grp2, $grp_diff);//alte+neue gruppen zusammenfuegen
+	return $grp;
+}
+
 
 	function setAError($id,$errors) {
 		$Return=false;

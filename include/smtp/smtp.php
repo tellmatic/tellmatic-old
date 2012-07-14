@@ -2,7 +2,7 @@
 /*
  * smtp.php
  *
- * @(#) $Header: /cvsroot/tellmatic/tellmatic/include/smtp/smtp.php,v 1.1 2007/11/29 23:52:52 mcms09 Exp $
+ * @(#) $Header: /cvsroot/tellmatic/tellmatic/include/smtp/smtp.php,v 1.2 2008/09/29 13:42:14 mcms09 Exp $
  *
  */
 
@@ -22,6 +22,7 @@ class smtp_class
 	var $direct_delivery=0;
 	var $error="";
 	var $debug=0;
+	var $debug_msg="";
 	var $html_debug=0;
 	var $esmtp=1;
 	var $esmtp_host="";
@@ -75,6 +76,8 @@ class smtp_class
 		if($this->html_debug)
 			$message=str_replace("\n","<br />\n",HtmlEntities($message));
 		echo $message;
+		//add debug message, voa
+		$this->debug_msg.=$message;
 		flush();
 	}
 

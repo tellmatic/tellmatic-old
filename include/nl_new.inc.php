@@ -58,6 +58,8 @@ pt_register("POST","track_image_new");
 $InputName_TrackImageExisting="track_image_existing";//trackimage auswahl
 $$InputName_TrackImageExisting=getVar($InputName_TrackImageExisting);
 
+$InputName_RCPTName="rcpt_name";//name
+$$InputName_RCPTName=getVar($InputName_RCPTName,0,$C[0]['rcpt_name']);
 
 $check=true;
 if ($set=="save") {
@@ -90,15 +92,16 @@ if ($set=="save") {
 									"grp_id"=>$nl_grp_id,
 									"attm"=>$attach_ext,
 									"content_type"=>$content_type,
-									"track_image"=>$track_image
+									"track_image"=>$track_image,
+									"rcpt_name"=>$rcpt_name,
 									)
 								);
 		$_MAIN_MESSAGE.="<br>".sprintf(___("Neuer Newsletter %s wurde erstellt."),"'<b>".display($subject)."</b>'");
 		$_MAIN_MESSAGE.= "<br>".___("Der Newsletter wurde gespeichert unter:").
 				"<ul>".
-				___("Template:")." <a href=\"".$tm_nldir."/".$NL_Filename_N."\" target=\"_preview\">".$tm_nldir."/".$NL_Filename_N."</a>".
+				___("Template:")." <a href=\"".$tm_URL_FE."/".$tm_nldir."/".$NL_Filename_N."\" target=\"_preview\">".$tm_nldir."/".$NL_Filename_N."</a>".
 				"<br>".
-				___("Online:")." <a href=\"".$tm_nldir."/".$NL_Filename_P."\"  target=\"_preview\">".$tm_nldir."/".$NL_Filename_P."</a>".
+				___("Online:")." <a href=\"".$tm_URL_FE."/".$tm_nldir."/".$NL_Filename_P."\"  target=\"_preview\">".$tm_nldir."/".$NL_Filename_P."</a>".
 				"</ul>";
 		$action="nl_list";
 		include_once (TM_INCLUDEPATH."/nl_list.inc.php");

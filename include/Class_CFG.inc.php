@@ -330,7 +330,9 @@ class tm_CFG {
 						SELECT id,
 							name,
 							smtp_host,
+							smtp_port,
 							smtp_domain,
+							smtp_auth,
 							smtp_user,
 							smtp_pass,
 							sender_name,
@@ -345,7 +347,8 @@ class tm_CFG {
 							max_mails_bcc,
 							max_mails_retry,
 							check_version,
-							track_image
+							track_image,
+							rcpt_name
 						FROM ".TM_TABLE_CONFIG."
 						WHERE siteid='".TM_SITEID."'
 						LIMIT 1
@@ -358,7 +361,9 @@ class tm_CFG {
 			#$this->C[$cc]['siteid']=$siteid;
 			$this->C[$cc]['siteid']=TM_SITEID;
 			$this->C[$cc]['smtp_host']=$DB->Record['smtp_host'];
+			$this->C[$cc]['smtp_port']=$DB->Record['smtp_port'];
 			$this->C[$cc]['smtp_domain']=$DB->Record['smtp_domain'];
+			$this->C[$cc]['smtp_auth']=$DB->Record['smtp_auth'];
 			$this->C[$cc]['smtp_user']=$DB->Record['smtp_user'];
 			$this->C[$cc]['smtp_pass']=$DB->Record['smtp_pass'];
 			$this->C[$cc]['sender_name']=$DB->Record['sender_name'];
@@ -374,6 +379,8 @@ class tm_CFG {
 			$this->C[$cc]['max_mails_retry']=$DB->Record['max_mails_retry'];
 			$this->C[$cc]['check_version']=$DB->Record['check_version'];
 			$this->C[$cc]['track_image']=$DB->Record['track_image'];
+			$this->C[$cc]['rcpt_name']=$DB->Record['rcpt_name'];
+			#$cc++;
 		}
 		return $this->C;
 	}//getCFG
@@ -399,10 +406,13 @@ class tm_CFG {
 					max_mails_bcc,
 					max_mails_retry,
 					smtp_host,
+					smtp_port,
 					smtp_user,
 					smtp_pass,
 					smtp_domain,
+					smtp_auth,
 					track_image,
+					rcpt_name,
 					siteid
 					)
 					VALUES
@@ -421,10 +431,13 @@ class tm_CFG {
 					'".dbesc($cfg["max_mails_bcc"])."',
 					'".dbesc($cfg["max_mails_retry"])."',
 					'".dbesc($cfg["smtp_host"])."',
+					'".dbesc($cfg["smtp_port"])."',
 					'".dbesc($cfg["smtp_user"])."',
 					'".dbesc($cfg["smtp_pass"])."',
 					'".dbesc($cfg["smtp_domain"])."',
+					'".dbesc($cfg["smtp_auth"])."',
 					'".dbesc($cfg["track_image"])."',
+					'".dbesc($cfg["rcpt_name"])."',
 					'".dbesc($cfg["siteid"])."'
 					)
 					";
@@ -456,10 +469,13 @@ class tm_CFG {
 					max_mails_bcc='".dbesc($cfg["max_mails_bcc"])."',
 					max_mails_retry='".dbesc($cfg["max_mails_retry"])."',
 					smtp_host='".dbesc($cfg["smtp_host"])."',
+					smtp_port='".dbesc($cfg["smtp_port"])."',
 					smtp_user='".dbesc($cfg["smtp_user"])."',
 					smtp_pass='".dbesc($cfg["smtp_pass"])."',
 					smtp_domain='".dbesc($cfg["smtp_domain"])."',
-					track_image='".dbesc($cfg["track_image"])."'
+					smtp_auth='".dbesc($cfg["smtp_auth"])."',
+					track_image='".dbesc($cfg["track_image"])."',
+					rcpt_name='".dbesc($cfg["rcpt_name"])."'
 					WHERE siteid='".dbesc($cfg["siteid"])."'
 					";
 		if ($DB->Query($Query)) {
@@ -468,5 +484,6 @@ class tm_CFG {
 		return $Return;
 	}//updateCFG
 
-}
+
+}//Class CFG
 ?>

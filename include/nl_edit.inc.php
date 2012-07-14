@@ -55,6 +55,9 @@ pt_register("POST","track_image_new");
 $InputName_TrackImageExisting="track_image_existing";//trackimage auswahl
 $$InputName_TrackImageExisting=getVar($InputName_TrackImageExisting);
 
+$InputName_RCPTName="rcpt_name";//name
+$$InputName_RCPTName=getVar($InputName_RCPTName);
+	
 $NEWSLETTER=new tm_NL();
 $NL=$NEWSLETTER->getNL($nl_id);
 
@@ -97,7 +100,8 @@ if ($set=="save") {
 									"grp_id"=>$nl_grp_id,
 									"attm"=>$attach_ext,
 									"content_type"=>$content_type,
-									"track_image"=>$track_image
+									"track_image"=>$track_image,
+									"rcpt_name"=>$rcpt_name,
 									)
 									);
 		$_MAIN_MESSAGE.="<br>".sprintf(___("Newsletter %s wurde aktualisiert."),"'<b>".display($subject)."</b>'");
@@ -124,6 +128,7 @@ if ($set=="save") {
 	$link=$NL[0]['link'];
 	$nl_grp_id=$NL[0]['grp_id'];
 	$content_type=$NL[0]['content_type'];
+	$rcpt_name=$NL[0]['rcpt_name'];
 	$$InputName_TrackImageExisting=$NL[0]['track_image'];
 	include_once (TM_INCLUDEPATH."/nl_form.inc.php");
 }

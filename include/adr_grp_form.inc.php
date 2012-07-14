@@ -30,7 +30,7 @@ $Form->new_Input($FormularName,"adr_grp_id", "hidden", $adr_grp_id);
 //add inputfields and buttons....
 //////////////////
 //Name
-$Form->new_Input($FormularName,$InputName_Name,"text", $$InputName_Name);
+$Form->new_Input($FormularName,$InputName_Name,"text", display($$InputName_Name));
 $Form->set_InputJS($FormularName,$InputName_Name," onChange=\"flash('submit','#ff0000');\" ");
 $Form->set_InputStyleClass($FormularName,$InputName_Name,"mFormText","mFormTextFocus");
 $Form->set_InputSize($FormularName,$InputName_Name,48,256);
@@ -55,8 +55,28 @@ if ($standard==1) {
 	$Form->set_InputLabel($FormularName,$InputName_Aktiv,"");
 }
 
+//PUB
+	$Form->new_Input($FormularName,$InputName_Public,"checkbox", 1);
+	$Form->set_InputJS($FormularName,$InputName_Public," onChange=\"flash('submit','#ff0000');\" ");
+	$Form->set_InputDefault($FormularName,$InputName_Public,$$InputName_Public);
+	$Form->set_InputStyleClass($FormularName,$InputName_Public,"mFormText","mFormTextFocus");
+	$Form->set_InputSize($FormularName,$InputName_Public,48,256);
+	$Form->set_InputDesc($FormularName,$InputName_Public,___("Öffentlich"));
+	$Form->set_InputReadonly($FormularName,$InputName_Public,false);
+	$Form->set_InputOrder($FormularName,$InputName_Public,2);
+	$Form->set_InputLabel($FormularName,$InputName_Public,"");
+
+//PUBName
+$Form->new_Input($FormularName,$InputName_PublicName,"text", display($$InputName_PublicName));
+$Form->set_InputJS($FormularName,$InputName_PublicName," onChange=\"flash('submit','#ff0000');\" ");
+$Form->set_InputStyleClass($FormularName,$InputName_PublicName,"mFormText","mFormTextFocus");
+$Form->set_InputSize($FormularName,$InputName_PublicName,48,256);
+$Form->set_InputDesc($FormularName,$InputName_PublicName,___("Name (öffentlich)"));
+$Form->set_InputReadonly($FormularName,$InputName_PublicName,false);
+$Form->set_InputOrder($FormularName,$InputName_PublicName,1);
+$Form->set_InputLabel($FormularName,$InputName_PublicName,"");
 //Descr
-$Form->new_Input($FormularName,$InputName_Descr,"textarea", $$InputName_Descr);
+$Form->new_Input($FormularName,$InputName_Descr,"textarea", display($$InputName_Descr));
 $Form->set_InputJS($FormularName,$InputName_Descr," onChange=\"flash('submit','#ff0000');\" ");
 $Form->set_InputStyleClass($FormularName,$InputName_Descr,"mFormTextarea","mFormTextareaFocus");
 $Form->set_InputSize($FormularName,$InputName_Descr,20,5);
@@ -111,6 +131,24 @@ $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Aktiv]['html'];
 	}
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "</tr>";
+
+$_MAIN_OUTPUT.= "<tr>";
+$_MAIN_OUTPUT.= "<td valign=top>";
+$_MAIN_OUTPUT.= tm_icon("cup.png",___("Öffentlich"))."&nbsp;".___("Öffentlich");
+$_MAIN_OUTPUT.= "</td>";
+$_MAIN_OUTPUT.= "<td valign=top>";
+$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Public]['html'];
+$_MAIN_OUTPUT.= "</td>";
+$_MAIN_OUTPUT.= "</tr>";
+$_MAIN_OUTPUT.= "<tr>";
+$_MAIN_OUTPUT.= "<td valign=top>";
+$_MAIN_OUTPUT.= tm_icon("cup.png",___("Name"))."&nbsp;".___("Name (öffentlich)");
+$_MAIN_OUTPUT.= "</td>";
+$_MAIN_OUTPUT.= "<td valign=top>";
+$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_PublicName]['html'];
+$_MAIN_OUTPUT.= "</td>";
+$_MAIN_OUTPUT.= "</tr>";
+
 $_MAIN_OUTPUT.= "<tr>";
 $_MAIN_OUTPUT.= "<td valign=top colspan=2>";
 $_MAIN_OUTPUT.= tm_icon("layout.png",___("Beschreibung"))."&nbsp;".___("Beschreibung")."<br>";

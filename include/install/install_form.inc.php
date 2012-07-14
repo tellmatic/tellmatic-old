@@ -92,6 +92,30 @@
 	$Form->set_InputOrder($FormularName,$InputName_DBPort,6);
 	$Form->set_InputLabel($FormularName,$InputName_DBPort,___("Datenbank Port")."<br>");
 
+//dbs
+$Form->new_Input($FormularName,$InputName_DBSocket,"checkbox", 1);
+$Form->set_InputDefault($FormularName,$InputName_DBSocket,$$InputName_DBSocket);
+$Form->set_InputStyleClass($FormularName,$InputName_DBSocket,"mFormText","mFormTextFocus");
+$Form->set_InputSize($FormularName,$InputName_DBSocket,48,256);
+$Form->set_InputDesc($FormularName,$InputName_DBSocket,___("Benutze Socket statt TCP-Port"));
+$Form->set_InputReadonly($FormularName,$InputName_DBSocket,false);
+$Form->set_InputOrder($FormularName,$InputName_DBSocket,2);
+$Form->set_InputLabel($FormularName,$InputName_DBSocket,___("Benutze Socket"));
+
+//DBType
+$Form->new_Input($FormularName,$InputName_DBType,"select", "");
+$Form->set_InputDefault($FormularName,$InputName_DBType,$$InputName_DBType);
+$Form->set_InputStyleClass($FormularName,$InputName_DBType,"mFormSelect","mFormSelectFocus");
+$Form->set_InputDesc($FormularName,$InputName_DBType,___("Datenbank Typ"));
+$Form->set_InputReadonly($FormularName,$InputName_DBType,false);
+$Form->set_InputOrder($FormularName,$InputName_DBType,16);
+$Form->set_InputLabel($FormularName,$InputName_DBType,"Typ:");
+$Form->set_InputSize($FormularName,$InputName_DBType,0,1);
+$Form->set_InputMultiple($FormularName,$InputName_DBType,false);
+//add Data
+$Form->add_InputOption($FormularName,$InputName_DBType,"MyISAM","MyISAM");
+$Form->add_InputOption($FormularName,$InputName_DBType,"InnoDB","InnoDB");
+
 	//dbs
 	$Form->new_Input($FormularName,$InputName_DBName,"text", $$InputName_DBName);
 	$Form->set_InputStyleClass($FormularName,$InputName_DBName,"mFormText","mFormTextFocus");
@@ -137,13 +161,22 @@
 	$Form->set_InputOrder($FormularName,$InputName_SMTPHost,11);
 	$Form->set_InputLabel($FormularName,$InputName_SMTPHost,___("SMTP Servername oder IP-Adresse")."<br>");
 
-	//smtp
+//smtp
+$Form->new_Input($FormularName,$InputName_SMTPPort,"text", $$InputName_SMTPPort);
+$Form->set_InputStyleClass($FormularName,$InputName_SMTPPort,"mFormText","mFormTextFocus");
+$Form->set_InputSize($FormularName,$InputName_SMTPPort,40,40);
+$Form->set_InputDesc($FormularName,$InputName_SMTPPort,___("SMTP Port, normalerweise 25 o. 587"));
+$Form->set_InputReadonly($FormularName,$InputName_SMTPPort,false);
+$Form->set_InputOrder($FormularName,$InputName_SMTPPort,12);
+$Form->set_InputLabel($FormularName,$InputName_SMTPPort,___("SMTP Port, normalerweise 25 o. 587")."<br>");
+
+//smtp
 	$Form->new_Input($FormularName,$InputName_SMTPUser,"text", $$InputName_SMTPUser);
 	$Form->set_InputStyleClass($FormularName,$InputName_SMTPUser,"mFormText","mFormTextFocus");
 	$Form->set_InputSize($FormularName,$InputName_SMTPUser,40,40);
 	$Form->set_InputDesc($FormularName,$InputName_SMTPUser,___("SMTP Benutzername"));
 	$Form->set_InputReadonly($FormularName,$InputName_SMTPUser,false);
-	$Form->set_InputOrder($FormularName,$InputName_SMTPUser,12);
+$Form->set_InputOrder($FormularName,$InputName_SMTPUser,13);
 	$Form->set_InputLabel($FormularName,$InputName_SMTPUser,___("SMTP Benutzername")."<br>");
 
 	//smtp
@@ -152,7 +185,7 @@
 	$Form->set_InputSize($FormularName,$InputName_SMTPPass,40,40);
 	$Form->set_InputDesc($FormularName,$InputName_SMTPPass,___("SMTP Passwort"));
 	$Form->set_InputReadonly($FormularName,$InputName_SMTPPass,false);
-	$Form->set_InputOrder($FormularName,$InputName_SMTPPass,13);
+$Form->set_InputOrder($FormularName,$InputName_SMTPPass,14);
 	$Form->set_InputLabel($FormularName,$InputName_SMTPPass,___("SMTP Passwort")."<br>");
 
 	//smtp
@@ -161,8 +194,26 @@
 	$Form->set_InputSize($FormularName,$InputName_SMTPDomain,40,40);
 	$Form->set_InputDesc($FormularName,$InputName_SMTPDomain,___("SMTP Domainname"));
 	$Form->set_InputReadonly($FormularName,$InputName_SMTPDomain,false);
-	$Form->set_InputOrder($FormularName,$InputName_SMTPDomain,14);
+$Form->set_InputOrder($FormularName,$InputName_SMTPDomain,15);
 	$Form->set_InputLabel($FormularName,$InputName_SMTPDomain,___("SMTP Domainname")."<br>");
+
+//SMTP-AuthType
+$Form->new_Input($FormularName,$InputName_SMTPAuth,"select", "");
+$Form->set_InputJS($FormularName,$InputName_SMTPAuth," onChange=\"flash('submit','#ff0000');\" ");
+$Form->set_InputDefault($FormularName,$InputName_SMTPAuth,$$InputName_SMTPAuth);
+$Form->set_InputStyleClass($FormularName,$InputName_SMTPAuth,"mFormSelect","mFormSelectFocus");
+$Form->set_InputDesc($FormularName,$InputName_SMTPAuth,___("SMTP-Auth"));
+$Form->set_InputReadonly($FormularName,$InputName_SMTPAuth,false);
+$Form->set_InputOrder($FormularName,$InputName_SMTPAuth,16);
+$Form->set_InputLabel($FormularName,$InputName_SMTPAuth,"");
+$Form->set_InputSize($FormularName,$InputName_SMTPAuth,0,1);
+$Form->set_InputMultiple($FormularName,$InputName_SMTPAuth,false);
+//add Data
+$Form->add_InputOption($FormularName,$InputName_SMTPAuth,"LOGIN","LOGIN");
+$Form->add_InputOption($FormularName,$InputName_SMTPAuth,"PLAIN","PLAIN");
+$Form->add_InputOption($FormularName,$InputName_SMTPAuth,"CRAM-MD5","CRAM-MD5");
+#$Form->add_InputOption($FormularName,$InputName_SMTPAuth,"Digest","Digest");
+#$Form->add_InputOption($FormularName,$InputName_SMTPAuth,"NTML","NTML");
 
 //regtext
 
@@ -272,6 +323,16 @@ $FORM.= "</td>";
 $FORM.= "</tr>";
 $FORM.= "<tr>";
 $FORM.= "<td valign=top>";
+$FORM.= $Form->INPUT[$FormularName][$InputName_DBSocket]['html'];
+$FORM.= "</td>";
+$FORM.= "</tr>";
+$FORM.= "<tr>";
+$FORM.= "<td valign=top>";
+$FORM.= $Form->INPUT[$FormularName][$InputName_DBType]['html'];
+$FORM.= "</td>";
+$FORM.= "</tr>";
+$FORM.= "<tr>";
+$FORM.= "<td valign=top>";
 $FORM.= $Form->INPUT[$FormularName][$InputName_DBUser]['html'];
 $FORM.= "</td>";
 $FORM.= "</tr>";
@@ -317,6 +378,11 @@ $FORM.= "</td>";
 $FORM.= "</tr>";
 $FORM.= "<tr>";
 $FORM.= "<td valign=top>";
+$FORM.= $Form->INPUT[$FormularName][$InputName_SMTPPort]['html'];
+$FORM.= "</td>";
+$FORM.= "</tr>";
+$FORM.= "<tr>";
+$FORM.= "<td valign=top>";
 $FORM.= $Form->INPUT[$FormularName][$InputName_SMTPUser]['html'];
 $FORM.= "</td>";
 $FORM.= "</tr>";
@@ -330,6 +396,12 @@ $FORM.= "<td valign=top>";
 $FORM.= $Form->INPUT[$FormularName][$InputName_SMTPDomain]['html'];
 $FORM.= "</td>";
 $FORM.= "</tr>";
+$FORM.= "<tr>";
+$FORM.= "<td valign=top>";
+$FORM.= $Form->INPUT[$FormularName][$InputName_SMTPAuth]['html'];
+$FORM.= "</td>";
+$FORM.= "</tr>";
+
 $FORM.= "<tr>";
 $FORM.= "<td valign=top align=\"right\">";
 $FORM.="<a href=\"#\" OnClick=\"switchSection('smtp');switchSection('dbs');\">".___("Zurück (Datenbank)")."</a>";
