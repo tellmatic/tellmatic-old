@@ -2,7 +2,7 @@
 /*
  * smtp_message.php
  *
- * @(#) $Header: /cvsroot/tellmatic/tellmatic/include/mimemessage/smtp_message.php,v 1.4 2007/12/01 14:52:48 mcms09 Exp $
+ * @(#) $Header: /cvsroot/tellmatic/tellmatic/include/mimemessage/smtp_message.php,v 1.5 2007/12/05 20:28:05 mcms09 Exp $
  *
  *
  */
@@ -14,7 +14,7 @@
 	<package>net.manuellemos.mimemessage</package>
 
 	<name>smtp_message_class</name>
-	<version>@(#) $Id: smtp_message.php,v 1.4 2007/12/01 14:52:48 mcms09 Exp $</version>
+	<version>@(#) $Id: smtp_message.php,v 1.5 2007/12/05 20:28:05 mcms09 Exp $</version>
 	<copyright>Copyright © (C) Manuel Lemos 1999-2004</copyright>
 	<title>MIME E-mail message composing and sending via SMTP</title>
 	<author>Manuel Lemos</author>
@@ -456,7 +456,7 @@ class smtp_message_class extends email_message_class
 {metadocument}
 	<variable>
 		<name>mailer_delivery</name>
-		<value>smtp $Revision: 1.4 $</value>
+		<value>smtp $Revision: 1.5 $</value>
 		<documentation>
 			<purpose>Specify the text that is used to identify the mail
 				delivery class or sub-class. This text is appended to the
@@ -467,7 +467,7 @@ class smtp_message_class extends email_message_class
 	</variable>
 {/metadocument}
 */
-	var $mailer_delivery='smtp $Revision: 1.4 $';
+	var $mailer_delivery='smtp $Revision: 1.5 $';
 /*
 {metadocument}
 	<variable>
@@ -561,10 +561,10 @@ class smtp_message_class extends email_message_class
 					$return_path[$headers[$header_name]]=1;
 					break;
 				case "from":
-					$error=$this->GetRFC822Addresses($headers[$header_name],$from);
+					$this->GetRFC822Addresses($headers[$header_name],$from);
 					break;
 				case "to":
-					$error=$this->GetRFC822Addresses($headers[$header_name],$to);
+					$this->GetRFC822Addresses($headers[$header_name],$to);
 					break;
 				case "cc":
 				case "bcc":
@@ -577,7 +577,7 @@ class smtp_message_class extends email_message_class
 					$message_id_set=1;
 					break;
 			}
-			if(strcmp($error,""))
+			if(isset($error) && strcmp($error,""))
 				return($this->OutputError($error));
 			if(strtolower($header_name)=="bcc")
 				continue;

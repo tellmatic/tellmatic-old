@@ -10,6 +10,18 @@
 /* check Homepage for Updates and more Infos                                    */
 /* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
 /********************************************************************************/
+
+*+*+*+*+*+*+*+*+*+*+*+ CHANGES V1.0.7.2  +*+*+*+*+*+*+*+*+*+*+*+*
+	06.12.2007
+		- removed some php warnings and some small fixes
+		- added support for multipart-mime/mixed/alternative
+		- fixed a 'bug' on viewing newsletters, status was set even if unsubscribed
+		- added status 7:unsubscribed for history 
+		- santa claus does not wear a red cloak!!!
+		- fixed a bug when searching for mixed case emails, now forcing lowercase
+		- on upload use move_uploaded file instead of copy...
+		- fixed problem with send time set to 0h00m or similar, 0 is empty in php :P, if set to 0 the current servertime was used..., fixed
+
 *+*+*+*+*+*+*+*+*+*+*+ CHANGES V1.0.7.1  +*+*+*+*+*+*+*+*+*+*+*+*
 	01.12.2007
 	- small fixes

@@ -1,10 +1,8 @@
-/Class_Adr.inc.php/1.1.1.1/Wed Nov 21 22:58:35 2007//
 /Class_Bounce.inc.php/1.1.1.1/Wed Nov 21 22:58:29 2007//
 /Class_CFG.inc.php/1.1.1.1/Wed Nov 21 22:58:38 2007//
 /Class_DB.inc.php/1.1.1.1/Wed Nov 21 22:58:43 2007//
 /Class_Form.inc.php/1.1.1.1/Wed Nov 21 22:58:36 2007//
 /Class_Misc.inc.php/1.1.1.1/Wed Nov 21 22:58:43 2007//
-/Class_NL.inc.php/1.1.1.1/Wed Nov 21 22:58:36 2007//
 /Class_URL.inc.php/1.1.1.1/Wed Nov 21 22:58:43 2007//
 /Class_mSimpleForm.inc.php/1.1.1.1/Wed Nov 21 22:58:37 2007//
 /Classes.inc.php/1.1.1.1/Wed Nov 21 22:58:28 2007//
@@ -14,14 +12,12 @@
 /GetText.inc.php/1.1.1.1/Wed Nov 21 22:58:27 2007//
 /Head.inc.php/1.1.1.1/Wed Nov 21 22:58:38 2007//
 /Header.inc.php/1.1.1.1/Wed Nov 21 22:58:42 2007//
-/Index.inc.php/1.1.1.1/Wed Nov 21 22:58:27 2007//
 /Login.inc.php/1.1.1.1/Wed Nov 21 22:58:40 2007//
 /Login_form.inc.php/1.1.1.1/Wed Nov 21 22:58:38 2007//
 /Login_guard_ret.inc.php/1.1.1.1/Wed Nov 21 22:58:42 2007//
 /Main.inc.php/1.1.1.1/Wed Nov 21 22:58:42 2007//
 /Menu.inc.php/1.1.1.1/Wed Nov 21 22:58:28 2007//
 /PHP5_clone.inc.php/1.1.1.1/Wed Nov 21 22:58:36 2007//
-/Stats.inc.php/1.1.1.1/Wed Nov 21 22:58:33 2007//
 /Welcome.inc.php/1.1.1.1/Wed Nov 21 22:58:32 2007//
 /adm_set.inc.php/1.1.1.1/Wed Nov 21 22:58:40 2007//
 /adm_set_form.inc.php/1.1.1.1/Wed Nov 21 22:58:38 2007//
@@ -67,17 +63,12 @@
 /nl_grp_list.inc.php/1.1.1.1/Wed Nov 21 22:58:34 2007//
 /nl_grp_list_legende.inc.php/1.1.1.1/Wed Nov 21 22:58:34 2007//
 /nl_grp_new.inc.php/1.1.1.1/Wed Nov 21 22:58:36 2007//
-/nl_list.inc.php/1.1.1.1/Wed Nov 21 22:58:27 2007//
 /nl_new.inc.php/1.1.1.1/Wed Nov 21 22:58:34 2007//
-/nl_upload.inc.php/1.1.1.1/Wed Nov 21 22:58:34 2007//
 /pager.inc.php/1.1.1.1/Wed Nov 21 22:58:34 2007//
 /phpinfo.inc.php/1.1.1.1/Wed Nov 21 22:58:38 2007//
 /phpinfo.php/1.1.1.1/Wed Nov 21 22:58:43 2007//
-/queue_form.inc.php/1.1.1.1/Wed Nov 21 22:58:41 2007//
 /queue_list.inc.php/1.1.1.1/Wed Nov 21 22:58:27 2007//
 /queue_list_legende.inc.php/1.1.1.1/Wed Nov 21 22:58:27 2007//
-/queue_new.inc.php/1.1.1.1/Wed Nov 21 22:58:36 2007//
-/queue_send.inc.php/1.1.1.1/Wed Nov 21 22:58:36 2007//
 /statistic.inc.php/1.1.1.1/Wed Nov 21 22:58:27 2007//
 /statistic_adr.inc.php/1.1.1.1/Wed Nov 21 22:58:38 2007//
 /statistic_adrgrp.inc.php/1.1.1.1/Wed Nov 21 22:58:33 2007//
@@ -92,17 +83,13 @@
 /unsubscribe_form.inc.php/1.1.1.1/Wed Nov 21 22:58:27 2007//
 /user.inc.php/1.1.1.1/Wed Nov 21 22:58:33 2007//
 /user_form.inc.php/1.1.1.1/Wed Nov 21 22:58:35 2007//
-/wysiwyg.inc.php/1.1.1.1/Wed Nov 21 22:58:42 2007//
 D/geoip////
 D/install////
 D/libchart-1.1////
 D/myftphp////
 D/phphtmlparser////
-/tm_lib_admin.inc.php/1.2/Sun Nov 25 12:24:28 2007//
 /nl_form.inc.php/1.2/Wed Nov 28 19:34:56 2007//
 /nl_list_legende.inc.php/1.2/Wed Nov 28 19:36:30 2007//
-/Class_Q.inc.php/1.2/Tue Nov 27 15:31:24 2007//
-/Lang.inc.php/1.2/Wed Nov 28 19:33:55 2007//
 /status_map.inc.php/1.2/Thu Nov 29 15:39:00 2007//
 /index.html/1.1/Wed Nov 28 19:45:02 2007//
 /index.php/1.1/Wed Nov 28 19:45:02 2007//
@@ -116,6 +103,19 @@ D/smtp////
 /adm_user_list_legende.inc.php/1.2/Sat Dec  1 11:56:18 2007//
 /Functions.inc.php/1.3/Sat Dec  1 12:01:21 2007//
 /Class_Tpl.inc.php/1.2/Sat Dec  1 16:21:06 2007//
-/send_it.php/1.4/Sat Dec  1 16:21:55 2007//
 /Class_Mail.inc.php/1.4/Sat Dec  1 17:39:36 2007//
-/tm_lib.inc.php/1.4/Sun Dec  2 18:34:38 2007//
+/nl_list.inc.php/1.2/Wed Dec  5 15:09:08 2007//
+/nl_upload.inc.php/1.2/Wed Dec  5 15:13:41 2007//
+/queue_form.inc.php/1.2/Wed Dec  5 15:16:23 2007//
+/queue_send.inc.php/1.2/Wed Dec  5 15:19:57 2007//
+/tm_lib_admin.inc.php/1.3/Wed Dec  5 15:22:43 2007//
+/Class_Adr.inc.php/1.2/Wed Dec  5 15:44:01 2007//
+/queue_new.inc.php/1.3/Wed Dec  5 15:54:41 2007//
+/send_it.php/1.6/Wed Dec  5 20:30:24 2007//
+/Stats.inc.php/1.2/Wed Dec  5 20:31:26 2007//
+/tm_lib.inc.php/1.6/Wed Dec  5 20:32:14 2007//
+/wysiwyg.inc.php/1.3/Wed Dec  5 20:46:30 2007//
+/Lang.inc.php/1.3/Wed Dec  5 15:05:56 2007//
+/Class_Q.inc.php/1.3/Mon Dec  3 11:54:54 2007//
+/Class_NL.inc.php/1.2/Wed Dec  5 15:04:59 2007//
+/Index.inc.php/1.2/Wed Dec  5 21:16:05 2007//

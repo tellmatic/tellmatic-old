@@ -48,6 +48,23 @@ function checkImport() {
 	}
 }
 
+function checkQNewLimitOffset() {
+	form=document.getElementById('queue_new');
+	field=document.getElementById('send_now');
+	if (field.checked)  {
+		var changefield=document.getElementById('usr_limit');
+	    changefield.disabled = false;
+		var changefield=document.getElementById('usr_offset');
+	    changefield.disabled = false;
+	} else {
+		var changefield=document.getElementById('usr_limit');
+	    changefield.disabled = true;
+		var changefield=document.getElementById('usr_offset');
+	    changefield.disabled = true;
+	}
+}
+
+
 //flash element
 function flash(id, color) {
 	var element = document.getElementById(id);

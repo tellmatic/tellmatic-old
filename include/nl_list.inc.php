@@ -330,11 +330,15 @@ for ($ncc=0;$ncc<$nc;$ncc++) {
 
 	$_MAIN_OUTPUT.= "<td>\n";
 	if ($NL[$ncc]['status']==4) {
-		$_MAIN_OUTPUT.= "<a href=\"".$tm_URL."/".$editURLPara_."\" title=\"".___("Newsletter bearbeiten")."\" onclick=\"return confirmLink(this, '".___("Der Newsletter wurde bereits versendet, wollen Sie ihn wirklich bearbeiten? Es wird empfohlen eine Kopie zu erstellen und diese zu bearbeiten.")."')\">".display($NL[$ncc]['subject'])."</a>\n";
+		$_MAIN_OUTPUT.= "<a href=\"".$tm_URL."/".$editURLPara_."\" title=\"".___("Newsletter bearbeiten")."\" onclick=\"return confirmLink(this, '".___("Der Newsletter wurde bereits versendet, wollen Sie ihn wirklich bearbeiten? Es wird empfohlen eine Kopie zu erstellen und diese zu bearbeiten.")."')\">";
 	} else {
 		if ($NL[$ncc]['status']!=3) {
-			$_MAIN_OUTPUT.= "<a href=\"".$tm_URL."/".$editURLPara_."\" title=\"".___("Newsletter bearbeiten")."\">".display($NL[$ncc]['subject'])."</a>\n";			
+			$_MAIN_OUTPUT.= "<a href=\"".$tm_URL."/".$editURLPara_."\" title=\"".___("Newsletter bearbeiten")."\">";
 		}
+	}
+	$_MAIN_OUTPUT.=display($NL[$ncc]['subject']);
+	if ($NL[$ncc]['status']!=3 || $NL[$ncc]['status']==4) {
+		$_MAIN_OUTPUT.="</a>\n";
 	}
 
 	$_MAIN_OUTPUT.= "<div id=\"tt_nl_list_".$NL[$ncc]['id']."\" class=\"tooltip\">\n";

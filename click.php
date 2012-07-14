@@ -29,18 +29,24 @@ if (checkid($nl_id)) {
 	if ($NL[0]['aktiv']==1) {
 		if (checkid($h_id)) {
 			$QUEUE=new tm_Q();
-			$QUEUE->setHStatus($h_id,3);	//view
 			//nur der erste aufruf wird mit der ip versehen! ansonsten wuerde diese jedesmal ueberschrieben wenn der leser oder ein anderer das nl anschaut.
 			$H=$QUEUE->getH($h_id);
 			if (empty($H[0]['ip']) || $H[0]['ip']=='0.0.0.0') {
 				$QUEUE->setHIP($H[0]['id'], getIP());	//save ip
 			}
+			if ($H[0]['status']!=7) { //7:unsubscribed
+				$QUEUE->setHStatus($h_id,3);	//view
+			}
 		}
 		if (checkid($a_id)) {
 			$ADDRESS=new tm_ADR();
-			$ADDRESS->setStatus($a_id,4);	//click
+			$ADR=getAdr($a_id);
+			//only set view status if not waiting status or unsubscribed // !5 && !11
+			if ($ADR[0]['status']!=5 && $ADR[0]['status']!=11) {
+				$ADDRESS->setStatus($a_id,4);	//view
+			}
 			//adr click counter ++
-			$ADDRESS->addClick($a_id,4);	//click
+			$ADDRESS->addClick($a_id);	//click
 		}
 		//header...
 		header("Location: ".$NL[0]['link'].""); /* Browser umleiten */

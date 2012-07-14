@@ -333,7 +333,7 @@ if (!$tm_config) {
 //Tellmatic Name
 /***********************************************************/
 	$ApplicationName="tellmatic";
-	$ApplicationVersion="1.0.7.1 Tellmatic";
+	$ApplicationVersion="1.0.7.2 Tellmatic";
 	$ApplicationDescr=___("Die Newsletter Maschine");
 	$ApplicationUrl="www.tellmatic.org";
 	$ApplicationText=$ApplicationName." v".$ApplicationVersion." - ".$ApplicationDescr." (".$ApplicationUrl.")";
@@ -348,7 +348,7 @@ if (!$tm_config) {
 /***********************************************************/
 //encoding
 /***********************************************************/
-	$encoding = "utf-8";
+	$encoding = "UTF-8";
 
 /***********************************************************/
 //configured

@@ -470,9 +470,11 @@ class tm_Q {
 			$Color2 = imagecolorallocate ($img, 255,0,0);
 			while ($this->DB->next_Record()) {
 				$geoip = geoip_record_by_addr($gi,$this->DB->Record['ip']);
-				$pt = getlocationcoords($geoip->latitude, $geoip->longitude, $width, $height);
-				imagefilledrectangle($img,$pt["x"]-1,$pt["y"]-1,$pt["x"]+1,$pt["y"]+1,$Color1);
-				imagerectangle($img,$pt["x"]-2,$pt["y"]-2,$pt["x"]+2,$pt["y"]+2,$Color2);
+				if (isset($geoip->latitude, $geoip->longitude)) {
+					$pt = getlocationcoords($geoip->latitude, $geoip->longitude, $width, $height);
+					imagefilledrectangle($img,$pt["x"]-1,$pt["y"]-1,$pt["x"]+1,$pt["y"]+1,$Color1);
+					imagerectangle($img,$pt["x"]-2,$pt["y"]-2,$pt["x"]+2,$pt["y"]+2,$Color2);
+				}
 				#imagesetpixel($img,$pt["x"],$pt["y"],$Color1);
 			}//while
 		}//if query
@@ -492,14 +494,16 @@ class tm_Q {
 			$K[0][0]=0;
 			while ($this->DB->next_Record()) {
 				$geoip = geoip_record_by_addr($gi,$this->DB->Record['ip']);
-				$pt = getlocationcoords($geoip->latitude, $geoip->longitude, $width, $height);
-				if (isset($K[$pt['x']][$pt['y']])) {
-					$K[$pt['x']][$pt['y']]++;
-					if ($K[$pt['x']][$pt['y']] > $max) $max=$K[$pt['x']][$pt['y']];
-				} else {
-					$K[$pt['x']][$pt['y']]=1;
+				if (isset($geoip->latitude, $geoip->longitude)) {
+					$pt = getlocationcoords($geoip->latitude, $geoip->longitude, $width, $height);
+					if (isset($K[$pt['x']][$pt['y']])) {
+						$K[$pt['x']][$pt['y']]++;
+						if ($K[$pt['x']][$pt['y']] > $max) $max=$K[$pt['x']][$pt['y']];
+					} else {
+						$K[$pt['x']][$pt['y']]=1;
+					}
+					$sum ++;
 				}
-				$sum ++;
 			}//while
 			$one_pc=$sum/100;
 			$Color1 = imagecolorallocatealpha ($img, 255,0,0,0);

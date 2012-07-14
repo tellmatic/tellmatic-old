@@ -42,6 +42,7 @@ if ($doptin==1 && !empty($c) && !empty($email)) { // && checkEmailAdr($email,$EM
 		$ADDRESS=new tm_ADR();
 		$search['email']=$email;
 		$search['code']=$c;
+		$search['email_exact_match']=true;
 		//harte pruefung, nur wenn noch nicht bestaetigt:	$search['status']=5;
 		//limit=1: adr holen
 		$ADR=$ADDRESS->getAdr(0,0,1,0,$search);

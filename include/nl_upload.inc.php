@@ -39,19 +39,25 @@
 			// Datei auch nicht zu groß
 			if($_FILES["file"]["size"] <= $max_upload_size) {
 				// Alles OK -> Datei kopieren
-				if($check && copy($_FILES["file"]["tmp_name"], $tm_nlpath."/".$NL_Filename)) { //$_FILES["file"]["name"]
-					$_MAIN_MESSAGE.= "<br>".___("HTML-Datei erfolgreich hochgeladen.");
-					$_MAIN_MESSAGE.= "<ul>".$_FILES["file"]["name"];
-					$_MAIN_MESSAGE.= " / ".$_FILES["file"]["size"]." Byte";
-					$_MAIN_MESSAGE.= ", ".$_FILES["file"]["type"];
-					$_MAIN_MESSAGE.= "<br>".___("HTML-Code wurde angefügt.").
-											"<br>".___("Datei gespeichert unter:")." <a href=\"".$tm_URL_FE."/".$tm_nldir."/".$NL_Filename."\" target=\"_preview\">".$tm_nldir."/".$NL_Filename."</a>";
-					$_MAIN_MESSAGE.= "</ul>";
-					$uploaded_html=true;
+				if($check) {
+					//http://www.php.net/manual/en/features.file-upload.php, use basename to preserve filename for multiple uploaded files.... if needed ;)
+					if (move_uploaded_file($_FILES["file"]["tmp_name"], $tm_nlpath."/".$NL_Filename)) {
+						$_MAIN_MESSAGE.= "<br>".___("HTML-Datei erfolgreich hochgeladen.");
+						$_MAIN_MESSAGE.= "<ul>".$_FILES["file"]["name"];
+						$_MAIN_MESSAGE.= " / ".$_FILES["file"]["size"]." Byte";
+						$_MAIN_MESSAGE.= ", ".$_FILES["file"]["type"];
+						$_MAIN_MESSAGE.= "<br>".___("HTML-Code wurde angefügt.").
+												"<br>".___("Datei gespeichert unter:")." <a href=\"".$tm_URL_FE."/".$tm_nldir."/".$NL_Filename."\" target=\"_preview\">".$tm_nldir."/".$NL_Filename."</a>";
+						$_MAIN_MESSAGE.= "</ul>";
+						$uploaded_html=true;
+					} else {
+						$_MAIN_MESSAGE.= "<br>".___("Fehler beim kopieren.");
+						$_MAIN_MESSAGE.= "<br>".___("HTML-Datei konnte nicht hochgeladen werden.");
+						$check=false;
+					}//copy
 				} else {
 					$_MAIN_MESSAGE.= "<br>".___("HTML-Datei konnte nicht hochgeladen werden.");
-					$check=false;
-				}//copy
+				}//check
 			} else {
 				$_MAIN_MESSAGE.= "<br>".sprintf(___("Die HTML-Datei darf nur eine Grösse von %s Byte haben."),$max_byte_size);
 				$check=false;
@@ -73,18 +79,24 @@
 			// Datei auch nicht zu groß
 			if($_FILES["image1"]["size"] <= $max_upload_size) {
 				// Alles OK -> Datei kopieren
-				if($check && copy($_FILES["image1"]["tmp_name"], $tm_nlimgpath."/".$NL_Imagename1)) { //$_FILES["image"]["name"]
-					$_MAIN_MESSAGE.= "<br>".___("BILD-Datei erfolgreich hochgeladen.");
-					$_MAIN_MESSAGE.= "<ul>".$_FILES["image1"]["name"];
-					$_MAIN_MESSAGE.= " / ".$_FILES["image1"]["size"]." Byte";
-					$_MAIN_MESSAGE.= ", ".$_FILES["image1"]["type"];
-					$_MAIN_MESSAGE.= "<br>".___("gespeichert unter:")." <a href=\"".$tm_URL_FE."/".$tm_nlimgdir."/".$NL_Imagename1."\"  target=\"_preview\">".$tm_nlimgdir."/".$NL_Imagename1."</a>";
-					$_MAIN_MESSAGE.= "</ul>";
-					$uploaded_image1=true;
+				if($check) {
+					//http://www.php.net/manual/en/features.file-upload.php, use basename to preserve filename for multiple uploaded files.... if needed ;)
+					if (move_uploaded_file($_FILES["image1"]["tmp_name"], $tm_nlimgpath."/".$NL_Imagename1)) {
+						$_MAIN_MESSAGE.= "<br>".___("BILD-Datei erfolgreich hochgeladen.");
+						$_MAIN_MESSAGE.= "<ul>".$_FILES["image1"]["name"];
+						$_MAIN_MESSAGE.= " / ".$_FILES["image1"]["size"]." Byte";
+						$_MAIN_MESSAGE.= ", ".$_FILES["image1"]["type"];
+						$_MAIN_MESSAGE.= "<br>".___("gespeichert unter:")." <a href=\"".$tm_URL_FE."/".$tm_nlimgdir."/".$NL_Imagename1."\"  target=\"_preview\">".$tm_nlimgdir."/".$NL_Imagename1."</a>";
+						$_MAIN_MESSAGE.= "</ul>";
+						$uploaded_image1=true;
+					} else {
+						$_MAIN_MESSAGE.= "<br>".___("Fehler beim kopieren.");
+						$_MAIN_MESSAGE.= "<br>".___("BILD-Datei konnte nicht hochgeladen werden.");
+						$check=false;
+					}//copy
 				} else {
 					$_MAIN_MESSAGE.= "<br>".___("BILD-Datei konnte nicht hochgeladen werden.");
-					$check=false;
-				}//copy
+				}//check
 			} else {
 				$_MAIN_MESSAGE.= "<br>".sprintf(___("Die BILD-Datei darf nur eine Grösse von %s Byte besitzen."),$max_byte_size);
 				$check=false;
@@ -111,18 +123,24 @@
 				$attachinfo=pathinfo($_FILES["attach1"]["name"]);
 				$attach_ext=$attachinfo['extension'];
 				$NL_Attachname1.=$attach_ext;
-				if($check && copy($_FILES["attach1"]["tmp_name"], $tm_nlattachpath."/".$NL_Attachname1)) { //$_FILES["image"]["name"]
-					$_MAIN_MESSAGE.= "<br>".___("Anhang erfolgreich hochgeladen.");
-					$_MAIN_MESSAGE.= "<ul>".$_FILES["attach1"]["name"];
-					$_MAIN_MESSAGE.= " / ".$_FILES["attach1"]["size"]." Byte";
-					$_MAIN_MESSAGE.= ", ".$_FILES["attach1"]["type"];
-					$_MAIN_MESSAGE.= "<br>".___("gespeichert unter:")." <a href=\"".$tm_URL_FE."/".$tm_nlattachdir."/".$NL_Attachname1."\"  target=\"_preview\">".$tm_nlattachdir."/".$NL_Attachname1."</a>";
-					$_MAIN_MESSAGE.= "</ul>";
-					$uploaded_attach1=true;
+				if($check) {
+					//http://www.php.net/manual/en/features.file-upload.php, use basename to preserve filename for multiple uploaded files.... if needed ;)
+					if (move_uploaded_file($_FILES["attach1"]["tmp_name"], $tm_nlattachpath."/".$NL_Attachname1)) {
+						$_MAIN_MESSAGE.= "<br>".___("Anhang erfolgreich hochgeladen.");
+						$_MAIN_MESSAGE.= "<ul>".$_FILES["attach1"]["name"];
+						$_MAIN_MESSAGE.= " / ".$_FILES["attach1"]["size"]." Byte";
+						$_MAIN_MESSAGE.= ", ".$_FILES["attach1"]["type"];
+						$_MAIN_MESSAGE.= "<br>".___("gespeichert unter:")." <a href=\"".$tm_URL_FE."/".$tm_nlattachdir."/".$NL_Attachname1."\"  target=\"_preview\">".$tm_nlattachdir."/".$NL_Attachname1."</a>";
+						$_MAIN_MESSAGE.= "</ul>";
+						$uploaded_attach1=true;
+					} else {
+						$_MAIN_MESSAGE.= "<br>".___("Fehler beim kopieren.");
+						$_MAIN_MESSAGE.= "<br>".___("Anhang konnte nicht hochgeladen werden.");
+						$check=false;
+					}//copy
 				} else {
 					$_MAIN_MESSAGE.= "<br>".___("Anhang konnte nicht hochgeladen werden.");
-					$check=false;
-				}//copy
+				}//check
 			} else {
 				$_MAIN_MESSAGE.= "<br>".sprintf(___("Der Anhang Datei darf nur eine Grösse von %s Byte haben."),$max_byte_size);
 				$check=false;
@@ -144,18 +162,24 @@
 			if($_FILES["track_image_new"]["size"] <= $max_upload_size) {
 				// Alles OK -> Datei kopieren
 				$uploaded_track_image_new_name=$_FILES["track_image_new"]["name"];
-				if($check && copy($_FILES["track_image_new"]["tmp_name"], $tm_nlimgpath."/".$uploaded_track_image_new_name)) { //$_FILES["image"]["name"]
-					$_MAIN_MESSAGE.= "<br>".___("Track-BILD-Datei erfolgreich hochgeladen.");
-					$_MAIN_MESSAGE.= "<ul>".$_FILES["track_image_new"]["name"];
-					$_MAIN_MESSAGE.= " / ".$_FILES["track_image_new"]["size"]." Byte";
-					$_MAIN_MESSAGE.= ", ".$_FILES["track_image_new"]["type"];
-					$_MAIN_MESSAGE.= "<br>".___("gespeichert unter:")." <a href=\"".$tm_URL_FE."/".$tm_nlimgdir."/".$uploaded_track_image_new_name."\"  target=\"_preview\">".$tm_nlimgdir."/".$uploaded_track_image_new_name."</a>";
-					$_MAIN_MESSAGE.= "</ul>";
-					$uploaded_track_image_new=true;
+				if($check) {
+					//http://www.php.net/manual/en/features.file-upload.php, use basename to preserve filename for multiple uploaded files.... if needed ;)
+					if (move_uploaded_file($_FILES["track_image_new"]["tmp_name"], $tm_nlimgpath."/".$uploaded_track_image_new_name)) {
+						$_MAIN_MESSAGE.= "<br>".___("Track-BILD-Datei erfolgreich hochgeladen.");
+						$_MAIN_MESSAGE.= "<ul>".$_FILES["track_image_new"]["name"];
+						$_MAIN_MESSAGE.= " / ".$_FILES["track_image_new"]["size"]." Byte";
+						$_MAIN_MESSAGE.= ", ".$_FILES["track_image_new"]["type"];
+						$_MAIN_MESSAGE.= "<br>".___("gespeichert unter:")." <a href=\"".$tm_URL_FE."/".$tm_nlimgdir."/".$uploaded_track_image_new_name."\"  target=\"_preview\">".$tm_nlimgdir."/".$uploaded_track_image_new_name."</a>";
+						$_MAIN_MESSAGE.= "</ul>";
+						$uploaded_track_image_new=true;
+					} else {
+						$_MAIN_MESSAGE.= "<br>".___("Fehler beim kopieren.");
+						$_MAIN_MESSAGE.= "<br>".___("Tracker-BILD-Datei konnte nicht hochgeladen werden.");
+						$check=false;
+					}//copy
 				} else {
 					$_MAIN_MESSAGE.= "<br>".___("Tracker-BILD-Datei konnte nicht hochgeladen werden.");
-					$check=false;
-				}//copy
+				}//check
 			} else {
 				$_MAIN_MESSAGE.= "<br>".sprintf(___("Die Tracker-BILD-Datei darf nur eine Grösse von %s Byte besitzen."),$max_byte_size);
 				$check=false;

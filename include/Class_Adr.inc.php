@@ -28,7 +28,7 @@ class tm_ADR {
 		$this->ADR=Array();
 		#$DB=new tm_DB();
 		$Query ="SELECT ".TM_TABLE_ADR.".id, "
-										.TM_TABLE_ADR.".email, "
+										."lcase(".TM_TABLE_ADR.".email) as email, "
 										.TM_TABLE_ADR.".aktiv, "
 										.TM_TABLE_ADR.".created, "
 										.TM_TABLE_ADR.".updated, "
@@ -59,7 +59,7 @@ class tm_ADR {
 		}
 
 		$Query .=" FROM ".TM_TABLE_ADR;
-		$Query .=" LEFT JOIN ".TM_TABLE_ADR_DETAILS." ON ".TM_TABLE_ADR.".id = ".TM_TABLE_ADR_DETAILS.".adr_id";
+			$Query .=" LEFT JOIN ".TM_TABLE_ADR_DETAILS." ON ".TM_TABLE_ADR.".id = ".TM_TABLE_ADR_DETAILS.".adr_id";
 
 		if (isset($search['group']) && !empty($search['group'])) {
 			$group_id=$search['group'];
@@ -77,9 +77,9 @@ class tm_ADR {
 
 		if (isset($search['email']) && !empty($search['email'])) {
 			if (isset($search['email_exact_match']) && $search['email_exact_match']===true) {
-				$Query .= " AND ".TM_TABLE_ADR.".email = '".dbesc($search['email'])."'";
+				$Query .= " AND ".TM_TABLE_ADR.".email = lcase('".dbesc($search['email'])."')";
 			} else {
-				$Query .= " AND ".TM_TABLE_ADR.".email like '".dbesc($search['email'])."'";
+				$Query .= " AND ".TM_TABLE_ADR.".email like lcase('".dbesc($search['email'])."')";
 			}
 		}
 		if (isset($search['author']) && !empty($search['author'])) {
@@ -185,7 +185,7 @@ class tm_ADR {
 						";
 		}
 		if (isset($search['email']) && !empty($search['email'])) {
-			$Query .= " AND ".TM_TABLE_ADR.".email like '".dbesc($search['email'])."'";
+			$Query .= " AND ".TM_TABLE_ADR.".email like lcase('".dbesc($search['email'])."')";
 		}
 		if (isset($search['status']) && !empty($search['status'])) {
 			$Query .= " AND ".TM_TABLE_ADR.".status = '".dbesc($search['status'])."'";
@@ -221,7 +221,7 @@ class tm_ADR {
 						";
 		}
 		if (isset($search['email']) && !empty($search['email'])) {
-			$Query .= " AND ".TM_TABLE_ADR.".email like '".dbesc($search['email'])."'";
+			$Query .= " AND ".TM_TABLE_ADR.".email like lcase('".dbesc($search['email'])."')";
 		}
 		if (isset($search['status']) && !empty($search['status'])) {
 			$Query .= " AND ".TM_TABLE_ADR.".status = '".dbesc($search['status'])."'";
@@ -685,7 +685,7 @@ class tm_ADR {
 		$Return=false;
 		//neue Adresse speichern
 		$Query ="INSERT INTO ".TM_TABLE_ADR." (email,aktiv,status,code,author,created,editor,updated,clicks,views,newsletter,siteid)
-					VALUES ('".dbesc($adr["email"])."', '".dbesc($adr["aktiv"])."',
+					VALUES (lcase('".dbesc($adr["email"])."'), '".dbesc($adr["aktiv"])."',
 								'".dbesc($adr["status"])."', '".dbesc($adr["code"])."', '".dbesc($adr["author"])."', '".dbesc($adr["created"])."', '".dbesc($adr["author"])."', '".dbesc($adr["created"])."', 0, 0, 0, '".TM_SITEID."'
 								)";
 		if ($this->DB->Query($Query)) {
@@ -793,7 +793,7 @@ class tm_ADR {
 		$Return=false;
 		if (isset($adr['id']) && check_dbid($adr['id'])) {
 			$Query ="UPDATE ".TM_TABLE_ADR." SET
-							email='".dbesc($adr["email"])."',
+							email=lcase('".dbesc($adr["email"])."'),
 							aktiv='".dbesc($adr["aktiv"])."',
 							editor='".dbesc($adr["author"])."',
 							updated='".dbesc($adr["created"])."'

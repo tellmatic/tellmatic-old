@@ -126,7 +126,7 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 			//bei massenmail wird die mail anders zusammengesetzt!
 			//link zum attachement fuer newsletter
 			$ATTACH1_URL=$tm_URL_FE."/".$tm_nlattachdir."/a".date_convert_to_string($NL[0]['created'])."_1.".$NL[0]['attm'];
-			$ATTACH1="<a href=\"".$ATTACH1_URL_FE."\" target=\"_blank\">";
+			$ATTACH1="<a href=\"".$ATTACH1_URL."\" target=\"_blank\">";
 		}
 
 		//Link wird weiter unten aufbereitet da evtl personalisiert .....
@@ -138,7 +138,7 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 		send_log(  "\n Subject".display($NL[0]['subject']));
 
 		//emailobjekt vorbereiten, wird dann kopiert, hier globale einstellungen
-		$email_obj=new smtp_message_class;
+		$email_obj=new smtp_message_class;//use SMTP!
 		$email_obj->default_charset=$encoding;
 		$email_obj->authentication_mechanism="LOGIN";
 		$email_obj->localhost=$SMTPDomain;
@@ -158,10 +158,10 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 		//debug
 		if (DEBUG) {
 			$email_obj->smtp_debug=1;
-			$email_obj->$smtp_html_debug=1;
+			$email_obj->smtp_html_debug=0;
 		} else {
 			$email_obj->smtp_debug=0;
-			$email_obj->$smtp_html_debug=0;
+			$email_obj->smtp_html_debug=0;
 		}
 
 		$email_obj->SetBulkMail=1;
@@ -512,15 +512,24 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 				send_log(  "\n add Mail Body");
 				//text/html part anfuegen:
 				send_log(  "\n    Newsletter is from type: '".$NL[0]['content_type']."'");
-				if ($NL[0]['content_type']=="html" || $NL[0]['content_type']=="text/html") {
-					send_log(  "\n    add HTML Part");
-					$email_message->AddQuotedPrintableHtmlPart($NLBODY);
-				}
-	
+				$parts=array();//array of partnumbers, returned by reference from createpart etc
+				//we want mixed multipart, with alternative text/html and attachements, inlineimages and all that
+				//text part must be the first one!!!
 				if ($NL[0]['content_type']=="text" || $NL[0]['content_type']=="text/html") {
 					send_log(  "\n    add TEXT Part");
-					$email_message->AddQuotedPrintableTextPart($NLBODY_TEXT);//$NLBODY_TEXT
+					//only add part
+					$email_message->CreateQuotedPrintableTextPart($NLBODY_TEXT,"",$partids[]);
+					#$email_message->AddQuotedPrintableTextPart($NLBODY_TEXT);
 				}
+				if ($NL[0]['content_type']=="html" || $NL[0]['content_type']=="text/html") {
+					send_log(  "\n    add HTML Part");
+					$email_message->CreateQuotedPrintableHtmlPart($NLBODY,"",$partids[]);
+					#$email_message->AddQuotedPrintableHtmlPart($NLBODY);
+				}
+
+				//AddAlternativeMultiparts
+				if (DEBUG) print_r($partids);
+				$email_message->AddAlternativeMultipart($partids);
 	
 				//erst jetzt darf der part f.d. attachement hinzugefuegt werden!
 				if ($attach_file) {

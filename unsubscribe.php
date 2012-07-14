@@ -45,14 +45,16 @@ if ($check_mail[0] && $set=="unsubscribe") {
 	$ADDRESS=new tm_ADR();
 	//adr anhand email suchen!
 	$search['email']=$email;
+	$search['email_exact_match']=true;
 	$ADR=$ADDRESS->getAdr(0,0,1,0,$search);
 	//print_r($ADR);
 	if (count($ADR)>0) {
 		//noch nicht abgemeldet?
 		if ($ADR[0]['status']!=11) {
-			/*
-			if ($ADR[0]['code']==$code) {
-			*/
+				if (checkid($h_id)) {
+					$QUEUE=new tm_Q();
+					$QUEUE->setHStatus($h_id,7);	//unsubscribe!
+				}	
 				//im author speichern wir den namen des newsletter etc.
 				$author="unsubscribed";
 				$NEWSLETTER=new tm_NL();
@@ -101,12 +103,6 @@ if ($check_mail[0] && $set=="unsubscribe") {
 					//sonstiger fehler
 					$FMESSAGE.= $MSG['unsubscribe']['error'];
 				}
-			/*
-			} else {//code=code
-				//code ungueltig
-				$FMESSAGE.= $MSG['unsubscribe']['error'];
-			}
-			*/
 		} else {//status!=11
 			//bereits abgemeldet
 			$FMESSAGE.= $MSG['unsubscribe']['already_unsubscribed'];

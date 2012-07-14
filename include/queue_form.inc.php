@@ -20,7 +20,7 @@ $Form=new tm_SimpleForm();
 $FormularName="queue_new";
 //make new Form
 $Form->new_Form($FormularName,$_SERVER["PHP_SELF"],"post","_self");
-$Form->set_FormJS($FormularName," onSubmit=\"switchSection('div_loader');\" ");
+$Form->set_FormJS($FormularName," onSubmit=\"switchSection('div_loader');\" OnChange=\"checkQNewLimitOffset();\" onClick=\"checkQNewLimitOffset();\"");
 //add a Description
 $Form->set_FormDesc($FormularName,___("neuen Q erstellen"));
 //variable content aus menu als hidden field!
@@ -39,7 +39,7 @@ $Form->set_InputDesc($FormularName,$InputName_NL,___("Newsletter wählen"));
 $Form->set_InputReadonly($FormularName,$InputName_NL,false);
 $Form->set_InputOrder($FormularName,$InputName_NL,6);
 $Form->set_InputLabel($FormularName,$InputName_NL,"");
-$Form->set_InputSize($FormularName,$InputName_NL,0,1);
+$Form->set_InputSize($FormularName,$InputName_NL,0,5);
 $Form->set_InputMultiple($FormularName,$InputName_NL,false);
 //add Data
 $NEWSLETTER=new tm_NL();
@@ -86,7 +86,7 @@ for ($accg=0; $accg<$acg; $accg++)
 
 //send now
 	$Form->new_Input($FormularName,$InputName_Send,"checkbox", 1);
-	$Form->set_InputJS($FormularName,$InputName_Send," onChange=\"flash('submit','#ff0000');\" ");
+	$Form->set_InputJS($FormularName,$InputName_Send," onChange=\"flash('submit','#ff0000');checkQNewLimitOffset();\" onClick=\"checkQNewLimitOffset();\"");
 	$Form->set_InputDefault($FormularName,$InputName_Send,1);
 	$Form->set_InputStyleClass($FormularName,$InputName_Send,"mFormText","mFormTextFocus");
 	$Form->set_InputSize($FormularName,$InputName_Send,48,256);
@@ -141,6 +141,26 @@ for ($m=0; $m<60; $m++)
 		$Form->add_InputOption($FormularName,$InputName_SendAtTimeM,$m,$m."");
 }
 
+//offset
+$Form->new_Input($FormularName,$InputName_Offset,"text", $$InputName_Offset);
+$Form->set_InputJS($FormularName,$InputName_Offset," onChange=\"flash('submit','#ff0000');checkQNewLimitOffset()\" onKeyUp=\"RemoveInvalidChars(this, '[^0-9]');\" onClick=\"checkQNewLimitOffset();\"");
+$Form->set_InputStyleClass($FormularName,$InputName_Offset,"mFormText","mFormTextFocus");
+$Form->set_InputSize($FormularName,$InputName_Offset,20,8);
+$Form->set_InputDesc($FormularName,$InputName_Offset,___("Offset"));
+$Form->set_InputReadonly($FormularName,$InputName_Offset,false);
+$Form->set_InputOrder($FormularName,$InputName_Offset,4);
+$Form->set_InputLabel($FormularName,$InputName_Offset,"");
+
+//limit
+$Form->new_Input($FormularName,$InputName_Limit,"text", $$InputName_Limit);
+$Form->set_InputJS($FormularName,$InputName_Limit," onChange=\"flash('submit','#ff0000');checkQNewLimitOffset();\" onKeyUp=\"RemoveInvalidChars(this, '[^1-90]');\" onClick=\"checkQNewLimitOffset();\"");
+$Form->set_InputStyleClass($FormularName,$InputName_Limit,"mFormText","mFormTextFocus");
+$Form->set_InputSize($FormularName,$InputName_Limit,20,8);
+$Form->set_InputDesc($FormularName,$InputName_Limit,___("Limit"));
+$Form->set_InputReadonly($FormularName,$InputName_Limit,false);
+$Form->set_InputOrder($FormularName,$InputName_Limit,4);
+$Form->set_InputLabel($FormularName,$InputName_Limit,"");
+
 //submit button
 $Form->new_Input($FormularName,$InputName_Submit,"submit",___("Speichern"));
 $Form->set_InputStyleClass($FormularName,$InputName_Submit,"mFormSubmit","mFormSubmitFocus");
@@ -169,39 +189,50 @@ $_MAIN_OUTPUT.= $Form->INPUT[$FormularName]['set']['html'];
 $_MAIN_OUTPUT.= "<table border=0>";
 $_MAIN_OUTPUT.= "<tr>";
 $_MAIN_OUTPUT.= "<td valign=top>".tm_icon("newspaper.png",___("Newsletter"))."&nbsp;".___("Newsletter")."<br>";
-//$_MAIN_OUTPUT.= "Waehlen Sie das zu versendende Newsletter<br>";
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_NL]['html'];
 $_MAIN_OUTPUT.= "</td>";
-/*
 $_MAIN_OUTPUT.= "</tr>";
 
 $_MAIN_OUTPUT.= "<tr>";
-*/
 $_MAIN_OUTPUT.= "<td valign=top colspan=1>";
-$_MAIN_OUTPUT.= "<br>".___("versenden an:");
+$_MAIN_OUTPUT.= "".___("versenden an:");
 $_MAIN_OUTPUT.= "</td>";
+$_MAIN_OUTPUT.= "</tr>";
 
+$_MAIN_OUTPUT.= "<tr>";
 $_MAIN_OUTPUT.= "<td valign=top colspan=1>".tm_icon("group.png",___("Gruppen"))."&nbsp;".___("Gruppen")."<br>";
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Group]['html'];
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "</tr>";
 
 $_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top colspan=2>".tm_icon("calendar.png",___("Versanddatum"))."&nbsp;".___("Versand starten am:")."<br>";
+$_MAIN_OUTPUT.= "<td valign=top colspan=1>".tm_icon("calendar.png",___("Versanddatum"))."&nbsp;".___("Versand starten am:")."<br>";
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_SendAt]['html'];
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_SendAtTimeH]['html'];
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_SendAtTimeM]['html'];
-$_MAIN_OUTPUT.= "<br>";
+$_MAIN_OUTPUT.= "</td>";
+$_MAIN_OUTPUT.= "</tr>";
+
+$_MAIN_OUTPUT.= "<tr>";
+$_MAIN_OUTPUT.= "<td valign=top colspan=1>";
+$_MAIN_OUTPUT.= "<br>".tm_icon("hourglass.png",___("Versandliste"))."&nbsp;".___("Versandliste sofort erstellen");
+$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Send]['html']."&nbsp;&nbsp;";
+$_MAIN_OUTPUT.= tm_icon("control_fastforward.png",___("Offset"))."&nbsp;";
+$_MAIN_OUTPUT.= ___("Offset").":";
+$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Offset]['html']."&nbsp;&nbsp;";
+$_MAIN_OUTPUT.= tm_icon("control_end.png",___("Limit"))."&nbsp;";
+$_MAIN_OUTPUT.= ___("Limit").":";
+$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Limit]['html']."&nbsp;&nbsp;";
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "</tr>";
 
 $_MAIN_OUTPUT.= "<tr>";
 $_MAIN_OUTPUT.= "<td valign=top colspan=2>";
-$_MAIN_OUTPUT.= "<br>".tm_icon("hourglass.png",___("Versandliste"))."&nbsp;".___("Versandliste sofort erstellen");
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Send]['html']."&nbsp;&nbsp;";
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Submit]['html'];
+$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Reset]['html'];
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "</tr>";
+
 $_MAIN_OUTPUT.= "</table>";
 $_MAIN_OUTPUT.= $Form->FORM[$FormularName]['foot'];
 

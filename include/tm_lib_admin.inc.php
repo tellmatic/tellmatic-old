@@ -59,6 +59,10 @@ if (!$tm_config_admin) {
 		$adr_row_limit=8000;
 	}
 	
+	
+	$max_execution_time=ini_get("max_execution_time");
+	if ($max_execution_time==0) $max_execution_time=3600;
+
 /***********************************************************/
 //kleinkram
 /***********************************************************/
@@ -69,7 +73,7 @@ if (!$tm_config_admin) {
 /***********************************************************/
 //php settings etc
 /***********************************************************/
-	@ini_set("max_execution_time","0");
+	#@ini_set("max_execution_time","0");
 	@ini_set("ignore_user_abort","1");
 
 /***********************************************************/

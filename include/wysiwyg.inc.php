@@ -25,6 +25,9 @@ $_MAIN_OUTPUT.='
 <script language="javascript" type="text/javascript">
 tinyMCE.init({
 	mode : "textareas",
+	//prevent special charcter encoding: 
+	//important!
+	entities : "",
 	theme : "advanced",
 	remove_linebreaks : false,
 	relative_urls : false,
@@ -53,10 +56,11 @@ tinyMCE.init({
 	theme_advanced_resize_horizontal : false,
 	theme_advanced_resizing : true,
 	fullpage_default_langcode : "'.$LOGIN->USER['lang'].'",
-	fullpage_default_title : "'.___("Newsletter").'",
-	fullpage_default_encoding : "UTF-8",
+	fullpage_default_title : "",
+	//"'.___("Newsletter").'",
+	fullpage_default_encoding : "'.$encoding.'",
 	fullpage_default_xml_pi : false,
-	fullpage_default_doctype : \'<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">\',
+	fullpage_default_doctype : "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">",
 	fullscreen_new_window : true,
 	fullscreen_settings : {
 		theme_advanced_path_location : "top"

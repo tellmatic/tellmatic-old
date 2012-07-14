@@ -139,7 +139,8 @@
 												"3"=>___("View"),
 												"4"=>___("Fehler"),
 												"5"=>___("Versand"),
-												"6"=>___("Abbruch")
+												"6"=>___("Abbruch"),
+												"7"=>___("Abgemeldet")
 								),
 								"descr"=>Array(
 												"1"=>___("Warten auf Versand"),
@@ -147,7 +148,8 @@
 												"3"=>___("Versendet, angezeigt"),
 												"4"=>___("Versendet, Fehler"),
 												"5"=>___("Wird in diesem Moment versendet!!!"),
-												"6"=>___("Abgebrochen, Q gelöscht")
+												"6"=>___("Abgebrochen, Q gelöscht"),
+												"7"=>___("Abgemeldet")
 								),
 								"statimg"=>Array(
 												"1"=>"new.png",
@@ -155,7 +157,8 @@
 												"3"=>"bullet_feed.png",
 												"4"=>"bullet_error.png",
 												"5"=>"bullet_feed.png",
-												"6"=>"bullet_red.png"
+												"6"=>"bullet_red.png",
+												"7"=>"user_red.png"
 								),
 						),
 				);

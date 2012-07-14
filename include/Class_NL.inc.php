@@ -342,7 +342,6 @@ class tm_NL {
 
 	function getGroup($id=0,$nl_id=0,$count=0) {
 		$this->GRP=Array();
-		
 		$Query ="
 			SELECT ".TM_TABLE_NL_GRP.".id, ".TM_TABLE_NL_GRP.".name, ".TM_TABLE_NL_GRP.".descr, ".TM_TABLE_NL_GRP.".aktiv, ".TM_TABLE_NL_GRP.".standard,
 			".TM_TABLE_NL_GRP.".author,
@@ -540,8 +539,9 @@ class tm_NL {
 function convertNL2Text($html,$type) {
 	$text=$html;
 	if ($type=="html" || $type=="text/html") {
-	    $htmlToText=new Html2Text($html, 80);
+		$htmlToText=new Html2Text($html, 80);//class has apache license, may be in conflict with gpl???
 	    $text=$htmlToText->convert();
+		$text = preg_replace('~<[^>]+>~', '', $text); // remove any HTML tags that are still left
 	}
 	return $text;
 }

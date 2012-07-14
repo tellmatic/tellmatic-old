@@ -30,14 +30,6 @@ if (!isset($action) || empty($action)) {
 	$action="Welcome";
 }
 
-//remove old temporrary admin html  files!
-//if file is older then 3 seconds, remove!
-if (DEBUG) {
-	$_MAIN_OUTPUT.="<!--\n".remove_old_admin_files()."-->\n";
-} else {
-	remove_old_admin_files();
-}
-
 $mSTDURL=new tm_URL();
 
 //Handle Login / Logout

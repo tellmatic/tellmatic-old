@@ -12,7 +12,7 @@
 /* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
 /********************************************************************************/
 
-$locale = (isset($LOGIN->USER['lang']))? $LOGIN->USER['lang'] : DEFAULT_LOCALE;
+	$locale = (isset($LOGIN) && isset($LOGIN->USER['lang']))? $LOGIN->USER['lang'] : DEFAULT_LOCALE;
 //eigene gettext emulation
 $translateStrings = Array();    
 load_translateStrings($locale);
