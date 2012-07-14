@@ -1,4 +1,4 @@
-<?php 
+<?php
 /********************************************************************************/
 /* this file is part of: / diese Datei ist ein Teil von:                        */
 /* tellmatic, the newslettermachine                                             */
@@ -12,20 +12,7 @@
 /* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
 /********************************************************************************/
 
-/*
-aufruf ohne parameter --> blindimage XxY Pixel oder auch global...? :)
-
-aufruf mit parameter:
-settings per newsletter --> 
-	blankimage ? --> blank png erzeigen
-	eigenes bild --> extension auslesen, jpg oder png erzeugen
-	global? --> globale settings auslesen
-		blank? --> blank png erzeugen
-		eigenes bild --> extension auslesen, jpg oder png erzeugen
-
-	bild ausgeben.
-*/
-include("./include/mnl_config.inc");
+include("./include/tm_config.inc.php");
 
 //aufruf: news_blank.png.php?h_id=&nl_id=&a_id=
 
@@ -37,17 +24,22 @@ $TrackImageType="png";
 $create_track_image=false;
 
 if (checkid($nl_id)) {
-	$NEWSLETTER=new mnlNL();
+	$NEWSLETTER=new tm_NL();
 	//nl view counter ++
 	$NEWSLETTER->addView($nl_id);
 	//history id? dann in der historie auf view setzen!
-	if (checkid($h_id)) { 
-		$QUEUE=new mnlQ();
+	if (checkid($h_id)) {
+		$QUEUE=new tm_Q();
 		$QUEUE->setHStatus($h_id,3);	//view
+		//nur der erste aufruf wird mit der ip versehen! ansonsten wuerde diese jedesmal ueberschrieben wenn der leser oder ein anderer das nl anschaut.
+		$H=$QUEUE->getH($h_id);
+		if (empty($H[0]['ip']) || $H[0]['ip']=='0.0.0.0') {
+			$QUEUE->setHIP($H[0]['id'], getIP());	//save ip
+		}
 	}
 	//adressid? wenn ja status aendern und view zaehlen
 	if (checkid($a_id)) {
-		$ADDRESS=new mnlAdr();
+		$ADDRESS=new tm_ADR();
 		$ADDRESS->setStatus($a_id,4);	//view
 		//adr view counter ++
 		$ADDRESS->addView($a_id,4);	//view
@@ -59,12 +51,10 @@ if (checkid($nl_id)) {
 		$create_track_image=true;
 	}
 }
-
 //wenn kein trackimage erzeugt werden soll, also kein newsletter gefunden wurde, blank erzeugen
 if (!$create_track_image) {
 	$Image=makeBlankImage(4,7);
 }
-
 //andernfalls, falls track image erzeugt werden soll, abhaengig vom newsletter...
 if ($create_track_image) {
 	//track image auslesen
@@ -79,12 +69,11 @@ if ($create_track_image) {
 	if ($imagefilename=="_blank") {
 		$Image=makeBlankImage(4,7);
 	}
-
 	//wenn kein blank oder global
 	if ($imagefilename!="_blank" && $imagefilename!="_global" ) {
 		$TrackImageType=strtolower(get_file_ext( $imagefilename ));
-		if ($TrackImageType=="jpeg") $TrackImageType="jpg";		
-		$imagefile=$mnl_nlimgpath.$imagefilename;
+		if ($TrackImageType=="jpeg") $TrackImageType="jpg";
+		$imagefile=$tm_nlimgpath.$imagefilename;
 		//wenn die datei existiert:
 		if (file_exists($imagefile)) {
 			$Image=makeTrackImage($imagefile,$TrackImageType);
@@ -95,22 +84,18 @@ if ($create_track_image) {
 	}
 }
 
-
-
-#Header("content-type: image/".$TrackImageType); 
-//    Image output
 ob_start("trackimage_output_handler");
 
 if ($TrackImageType=="png") {
-	ImagePNG($Image); 
+	ImagePNG($Image);
 }
 if ($TrackImageType=="jpg") {
-	ImageJPEG($Image); 
+	ImageJPEG($Image);
 }
 
 ob_end_flush();
 
-ImageDestroy($Image); 
+ImageDestroy($Image);
 
 /////////////////////////////////
 //    Output handler
@@ -136,20 +121,15 @@ function makeTrackImage($imagefile,$type="png") {
 	$ImageOut = imagecreatetruecolor($width, $height);
 
 	if ($type=="png") {
-
 		//if not truecolor, convert png to truecolor png
 		if (!imageistruecolor($ImageIn)) {
 	        imagealphablending($ImageOut, false);
 			imagecopy($ImageOut, $ImageIn, 0, 0, 0, 0, $width, $height);
     	    imagesavealpha($ImageOut, true);
 			$bgColor = imagecolorallocate($ImageIn, 255,255,255);
-			ImageColorTransparent($ImageOut, $bgColor); 
+			ImageColorTransparent($ImageOut, $bgColor);
 			imagefill($ImageOut , 0,0 , $bgColor);
-
-
-
 		}//not truecolor
-
 		//true color png
 		if (imageistruecolor($ImageIn)) {
 			imageAlphaBlending($ImageIn, true);
@@ -157,24 +137,23 @@ function makeTrackImage($imagefile,$type="png") {
 			$ImageOut=$ImageIn;
 		}//truecolor
 	}//type=png
-
 	if ($type=="jpg") {
 		$ImageOut=$ImageIn;
 	}//jpg
-    imagedestroy($imageIn);
-	return $ImageOut;	
+    #imagedestroy($imageIn);
+	return $ImageOut;
 }//function
 
 function makeBlankImage($width=4,$height=7) {
 	//bild generieren
-	$ImageOut = ImageCreate($width,$height); 
-	$White = ImageColorAllocate($ImageOut, 255,255,255); 
-	$FC=$White; 
-	$BG=$White; 
-	$TC=$BG; 
-	ImageColorTransparent($ImageOut, $TC); 
-	ImageFill($ImageOut, 0, 0, $BG); 
-	Imageinterlace($ImageOut, 1); 
+	$ImageOut = ImageCreate($width,$height);
+	$White = ImageColorAllocate($ImageOut, 255,255,255);
+	$FC=$White;
+	$BG=$White;
+	$TC=$BG;
+	ImageColorTransparent($ImageOut, $TC);
+	ImageFill($ImageOut, 0, 0, $BG);
+	Imageinterlace($ImageOut, 1);
 	return $ImageOut;
 }
 

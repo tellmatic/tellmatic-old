@@ -4,7 +4,7 @@
 /* tellmatic, the newslettermachine                                             */
 /* tellmatic, die Newslettermaschine                                            */
 /* 2006/7 by Volker Augustin, multi.art.studio Hanau                            */
-/* Contact/Kontakt: mnl@multiartstudio.com                                      */
+/* Contact/Kontakt: info@tellmatic.org                                      */
 /* Homepage: www.tellmatic.de                                                   */
 /* leave this header in file!                                                   */
 /* diesen Header nicht loeschen!                                                */
@@ -13,13 +13,12 @@
 /********************************************************************************/
 
 //config einbinden
-include ("./include/mnl_config.inc");
+include ("./include/tm_config.inc.php");
 
-//if unsubscribe.php is included in your script, please set $called_via_url=false; $_CONTENT holds the html output 
+//if unsubscribe.php is included in your script, please set $called_via_url=false; $_CONTENT holds the html output
 if (!isset($_CONTENT)) {$_CONTENT="";}
 if (!isset($called_via_url)) {$called_via_url=true;}
 
-//
 //aufruf: unsubscribe.php?h_id=&nl_id=&a_id=
 //oder auch ohne parameter
 //da wir ja ein formular haben
@@ -39,12 +38,11 @@ $FMESSAGE="";
 $InputName_Name="email";//email
 $$InputName_Name=getVar($InputName_Name);
 
-if (checkemailadr($email,$EMailcheck_Intern) && $set=="unsubscribe") {
+$check_mail=checkEmailAdr($email,$EMailcheck_Intern);
+if ($check_mail[0] && $set=="unsubscribe") {
 //unbedingt ^^^ pruefen auf gueltige email!
 //sonst findet getAdr alle adressen!!! da search - email null ist / leer ist
-	$ADDRESS=new mnlAdr();
-
-	//$ADR=$ADDRESS->getAdr($a_id);
+	$ADDRESS=new tm_ADR();
 	//adr anhand email suchen!
 	$search['email']=$email;
 	$ADR=$ADDRESS->getAdr(0,0,1,0,$search);
@@ -52,12 +50,9 @@ if (checkemailadr($email,$EMailcheck_Intern) && $set=="unsubscribe") {
 	if (count($ADR)>0) {
 		//noch nicht abgemeldet?
 		if ($ADR[0]['status']!=11) {
-			/*
-			if ($ADR[0]['code']==$code) {
-			*/
 				//im author speichern wir den namen des newsletter etc.
 				$author="unsubscribed";
-				$NEWSLETTER=new mnlNL();
+				$NEWSLETTER=new tm_NL();
 				$NL=$NEWSLETTER->getNL($nl_id);
 				if (count($NL)>0) {
 					$author.=" (".$NL[0]['subject'].")";
@@ -71,69 +66,61 @@ if (checkemailadr($email,$EMailcheck_Intern) && $set=="unsubscribe") {
 						//email bei subscrption an admin....
 						$SubscriptionMail_Subject="mNL: Abmeldung";
 						$SubscriptionMail_HTML="";
-						$SubscriptionMail_HTML.="<br><b>".$created."</b>
-														<br>'<b>".$author."</b>'
-														<br>AID: <b>".$ADR[0]['id']."</b>
-														<br>
-														<br>Folgender Benutzer hat sich aus der Verteilerliste ausgetragen und moechte kein Newsletter mehr erhalten
-														<ul>Daten:
-														<li>e-Mail: <b>".$ADR[0]['email']."</b></li>
-														<li>F0: <b>".$ADR[0]['f0']."</b></li>
-														<li>F1: <b>".$ADR[0]['f1']."</b></li>
-														<li>F2: <b>".$ADR[0]['f2']."</b></li>
-														<li>F3: <b>".$ADR[0]['f3']."</b></li>
-														<li>F4: <b>".$ADR[0]['f4']."</b></li>
-														<li>F5: <b>".$ADR[0]['f5']."</b></li>
-														<li>F6: <b>".$ADR[0]['f6']."</b></li>
-														<li>F7: <b>".$ADR[0]['f7']."</b></li>
-														<li>F8: <b>".$ADR[0]['f8']."</b></li>
-														<li>F9: <b>".$ADR[0]['f9']."</b></li>
-														</ul>
-														<br>
-														Code: <b>".$code."</b>
-														<br>
-														<br>
-														Der Datensatz wurde de-aktiviert und markiert (Unsubscribed) und wurde ab sofort aus der Empfaengerliste ausgeschlossen.
-														";
+						$SubscriptionMail_HTML.="<br><b>".$created."</b>\n".
+														"<br>'<b>".$author."</b>'\n".
+														"<br>AID: <b>".$ADR[0]['id']."</b>\n".
+														"<br>\n".
+														"<br>Folgender Benutzer hat sich aus der Verteilerliste ausgetragen und moechte kein Newsletter mehr erhalten:\n".
+														"<br>The following user has unsubscribed:\n".
+														"<ul>Daten:\n".
+														"<li>e-Mail: <b>".$ADR[0]['email']."</b></li>\n".
+														"<li>F0: <b>".$ADR[0]['f0']."</b></li>\n".
+														"<li>F1: <b>".$ADR[0]['f1']."</b></li>\n".
+														"<li>F2: <b>".$ADR[0]['f2']."</b></li>\n".
+														"<li>F3: <b>".$ADR[0]['f3']."</b></li>\n".
+														"<li>F4: <b>".$ADR[0]['f4']."</b></li>\n".
+														"<li>F5: <b>".$ADR[0]['f5']."</b></li>\n".
+														"<li>F6: <b>".$ADR[0]['f6']."</b></li>\n".
+														"<li>F7: <b>".$ADR[0]['f7']."</b></li>\n".
+														"<li>F8: <b>".$ADR[0]['f8']."</b></li>\n".
+														"<li>F9: <b>".$ADR[0]['f9']."</b></li>\n".
+														"</ul>\n".
+														"<br>\n".
+														"Code: <b>".$code."</b>\n".
+														"<br>\n".
+														"<br>\n".
+														"Der Datensatz wurde de-aktiviert und markiert (Unsubscribed) und wurde ab sofort aus der Empfaengerliste ausgeschlossen.\n".
+														"<br>The Address has been deactivated and marked as unsubscribed and will be excluded from recipients list.\n";
 						@SendMail($From,$FromName,$send_notification_email,$FromName,$SubscriptionMail_Subject,clear_text($SubscriptionMail_HTML),$SubscriptionMail_HTML);
 					}//send notify
-					$FMESSAGE.= "Sie wurden abgemeldet.";
+					$FMESSAGE.= $MSG['unsubscribe']['unsubscribe'];
 				} else {//unsubscribe()
 					//sonstiger fehler
-					$FMESSAGE.= "Fehler!";
+					$FMESSAGE.= $MSG['unsubscribe']['error'];
 				}
-			/*
-			} else {//code=code
-				//code ungueltig
-				$FMESSAGE.= "Ungueltig!";
-			}
-			*/
 		} else {//status!=11
 			//bereits abgemeldet
-			$FMESSAGE.= "Sie sind nicht mehr angemeldet.";
+			$FMESSAGE.= $MSG['unsubscribe']['already_unsubscribed'];
 		}
 	} else {//count adr
 		//adresse existiert nicht, nix gefunden
-		$FMESSAGE.= "Adresse Ungueltig!";
+		$FMESSAGE.= $MSG['unsubscribe']['invalid_email'];//$check_mail[1]
 	}
 } else {
  //keine eingabe
  $FMESSAGE.= "";
 }
-
 $email="";// !
-include_once($mnl_includepath."/unsubscribe_form.inc");
-
+include_once($tm_includepath."/unsubscribe_form.inc.php");
 //new Template
-$_Tpl_FRM=new mTemplate();
-$_Tpl_FRM->setTemplatePath($mnl_tplpath);
+$_Tpl_FRM=new tm_Template();
+$_Tpl_FRM->setTemplatePath($tm_tplpath);
 $_Tpl_FRM->setParseValue("FMESSAGE", $FMESSAGE);
 $_Tpl_FRM->setParseValue("FHEAD", $FHEAD);
 $_Tpl_FRM->setParseValue("FFOOT", $FFOOT);
 $_Tpl_FRM->setParseValue("FSUBMIT", $FSUBMIT);
 $_Tpl_FRM->setParseValue("FEMAIL", $FEMAIL);
 $OUTPUT=$_Tpl_FRM->renderTemplate("Unsubscribe.html");
-
 //anzeige
 if ($called_via_url) {
 	echo $OUTPUT;

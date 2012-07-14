@@ -12,11 +12,10 @@
 /* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
 /********************************************************************************/
 
-if (!file_exists("../include/mnl_config.inc")) {
-	echo phpinfo();
+if (!file_exists("../include/tm_config.inc.php")) {
 	exit;
 }
-require_once ("../include/mnl_config.inc");
-//
-require_once ($mnl_includepath."/Index.inc");
+require_once ("../include/tm_config.inc.php");
+require_once ($tm_docroot."/".$tm_dir."/include/tm_lib_admin.inc.php");
+require_once ($tm_includepath."/Index.inc.php");
 ?>

@@ -10,6 +10,104 @@
 /* check Homepage for Updates and more Infos                                    */
 /* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
 /********************************************************************************/
+*+*+*+*+*+*+*+*+*+*+*+ CHANGES V1.0.7  +*+*+*+*+*+*+*+*+*+*+*+*
+	16.11.2007
+	In short: 
+		Tellmatic 1.0.7 contains tons of bugfixes, optimizations, new features, massive code cleanup, important security fixes, speed and perfomance optimizations etc.
+	
+	more Details:
+	
+		Fixed bugs:
+		 - send_it.php: trys to send mail even if entry is already processed, (not critical), fixed
+		 - wysiwyg: missing file plugins/contextmenu/langs/XX.js, wysiwyg won't start if language file was missing, (not critical), fixed
+		 - subscribe.php: 
+		 	typo: $SUBSCRIBE_URL=$mnl_URL."/subscribe.php?doptin=1&email=".$email."&fid=".$frm_id."&c=".$code;
+			should be:	$SUBSCRIBE_URL=$mnl_URL_FE."/subscribe.php?doptin=1&email=".$email."&fid=".$frm_id."&c=".$code;
+			, fixed
+		 - serverinfo: used get_cfg_var, now use ini_get() instead, (not critical), fixed
+		 - click on a newsletter name to edit does not throw a warning, now it does, (not critical), fixed
+		 
+		Changes, new features and enhancements:
+
+		 - installation splitted into single steps
+		 - userflag: manager, you must be a 'manager' to use bouncemanagement and database clean up
+		 - multiuser: add/edit/delete tellmatic authors
+		 - html code and default style is 100% valid html and 100% valid css code
+		 - index.php in installation directopry contains an example how to use the subscription and unsubscrtiption form
+		 - configure hard coded messages not using gettext for unsubscribe and subscribe, to change: open tm_lib.inc.php and edit 
+			$MSG['subscribe']['update']
+			$MSG['unsubscribe']['unsubscribe']
+			$MSG['unsubscribe']['error']
+			$MSG['unsubscribe']['invalid']
+			$MSG['unsubscribe']['already_unsubscribed']
+			$MSG['unsubscribe']['invalid_email']
+			all other messages for forms are configured in the form and saved in database!
+		 - name field for 'email' added to forms
+		 - added free definable errormessages in forms (for email, captcha, f0-9)
+		 - added regexpression fields for forms to let you check the input, e.g.: "^[A-Za-z_ ][A-Za-z0-9_ ]*$"
+		 - more icons :)
+		 - added delete flag for addresses
+		 - added LastInserID to DB Class, now inserting an entry does not require to read the inserted entry to add details (addresses)
+		 - internal address checking nw uses exact match for email, speeds up double checking by 1000%!
+		 - add a Q: now uses offset and limit to insert the queue entries, works well with only 8MB now.
+		 - $mnl and all variables, constants named mnl are renamed to use unique tm_
+		 	e.g. MNL_SITEID becomes TM_SITEID
+		 - changed some Class names
+			mMail: tm_Mail
+			mBounce: tm_Bounce
+			connectDB: tm_DB
+			mnlCFG(); tm_CFG
+			mnlNL(); tm_NL
+			mnlQ(); tm_Q
+			mnlAdr(); tm_ADR
+			mnlFRM(); tm_FRM
+			mSimpleForm: tm_SimpleForm
+			mURL: tm_Url nur in index
+			mTemplate: tm_Template
+		 - checking emails now returns the exact reason why it has failed! (syntax, mx, dns, validation etc)
+		 - import: saves a logfile instead of showing the messages
+		 - setting default siteid to 'tellmatic'
+		 - import: disable checking for existing entries
+		 - newsletter and address status have colors now.
+		 - security checks e.g.: http://www.henke37.cjb.net/index.php?page=phpsafety and more
+		 - handle evil magic quotes correctly: see http://www.php.net/manual/en/security.magicquotes.disabling.php#id2553906
+		 - all queries uses mysql_real_escape_string(): function dbesc($val) { return mysql_real_escape_string($val); }
+		 - added a login page, login is using return-include
+		 - use session logins
+		 - all .inc files renamed to .inc.php
+		 - mnl_config.inc becomes tm_config.inc.php
+		 - mnl_lib.inc --> tm_lib.inc.php and tm_lib_admin.inc.php
+		 - tinymce_il.php moved to /include
+		 - passwords are saved as a md5 hash of siteid, username and password md5(siteid,name,password)	
+		 - added function tm_icon() to show icons, generates unique img src, using alt, title and id
+		 - added function display() to show output text in browser (wrapper for htmlentities() and stuff)
+		 - templates for layouts are now saved in different directories, each for one stylesheet. (see /tpl)
+		 - styesheets renamed to tellmatic*.css
+		 - GeoIP support: added geographical map for readers and subscribers etc (ip is saved on click, view or subscription)
+			http://www.maxmind.com/app/api / LGPL
+		 - import: added limit and offset
+		 - export: added limit and offset
+		 - export: select file, overwrite or append to existing file
+		 - graphical statistics, barcharts for summary and details for addresses, groups, newsletter, queue, etc.
+			 using libchart - http://phpcode.mypapit.net/php-class/libchart-howto-create-bar-chart-and-pie-chart-easily-with-php/20/
+			 http://naku.dohcrew.com/libchart/pages/samplecode/ GPL!!!
+		 - somewhat optimized sql
+		 - added indexes to db
+		 - classes use only 1 or max 2 dbconnections at a time
+		 - splitted status/summary and top list
+		 - added menuentry 'manage' for bouncemanagement and db cleanup
+		 - added menuentry for phpinfo()
+		 - added menuentry for credits/donate etc
+		 - new directory /files/reports to store reports and maps and charts
+		 - added memo to addresses, will be updated manually, saves memos on subscription, updated by import+update etc
+		 - new Stats.inc	ARR=Array();ARR[ ][ ] becomes ARR=Array(Array(...))
+		 - Class tm_ADR: getAdr with no details (saves a lot of memory)
+		 - js validator: http://www.silisoftware.com/scripts/index.php?scriptname=jsFormValidation
+		 - if user password changes, a new .htpasswd file is generated in /include
+		 - added spellchecker for wysiwyg
+		 - export: get available memory and export with limit and offset, now exporting 100 of thousands addresses is no more problem
+
+	The list is not complete.
 
 *+*+*+*+*+*+*+*+*+*+*+ CHANGES V1.0.6  +*+*+*+*+*+*+*+*+*+*+*+*
 	30.07.2007 - some bugfixes and enhancements

@@ -1,5 +1,5 @@
  /**
- * $Id: editor_plugin_src.js 42 2006-08-08 14:32:24Z spocke $
+ * $Id: del.js,v 1.1.1.1 2007/11/21 22:59:49 mcms09 Exp $
  *
  * @author Moxiecode - based on work by Andrew Tetlaw
  * @copyright Copyright © 2004-2007, Moxiecode Systems AB, All rights reserved.

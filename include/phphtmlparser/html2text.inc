@@ -6,7 +6,7 @@
  */
 
 #include ("htmlparser.inc");
-require_once ($mnl_includepath."/phphtmlparser/htmlparser.inc");
+require_once ($tm_includepath."/phphtmlparser/htmlparser.inc");
 
 /**
  * Class Html2Text. (HtmlParser example.)
@@ -26,6 +26,12 @@ class Html2Text {
     var $iCurrentWordArray;
     var $iCurrentWordIndex;
     var $iInScript;
+    
+    //by vizzy, 
+    //PHP Error no:8 |;| error typeNotice |;| php_error: Undefined property:  iInText |;| file:./include/phphtmlparser/html2text.inc |;| line 125 |;|
+    var $iInText;
+    //
+    
     var $iListLevel = 0;
     var $iHtmlText;
     var $iMaxColumns;

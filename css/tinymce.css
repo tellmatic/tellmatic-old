@@ -1,40 +1,18 @@
-body {
-	background-color: #FFFFFF;
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-size: 10px;
-	scrollbar-3dlight-color: #F0F0EE;
-	scrollbar-arrow-color: #676662;
-	scrollbar-base-color: #F0F0EE;
-	scrollbar-darkshadow-color: #DDDDDD;
-	scrollbar-face-color: #E0E0DD;
-	scrollbar-highlight-color: #F0F0EE;
-	scrollbar-shadow-color: #F0F0EE;
-	scrollbar-track-color: #F5F5F5;
-}
-
-td {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-size: 10px;
-}
-
-pre {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-size: 10px;
-}
-
 .console {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-weight: bold;
 	font-size: 10px;
 	background-color: #000000;
 	color: #ffffff;
-	border: 1px dashed #cccccc;
+	text-indent:4px;
+	border: 2px dashed #cccccc;
 }
 
 .config {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-weight: normal;
 	font-size: 10px;
+	text-indent:8px;
 	background-color: #eeeeee;
 	color: #000000;
 	border: 1px solid #dddddd;
@@ -47,20 +25,9 @@ pre {
 	color: #000099;
 }
 
-.tablerow1 {
+.tablerow_even {
 	background-color: #BBBBBB;
 }
-
-thead {
-	background-color: #FFBBBB;
+.tablerow_odd {
+	background-color: #cccccc;
 }
-
-tfoot {
-	background-color: #BBBBFF;
-}
-
-th {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-size: 13px;
-}
-//p { margin: 0; padding: 0; }

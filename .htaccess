@@ -1,1 +1,15 @@
+#<Files ~ "\.(inc.php)$" >
+#	 ErrorDocument 401 default
+#</Files>
+    
+
+#multpile php versions?
 #AddType application/x-httpd-php5 .php
+
+#php cgi workaround
+#is php running as cgi? so http auth via php will not work on most providers due to misconfiguration!
+#rewrite engine must be enabled ...
+#<IfModule mod_rewrite.c>
+#RewriteEngine on
+#RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization},L]
+#</IfModule>

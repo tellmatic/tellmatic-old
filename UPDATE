@@ -12,6 +12,110 @@
 /********************************************************************************/
 
 UPDATE
+*+*+*+*+*+*+*+*+*+*+*+ 1.0.7
+--en
+A new installation is recommended.
+
+Updating from 1.0.6 (and earlier versions) to 1.0.7:
+
+Please update to 1.0.6 first or reinstall and import your data
+rename mnl_config.inc to tm_config.inc.php
+Delete all .inc files
+Copy all files
+Update Paths in click.php, send_it.php, subscribe.php and unsubscribe.php , news_blank.png.php etc.
+create dirs: 
+	/files/reports
+	/admin/tmp
+
+Update Database:
+
+ALTER TABLE adr ADD FULLTEXT (email);
+ALTER TABLE adr_details ADD INDEX adrd_siteid_adrid ( adr_id , siteid );
+ALTER TABLE user ADD email VARCHAR( 255 ) NOT NULL AFTER passwd , ADD last_login INT(11) NOT NULL AFTER email;
+ALTER TABLE user ADD crypt VARCHAR( 128 ) NOT NULL AFTER passwd;
+ALTER TABLE adr ADD clean TINYINT( 1 ) NOT NULL DEFAULT '0' AFTER email;
+ALTER TABLE nl_h ADD ip VARCHAR( 16 ) NOT NULL DEFAULT '0.0.0.0' AFTER sent;
+ALTER TABLE frm_s ADD ip VARCHAR( 16 ) NOT NULL DEFAULT '0.0.0.0' AFTER adr_id;
+ALTER TABLE user ADD manager SMALLINT( 1 ) NOT NULL DEFAULT '0' AFTER admin;
+
+ALTER TABLE frm
+		ADD email_errmsg VARCHAR( 255 ),
+		ADD f0_errmsg VARCHAR( 255 ) ,
+		ADD f1_errmsg VARCHAR( 255 ) ,
+		ADD f2_errmsg VARCHAR( 255 ) ,
+		ADD f3_errmsg VARCHAR( 255 ) ,
+		ADD f4_errmsg VARCHAR( 255 ) ,
+		ADD f5_errmsg VARCHAR( 255 ) ,
+		ADD f6_errmsg VARCHAR( 255 ) ,
+		ADD f7_errmsg VARCHAR( 255 ) ,
+		ADD f8_errmsg VARCHAR( 255 ) ,
+		ADD f9_errmsg VARCHAR( 255 ) ;
+ALTER TABLE frm 
+		ADD f0_expr VARCHAR( 255 ) ,
+		ADD f1_expr VARCHAR( 255 ) ,
+		ADD f2_expr VARCHAR( 255 ) ,
+		ADD f3_expr VARCHAR( 255 ) ,
+		ADD f4_expr VARCHAR( 255 ) ,
+		ADD f5_expr VARCHAR( 255 ) ,
+		ADD f6_expr VARCHAR( 255 ) ,
+		ADD f7_expr VARCHAR( 255 ) ,
+		ADD f8_expr VARCHAR( 255 ) ,
+		ADD f9_expr VARCHAR( 255 ) ;
+		
+ALTER TABLE frm ADD email VARCHAR( 255 ) NOT NULL AFTER subscribe_aktiv;
+ALTER TABLE frm ADD captcha_errmsg VARCHAR( 255 ) NOT NULL AFTER email_errmsg;
+
+UPDATE adr SET siteid = 'tellmatic';
+UPDATE adr_details SET siteid = 'tellmatic';
+UPDATE adr_grp SET siteid = 'tellmatic';
+UPDATE adr_grp_ref SET siteid = 'tellmatic';
+UPDATE config SET siteid = 'tellmatic';
+UPDATE frm SET siteid = 'tellmatic';
+UPDATE frm_grp_ref SET siteid = 'tellmatic';
+UPDATE frm_s SET siteid = 'tellmatic';
+UPDATE log SET siteid = 'tellmatic';
+UPDATE nl_grp SET siteid = 'tellmatic';
+UPDATE nl SET siteid = 'tellmatic';
+UPDATE nl_h SET siteid = 'tellmatic';
+UPDATE nl_q SET siteid = 'tellmatic';
+UPDATE user SET siteid = 'tellmatic';
+
+ALTER TABLE nl_h ADD INDEX nlh_siteid_ip (siteid,ip);
+ALTER TABLE nl_h ADD INDEX nlh_siteid_qid_ip (siteid,ip,q_id);
+ALTER TABLE nl_h ADD INDEX nlh_siteid_ip_grpid (siteid,ip,grp_id);
+ALTER TABLE nl_h ADD INDEX nlh_siteid_ip_qid_nlid (siteid,ip,q_id,nl_id);
+ALTER TABLE nl_h ADD INDEX h_nlid_adrid_stat ( status , nl_id , adr_id );
+ALTER TABLE nl_h ADD INDEX nlh_siteid_status ( siteid , status );
+ALTER TABLE frm_s ADD INDEX frms_siteid_ip (siteid,ip);
+ALTER TABLE frm_s ADD INDEX frms_siteid_ip_frmid (siteid,ip,frm_id);
+ALTER TABLE frm_s ADD INDEX frms_siteid_ip (siteid,ip);
+ALTER TABLE frm_s ADD INDEX frms_siteid_ip_frmid (siteid,ip,frm_id);
+ALTER TABLE adr_grp_ref ADD INDEX grp_site_id ( grp_id , siteid );
+ALTER TABLE frm_grp_ref ADD INDEX grp_site_id ( grp_id , siteid ); 
+ALTER TABLE adr_grp_ref ADD INDEX aref_adrid_siteid ( adr_id , siteid );
+ALTER TABLE adr ADD INDEX adr_siteid_status ( siteid , status );
+ALTER TABLE adr ADD INDEX adr_siteid_email ( email , siteid );
+ALTER TABLE adr ADD INDEX adr_siteid_id ( id , siteid );
+
+now make a small php script, <?php echo md5('tellmatic'.'username'.'password');?> and update your password with the generated password hash 
+go to table [prefix]_user and edit your user
+ set passwd to: "9d8acdc4a8d4d2cc2d5b41253a86da9c"
+ and name to "tellmatic"
+now the password is 'letmein'
+please login at /admin/index.php and change your password.
+this is necessary because password is saved as a hash value md5(id+name+pw)
+
+download geoip database from http://www.maxmind.com/app/geolitecity
+	http://www.maxmind.com/download/geoip/database/GeoLiteCity.dat.gz
+	unzip and copy the file to include/geoip/GeoLiteCity.dat
+
+after all is done enter errormessages and names to existing forms!
+
+have fun.
+
+if you need help, feel free to write to the public forum.
+or if you need personal help, make a donation and write an email.
+
 
 *+*+*+*+*+*+*+*+*+*+*+ 1.0.6
 
@@ -27,56 +131,56 @@ Updating from 1.0.5 (and earlier versions) to 1.0.6:
 	
 	Update your database: see SQL below
 		* please add table prefix if necessary!!! *
-		e.g.: "	ALTER TABLE `tm_nl_grp` ADD `created` DATETIME NOT NULL , ...etc."
+		e.g.: "	ALTER TABLE tm_nl_grp ADD created DATETIME NOT NULL , ...etc."
 		where "tm_" is your table prefix
 
 
 --de
-Update von 1.0.5 (und früheren Versionen) auf 1.0.6:
+Update von 1.0.5 (und frÃ¼heren Versionen) auf 1.0.6:
 
-	Erstellen Sie ein Backup Ihrer aktuellen Installation und der Datenbank! Es wird grundsaätzlich bei allen Updates - egal welcher Software - empfohlen ein Backup der aktuellen Installation zu machen ;-) (Wie wertvoll ein Backup ist und das sich der Aufwand durchaus lohnt, stellt man spätestens dann fest wenn man eins braucht und keins hat.)
-	Löschen Sie die index.php aus dem Tellmatic Installationsverzeichnis. Die Verwaltung zu Tellmatic erreichen nun unter admin/index.php
+	Erstellen Sie ein Backup Ihrer aktuellen Installation und der Datenbank! Es wird grundsaÃ¤tzlich bei allen Updates - egal welcher Software - empfohlen ein Backup der aktuellen Installation zu machen ;-) (Wie wertvoll ein Backup ist und das sich der Aufwand durchaus lohnt, stellt man spÃ¤testens dann fest wenn man eins braucht und keins hat.)
+	LÃ¶schen Sie die index.php aus dem Tellmatic Installationsverzeichnis. Die Verwaltung zu Tellmatic erreichen nun unter admin/index.php
 	Erstellen Sie das Verzeichnis /files/tmp
 	Kopieren Sie die Dateien der aktuellen Version 1.0.6.
 	Wenn Sie Templates editiert haben (zum Beispiel fuer Formulare), spielen Sie diese aus der Sicherung zurueck oder sparen diese beim kopieren aus.
 	Lesen Sie die CHANGES-Datei, diese enthaelt wichtige Information zu dem Update!
 
 	Aktualisieren Sie Ihre Datenbank, siehe untenstehende SQL Statements. Beachten Sie den Tabellenprefix den Sie ggf. bei der vorherigen Installation angegeben haben.
-		z.B.: "	ALTER TABLE `tm_nl_grp` ADD `created` DATETIME NOT NULL , ...etc."
+		z.B.: "	ALTER TABLE tm_nl_grp ADD created DATETIME NOT NULL , ...etc."
 		wobei "tm_" der Tabellen-Prefix ist.
-		Ändern Sie die SQL Statements ggf. dementsprechend ab.
+		Ã„ndern Sie die SQL Statements ggf. dementsprechend ab.
 	
 ----------------------------------------------------------------------------------------------------------------
 	
 	 update-SQL:
 
-	ALTER TABLE `nl_grp` ADD `created` DATETIME NOT NULL ,
-		ADD `updated` DATETIME NOT NULL ,
-		ADD `author` VARCHAR( 64 ) NOT NULL ,
-		ADD `editor` VARCHAR( 64 ) NOT NULL ;
+	ALTER TABLE nl_grp ADD created DATETIME NOT NULL ,
+		ADD updated DATETIME NOT NULL ,
+		ADD author VARCHAR( 64 ) NOT NULL ,
+		ADD editor VARCHAR( 64 ) NOT NULL ;
 
-	ALTER TABLE `config` ADD `track_image` VARCHAR( 255 ) NOT NULL ,
-		ADD `check_version` TINYINT DEFAULT '1' NOT NULL;
+	ALTER TABLE config ADD track_image VARCHAR( 255 ) NOT NULL ,
+		ADD check_version TINYINT DEFAULT '1' NOT NULL;
 		
-	ALTER TABLE `adr_grp` ADD `created` DATETIME NOT NULL ,
-		ADD `updated` DATETIME NOT NULL ,
-		ADD `author` VARCHAR( 64 ) NOT NULL ,
-		ADD `editor` VARCHAR( 64 ) NOT NULL ;
+	ALTER TABLE adr_grp ADD created DATETIME NOT NULL ,
+		ADD updated DATETIME NOT NULL ,
+		ADD author VARCHAR( 64 ) NOT NULL ,
+		ADD editor VARCHAR( 64 ) NOT NULL ;
 		
-	ALTER TABLE `adr_details` ADD `memo` TEXT AFTER `adr_id`;
+	ALTER TABLE adr_details ADD memo TEXT AFTER adr_id;
 		
-	ALTER TABLE `frm` ADD `use_captcha` TINYINT DEFAULT '1' ,
-		ADD `digits_captcha` TINYINT DEFAULT '4' AFTER `use_captcha`,
-		ADD `submit_value` VARCHAR( 255 ) NOT NULL AFTER `digits_captcha` ,
-		ADD `reset_value` VARCHAR( 255 ) NOT NULL AFTER `submit_value`,
-		ADD `subscribe_aktiv` TINYINT DEFAULT '1' AFTER `submit_value`;
+	ALTER TABLE frm ADD use_captcha TINYINT DEFAULT '1' ,
+		ADD digits_captcha TINYINT DEFAULT '4' AFTER use_captcha,
+		ADD submit_value VARCHAR( 255 ) NOT NULL AFTER digits_captcha ,
+		ADD reset_value VARCHAR( 255 ) NOT NULL AFTER submit_value,
+		ADD subscribe_aktiv TINYINT DEFAULT '1' AFTER submit_value;
 			
-	ALTER TABLE `user` ADD `expert` TINYINT DEFAULT '0' AFTER `lang` ;
+	ALTER TABLE user ADD expert TINYINT DEFAULT '0' AFTER lang ;
 
-	ALTER TABLE `nl` ADD `track_image` VARCHAR( 255 ) DEFAULT '_global' NOT NULL;
+	ALTER TABLE nl ADD track_image VARCHAR( 255 ) DEFAULT '_global' NOT NULL;
 
 	#only needed if updatig from versions earlier than 1.0.5:
-	ALTER TABLE `nl` ADD `content_type` VARCHAR( 12 ) DEFAULT 'html' NOT NULL ;
+	ALTER TABLE nl ADD content_type VARCHAR( 12 ) DEFAULT 'html' NOT NULL ;
 
 Thats all, now please test it! 
 
@@ -143,7 +247,7 @@ Update to 1.0.3-a from previous version:
 	see below
 
 --de:
-Update auf 1.0.3-a von einer früheren Version:
+Update auf 1.0.3-a von einer frÃ¼heren Version:
 	siehe unten
 	
 *+*+*+*+*+*+*+*+*+*+*+ 1.0.3
@@ -156,18 +260,18 @@ Update to 1.0.3 from previous version:
 
 	Please add field 'lang' to the tellmatic usertable:
 	SQL:
-		ALTER TABLE `[prefix_]user` ADD `lang` VARCHAR( 8 ) DEFAULT 'de' NOT NULL AFTER `style` ; 
-		ALTER TABLE `user` ADD INDEX ( `lang` ) ;
+		ALTER TABLE [prefix_]user ADD lang VARCHAR( 8 ) DEFAULT 'de' NOT NULL AFTER style ; 
+		ALTER TABLE user ADD INDEX ( lang ) ;
 		After adding the field, please update your default-value for users:
-		UPDATE `[prefix_]user` SET lang='de';
+		UPDATE [prefix_]user SET lang='de';
 		
 		International users may use:
-		UPDATE `[prefix_]user` SET lang='en';
+		UPDATE [prefix_]user SET lang='en';
 
 	done.
 
 --de:
-Update auf 1.0.3 von einer früheren Version:
+Update auf 1.0.3 von einer frÃ¼heren Version:
 	
 	Erstellen Sie eine Sicherheitskopie ihrer aktuellen Installation!
 	Kopieren Sie Tellmatic 1.0.3 auf Ihren Server. Sie koennen die vorhandene Installation ueberschreiben. 
@@ -175,15 +279,15 @@ Update auf 1.0.3 von einer früheren Version:
 	
 	Bitte legen Sie das Feld mit dem Namen 'lang' in der Benutzertabelle von Tellmatic an:
 	SQL:
-		ALTER TABLE `[prefix_]user` ADD `lang` VARCHAR( 8 ) DEFAULT 'de' NOT NULL AFTER `style` ; 
-		ALTER TABLE `user` ADD INDEX ( `lang` ) ;
+		ALTER TABLE [prefix_]user ADD lang VARCHAR( 8 ) DEFAULT 'de' NOT NULL AFTER style ; 
+		ALTER TABLE user ADD INDEX ( lang ) ;
 	
 	Danach aktualisieren Sie die Felder mit dem Standardwert:
 	After adding the field, please update your default-value for users:
-		UPDATE `[prefix_]user` SET lang='de';
+		UPDATE [prefix_]user SET lang='de';
 		
 		International users may use:
-		UPDATE `[prefix_]user` SET lang='en';
+		UPDATE [prefix_]user SET lang='en';
 
 	fertig.
 

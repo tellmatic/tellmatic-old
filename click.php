@@ -1,4 +1,4 @@
-<?php 
+<?php
 /********************************************************************************/
 /* this file is part of: / diese Datei ist ein Teil von:                        */
 /* tellmatic, the newslettermachine                                             */
@@ -12,7 +12,7 @@
 /* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
 /********************************************************************************/
 
-include("./include/mnl_config.inc");
+include("./include/tm_config.inc.php");
 //aufruf: click.php?h_id=&nl_id=&a_id=
 
 $h_id=getVar("h_id");
@@ -20,7 +20,7 @@ $nl_id=getVar("nl_id");
 $a_id=getVar("a_id");
 
 if (checkid($nl_id)) {
-	$NEWSLETTER=new mnlNL();
+	$NEWSLETTER=new tm_NL();
 	//nl click counter ++
 	$NEWSLETTER->addClick($nl_id);
 	//Link holen
@@ -28,11 +28,16 @@ if (checkid($nl_id)) {
 	//nur wenn nl aktiv ist!
 	if ($NL[0]['aktiv']==1) {
 		if (checkid($h_id)) {
-			$QUEUE=new mnlQ();
+			$QUEUE=new tm_Q();
 			$QUEUE->setHStatus($h_id,3);	//view
+			//nur der erste aufruf wird mit der ip versehen! ansonsten wuerde diese jedesmal ueberschrieben wenn der leser oder ein anderer das nl anschaut.
+			$H=$QUEUE->getH($h_id);
+			if (empty($H[0]['ip']) || $H[0]['ip']=='0.0.0.0') {
+				$QUEUE->setHIP($H[0]['id'], getIP());	//save ip
+			}
 		}
 		if (checkid($a_id)) {
-			$ADDRESS=new mnlAdr();
+			$ADDRESS=new tm_ADR();
 			$ADDRESS->setStatus($a_id,4);	//click
 			//adr click counter ++
 			$ADDRESS->addClick($a_id,4);	//click
@@ -42,7 +47,7 @@ if (checkid($nl_id)) {
 		exit;
 	} else {
 		//wenn inaktiv!
-		//header("Location: ".$mnl_Domain.""); /* Browser umleiten */
+		//header("Location: ".$tm_Domain.""); /* Browser umleiten */
 		//oder: ;)
 		header("HTTP/1.0 404 Not Found");
 		exit;
@@ -51,7 +56,4 @@ if (checkid($nl_id)) {
 
 header("HTTP/1.0 404 Not Found");
 exit;
-
-
-
 ?>
