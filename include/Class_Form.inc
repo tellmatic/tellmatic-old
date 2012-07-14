@@ -20,6 +20,8 @@ class mnlFRM {
 		$this->FRM=Array();
 		$DB=new ConnectDB();
 		$Query ="	SELECT ".mnlTABLE_FRM.".id, ".mnlTABLE_FRM.".name, ".mnlTABLE_FRM.".descr, ".mnlTABLE_FRM.".aktiv, ".mnlTABLE_FRM.".author, ".mnlTABLE_FRM.".created, ".mnlTABLE_FRM.".editor, ".mnlTABLE_FRM.".updated, ".mnlTABLE_FRM.".double_optin, ".mnlTABLE_FRM.".subscriptions,
+						 ".mnlTABLE_FRM.".use_captcha,  ".mnlTABLE_FRM.".digits_captcha,  ".mnlTABLE_FRM.".subscribe_aktiv,
+						 ".mnlTABLE_FRM.".submit_value, ".mnlTABLE_FRM.".reset_value,
 						".mnlTABLE_FRM.".f0, ".mnlTABLE_FRM.".f1, ".mnlTABLE_FRM.".f2, ".mnlTABLE_FRM.".f3, ".mnlTABLE_FRM.".f4, ".mnlTABLE_FRM.".f5, ".mnlTABLE_FRM.".f6, ".mnlTABLE_FRM.".f7, ".mnlTABLE_FRM.".f8, ".mnlTABLE_FRM.".f9,
 						".mnlTABLE_FRM.".f0_type, ".mnlTABLE_FRM.".f1_type, ".mnlTABLE_FRM.".f2_type, ".mnlTABLE_FRM.".f3_type, ".mnlTABLE_FRM.".f4_type, ".mnlTABLE_FRM.".f5_type, ".mnlTABLE_FRM.".f6_type, ".mnlTABLE_FRM.".f7_type, ".mnlTABLE_FRM.".f8_type, ".mnlTABLE_FRM.".f9_type,
 						".mnlTABLE_FRM.".f0_required, ".mnlTABLE_FRM.".f1_required, ".mnlTABLE_FRM.".f2_required, ".mnlTABLE_FRM.".f3_required, ".mnlTABLE_FRM.".f4_required, ".mnlTABLE_FRM.".f5_required, ".mnlTABLE_FRM.".f6_required, ".mnlTABLE_FRM.".f7_required, ".mnlTABLE_FRM.".f8_required, ".mnlTABLE_FRM.".f9_required,
@@ -64,6 +66,11 @@ class mnlFRM {
 			$this->FORM[$ac]['updated']=$DB->Record['updated'];
 			$this->FORM[$ac]['double_optin']=$DB->Record['double_optin'];
 			$this->FORM[$ac]['subscriptions']=$DB->Record['subscriptions'];
+			$this->FORM[$ac]['use_captcha']=$DB->Record['use_captcha'];
+			$this->FORM[$ac]['digits_captcha']=$DB->Record['digits_captcha'];
+			$this->FORM[$ac]['subscribe_aktiv']=$DB->Record['subscribe_aktiv'];
+			$this->FORM[$ac]['submit_value']=$DB->Record['submit_value'];
+			$this->FORM[$ac]['reset_value']=$DB->Record['reset_value'];
 			$this->FORM[$ac]['f0']=$DB->Record['f0'];
 			$this->FORM[$ac]['f1']=$DB->Record['f1'];
 			$this->FORM[$ac]['f2']=$DB->Record['f2'];
@@ -139,6 +146,11 @@ class mnlFRM {
 				"created"=>$created, 
 				"author"=>$author, 
 				"double_optin"=>$FRM[0]["double_optin"],
+				"use_captcha"=>$FRM[0]["use_captcha"], 
+				"digits_captcha"=>$FRM[0]["digits_captcha"], 
+				"subscribe_aktiv"=>$FRM[0]["subscribe_aktiv"], 
+				"submit_value"=>$FRM[0]["submit_value"], 
+				"reset_value"=>$FRM[0]["reset_value"], 
 				"f0"=>$FRM[0]["f0"],
 				"f1"=>$FRM[0]["f1"],
 				"f2"=>$FRM[0]["f2"],
@@ -226,7 +238,8 @@ class mnlFRM {
 		$Query ="INSERT INTO 
 					".mnlTABLE_FRM." 
 					(
-					name,descr,aktiv,author,created,editor,updated,double_optin,subscriptions,siteid,
+					name,descr,aktiv,author,created,editor,updated,double_optin,subscriptions,use_captcha,digits_captcha,subscribe_aktiv,
+					submit_value, reset_value, siteid,
 					f0,f1,f2,f3,f4,f5,f6,f7,f8,f9,
 					f0_type, f1_type, f2_type, f3_type, f4_type, f5_type, f6_type, f7_type, f8_type, f9_type,
 					f0_required, f1_required, f2_required, f3_required, f4_required, f5_required, f6_required, f7_required, f8_required, f9_required,
@@ -234,7 +247,10 @@ class mnlFRM {
 					) 
 					VALUES 
 					(
-					'".$frm["name"]."', '".$frm["descr"]."', '".$frm["aktiv"]."', '".$frm["author"]."', '".$frm["created"]."', '".$frm["author"]."', '".$frm["created"]."', '".$frm["double_optin"]."', 0, '".MNL_SITEID."',
+					'".$frm["name"]."', '".$frm["descr"]."', '".$frm["aktiv"]."', '".$frm["author"]."', '".$frm["created"]."', '".$frm["author"]."', '".$frm["created"]."', '".$frm["double_optin"]."', 0, '".$frm["use_captcha"]."', 
+					'".$frm["digits_captcha"]."', '".$frm["subscribe_aktiv"]."', 
+					'".$frm["submit_value"]."', '".$frm["reset_value"]."', 
+					'".MNL_SITEID."',
 					'".$frm["f0"]."',
 					'".$frm["f1"]."',
 					'".$frm["f2"]."',
@@ -363,6 +379,11 @@ class mnlFRM {
 						updated='".$frm["created"]."',
 						editor='".$frm["author"]."',
 						double_optin='".$frm["double_optin"]."',
+						use_captcha='".$frm["use_captcha"]."',
+						digits_captcha='".$frm["digits_captcha"]."',
+						subscribe_aktiv='".$frm["subscribe_aktiv"]."',
+						submit_value='".$frm["submit_value"]."',
+						reset_value='".$frm["reset_value"]."',
 						f0='".$frm["f0"]."',
 						f1='".$frm["f1"]."',
 						f2='".$frm["f2"]."',

@@ -62,14 +62,25 @@
    -moz-border-radius:0 0 2em 2em;
 }		
 
-a.menu_entry:link, a.menu_head:link
+a.menu_head:link
 { 
-/*, a.menu_head:visitied, a.menu_entry:visited*/
+ color:#ffcc00;
+ background-color:#cc6666;
+ text-decoration:none;
+}
+a.menu_head:active, a.menu_head:hover
+{ 
+ color:#ff0000;
+ background-color:#cccccc;
+}
+
+a.menu_entry:link
+{ 
  color:#ffffff;
  background-color:#cc6666;
  text-decoration:none;
 }
-a.menu_entry:active, a.menu_entry:hover, a.menu_head:active, a.menu_head:hover
+a.menu_entry:active, a.menu_entry:hover
 { 
  color:#ff0000;
  background-color:#cccccc;

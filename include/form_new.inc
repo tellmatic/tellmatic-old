@@ -40,6 +40,20 @@ $$InputName_Aktiv=getVar($InputName_Aktiv);
 $InputName_DoubleOptin="double_optin";
 $$InputName_DoubleOptin=getVar($InputName_DoubleOptin);
 
+$InputName_UseCaptcha="use_captcha";
+$$InputName_UseCaptcha=getVar($InputName_UseCaptcha);
+
+$InputName_DigitsCaptcha="digits_captcha";
+$$InputName_DigitsCaptcha=getVar($InputName_DigitsCaptcha);
+
+$InputName_SubAktiv="subscribe_aktiv";
+$$InputName_SubAktiv=getVar($InputName_SubAktiv);
+
+$InputName_SubmitValue="submit_value";
+$$InputName_SubmitValue=getVar($InputName_SubmitValue);
+
+$InputName_ResetValue="reset_value";
+$$InputName_ResetValue=getVar($InputName_ResetValue);
 
 $InputName_F0="f0";
 $$InputName_F0=getVar($InputName_F0);
@@ -138,6 +152,11 @@ if ($set=="save") {
 				"created"=>$created, 
 				"author"=>$author,
 				"double_optin"=>$double_optin,
+				"use_captcha"=>$use_captcha,
+				"digits_captcha"=>$digits_captcha,
+				"subscribe_aktiv"=>$subscribe_aktiv,
+				"submit_value"=>$submit_value,
+				"reset_value"=>$reset_value,
 				"f0"=>$f0,
 				"f1"=>$f1,
 				"f2"=>$f2,

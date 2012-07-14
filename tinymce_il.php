@@ -18,6 +18,7 @@ include ("./include/mnl_config.inc");
 function tinymce_createimagelist($FileA,$UrlPrefix) {
 	$Return="";
 	//sort array by name:
+		$btsort=Array();
 			foreach ($FileA as $field) {  
 			$btsort[]=$field['filename'];
 		}  

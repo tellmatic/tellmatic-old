@@ -41,12 +41,12 @@ $_MAIN_MESSAGE.="";
 if ($set=="nl") {
 	//nl_id
 	$N=$NEWSLETTER->getNL($nl_id);
-	$_MAIN_OUTPUT.=sprintf(___("Statistik f&uuml;r Newsletter %s"),"<b>".$N[0]['subject']."</b>");
+	$_MAIN_OUTPUT.=sprintf(___("Statistik für Newsletter %s"),"<b>".$N[0]['subject']."</b>");
 
 	//Q Status
 	//countQ($nl_id=0,$grp_id=0,$status=0)
 	$qc=$QUEUE->countQ($nl_id);
-	$_MAIN_OUTPUT.="<br><br>".sprintf(___("%s Sendeauftr&auml;ge insgesamt:"),"<b>$qc</b>");
+	$_MAIN_OUTPUT.="<br><br>".sprintf(___("%s Sendeaufträge insgesamt:"),"<b>$qc</b>");
 	$_MAIN_OUTPUT.="<br>&nbsp;&nbsp;&nbsp;".___("Auftragsstatus:");
 	$qsc=count($STATUS['q']['status']);
 	//countQ($nl_id=0,$grp_id=0,$status=0)
@@ -119,7 +119,7 @@ if ($set=="nl") {
 if ($set=="adrg") {
 	//adr_grp_id
 	$AG=$ADDRESS->getGroup($adr_grp_id);
-	$_MAIN_OUTPUT.=sprintf(___("Statistik f&uuml;r Adressgruppe %s"),"<b>".$AG[0]['name']."</b>");
+	$_MAIN_OUTPUT.=sprintf(___("Statistik für Adressgruppe %s"),"<b>".$AG[0]['name']."</b>");
 
 	//Gesamtstatus, anzahl per adr-status
 	$ac=$ADDRESS->countADR($adr_grp_id);
@@ -200,10 +200,6 @@ if ($set=="adr") {
 	$_MAIN_OUTPUT.= "<br>f8: ".$ADR[0]['f8'];
 	$_MAIN_OUTPUT.= "<br>f9: ".$ADR[0]['f9'];
 	$_MAIN_OUTPUT.="</ul></ul>";
-	/*
-	$created_date=strftime("%d-%m-%Y",mk_microtime($ADR[0]['created']));
-	$updated_date=strftime("%d-%m-%Y",mk_microtime($ADR[0]['updated']));
-	*/
 	$created_date=$ADR[0]['created'];
 	$updated_date=$ADR[0]['updated'];
 
@@ -233,7 +229,7 @@ if ($set=="adr") {
 	//H Status
 	//	function countH($q_id=0,$nl_id=0,$grp_id=0,$adr_id=0,$status=0) {	//countH($nl_id=0,$grp_id=0,$status=0)
 	$hc=$QUEUE->countH(0,0,0,$adr_id,0);
-	$_MAIN_OUTPUT.="<ul><b>$hc</b> ".___("Sendeauftr&auml;ge insgesamt:");
+	$_MAIN_OUTPUT.="<ul><b>$hc</b> ".___("Sendeaufträge insgesamt:");
 	$_MAIN_OUTPUT.="<br><ul>".___("Auftragsstatus:")."<ul>";
 	$hsc=count($STATUS['h']['status']);
 	//countQ($nl_id=0,$grp_id=0,$status=0)
@@ -283,7 +279,7 @@ if ($set=="adr") {
 //Statistik fuer Formulare
 /////////////////////////////////////
 if ($set=="form") {
-	$_MAIN_OUTPUT.="<a href=\"http://www.tellmatic.org/?c=donate\" target=\"_blank\">".___("Diese Funktion ist leider noch nicht implementiert. Bitte unterst&uuml;tzen Sie die Entwicklung von Tellmatic.")."</a>";
+	$_MAIN_OUTPUT.="<a href=\"http://www.tellmatic.org/?c=donate\" target=\"_blank\">".___("Diese Funktion ist leider noch nicht implementiert. Bitte unterstützen Sie die Entwicklung von Tellmatic.")."</a>";
 }
 
 $_MAIN_OUTPUT.= "<br><br><br><br>";

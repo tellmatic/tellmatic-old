@@ -65,10 +65,8 @@ if ($bc) { //bc>0
 			$_MAIN_OUTPUT.= "<br>ID: ".$ADR[0]['id']." / ".$ADR[0]['d_id']."&nbsp;&nbsp;<br>";
 			if ($ADR[0]['aktiv']==1) {
 				$_MAIN_OUTPUT.=  "<img src=\"".$mnl_iconURL."/tick.png\" border=\"0\" title=\"".___("Aktiv")."\">";
-	//			$_MAIN_OUTPUT.=  ___("(aktiv)");
 			} else {
 				$_MAIN_OUTPUT.=  "<img src=\"".$mnl_iconURL."/cancel.png\" border=\"0\" title=\"".___("Inaktiv")."\">";
-	//			$_MAIN_OUTPUT.=  ___("(inaktiv)");
 			}
 			$_MAIN_OUTPUT.= "<br><img src=\"".$mnl_iconURL."/".$STATUS['adr']['statimg'][$ADR[0]['status']]."\" border=\"0\" title=\"".$STATUS['adr']['status'][$ADR[0]['status']]."\">&nbsp;".$STATUS['adr']['status'][$ADR[0]['status']];
 			$_MAIN_OUTPUT.= "<br>".
@@ -94,10 +92,8 @@ if ($bc) { //bc>0
 			$_MAIN_OUTPUT.= "ID: ".$ADR[0]['id']." / ".$ADR[0]['d_id']."&nbsp;&nbsp;";
 			if ($ADR[0]['aktiv']==1) {
 				$_MAIN_OUTPUT.=  "<img src=\"".$mnl_iconURL."/tick.png\" border=\"0\" title=\"".___("Aktiv")."\">";
-	//			$_MAIN_OUTPUT.=  "(aktiv)";
 			} else {
 				$_MAIN_OUTPUT.=  "<img src=\"".$mnl_iconURL."/cancel.png\" border=\"0\" title=\"".___("Inaktiv")."\">";
-	//			$_MAIN_OUTPUT.=  "(inaktiv)";
 			}
 			$_MAIN_OUTPUT.= "&nbsp;<img src=\"".$mnl_iconURL."/".$STATUS['adr']['statimg'][$ADR[0]['status']]."\" border=\"0\" title=\"".$STATUS['adr']['status'][$ADR[0]['status']]."\">&nbsp;".$STATUS['adr']['status'][$ADR[0]['status']];
 		} else {
@@ -109,8 +105,7 @@ if ($bc) { //bc>0
 	}
 		$_MAIN_OUTPUT.= "<tr>";
 		$_MAIN_OUTPUT.= "<td colspan=3>";
-		$_MAIN_OUTPUT.= "<a href=\"javascript:checkAllForm('".$FormularName."');\" title=\"".___("Markierung fuer alle angezeigten Adressen umkehren")."\">".___("Alle ausw&auml;hlen / Markierung f&uuml;r alle angezeigten Adressen umkehren")."</a><br><br>";
-	//	$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_ActionAdr]['html'];
+		$_MAIN_OUTPUT.= "<a href=\"javascript:checkAllForm('".$FormularName."');\" title=\"".___("Markierung fuer alle angezeigten Adressen umkehren")."\">".___("Alle auswählen / Markierung für alle angezeigten Adressen umkehren")."</a><br><br>";
 		$_MAIN_OUTPUT.= "</td>";
 		$_MAIN_OUTPUT.= "</tr>";
 	

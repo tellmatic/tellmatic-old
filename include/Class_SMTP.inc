@@ -545,7 +545,7 @@ class sasl_interact_class
 	<package>net.manuellemos.sasl</package>
 
 	<version>@(#) $Id: sasl.php,v 1.8 2004/11/17 07:59:54 mlemos Exp $</version>
-	<copyright>Copyright © (C) Manuel Lemos 2004</copyright>
+	<copyright>Copyright Â© (C) Manuel Lemos 2004</copyright>
 	<title>Simple Authentication and Security Layer client</title>
 	<author>Manuel Lemos</author>
 	<authoraddress>mlemos-at-acm.org</authoraddress>
@@ -921,7 +921,7 @@ class sasl_client_class
 	<package>net.manuellemos.mimemessage</package>
 
 	<version>@(#) $Id: email_message.php,v 1.67 2005/06/07 22:28:01 mlemos Exp $</version>
-	<copyright>Copyright © (C) Manuel Lemos 1999-2004</copyright>
+	<copyright>Copyright Â© (C) Manuel Lemos 1999-2004</copyright>
 	<title>MIME E-mail message composing and sending</title>
 	<author>Manuel Lemos</author>
 	<authoraddress>mlemos-at-acm.org</authoraddress>
@@ -4427,7 +4427,7 @@ class email_message_class
 
 	<name>smtp_message_class</name>
 	<version>@(#) $Id: smtp_message.php,v 1.27 2004/10/05 18:11:27 mlemos Exp $</version>
-	<copyright>Copyright © (C) Manuel Lemos 1999-2004</copyright>
+	<copyright>Copyright Â© (C) Manuel Lemos 1999-2004</copyright>
 	<title>MIME E-mail message composing and sending via SMTP</title>
 	<author>Manuel Lemos</author>
 	<authoraddress>mlemos-at-acm.org</authoraddress>

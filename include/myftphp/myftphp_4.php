@@ -24,6 +24,7 @@ $mnl_includedir="include";
 $mnl_path=$mnl_docroot."/".$mnl_dir;
 $mnl_includepath=$mnl_path."/".$mnl_includedir;
 
+include($mnl_includepath."/Functions.inc");
 
 /********_________________some_note____________________********/
 /*****////////////////////////////////////////////////////*****/
@@ -479,8 +480,9 @@ class mfp_files extends mfp_list {
 // activate buffering
 #header('X-ob_mode: ' . 1);
 //compression buffer + content buffer
-ob_start('ob_gzhandler');
-ob_start();
+//using tellmatic function
+m_obstart();
+
 
 // sessions - moved to class
 /*session_name('myftphp');

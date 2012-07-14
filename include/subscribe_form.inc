@@ -19,14 +19,13 @@ $InputName_Reset="reset";
 $Form=new mSimpleForm();
 $FormularName="subscribe".$FRM[0]['id'];
 //make new Form
-//$Form->new_Form($FormularName,$mnl_URL."/subscribe.php","post","_self");
 $Form->new_Form($FormularName,$_SERVER["PHP_SELF"],"post","_self");
 
 //add a Description
 $Form->set_FormDesc($FormularName,"subscribe");
 $Form->new_Input($FormularName,"set", "hidden", "save");
 $Form->new_Input($FormularName,"fid", "hidden", $frm_id);
-$Form->new_Input($FormularName,"cpt", "hidden", $captcha_code);
+$Form->new_Input($FormularName,"cpt", "hidden", $captcha_md5);
 
 //////////////////
 //add inputfields and buttons....
@@ -43,12 +42,21 @@ $Form->set_InputLabel($FormularName,$InputName_Name,"");
 //Captcha
 $Form->new_Input($FormularName,$InputName_Captcha,"text", "");
 $Form->set_InputStyleClass($FormularName,$InputName_Captcha,"mFormText","mFormTextFocus");
-$Form->set_InputSize($FormularName,$InputName_Captcha,8,4);
+$Form->set_InputSize($FormularName,$InputName_Captcha,12,12);
 $Form->set_InputDesc($FormularName,$InputName_Captcha,"");
 $Form->set_InputReadonly($FormularName,$InputName_Captcha,false);
 $Form->set_InputOrder($FormularName,$InputName_Captcha,1);
 $Form->set_InputLabel($FormularName,$InputName_Captcha,"");
 
+//MEMO
+$Form->new_Input($FormularName,$InputName_Memo,"textarea", $$InputName_Memo);
+$Form->set_InputDefault($FormularName,$InputName_Memo,$$InputName_Memo);
+$Form->set_InputStyleClass($FormularName,$InputName_Memo,"mFormText","mFormTextFocus");
+$Form->set_InputSize($FormularName,$InputName_Memo,48,5);
+$Form->set_InputDesc($FormularName,$InputName_Memo,"");
+$Form->set_InputReadonly($FormularName,$InputName_Memo,false);
+$Form->set_InputOrder($FormularName,$InputName_Memo,1);
+$Form->set_InputLabel($FormularName,$InputName_Memo,"");
 
 //F
 if ($FRM[0]['f0_type']=="checkbox") {$$InputName_F0=1;} //die einfache variante, die andere waere new input value=1 wenn checkbox, sonst $$, das is aber so viel.....
@@ -234,7 +242,7 @@ if ($FRM[0]['f9_type']=="select" && !empty($FRM[0]['f9_value'])) {
 
 
 //submit button 
-$Form->new_Input($FormularName,$InputName_Submit,"submit","Speichern");
+$Form->new_Input($FormularName,$InputName_Submit,"submit",$FRM[0]['submit_value']);
 $Form->set_InputStyleClass($FormularName,$InputName_Submit,"mFormSubmit","mFormSubmitFocus");
 $Form->set_InputDesc($FormularName,$InputName_Submit,"");
 $Form->set_InputReadonly($FormularName,$InputName_Submit,false);
@@ -242,7 +250,7 @@ $Form->set_InputOrder($FormularName,$InputName_Submit,998);
 $Form->set_InputLabel($FormularName,$InputName_Submit,"");
 
 //a reset button
-$Form->new_Input($FormularName,$InputName_Reset,"reset","Reset");
+$Form->new_Input($FormularName,$InputName_Reset,"reset",$FRM[0]['reset_value']);
 $Form->set_InputStyleClass($FormularName,$InputName_Reset,"mFormReset","mFormResetFocus");
 $Form->set_InputDesc($FormularName,$InputName_Reset,"Reset");
 $Form->set_InputReadonly($FormularName,$InputName_Reset,false);
@@ -296,6 +304,7 @@ if (!empty($FRM[0]['f8'])) {
 if (!empty($FRM[0]['f9'])) {
 	$F9= $Form->INPUT[$FormularName][$InputName_F9]['html'];
 }
+$FMEMO= $Form->INPUT[$FormularName][$InputName_Memo]['html'];
 $FSUBMIT= $Form->INPUT[$FormularName][$InputName_Submit]['html'];
 $FRESET= $Form->INPUT[$FormularName][$InputName_Reset]['html'];
 

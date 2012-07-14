@@ -34,34 +34,34 @@ if ($set=="aktiv") {
 	}
 }
 if ($set=="delete" && $doit==1) {
-	$NEWSLETTER->delNL($nl_id);
-	$_MAIN_MESSAGE.="<br>".___("Eintrag wurde gel&ouml;scht.");
+	if (!DEMO) $NEWSLETTER->delNL($nl_id);
+	$_MAIN_MESSAGE.="<br>".___("Eintrag wurde gelÖscht.");
 }
 
 if ($set=="delete_img" && $doit==1) {
 	$NL=$NEWSLETTER->getNL($nl_id);
-	if (@unlink($mnl_nlimgpath."/nl_".date_convert_to_string($NL[0]['created'])."_1.jpg")) {
-		$_MAIN_MESSAGE.="<br>".___("Bild wurde gel&ouml;scht.");
+	if (!DEMO && @unlink($mnl_nlimgpath."/nl_".date_convert_to_string($NL[0]['created'])."_1.jpg")) {
+		$_MAIN_MESSAGE.="<br>".___("Bild wurde gelÖscht.");
 	} else {
-		$_MAIN_MESSAGE.="<br>".___("Bild konnte nicht gel&ouml;scht werden.");
+		$_MAIN_MESSAGE.="<br>".___("Bild konnte nicht gelÖscht werden.");
 	}
 }
 
 if ($set=="delete_html" && $doit==1) {
 	$NL=$NEWSLETTER->getNL($nl_id);
-	if (@unlink($mnl_nlpath."/nl_".date_convert_to_string($NL[0]['created']).".html")) {
-		$_MAIN_MESSAGE.="<br>".___("HTML Datei wurde gel&ouml;scht.");
+	if (!DEMO && @unlink($mnl_nlpath."/nl_".date_convert_to_string($NL[0]['created']).".html")) {
+		$_MAIN_MESSAGE.="<br>".___("HTML Datei wurde gelÖscht.");
 	} else {
-		$_MAIN_MESSAGE.="<br>".___("HTML Datei konnte nicht gel&ouml;scht werden.");
+		$_MAIN_MESSAGE.="<br>".___("HTML Datei konnte nicht gelÖscht werden.");
 	}
 }
 
 if ($set=="delete_attm" && $doit==1) {
 	$NL=$NEWSLETTER->getNL($nl_id);
-	if (@unlink($mnl_nlattachpath."/a".date_convert_to_string($NL[0]['created'])."_1.".$NL[0]['attm'])) {
-		$_MAIN_MESSAGE.="<br>".___("Anhang wurde gel&ouml;scht.");
+	if (!DEMO && @unlink($mnl_nlattachpath."/a".date_convert_to_string($NL[0]['created'])."_1.".$NL[0]['attm'])) {
+		$_MAIN_MESSAGE.="<br>".___("Anhang wurde gelÖscht.");
 	} else {
-		$_MAIN_MESSAGE.="<br>".___("Anhang konnte nicht gel&ouml;scht werden.");
+		$_MAIN_MESSAGE.="<br>".___("Anhang konnte nicht gelÖscht werden.");
 	}
 }
 
@@ -80,7 +80,7 @@ if ($set=="copy" && $doit==1) {
 }
 if ($set=="copyall" && $doit==1) {
 	$NEWSLETTER->copyNL($nl_id,1);//,1 = with files
-	$_MAIN_MESSAGE.="<br>".___("Eintrag und dazugeh&ouml;rige Dateien wurde kopiert.");
+	$_MAIN_MESSAGE.="<br>".___("Eintrag und dazugehÖrige Dateien wurde kopiert.");
 }
 
 $offset=getVar("offset");
@@ -108,7 +108,7 @@ if ($nl_grp_id!=0)
 	$NL=$NEWSLETTER->getNL(0,$offset,$limit,$nl_grp_id,0,$sortIndex,$sortType);//
 	//getNL($id=0,$offset=0,$limit=0,$group_id=0,$return_content=0,$sortIndex="",$sortType=0)
 	$nl_grp=$NEWSLETTER->getGroup($nl_grp_id);
-	$_MAIN_MESSAGE.="<br>".sprintf(___("Gew&auml;hlte Gruppe: %s"),"<b>".$nl_grp[0]['name']."</b>");
+	$_MAIN_MESSAGE.="<br>".sprintf(___("Gewählte Gruppe: %s"),"<b>".$nl_grp[0]['name']."</b>");
 } else {
 	$NL=$NEWSLETTER->getNL(0,$offset,$limit,0,0,$sortIndex,$sortType);//
 	//getNL($id=0,$offset=0,$limit=0,$group_id=0,$return_content=0,$sortIndex="",$sortType=0)
@@ -315,6 +315,15 @@ for ($ncc=0;$ncc<$nc;$ncc++) {
 	} else {
 		$_MAIN_OUTPUT.=  "<img src=\"".$mnl_iconURL."/user_suit.png\" border=\"0\" title=\"".___("personalisierter Newsletter")."\">";
 	}
+	if ($NL[$ncc]['content_type']=="text/html") {
+		$_MAIN_OUTPUT.=  "<img src=\"".$mnl_iconURL."/page_white_office.png\" border=\"0\" title=\"".___("TEXT/HTML")."\">";
+	}
+	if ($NL[$ncc]['content_type']=="html") {
+		$_MAIN_OUTPUT.=  "<img src=\"".$mnl_iconURL."/page_white_h.png\" border=\"0\" title=\"".___("HTML")."\">";
+	}
+	if ($NL[$ncc]['content_type']=="text") {
+		$_MAIN_OUTPUT.=  "<img src=\"".$mnl_iconURL."/page_white_text.png\" border=\"0\" title=\"".___("TEXT")."\">";
+	}
 	$_MAIN_OUTPUT.= $created_date;
 	
 	$_MAIN_OUTPUT.= "</td>";
@@ -323,12 +332,13 @@ for ($ncc=0;$ncc<$nc;$ncc++) {
 	$_MAIN_OUTPUT.= "<a href=\"".$mnl_URL."/".$editURLPara_."\" title=\"".___("Newsletter bearbeiten")."\" >".$NL[$ncc]['subject']."</a>";
 
 	$_MAIN_OUTPUT.= "<div id=\"tt_nl_list_".$NL[$ncc]['id']."\" class=\"tooltip\">";
-	$_MAIN_OUTPUT.= "ID: ".$NL[$ncc]['id']." ";
+	$_MAIN_OUTPUT.= "<b>".$NL[$ncc]['subject']."</b>";
+	$_MAIN_OUTPUT.= "<br>ID: ".$NL[$ncc]['id']." ";
 	if ($NL[$ncc]['aktiv']==1) {
-		$_MAIN_OUTPUT.=  "<img src=\"".$mnl_iconURL."/tick.png\" border=\"0\">";
+		$_MAIN_OUTPUT.=  "<br><img src=\"".$mnl_iconURL."/tick.png\" border=\"0\">";
 		$_MAIN_OUTPUT.=  ___("(aktiv)");
 	} else {
-		$_MAIN_OUTPUT.=  "<img src=\"".$mnl_iconURL."/cancel.png\" border=\"0\">";
+		$_MAIN_OUTPUT.=  "<br><img src=\"".$mnl_iconURL."/cancel.png\" border=\"0\">";
 		$_MAIN_OUTPUT.=  ___("(inaktiv)");
 	}
 	if ($NL[$ncc]['massmail']==1) {
@@ -336,10 +346,20 @@ for ($ncc=0;$ncc<$nc;$ncc++) {
 	} else {
 		$_MAIN_OUTPUT.=  "<br><img src=\"".$mnl_iconURL."/user_suit.png\" border=\"0\" title=\"".___("personalisierter Newsletter")."\">".___("personalisierter Newsletter");
 	}
+	if ($NL[$ncc]['content_type']=="text/html") {
+		$_MAIN_OUTPUT.=  "<br><img src=\"".$mnl_iconURL."/page_white_office.png\" border=\"0\" title=\"".___("TEXT/HTML")."\">".___("TEXT/HTML");
+	}
+	if ($NL[$ncc]['content_type']=="html") {
+		$_MAIN_OUTPUT.=  "<br><img src=\"".$mnl_iconURL."/page_white_h.png\" border=\"0\" title=\"".___("HTML")."\">".___("HTML");
+	}
+	if ($NL[$ncc]['content_type']=="text") {
+		$_MAIN_OUTPUT.=  "<br><img src=\"".$mnl_iconURL."/page_white_text.png\" border=\"0\" title=\"".___("TEXT")."\">".___("TEXT");
+	}
+
+	$_MAIN_OUTPUT.=  "<br>".___("Tracking Bild").": \"".$NL[$ncc]['track_image']."\"";
 
 	$_MAIN_OUTPUT.= "<br><img src=\"".$mnl_iconURL."/".$STATUS['nl']['statimg'][$NL[$ncc]['status']]."\" border=\"0\">&nbsp;".$STATUS['nl']['status'][$NL[$ncc]['status']];
-	$_MAIN_OUTPUT.= "<br><b>".$NL[$ncc]['subject']."</b>".
-							"<br>".sprintf(___("Erstellt am: %s von %s"),$created_date,$author).
+	$_MAIN_OUTPUT.= "<br>".sprintf(___("Erstellt am: %s von %s"),$created_date,$author).
 							"<br>".sprintf(___("Bearbeitet am: %s von %s"),$updated_date,$editor);
 	$_MAIN_OUTPUT.= "<br>".___("Gruppe:")." ";
 
@@ -381,76 +401,116 @@ for ($ncc=0;$ncc<$nc;$ncc++) {
 	$_MAIN_OUTPUT.= "<td colspan=5>";
 
 	//div fuer aktionen etc
-		$_MAIN_OUTPUT.= "<div id=\"list_edit_".$ncc."\" class=\"list_edit\">";
+		$_MAIN_OUTPUT.= "<div id=\"list_edit_".$ncc."\" class=\"list_edit\">";//align=\"right\"
 		$_MAIN_OUTPUT.= "<font size=-1>";
 		//
-		//q hinzufuegen
+		//q hinzufügen
 		if ($NL[$ncc]['aktiv']==1) {
 			if (file_exists($mnl_nlpath."/nl_".date_convert_to_string($NL[$ncc]['created'])."_n.html")) {
-				$_MAIN_OUTPUT.= "<a  class=\"list_edit_entry\" href=\"".$mnl_URL."/".$addqURLPara_."\" title=\"".___("Neue Q")."\"><img src=\"".$mnl_iconURL."/hourglass_add.png\" border=\"0\">&nbsp;".___("Versandauftrag anlegen")."</a>";
+				$_MAIN_OUTPUT.= "<a  class=\"list_edit_entry\" href=\"".$mnl_URL."/".$addqURLPara_."\" title=\"".___("Neue Q")."\"><img src=\"".$mnl_iconURL."/hourglass_add.png\" border=\"0\">&nbsp;";
+				if (!$user_is_expert) $_MAIN_OUTPUT.= ___("Versandauftrag anlegen");
+				$_MAIN_OUTPUT.= "</a>";
 			}
 		}
 		//queued? queuelist button anzeigen // status >1
 		if ($qc>0 && ($NL[$ncc]['status']==2 || $NL[$ncc]['status']==3 || $NL[$ncc]['status']==4  || $NL[$ncc]['status']==6)) {
-			$_MAIN_OUTPUT.= "<a class=\"list_edit_entry\" href=\"".$mnl_URL."/".$delqURLPara_."\"  onclick=\"return confirmLink(this, '".___("Alle Q-Eintraege fuer diesen Newsletter loeschen? Achtung es werden auch laufende Sendeauftraege geloescht!")."')\" title=\"".___("Q fuer dieses Newsletter loeschen")."\"><img src=\"".$mnl_iconURL."/hourglass_delete.png\" border=\"0\">&nbsp;".___("Versandauftr&auml;ge l&ouml;schen")."</a>";
-			$_MAIN_OUTPUT.= "<a class=\"list_edit_entry\" href=\"".$mnl_URL."/".$showqURLPara_."\" title=\"".___("Q fuer dieses Newsletter anzeigen")."\"><img src=\"".$mnl_iconURL."/hourglass_go.png\" border=\"0\">&nbsp;".___("Versandauftr&auml;ge anzeigen")."</a>";
+			$_MAIN_OUTPUT.= "<a class=\"list_edit_entry\" href=\"".$mnl_URL."/".$delqURLPara_."\"  onclick=\"return confirmLink(this, '".___("Alle Q-Eintraege fuer diesen Newsletter loeschen? Achtung es werden auch laufende Sendeauftraege geloescht!")."')\" title=\"".___("Q fuer dieses Newsletter loeschen")."\"><img src=\"".$mnl_iconURL."/hourglass_delete.png\" border=\"0\">&nbsp;";
+			if (!$user_is_expert) $_MAIN_OUTPUT.= ___("Versandaufträge lÖschen");
+			$_MAIN_OUTPUT.= "</a>";
+			$_MAIN_OUTPUT.= "<a class=\"list_edit_entry\" href=\"".$mnl_URL."/".$showqURLPara_."\" title=\"".___("Q fuer dieses Newsletter anzeigen")."\"><img src=\"".$mnl_iconURL."/hourglass_go.png\" border=\"0\">&nbsp;";
+			if (!$user_is_expert) $_MAIN_OUTPUT.= ___("Versandaufträge anzeigen");
+			$_MAIN_OUTPUT.= "</a>";
 		}
 		//queued? senden button anzeigen // status =2 oder 3 oder 4
 		//	if (($NL[$ncc]['status']==2  || $NL[$ncc]['status']==3 || $NL[$ncc]['status']==4) && $NL[$ncc]['aktiv']==1) {
 		if ($qc_new>0 && $NL[$ncc]['aktiv']==1) {
-			$_MAIN_OUTPUT.= "<a class=\"list_edit_entry\" href=\"".$mnl_URL."/".$sendURLPara_."\" title=\"".___("Newsletter versenden")."\"><img src=\"".$mnl_iconURL."/email_go.png\" border=\"0\">&nbsp;".___("Versand starten")."</a>";
+			$_MAIN_OUTPUT.= "<a class=\"list_edit_entry\" href=\"".$mnl_URL."/".$sendURLPara_."\" title=\"".___("Newsletter versenden")."\"><img src=\"".$mnl_iconURL."/email_go.png\" border=\"0\">&nbsp;";
+			if (!$user_is_expert) $_MAIN_OUTPUT.=___("Versand starten");
+			$_MAIN_OUTPUT.= "</a>";
 		}
 		//
 
 		//
 		//link zum Template!
 		if (file_exists($mnl_nlpath."/nl_".date_convert_to_string($NL[$ncc]['created'])."_n.html")) {
-			$_MAIN_OUTPUT.= "<a class=\"list_edit_entry\" href=\"".$mnl_URL."/".$mnl_nldir."/nl_".date_convert_to_string($NL[$ncc]['created'])."_n.html\" target=\"_preview\" title=\"".___("Template des Newsletter anzeigen: ").$mnl_nldir."/nl_".date_convert_to_string($NL[$ncc]['created'])."_n.html\"><img src=\"".$mnl_iconURL."/eye.png\" border=\"0\">&nbsp;".___("Template anzeigen")."</a>";
+			$_MAIN_OUTPUT.= "<a class=\"list_edit_entry\" href=\"".$mnl_URL_FE."/".$mnl_nldir."/nl_".date_convert_to_string($NL[$ncc]['created'])."_n.html\" target=\"_preview\" title=\"".___("Template des Newsletter anzeigen: ").$mnl_nldir."/nl_".date_convert_to_string($NL[$ncc]['created'])."_n.html\"><img src=\"".$mnl_iconURL."/eye.png\" border=\"0\">&nbsp;";
+			if (!$user_is_expert) $_MAIN_OUTPUT.=___("Template anzeigen");
+			$_MAIN_OUTPUT.= "</a>";
 		}
 		//link zur geparsten onlineversion!
 		if (file_exists($mnl_nlpath."/nl_".date_convert_to_string($NL[$ncc]['created'])."_p.html")) {
-			$_MAIN_OUTPUT.= "<a class=\"list_edit_entry\" href=\"".$mnl_URL."/".$mnl_nldir."/nl_".date_convert_to_string($NL[$ncc]['created'])."_p.html\" target=\"_preview\" title=\"".___("Onlineversion des Newsletter anzeigen: ").$mnl_nldir."/nl_".date_convert_to_string($NL[$ncc]['created'])."_n.html\"><img src=\"".$mnl_iconURL."/world_go.png\" border=\"0\">&nbsp;".___("Onlineversion anzeigen")."</a>";
+			$_MAIN_OUTPUT.= "<a class=\"list_edit_entry\" href=\"".$mnl_URL_FE."/".$mnl_nldir."/nl_".date_convert_to_string($NL[$ncc]['created'])."_p.html\" target=\"_preview\" title=\"".___("Onlineversion des Newsletter anzeigen: ").$mnl_nldir."/nl_".date_convert_to_string($NL[$ncc]['created'])."_p.html\"><img src=\"".$mnl_iconURL."/world_go.png\" border=\"0\">&nbsp;";
+			if (!$user_is_expert) $_MAIN_OUTPUT.=___("Onlineversion anzeigen");
+			$_MAIN_OUTPUT.= "</a>";
 		}
 		//link zum bild
 		if (file_exists($mnl_nlimgpath."/nl_".date_convert_to_string($NL[$ncc]['created'])."_1.jpg")) {
-			$_MAIN_OUTPUT.= "<a class=\"list_edit_entry\" href=\"".$mnl_URL."/".$mnl_nlimgdir."/nl_".date_convert_to_string($NL[$ncc]['created'])."_1.jpg\" target=\"_preview\" title=\"".___("Bild fuer diesen Newsletter anzeigen: ").$mnl_nlimgdir."/nl_".date_convert_to_string($NL[$ncc]['created'])."_1.jpg\"><img src=\"".$mnl_iconURL."/photo.png\" border=\"0\">&nbsp;".___("Bild anzeigen")."</a>";
-			$_MAIN_OUTPUT.= "<a class=\"list_edit_entry\" href=\"".$mnl_URL."/".$delimgURLPara_."\"  onclick=\"return confirmLink(this, '".___("Bild loeschen").": ".$mnl_nlimgdir."/nl_".date_convert_to_string($NL[$ncc]['created'])."_1.jpg')\" title=\"".___("Bild loeschen")."\"><img src=\"".$mnl_iconURL."/photo_delete.png\" border=\"0\">&nbsp;".___("Bild l&ouml;schen")."</a>";
+			$_MAIN_OUTPUT.= "<a class=\"list_edit_entry\" href=\"".$mnl_URL_FE."/".$mnl_nlimgdir."/nl_".date_convert_to_string($NL[$ncc]['created'])."_1.jpg\" target=\"_preview\" title=\"".___("Bild fuer diesen Newsletter anzeigen: ").$mnl_nlimgdir."/nl_".date_convert_to_string($NL[$ncc]['created'])."_1.jpg\"><img src=\"".$mnl_iconURL."/photo.png\" border=\"0\">&nbsp;";
+			if (!$user_is_expert) $_MAIN_OUTPUT.=___("Bild anzeigen");
+			$_MAIN_OUTPUT.= "</a>";
+			$_MAIN_OUTPUT.= "<a class=\"list_edit_entry\" href=\"".$mnl_URL."/".$delimgURLPara_."\"  onclick=\"return confirmLink(this, '".___("Bild loeschen").": ".$mnl_nlimgdir."/nl_".date_convert_to_string($NL[$ncc]['created'])."_1.jpg')\" title=\"".___("Bild loeschen")."\"><img src=\"".$mnl_iconURL."/photo_delete.png\" border=\"0\">&nbsp;";
+			if (!$user_is_expert) $_MAIN_OUTPUT.=___("Bild lÖschen");
+			$_MAIN_OUTPUT.= "</a>";
 		}
 		//link zur html datei!
 		if (file_exists($mnl_nlpath."/nl_".date_convert_to_string($NL[$ncc]['created']).".html")) {
-			$_MAIN_OUTPUT.= "<a class=\"list_edit_entry\" href=\"".$mnl_URL."/".$mnl_nldir."/nl_".date_convert_to_string($NL[$ncc]['created']).".html\" target=\"_preview\" title=\"".___("HTML-Datei anzeigen").": ".$mnl_nldir."/nl_".date_convert_to_string($NL[$ncc]['created']).".html\"><img src=\"".$mnl_iconURL."/page_white_world.png\" border=\"0\">&nbsp;".___("HTML-Datei anzeigen")."</a>";
-			$_MAIN_OUTPUT.= "<a class=\"list_edit_entry\" href=\"".$mnl_URL."/".$delhtmlURLPara_."\"  onclick=\"return confirmLink(this, 'HTML Datei loeschen: ".$mnl_nldir."/nl_".date_convert_to_string($NL[$ncc]['created']).".html')\" title=\"".___("HTML Datei loeschen")."\"><img src=\"".$mnl_iconURL."/page_white_delete.png\" border=\"0\">&nbsp;".___("HTML-Datei l&ouml;schen")."</a>";
+			$_MAIN_OUTPUT.= "<a class=\"list_edit_entry\" href=\"".$mnl_URL_FE."/".$mnl_nldir."/nl_".date_convert_to_string($NL[$ncc]['created']).".html\" target=\"_preview\" title=\"".___("HTML-Datei anzeigen").": ".$mnl_nldir."/nl_".date_convert_to_string($NL[$ncc]['created']).".html\"><img src=\"".$mnl_iconURL."/page_white_world.png\" border=\"0\">&nbsp;";
+			if (!$user_is_expert) $_MAIN_OUTPUT.=___("HTML-Datei anzeigen");
+			$_MAIN_OUTPUT.= "</a>";
+			$_MAIN_OUTPUT.= "<a class=\"list_edit_entry\" href=\"".$mnl_URL."/".$delhtmlURLPara_."\"  onclick=\"return confirmLink(this, 'HTML Datei loeschen: ".$mnl_nldir."/nl_".date_convert_to_string($NL[$ncc]['created']).".html')\" title=\"".___("HTML Datei loeschen")."\"><img src=\"".$mnl_iconURL."/page_white_delete.png\" border=\"0\">&nbsp;";
+			if (!$user_is_expert) $_MAIN_OUTPUT.=___("HTML-Datei lÖschen");
+			$_MAIN_OUTPUT.= "</a>";
 		}
 		//link zum attachement!
 		if (file_exists($mnl_nlattachpath."/a".date_convert_to_string($NL[$ncc]['created'])."_1.".$NL[$ncc]['attm'])) {
-			$_MAIN_OUTPUT.= "<a class=\"list_edit_entry\" href=\"".$mnl_URL."/".$mnl_nlattachdir."/a".date_convert_to_string($NL[$ncc]['created'])."_1.".$NL[$ncc]['attm']."\" target=\"_preview\" title=\"".___("Anhang fuer diesen Newsletter laden").": ".$mnl_nlattachdir."/a".date_convert_to_string($NL[$ncc]['created'])."_1.".$NL[$ncc]['attm']."\"><img src=\"".$mnl_iconURL."/attach.png\" border=\"0\">&nbsp;".___("Anhang anzeigen")."</a>";
-			$_MAIN_OUTPUT.= "<a class=\"list_edit_entry\" href=\"".$mnl_URL."/".$delattmURLPara_."\"  onclick=\"return confirmLink(this, '".___("Anhang loeschen").": a".date_convert_to_string($NL[$ncc]['created'])."_1.".$NL[$ncc]['attm']."')\" title=\"".___("Anhang loeschen")."\"><img src=\"".$mnl_iconURL."/link_break.png\" border=\"0\">&nbsp;".___("Anhang l&ouml;schen")."</a>";
+			$_MAIN_OUTPUT.= "<a class=\"list_edit_entry\" href=\"".$mnl_URL_FE."/".$mnl_nlattachdir."/a".date_convert_to_string($NL[$ncc]['created'])."_1.".$NL[$ncc]['attm']."\" target=\"_preview\" title=\"".___("Anhang fuer diesen Newsletter laden").": ".$mnl_nlattachdir."/a".date_convert_to_string($NL[$ncc]['created'])."_1.".$NL[$ncc]['attm']."\"><img src=\"".$mnl_iconURL."/attach.png\" border=\"0\">&nbsp;";
+			if (!$user_is_expert) $_MAIN_OUTPUT.=___("Anhang anzeigen");
+			$_MAIN_OUTPUT.= "</a>";
+			$_MAIN_OUTPUT.= "<a class=\"list_edit_entry\" href=\"".$mnl_URL."/".$delattmURLPara_."\"  onclick=\"return confirmLink(this, '".___("Anhang loeschen").": a".date_convert_to_string($NL[$ncc]['created'])."_1.".$NL[$ncc]['attm']."')\" title=\"".___("Anhang loeschen")."\"><img src=\"".$mnl_iconURL."/link_break.png\" border=\"0\">&nbsp;";
+			if (!$user_is_expert) $_MAIN_OUTPUT.=___("Anhang lÖschen");
+			$_MAIN_OUTPUT.= "</a>";
 		}
 		//link zum link
 		if (!empty($NL[$ncc]['link'])) {
-			$_MAIN_OUTPUT.= "<a class=\"list_edit_entry\" href=\"".$NL[$ncc]['link']."\" target=\"_link\" title=\"".$NL[$ncc]['link']."\"><img src=\"".$mnl_iconURL."/page_white_link.png\" border=\"0\">&nbsp;".___("Link anzeigen")."</a>";
+			$_MAIN_OUTPUT.= "<a class=\"list_edit_entry\" href=\"".$NL[$ncc]['link']."\" target=\"_link\" title=\"".$NL[$ncc]['link']."\"><img src=\"".$mnl_iconURL."/page_white_link.png\" border=\"0\">&nbsp;";
+			if (!$user_is_expert) $_MAIN_OUTPUT.=___("Link anzeigen");
+			$_MAIN_OUTPUT.= "</a>";
 		}
 		//aktiv
 		$_MAIN_OUTPUT.= "<a class=\"list_edit_entry\" href=\"".$mnl_URL."/".$aktivURLPara_."\" title=\"".___("aktivieren/de-aktivieren")."\">";
 		if ($NL[$ncc]['aktiv']==1) {
-			$_MAIN_OUTPUT.=  "<img src=\"".$mnl_iconURL."/tick.png\" border=\"0\">&nbsp;".___("Deaktivieren");
+			$_MAIN_OUTPUT.=  "<img src=\"".$mnl_iconURL."/tick.png\" border=\"0\">&nbsp;";
+			if (!$user_is_expert) $_MAIN_OUTPUT.=___("Deaktivieren");
 		} else {
-			$_MAIN_OUTPUT.=  "<img src=\"".$mnl_iconURL."/cancel.png\" border=\"0\">&nbsp;".___("Aktivieren");
+			$_MAIN_OUTPUT.=  "<img src=\"".$mnl_iconURL."/cancel.png\" border=\"0\">&nbsp;";
+			if (!$user_is_expert) $_MAIN_OUTPUT.=___("Aktivieren");
 		}
 		$_MAIN_OUTPUT.= "</a>";
 		//...
-		$_MAIN_OUTPUT.= "<a class=\"list_edit_entry\" href=\"".$mnl_URL."/".$delURLPara_."\" onclick=\"return confirmLink(this, '".___("Newsletter loeschen")."')\" title=\"".___("Newsletter loeschen")."\"><img src=\"".$mnl_iconURL."/cross.png\" border=\"0\">&nbsp;".___("L&ouml;schen")."</a>";
+		$_MAIN_OUTPUT.= "<a class=\"list_edit_entry\" href=\"".$mnl_URL."/".$delURLPara_."\" onclick=\"return confirmLink(this, '".___("Newsletter loeschen")."')\" title=\"".___("Newsletter loeschen")."\"><img src=\"".$mnl_iconURL."/cross.png\" border=\"0\">&nbsp;";
+		if (!$user_is_expert) $_MAIN_OUTPUT.=___("LÖschen");
+		$_MAIN_OUTPUT.= "</a>";
 		if ($NL[$ncc]['status']==4) {
-			$_MAIN_OUTPUT.= "<a class=\"list_edit_entry\" href=\"".$mnl_URL."/".$editURLPara_."\" onclick=\"return confirmLink(this, '".___("Der Newsletter wurde bereits versendet, wollen Sie ihn wirklich bearbeiten? Es wird empfohlen eine Kopie zu erstellen und diese zu bearbeiten.")."')\" title=\"".___("Newsletter bearbeiten")."\"><img src=\"".$mnl_iconURL."/pencil.png\" border=\"0\">&nbsp;".___("Bearbeiten")."</a>";
+			$_MAIN_OUTPUT.= "<a class=\"list_edit_entry\" href=\"".$mnl_URL."/".$editURLPara_."\" onclick=\"return confirmLink(this, '".___("Der Newsletter wurde bereits versendet, wollen Sie ihn wirklich bearbeiten? Es wird empfohlen eine Kopie zu erstellen und diese zu bearbeiten.")."')\" title=\"".___("Newsletter bearbeiten")."\"><img src=\"".$mnl_iconURL."/pencil.png\" border=\"0\">&nbsp;";
+			if (!$user_is_expert) $_MAIN_OUTPUT.=___("Bearbeiten");
+			$_MAIN_OUTPUT.= "</a>";
 		} else {
 			if ($NL[$ncc]['status']!=3) {
-				$_MAIN_OUTPUT.= "<a class=\"list_edit_entry\" href=\"".$mnl_URL."/".$editURLPara_."\" title=\"".___("Newsletter bearbeiten")."\"><img src=\"".$mnl_iconURL."/pencil.png\" border=\"0\">&nbsp;".___("Bearbeiten")."</a>";
+				$_MAIN_OUTPUT.= "<a class=\"list_edit_entry\" href=\"".$mnl_URL."/".$editURLPara_."\" title=\"".___("Newsletter bearbeiten")."\"><img src=\"".$mnl_iconURL."/pencil.png\" border=\"0\">&nbsp;";
+				if (!$user_is_expert) $_MAIN_OUTPUT.=___("Bearbeiten");
+				$_MAIN_OUTPUT.= "</a>";
 			}
 		}
-		$_MAIN_OUTPUT.= "<a class=\"list_edit_entry\" href=\"".$mnl_URL."/".$copyURLPara_."\" onclick=\"return confirmLink(this, '".___("Newsletter kopieren")."')\" title=\"".___("Newsletter kopieren")."\"><img src=\"".$mnl_iconURL."/bullet_add.png\" border=\"0\">&nbsp;".___("Kopieren")."</a>";
-		$_MAIN_OUTPUT.= "<a class=\"list_edit_entry\" href=\"".$mnl_URL."/".$copyallURLPara_."\" onclick=\"return confirmLink(this, '".___("Newsletter und Dateien kopieren")."')\" title=\"".___("Newsletter und Dateien kopieren")."\"><img src=\"".$mnl_iconURL."/add.png\" border=\"0\">&nbsp;".___("Kopieren(+Dateien)")."</a>";
+		$_MAIN_OUTPUT.= "<a class=\"list_edit_entry\" href=\"".$mnl_URL."/".$copyURLPara_."\" onclick=\"return confirmLink(this, '".___("Newsletter kopieren")."')\" title=\"".___("Newsletter kopieren")."\"><img src=\"".$mnl_iconURL."/bullet_add.png\" border=\"0\">&nbsp;";
+		if (!$user_is_expert) $_MAIN_OUTPUT.=___("Kopieren");
+		$_MAIN_OUTPUT.= "</a>";
+		$_MAIN_OUTPUT.= "<a class=\"list_edit_entry\" href=\"".$mnl_URL."/".$copyallURLPara_."\" onclick=\"return confirmLink(this, '".___("Newsletter und Dateien kopieren")."')\" title=\"".___("Newsletter und Dateien kopieren")."\"><img src=\"".$mnl_iconURL."/add.png\" border=\"0\">&nbsp;";
+		if (!$user_is_expert) $_MAIN_OUTPUT.=___("Kopieren(+Dateien)");
+		$_MAIN_OUTPUT.= "</a>";
 		if ($NL[$ncc]['status']>2) {
-			$_MAIN_OUTPUT.= "<a class=\"list_edit_entry\" href=\"".$mnl_URL."/".$statURLPara_."\" title=\"".___("Statistik anzeigen")."\"><img src=\"".$mnl_iconURL."/chart_pie.png\" border=\"0\">&nbsp;".___("Statistik")."</a>";
+			$_MAIN_OUTPUT.= "<a class=\"list_edit_entry\" href=\"".$mnl_URL."/".$statURLPara_."\" title=\"".___("Statistik anzeigen")."\"><img src=\"".$mnl_iconURL."/chart_pie.png\" border=\"0\">&nbsp;";
+			if (!$user_is_expert) $_MAIN_OUTPUT.=___("Statistik");
+			$_MAIN_OUTPUT.= "</a>";
 		}
 
 		$_MAIN_OUTPUT.= "</font><br>";

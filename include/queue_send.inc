@@ -43,7 +43,7 @@ if ($nl_id>0) {
 
 $qc=count($q_arr);//wieviel q eintraege gibt es?
 
-$_MAIN_MESSAGE.="<br>".___("Empf&auml;ngerliste wird generiert.");
+$_MAIN_MESSAGE.="<br>".___("Empfängerliste wird generiert.");
 
 for ($qcc=0;$qcc<$qc;$qcc++) {
 	//queue eintraege auslesen
@@ -69,7 +69,7 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 				//status=1 //neu
 				if ($ADR[$acc]['aktiv']==1 && $ADR[$acc]['errors']<=$max_mails_retry) {
 					if ($ADR[$acc]['status']==1 || $ADR[$acc]['status']==2 || $ADR[$acc]['status']==3 || $ADR[$acc]['status']==4 || $ADR[$acc]['status']==10 || $ADR[$acc]['status']==12) {
-						//pruefen ob adresse schon in history vorhanden mit status neu=1, wenn ja , nicht hinzufuegen, den rest schon, auch wenn bereits gesendet!
+						//pruefen ob adresse schon in history vorhanden mit status neu=1, wenn ja , nicht hhinzufügen den rest schon, auch wenn bereits gesendet!
 						$Hnew=$QUEUE->getH(0,0,0,0,$Q[0]['nl_id'],0,$ADR[$acc]['id'],1);
 						//getH($id=0,$offset=0,$limit=0,$q_id=0,$nl_id=0,$grp_id=0,$adr_id=0,$status=0)
 						$hc_new=count($Hnew);

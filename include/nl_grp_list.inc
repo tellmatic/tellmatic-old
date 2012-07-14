@@ -35,8 +35,8 @@ if ($set=="standard") {
 	$_MAIN_MESSAGE.="<br>".___("Neue Standardgruppe wurde definiert.");
 }
 if ($set=="delete" && $doit==1) {
-	$NEWSLETTER->delGRP($nl_grp_id);
-	$_MAIN_MESSAGE.="<br>".___("Eintrag wurde gel&ouml;scht.");
+	if (!DEMO) $NEWSLETTER->delGRP($nl_grp_id);
+	$_MAIN_MESSAGE.="<br>".___("Eintrag wurde gelÖscht.");
 }
 
 
@@ -117,9 +117,6 @@ for ($nccg=0;$nccg<$ncg;$nccg++) {
 
 	$_MAIN_OUTPUT.= "<tr id=\"row_".$nccg."\" bgcolor=\"".$bgcolor."\" onmouseover=\"setBGColor('row_".$nccg."','".$row_bgcolor_hilite."');\" onmouseout=\"setBGColor('row_".$nccg."','".$bgcolor."');\">";
 	$_MAIN_OUTPUT.= "<td onmousemove=\"showToolTip('tt_adr_grp_list_".$GRP[$nccg]['id']."')\" onmouseout=\"hideToolTip();\">";
-/*
-	$_MAIN_OUTPUT.= $GRP[$nccg]['id'];
-*/
 	//wenn standardgruppe, dann icon anzeigen
 	if ($GRP[$nccg]['standard']==1) {
 		$_MAIN_OUTPUT.=  "&nbsp;<img src=\"".$mnl_iconURL."/page_white_lightning.png\" title=\"".___("Diese Gruppe ist die Standardgruppe")."\" border=\"0\">";
@@ -128,21 +125,24 @@ for ($nccg=0;$nccg<$ncg;$nccg++) {
 	$_MAIN_OUTPUT.= "<td onmousemove=\"showToolTip('tt_adr_grp_list_".$GRP[$nccg]['id']."')\" onmouseout=\"hideToolTip();\">";
 	$_MAIN_OUTPUT.= "<a href=\"".$mnl_URL."/".$editURLPara_."\" title=\"".___("Newslettergruppe bearbeiten")."\">".$GRP[$nccg]['name']."</a>";
 	$_MAIN_OUTPUT.= "<div id=\"tt_adr_grp_list_".$GRP[$nccg]['id']."\" class=\"tooltip\">";
-	$_MAIN_OUTPUT.= "ID: ".$GRP[$nccg]['id']." ";
+	$_MAIN_OUTPUT.="<b>".$GRP[$nccg]['name']."</b>";
+	$_MAIN_OUTPUT.= "<br><font size=\"-1\">".$GRP[$nccg]['descr']."</font>";
+	$_MAIN_OUTPUT.= "<br>ID: ".$GRP[$nccg]['id']." ";
 	if ($GRP[$nccg]['aktiv']==1) {
-		$_MAIN_OUTPUT.=  "<img src=\"".$mnl_iconURL."/tick.png\" border=\"0\">";
+		$_MAIN_OUTPUT.=  "<br><img src=\"".$mnl_iconURL."/tick.png\" border=\"0\">";
 		$_MAIN_OUTPUT.=  ___("(aktiv)");
 	} else {
-		$_MAIN_OUTPUT.=  "<img src=\"".$mnl_iconURL."/cancel.png\" border=\"0\">";
+		$_MAIN_OUTPUT.=  "<br><img src=\"".$mnl_iconURL."/cancel.png\" border=\"0\">";
 		$_MAIN_OUTPUT.=  ___("(inaktiv)");
 	}
 	//wenn standardgruppe, dann icon anzeigen
 	if ($GRP[$nccg]['standard']==1) {
 		$_MAIN_OUTPUT.=  "<br><img src=\"".$mnl_iconURL."/page_white_lightning.png\" title=\"".___("Diese Gruppe ist die Standardgruppe")."\" alt=\"".___("Diese Gruppe ist die Standardgruppe")."\" border=\"0\">".___("Standardgruppe");
 	}
-	$_MAIN_OUTPUT.="<br><b>".$GRP[$nccg]['name']."</b><br>";
-	$_MAIN_OUTPUT.=$GRP[$nccg]['nl_count']." ".___("Newsletter")."<br>";
-	$_MAIN_OUTPUT.= "<font size=\"-1\">".$GRP[$nccg]['descr']."</font>";
+	$_MAIN_OUTPUT.="<br>".$GRP[$nccg]['nl_count']." ".___("Newsletter").
+									"<br>".sprintf(___("Erstellt am: %s von %s"),$GRP[$nccg]['created'],$GRP[$nccg]['author']).
+									"<br>".sprintf(___("Bearbeitet am: %s von %s"),$GRP[$nccg]['updated'],$GRP[$nccg]['editor']).
+									"";
 	$_MAIN_OUTPUT.= "</div>";
 	$_MAIN_OUTPUT.= "</td>";
 	$_MAIN_OUTPUT.= "<td>";
@@ -169,10 +169,8 @@ for ($nccg=0;$nccg<$ncg;$nccg++) {
 	$_MAIN_OUTPUT.= "<a href=\"".$mnl_URL."/".$editURLPara_."\" title=\"".___("Newslettergruppe bearbeiten")."\"><img src=\"".$mnl_iconURL."/pencil.png\" border=\"0\"></a>";
 	$_MAIN_OUTPUT.= "&nbsp;<a href=\"".$mnl_URL."/".$addnlURLPara_."\" title=\"".___("Neuen Newsletter in dieser Gruppe erstellen")."\"><img src=\"".$mnl_iconURL."/newspaper_add.png\" border=\"0\"></a>";	
 	$_MAIN_OUTPUT.= "&nbsp;<a href=\"".$mnl_URL."/".$shownlURLPara_."\" title=\"".___("Alle Newsletter in dieser Gruppe anzeigen")."\"><img src=\"".$mnl_iconURL."/newspaper_go.png\" border=\"0\">&nbsp;".$GRP[$nccg]['nl_count']."</a>";
-	//$_MAIN_OUTPUT.=  "&nbsp;<a href=\"".$mnl_URL."/".$statURLPara_."\" title=\"Statistik anzeigen\"><img src=\"".$mnl_iconURL."/chart_pie.png\" border=\"0\"></a>";
 	if ($GRP[$nccg]['standard']==1) {
 		//wenn gruppe standard ist, dann bildchen anzeigen, wird auch neben id angezeigt
-		//$_MAIN_OUTPUT.=  "&nbsp;<img src=\"".$mnl_iconURL."/page_white_lightning.png\" border=\"0\">";
 	} else {
 		//wenn gruppe aktiv ist, dann darf man sie als standard definieren
 		if ($GRP[$nccg]['aktiv']==1) {

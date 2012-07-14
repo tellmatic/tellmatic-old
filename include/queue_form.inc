@@ -32,6 +32,7 @@ $Form->new_Input($FormularName,"set", "hidden", "save");
 
 //NL
 $Form->new_Input($FormularName,$InputName_NL,"select", "");
+$Form->set_InputJS($FormularName,$InputName_NL," onChange=\"flash('submit','#ff0000');\" ");
 $Form->set_InputDefault($FormularName,$InputName_NL,$nl_id);
 $Form->set_InputStyleClass($FormularName,$InputName_NL,"mFormSelect","mFormSelectFocus");
 $Form->set_InputDesc($FormularName,$InputName_NL,___("Newsletter waehlen"));
@@ -60,6 +61,7 @@ for ($ncc=0; $ncc<$nc; $ncc++)
 
 //Gruppe
 $Form->new_Input($FormularName,$InputName_Group,"select", "");
+$Form->set_InputJS($FormularName,$InputName_Group," onChange=\"flash('submit','#ff0000');\" ");
 $Form->set_InputStyleClass($FormularName,$InputName_Group,"mFormSelect","mFormSelectFocus");
 $Form->set_InputDesc($FormularName,$InputName_Group,___("Gruppen waehlen, STRG/CTRL gedrueckt halten und klicken f. Mehrfachauswahl"));
 $Form->set_InputReadonly($FormularName,$InputName_Group,false);
@@ -69,6 +71,7 @@ $Form->set_InputSize($FormularName,$InputName_Group,0,5);
 $Form->set_InputMultiple($FormularName,$InputName_Group,true);
 //add Data
 $ADDRESS=new mnlADR();
+//getGroup($id=0,$adr_id=0,$frm_id=0,$count=0) 
 $GRP=$ADDRESS->getGroup(0,0,0,1);
 $acg=count($GRP);
 for ($accg=0; $accg<$acg; $accg++)
@@ -82,6 +85,7 @@ for ($accg=0; $accg<$acg; $accg++)
 //send now
 //Aktiv
 	$Form->new_Input($FormularName,$InputName_Send,"checkbox", 1);
+	$Form->set_InputJS($FormularName,$InputName_Send," onChange=\"flash('submit','#ff0000');\" ");
 	$Form->set_InputDefault($FormularName,$InputName_Send,1);
 	$Form->set_InputStyleClass($FormularName,$InputName_Send,"mFormText","mFormTextFocus");
 	$Form->set_InputSize($FormularName,$InputName_Send,48,256);
@@ -92,6 +96,7 @@ for ($accg=0; $accg<$acg; $accg++)
 	
 //send_at_date
 $Form->new_Input($FormularName,$InputName_SendAt,"text", $send_at_date);
+$Form->set_InputJS($FormularName,$InputName_SendAt," onChange=\"flash('submit','#ff0000');\" ");
 $Form->set_InputStyleClass($FormularName,$InputName_SendAt,"mFormText","mFormTextFocus");
 $Form->set_InputSize($FormularName,$InputName_SendAt,20,30);
 $Form->set_InputDesc($FormularName,$InputName_SendAt,___("Datum des terminierten Versands"));
@@ -103,6 +108,7 @@ $Form->set_InputLabel($FormularName,$InputName_SendAt,"");
 
 //send_at_h
 $Form->new_Input($FormularName,$InputName_SendAtTimeH,"select", "");
+$Form->set_InputJS($FormularName,$InputName_SendAtTimeH," onChange=\"flash('submit','#ff0000');\" ");
 $Form->set_InputDefault($FormularName,$InputName_SendAtTimeH,$$InputName_SendAtTimeH);
 $Form->set_InputStyleClass($FormularName,$InputName_SendAtTimeH,"mFormSelect","mFormSelectFocus");
 $Form->set_InputDesc($FormularName,$InputName_SendAtTimeH,___("Stunde"));
@@ -119,6 +125,7 @@ for ($h=0; $h<24; $h++)
 
 //send_at_m
 $Form->new_Input($FormularName,$InputName_SendAtTimeM,"select", "");
+$Form->set_InputJS($FormularName,$InputName_SendAtTimeM," onChange=\"flash('submit','#ff0000');\" ");
 $Form->set_InputDefault($FormularName,$InputName_SendAtTimeM,$$InputName_SendAtTimeM);
 $Form->set_InputStyleClass($FormularName,$InputName_SendAtTimeM,"mFormSelect","mFormSelectFocus");
 $Form->set_InputDesc($FormularName,$InputName_SendAtTimeM,___("Minute"));

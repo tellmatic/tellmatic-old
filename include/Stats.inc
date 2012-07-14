@@ -18,7 +18,7 @@
 	//achtung!!! wenn neuer status dann auch beim versenden beachten......... und evtll. anfuegen an if abfrage, send.inc
 	$STATUS['adr']['status'][1]=___("Neu");
 	$STATUS['adr']['status'][2]=___("OK");
-	$STATUS['adr']['status'][3]=___("Bestaetigt");
+	$STATUS['adr']['status'][3]=___("Bestätigt");
 	$STATUS['adr']['status'][4]=___("Angezeigt");
 	$STATUS['adr']['status'][5]=___("Warten");
 	$STATUS['adr']['status'][6]="6";
@@ -31,14 +31,14 @@
 	
 	
 	$STATUS['adr']['descr'][1]=___("Neuanmeldung");
-	$STATUS['adr']['descr'][2]=___("manuell Eingetragen, Syntax Gepr&uuml;ft, Senden OK");
-	$STATUS['adr']['descr'][3]=___("Best&auml;tigt, Double-Opt-In");
+	$STATUS['adr']['descr'][2]=___("manuell Eingetragen, Syntax Geprüft, Senden OK");
+	$STATUS['adr']['descr'][3]=___("Bestätigt, Double-Opt-In");
 	$STATUS['adr']['descr'][4]=___("Rechecked, NL/Blindimage angezeigt");
-	$STATUS['adr']['descr'][5]=___("Warten auf Best&auml;tigung (Double-Opt-IN)");
+	$STATUS['adr']['descr'][5]=___("Warten auf Bestätigung (Double-Opt-IN)");
 	$STATUS['adr']['descr'][6]=___("undefiniert");
 	$STATUS['adr']['descr'][7]=___("undefiniert");
-	$STATUS['adr']['descr'][8]=___("Fehler beim versenden, Status/Aktiv wurde ge&auml;ndert vor dem versenden!");
-	$STATUS['adr']['descr'][9]=___("Fehlerhafte Adresse o. Rueckl&auml;ufer");
+	$STATUS['adr']['descr'][8]=___("Fehler beim versenden, Status/Aktiv wurde geändert vor dem versenden!");
+	$STATUS['adr']['descr'][9]=___("Fehlerhafte Adresse o. Rueckläufer");
 	$STATUS['adr']['descr'][10]=___("Fehler beim versenden, neuer Versuch");
 	$STATUS['adr']['descr'][11]=___("Abgemeldet");
 	$STATUS['adr']['descr'][12]=___("1st-Touch-Opt-In");
@@ -65,11 +65,11 @@
 	$STATUS['nl']['status'][5]=___("Archiv");
 	$STATUS['nl']['status'][6]=___("Warten");
 	
-	$STATUS['nl']['descr'][1]=___("Keine Versandauftr&auml;ge oder Historie f. dieses Newsletter");
+	$STATUS['nl']['descr'][1]=___("Keine Versandaufträge oder Historie f. dieses Newsletter");
 	$STATUS['nl']['descr'][2]=___("In der Warteschlange");
 	$STATUS['nl']['descr'][3]=___("Versand gestartet");
 	$STATUS['nl']['descr'][4]=___("Versendet");
-	$STATUS['nl']['descr'][5]=___("Archiviert - Qs wurden gel&ouml;scht");
+	$STATUS['nl']['descr'][5]=___("Archiviert - Qs wurden gelÖscht");
 	$STATUS['nl']['descr'][6]=___("Versand vorbereitet, Warten auf Versand (terminiert)");
 	
 	$STATUS['nl']['statimg'][1]="new.png";
@@ -111,7 +111,7 @@
 	$STATUS['h']['descr'][3]=___("Versendet, angezeigt");
 	$STATUS['h']['descr'][4]=___("Versendet, Fehler");
 	$STATUS['h']['descr'][5]=___("Wird in diesem Moment versendet!!!");
-	$STATUS['h']['descr'][6]=___("Abgebrochen, Q gel&ouml;scht");
+	$STATUS['h']['descr'][6]=___("Abgebrochen, Q gelÖscht");
 
 	$STATUS['h']['statimg'][1]="new.png";
 	$STATUS['h']['statimg'][2]="bullet_green.png";

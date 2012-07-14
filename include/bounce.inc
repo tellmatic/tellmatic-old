@@ -4,8 +4,8 @@
 /* tellmatic, the newslettermachine                                             */
 /* tellmatic, die Newslettermaschine                                            */
 /* 2006/7 by Volker Augustin, multi.art.studio Hanau                            */
-/* Contact/Kontakt: mnl@multiartstudio.com                                      */
-/* Homepage: www.tellmatic.de                                                   */
+/* Contact/Kontakt: info@tellmatic.org                                      */
+/* Homepage: www.tellmatic.org                                                   */
 /* leave this header in file!                                                   */
 /* diesen Header nicht loeschen!                                                */
 /* check Homepage for Updates and more Infos                                    */
@@ -66,9 +66,7 @@ if (empty($val)) {
 $InputName_ActionAdr="val2";
 $$InputName_ActionAdr=getVar($InputName_ActionAdr);
 
-//if ($val!="filter" && $val!="filter_delete") {
 	include_once ($mnl_includepath."/bounce_host_form.inc");
-//}
 
 //server ausgewaehlt, wir connecten
 if ($set=="connect") {
@@ -102,7 +100,7 @@ if ($set=="connect") {
 			include_once ($mnl_includepath."/bounce_filter_adr_list.inc");//liste der aressen mit checkboxen
 			include_once ($mnl_includepath."/bounce_filter_form.inc");//render formular! aktion waehlen etc
 		} else {
-			$_MAIN_MESSAGE.= "<br>".___("Es wurden keine Mails zum Bearbeiten ausgew&auml;hlt.");
+			$_MAIN_MESSAGE.= "<br>".___("Es wurden keine Mails zum Bearbeiten ausgewählt.");
 			$val="list";
 		}
 	}
@@ -111,19 +109,19 @@ if ($set=="connect") {
 	if ($val=="delete" || $val=="filter_delete") {
 		$mc=count($mailno);
 		if ($mc>0) {
-			$_MAIN_MESSAGE .= "<br>".___("L&ouml;sche Mail.");
+			$_MAIN_MESSAGE .= "<br>".___("LÖsche Mail.");
 			for ($mcc=0;$mcc<$mc;$mcc++) {
 				$_MAIN_MESSAGE .= "".$mailno[$mcc]." ";
-				$Mailer->delete($mailno[$mcc]);
+				if (!DEMO) $Mailer->delete($mailno[$mcc]);
 			}
 			//mailbox aufraeumen
-			$_MAIN_MESSAGE .= "<br>".___("Mailbox aufr&auml;umen, als gel&ouml;scht markierte Mails wurden entfernt.");
+			$_MAIN_MESSAGE .= "<br>".___("Mailbox aufräumen, als gelÖscht markierte Mails wurden entfernt.");
 			$Mailer->expunge();
 			//todo: reconnect! damit bekommen wir aktuelle servermeldungen etc.
 			//Mails neu auslesen
 			$Mail=$Mailer->getMail(0,$offset,$limit,$search_mail);
 		} else {
-			$_MAIN_MESSAGE.= "<br>".___("Es wurden keine Mails zum L&ouml;schen ausgew&auml;hlt.");
+			$_MAIN_MESSAGE.= "<br>".___("Es wurden keine Mails zum LÖschen ausgewählt.");
 			$val="list";
 		}
 		//nur bei delete die liste wieder anzeigen, bei filter oder filter_delete setzen wir es hinterher im hiddenfield auf list, bzw zeigen vorher noch das adressformular an!
@@ -139,7 +137,7 @@ if ($set=="connect") {
 		$ac=count($adr);
 
 		if ($ac>0) {
-			$_MAIN_MESSAGE.= "<br>".sprintf(___("%s Adressen zum Bearbeiten ausgew&auml;hlt."),$ac);
+			$_MAIN_MESSAGE.= "<br>".sprintf(___("%s Adressen zum Bearbeiten ausgewählt."),$ac);
 
 			for ($acc=0;$acc<$ac;$acc++) {
 				$search['email']=$adr[$acc];
@@ -147,7 +145,7 @@ if ($set=="connect") {
 				if (isset($A[0]['id'])) {
 				
 					if ($val2 == "delete") {
-						$ADDRESS->delAdr($A[0]['id']);
+						if (!DEMO) $ADDRESS->delAdr($A[0]['id']);
 						$_MAIN_MESSAGE.= "<br>".sprintf(___("Die Adresse %s wurde geloescht."),$A[0]['email']);
 					}
 					
@@ -169,7 +167,6 @@ if ($set=="connect") {
 					if ($val2 == "auto") {
 						$_MAIN_MESSAGE.= "<br>".$A[0]['email'].": ";
 						//wenn erros noch unter dem limit... 
-						//if ($A[0]['errors'] <= $max_mails_retry) {
 							//fehler zaehlen
 							$ADDRESS->setAError($A[0]['id'],($A[0]['errors']+1));
 							$_MAIN_MESSAGE.= " -- ".sprintf(___("Fehler: %s von max. %s"),($A[0]['errors']+1),$max_mails_retry);
@@ -193,9 +190,7 @@ if ($set=="connect") {
 								}
 							} else {
 								$_MAIN_MESSAGE.= " -- ".___("ist bereits abgemeldet (unsubscribed).");// und wurde geloescht
-								//$ADDRESS->delAdr($A[0]['id']);
 							}// if status !=11
-						//} // else {}
 					}
 				} else { //isset A
 					$_MAIN_MESSAGE.= "<br>".sprintf(___("%s ist nicht bekannt."),$adr[$acc]);
@@ -215,6 +210,5 @@ if ($set=="connect") {
 	//verbindung schliessen
 	$Mailer->disconnect();
 } else {
-	//include_once ($mnl_includepath."/bounce_host_form.inc");
 }
 ?>

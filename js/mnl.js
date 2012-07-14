@@ -11,6 +11,48 @@
 /* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
 /********************************************************************************/
 
+// bei import und delete diverse felder deaktivieren:
+
+function checkImport() {
+	form=document.getElementById('adr_import');
+	field=document.getElementById('delete');
+	if (field.checked)  {
+		var changefield=document.getElementById('merge_groups');
+	    changefield.disabled = true;
+		var changefield=document.getElementById('adr_grp');
+	    changefield.disabled = true;
+		var changefield=document.getElementById('status_new');
+	    changefield.disabled = true;
+		var changefield=document.getElementById('status_exists');
+	    changefield.disabled = true;
+		var changefield=document.getElementById('aktiv_new');
+	    changefield.disabled = true;
+		var changefield=document.getElementById('aktiv_existing');
+	    changefield.disabled = true;
+	} else {
+		var changefield=document.getElementById('merge_groups');
+	    changefield.disabled = false;
+		var changefield=document.getElementById('adr_grp');
+	    changefield.disabled = false;
+		var changefield=document.getElementById('status_new');
+	    changefield.disabled = false;
+		var changefield=document.getElementById('status_exists');
+	    changefield.disabled = false;
+		var changefield=document.getElementById('aktiv_new');
+	    changefield.disabled = false;
+		var changefield=document.getElementById('aktiv_existing');
+	    changefield.disabled = false;
+	}
+}
+
+
+function flash(id, color) {
+	var element = document.getElementById(id);
+	var color_cur = element.style.backgroundColor;
+	element.style.backgroundColor = color;
+	setTimeout("flash('" + id + "', '" + color_cur + "')", 500);
+}
+      
 //checkbox auswahl umkeheren fuer alle checkboxen im formular !!!
 //auwahl umkehren alle selectboxen in formular mit der id....
 function checkAllForm(id) {

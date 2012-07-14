@@ -14,6 +14,11 @@
 
 $T=new Timer();
 
+//Session vorbereiten
+session_save_path($mnl_tmppath);
+session_start();
+session_name("TM");
+
 $LOGIN=new mnlCFG();
 $action=getVar("act");
 if ($action=="logout") {
@@ -25,6 +30,12 @@ if ($action=="logout") {
 if (!isset($action) || empty($action)) {$action="Welcome";}
 
 $LOGIN->getUser($LOGIN->LoggedInUsername);
+
+//Expertenmodus.... blendet hilfen aus und legenden, etc.
+$user_is_expert=false;
+if ($LOGIN->USER['expert']==1) {
+	$user_is_expert=true;
+}
 
 //Sprache festlegen!
 require_once ($mnl_includepath."/Lang.inc");
@@ -54,6 +65,9 @@ $_Tpl->setParseValue("_HEAD", $_HEAD);
 $_Tpl->setParseValue("_MENU", $_MENU);
 $_Tpl->setParseValue("_MAIN", $_MAIN);
 $_Tpl->setParseValue("_FOOT", $_FOOT);
+
+//cookie?
+setcookie(session_name(), session_id(), time()+3600);
 
 //RENDER PAGE
 $_PAGE=$_Tpl->renderTemplate("Index.html");

@@ -17,6 +17,8 @@ $_MAIN_OUTPUT.="<br><b><a href=\"javascript:switchSection('legende')\"><img src=
 $_MAIN_OUTPUT.= "<div id=\"legende\" class=\"legende\">";
 
 $_MAIN_OUTPUT.= "<h3>".___("Legende")."</h3>";
+$_MAIN_OUTPUT.= "<img src=\"".$mnl_iconURL."/user_green.png\" border=\"0\" title=\"".___("Neuangemeldete Adressen sind aktiv")."\" alt=\"".___("Neuangemeldete Adressen sind aktiv")."\">&nbsp;/&nbsp;<img src=\"".$mnl_iconURL."/user_red.png\" border=\"0\" title=\"".___("Neuangemeldete Adressen sind inaktiv")."\" alt=\"".___("Neuangemeldete Adressen sind inaktiv")."\">&nbsp;".___("Neuangemeldete Adressen sind aktiv/deaktiviert")."<br>";
+$_MAIN_OUTPUT.= "<img src=\"".$mnl_iconURL."/sport_8ball.png\" border=\"0\" title=\"".___("Captcha Spamschutz aktiviert")."\" alt=\"".___("Captcha Spamschutz aktiviert")."\">&nbsp;".___("Captcha Spamschutz aktiviert")."<br>";
 $_MAIN_OUTPUT.= "<img src=\"".$mnl_iconURL."/arrow_refresh.png\" border=\"0\" title=\"".___("Double-Opt-In")."\" alt=\"".___("Double-Opt-In")."\">&nbsp;".___("Double-Opt-In aktiviert")."<br>";
 
 //link zur dynamischen onlineversion!
@@ -31,13 +33,13 @@ $_MAIN_OUTPUT.= "<img src=\"".$mnl_iconURL."/cancel.png\" border=\"0\" title=\""
 $_MAIN_OUTPUT.= "<img src=\"".$mnl_iconURL."/pencil.png\" border=\"0\" title=\"".___("Bearbeiten")."\" alt=\"".___("Bearbeiten")."\">&nbsp;".___("Bearbeiten")."<br>";
 $_MAIN_OUTPUT.= "<img src=\"".$mnl_iconURL."/add.png\" border=\"0\" title=\"".___("Kopieren")."\" alt=\"".___("Kopieren")."\">&nbsp;".___("Formular kopieren")."<br>";
 $_MAIN_OUTPUT.= "<img src=\"".$mnl_iconURL."/chart_pie.png\" border=\"0\" title=\"".___("Statistik")."\" alt=\"".___("Statistik")."\">&nbsp;".___("Statistik anzeigen")."<br>";
-$_MAIN_OUTPUT.= "<img src=\"".$mnl_iconURL."/cross.png\" border=\"0\" title=\"".___("Loeschen")."\" alt=\"".___("Loeschen")."\">&nbsp;".___("Formular l&oumlschen")."<br>";
+$_MAIN_OUTPUT.= "<img src=\"".$mnl_iconURL."/cross.png\" border=\"0\" title=\"".___("Loeschen")."\" alt=\"".___("Loeschen")."\">&nbsp;".___("Formular löschen")."<br>";
 
 $_MAIN_OUTPUT.= "</div><br><br>";
-$_MAIN_OUTPUT.= "<script type=\"text/javascript\">
-<!--	
-//switchSection('legende'); 
--->
+$_MAIN_OUTPUT.= "</div><br><br>";
+if ($user_is_expert) $_MAIN_OUTPUT.= "
+<script type=\"text/javascript\">
+	switchSection('legende');
 </script>";
 
 ?>

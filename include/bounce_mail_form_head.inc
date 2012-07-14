@@ -20,13 +20,9 @@ $Form=new mSimpleForm();
 $FormularName="bounce_mail";
 //make new Form
 $Form->new_Form($FormularName,$_SERVER["PHP_SELF"],"post","_self");
-//$this->set_FormStyle($FormularName,"font-size:10pt;font-color=red;");
-////$Form->set_FormStyleClass($FormularName,"mForm");
-////$Form->set_FormInputStyleClass($FormularName,"mFormText","mFormTextFocus");
 //add a Description
 $Form->set_FormDesc($FormularName,___("Host waehlen"));
 //variable content aus menu als hidden field!
-//$Form->new_Input($FormularName,"type", "hidden", $content);
 $Form->new_Input($FormularName,"act", "hidden", $action);
 $Form->new_Input($FormularName,"host", "hidden", $host);
 $Form->new_Input($FormularName,"offset", "hidden", $offset);
@@ -39,6 +35,7 @@ $Form->new_Input($FormularName,"set", "hidden", $set);
 
 //MailNo
 $Form->new_Input($FormularName,$InputName_Mail,"checkbox", "");
+$Form->set_InputJS($FormularName,$InputName_Mail," onChange=\"flash('submit','#ff0000');\" ");
 $Form->set_InputDefault($FormularName,$InputName_Mail,$$InputName_Mail);
 $Form->set_InputStyleClass($FormularName,$InputName_Mail,"mFormCheckbox","mFormCheckboxFocus");
 $Form->set_InputDesc($FormularName,$InputName_Mail,___("Auswaehlen"));
@@ -51,6 +48,7 @@ $Form->set_InputMultiple($FormularName,$InputName_Mail,true);
 
 //Aktion
 $Form->new_Input($FormularName,$InputName_Action,"select", "");
+$Form->set_InputJS($FormularName,$InputName_Action," onChange=\"flash('submit','#ff0000');\" ");
 $Form->set_InputDefault($FormularName,$InputName_Action,$$InputName_Action);
 $Form->set_InputStyleClass($FormularName,$InputName_Action,"mFormSelect","mFormSelectFocus");
 $Form->set_InputDesc($FormularName,$InputName_Action,___("Aktion ausfuehren"));

@@ -33,8 +33,9 @@ if (!$mnl_config) {
 		
 	//siteid //achtung, siteid aendern heisst komplett neuer datenstamm... es muessen auch user angelegt werden.... oehm... nicht aendern!!!
 	//$mnl_siteid="mnl";
-	define("MNL_SITEID","mnl");
-
+	define ("MNL_SITEID","mnl");
+	define ("DEMO", FALSE);
+	define ("DEBUG", FALSE);
 	///////////////////////////////
 	//////////////STOP/////////////
 	///////////////////////////////
@@ -52,6 +53,7 @@ if (!$mnl_config) {
 	if (PHP5) ini_set('zend.ze1_compatibility_mode', '1');
 
 
+	//check if php runs on windows!
 	if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {  $php_windows=true; } else {  $php_windows=false; }
 	define("PHPWIN",$php_windows);
 	@ini_set("max_execution_time","300");
@@ -85,6 +87,8 @@ if (!$mnl_config) {
 	$mnl_logdir="files/log";
 	//verzeichnis fuer docs
 	$mnl_docdir="doc";
+	//sessions, tmp
+	$mnl_tmpdir="files/tmp";
 
 	//filedir, filepath!
 	
@@ -104,21 +108,23 @@ if (!$mnl_config) {
 	//pfad zu bildern, interne
 	$mnl_imgpath=$mnl_docroot."/".$mnl_dir."/".$mnl_imgdir;
 	//URLs
-	$mnl_URL=$mnl_Domain."/".$mnl_dir;
-	$mnl_imgURL=$mnl_URL."/".$mnl_imgdir;
-	$mnl_iconURL=$mnl_URL."/".$mnl_icondir;
+	$mnl_URL=$mnl_Domain."/".$mnl_dir."/admin";//backend, admin
+	$mnl_URL_FE=$mnl_Domain."/".$mnl_dir;//frontend!
+	$mnl_imgURL=$mnl_URL_FE."/".$mnl_imgdir;
+	$mnl_iconURL=$mnl_URL_FE."/".$mnl_icondir;
 	
 	//includes
 	$mnl_path=$mnl_docroot."/".$mnl_dir;
 	$mnl_includepath=$mnl_path."/".$mnl_includedir;
 
+	$mnl_tmppath=$mnl_path."/".$mnl_tmpdir;
 	//templates
 	$mnl_tplpath=$mnl_path."/".$mnl_tpldir;
 	 
 	$row_bgcolor="#ffffff";
 	$row_bgcolor2="#eeefee";
 	$row_bgcolor_inactive="#ff9999";
-	$row_bgcolor_hilite="#bbd6ff";
+	$row_bgcolor_hilite="#ffcc00";
 	 
 	//
 	$img_arrowup="<img src=\"".$mnl_iconURL."/bullet_arrow_up.png\" border=\"0\">";
@@ -126,8 +132,10 @@ if (!$mnl_config) {
 	//
 	$allowed_html_filetypes = "(htm|html|txt)";
 	$allowed_image_filetypes = "(jpg|jpeg)";
+	$allowed_trackimage_filetypes = "(jpg|jpeg|png)";
 	$allowed_csv_filetypes = "(csv|txt)";
 	$max_upload_size=2048000;//2M
+	if (DEMO) $max_upload_size=2048;//2k
 	//
 
 	//DBS Tabellen, Namen und Prefix!
@@ -172,7 +180,7 @@ if (!$mnl_config) {
 	//klassen
 	require_once ($mnl_includepath."/Classes.inc");
 
-	$encoding = 'UTF-8';
+	$encoding = "utf-8";
 	header("Content-type: text/html; charset=$encoding");
 
 	//config aus db holen
@@ -207,6 +215,7 @@ if (!$mnl_config) {
 	$use_SMTPmail=true;//fuer smtp mail function!
 		
 	//eMail prueflevel!
+	$EMAILCHECK['intern'][0]="keine Prüfung";
 	$EMAILCHECK['intern'][1]="Syntax";
 	$EMAILCHECK['intern'][2]="Syntax + MX/DNS";
 	$EMAILCHECK['intern'][3]="Syntax, MX/DNS + Validate";
@@ -216,7 +225,7 @@ if (!$mnl_config) {
 	$EMAILCHECK['subscribe'][3]="Syntax, MX/DNS + Validate";
 
 	$ApplicationName="tellmatic";
-	$ApplicationVersion="1.0.5 Tellmatic";
+	$ApplicationVersion="1.0.6 Tellmatic";
 	$ApplicationDescr=___("Die Newsletter Maschine");
 	$ApplicationUrl="www.tellmatic.org";
 	$ApplicationText=$ApplicationName." v".$ApplicationVersion." - ".$ApplicationDescr." (".$ApplicationUrl.")";

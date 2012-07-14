@@ -18,7 +18,13 @@ function ___($s) {
 	//return $s;//disabled
 	//return _($s);//native gettext
 	//return __($s);//php_gettext emulation
-	return translate($s);//eigene gettext emulation!
+	$translated=translate($s);//'eigene' gettext emulation! adapted from old squirrelmail
+	$text=$translated[0];
+	$match=$translated[1];//=0 no match, =1 match, =2 guess
+	if (DEBUG && $match==0) $text.="(NO)";
+	if (DEBUG && $match==1) $text.="(++)";
+	$return=$text;
+	return $return;
 }
 
 function getMessages() {
@@ -45,6 +51,22 @@ function getCurrentVersion() {
   }
   fclose($rh);
   return $ver;
+}
+
+function readFileInArray($file) {
+	$rows=Array();
+	if (file_exists($file)) {   
+		$uf=fopen($file,"r");
+		if ($uf)  {
+		   while(!feof($uf))
+	 		{
+				$rows[]=fgets($uf, 4096);
+			}
+			fclose($uf);
+		}//if uf
+		
+	}//file_exists
+	return $rows;
 }
 
 function date_convert_to_string($date) {
@@ -123,6 +145,7 @@ function update_file($file_path,$file_name,$file_content="") {
 }	
 
 
+
 function getVar($Var,$slashes=1,$default="") {
     //this function gets variables from post or get, post has higher priority!
     global $_GET,$_POST;
@@ -134,7 +157,12 @@ function getVar($Var,$slashes=1,$default="") {
 	   		//$Return = (get_magic_quotes_gpc()) ? $_GET[$Var] : addslashes($_GET[$Var]);
 			$Return = $_GET[$Var];
         } else {
-			$Return=$default;
+    	    if (isset($_SESSION[$Var])) { //&& !is_array($_POST[$Var])
+		   		//$Return = (get_magic_quotes_gpc()) ? $_GET[$Var] : addslashes($_GET[$Var]);
+				$Return = $_SESSION[$Var];
+    	    } else {
+				$Return=$default;
+			}
 		}
     }
     if ($slashes==1)   {
@@ -144,9 +172,8 @@ function getVar($Var,$slashes=1,$default="") {
 }//getVar()
 
 
-
 //Liste von e-Mails checken
-function checkEmailList($eMailList,$debug=0) {
+function checkEmailList($eMailList,$debug=0,$level=2) {
 	if (!empty($eMailList)) {
 		$Return=true;
 		//zerlege string fwd in bestandteile durch komma getrennt
@@ -159,7 +186,7 @@ function checkEmailList($eMailList,$debug=0) {
 			//pruefe einzelne adresse
 			$Message.=$Counter.".:".$eMailListArray[$Counter];
 			//wird einmal falsches ergebnis ausgegeben, false setzen
-			if (!checkemailadr($eMailListArray[$Counter])) {
+			if (!checkemailadr($eMailListArray[$Counter],$level)) {
 				$Return=false;
 				$Message.="...........<b>Fehler</b>";
 			} else {
@@ -370,13 +397,6 @@ function SendMail($From,$FromName,$To,$ToName,$Subject,$Text,$Html,$AttmFiles=Ar
 	$ToName=clear_text($ToName);
 	$ToName=str_replace(",","",$ToName);
 
-/*
-if (empty($Text))
-{
-	$Text=strip_htmltags($Html);
-	$Text=strip_tags($Text);
-}
-*/
 	if ($use_SMTPmail) {
 	 	if (SendMail_smtp($From,$FromName,$To,$ToName,$Subject,$Text,$Html,$AttmFiles)) {
 	 		$return=true;
@@ -535,22 +555,12 @@ function SendMail_mail($From,$FromName,$To,$ToName,$Subject,$Text,$Html,$AttmFil
 	$OB="----=_OuterBoundary_000".md5(rand());
 	$IB="----=_InnerBoundery_001".md5(rand());
 
-	//$Html=$Html?$Html:preg_replace("/\n/","<br>",$Text);
-	// or die("neither text nor html part present.");
-	//$Text=$Text?$Text:"Diese Mail ist nur im HTML-Format verfuegbar, bitte aktivieren Sie die HTML-Ansicht oder benutzen Sie ein HTML-faehiges Mailprogramm.\n\r
-	//This mail uses HTML, please activate HTML in your Mail-Client";
-
 	$headers  = "MIME-Version: 1.0\r\n";
 	$headers .="Return-Path: <".$From.">\r\n";
 	$headers .= "From: ".$FromName." <".$From.">\r\n";
 	$headers .="To: ".$ToName." <".$To.">\r\n";
-	//$headers .="To: <".$To.">\r\n";
-	// <".$To.">\n";
-//	$headers .="Bcc: mcms@multiartstudio.com\r\n"; 
 	$headers .="Reply-To: ".$FromName." <".$From.">\r\n"; 
-//	$headers .= "Content-type: text/html; charset=iso-8859-1\r\n";// war zweimal definiert, muss aber multipart/mixed sein
 	$headers .= "X-Mailer: ".$ApplicationText."\r\n";
-//	$headers .="Content-Type: multipart/mixed;\n\tboundary=\"".$OB."\"\r\n";
 	$headers .="Content-Type: multipart/mixed;\n\t";
 	$headers.="boundary=\"".$OB."\"\r\n";
 
@@ -600,7 +610,7 @@ function SendMail_mail($From,$FromName,$To,$ToName,$Subject,$Text,$Html,$AttmFil
 	 ini_set('sendmail_from', $From);
 	if (mail($To,$Subject,$Msg,$headers)) { 
 		//send syslog message
-		syslog(LOG_INFO,"mCMS: Mail sent from $From  to $ToName <$To> ");
+		syslog(LOG_INFO,"Mail sent from $From  to $ToName <$To> ");
 		ini_restore('sendmail_from');	
 		return true;
 	} else {
@@ -609,7 +619,6 @@ function SendMail_mail($From,$FromName,$To,$ToName,$Subject,$Text,$Html,$AttmFil
 	}
 }
 //SendMail END
-
 
 function strip_specialchar($x) {
 	$x=trim($x);
@@ -638,31 +647,20 @@ function strip_specialchar($x) {
 	//$x=str_replace ( "=", "", $x); 
 	//$x=str_replace ( "/", "", $x); 
 	$x=str_replace ( "'", "", $x); 
-	$x=str_replace ( "´", "", $x); 
+	$x=str_replace ( "Å½", "", $x); 
 	$x=str_replace ( "`", "", $x); 
 	$x=str_replace ( "~", "", $x); 
 	return $x;
 }
 
-
 function make_seed() {
     list($usec, $sec) = explode(' ', microtime());
     return (float) $sec + ((float) $usec * 100000);
 }
-
-
-
-
- 
  
 function configure_me() { 
 	return true; 
 } 
- 
- 
-
-
-
 
 function checkemailadr($email,$level=2) {  
 	$Return=true;//ok, weil mit level=0 oder >3 pruefung ausgeschaltet werden kann.....
@@ -670,11 +668,7 @@ function checkemailadr($email,$level=2) {
 	
 	if ($level>=1) {
 		//syntax
-		//$regex="^[0-9a-z]([-_.]?[0-9a-z])*@[0-9a-z]([-.]?[0-9a-z])*\\.[a-z]{2,4}$"; // hat probleme mit a.-b.cde@x-yz.td
-		//2007-05-03		: http://www.markussipila.info/pub/emailvalidator.php?action=validate
-		$regex="^[a-z0-9,!#\$%&'\*\+/=\?\^_`\{\|}~-]+(\.[a-z0-9,!#\$%&'\*\+/=\?\^_`\{\|}~-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*\.([a-z]{2,})$";
-		//if(ereg ("<($regex)>", $email, $email_V))
-		//if (eregi("^[0-9a-z]([-_.]?[0-9a-z])*@[0-9a-z]([-.]?[0-9a-z])*\\.[a-z]{2,4}$", $email, $check)) {  
+		$regex="^[a-z0-9,!#\$%&'\*\+/=\?\^_`\{\|}~-]+(\.[a-z0-9,!#\$%&'\*\+/=\?\^_`\{\|}~-]+)*(\.{0,1})@[a-z0-9-]+(\.[a-z0-9-]+)*\.([a-z]{2,})$";
 		if (eregi("$regex", $email, $check)) {  
 			$Return=true;
 		} else {
@@ -689,7 +683,6 @@ function checkemailadr($email,$level=2) {
 		//mx
 		$mx=getmxrr($mailDomain,$mxhosts);//print_r($mxhosts);
 		if($mx==1) {  
-		//if(getmxrr(substr(strstr($check[0], '@'), 1), $validate_email_temp)) {  
 			$Return=true;
 		} else {
 			$Return=false;
@@ -720,32 +713,19 @@ function validate_email($email) {
 	$Return=Array(0=>true, 1=>"OK");
 	list($userName, $mailDomain) = split("@", $email);
 	$mx=getmxrr($mailDomain,$mxhosts);
-	//mxhosts=array()
-	//print_r($mxhosts);
 	$hc=count($mxhosts);
 	if ($hc>0) {
 		//wir preuefen nur m al den ersten mx
 		$host=$mxhosts[0];
 		$Connect = fsockopen ( $host, 25 );
 		if ($Connect) {
-	        //aol hack
-	        /*
-	        do {
-					 $Out = fgets ( $Connect, 1024 ); 
-				} while (ereg("^220",$Out));
-	        */
 	        if (ereg("^220", $Out = fgets($Connect, 1024))) {
-	        //aol: if (ereg("^220", $Out)) {
-  	           //echo "<br>".$Out."<br>";
 	           fputs ($Connect, "HELO ".$SMTPDomain."\r\n");
 	           $Out = fgets ( $Connect, 1024 );
-  	           //echo "<br>".$Out."<br>";
 	           fputs ($Connect, "MAIL FROM: <{$email}>\r\n");
 	           $From = fgets ( $Connect, 1024 );
 	           fputs ($Connect, "RCPT TO: <{$email}>\r\n");
 	           $To = fgets ($Connect, 1024);
-	           //echo "<br>".$To."<br>";
-	           //echo "<br>".$From."<br>";
 	           fputs ($Connect, "QUIT\r\n");
 	           fclose($Connect);
 	           if (!ereg ("^250", $From) || !ereg ( "^250", $To )) {
@@ -857,6 +837,23 @@ function gen_rec_files_array ($path,$selected="",$recpath="",$extension="",$addc
 		}
 		@closedir($handle);
 	}
+}
+
+function getCSSDirectories($path) {
+	$Return=Array();
+	$dc=0;
+	$handle=opendir($path);
+	while (($file = readdir($handle))!==false) { 
+		if (($file != ".") && ($file != "..")) { 
+			if (opendir($path."/".$file)) { //is_dir is false for some reasons for directories!
+				$Return[$dc]=$file;
+				$dc++;
+				closedir($path."/".$file);
+			} 
+		}
+	}
+	@closedir($handle);
+	return $Return;
 }
 
 if (PHPWIN && !function_exists('getmxrr')) {

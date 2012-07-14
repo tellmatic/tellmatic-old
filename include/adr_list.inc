@@ -28,14 +28,7 @@ if (empty($limit)) {
 	$limit=25;
 }
 
-$sortIndex=getVar("si");
-if (empty($sortIndex)) {
-	$sortIndex="id";
-}
-$sortType=getVar("st");
-if (empty($sortType)) {
-	$sortType="0";//asc
-}
+//sort und sorttype nach search verschoben
 
 $ADDRESS=new mnlADR();
 $QUEUE=new mnlQ();
@@ -63,8 +56,8 @@ if ($set=="aktiv") {
 	}
 }
 if ($set=="delete" && $doit==1) {
-	$ADDRESS->delAdr($adr_id);
-	$_MAIN_MESSAGE.="<br>".___("Eintrag wurde gel&ouml;scht.");
+	if (!DEMO) $ADDRESS->delAdr($adr_id);
+	$_MAIN_MESSAGE.="<br>".___("Eintrag wurde gelÖscht.");
 }
 
 
@@ -72,7 +65,7 @@ if ($adr_grp_id>0)
 {
 	$ADR=$ADDRESS->getAdr(0,$offset,$limit,$adr_grp_id,$search,$sortIndex,$sortType);//id,offset,limit,group,$search_array
 	$adr_grp=$ADDRESS->getGroup($adr_grp_id);
-	$_MAIN_MESSAGE.="<br>".sprintf(___("gew&auml;hlte Gruppe: %s"),"<b>".$adr_grp[0]['name']."</b>");
+	$_MAIN_MESSAGE.="<br>".sprintf(___("gewählte Gruppe: %s"),"<b>".$adr_grp[0]['name']."</b>");
 } else {
 	$ADR=$ADDRESS->getAdr(0,$offset,$limit,0,$search,$sortIndex,$sortType);//id,offset,limit,group,$search_array
 }
@@ -87,23 +80,26 @@ $entrys_total=$ADDRESS->countADR($adr_grp_id,$search);
 
 
 //globale parameter die angefuegt werden sollen!
-$mSTDURL->addParam("offset",0);
+$mSTDURL->addParam("offset",$offset);
 $mSTDURL->addParam("limit",$limit);
-$mSTDURL->addParam("st",$sortType);
-$mSTDURL->addParam("si",$sortIndex);
-if (isset($email)) {
-	$mSTDURL->addParam("email",$email);
+if (isset($s_email)) {
+	$mSTDURL->addParam("s_email",$s_email);
+}
+if (isset($s_author)) {
+	$mSTDURL->addParam("s_author",$s_author);
 }
 if (isset($f0_9)) {
 	$mSTDURL->addParam("f0_9",$f0_9);
 }
-if (isset($status)) {
-	$mSTDURL->addParam("status",$status);
+if (isset($s_status)) {
+	$mSTDURL->addParam("s_status",$s_status);
 }
 $mSTDURL->addParam("adr_grp_id",$adr_grp_id);
 if ($set=="search") {
 	$mSTDURL->addParam("set",$set);
 }
+$mSTDURL->addParam("st",$sortType);
+$mSTDURL->addParam("si",$sortIndex);
 
 $firstURLPara=$mSTDURL;
 $firstURLPara->addParam("act","adr_list");
@@ -135,8 +131,6 @@ $aktivURLPara=$mSTDURL;
 $aktivURLPara->addParam("adr_grp_id",$adr_grp_id);
 $aktivURLPara->addParam("offset",$offset);
 $aktivURLPara->addParam("limit",$limit);
-$aktivURLPara->addParam("st",$sortType);
-$aktivURLPara->addParam("si",$sortIndex);
 $aktivURLPara->addParam("act","adr_list");
 $aktivURLPara->addParam("set","aktiv");
 
@@ -144,8 +138,6 @@ $delURLPara=$mSTDURL;
 $delURLPara->addParam("adr_grp_id",$adr_grp_id);
 $delURLPara->addParam("offset",$offset);
 $delURLPara->addParam("limit",$limit);
-$delURLPara->addParam("st",$sortType);
-$delURLPara->addParam("si",$sortIndex);
 $delURLPara->addParam("act","adr_list");
 $delURLPara->addParam("set","delete");
 
@@ -226,26 +218,29 @@ for ($acc=0;$acc<$ac;$acc++) {
 	$_MAIN_OUTPUT.= "<td onmousemove=\"showToolTip('tt_adr_list_".$ADR[$acc]['id']."')\" onmouseout=\"setBGColor('row_".$acc."','".$bgcolor."');hideToolTip();\">";
 	$_MAIN_OUTPUT.= "<a href=\"".$mnl_URL."/".$editURLPara_."\">".$ADR[$acc]['email']."</a>";
 	$_MAIN_OUTPUT.= "<div id=\"tt_adr_list_".$ADR[$acc]['id']."\" class=\"tooltip\">";
-	$_MAIN_OUTPUT.= "ID: ".$ADR[$acc]['id']." / ".$ADR[$acc]['d_id']." ";
+	$_MAIN_OUTPUT.= "<b>".$ADR[$acc]['email']."</b>";
+	$_MAIN_OUTPUT.= "<br><font size=-1>".$ADR[$acc]['f0'].",&nbsp;".$ADR[$acc]['f1'].",&nbsp;".$ADR[$acc]['f2'].",&nbsp;".$ADR[$acc]['f3'].",&nbsp;".$ADR[$acc]['f4'].",&nbsp;".$ADR[$acc]['f5'].",&nbsp;";
+	$_MAIN_OUTPUT.= "<br>".$ADR[$acc]['f6'].",&nbsp;".$ADR[$acc]['f7'].",&nbsp;".$ADR[$acc]['f8'].",&nbsp;".$ADR[$acc]['f9']."</font>";
+	$_MAIN_OUTPUT.= "<br>ID: ".$ADR[$acc]['id']." / ".$ADR[$acc]['d_id']." ";
 	if ($ADR[$acc]['aktiv']==1) {
-		$_MAIN_OUTPUT.=  "<img src=\"".$mnl_iconURL."/tick.png\" border=\"0\">";
+		$_MAIN_OUTPUT.=  "<br><img src=\"".$mnl_iconURL."/tick.png\" border=\"0\">";
 		$_MAIN_OUTPUT.=  ___("(aktiv)");
 	} else {
-		$_MAIN_OUTPUT.=  "<img src=\"".$mnl_iconURL."/cancel.png\" border=\"0\">";
+		$_MAIN_OUTPUT.=  "<br><img src=\"".$mnl_iconURL."/cancel.png\" border=\"0\">";
 		$_MAIN_OUTPUT.=  ___("(inaktiv)");
 	}
 
-	$_MAIN_OUTPUT.= sprintf(___("Status: %s"),"<img src=\"".$mnl_iconURL."/".$STATUS['adr']['statimg'][$ADR[$acc]['status']]."\" border=\"0\">".$STATUS['adr']['status'][$ADR[$acc]['status']]);
+	$_MAIN_OUTPUT.= "<br>".sprintf(___("Status: %s"),"<img src=\"".$mnl_iconURL."/".$STATUS['adr']['statimg'][$ADR[$acc]['status']]."\" border=\"0\">".$STATUS['adr']['status'][$ADR[$acc]['status']]);
 	
-	$_MAIN_OUTPUT.= "<br><b>".$ADR[$acc]['email']."</b>".
-							"<br>CODE: ".$ADR[$acc]['code']." &nbsp;".
-							"<br>".sprintf(___("erstellt am: %s von: %s"),$created_date,$author).
-							"<br>".sprintf(___("bearbeitet am: %s von %s"),$updated_date,$editor).
+	$_MAIN_OUTPUT.= "<br>CODE: ".$ADR[$acc]['code']." &nbsp;".
+							"<br>".sprintf(___("Erstellt am: %s von %s"),$created_date,$author).
+							"<br>".sprintf(___("Bearbeitet am: %s von %s"),$updated_date,$editor).
 							"<br>".sprintf(___("Newsletter Aktuell: %s"),$nlc).
 							"<br>".sprintf(___("Newsletter Gesamt: %s"),$ADR[$acc]['newsletter']).
 							"<br>".sprintf(___("Views: %s"),$ADR[$acc]['views']).
 							"<br>".sprintf(___("Clicks: %s"),$ADR[$acc]['clicks']).
-							"<br>".sprintf(___("Sendefehler: %s"),$ADR[$acc]['errors'])."&nbsp;";
+							"<br>".sprintf(___("Sendefehler: %s"),$ADR[$acc]['errors']).
+							"<br>".___("Memo:")."<font size=\"-1\">".$ADR[$acc]['memo']."</font>";
 	$_MAIN_OUTPUT.= "<br>".___("Mitglied in den Gruppen:");
 	$_MAIN_OUTPUT.= "<ul>";
 	$GRP=$ADDRESS->getGroup(0,$ADR[$acc]['id']);
@@ -254,8 +249,6 @@ for ($acc=0;$acc<$ac;$acc++) {
 		$_MAIN_OUTPUT.= "<li>".$GRP[$accg]['name']."</li>";
 	}
 	$_MAIN_OUTPUT.= "</ul>";
-	$_MAIN_OUTPUT.= "<br><font size=-1>".$ADR[$acc]['f0'].",&nbsp;".$ADR[$acc]['f1'].",&nbsp;".$ADR[$acc]['f2'].",&nbsp;".$ADR[$acc]['f3'].",&nbsp;".$ADR[$acc]['f4'].",&nbsp;".$ADR[$acc]['f5'].",&nbsp;";
-	$_MAIN_OUTPUT.= "<br>".$ADR[$acc]['f6'].",&nbsp;".$ADR[$acc]['f7'].",&nbsp;".$ADR[$acc]['f8'].",&nbsp;".$ADR[$acc]['f9']."</font>";
 
 	$_MAIN_OUTPUT.= "</div>";
 	$_MAIN_OUTPUT.= "</td>";

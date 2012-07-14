@@ -36,6 +36,7 @@ $Form->new_Input($FormularName,"nl_grp_id", "hidden", $nl_grp_id);
 //////////////////
 //Name
 $Form->new_Input($FormularName,$InputName_Name,"text", $$InputName_Name);
+$Form->set_InputJS($FormularName,$InputName_Name," onChange=\"flash('submit','#ff0000');\" ");
 $Form->set_InputStyleClass($FormularName,$InputName_Name,"mFormText","mFormTextFocus");
 $Form->set_InputSize($FormularName,$InputName_Name,48,256);
 $Form->set_InputDesc($FormularName,$InputName_Name,___("Name"));
@@ -48,6 +49,7 @@ if ($standard==1) {
 	$Form->new_Input($FormularName,$InputName_Aktiv, "hidden", 1);
 } else {
 	$Form->new_Input($FormularName,$InputName_Aktiv,"checkbox", 1);
+	$Form->set_InputJS($FormularName,$InputName_Aktiv," onChange=\"flash('submit','#ff0000');\" ");
 	$Form->set_InputDefault($FormularName,$InputName_Aktiv,$$InputName_Aktiv);
 	$Form->set_InputStyleClass($FormularName,$InputName_Aktiv,"mFormText","mFormTextFocus");
 	$Form->set_InputSize($FormularName,$InputName_Aktiv,48,256);
@@ -59,6 +61,7 @@ if ($standard==1) {
 
 //Name
 $Form->new_Input($FormularName,$InputName_Descr,"textarea", $$InputName_Descr);
+$Form->set_InputJS($FormularName,$InputName_Descr," onChange=\"flash('submit','#ff0000');\" ");
 $Form->set_InputStyleClass($FormularName,$InputName_Descr,"mFormTextarea","mFormTextareaFocus");
 $Form->set_InputSize($FormularName,$InputName_Descr,20,5);
 $Form->set_InputDesc($FormularName,$InputName_Descr,___("Beschreibung"));
@@ -68,6 +71,7 @@ $Form->set_InputLabel($FormularName,$InputName_Descr,"");
 
 //COLOR!
 $Form->new_Input($FormularName,$InputName_Color,"text", $$InputName_Color);
+$Form->set_InputJS($FormularName,$InputName_Color," onChange=\"flash('submit','#ff0000');\" ");
 $Form->set_InputStyleClass($FormularName,$InputName_Color,"mFormText","mFormTextFocus");
 $Form->set_InputSize($FormularName,$InputName_Color,8,8);
 $Form->set_InputDesc($FormularName,$InputName_Color,___("Farbe: Auswaehlen und klicken um Farbe zu uebernehmen"));
@@ -136,12 +140,6 @@ $_MAIN_OUTPUT.= "<tr>";
 $_MAIN_OUTPUT.= "<td valign=top colspan=2>";
 $_MAIN_OUTPUT.= ___("Beschreibung")."<br>";
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Descr]['html'];
-/*
-$_MAIN_OUTPUT.= "<br>";
-include ($mnl_includepath."/colors.inc");
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_ColorView]['html'];
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Color]['html'];
-*/
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "</tr>";
 $_MAIN_OUTPUT.= "<tr>";

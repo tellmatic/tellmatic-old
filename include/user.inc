@@ -12,7 +12,7 @@
 /* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
 /********************************************************************************/
 
-$_MAIN_DESCR=___("Benutzereinstellungen &auml;ndern");
+$_MAIN_DESCR=___("Benutzereinstellungen ändern");
 $_MAIN_MESSAGE.="";
 
 $set=getVar("set");
@@ -29,6 +29,9 @@ $$InputName_Style=getVar($InputName_Style);
 $InputName_Lang="lang";
 $$InputName_Lang=getVar($InputName_Lang);
 
+$InputName_Expert="expert";
+$$InputName_Expert=getVar($InputName_Expert);
+
 $check=true;
 if ($set=="save") {
 	//checkinput
@@ -41,21 +44,36 @@ if ($set=="save") {
 	$USER=new mnlCFG();
 
 	if ($check) {
-		$USER->setPasswd($LOGIN->USER['name'],$pass);//	MNL_SITEID,$PHP_AUTH_USER,$PHP_AUTH_PW; 
+		if (!DEMO) $USER->setPasswd($LOGIN->USER['name'],$pass);//	MNL_SITEID,$PHP_AUTH_USER,$PHP_AUTH_PW; 
 		$pwchanged=1;
 	} else {
-		$_MAIN_MESSAGE.="<br>".___("Das Passwort wurde nicht ge&auml;ndert.");
+		$_MAIN_MESSAGE.="<br>".___("Das Passwort wurde nicht geändert.");
 	}
 	
 	$USER->setStyle($LOGIN->USER['name'],$style);
 	$USER->setLang($LOGIN->USER['name'],$lang);
-
+	$USER->setExpert($LOGIN->USER['name'],$expert);
 
 	header('Location: '.$mnl_URL."/?act=user&pwchanged=".$pwchanged."&cryptpw=".crypt($LOGIN->USER['passwd']));
 	exit;
 }
 
+//read css directories and check for stylesheets
+$CSSDirs=Array();
+$CSSDirsTmp=getCSSDirectories($mnl_path."/css");
+$css_c=count($CSSDirsTmp);
+$css_i=0;
+for ($css_cc=0; $css_cc < $css_c; $css_cc++) {
+	$css_file=$mnl_path."/css/".$CSSDirsTmp[$css_cc]."/mnl.css";
+	if (file_exists($css_file)) {
+		$CSSDirs[$css_i]["dir"]=$CSSDirsTmp[$css_cc];
+		$CSSDirs[$css_i]["name"]=$CSSDirsTmp[$css_cc];
+		$css_i++;
+	}
+}
+
 $$InputName_Style=$LOGIN->USER['style'];
 $$InputName_Lang=$LOGIN->USER['lang'];
+$$InputName_Expert=$LOGIN->USER['expert'];
 include_once ($mnl_includepath."/user_form.inc");
 ?>

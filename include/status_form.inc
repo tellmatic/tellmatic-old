@@ -20,9 +20,6 @@ $Form=new mSimpleForm();
 $FormularName="status";
 //make new Form
 $Form->new_Form($FormularName,$_SERVER["PHP_SELF"],"post","_self");
-//$this->set_FormStyle($FormularName,"font-size:10pt;font-color=red;");
-////$Form->set_FormStyleClass($FormularName,"mForm");
-////$Form->set_FormInputStyleClass($FormularName,"mFormText","mFormTextFocus");
 
 $Form->set_FormJS($FormularName," onSubmit=\"switchSection('div_loader');\" ");
 
@@ -37,6 +34,7 @@ $Form->new_Input($FormularName,"act", "hidden", $action);
 //////////////////
 //Top X
 $Form->new_Input($FormularName,$InputName_TopX,"select", "");
+$Form->set_InputJS($FormularName,$InputName_TopX," onChange=\"flash('submit','#ff0000');\" ");
 $Form->set_InputDefault($FormularName,$InputName_TopX,$show_top_x);
 $Form->set_InputStyleClass($FormularName,$InputName_TopX,"mFormSelect","mFormSelectFocus");
 $Form->set_InputDesc($FormularName,$InputName_TopX,___("Zeige Top X Einträge"));

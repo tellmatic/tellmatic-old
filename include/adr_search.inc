@@ -13,46 +13,74 @@
 /********************************************************************************/
 
 
-//$_MAIN_DESCR="Adressen suchen";
-//$_MAIN_MESSAGE.="Suchmaske: email, f0-f9, status, gruppe";
 $set=getVar("set");
 $search_array=Array();
 
-$InputName_Name="email";//
+$InputName_Name="s_email";//
 $$InputName_Name=getVar($InputName_Name);
 
 $InputName_F="f0_9";//
 $$InputName_F=getVar($InputName_F);
 
-$InputName_Status="status";//
+$InputName_Status="s_status";//
 $$InputName_Status=getVar($InputName_Status);
 
 $InputName_Group="adr_grp_id";//
 $$InputName_Group=getVar($InputName_Group);
 //pt_register("POST","adr_grp");
-/*
-if (!isset($adr_grp)) {
-	$adr_grp[0]=getVar("adr_grp_id");
-}
-*/
-$InputName_Author="author";//
+$InputName_Author="s_author";//
 $$InputName_Author=getVar($InputName_Author);
 
 $InputName_Limit="limit";//range from
 //$limit=getVar($InputName_Limit);
 
+$InputName_SI0="si0";//
+$$InputName_SI0=getVar($InputName_SI0);
+
+$InputName_SI1="si1";//
+$$InputName_SI1=getVar($InputName_SI1);
+
+$InputName_SI2="si2";//
+$$InputName_SI2=getVar($InputName_SI2);
+
+$sort_search=false;
+if (!isset($sortIndex)) {
+	$sortIndex=getVar("si");
+}
+if (!empty($si0)) {
+	$sortIndex.=$si0.",";
+	$sort_search=true;
+}
+if (!empty($si1)) {
+	$sortIndex.=$si1.",";
+	$sort_search=true;
+}
+if (!empty($si2)) {
+	$sortIndex.=$si2.",";
+	$sort_search=true;
+}
+
+if (empty($sortIndex)) {
+	$sortIndex="id";
+}
+if ($sort_search) {
+	$sortIndex.="id";
+}
+
+$sortType=getVar("st");
+if (empty($sortType)) {
+	$sortType="0";//asc
+}
 
 include_once ($mnl_includepath."/adr_search_form.inc");
 
-//if ($set=="search") {
-	$search['email']=str_replace("*","%",$email);
-	$search['status']=$status;
-	$search['author']=$author;
+	$search['email']=str_replace("*","%",$s_email);
+	$search['status']=$s_status;
+	$search['author']=$s_author;
 	$search['f0_9']=str_replace("*","%",$f0_9);
 	$search['group']=$adr_grp_id;
 	//$limit=100;
 	//include_once ($mnl_includepath."/adr_list.inc");
-//}
 
 
 ?>

@@ -35,7 +35,8 @@ $Form->new_Input($FormularName,"set", "hidden", "search");
 //add inputfields and buttons....
 //////////////////
 //EMAIL
-$Form->new_Input($FormularName,$InputName_Name,"text","");
+$Form->new_Input($FormularName,$InputName_Name,"text",$$InputName_Name);
+$Form->set_InputJS($FormularName,$InputName_Name," onChange=\"flash('submit','#ff0000');\" ");
 $Form->set_InputStyleClass($FormularName,$InputName_Name,"mFormText","mFormTextFocus");
 $Form->set_InputSize($FormularName,$InputName_Name,12,256);
 $Form->set_InputDesc($FormularName,$InputName_Name,___("Suche nach e-Mail"));
@@ -45,6 +46,7 @@ $Form->set_InputLabel($FormularName,$InputName_Name,"e-Mail<br>");
 
 //F
 $Form->new_Input($FormularName,$InputName_F,"text", $$InputName_F);
+$Form->set_InputJS($FormularName,$InputName_F," onChange=\"flash('submit','#ff0000');\" ");
 $Form->set_InputStyleClass($FormularName,$InputName_F,"mFormText","mFormTextFocus");
 $Form->set_InputSize($FormularName,$InputName_F,12,256);
 $Form->set_InputDesc($FormularName,$InputName_F,___("Suche in den Feldern F0-F9"));
@@ -55,6 +57,7 @@ $Form->set_InputLabel($FormularName,$InputName_F,"F0-F9<br>");
 
 //Gruppe
 $Form->new_Input($FormularName,$InputName_Group,"select", "");
+$Form->set_InputJS($FormularName,$InputName_Group," onChange=\"flash('submit','#ff0000');\" ");
 $Form->set_InputDefault($FormularName,$InputName_Group,$adr_grp_id);
 $Form->set_InputStyleClass($FormularName,$InputName_Group,"mFormSelect","mFormSelectFocus");
 $Form->set_InputDesc($FormularName,$InputName_Group,___("Suche nach Gruppenzugehoerigkeit"));
@@ -77,7 +80,8 @@ for ($accg=0; $accg<$acg; $accg++)
 
 //Author bzw Formular! Form_[ID]
 $Form->new_Input($FormularName,$InputName_Author,"select", "");
-$Form->set_InputDefault($FormularName,$InputName_Author,$author);
+$Form->set_InputJS($FormularName,$InputName_Author," onChange=\"flash('submit','#ff0000');\" ");
+$Form->set_InputDefault($FormularName,$InputName_Author,$$InputName_Author);
 $Form->set_InputStyleClass($FormularName,$InputName_Author,"mFormSelect","mFormSelectFocus");
 $Form->set_InputDesc($FormularName,$InputName_Author,___("Author, angemeldet ueber Formular"));
 $Form->set_InputReadonly($FormularName,$InputName_Author,false);
@@ -100,7 +104,8 @@ for ($fccg=0; $fccg<$fcg; $fccg++)
 
 //Status
 $Form->new_Input($FormularName,$InputName_Status,"select", "");
-$Form->set_InputDefault($FormularName,$InputName_Status,$status);
+$Form->set_InputJS($FormularName,$InputName_Status," onChange=\"flash('submit','#ff0000');\" ");
+$Form->set_InputDefault($FormularName,$InputName_Status,$$InputName_Status);
 $Form->set_InputStyleClass($FormularName,$InputName_Status,"mFormSelect","mFormSelectFocus");
 $Form->set_InputDesc($FormularName,$InputName_Status,___("Suche nach Adress-Status"));
 $Form->set_InputReadonly($FormularName,$InputName_Status,false);
@@ -120,6 +125,7 @@ for ($scc=1; $scc<=$sc; $scc++)//0
 
 //Limit
 $Form->new_Input($FormularName,$InputName_Limit,"select", "");
+$Form->set_InputJS($FormularName,$InputName_Limit," onChange=\"flash('submit','#ff0000');\" ");
 $Form->set_InputDefault($FormularName,$InputName_Limit,$limit);
 $Form->set_InputStyleClass($FormularName,$InputName_Limit,"mFormSelect","mFormSelectFocus");
 $Form->set_InputDesc($FormularName,$InputName_Limit,___("Maximale Anzahl Eintraege die auf einmal angezeigt werden."));
@@ -135,6 +141,92 @@ $Form->add_InputOption($FormularName,$InputName_Limit,10,"10 ".___("Adressen"));
 $Form->add_InputOption($FormularName,$InputName_Limit,25,"25 ".___("Adressen"));
 $Form->add_InputOption($FormularName,$InputName_Limit,50,"50 ".___("Adressen"));
 $Form->add_InputOption($FormularName,$InputName_Limit,100,"100 ".___("Adressen"));
+//Sort-multi - 0
+$Form->new_Input($FormularName,$InputName_SI0,"select", "");
+$Form->set_InputJS($FormularName,$InputName_SI0," onChange=\"flash('submit','#ff0000');\" ");
+$Form->set_InputDefault($FormularName,$InputName_SI0,$si0);
+$Form->set_InputStyleClass($FormularName,$InputName_SI0,"mFormSelect","mFormSelectFocus");
+$Form->set_InputDesc($FormularName,$InputName_SI0,___("Maximale Anzahl Eintraege die auf einmal angezeigt werden."));
+$Form->set_InputReadonly($FormularName,$InputName_SI0,false);
+$Form->set_InputOrder($FormularName,$InputName_SI0,6);
+$Form->set_InputLabel($FormularName,$InputName_SI0,___("sortiere nach.")."<br>");
+//$Form->set_InputValue($FormularName,$InputName_Group,"");
+$Form->set_InputSize($FormularName,$InputName_SI0,0,1);
+$Form->set_InputMultiple($FormularName,$InputName_SI0,false);
+//add Data
+$Form->add_InputOption($FormularName,$InputName_SI0,"","--");
+$Form->add_InputOption($FormularName,$InputName_SI0,"email",___("E-Mail-Adresse"));
+$Form->add_InputOption($FormularName,$InputName_SI0,"aktiv",___("Aktiv"));
+$Form->add_InputOption($FormularName,$InputName_SI0,"status",___("Status"));
+$Form->add_InputOption($FormularName,$InputName_SI0,"created",___("Erstellungs-Datum"));
+$Form->add_InputOption($FormularName,$InputName_SI0,"f0",___("F0"));
+$Form->add_InputOption($FormularName,$InputName_SI0,"f1",___("F1"));
+$Form->add_InputOption($FormularName,$InputName_SI0,"f2",___("F2"));
+$Form->add_InputOption($FormularName,$InputName_SI0,"f3",___("F3"));
+$Form->add_InputOption($FormularName,$InputName_SI0,"f4",___("F4"));
+$Form->add_InputOption($FormularName,$InputName_SI0,"f5",___("F5"));
+$Form->add_InputOption($FormularName,$InputName_SI0,"f6",___("F6"));
+$Form->add_InputOption($FormularName,$InputName_SI0,"f7",___("F7"));
+$Form->add_InputOption($FormularName,$InputName_SI0,"f8",___("F8"));
+$Form->add_InputOption($FormularName,$InputName_SI0,"f9",___("F9"));
+
+//Sort-multi - 0
+$Form->new_Input($FormularName,$InputName_SI1,"select", "");
+$Form->set_InputJS($FormularName,$InputName_SI1," onChange=\"flash('submit','#ff0000');\" ");
+$Form->set_InputDefault($FormularName,$InputName_SI1,$si1);
+$Form->set_InputStyleClass($FormularName,$InputName_SI1,"mFormSelect","mFormSelectFocus");
+$Form->set_InputDesc($FormularName,$InputName_SI1,___("Maximale Anzahl Eintraege die auf einmal angezeigt werden."));
+$Form->set_InputReadonly($FormularName,$InputName_SI1,false);
+$Form->set_InputOrder($FormularName,$InputName_SI1,6);
+$Form->set_InputLabel($FormularName,$InputName_SI1,___("sortiere nach.")."<br>");
+//$Form->set_InputValue($FormularName,$InputName_Group,"");
+$Form->set_InputSize($FormularName,$InputName_SI1,0,1);
+$Form->set_InputMultiple($FormularName,$InputName_SI1,false);
+//add Data
+$Form->add_InputOption($FormularName,$InputName_SI1,"","--");
+$Form->add_InputOption($FormularName,$InputName_SI1,"email",___("E-Mail-Adresse"));
+$Form->add_InputOption($FormularName,$InputName_SI1,"aktiv",___("Aktiv"));
+$Form->add_InputOption($FormularName,$InputName_SI1,"status",___("Status"));
+$Form->add_InputOption($FormularName,$InputName_SI1,"created",___("Erstellungs-Datum"));
+$Form->add_InputOption($FormularName,$InputName_SI1,"f0",___("F0"));
+$Form->add_InputOption($FormularName,$InputName_SI1,"f1",___("F1"));
+$Form->add_InputOption($FormularName,$InputName_SI1,"f2",___("F2"));
+$Form->add_InputOption($FormularName,$InputName_SI1,"f3",___("F3"));
+$Form->add_InputOption($FormularName,$InputName_SI1,"f4",___("F4"));
+$Form->add_InputOption($FormularName,$InputName_SI1,"f5",___("F5"));
+$Form->add_InputOption($FormularName,$InputName_SI1,"f6",___("F6"));
+$Form->add_InputOption($FormularName,$InputName_SI1,"f7",___("F7"));
+$Form->add_InputOption($FormularName,$InputName_SI1,"f8",___("F8"));
+$Form->add_InputOption($FormularName,$InputName_SI1,"f9",___("F9"));
+
+//Sort-multi - 2
+$Form->new_Input($FormularName,$InputName_SI2,"select", "");
+$Form->set_InputJS($FormularName,$InputName_SI2," onChange=\"flash('submit','#ff0000');\" ");
+$Form->set_InputDefault($FormularName,$InputName_SI2,$si2);
+$Form->set_InputStyleClass($FormularName,$InputName_SI2,"mFormSelect","mFormSelectFocus");
+$Form->set_InputDesc($FormularName,$InputName_SI2,___("Maximale Anzahl Eintraege die auf einmal angezeigt werden."));
+$Form->set_InputReadonly($FormularName,$InputName_SI2,false);
+$Form->set_InputOrder($FormularName,$InputName_SI2,6);
+$Form->set_InputLabel($FormularName,$InputName_SI2,___("sortiere nach.")."<br>");
+//$Form->set_InputValue($FormularName,$InputName_Group,"");
+$Form->set_InputSize($FormularName,$InputName_SI2,0,1);
+$Form->set_InputMultiple($FormularName,$InputName_SI2,false);
+//add Data
+$Form->add_InputOption($FormularName,$InputName_SI2,"","--");
+$Form->add_InputOption($FormularName,$InputName_SI2,"email",___("E-Mail-Adresse"));
+$Form->add_InputOption($FormularName,$InputName_SI2,"aktiv",___("Aktiv"));
+$Form->add_InputOption($FormularName,$InputName_SI2,"status",___("Status"));
+$Form->add_InputOption($FormularName,$InputName_SI2,"created",___("Erstellungs-Datum"));
+$Form->add_InputOption($FormularName,$InputName_SI2,"f0",___("F0"));
+$Form->add_InputOption($FormularName,$InputName_SI2,"f1",___("F1"));
+$Form->add_InputOption($FormularName,$InputName_SI2,"f2",___("F2"));
+$Form->add_InputOption($FormularName,$InputName_SI2,"f3",___("F3"));
+$Form->add_InputOption($FormularName,$InputName_SI2,"f4",___("F4"));
+$Form->add_InputOption($FormularName,$InputName_SI2,"f5",___("F5"));
+$Form->add_InputOption($FormularName,$InputName_SI2,"f6",___("F6"));
+$Form->add_InputOption($FormularName,$InputName_SI2,"f7",___("F7"));
+$Form->add_InputOption($FormularName,$InputName_SI2,"f8",___("F8"));
+$Form->add_InputOption($FormularName,$InputName_SI2,"f9",___("F9"));
 
 //submit button 
 $Form->new_Input($FormularName,$InputName_Submit,"submit",___("Suchen"));
@@ -189,8 +281,11 @@ $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "<td valign=top colspan=1>";
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Author]['html'];
 $_MAIN_OUTPUT.= "</td>";
+$_MAIN_OUTPUT.= "</tr>";
 
-$_MAIN_OUTPUT.= "<td valign=bottom colspan=1>";
+$_MAIN_OUTPUT.= "<tr>";
+
+$_MAIN_OUTPUT.= "<td valign=bottom colspan=6>";
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Submit]['html'];
 //$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Reset]['html'];
 $_MAIN_OUTPUT.= "</td>";

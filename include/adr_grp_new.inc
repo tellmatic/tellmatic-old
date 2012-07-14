@@ -15,6 +15,8 @@
 $_MAIN_DESCR=___("neue Adressgruppe erstellen");
 $_MAIN_MESSAGE.="";
 
+$created=date("Y-m-d H:i:s");
+$author=$LOGIN->USER['name'];
 $set=getVar("set");
 $adr_grp_id=0;
 $standard=0;
@@ -36,7 +38,13 @@ if ($set=="save") {
 	if (empty($name)) {$check=false;$_MAIN_MESSAGE.="<br>".___("Name der Gruppe sollte nicht leer sein.");}
 	if ($check) {
 		$ADDRESS=new mnlAdr();
-		$ADDRESS->addGrp(Array("name"=>$name, "descr"=>$descr, "aktiv"=>$aktiv));
+		$ADDRESS->addGrp(Array(
+					"name"=>$name,
+					"descr"=>$descr,
+					"aktiv"=>$aktiv,
+					"created"=>$created, 
+					"author"=>$author
+					));
 		$_MAIN_MESSAGE.="<br>".sprintf(___("Neue Addressgruppe %s wurde erstellt."),"'<b>".$name."</b>'");
 		$action="adr_grp_list";
 		include_once ($mnl_includepath."/adr_grp_list.inc");

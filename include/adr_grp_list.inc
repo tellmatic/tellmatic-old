@@ -35,12 +35,12 @@ if ($set=="standard") {
 	$_MAIN_MESSAGE.="<br>".___("Neue Standardgruppe wurde definiert.");
 }
 if ($set=="delete" && $doit==1) {
-	$ADDRESS->delGRP($adr_grp_id,1,0);
-	$_MAIN_MESSAGE.="<br>".___("Eintrag wurde gel&ouml;scht.");
+	if (!DEMO) $ADDRESS->delGRP($adr_grp_id,1,0);
+	$_MAIN_MESSAGE.="<br>".___("Eintrag wurde gelÖscht.");
 }
 if ($set=="deleteall" && $doit==1) {
-	$ADDRESS->delGRP($adr_grp_id,0,1);
-	$_MAIN_MESSAGE.="<br>".___("Eintrag und die zugeordneten Adressen wurden gel&ouml;scht.");
+	if (!DEMO) $ADDRESS->delGRP($adr_grp_id,0,1);
+	$_MAIN_MESSAGE.="<br>".___("Eintrag und die zugeordneten Adressen wurden gelÖscht.");
 }
 $GRP=$ADDRESS->getGroup(0,0,0,1);
 $acg=count($GRP);
@@ -135,21 +135,24 @@ for ($accg=0;$accg<$acg;$accg++) {
 	$_MAIN_OUTPUT.= "<td onmousemove=\"showToolTip('tt_adr_grp_list_".$GRP[$accg]['id']."')\" onmouseout=\"hideToolTip();\">";
 	$_MAIN_OUTPUT.= "<a href=\"".$mnl_URL."/".$editURLPara_."\"  title=\"".___("Adressgruppe bearbeiten")."\">".$GRP[$accg]['name']."</a>";
 	$_MAIN_OUTPUT.= "<div id=\"tt_adr_grp_list_".$GRP[$accg]['id']."\" class=\"tooltip\">";
-	$_MAIN_OUTPUT.= "ID: ".$GRP[$accg]['id']." ";
+	$_MAIN_OUTPUT.="<b>".$GRP[$accg]['name']."</b>";
+	$_MAIN_OUTPUT.= "<br><font size=\"-1\">".$GRP[$accg]['descr']."</font>";
+	$_MAIN_OUTPUT.= "<br>ID: ".$GRP[$accg]['id']." ";
 	if ($GRP[$accg]['aktiv']==1) {
-		$_MAIN_OUTPUT.=  "<img src=\"".$mnl_iconURL."/tick.png\" border=\"0\">";
+		$_MAIN_OUTPUT.=  "<br><img src=\"".$mnl_iconURL."/tick.png\" border=\"0\">";
 		$_MAIN_OUTPUT.=  ___("(aktiv)");
 	} else {
-		$_MAIN_OUTPUT.=  "<img src=\"".$mnl_iconURL."/cancel.png\" border=\"0\">";
+		$_MAIN_OUTPUT.=  "<br><img src=\"".$mnl_iconURL."/cancel.png\" border=\"0\">";
 		$_MAIN_OUTPUT.=  ___("(inaktiv)");
 	}
 	//wenn standardgruppe, dann icon anzeigen
 	if ($GRP[$accg]['standard']==1) {
 		$_MAIN_OUTPUT.=  "<br><img src=\"".$mnl_iconURL."/page_white_lightning.png\" title=\"".___("Diese Gruppe ist die Standardgruppe")."\" border=\"0\">".___("Standardgruppe");
 	}
-	$_MAIN_OUTPUT.="<br><b>".$GRP[$accg]['name']."</b><br>";
-	$_MAIN_OUTPUT.=sprintf(___("%s Adressen"),$GRP[$accg]['adr_count'])."<br>";
-	$_MAIN_OUTPUT.= "<font size=\"-1\">".$GRP[$accg]['descr']."</font>";
+	$_MAIN_OUTPUT.="<br>".sprintf(___("%s Adressen"),$GRP[$accg]['adr_count']).
+									"<br>".sprintf(___("Erstellt am: %s von %s"),$GRP[$accg]['created'],$GRP[$accg]['author']).
+									"<br>".sprintf(___("Bearbeitet am: %s von %s"),$GRP[$accg]['updated'],$GRP[$accg]['editor']).
+									"";
 	$_MAIN_OUTPUT.= "</div>";
 	$_MAIN_OUTPUT.= "</td>";
 	$_MAIN_OUTPUT.= "<td>";

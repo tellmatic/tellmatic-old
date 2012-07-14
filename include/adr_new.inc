@@ -20,6 +20,18 @@ $adr_id=0;
 $created=date("Y-m-d H:i:s");
 $author=$LOGIN->USER['name'];
 
+$offset=getVar("offset");
+$limit=getVar("limit");
+$s_email=getVar("s_email");
+$s_status=getVar("s_status");
+$s_author=getVar("s_author");
+$adr_grp_id=getVar("adr_grp_id");
+$st=getVar("st");
+$si=getVar("si");
+$si0=getVar("si0");
+$si1=getVar("si1");
+$si2=getVar("si2");
+
 //field names for query
 $InputName_Group="adr_grp";//range from
 //$$InputName_Group=getVar($InputName_Group);
@@ -28,42 +40,44 @@ if (!isset($adr_grp)) {
 	$adr_grp[0]=getVar("adr_grp_id");
 }
 
-$InputName_Name="email";//betreff
+$InputName_Name="email";
 $$InputName_Name=getVar($InputName_Name);
 
-$InputName_Aktiv="aktiv";//range from
+$InputName_Aktiv="aktiv";
 $$InputName_Aktiv=getVar($InputName_Aktiv);
 
-$InputName_Status="status";//
+$InputName_Status="status";
 $$InputName_Status=getVar($InputName_Status);
 
-$InputName_F0="f0";//range from
+$InputName_F0="f0";
 $$InputName_F0=getVar($InputName_F0);
-$InputName_F1="f1";//range from
+$InputName_F1="f1";
 $$InputName_F1=getVar($InputName_F1);
-$InputName_F2="f2";//range from
+$InputName_F2="f2";
 $$InputName_F2=getVar($InputName_F2);
-$InputName_F3="f3";//range from
+$InputName_F3="f3";
 $$InputName_F3=getVar($InputName_F3);
-$InputName_F4="f4";//range from
+$InputName_F4="f4";
 $$InputName_F4=getVar($InputName_F4);
-$InputName_F5="f5";//range from
+$InputName_F5="f5";
 $$InputName_F5=getVar($InputName_F5);
-$InputName_F6="f6";//range from
+$InputName_F6="f6";
 $$InputName_F6=getVar($InputName_F6);
-$InputName_F7="f7";//range from
+$InputName_F7="f7";
 $$InputName_F7=getVar($InputName_F7);
-$InputName_F8="f8";//range from
+$InputName_F8="f8";
 $$InputName_F8=getVar($InputName_F8);
-$InputName_F9="f9";//range from
+$InputName_F9="f9";
 $$InputName_F9=getVar($InputName_F9);
 
+$InputName_Memo="memo";
+$$InputName_Memo=getVar($InputName_Memo);
 $check=true;
 if ($set=="save") {
 	//checkinput
 	if (empty($email)) {$check=false;$_MAIN_MESSAGE.="<br>".___("E-Mail sollte nicht leer sein.");}
 	//email auf gueltigkeit pruefen
-	if (!checkemailadr($email,$EMailcheck_Intern)) {$check=false;$_MAIN_MESSAGE.="<br>".___("E-Mail ist nicht korrekt oder Domain ist nicht g&uuml;ltig.");}
+	if (!checkemailadr($email,$EMailcheck_Intern)) {$check=false;$_MAIN_MESSAGE.="<br>".___("E-Mail ist nicht korrekt oder Domain ist nicht gültig.");}
 	if ($check) {
 
 		$ADDRESS=new mnlADR();	
@@ -106,6 +120,7 @@ if ($set=="save") {
 				"aktiv"=>$aktiv,
 				"created"=>$created, 
 				"author"=>$author, 
+				"memo"=>$memo, 
 				"f0"=>$f0,
 				"f1"=>$f1,
 				"f2"=>$f2,
@@ -119,7 +134,7 @@ if ($set=="save") {
 				),
 				$all_adr_grp);
 			//
-			//und neue referenzen zu neuen gruppen hinzufuegen
+			//und neue referenzen zu neuen gruppen hinzufügen
 			//$ADDRESS->addRef($ADR[0]['id'],$new_adr_grp);
 			// ^^^ nur fuer den fall das daten nicht geupdated werden!!! sondern nur referenzen hinzugefuegt!
 			//optional nachzuruesten und in den settings einstellbar :)
@@ -136,6 +151,7 @@ if ($set=="save") {
 					"author"=>$author, 
 					"status"=>$status, 
 					"code"=>$code, 
+					"memo"=>$memo, 
 					"f0"=>$f0,
 					"f1"=>$f1,
 					"f2"=>$f2,

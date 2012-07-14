@@ -20,6 +20,17 @@ $adr_id=getVar("adr_id");
 $created=date("Y-m-d H:i:s");
 $author=$LOGIN->USER['name'];
 
+$offset=getVar("offset");
+$limit=getVar("limit");
+$s_email=getVar("s_email");
+$s_status=getVar("s_status");
+$s_author=getVar("s_author");
+$adr_grp_id=getVar("adr_grp_id");
+$st=getVar("st");
+$si=getVar("si");
+$si0=getVar("si0");
+$si1=getVar("si1");
+$si2=getVar("si2");
 //field names for query
 $InputName_Group="adr_grp";//range from
 //$$InputName_Group=getVar($InputName_Group);
@@ -58,12 +69,17 @@ $$InputName_F8=getVar($InputName_F8);
 $InputName_F9="f9";//range from
 $$InputName_F9=getVar($InputName_F9);
 
+$InputName_Memo="memo";
+$$InputName_Memo=getVar($InputName_Memo);
+
+$ADDRESS=new mnlADR();
+$ADR=$ADDRESS->getAdr($adr_id);
 $check=true;
 if ($set=="save") {
 	//checkinput
 	if (empty($email)) {$check=false;$_MAIN_MESSAGE.="<br>".___("E-Mail darf nicht leer sein.");}
 	//email auf gueltigkeit pruefen
-	if (!checkemailadr($email,$EMailcheck_Intern)) {$check=false;$_MAIN_MESSAGE.="<br>".___("E-Mail ist nicht korrekt oder Domain ist nicht g&uuml;tig.");}
+	if (!checkemailadr($email,$EMailcheck_Intern)) {$check=false;$_MAIN_MESSAGE.="<br>".___("E-Mail ist nicht korrekt oder Domain ist nicht gütig.");}
 	if ($check) {
 		$ADDRESS=new mnlADR();
 		$ADDRESS->updateAdr(Array(
@@ -72,6 +88,7 @@ if ($set=="save") {
 				"aktiv"=>$aktiv, 
 				"created"=>$created, 
 				"author"=>$author, 
+				"memo"=>$memo, 
 				"f0"=>$f0,
 				"f1"=>$f1,
 				"f2"=>$f2,
@@ -89,14 +106,12 @@ if ($set=="save") {
 		$_MAIN_MESSAGE.="<br>".sprintf(___("Adresse %s wurde bearbeitet."),"<b>".$email."</b>");
 		$action="adr_list";
 		include_once ("adr_list.inc");
-	} else {
-		include_once ("adr_form.inc");
-	}
+	} else {//checkemail
+		include_once ($mnl_includepath."/adr_form.inc");
+	}//checkemail
 	
 } else {
 
-	$ADDRESS=new mnlADR();
-	$ADR=$ADDRESS->getAdr($adr_id);
 	$adr_grp=$ADDRESS->getGroupID(0,$adr_id,0);
 	$email=$ADR[0]['email'];
 	$aktiv=$ADR[0]['aktiv'];
@@ -111,6 +126,7 @@ if ($set=="save") {
 	$f7=$ADR[0]['f7'];
 	$f8=$ADR[0]['f8'];
 	$f9=$ADR[0]['f9'];
+	$memo=$ADR[0]['memo'];
 	include_once ($mnl_includepath."/adr_form.inc");
 }
 ?>

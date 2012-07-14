@@ -23,18 +23,23 @@ $FORMULAR=new mnlFRM();
 
 $shownlgURLPara=$mSTDURL;
 $shownlgURLPara->addParam("act","nl_grp_list");
+$shownlgURLPara->addParam("s","s_menu_nl,s_menu_vw");
 $shownlgURLPara_=$shownlgURLPara->getAllParams();
 
 $shownlURLPara=$mSTDURL;
+$shownlURLPara->addParam("s","s_menu_nl,s_menu_vw");
 
 $showformURLPara=$mSTDURL;
+$showformURLPara->addParam("s","s_menu_frm,s_menu_vw");
 
 $showadrURLPara=$mSTDURL;
 $showadrURLPara->addParam("act","statistic");
+$showadrURLPara->addParam("s","s_menu_adr,s_menu_vw");
 $showadrURLPara->addParam("set","adr");
 
 $showgrpURLPara=$mSTDURL;
 $showgrpURLPara->addParam("act","adr_grp_list");
+$showgrpURLPara->addParam("s","s_menu_adr,s_menu_vw");
 
 //$showadrURLPara->addParam("set","search");//wird nicht mehr benoteigt.... suchmaske bestandteil der liste!
 $showadrURLPara_=$showadrURLPara->getAllParams();
@@ -135,7 +140,7 @@ for ($acc=0;$acc<$ac;$acc++) {
 	}
 }
 $_MAIN_OUTPUT.="</td></tr>".
-						"<tr><td colspan=2 align=center><font size=-1>(".sprintf(___("Die TOP %s Liste  z&auml;hlt auch doppelte Klicks und Views!"),$show_top_x).")</font></td></tr>".
+						"<tr><td colspan=2 align=center><font size=-1>(".sprintf(___("Die TOP %s Liste  zählt auch doppelte Klicks und Views!"),$show_top_x).")</font></td></tr>".
 						"</table></center>";
 
 
@@ -154,6 +159,7 @@ $hc=$QUEUE->countH();
 //countH($q_id=0,$nl_id=0,$grp_id=0,$adr_id=0,$status=0)
 $shownlURLPara->addParam("act","nl_list");
 $shownlURLPara->addParam("set","");
+$shownlURLPara->delParam("nl_id","");
 $shownlURLPara_=$shownlURLPara->getAllParams();
 $_MAIN_OUTPUT.="<a href=\"".$mnl_URL."/".$shownlURLPara_."\">".sprintf(___("%s Newsletter"),$nlc)."</a> ::: <a href=\"".$mnl_URL."/".$shownlgURLPara_."\">".sprintf(___("%s Gruppen"),$nlgc)."</a>";
 $_MAIN_OUTPUT.="<br><br>".sprintf(___("Insgesamt %s Mails im Versand:"),$hc);
@@ -177,7 +183,7 @@ $showadrURLPara->delParam("email");
 $showadrURLPara->delParam("adr_id");
 $showadrURLPara->addParam("act","adr_list");
 $showadrURLPara_=$showadrURLPara->getAllParams();
-$_MAIN_OUTPUT.="<a href=\"".$mnl_URL."/".$showadrURLPara_."\">".sprintf(___("%s Newsletter"),$ac)."</a> ::: <a href=\"".$mnl_URL."/".$showgrpURLPara_."\">".sprintf(___("%s Gruppen"),$agc)."</a>";
+$_MAIN_OUTPUT.="<a href=\"".$mnl_URL."/".$showadrURLPara_."\">".sprintf(___("%s Adressen"),$ac)."</a> ::: <a href=\"".$mnl_URL."/".$showgrpURLPara_."\">".sprintf(___("%s Gruppen"),$agc)."</a>";
 $asc=count($STATUS['adr']['status']);
 for ($ascc=1; $ascc<=$asc; $ascc++)//0
 {

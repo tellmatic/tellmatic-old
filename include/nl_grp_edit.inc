@@ -15,6 +15,9 @@
 $_MAIN_DESCR=___("Newslettergruppe bearbeiten");
 $_MAIN_MESSAGE.="";
 
+$created=date("Y-m-d H:i:s");
+$author=$LOGIN->USER['name'];
+
 $set=getVar("set");
 $nl_grp_id=getVar("nl_grp_id");
 
@@ -40,7 +43,14 @@ if ($set=="save") {
 	if (empty($name)) {$check=false;$_MAIN_MESSAGE.="<br>".___("Name der Gruppe sollte nicht leer sein.");}
 	if ($check) {
 		$NEWSLETTER=new mnlNL();
-		$NEWSLETTER->updateGrp(Array("id"=>$nl_grp_id, "name"=>$name, "descr"=>$descr, "aktiv"=>$aktiv));
+		$NEWSLETTER->updateGrp(Array(
+					"id"=>$nl_grp_id, 
+					"name"=>$name, 
+					"descr"=>$descr, 
+					"aktiv"=>$aktiv,
+					"created"=>$created, 
+					"author"=>$author
+					));
 		$_MAIN_MESSAGE.="<br>".sprintf(___("Newslettergruppe %s wurde aktualisiert."),"'<b>".$name."</b>'");
 		$action="nl_grp_list";
 		include_once ($mnl_includepath."/nl_grp_list.inc");

@@ -34,6 +34,7 @@ $Form->new_Input($FormularName,"set", "hidden", "export");
 //////////////////
 //Gruppe
 $Form->new_Input($FormularName,$InputName_Group,"select", "");
+$Form->set_InputJS($FormularName,$InputName_Group," onChange=\"flash('submit','#ff0000');\" ");
 $Form->set_InputStyleClass($FormularName,$InputName_Group,"mFormSelect","mFormSelectFocus");
 $Form->set_InputDesc($FormularName,$InputName_Group,___("Gruppen waehlen, STRG/CTRL gedrueckt halten und klicken f. Mehrfachauswahl"));
 $Form->set_InputReadonly($FormularName,$InputName_Group,false);
@@ -52,6 +53,7 @@ for ($accg=0; $accg<$acg; $accg++)
 
 //Status
 $Form->new_Input($FormularName,$InputName_Status,"select", "");
+$Form->set_InputJS($FormularName,$InputName_Status," onChange=\"flash('submit','#ff0000');\" ");
 $Form->set_InputDefault($FormularName,$InputName_Status,0);
 $Form->set_InputStyleClass($FormularName,$InputName_Status,"mFormSelect","mFormSelectFocus");
 $Form->set_InputDesc($FormularName,$InputName_Status,___("Nur Adressen mit diesem Status exportieren"));
@@ -66,6 +68,31 @@ $sc=count($STATUS['adr']['status']);
 for ($scc=1; $scc<=$sc; $scc++) {
 	$Form->add_InputOption($FormularName,$InputName_Status,$scc,$STATUS['adr']['status'][$scc]." (".$STATUS['adr']['descr'][$scc].")");
 }
+//trennzeichen
+$Form->new_Input($FormularName,$InputName_Delimiter,"select", "");
+$Form->set_InputJS($FormularName,$InputName_Delimiter," onChange=\"flash('submit','#ff0000');\" ");
+$Form->set_InputDefault($FormularName,$InputName_Delimiter,$$InputName_Delimiter);
+$Form->set_InputStyleClass($FormularName,$InputName_Delimiter,"mFormSelect","mFormSelectFocus");
+$Form->set_InputDesc($FormularName,$InputName_Delimiter,___("Trennzeichen"));
+$Form->set_InputReadonly($FormularName,$InputName_Delimiter,false);
+$Form->set_InputOrder($FormularName,$InputName_Delimiter,6);
+$Form->set_InputLabel($FormularName,$InputName_Delimiter,"");
+$Form->set_InputSize($FormularName,$InputName_Delimiter,0,1);
+$Form->set_InputMultiple($FormularName,$InputName_Delimiter,false);
+//add Data
+$Form->add_InputOption($FormularName,$InputName_Delimiter,",",",");
+$Form->add_InputOption($FormularName,$InputName_Delimiter,";",";");
+$Form->add_InputOption($FormularName,$InputName_Delimiter,"|","|");
+
+//Dateiname
+$Form->new_Input($FormularName,$InputName_File,"text", $$InputName_File);
+$Form->set_InputJS($FormularName,$InputName_File," onChange=\"flash('submit','#ff0000');\" ");
+$Form->set_InputStyleClass($FormularName,$InputName_File,"mFormText","mFormTextFocus");
+$Form->set_InputSize($FormularName,$InputName_File,48,256);
+$Form->set_InputDesc($FormularName,$InputName_File,___("Dateiname"));
+$Form->set_InputReadonly($FormularName,$InputName_File,false);
+$Form->set_InputOrder($FormularName,$InputName_File,1);
+$Form->set_InputLabel($FormularName,$InputName_File,"");
 
 //submit button 
 $Form->new_Input($FormularName,$InputName_Submit,"submit","Adressen exportieren");
@@ -96,7 +123,7 @@ $_MAIN_OUTPUT.= $Form->INPUT[$FormularName]['set']['html'];
 $_MAIN_OUTPUT.= "<table>";
 $_MAIN_OUTPUT.= "<tr>";
 $_MAIN_OUTPUT.= "<td valign=top>";
-$_MAIN_OUTPUT.= ___("Gruppe:")."<br>";
+$_MAIN_OUTPUT.= "<img src=\"".$mnl_iconURL."/group.png\" border=\"0\">&nbsp;".___("Gruppe:")."<br>";
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Group]['html'];
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "</tr>";
@@ -104,6 +131,18 @@ $_MAIN_OUTPUT.= "<tr>";
 $_MAIN_OUTPUT.= "<td valign=top>";
 $_MAIN_OUTPUT.= ___("Adressen mit folgendem Status:")."<br>";
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Status]['html'];
+$_MAIN_OUTPUT.= "</td>";
+$_MAIN_OUTPUT.= "</tr>";
+$_MAIN_OUTPUT.= "<tr>";
+$_MAIN_OUTPUT.= "<td valign=top>";
+$_MAIN_OUTPUT.= ___("Trennzeichen:")."<br>";
+$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Delimiter]['html'];
+$_MAIN_OUTPUT.= "</td>";
+$_MAIN_OUTPUT.= "</tr>";
+$_MAIN_OUTPUT.= "<tr>";
+$_MAIN_OUTPUT.= "<td valign=top>";
+$_MAIN_OUTPUT.= ___("Dateiname:")."<br>";
+$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_File]['html'].".csv";
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "</tr>";
 $_MAIN_OUTPUT.= "<tr>";

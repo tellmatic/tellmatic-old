@@ -9,58 +9,62 @@
 /* leave this header in file!                                                   */
 /* diesen Header nicht loeschen!                                                */
 /* check Homepage for Updates and more Infos                                    */
-/* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
+/* Besuchen Sie die Homepage für Updates und weitere Infos                     */
 /********************************************************************************/
 
-$_MAIN_DESCR=___("Bitte aus dem Men&uuml; w&auml;hlen.")."<br>";
+$_MAIN_DESCR=___("Bitte aus dem Menü wählen.")."<br>";
 $_MAIN_MESSAGE="";
 $_MAIN_OUTPUT="";
 $_MAIN_HELP="";
 
 if (file_exists($mnl_path."/install.php")) {
-	$_MAIN_MESSAGE.="<br><font size=2 color=red><b>".___("ACHTUNG! /install.php existiert! Die Datei install.php bitte nach erfolgreicher Installation verschieben oder l&aouml;schen!")."</b></font>";
+	$_MAIN_MESSAGE.="<br><font size=2 color=red><b>".___("ACHTUNG! /install.php existiert! Die Datei install.php bitte nach erfolgreicher Installation verschieben oder löschen!")."</b></font>";
 }
 
 if (is_writeable($mnl_includepath)) {
-	$_MAIN_MESSAGE.="<br><font size=2 color=red><b>".sprintf(___("ACHTUNG! %s ist nicht Schreibgesch&uuml;tzt"),$mnl_includepath)."</b></font>";
+	$_MAIN_MESSAGE.="<br><font size=2 color=red><b>".sprintf(___("ACHTUNG! %s ist nicht Schreibgeschützt"),$mnl_includepath)."</b></font>";
 	if (@chmod ($mnl_includepath, 0755)) {
-		$_MAIN_MESSAGE.="<br><font size=2 color=green>".sprintf(___("Rechte f&uuml;r %s wurden ge&auml;ndert!"),$mnl_includepath)."</font>";
+		$_MAIN_MESSAGE.="<br><font size=2 color=green>".sprintf(___("Rechte für %s wurden geändert!"),$mnl_includepath)."</font>";
 	} else {
-		$_MAIN_MESSAGE.="<br><font size=2 color=blue>".sprintf(___("Rechte f&uuml;r %s konnten nicht ge&auml;ndert werden! Bitte &auml;ndern Sie diese manuell."),$mnl_includepath)."</font>";
+		$_MAIN_MESSAGE.="<br><font size=2 color=blue>".sprintf(___("Rechte für %s konnten nicht geändert werden! Bitte ändern Sie diese manuell."),$mnl_includepath)."</font>";
 	}
 	if (@chmod ($mnl_includepath."/mnl_config.inc", 0755)) {
-		$_MAIN_MESSAGE.="<br><font size=2 color=green>".___("Rechte f&uuml;r mnl_config.inc wurden ge&auml;ndert!")."</font>";
+		$_MAIN_MESSAGE.="<br><font size=2 color=green>".___("Rechte für mnl_config.inc wurden geändert!")."</font>";
 	} else {
-		$_MAIN_MESSAGE.="<br><font size=2 color=blue>".___("Rechte f&uuml;r mnl_config.inc konnten nicht ge&auml;ndert werden! Bitte &auml;ndern Sie diese manuell.")."</font>";
+		$_MAIN_MESSAGE.="<br><font size=2 color=blue>".___("Rechte für mnl_config.inc konnten nicht geändert werden! Bitte ändern Sie diese manuell.")."</font>";
 	}
 }
+if (!is_writeable($mnl_tmppath)) {
+	$_MAIN_MESSAGE.="<br><font size=2 color=red><b>".sprintf(___("Keine Schreibrechte für %s"),$mnl_datapath)."</b></font>";
+}
+
 if (!is_writeable($mnl_datapath)) {
-	$_MAIN_MESSAGE.="<br><font size=2 color=red><b>".sprintf(___("Keine Schreibrechte f&uuml;r %s"),$mnl_datapath)."</b></font>";
+	$_MAIN_MESSAGE.="<br><font size=2 color=red><b>".sprintf(___("Keine Schreibrechte für %s"),$mnl_datapath)."</b></font>";
 }
 if (!is_writeable($mnl_nlpath)) {
-	$_MAIN_MESSAGE.="<br><font size=2 color=red><b>".sprintf(___("Keine Schreibrechte f&uuml;r %s"),$mnl_nlpath)."</b></font>";
+	$_MAIN_MESSAGE.="<br><font size=2 color=red><b>".sprintf(___("Keine Schreibrechte für %s"),$mnl_nlpath)."</b></font>";
 }
 if (!is_writeable($mnl_nlattachpath)) {
-	$_MAIN_MESSAGE.="<br><font size=2 color=red><b>".sprintf(___("Keine Schreibrechte f&uuml;r %s"),$mnl_nlattachpath)."</b></font>";
+	$_MAIN_MESSAGE.="<br><font size=2 color=red><b>".sprintf(___("Keine Schreibrechte für %s"),$mnl_nlattachpath)."</b></font>";
 }
 if (!is_writeable($mnl_nlimgpath)) {
-	$_MAIN_MESSAGE.="<br><font size=2 color=red><b>".sprintf(___("Keine Schreibrechte f&uuml;r %s"),$mnl_nlimgpath)."</b></font>";
+	$_MAIN_MESSAGE.="<br><font size=2 color=red><b>".sprintf(___("Keine Schreibrechte für %s"),$mnl_nlimgpath)."</b></font>";
 }
 if (!is_writeable($mnl_logpath)) {
-	$_MAIN_MESSAGE.="<br><font size=2 color=red><b>".sprintf(___("Keine Schreibrechte f&uuml;r %s"),$mnl_logpath)."</b></font>";
+	$_MAIN_MESSAGE.="<br><font size=2 color=red><b>".sprintf(___("Keine Schreibrechte für %s"),$mnl_logpath)."</b></font>";
 }
 if (!is_writeable($mnl_formpath)) {
-	$_MAIN_MESSAGE.="<br><font size=2 color=red><b>".sprintf(___("Keine Schreibrechte f&uuml;r %s"),$mnl_formpath)."</b></font>";
+	$_MAIN_MESSAGE.="<br><font size=2 color=red><b>".sprintf(___("Keine Schreibrechte für %s"),$mnl_formpath)."</b></font>";
 }
 
 if (!file_exists($mnl_includepath."/.htaccess")) {
-	$_MAIN_MESSAGE.="<br><font size=2 color=red><b>".sprintf(___("ACHTUNG! %s ist nicht Passwortgesch&uuml;tzt"),$mnl_includepath)."</b></font>";
+	$_MAIN_MESSAGE.="<br><font size=2 color=red><b>".sprintf(___("ACHTUNG! %s ist nicht Passwortgeschützt"),$mnl_includepath)."</b></font>";
 }
 if (!file_exists($mnl_datapath."/.htaccess")) {
-	$_MAIN_MESSAGE.="<br><font size=2 color=red><b>".sprintf(___("ACHTUNG! %s ist nicht Passwortgesch&uuml;tzt"),$mnl_datapath)."</b></font>";
+	$_MAIN_MESSAGE.="<br><font size=2 color=red><b>".sprintf(___("ACHTUNG! %s ist nicht Passwortgeschützt"),$mnl_datapath)."</b></font>";
 }
 if (!file_exists($mnl_logpath."/.htaccess")) {
-	$_MAIN_MESSAGE.="<br><font size=2 color=red><b>".sprintf(___("ACHTUNG! %s ist nicht Passwortgesch&uuml;tzt"),$mnl_logpath)."</b></font>";
+	$_MAIN_MESSAGE.="<br><font size=2 color=red><b>".sprintf(___("ACHTUNG! %s ist nicht Passwortgeschützt"),$mnl_logpath)."</b></font>";
 }
 
 
@@ -69,6 +73,11 @@ include_once ($mnl_includepath."/".$action.".inc");
 
 $_MAIN_DESCR="<img src=\"".$mnl_iconURL."/help.png\" border=\"0\" onclick=\"javascript:switchSection('main_help');\">&nbsp;&nbsp;".$_MAIN_DESCR;
 
+if ($user_is_expert) $_MAIN_OUTPUT.= "
+<script type=\"text/javascript\">
+	switchSection('main_help');
+</script>";
+
 if (!empty($_ERROR['html'])) {
 	$_MAIN_MESSAGE.="<hr noshade><br>".$_ERROR['html']."<br><hr noshade><br>";
 }
@@ -76,7 +85,7 @@ if (!empty($_ERROR['html'])) {
 $pwchanged=getVar("pwchanged");
 $cryptpw=getVar("cryptpw");
 if ($pwchanged==1) {
-	$_MAIN_MESSAGE.="<br>".___("Passwort wurde gespeichert und ist ab sofort g&uuml;ltig!").
+	$_MAIN_MESSAGE.="<br>".___("Passwort wurde gespeichert und ist ab sofort gültig.").
 										"<br>".___("Achtung! Passwort muss in include/.htpasswd manuell angepasst werden.").
 										"<br>crypt: <font color=red>".$cryptpw."</font>";
 }

@@ -46,8 +46,17 @@ $$InputName_Aktiv=getVar($InputName_Aktiv);
 $InputName_Link="link";//link
 $$InputName_Link=getVar($InputName_Link);
 
+$InputName_ContentType="content_type";
+$$InputName_ContentType=getVar($InputName_ContentType);
+
 $InputName_Group="nl_grp_id";//range from
 $$InputName_Group=getVar($InputName_Group);
+
+$InputName_TrackImageNew="track_image_new";//trackimage upload
+pt_register("POST","track_image_new");
+
+$InputName_TrackImageExisting="track_image_existing";//trackimage auswahl
+$$InputName_TrackImageExisting=getVar($InputName_TrackImageExisting);
 
 $check=true;
 if ($set=="save") {
@@ -56,6 +65,13 @@ if ($set=="save") {
 
 	//upload ?!
 	include_once ($mnl_includepath."/nl_upload.inc");
+
+	$track_image="";
+	if ($uploaded_track_image_new) {
+		$track_image="/".$uploaded_track_image_new_name;
+	} else {
+		$track_image=$track_image_existing;
+	}
 
 	if ($check) {
 		$status=1;
@@ -71,7 +87,9 @@ if ($set=="save") {
 									"created"=>$created, 
 									"author"=>$author, 
 									"grp_id"=>$nl_grp_id,
-									"attm"=>$attach_ext
+									"attm"=>$attach_ext,
+									"content_type"=>$content_type,
+									"track_image"=>$track_image
 									)
 								);
 		$_MAIN_MESSAGE.="<br>".sprintf(___("Neuer Newsletter %s wurde erstellt."),"'<b>".$subject."</b>'");

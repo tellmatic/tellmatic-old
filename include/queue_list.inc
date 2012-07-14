@@ -64,23 +64,23 @@ if ($set=="delete" && $doit==1 && !empty($q_id)) {
 		$NEWSLETTER->setStatus($Q[0]['nl_id'],5);
 	}
 	//q loeschen
-	$QUEUE->delQ($q_id);
-	$_MAIN_MESSAGE.="<br>".___("Eintrag wurde gel&ouml;scht.");
+	if (!DEMO) $QUEUE->delQ($q_id);
+	$_MAIN_MESSAGE.="<br>".___("Eintrag wurde gelÖscht.");
 }
 
 if ($set=="delete_log" && $doit==1) {
 	$Q=$QUEUE->getQ($q_id);
-	if (@unlink($mnl_logpath."/".$logfilename)) {
-		$_MAIN_MESSAGE.="<br>".___("Logfile wurde gel&ouml;scht.");
+	if (!DEMO && @unlink($mnl_logpath."/".$logfilename)) {
+		$_MAIN_MESSAGE.="<br>".___("Logfile wurde gelÖscht.");
 	} else {
-		$_MAIN_MESSAGE.="<br>".___("Logfile konnte nicht gel&ouml;scht werden.");
+		$_MAIN_MESSAGE.="<br>".___("Logfile konnte nicht gelÖscht werden.");
 	}
 }
 
 //q f. liste holen
 if ($nl_id>0) {
 	$NL=$NEWSLETTER->getNL($nl_id);
-	$_MAIN_MESSAGE.="<br>".sprintf(___("gew&auml;hltes Newsletter: %s")," <b>".$NL[0]['subject']."</b>");
+	$_MAIN_MESSAGE.="<br>".sprintf(___("gewähltes Newsletter: %s")," <b>".$NL[0]['subject']."</b>");
 	$Q=$QUEUE->getQ(0,0,0,$nl_id);//id offset limit nl_id
 } else {
 	$Q=$QUEUE->getQ(0,0,0,0);//id offset limit nl_id
@@ -164,7 +164,7 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 
 	$logfilename="q_".$Q[$qcc]['id']."_".$Q[$qcc]['grp_id']."_".date_convert_to_string($Q[$qcc]['created']).".log.html";
 	$logfile=$mnl_logpath."/".$logfilename;
-	$logfileURL=$mnl_URL."/".$mnl_logdir."/".$logfilename;
+	$logfileURL=$mnl_URL_FE."/".$mnl_logdir."/".$logfilename;
 	
 	$sendURLPara->addParam("q_id",$Q[$qcc]['id']);
 	$sendURLPara_=$sendURLPara->getAllParams();
@@ -216,10 +216,10 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 	$_MAIN_OUTPUT.= $GRP[0]['name'];
 	
 	$_MAIN_OUTPUT.= "<div id=\"tt_q_list_".$Q[$qcc]['id']."\" class=\"tooltip\">";
-	$_MAIN_OUTPUT.= "ID: ".$Q[$qcc]['id']." ";
+	$_MAIN_OUTPUT.="<b>".$NL[0]['subject']."</b>";
+	$_MAIN_OUTPUT.="<br>".sprintf(___("An Gruppe: %s"),"<b>".$GRP[0]['name']."</b>");
+	$_MAIN_OUTPUT.= "<br>ID: ".$Q[$qcc]['id']." ";
 	$_MAIN_OUTPUT.= "<br><img src=\"".$mnl_iconURL."/".$STATUS['q']['statimg'][$Q[$qcc]['status']]."\" border=\"0\">&nbsp;".$STATUS['q']['status'][$Q[$qcc]['status']];
-	$_MAIN_OUTPUT.="<br><b>".$NL[0]['subject']."</b>";
-	$_MAIN_OUTPUT.="<br><b>".$GRP[0]['name']."</b>";
 	$_MAIN_OUTPUT.="<br>".sprintf(___("Erstellt am: %s"),"<b>".$created_date."</b>");
 	$_MAIN_OUTPUT.="<br>".sprintf(___("Versand startet am/um: %s"),"<b>".$send_at."</b>");
 	$_MAIN_OUTPUT.="<br>".sprintf(___("Erstellt von: %s"),"<b>".$Q[$qcc]['author']."</b>");

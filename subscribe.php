@@ -118,6 +118,8 @@ if ($frm_id>0 && $doptin!=1) {
 	$InputName_F9="f9";
 	$$InputName_F9=getVar($InputName_F9);
 
+	$InputName_Memo="memo";
+	$$InputName_Memo=clear_text(getVar($InputName_Memo));
 	$FORMULAR=new mnlFRM();
 	$FRM=$FORMULAR->getForm($frm_id);
 	//$FRM[0]['name']
@@ -130,7 +132,6 @@ if ($frm_id>0 && $doptin!=1) {
 			//$date_sub=strftime("%d-%m-%Y %H:%M:%S",mk_microtime($created));
 			$date_sub=$created;
 			$author=$FRM[0]['id'];
-			$aktiv=1;
 
 			//double optin
 			if ($FRM[0]['double_optin']==1) {
@@ -142,7 +143,9 @@ if ($frm_id>0 && $doptin!=1) {
 
 
 			//checkinput
-			if (empty($fcpt) || $fcpt!=$cpt) {$check=false;$MESSAGE.="<br>Spamschutz! Bitte geben Sie untenstehenden Zahlen-Code ein um Ihre Angaben zu bestaetigen.";}
+			if ($FRM[0]['use_captcha']==1) {
+				if (empty($fcpt) || md5($fcpt)!=$cpt) {$check=false;$MESSAGE.="<br>Spamschutz! Bitte geben Sie untenstehenden Zahlen-Code ein um Ihre Angaben zu bestaetigen.";}
+			}
 			if (empty($email)) {$check=false;$MESSAGE.="<br>e-Mail darf nicht leer sein.";}
 			//email auf gueltigkeit pruefen
 			if (!checkemailadr($email,$EMailcheck_Subscribe)) {$check=false;$MESSAGE.="<br>e-Mail hat ein falsches Format oder ist nicht gueltig.";}
@@ -214,7 +217,8 @@ if ($frm_id>0 && $doptin!=1) {
 						"f6"=>$f6,
 						"f7"=>$f7,
 						"f8"=>$f8,
-						"f9"=>$f9
+						"f9"=>$f9,
+						"memo"=>"\n".$created.":\n".$memo."\n".$ADR[0]['memo'],
 						),
 						$all_adr_grp);
 
@@ -235,7 +239,7 @@ if ($frm_id>0 && $doptin!=1) {
 					//wenn adresse noch nicht existiert , neu anlegen
 					$newADRID=$ADDRESS->addAdr(Array(
 						"email"=>$email,
-						"aktiv"=>$aktiv,
+						"aktiv"=>$FRM[0]['subscribe_aktiv'],
 						"created"=>$created,
 						"status"=>$status,
 						"code"=>$code,
@@ -249,7 +253,8 @@ if ($frm_id>0 && $doptin!=1) {
 						"f6"=>$f6,
 						"f7"=>$f7,
 						"f8"=>$f8,
-						"f9"=>$f9
+						"f9"=>$f9,
+						"memo"=>$created.":\n".$memo,
 						),
 						$new_adr_grp);
 				}
@@ -285,6 +290,8 @@ if ($frm_id>0 && $doptin!=1) {
 													</ul>
 													<br>
 													Code: <b>".$code."</b>
+													<br>
+													Memo: <b>".$memo."</b>
 													<br>
 													<br>
 													";
@@ -353,7 +360,11 @@ if ($frm_id>0 && $doptin!=1) {
 		if (!$check || $set!="save") {
 
 			//captcha code
-			$captcha_code = rand(1000,9999);
+			$captcha_code="";
+			for ($digits=0;$digits<$FRM[0]['digits_captcha'];$digits++) {
+				$captcha_code .= rand(0,9);
+			}
+			$captcha_md5=md5($captcha_code);
 			$captcha_text = new Number( $captcha_code );
 			$FCAPTCHAIMG=$captcha_text->printNumber();;
 
@@ -361,6 +372,7 @@ if ($frm_id>0 && $doptin!=1) {
 
 			$_Tpl_FRM->setParseValue("FMESSAGE", $MESSAGE);
 			$_Tpl_FRM->setParseValue("FNAME", $FRM[0]['name']);
+			$_Tpl_FRM->setParseValue("FDESCR", $FRM[0]['descr']);
 			$_Tpl_FRM->setParseValue("FHEAD", $FHEAD);
 			$_Tpl_FRM->setParseValue("FFOOT", $FFOOT);
 			$_Tpl_FRM->setParseValue("FRESET", $FRESET);
@@ -389,6 +401,7 @@ if ($frm_id>0 && $doptin!=1) {
 			$_Tpl_FRM->setParseValue("F7NAME", $FRM[0]['f7']);
 			$_Tpl_FRM->setParseValue("F8NAME", $FRM[0]['f8']);
 			$_Tpl_FRM->setParseValue("F9NAME", $FRM[0]['f9']);
+			$_Tpl_FRM->setParseValue("MEMO", $FMEMO);
 			//template ausgeben
 			$OUTPUT=$_Tpl_FRM->renderTemplate($Form_Filename);
 
@@ -396,6 +409,7 @@ if ($frm_id>0 && $doptin!=1) {
 
 			$_Tpl_FRM->setParseValue("FMESSAGE", $MESSAGE);
 			$_Tpl_FRM->setParseValue("FNAME", $FRM[0]['name']);
+			$_Tpl_FRM->setParseValue("FDESCR", $FRM[0]['descr']);
 			$_Tpl_FRM->setParseValue("FEMAIL", $email);
 			$_Tpl_FRM->setParseValue("FEMAILNAME", "e-Mail");
 			$_Tpl_FRM->setParseValue("F0", $f0);
@@ -418,7 +432,7 @@ if ($frm_id>0 && $doptin!=1) {
 			$_Tpl_FRM->setParseValue("F7NAME", $FRM[0]['f7']);
 			$_Tpl_FRM->setParseValue("F8NAME", $FRM[0]['f8']);
 			$_Tpl_FRM->setParseValue("F9NAME", $FRM[0]['f9']);
-
+			$_Tpl_FRM->setParseValue("MEMO", $memo);
 			//template ausgeben
 			$OUTPUT=$_Tpl_FRM->renderTemplate($Form_Filename_S);
 

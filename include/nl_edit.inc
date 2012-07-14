@@ -25,27 +25,35 @@ pt_register("POST","file");
 $InputName_Image1="image1";//bild1
 pt_register("POST","image1");
 
-$InputName_Attach1="attach1";//bild1
+$InputName_Attach1="attach1";
 pt_register("POST","attach1");
 
-$InputName_Name="subject";//betreff
+$InputName_Name="subject";
 $$InputName_Name=getVar($InputName_Name);
 
-$InputName_Massmail="massmail";//betreff
+$InputName_Massmail="massmail";
 $$InputName_Massmail=getVar($InputName_Massmail);
 
-$InputName_Descr="body";//range from
+$InputName_Descr="body";
 $$InputName_Descr=getVar($InputName_Descr,0);//varname,slashes? 0=no add slashes
-//$$InputName_Descr=strtr($$InputName_Descr, $trans); 
 
-$InputName_Aktiv="aktiv";//range from
+$InputName_Aktiv="aktiv";
 $$InputName_Aktiv=getVar($InputName_Aktiv);
 
-$InputName_Link="link";//link
+$InputName_Link="link";
 $$InputName_Link=getVar($InputName_Link);
 
-$InputName_Group="nl_grp_id";//range from
+$InputName_ContentType="content_type";
+$$InputName_ContentType=getVar($InputName_ContentType);
+
+$InputName_Group="nl_grp_id";
 $$InputName_Group=getVar($InputName_Group);
+
+$InputName_TrackImageNew="track_image_new";//trackimage upload
+pt_register("POST","track_image_new");
+
+$InputName_TrackImageExisting="track_image_existing";//trackimage auswahl
+$$InputName_TrackImageExisting=getVar($InputName_TrackImageExisting);
 
 $NEWSLETTER=new mnlNL();
 $NL=$NEWSLETTER->getNL($nl_id);
@@ -62,12 +70,15 @@ if ($set=="save") {
 	//upload ?!
 	include_once ($mnl_includepath."/nl_upload.inc");
 
+	$track_image="";
+	if ($uploaded_track_image_new) {
+		$track_image="/".$uploaded_track_image_new_name;
+	} else {
+		$track_image=$track_image_existing;
+	}
+
 	if ($check) {
-		/* machen wir schon oben da wir $created benoetigen!!!
-		$NEWSLETTER=new mnlNL();
-		*/
 		//da wir das attachement anhand seiner endung identifizieren muessen, attm nur aktualisieren wenn auch was hochgeladen wurde, 					
-		//$uploaded_attach1=true;
 		if (!$uploaded_attach1) {
 			//also wenn kein upload... dann endung beibehalten
 			$NL=$NEWSLETTER->getNL($nl_id);
@@ -84,15 +95,17 @@ if ($set=="save") {
 									"created"=>$updated, 
 									"author"=>$author, 
 									"grp_id"=>$nl_grp_id,
-									"attm"=>$attach_ext
+									"attm"=>$attach_ext,
+									"content_type"=>$content_type,
+									"track_image"=>$track_image
 									)
 									);
 		$_MAIN_MESSAGE.="<br>".sprintf(___("Newsletter %s wurde aktualisiert."),"'<b>".$subject."</b>'");
 		$_MAIN_MESSAGE.= "<br>".___("Der Newsletter wurde gespeichert unter:").
 				"<ul>".
-				___("Vorlage:")." <a href=\"".$mnl_nldir."/".$NL_Filename_N."\" target=\"_preview\">".$mnl_nldir."/".$NL_Filename_N."</a>".
+				___("Vorlage:")." <a href=\"".$mnl_URL_FE."/".$mnl_nldir."/".$NL_Filename_N."\" target=\"_preview\">".$mnl_nldir."/".$NL_Filename_N."</a>".
 				"<br>".
-				___("Online:")." <a href=\"".$mnl_nldir."/".$NL_Filename_P."\" target=\"_preview\">".$mnl_nldir."/".$NL_Filename_P."</a>".
+				___("Online:")." <a href=\"".$mnl_URL_FE."/".$mnl_nldir."/".$NL_Filename_P."\" target=\"_preview\">".$mnl_nldir."/".$NL_Filename_P."</a>".
 				"</ul>";
 
 		$action="nl_list";
@@ -113,6 +126,8 @@ if ($set=="save") {
 	$massmail=$NL[0]['massmail'];
 	$link=$NL[0]['link'];
 	$nl_grp_id=$NL[0]['grp_id'];
+	$content_type=$NL[0]['content_type'];
+	$$InputName_TrackImageExisting=$NL[0]['track_image'];
 	include_once ($mnl_includepath."/nl_form.inc");
 }
 ?>

@@ -15,6 +15,8 @@
 $_MAIN_DESCR=___("Adressgruppe bearbeiten");
 $_MAIN_MESSAGE.="";
 
+$created=date("Y-m-d H:i:s");
+$author=$LOGIN->USER['name'];
 $set=getVar("set");
 $adr_grp_id=getVar("adr_grp_id");
 
@@ -35,7 +37,14 @@ if ($set=="save") {
 	if (empty($name)) {$check=false;$_MAIN_MESSAGE.="<br>".___("Name der Gruppe sollte nicht leer sein.");}
 	if ($check) {
 		$ADDRESS=new mnlAdr();
-		$ADDRESS->updateGrp(Array("id"=>$adr_grp_id, "name"=>$name, "descr"=>$descr, "aktiv"=>$aktiv));
+		$ADDRESS->updateGrp(Array(
+					"id"=>$adr_grp_id,
+					"name"=>$name,
+					"descr"=>$descr,
+					"aktiv"=>$aktiv,
+					"created"=>$created, 
+					"author"=>$author
+					));
 		$_MAIN_MESSAGE.="<br>".sprintf(___("Adressgruppe %s wurde aktualisiert."),"'<b>".$name."</b>'");
 		$action="adr_grp_list";
 		include_once ($mnl_includepath."/adr_grp_list.inc");

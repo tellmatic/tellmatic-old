@@ -67,25 +67,73 @@ $$InputName_SMTPPass=getVar($InputName_SMTPPass);
 $InputName_SMTPDomain="smtp_domain";
 $$InputName_SMTPDomain=getVar($InputName_SMTPDomain);
 
+$InputName_CheckVersion="check_version";
+$$InputName_CheckVersion=getVar($InputName_CheckVersion);
 
+$InputName_TrackImageExisting="track_image_existing";//trackimage auswahl
+$$InputName_TrackImageExisting=getVar($InputName_TrackImageExisting);
+
+$InputName_TrackImageNew="track_image_new";//trackimage upload
+pt_register("POST","track_image_new");
 $CONFIG=new mnlCFG();
 
 $check=true;
 if ($set=="save") {
+	//image
+	//imageupload
+	// Wurde wirklich eine Datei hochgeladen?
+	$uploaded_track_image_new=false;
+	if(is_uploaded_file($_FILES["track_image_new"]["tmp_name"])) {
+		// Gültige Endung? ($ = Am Ende des Dateinamens) (/i = Groß- Kleinschreibung nicht berücksichtigen)
+		if(preg_match("/\." . $allowed_trackimage_filetypes . "$/i", $_FILES["track_image_new"]["name"])) {
+			// Datei auch nicht zu groß
+			if($_FILES["track_image_new"]["size"] <= $max_upload_size) {
+				// Alles OK -> Datei kopieren
+				$uploaded_track_image_new_name=$_FILES["track_image_new"]["name"];
+				if($check && copy($_FILES["track_image_new"]["tmp_name"], $mnl_nlimgpath."/".$uploaded_track_image_new_name)) { //$_FILES["image"]["name"]
+					$_MAIN_MESSAGE.= "<br>".___("Track-BILD-Datei erfolgreich hochgeladen.");
+					$_MAIN_MESSAGE.= "<ul>".$_FILES["track_image_new"]["name"];
+					$_MAIN_MESSAGE.= " / ".$_FILES["track_image_new"]["size"]." Byte";
+					$_MAIN_MESSAGE.= ", ".$_FILES["track_image_new"]["type"];
+					$_MAIN_MESSAGE.= "<br>".___("gespeichert unter:")." <a href=\"".$mnl_URL_FE."/".$mnl_nlimgdir."/".$uploaded_track_image_new_name."\"  target=\"_preview\">".$mnl_nlimgdir."/".$uploaded_track_image_new_name."</a>";
+					$_MAIN_MESSAGE.= "</ul>";
+					$uploaded_track_image_new=true;
+				} else {
+					$_MAIN_MESSAGE.= "<br>".___("Tracker-BILD-Datei konnte nicht hochgeladen werden.");
+					$check=false;
+				}//copy
+			} else {
+				$_MAIN_MESSAGE.= "<br>".sprintf(___("Die Tracker-BILD-Datei darf nur eine GrÖsse von %s Byte besitzen."),$max_byte_size);
+				$check=false;
+			}//max size
+		} else {
+			$_MAIN_MESSAGE.= "<br>".___("Die Tracker-BILD-Datei besitzt eine ungültige Endung.");
+			$check=false;
+		}//extension
+	} else {
+		//$_MAIN_MESSAGE.= "Keine HTML-Datei zum Hochladen angegeben.";
+	}//no file
+	//ende upload image
 	//checkinput
 	if (empty($sender_email)) {$check=false;$_MAIN_MESSAGE.="<br>".___("Absender-Adresse sollte nicht leer sein").".";}
-	if (!checkemailadr($sender_email,$EMailcheck_Intern)) {$check=false;$_MAIN_MESSAGE.="<br>".___("Absender E-Mail hat ein falsches Format oder Domain ist nicht g&uuml;ltig").".";}
+	if (!checkemailadr($sender_email,$EMailcheck_Intern)) {$check=false;$_MAIN_MESSAGE.="<br>".___("Absender E-Mail hat ein falsches Format oder Domain ist nicht gültig").".";}
 	if (empty($sender_name)) {$check=false;$_MAIN_MESSAGE.="<br>".___("Absender-Name sollte nicht leer sein").".";}
-	if (empty($return_mail)) {$check=false;$_MAIN_MESSAGE.="<br>".___("E-Mail f&uuml;r Fehlermeldungen sollte nicht leer sein").".";}
-	if (!empty($return_mail) && !checkemailadr($return_mail,$EMailcheck_Intern)) {$check=false;$_MAIN_MESSAGE.="<br>".___("E-Mail f&uuml;r Fehlermeldungen hat ein falsches Format oder Domain ist nicht g&uuml;ltig").".";}
-	if (($notify_subscribe==1 || $notify_unsubscribe==1) && empty($notify_mail)) {$check=false;$_MAIN_MESSAGE.="<br>".___("E-Mail f&uumlr Benachrichtigungen sollte nicht leer sein").".";}
-	if (!empty($notify_mail) && !checkemailadr($notify_mail,$EMailcheck_Intern)) {$check=false;$_MAIN_MESSAGE.="<br>".___("E-Mail f&uuml;r Benachrichtigungen bei An-/Abmeldungen hat ein falsches Format oder Domain ist nicht g&uuml;ltig").".";}
+	if (empty($return_mail)) {$check=false;$_MAIN_MESSAGE.="<br>".___("E-Mail für Fehlermeldungen sollte nicht leer sein").".";}
+	if (!empty($return_mail) && !checkemailadr($return_mail,$EMailcheck_Intern)) {$check=false;$_MAIN_MESSAGE.="<br>".___("E-Mail für Fehlermeldungen hat ein falsches Format oder Domain ist nicht gültig").".";}
+	if (($notify_subscribe==1 || $notify_unsubscribe==1) && empty($notify_mail)) {$check=false;$_MAIN_MESSAGE.="<br>".___("E-Mail für Benachrichtigungen sollte nicht leer sein").".";}
+	if (!empty($notify_mail) && !checkemailadr($notify_mail,$EMailcheck_Intern)) {$check=false;$_MAIN_MESSAGE.="<br>".___("E-Mail für Benachrichtigungen bei An-/Abmeldungen hat ein falsches Format oder Domain ist nicht gültig").".";}
 
 	//check smtp/pop3 connection .... and maybe give a warning message, dont fail :)
 	//still to do , connect doesnt work here, need a testfunction........
 
+	if (!DEMO && $check) {
 
-	if ($check) {
+		$track_image="";
+		if ($uploaded_track_image_new) {
+			$track_image="/".$uploaded_track_image_new_name;
+		} else {
+			$track_image=$track_image_existing;
+		}
 
 		$CONFIG->updateCFG(Array(
 				"siteid"=>MNL_SITEID,
@@ -104,9 +152,11 @@ if ($set=="save") {
 				"smtp_user"=>$smtp_user,
 				"smtp_pass"=>$smtp_pass,
 				"emailcheck_intern"=>$emailcheck_intern,
-				"emailcheck_subscribe"=>$emailcheck_subscribe
+				"emailcheck_subscribe"=>$emailcheck_subscribe,
+				"check_version"=>$check_version,
+				"track_image"=>$track_image
 				));
-		$_MAIN_MESSAGE.="<br>".___("Die Einstellungen wurden gespeichert und sind ab sofort g&uuml;ltig")."!";
+		$_MAIN_MESSAGE.="<br>".___("Die Einstellungen wurden gespeichert und sind ab sofort gültig")."!";
 		$action="adm_set";
 //
 	} else {
@@ -126,13 +176,22 @@ if ($set=="save") {
 	$$InputName_MaxMails=$C[0]['max_mails_atonce'];//
 	$$InputName_MaxMailsBcc=$C[0]['max_mails_bcc'];//
 	$$InputName_MaxRetry=$C[0]['max_mails_retry'];//
+	if (!DEMO) {
 	$$InputName_SMTPHost=$C[0]['smtp_host'];//
 	$$InputName_SMTPUser=$C[0]['smtp_user'];//
 	$$InputName_SMTPPass=$C[0]['smtp_pass'];//
 	$$InputName_SMTPDomain=$C[0]['smtp_domain'];//
+	} else {
+		$$InputName_SMTPHost="mail.virtualhost.de";//
+		$$InputName_SMTPUser="smtp username";//
+		$$InputName_SMTPPass="smtp passwd";//
+		$$InputName_SMTPDomain="sender domainname";//
+	}
 	$$InputName_ECheckIntern=$C[0]['emailcheck_intern'];//
 	$$InputName_ECheckSubscribe=$C[0]['emailcheck_subscribe'];//
-	
+	$$InputName_CheckVersion=$C[0]['check_version'];//
+
+	$$InputName_TrackImageExisting=$C[0]['track_image'];
 	
 	include_once ($mnl_includepath."/adm_set_form.inc");
 	

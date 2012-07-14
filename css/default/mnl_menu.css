@@ -62,14 +62,25 @@
    -moz-border-radius:0 0 2em 2em;
 }		
 
-a.menu_entry:link, a.menu_head:link
+a.menu_head:link
 { 
-/*, a.menu_head:visitied, a.menu_entry:visited*/
+ color:#ffffff;
+ background-color:#07499c;
+ text-decoration:none;
+}
+a.menu_head:active, a.menu_head:hover
+{ 
+ color:#07499c;
+ background-color:#ffcc00;
+}
+
+a.menu_entry:link
+{ 
  color:#000066;
  background-color:#c3e6ec;
  text-decoration:none;
 }
-a.menu_entry:active, a.menu_entry:hover, a.menu_head:active, a.menu_head:hover
+a.menu_entry:active, a.menu_entry:hover
 { 
  color:#ff0000;
  background-color:#fda711;

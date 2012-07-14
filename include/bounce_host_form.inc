@@ -20,14 +20,10 @@ $Form=new mSimpleForm();
 $FormularName="bounce_host";
 //make new Form
 $Form->new_Form($FormularName,$_SERVER["PHP_SELF"],"post","_self");
-//$this->set_FormStyle($FormularName,"font-size:10pt;font-color=red;");
-////$Form->set_FormStyleClass($FormularName,"mForm");
-////$Form->set_FormInputStyleClass($FormularName,"mFormText","mFormTextFocus");
 $Form->set_FormJS($FormularName," onSubmit=\"switchSection('div_loader');\" ");
 //add a Description
 $Form->set_FormDesc($FormularName,___("Host waehlen"));
 //variable content aus menu als hidden field!
-//$Form->new_Input($FormularName,"type", "hidden", $content);
 $Form->new_Input($FormularName,"act", "hidden", $action);
 $Form->new_Input($FormularName,"set", "hidden", "connect");
 $Form->new_Input($FormularName,"val", "hidden", "list");
@@ -37,6 +33,7 @@ $Form->new_Input($FormularName,"val", "hidden", "list");
 //////////////////
 //HOST
 $Form->new_Input($FormularName,$InputName_Host,"select", "");
+$Form->set_InputJS($FormularName,$InputName_Host," onChange=\"flash('submit','#ff0000');\" ");
 $Form->set_InputDefault($FormularName,$InputName_Host,$$InputName_Host);
 $Form->set_InputStyleClass($FormularName,$InputName_Host,"mFormSelect","mFormSelectFocus");
 $Form->set_InputSize($FormularName,$InputName_Host,1,1);
@@ -49,6 +46,7 @@ $Form->add_InputOption($FormularName,$InputName_Host,$$InputName_Host,$$InputNam
 
 //Offset
 $Form->new_Input($FormularName,$InputName_Offset,"select", "");
+$Form->set_InputJS($FormularName,$InputName_Offset," onChange=\"flash('submit','#ff0000');\" ");
 $Form->set_InputDefault($FormularName,$InputName_Offset,$$InputName_Offset);
 $Form->set_InputStyleClass($FormularName,$InputName_Offset,"mFormSelect","mFormSelectFocus");
 $Form->set_InputDesc($FormularName,$InputName_Offset,___("Anzahl Mails die uebersprungen werden."));
@@ -73,6 +71,7 @@ $Form->add_InputOption($FormularName,$InputName_Offset,"1000","1000 Mails");
 */
 //Limit
 $Form->new_Input($FormularName,$InputName_Limit,"select", "");
+$Form->set_InputJS($FormularName,$InputName_Limit," onChange=\"flash('submit','#ff0000');\" ");
 $Form->set_InputDefault($FormularName,$InputName_Limit,$$InputName_Limit);
 $Form->set_InputStyleClass($FormularName,$InputName_Limit,"mFormSelect","mFormSelectFocus");
 $Form->set_InputDesc($FormularName,$InputName_Limit,___("max. Anzahl Mails die durchsucht/angezeigt werden."));
@@ -95,6 +94,7 @@ $Form->add_InputOption($FormularName,$InputName_Limit,"1000","1000 Mails");
 
 //nur bounces
 	$Form->new_Input($FormularName,$InputName_Bounce,"checkbox", 1);
+	$Form->set_InputJS($FormularName,$InputName_Bounce," onChange=\"flash('submit','#ff0000');\" ");
 	$Form->set_InputDefault($FormularName,$InputName_Bounce,$$InputName_Bounce);
 	$Form->set_InputStyleClass($FormularName,$InputName_Bounce,"mFormText","mFormTextFocus");
 	$Form->set_InputSize($FormularName,$InputName_Bounce,48,48);
@@ -105,6 +105,7 @@ $Form->add_InputOption($FormularName,$InputName_Limit,"1000","1000 Mails");
 
 //to adresse filtern nach return path fuer den host
 	$Form->new_Input($FormularName,$InputName_FilterTo,"checkbox", 1);
+	$Form->set_InputJS($FormularName,$InputName_FilterTo," onChange=\"flash('submit','#ff0000');\" ");
 	$Form->set_InputDefault($FormularName,$InputName_FilterTo,$$InputName_FilterTo);
 	$Form->set_InputStyleClass($FormularName,$InputName_FilterTo,"mFormText","mFormTextFocus");
 	$Form->set_InputSize($FormularName,$InputName_FilterTo,48,48);
@@ -141,7 +142,7 @@ $_MAIN_OUTPUT.= $Form->INPUT[$FormularName]['set']['html'];
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName]['val']['html'];
 $_MAIN_OUTPUT.= "<table border=0>";
 $_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top>".___("Host")."<br>";
+$_MAIN_OUTPUT.= "<td valign=top><img src=\"".$mnl_iconURL."/computer.png\" border=\"0\">&nbsp;".___("Host")."<br>";
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Host]['html'];
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "<td valign=top colspan=1>".___("Offset")."<br>";
@@ -151,8 +152,8 @@ $_MAIN_OUTPUT.= "<td valign=top colspan=1>".___("Limit")."<br>";
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Limit]['html'];
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "<td valign=top colspan=1><br>";
-$_MAIN_OUTPUT.= ___("Nur Bouncemails")." ".$Form->INPUT[$FormularName][$InputName_Bounce]['html'];
-$_MAIN_OUTPUT.= " ".___("Nur Returnmails")." ".$Form->INPUT[$FormularName][$InputName_FilterTo]['html'];
+$_MAIN_OUTPUT.= "<img src=\"".$mnl_iconURL."/sport_soccer.png\" border=\"0\">&nbsp;".___("Nur Bouncemails")." ".$Form->INPUT[$FormularName][$InputName_Bounce]['html'];
+$_MAIN_OUTPUT.= "&nbsp;<img src=\"".$mnl_iconURL."/status_offline.png\" border=\"0\">&nbsp;".___("Nur Returnmails")." ".$Form->INPUT[$FormularName][$InputName_FilterTo]['html'];
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "<td valign=bottom colspan=1><br>";
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Submit]['html'];

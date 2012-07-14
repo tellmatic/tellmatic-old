@@ -21,7 +21,8 @@ class mnlADR {
 		$this->ADR=Array();
 		$DB=new ConnectDB();
 		$Query ="						SELECT ".mnlTABLE_ADR.".id, ".mnlTABLE_ADR.".email, ".mnlTABLE_ADR.".aktiv, ".mnlTABLE_ADR.".created, ".mnlTABLE_ADR.".updated, ".mnlTABLE_ADR.".author, ".mnlTABLE_ADR.".editor, ".mnlTABLE_ADR.".status, ".mnlTABLE_ADR.".errors, ".mnlTABLE_ADR.".code, ".mnlTABLE_ADR.".clicks, ".mnlTABLE_ADR.".views, ".mnlTABLE_ADR.".newsletter,
-								".mnlTABLE_ADR_DETAILS.".id as d_id, ".mnlTABLE_ADR_DETAILS.".f0, ".mnlTABLE_ADR_DETAILS.".f1, ".mnlTABLE_ADR_DETAILS.".f2, ".mnlTABLE_ADR_DETAILS.".f3, ".mnlTABLE_ADR_DETAILS.".f4, ".mnlTABLE_ADR_DETAILS.".f5, ".mnlTABLE_ADR_DETAILS.".f6, ".mnlTABLE_ADR_DETAILS.".f7, ".mnlTABLE_ADR_DETAILS.".f8, ".mnlTABLE_ADR_DETAILS.".f9
+								".mnlTABLE_ADR_DETAILS.".id as d_id,
+								".mnlTABLE_ADR_DETAILS.".memo, ".mnlTABLE_ADR_DETAILS.".f0, ".mnlTABLE_ADR_DETAILS.".f1, ".mnlTABLE_ADR_DETAILS.".f2, ".mnlTABLE_ADR_DETAILS.".f3, ".mnlTABLE_ADR_DETAILS.".f4, ".mnlTABLE_ADR_DETAILS.".f5, ".mnlTABLE_ADR_DETAILS.".f6, ".mnlTABLE_ADR_DETAILS.".f7, ".mnlTABLE_ADR_DETAILS.".f8, ".mnlTABLE_ADR_DETAILS.".f9
 						FROM ".mnlTABLE_ADR." 
 						LEFT JOIN ".mnlTABLE_ADR_DETAILS." ON ".mnlTABLE_ADR.".id = ".mnlTABLE_ADR_DETAILS.".adr_id
 					";
@@ -99,6 +100,7 @@ class mnlADR {
 			$this->ADR[$ac]['newsletter']=$DB->Record['newsletter'];
 			$this->ADR[$ac]['errors']=$DB->Record['errors'];
 			$this->ADR[$ac]['code']=$DB->Record['code'];
+			$this->ADR[$ac]['memo']=$DB->Record['memo'];
 			$this->ADR[$ac]['d_id']=$DB->Record['d_id'];
 			$this->ADR[$ac]['f0']=$DB->Record['f0'];
 			$this->ADR[$ac]['f1']=$DB->Record['f1'];
@@ -119,7 +121,6 @@ class mnlADR {
 	//liefert NUR die IDs zurueck als Array!!! Beoetigt fuer die Formulare
 	//keine suche ueber f0_9 !!!!! da wir speicher sparen wollen... nur ids!
 	//bzw neue query testen!
-		
 		$ADRID=Array();
 		$DB=new ConnectDB();
 		$Query ="
@@ -158,7 +159,6 @@ class mnlADR {
 	//liefert NUR die IDs zurueck als Array!!! Benoetigt fuer die Formulare
 	//keine suche ueber f0_9 !!!!! da wir speicher sparen wollen... nur ids!
 	//bzw neue query testen!
-		
 		$this->ADR=Array();
 		$DB=new ConnectDB();
 		$Query ="
@@ -199,7 +199,11 @@ class mnlADR {
 		$this->GRP=Array();
 		$DB=new ConnectDB();
 		$Query ="
-			SELECT ".mnlTABLE_ADR_GRP.".id, ".mnlTABLE_ADR_GRP.".name, ".mnlTABLE_ADR_GRP.".descr, ".mnlTABLE_ADR_GRP.".aktiv, ".mnlTABLE_ADR_GRP.".standard
+			SELECT ".mnlTABLE_ADR_GRP.".id, ".mnlTABLE_ADR_GRP.".name, ".mnlTABLE_ADR_GRP.".descr, ".mnlTABLE_ADR_GRP.".aktiv, ".mnlTABLE_ADR_GRP.".standard,
+			".mnlTABLE_ADR_GRP.".author,
+			".mnlTABLE_ADR_GRP.".editor,
+			".mnlTABLE_ADR_GRP.".created,
+			".mnlTABLE_ADR_GRP.".updated
 			FROM ".mnlTABLE_ADR_GRP." 
 			WHERE ".mnlTABLE_ADR_GRP.".siteid='".MNL_SITEID."'
 			";
@@ -209,7 +213,11 @@ class mnlADR {
 		if ($adr_id >0) {
 			$Query ="";
 			$Query .= " 
-				SELECT DISTINCT ".mnlTABLE_ADR_GRP.".id, ".mnlTABLE_ADR_GRP.".name, ".mnlTABLE_ADR_GRP.".descr, ".mnlTABLE_ADR_GRP.".aktiv, ".mnlTABLE_ADR_GRP.".standard
+				SELECT DISTINCT ".mnlTABLE_ADR_GRP.".id, ".mnlTABLE_ADR_GRP.".name, ".mnlTABLE_ADR_GRP.".descr, ".mnlTABLE_ADR_GRP.".aktiv, ".mnlTABLE_ADR_GRP.".standard,
+				".mnlTABLE_ADR_GRP.".author,
+				".mnlTABLE_ADR_GRP.".editor,
+				".mnlTABLE_ADR_GRP.".created,
+				".mnlTABLE_ADR_GRP.".updated
 				FROM ".mnlTABLE_ADR_GRP.", ".mnlTABLE_ADR_GRP_REF."
 				WHERE ".mnlTABLE_ADR_GRP.".id=".mnlTABLE_ADR_GRP_REF.".grp_id
 				AND ".mnlTABLE_ADR_GRP.".siteid='".MNL_SITEID."'
@@ -220,7 +228,12 @@ class mnlADR {
 		if (check_dbid($frm_id)) {
 			$Query ="";
 			$Query .= " 
-				SELECT DISTINCT ".mnlTABLE_ADR_GRP.".id, ".mnlTABLE_ADR_GRP.".name, ".mnlTABLE_ADR_GRP.".descr, ".mnlTABLE_ADR_GRP.".aktiv, ".mnlTABLE_ADR_GRP.".standard
+				SELECT DISTINCT ".mnlTABLE_ADR_GRP.".id, ".mnlTABLE_ADR_GRP.".name, ".mnlTABLE_ADR_GRP.".descr, ".mnlTABLE_ADR_GRP.".aktiv, ".mnlTABLE_ADR_GRP.".standard,
+				".mnlTABLE_ADR_GRP.".author,
+				".mnlTABLE_ADR_GRP.".editor,
+				".mnlTABLE_ADR_GRP.".created,
+				".mnlTABLE_ADR_GRP.".updated
+
 				FROM ".mnlTABLE_ADR_GRP.", ".mnlTABLE_FRM_GRP_REF." 
 				WHERE ".mnlTABLE_ADR_GRP.".id=".mnlTABLE_FRM_GRP_REF.".grp_id
 				AND ".mnlTABLE_ADR_GRP.".siteid='".MNL_SITEID."'
@@ -238,6 +251,10 @@ class mnlADR {
 			$this->GRP[$ac]['descr']=$DB->Record['descr'];
 			$this->GRP[$ac]['aktiv']=$DB->Record['aktiv'];
 			$this->GRP[$ac]['standard']=$DB->Record['standard'];
+			$this->GRP[$ac]['author']=$DB->Record['author'];
+			$this->GRP[$ac]['editor']=$DB->Record['editor'];
+			$this->GRP[$ac]['created']=$DB->Record['created'];
+			$this->GRP[$ac]['updated']=$DB->Record['updated'];
 			if ($count==1) {
 				$this->GRP[$ac]['adr_count']=$this->countADR($this->GRP[$ac]['id']);
 			}
@@ -308,7 +325,19 @@ class mnlADR {
 	function addGrp($group) {
 		$Return=false;
 		$DB=new ConnectDB();
-		$Query ="INSERT INTO ".mnlTABLE_ADR_GRP." (name,descr,aktiv,standard,siteid) VALUES ('".$group["name"]."', '".$group["descr"]."', '".$group["aktiv"]."', 0, '".MNL_SITEID."')";
+		$Query ="INSERT INTO ".mnlTABLE_ADR_GRP." (
+					name,descr,aktiv,
+					standard,
+					created,author,
+					updated,editor,
+					siteid
+					) 
+					VALUES (
+					'".$group["name"]."', '".$group["descr"]."',
+					'".$group["aktiv"]."', 0,
+					'".$group["created"]."', '".$group["author"]."',
+					'".$group["created"]."', '".$group["author"]."',
+					'".MNL_SITEID."')";
 		if ($DB->Query($Query)) {
 			$Return=true;
 		}
@@ -319,7 +348,13 @@ class mnlADR {
 		$Return=false;
 		if (isset($group['id']) && check_dbid($group['id'])) {
 			$DB=new ConnectDB();
-			$Query ="UPDATE ".mnlTABLE_ADR_GRP." SET name='".$group["name"]."', descr='".$group["descr"]."', aktiv='".$group["aktiv"]."' WHERE siteid='".MNL_SITEID."' AND id='".$group["id"]."'";
+			$Query ="UPDATE ".mnlTABLE_ADR_GRP." 
+					SET 
+					name='".$group["name"]."', descr='".$group["descr"]."', 
+					aktiv='".$group["aktiv"]."',
+					updated='".$group["created"]."',
+					editor='".$group["author"]."'
+					WHERE siteid='".MNL_SITEID."' AND id='".$group["id"]."'";
 			if ($DB->Query($Query)) {
 				$Return=true;
 			}
@@ -402,17 +437,6 @@ class mnlADR {
 				}
 			}
 			
-			/* nein historie nicht loeschen! nur wenn nl oder adresse geloescht wird!
-			//versandliste, history h loeschen
-			$Query ="DELETE FROM nl_h WHERE siteid='".MNL_SITEID."' AND grp_id='".$id."'";
-				if ($DB->Query($Query)) {
-					$Return=true;
-				} else {
-					$Return=false;
-					return $Return;
-				}
-			
-			*/
 			
 			//aber die q muss geloescht werden!!!
 			//q loeschen
@@ -528,8 +552,10 @@ class mnlADR {
 			//neue id
 			$new_adr_id=$DB->Record['id'];
 			//detaildaten eintragen
-				$Query="INSERT INTO ".mnlTABLE_ADR_DETAILS." (adr_id,siteid,f0,f1,f2,f3,f4,f5,f6,f7,f8,f9) 
-							VALUES ('".$new_adr_id."','".MNL_SITEID."',
+				$Query="INSERT INTO ".mnlTABLE_ADR_DETAILS." (adr_id,memo,siteid,f0,f1,f2,f3,f4,f5,f6,f7,f8,f9) 
+							VALUES ('".$new_adr_id."',
+										'".$adr['memo']."',
+										'".MNL_SITEID."',
 										'".$adr['f0']."',
 										'".$adr['f1']."',
 										'".$adr['f2']."',
@@ -628,6 +654,7 @@ class mnlADR {
 			}
 			//details
 			$Query ="UPDATE ".mnlTABLE_ADR_DETAILS." SET
+						memo='".$adr['memo']."',
 						f0='".$adr["f0"]."',
 						f1='".$adr["f1"]."',
 						f2='".$adr["f2"]."',

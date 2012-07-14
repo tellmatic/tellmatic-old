@@ -34,8 +34,8 @@ if ($set=="aktiv") {
 	}
 }
 if ($set=="delete" && $doit==1) {
-	$FORMULAR->delForm($frm_id);
-	$_MAIN_MESSAGE.="<br>".___("Eintrag wurde gel&ouml;scht.");
+	if (!DEMO) $FORMULAR->delForm($frm_id);
+	$_MAIN_MESSAGE.="<br>".___("Eintrag wurde gelÖscht.");
 }
 if ($set=="copy" && $doit==1) {
 	$FORMULAR->copyForm($frm_id);
@@ -147,9 +147,17 @@ for ($acc=0;$acc<$ac;$acc++) {
 	
 	$_MAIN_OUTPUT.= "<tr id=\"row_".$acc."\"  bgcolor=\"".$bgcolor."\" onmouseover=\"setBGColor('row_".$acc."','".$row_bgcolor_hilite."');\" onmouseout=\"setBGColor('row_".$acc."','".$bgcolor."');\">";
 	$_MAIN_OUTPUT.= "<td onmousemove=\"showToolTip('tt_adr_list_".$FRM[$acc]['id']."')\" onmouseout=\"hideToolTip();\">";
-	$_MAIN_OUTPUT.= "<b>".$FRM[$acc]['id']."</b>";
+	$_MAIN_OUTPUT.= "<b>".$FRM[$acc]['id']."</b>&nbsp;&nbsp;";
 
+	if ($FRM[$acc]['subscribe_aktiv']==1) {
+		$_MAIN_OUTPUT.=  "<img src=\"".$mnl_iconURL."/user_green.png\" border=\"0\">&nbsp;";
+	} else {
+		$_MAIN_OUTPUT.=  "<img src=\"".$mnl_iconURL."/user_red.png\" border=\"0\">&nbsp;";
+	}
 	//markierung doubleoptin
+	if ($FRM[$acc]['use_captcha']==1) {
+		$_MAIN_OUTPUT.=  "<img src=\"".$mnl_iconURL."/sport_8ball.png\" border=\"0\">".$FRM[$acc]['digits_captcha']."&nbsp;";
+	}
 	if ($FRM[$acc]['double_optin']==1) {
 		$_MAIN_OUTPUT.=  "<img src=\"".$mnl_iconURL."/arrow_refresh_small.png\" border=\"0\" title=\"".___("Double-Opt-In")."\" alt=\"".___("Double-Opt-In")."\">";
 	}
@@ -161,21 +169,35 @@ for ($acc=0;$acc<$ac;$acc++) {
 	$_MAIN_OUTPUT.= "<td onmousemove=\"showToolTip('tt_adr_list_".$FRM[$acc]['id']."')\" onmouseout=\"hideToolTip();\">";
 	$_MAIN_OUTPUT.= "<a href=\"".$mnl_URL."/".$editURLPara_."\"  title=\"".___("Formular bearbeiten")."\">".$FRM[$acc]['name']."</a>";
 	$_MAIN_OUTPUT.= "<div id=\"tt_adr_list_".$FRM[$acc]['id']."\" class=\"tooltip\">";
-	$_MAIN_OUTPUT.= "ID: ".$FRM[$acc]['id']." ";
+	$_MAIN_OUTPUT.= "<b>".$FRM[$acc]['name']."</b>".
+							"<font size=-1><br>".$FRM[$acc]['descr'];
+
+	$_MAIN_OUTPUT.= "<br>ID: ".$FRM[$acc]['id']." ";
 	if ($FRM[$acc]['aktiv']==1) {
-		$_MAIN_OUTPUT.=  "<img src=\"".$mnl_iconURL."/tick.png\" border=\"0\">";
+		$_MAIN_OUTPUT.=  "<br><img src=\"".$mnl_iconURL."/tick.png\" border=\"0\">";
 		$_MAIN_OUTPUT.=  ___("(aktiv)");
 	} else {
-		$_MAIN_OUTPUT.=  "<img src=\"".$mnl_iconURL."/cancel.png\" border=\"0\">";
+		$_MAIN_OUTPUT.=  "<br><img src=\"".$mnl_iconURL."/cancel.png\" border=\"0\">";
 		$_MAIN_OUTPUT.=  ___("(inaktiv)");
+	}
+	if ($FRM[$acc]['subscribe_aktiv']==1) {
+		$_MAIN_OUTPUT.=  "<br><img src=\"".$mnl_iconURL."/user_green.png\" border=\"0\">";
+		$_MAIN_OUTPUT.=  ___("Neuangemeldete Adressen sind aktiv");
+	} else {
+		$_MAIN_OUTPUT.=  "<br><img src=\"".$mnl_iconURL."/user_red.png\" border=\"0\">";
+		$_MAIN_OUTPUT.=  ___("Neuangemeldete Adressen sind deaktiviert");
+	}
+	//captcha
+	if ($FRM[$acc]['use_captcha']==1) {
+		$_MAIN_OUTPUT.=  "<br><img src=\"".$mnl_iconURL."/sport_8ball.png\" border=\"0\">&nbsp;";
+		$_MAIN_OUTPUT.=  ___("Captcha").",&nbsp;";
+		$_MAIN_OUTPUT.=  sprintf(___("%s Ziffern"),$FRM[$acc]['digits_captcha']);
 	}
 	//markierung doubleoptin
 	if ($FRM[$acc]['double_optin']==1) {
-		$_MAIN_OUTPUT.=  "&nbsp;<img src=\"".$mnl_iconURL."/arrow_refresh_small.png\" border=\"0\">".___("Double-Opt-In");
+		$_MAIN_OUTPUT.=  "<br><img src=\"".$mnl_iconURL."/arrow_refresh_small.png\" border=\"0\">".___("Double-Opt-In");
 	}
-	$_MAIN_OUTPUT.= "<br><b>".$FRM[$acc]['name']."</b>".
-							"<font size=-1><br>".$FRM[$acc]['descr'].
-							"<br><br>".sprintf(___("Anmeldungen: %s"),$FRM[$acc]['subscriptions']).
+	$_MAIN_OUTPUT.= 	"<br><br>".sprintf(___("Anmeldungen: %s"),$FRM[$acc]['subscriptions']).
 							"<br><br>f0= ".$FRM[$acc]['f0']." &nbsp; [".$FRM[$acc]['f0_value']."]".
 							"<br>f1= ".$FRM[$acc]['f1']." &nbsp; [".$FRM[$acc]['f1_value']."]".
 							"<br>f2= ".$FRM[$acc]['f2']." &nbsp; [".$FRM[$acc]['f2_value']."]".
@@ -188,7 +210,7 @@ for ($acc=0;$acc<$ac;$acc++) {
 							"<br>f9= ".$FRM[$acc]['f9']." &nbsp; [".$FRM[$acc]['f9_value']."]".
 							"<br><br>".sprintf(___("Erstellt am: %s von %s"),$created_date,$author).
 							"<br>".sprintf(___("Bearbeitet am: %s von %s"),$updated_date,$editor);
-	$_MAIN_OUTPUT.= "<br><br>".___("Anmeldungen &uuml;ber dieses Formular werden in die folgenden Gruppen eingeordnet:")."<br>";
+	$_MAIN_OUTPUT.= "<br><br>".___("Anmeldungen über dieses Formular werden in die folgenden Gruppen eingeordnet:")."<br>";
 	$_MAIN_OUTPUT.= "<ul>";
 
 	$GRP=$ADDRESS->getGroup(0,0,$FRM[$acc]['id']);
@@ -223,16 +245,16 @@ for ($acc=0;$acc<$ac;$acc++) {
 	$_MAIN_OUTPUT.= "</td>";
 	$_MAIN_OUTPUT.= "<td>";
 	//link zur dynamischen onlineversion!
-	$_MAIN_OUTPUT.= "&nbsp;&nbsp;<a href=\"".$mnl_URL."/subscribe.php?fid=".$FRM[$acc]['id']."\" target=\"_preview\" title=\"".sprintf(___("Dynamische Onlineversion anzeigen: %s"),"subscribe.php?fid=".$FRM[$acc]['id'])."\"><img src=\"".$mnl_iconURL."/eye.png\" border=\"0\"></a>";
+	$_MAIN_OUTPUT.= "&nbsp;&nbsp;<a href=\"".$mnl_URL_FE."/subscribe.php?fid=".$FRM[$acc]['id']."\" target=\"_preview\" title=\"".sprintf(___("Dynamische Onlineversion anzeigen: %s"),"subscribe.php?fid=".$FRM[$acc]['id'])."\"><img src=\"".$mnl_iconURL."/eye.png\" border=\"0\"></a>";
 	//link zum template
 	if (file_exists($mnl_formpath."/Form_".$FRM[$acc]['id'].".html")) {
-		$_MAIN_OUTPUT.= "&nbsp;&nbsp;<a href=\"".$mnl_URL."/".$mnl_formdir."/Form_".$FRM[$acc]['id'].".html\" target=\"_preview\" title=\"".sprintf(___("Template anzeigen: %s"),$mnl_formdir."/Form_".$FRM[$acc]['id'].".html")."\"><img src=\"".$mnl_iconURL."/page_white_code.png\" border=\"0\"></a>";
+		$_MAIN_OUTPUT.= "&nbsp;&nbsp;<a href=\"".$mnl_URL_FE."/".$mnl_formdir."/Form_".$FRM[$acc]['id'].".html\" target=\"_preview\" title=\"".sprintf(___("Template anzeigen: %s"),$mnl_formdir."/Form_".$FRM[$acc]['id'].".html")."\"><img src=\"".$mnl_iconURL."/page_white_code.png\" border=\"0\"></a>";
 	}
 	//link zur geparsten Version
 	if (file_exists($mnl_formpath."/Form_".$FRM[$acc]['id']."_p.html")) {
-		$_MAIN_OUTPUT.= "&nbsp;&nbsp;<a href=\"".$mnl_URL."/".$mnl_formdir."/Form_".$FRM[$acc]['id']."_p.html\" target=\"_preview\" title=\"".sprintf(___("Statische Onlineversion anzeigen: %s"),$mnl_formdir."/Form_".$FRM[$acc]['id']."_p.html")."\"><img src=\"".$mnl_iconURL."/application_form_magnify.png\" border=\"0\"></a>";
+		$_MAIN_OUTPUT.= "&nbsp;&nbsp;<a href=\"".$mnl_URL_FE."/".$mnl_formdir."/Form_".$FRM[$acc]['id']."_p.html\" target=\"_preview\" title=\"".sprintf(___("Statische Onlineversion anzeigen: %s"),$mnl_formdir."/Form_".$FRM[$acc]['id']."_p.html")."\"><img src=\"".$mnl_iconURL."/application_form_magnify.png\" border=\"0\"></a>";
 	}
-	$_MAIN_OUTPUT.= "<a href=\"".$mnl_URL."/".$editURLPara_."\" title=\"".___("Formular bearbeiten")."\"><img src=\"".$mnl_iconURL."/pencil.png\" border=\"0\"></a>";
+	$_MAIN_OUTPUT.= "&nbsp;<a href=\"".$mnl_URL."/".$editURLPara_."\" title=\"".___("Formular bearbeiten")."\"><img src=\"".$mnl_iconURL."/pencil.png\" border=\"0\"></a>";
 	$_MAIN_OUTPUT.= "&nbsp;<a href=\"".$mnl_URL."/".$copyURLPara_."\" onclick=\"return confirmLink(this, '".___("Formular kopieren")."')\" title=\"".___("Formular kopieren")."\"><img src=\"".$mnl_iconURL."/add.png\" border=\"0\"></a>";
 	$_MAIN_OUTPUT.= "&nbsp;<a href=\"".$mnl_URL."/".$statURLPara_."\" title=\"".___("Statistik anzeigen")."\"><img src=\"".$mnl_iconURL."/chart_pie.png\" border=\"0\"></a>";
 	$_MAIN_OUTPUT.= "&nbsp;<a href=\"".$mnl_URL."/".$delURLPara_."\" onclick=\"return confirmLink(this, '".sprintf(___("Formular %s loeschen"),$FRM[$acc]['name'])."')\" title=\"".___("Formular loeschen")."\"><img src=\"".$mnl_iconURL."/cross.png\" border=\"0\"></a>";

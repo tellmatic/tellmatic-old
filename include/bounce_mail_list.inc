@@ -11,36 +11,18 @@
 /* check Homepage for Updates and more Infos                                    */
 /* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
 /********************************************************************************/
-
-//
-
-//
-//$Mail=$Bounce->filterBounces($Mail,1,1);//$Messages , checkHeader=1, checkBody
-/*
-//$Bounce->checkHeader($Mail[]);
-//$Bounce->checkBody($Mail[]);
-*/
 $Bounces=Array();
 $bcmatch=0;
 
 
 
 //hier uebergeben wir das mailarray an bounce und lassen uns die bounces filtern, aus body und header
-/*
-//tun wir aber bereits in getmail!!!
-if ($filter_to==1) { // wenn 1 dann filtern wir die emails nach return-path im to feld! am besten aber schon in getMail.... ueber search-array
-	$Mail=$Bounce->filterBounces($Mail,1,1,$bounce,$ReturnPath);//$Messages , checkHeader=1, checkBody, returnOnlyBounces..., filter to:
-} else {
-	$Mail=$Bounce->filterBounces($Mail,1,1,$bounce);//$Messages , checkHeader=1, checkBody, returnOnlyBounces..., filter to:
-}
-*/
 
 $Mail=$Bounce->filterBounces($Mail,1,1,$bounce);//$Messages , checkHeader=1, checkBody, returnOnlyBounces..., filter to:
 
 $mc=count($Mail);					
 
 $_MAIN_OUTPUT .= "<br>".sprintf(___("Gesamt: %s Mails"),$Mailer->count_msg);
-//$_MAIN_OUTPUT .= "<br>Angezeigt werden max. $limit / $mc Mails.";
 
 if ($mc>0) {
 	//$_MAIN_OUTPUT .= "<br>Mail Nr. ".($offset+1)." bis Nr. ".($offset+$mc).".";
@@ -65,14 +47,6 @@ if ($mc>0) {
 			$bcmatch++;
 		}
 
-	/*alt:
-		//bounce holen
-		if (!empty($Mail[$mcc]['bounce'])) {
-			$Mail=$Bounce->filterBounces($Mail,1,1);//$Messages , checkHeader=1, checkBody
-			$Bounces = array_merge($Bounces,$Mail[$mcc]['bounce']);
-			$bcmatch++;
-		}
-	*/			
 		if ($mcc%2==0) {$bgcolor=$row_bgcolor;} else {$bgcolor=$row_bgcolor2;}
 		$_MAIN_OUTPUT.= "<tr id=\"row_".$mcc."\" bgcolor=\"".$bgcolor."\" onmousemove=\"showToolTip('tt_bouncemail_list_".$mcc."')\" onmouseover=\"setBGColor('row_".$mcc."','".$row_bgcolor_hilite."');\" onmouseout=\"setBGColor('row_".$mcc."','".$bgcolor."');hideToolTip();\">";
 		$_MAIN_OUTPUT.= "<td valign=\"top\">";
@@ -141,7 +115,7 @@ if ($mc>0) {
 	
 	$_MAIN_OUTPUT.= "<tr>";
 	$_MAIN_OUTPUT.= "<td colspan=4>";
-	$_MAIN_OUTPUT.= "<a href=\"javascript:checkAllForm('".$FormularName."');\" title=\"".___("Markierung fuer alle angezeigten E-Mails umkehren")."\">".___("Alle ausw&auml;hlen / Markierung f&uuml;r alle angezeigten E-Mails umkehren")."</a>";
+	$_MAIN_OUTPUT.= "<a href=\"javascript:checkAllForm('".$FormularName."');\" title=\"".___("Markierung fuer alle angezeigten E-Mails umkehren")."\">".___("Alle auswählen / Markierung ü;r alle angezeigten E-Mails umkehren")."</a>";
 	//$_MAIN_OUTPUT.= "<a href=\"javascript:checkByID('".$InputName_Mail."');\">alle auswaehlen</a><br>";
 	//$_MAIN_OUTPUT.= "<a href=\"javascript:checkAll();\">alle auswaehlen</a><br>";
 	$_MAIN_OUTPUT.= "</td>";

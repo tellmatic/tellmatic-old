@@ -106,11 +106,11 @@ msgid	"Return-Path, E-Mail fuer Fehlermeldungen"
 msgstr	"Return-Path, E-Mail für Fehlermeldungen"
 
 #: ../include/adm_set_form.inc:285
-msgid	"Pr&uuml;fung der E-Mail-Adressen, Intern + Versand"
+msgid	"Prüfung der E-Mail-Adressen, Intern + Versand"
 msgstr	"Prüfung der E-Mail-Adressen, Intern + Versand"
 
 #: ../include/adm_set_form.inc:294
-msgid	"Pr&uuml;fung der E-Mail-Adressen bei Anmeldung"
+msgid	"Prüfung der E-Mail-Adressen bei Anmeldung"
 msgstr	"Prüfung der E-Mail-Adressen bei Anmeldung"
 
 #: ../include/adm_set_form.inc:303
@@ -134,7 +134,7 @@ msgid	"Maximale Anzahl Mails pro Sendevorgang"
 msgstr	"Maximale Anzahl Mails pro Sendevorgang"
 
 #: ../include/adm_set_form.inc:348
-msgid	"Maximale Anzahl Adressen pro Mail im BCC-Header f&uuml;r "
+msgid	"Maximale Anzahl Adressen pro Mail im BCC-Header für "
 	"Massenmailing"
 msgstr	"Maximale Anzahl Adressen pro Mail im BCC-Header für "
 	"Massenmailing"
@@ -144,37 +144,31 @@ msgid	"Absender-Adresse sollte nicht leer sein"
 msgstr	"Absender-Adresse sollte nicht leer sein"
 
 #: ../include/adm_set.inc:77
-msgid	"Absender E-Mail hat ein falsches Format oder Domain ist nicht "
-	"g&uuml;ltig"
-msgstr	"Absender E-Mail hat ein falsches Format oder Domain ist nicht "
-	"gültig"
+msgid	"Absender E-Mail hat ein falsches Format oder Domain ist nicht gültig"
+msgstr	"Absender E-Mail hat ein falsches Format oder Domain ist nicht gültig"
 
 #: ../include/adm_set.inc:78
 msgid	"Absender-Name sollte nicht leer sein"
 msgstr	"Absender-Name sollte nicht leer sein"
 
 #: ../include/adm_set.inc:79
-msgid	"E-Mail f&uuml;r Fehlermeldungen sollte nicht leer sein"
+msgid	"E-Mail für Fehlermeldungen sollte nicht leer sein"
 msgstr	"E-Mail für Fehlermeldungen sollte nicht leer sein"
 
 #: ../include/adm_set.inc:80
-msgid	"E-Mail f&uuml;r Fehlermeldungen hat ein falsches Format oder Domain "
-	"ist nicht g&uuml;ltig"
-msgstr	"E-Mail für Fehlermeldungen hat ein falsches Format oder "
-	"Domain ist nicht gültig"
+msgid	"E-Mail für Fehlermeldungen hat ein falsches Format oder Domain ist nicht gültig"
+msgstr	"E-Mail für Fehlermeldungen hat ein falsches Format oder Domain ist nicht gültig"
 
 #: ../include/adm_set.inc:81
-msgid	"E-Mail f&uumlr Benachrichtigungen sollte nicht leer sein"
-msgstr	"E-Mail f&uumlr Benachrichtigungen sollte nicht leer sein"
+msgid	"E-Mail für Benachrichtigungen sollte nicht leer sein"
+msgstr	"E-Mail für Benachrichtigungen sollte nicht leer sein"
 
 #: ../include/adm_set.inc:82
-msgid	"E-Mail f&uuml;r Benachrichtigungen bei An-/Abmeldungen hat ein "
-	"falsches Format oder Domain ist nicht g&uuml;ltig"
-msgstr	"E-Mail für Benachrichtigungen bei An-/Abmeldungen hat ein "
-	"falsches Format oder Domain ist nicht gültig"
+msgid	"E-Mail für Benachrichtigungen bei An-/Abmeldungen hat ein falsches Format oder Domain ist nicht gültig"
+msgstr	"E-Mail für Benachrichtigungen bei An-/Abmeldungen hat ein falsches Format oder Domain ist nicht gültig"
 
 #: ../include/adm_set.inc:131
-msgid	"Die Einstellungen wurden gespeichert und sind ab sofort g&uuml;ltig"
+msgid	"Die Einstellungen wurden gespeichert und sind ab sofort gültig"
 msgstr	"Die Einstellungen wurden gespeichert und sind ab sofort gültig"
 
 #: ../include/Menu.inc:205 ../include/Menu.inc:206 ../include/Menu.inc:214
@@ -234,13 +228,11 @@ msgstr	"mit dem Status:"
 #: ../include/adr_clean.inc:54 ../include/adr_clean.inc:70
 #: ../include/adr_clean.inc:79 ../include/adr_clean.inc:99
 #, c-format
-msgid	"%s Eintr&auml;ge aus der Gruppe %s mit dem Status %s wurden "
-	"gel&ouml;scht."
-msgstr	"%s Einträge aus der Gruppe %s mit dem Status %s wurden "
-	"gelöscht."
+msgid	"%s Einträge aus der Gruppe %s mit dem Status %s wurden gelöscht."
+msgstr	"%s Einträge aus der Gruppe %s mit dem Status %s wurden gelöscht."
 
 #: ../include/adr_clean.inc:108
-msgid	"&Uuml;bersicht"
+msgid	"Übersicht"
 msgstr	"Übersicht"
 
 #: ../include/adr_clean.inc:115 ../include/adr_grp_list.inc:151
@@ -257,7 +249,7 @@ msgid	"E-Mail darf nicht leer sein."
 msgstr	"E-Mail darf nicht leer sein."
 
 #: ../include/adr_edit.inc:66
-msgid	"E-Mail ist nicht korrekt oder Domain ist nicht g&uuml;tig."
+msgid	"E-Mail ist nicht korrekt oder Domain ist nicht gütig."
 msgstr	"E-Mail ist nicht korrekt oder Domain ist nicht gültig."
 
 #: ../include/adr_edit.inc:89
@@ -273,10 +265,8 @@ msgstr	"Adressen in eine CSV-Datei exportieren"
 #: ../include/adr_export_form.inc:37 ../include/adr_form.inc:59
 #: ../include/adr_import_form.inc:47 ../include/form_form.inc:78
 #: ../include/queue_form.inc:68
-msgid	"Gruppen waehlen, STRG/CTRL gedrueckt halten und klicken f. "
-	"Mehrfachauswahl"
-msgstr	"Gruppen wählen, STRG/CTRL gedrückt halten und klicken "
-	"f. Mehrfachauswahl"
+msgid	"Gruppen waehlen, STRG/CTRL gedrueckt halten und klicken f. Mehrfachauswahl"
+msgstr	"Gruppen wählen, STRG/CTRL gedrückt halten und klicken f. Mehrfachauswahl"
 
 #: ../include/adr_export_form.inc:56
 msgid	"Nur Adressen mit diesem Status exportieren"
@@ -296,7 +286,7 @@ msgstr	"Adressen exportieren (CSV-Export)"
 
 #: ../include/adr_export.inc:42 ../include/adr_list.inc:75
 #, c-format
-msgid	"gew&auml;hlte Gruppe: %s"
+msgid	"gewählte Gruppe: %s"
 msgstr	"gewählte Gruppe: %s"
 
 #: ../include/adr_export.inc:43
@@ -306,7 +296,7 @@ msgstr	"Exportiere %s"
 
 #: ../include/adr_export.inc:44
 #, c-format
-msgid	"%s Eintr&auml;ge gefunden."
+msgid	"%s Einträge gefunden."
 msgstr	"%s Einträge gefunden."
 
 #: ../include/adr_export.inc:68 ../include/adr_import.inc:50
@@ -420,11 +410,11 @@ msgstr	"Neue Standardgruppe wurde definiert."
 #: ../include/adr_grp_list.inc:39 ../include/adr_list.inc:67
 #: ../include/form_list.inc:38 ../include/nl_grp_list.inc:39
 #: ../include/nl_list.inc:38 ../include/queue_list.inc:68
-msgid	"Eintrag wurde gel&ouml;scht."
+msgid	"Eintrag wurde gelöscht."
 msgstr	"Eintrag wurde gelöscht."
 
 #: ../include/adr_grp_list.inc:43
-msgid	"Eintrag und die zugeordneten Adressen wurden gel&ouml;scht."
+msgid	"Eintrag und die zugeordneten Adressen wurden gelöscht."
 msgstr	"Eintrag und die zugeordneten Adressen wurden gelöscht."
 
 #: ../include/adr_grp_list.inc:141 ../include/adr_list.inc:226
@@ -509,7 +499,7 @@ msgstr	"Legende"
 
 #: ../include/adr_grp_list_legende.inc:19
 #: ../include/nl_grp_list_legende.inc:20
-msgid	"Standardgruppe (kann nicht de-aktiviert und gel&ouml;scht werden)"
+msgid	"Standardgruppe (kann nicht de-aktiviert und gelöscht werden)"
 msgstr	"Standardgruppe (kann nicht de-aktiviert und gelöscht werden)"
 
 #: ../include/adr_grp_list_legende.inc:20
@@ -554,7 +544,7 @@ msgid	"Gruppe loeschen und Adressen der Standardgruppe zuordnen"
 msgstr	"Gruppe löschen und Adressen der Standardgruppe zuordnen"
 
 #: ../include/adr_grp_list_legende.inc:27
-msgid	"Gruppe l&ouml;schen und Adressen der Standardgruppe zuordnen"
+msgid	"Gruppe löschen und Adressen der Standardgruppe zuordnen"
 msgstr	"Gruppe löschen und Adressen der Standardgruppe zuordnen"
 
 #: ../include/adr_grp_list_legende.inc:28
@@ -562,12 +552,8 @@ msgid	"Gruppe loeschen und Adressen der Gruppe loeschen"
 msgstr	"Gruppe löschen und Adressen der Gruppe löschen"
 
 #: ../include/adr_grp_list_legende.inc:28
-msgid	"Gruppe l&ouml;schen und Adressen der Gruppe l&ouml;schen (Adressen "
-	"werden komplett gel&ouml;scht und auch aus allen anderen Gruppen "
-	"entfernt!)"
-msgstr	"Gruppe löschen und Adressen der Gruppe löschen "
-	"(Adressen werden komplett gelöscht und auch aus allen anderen "
-	"Gruppen entfernt!)"
+msgid	"Gruppe löschen und Adressen der Gruppe löschen (Adressen werden komplett gelöscht und auch aus allen anderen Gruppen entfernt!)"
+msgstr	"Gruppe löschen und Adressen der Gruppe löschen (Adressen werden komplett gelöscht und auch aus allen anderen Gruppen entfernt!)"
 
 #: ../include/adr_grp_new.inc:15
 msgid	"neue Adressgruppe erstellen"
@@ -595,7 +581,7 @@ msgid	"Adress-Status f. existierende Adressen"
 msgstr	"Adress-Status f. existierende Adressen"
 
 #: ../include/adr_import_form.inc:90
-msgid	"Keine Aenderungen"
+msgid	"Keine Änderungen"
 msgstr	"Keine Änderungen"
 
 #: ../include/adr_import_form.inc:100
@@ -628,11 +614,11 @@ msgstr	"CSV-Datei konnte nicht hochgeladen werden."
 
 #: ../include/adr_import.inc:58
 #, c-format
-msgid	"Die CSV-Datei darf nur eine Gr&ouml;sse von %s Byte besitzen."
+msgid	"Die CSV-Datei darf nur eine Grösse von %s Byte besitzen."
 msgstr	"Die CSV-Datei darf nur eine Grösse von %s Byte besitzen."
 
 #: ../include/adr_import.inc:62
-msgid	"Die CSV-Datei besitzt eine ung&uuml;ltige Endung."
+msgid	"Die CSV-Datei besitzt eine ungültige Endung."
 msgstr	"Die CSV-Datei besitzt eine ungültige Endung."
 
 #: ../include/adr_import.inc:66
@@ -640,16 +626,16 @@ msgid	"Keine CSV-Datei zum Hochladen angegeben."
 msgstr	"Keine CSV-Datei zum Hochladen angegeben."
 
 #: ../include/adr_import.inc:71
-msgid	"Status f&uuml;r neue Adressen: "
+msgid	"Status für neue Adressen: "
 msgstr	"Status für neue Adressen: "
 
 #: ../include/adr_import.inc:75
-msgid	"Status f&uuml;r bestehende Adressen: "
+msgid	"Status für bestehende Adressen: "
 msgstr	"Status für bestehende Adressen: "
 
 #: ../include/adr_import.inc:80
-msgid	"Keine &Auml;nderung"
-msgstr	"Keine ÃÂnderung"
+msgid	"Keine Änderung"
+msgstr	"Keine Änderung"
 
 #: ../include/adr_import.inc:93
 #, c-format
@@ -658,7 +644,7 @@ msgstr	"Importiere Datei %s"
 
 #: ../include/adr_import.inc:154
 #, c-format
-msgid	"%s Eintr&auml;ge gefunden!"
+msgid	"%s Einträge gefunden!"
 msgstr	"%s Einträge gefunden!"
 
 #: ../include/adr_import.inc:156
@@ -668,10 +654,8 @@ msgstr	"%s existiert nicht!"
 
 #: ../include/adr_import.inc:227
 #, c-format
-msgid	"Zeile %s: E-Mail %s existiert Bereits und wurde aktualisiert und ggf "
-	"in Neue Gruppen eingetragen."
-msgstr	"Zeile %s: E-Mail %s existiert Bereits und wurde aktualisiert und ggf "
-	"in Neue Gruppen eingetragen."
+msgid	"Zeile %s: E-Mail %s existiert Bereits und wurde aktualisiert und ggf in Neue Gruppen eingetragen."
+msgstr	"Zeile %s: E-Mail %s existiert Bereits und wurde aktualisiert und ggf in Neue Gruppen eingetragen."
 
 #: ../include/adr_import.inc:266
 #, c-format
@@ -680,14 +664,12 @@ msgstr	"Zeile %s: E-Mail %s hat ein falsches Format."
 
 #: ../include/adr_import.inc:271
 #, c-format
-msgid	"Es wurden %s von %s Eintr&auml;gen importiert und in die "
-	"gew&auml;hlten Gruppen eingetragen."
-msgstr	"Es wurden %s von %s Einträgen importiert und in die "
-	"gewählten Gruppen eingetragen."
+msgid	"Es wurden %s von %s Einträgen importiert und in die gewählten Gruppen eingetragen."
+msgstr	"Es wurden %s von %s Einträgen importiert und in die gewählten Gruppen eingetragen."
 
 #: ../include/adr_import.inc:272
 #, c-format
-msgid	"%s Eintr&auml;ge waren Fehlerhaft und wurden NICHT importiert."
+msgid	"%s Einträge waren Fehlerhaft und wurden NICHT importiert."
 msgstr	"%s Einträge waren Fehlerhaft und wurden NICHT importiert."
 
 #: ../include/adr_import.inc:273
@@ -738,7 +720,7 @@ msgid	"E-Mail sollte nicht leer sein."
 msgstr	"E-Mail sollte nicht leer sein."
 
 #: ../include/adr_new.inc:66
-msgid	"E-Mail ist nicht korrekt oder Domain ist nicht g&uuml;ltig."
+msgid	"E-Mail ist nicht korrekt oder Domain ist nicht gültig."
 msgstr	"E-Mail ist nicht korrekt oder Domain ist nicht gültig."
 
 #: ../include/adr_new.inc:126
@@ -813,10 +795,8 @@ msgid	"Markierung fuer alle angezeigten Adressen umkehren"
 msgstr	"Markierung für alle angezeigten Adressen umkehren"
 
 #: ../include/bounce_filter_adr_list.inc:112
-msgid	"Alle ausw&auml;hlen / Markierung f&uuml;r alle angezeigten Adressen "
-	"umkehren"
-msgstr	"Alle auswählen / Markierung für alle angezeigten "
-	"Adressen umkehren"
+msgid	"Alle auswählen / Markierung für alle angezeigten Adressen umkehren"
+msgstr	"Alle auswählen / Markierung für alle angezeigten Adressen umkehren"
 
 #: ../include/bounce_filter_form_head.inc:44
 #: ../include/bounce_filter_form_head.inc:54
@@ -923,26 +903,24 @@ msgid	"Servermeldung: %s"
 msgstr	"Servermeldung: %s"
 
 #: ../include/bounce.inc:105
-msgid	"Es wurden keine Mails zum Bearbeiten ausgew&auml;hlt."
+msgid	"Es wurden keine Mails zum Bearbeiten ausgewählt."
 msgstr	"Es wurden keine Mails zum Bearbeiten ausgewählt."
 
 #: ../include/bounce.inc:114
-msgid	"L&ouml;sche Mail."
+msgid	"Lösche Mail."
 msgstr	"Lösche Mail."
 
 #: ../include/bounce.inc:120
-msgid	"Mailbox aufr&auml;umen, als gel&ouml;scht markierte Mails wurden "
-	"entfernt."
-msgstr	"Mailbox aufräumen, als gelöscht markierte Mails wurden "
-	"entfernt."
+msgid	"Mailbox aufräumen, als gelöscht markierte Mails wurden entfernt."
+msgstr	"Mailbox aufräumen, als gelöscht markierte Mails wurden entfernt."
 
 #: ../include/bounce.inc:126
-msgid	"Es wurden keine Mails zum L&ouml;schen ausgew&auml;hlt."
+msgid	"Es wurden keine Mails zum Löschen ausgewählt."
 msgstr	"Es wurden keine Mails zum Löschen ausgewählt."
 
 #: ../include/bounce.inc:142
 #, c-format
-msgid	"%s Adressen zum Bearbeiten ausgew&auml;hlt."
+msgid	"%s Adressen zum Bearbeiten ausgewählt."
 msgstr	"%s Adressen zum Bearbeiten ausgewählt."
 
 #: ../include/bounce.inc:151
@@ -985,7 +963,7 @@ msgid	"%s ist nicht bekannt."
 msgstr	"%s ist nicht bekannt."
 
 #: ../include/bounce.inc:205
-msgid	"Es wurden keine Adressen zum Bearbeiten ausgew&auml;hlt."
+msgid	"Es wurden keine Adressen zum Bearbeiten ausgewählt."
 msgstr	"Es wurden keine Adressen zum Bearbeiten ausgewählt."
 
 #: ../include/bounce_mail_form_head.inc:63
@@ -1027,10 +1005,8 @@ msgid	"Markierung fuer alle angezeigten E-Mails umkehren"
 msgstr	"Markierung für alle angezeigten E-Mails umkehren"
 
 #: ../include/bounce_mail_list.inc:144
-msgid	"Alle ausw&auml;hlen / Markierung f&uuml;r alle angezeigten E-Mails "
-	"umkehren"
-msgstr	"Alle auswählen / Markierung für alle angezeigten "
-	"E-Mails umkehren"
+msgid	"Alle auswählen / Markierung für alle angezeigten E-Mails umkehren"
+msgstr	"Alle auswählen / Markierung für alle angezeigten E-Mails umkehren"
 
 #: ../include/Menu.inc:233 ../include/Menu.inc:242 ../include/docu.inc:15
 msgid	"Hilfe / Dokumentation"
@@ -1063,7 +1039,7 @@ msgstr	"Max. POST Data: %s"
 
 #: ../include/Foot.inc:29
 #, c-format
-msgid	"Max. Ausf&uuml;hrungszeit: %s Sekunden"
+msgid	"Max. Ausführungszeit: %s Sekunden"
 msgstr	"Max. Ausführungszeit: %s Sekunden"
 
 #: ../include/Foot.inc:30
@@ -1166,10 +1142,8 @@ msgid	"Formular bearbeiten"
 msgstr	"Formular bearbeiten"
 
 #: ../include/form_list.inc:191
-msgid	"Anmeldungen &uuml;ber dieses Formular werden in die folgenden "
-	"Gruppen eingeordnet:"
-msgstr	"Anmeldungen über dieses Formular werden in die folgenden "
-	"Gruppen eingeordnet:"
+msgid	"Anmeldungen über dieses Formular werden in die folgenden Gruppen eingeordnet:"
+msgstr	"Anmeldungen über dieses Formular werden in die folgenden Gruppen eingeordnet:"
 
 #: ../include/form_list.inc:226
 #, c-format
@@ -1228,8 +1202,8 @@ msgid	"Kopieren"
 msgstr	"Kopieren"
 
 #: ../include/form_list_legende.inc:34
-msgid	"Formular l&oumlschen"
-msgstr	"Formular l&oumlschen"
+msgid	"Formular löschen"
+msgstr	"Formular löschen"
 
 #: ../include/form_new.inc:15
 msgid	"neues Formluar erstellen"
@@ -1249,12 +1223,8 @@ msgid	"Seite wird geladen"
 msgstr	"Seite wird geladen"
 
 #: ../include/Header.inc:82
-msgid	"Achtung! Ein Abbruch des Ladevorgangs kann zu Datenverlust und "
-	"ungew&uuml;nschten Nebeneffekten f&uuml;hren. Bitte tun Sie dies auf "
-	"Ihr eigenes Risiko."
-msgstr	"Achtung! Ein Abbruch des Ladevorgangs kann zu Datenverlust und "
-	"ungewünschten Nebeneffekten führen. Bitte tun Sie dies "
-	"auf Ihr eigenes Risiko."
+msgid	"Achtung! Ein Abbruch des Ladevorgangs kann zu Datenverlust und ungewünschten Nebeneffekten führen. Bitte tun Sie dies auf Ihr eigenes Risiko."
+msgstr	"Achtung! Ein Abbruch des Ladevorgangs kann zu Datenverlust und ungewünschten Nebeneffekten führen. Bitte tun Sie dies auf Ihr eigenes Risiko."
 
 #: ../include/Index.inc:22
 msgid	"Bitte geben Sie Ihren Benutzernamen und Passwort ein"
@@ -1266,59 +1236,53 @@ msgstr	"Hallo"
 msgid	"Hallo Welt"
 msgstr	"Hallo Welt"
 
-msgid	"Tsch&uuml;ss"
+msgid	"Tschüss"
 msgstr	"Tschüss"
 
 #: ../include/Main.inc:15
-msgid	"Bitte aus dem Men&uuml; w&auml;hlen."
+msgid	"Bitte aus dem Menü wählen."
 msgstr	"Bitte aus dem Menü wählen."
 
 #: ../include/Main.inc:21
-msgid	"ACHTUNG! /install.php existiert! Die Datei install.php bitte nach "
-	"erfolgreicher Installation verschieben oder l&aouml;schen!"
-msgstr	"ACHTUNG! /install.php existiert! Die Datei install.php bitte nach "
-	"erfolgreicher Installation verschieben oder löschen!"
+msgid	"ACHTUNG! /install.php existiert! Die Datei install.php bitte nach erfolgreicher Installation verschieben oder löschen!"
+msgstr	"ACHTUNG! /install.php existiert! Die Datei install.php bitte nach erfolgreicher Installation verschieben oder löschen!"
 
 #: ../include/Main.inc:25
 #, c-format
-msgid	"ACHTUNG! %s ist nicht Schreibgesch&uuml;tzt"
+msgid	"ACHTUNG! %s ist nicht Schreibgeschützt"
 msgstr	"ACHTUNG! %s ist nicht Schreibgeschützt"
 
 #: ../include/Main.inc:27
 #, c-format
-msgid	"Rechte f&uuml;r %s wurden ge&auml;ndert!"
+msgid	"Rechte für %s wurden geändert!"
 msgstr	"Rechte für %s wurden geändert!"
 
 #: ../include/Main.inc:29
 #, c-format
-msgid	"Rechte f&uuml;r %s konnten nicht ge&auml;ndert werden! Bitte "
-	"&auml;ndern Sie diese manuell."
-msgstr	"Rechte für %s konnten nicht geändert werden! Bitte "
-	"ändern Sie diese manuell."
+msgid	"Rechte für %s konnten nicht geändert werden! Bitte ändern Sie diese manuell."
+msgstr	"Rechte für %s konnten nicht geändert werden! Bitte ändern Sie diese manuell."
 
 #: ../include/Main.inc:32
-msgid	"Rechte f&uuml;r mnl_config.inc wurden ge&auml;ndert!"
+msgid	"Rechte für mnl_config.inc wurden geändert!"
 msgstr	"Rechte für mnl_config.inc wurden geändert!"
 
 #: ../include/Main.inc:34
-msgid	"Rechte f&uuml;r mnl_config.inc konnten nicht ge&auml;ndert werden! "
-	"Bitte &auml;ndern Sie diese manuell."
-msgstr	"Rechte für mnl_config.inc konnten nicht geändert "
-	"werden! Bitte ändern Sie diese manuell."
+msgid	"Rechte für mnl_config.inc konnten nicht geändert werden! Bitte ändern Sie diese manuell."
+msgstr	"Rechte für mnl_config.inc konnten nicht geändert werden! Bitte ändern Sie diese manuell."
 
 #: ../include/Main.inc:38 ../include/Main.inc:41 ../include/Main.inc:44
 #: ../include/Main.inc:47 ../include/Main.inc:50 ../include/Main.inc:53
 #, c-format
-msgid	"Keine Schreibrechte f&uuml;r %s"
+msgid	"Keine Schreibrechte für %s"
 msgstr	"Keine Schreibrechte für %s"
 
 #: ../include/Main.inc:57 ../include/Main.inc:60 ../include/Main.inc:63
 #, c-format
-msgid	"ACHTUNG! %s ist nicht Passwortgesch&uuml;tzt"
+msgid	"ACHTUNG! %s ist nicht Passwortgeschützt"
 msgstr	"ACHTUNG! %s ist nicht Passwortgeschützt"
 
 #: ../include/Main.inc:79
-msgid	"Passwort wurde gespeichert und ist ab sofort g&uuml;ltig!"
+msgid	"Passwort wurde gespeichert und ist ab sofort gültig!"
 msgstr	"Passwort wurde gespeichert und ist ab sofort gültig!"
 
 #: ../include/Menu.inc:22 ../include/Menu.inc:31 ../include/Menu_old.inc:21
@@ -1375,11 +1339,11 @@ msgid	"Neuanmeldung"
 msgstr	"Neuanmeldung"
 
 #: ../include/Stats.inc:34 ../include/mnl_lib.inc:232
-msgid	"manuell Eingetragen, Syntax Gepr&uuml;ft, Senden OK"
+msgid	"manuell Eingetragen, Syntax Geprüft, Senden OK"
 msgstr	"manuell Eingetragen, Syntax Geprüft, Senden OK"
 
 #: ../include/Stats.inc:35 ../include/mnl_lib.inc:233
-msgid	"Best&auml;tigt, Double-Opt-In"
+msgid	"Bestätigt, Double-Opt-In"
 msgstr	"Bestätigt, Double-Opt-In"
 
 #: ../include/Stats.inc:36 ../include/mnl_lib.inc:234
@@ -1387,7 +1351,7 @@ msgid	"Rechecked, NL/Blindimage angezeigt"
 msgstr	"Rechecked, NL/Blindimage angezeigt"
 
 #: ../include/Stats.inc:37 ../include/mnl_lib.inc:235
-msgid	"Warten auf Best&auml;tigung (Double-Opt-IN)"
+msgid	"Warten auf Bestätigung (Double-Opt-IN)"
 msgstr	"Warten auf Bestätigung (Double-Opt-IN)"
 
 #: ../include/Stats.inc:38 ../include/Stats.inc:39 ../include/mnl_lib.inc:236
@@ -1396,13 +1360,11 @@ msgid	"undefiniert"
 msgstr	"undefiniert"
 
 #: ../include/Stats.inc:40 ../include/mnl_lib.inc:238
-msgid	"Fehler beim versenden, Status/Aktiv wurde ge&auml;ndert vor dem "
-	"versenden!"
-msgstr	"Fehler beim versenden, Status/Aktiv wurde geändert vor dem "
-	"versenden!"
+msgid	"Fehler beim versenden, Status/Aktiv wurde geändert vor dem versenden!"
+msgstr	"Fehler beim versenden, Status/Aktiv wurde geändert vor dem versenden!"
 
 #: ../include/Stats.inc:41 ../include/mnl_lib.inc:239
-msgid	"Fehlerhafte Adresse o. Rueckl&auml;ufer"
+msgid	"Fehlerhafte Adresse o. Rueckläufer"
 msgstr	"Fehlerhafte Adresse o. Rückläufer"
 
 #: ../include/Stats.inc:42 ../include/mnl_lib.inc:240
@@ -1431,9 +1393,8 @@ msgid	"Archiv"
 msgstr	"Archiv"
 
 #: ../include/Stats.inc:68 ../include/mnl_lib.inc:266
-msgid	"Keine Versandauftr&auml;ge oder Historie f. dieses Newsletter"
-msgstr	"Keine Versandaufträge oder Historie für diesen "
-	"Newsletter"
+msgid	"Keine Versandaufträge oder Historie f. dieses Newsletter"
+msgstr	"Keine Versandaufträge oder Historie für diesen Newsletter"
 
 #: ../include/Stats.inc:69 ../include/mnl_lib.inc:267
 msgid	"In der Warteschlange"
@@ -1449,7 +1410,7 @@ msgid	"Versendet"
 msgstr	"Versendet"
 
 #: ../include/Stats.inc:72 ../include/mnl_lib.inc:270
-msgid	"Archiviert - Qs wurden gel&ouml;scht"
+msgid	"Archiviert - Qs wurden gelöscht"
 msgstr	"Archiviert - Qs wurden gelöscht"
 
 #: ../include/Stats.inc:73 ../include/mnl_lib.inc:271
@@ -1515,7 +1476,7 @@ msgid	"Wird in diesem Moment versendet!!!"
 msgstr	"Wird in diesem Moment versendet!!!"
 
 #: ../include/Stats.inc:114 ../include/mnl_lib.inc:312
-msgid	"Abgebrochen, Q gel&ouml;scht"
+msgid	"Abgebrochen, Q gelöscht"
 msgstr	"Abgebrochen, Q gelöscht"
 
 #: ../include/mnl_lib.inc:325
@@ -1637,10 +1598,8 @@ msgstr	"Diese Newslettergruppe als Standardgruppe"
 
 #: ../include/nl_grp_list.inc:182
 #, c-format
-msgid	"Newslettergruppe %s loeschen und Newsletter dieser Gruppe der "
-	"Standardgruppe zuordnen?"
-msgstr	"Newslettergruppe %s löschen und Newsletter dieser Gruppe der "
-	"Standardgruppe zuordnen?"
+msgid	"Newslettergruppe %s loeschen und Newsletter dieser Gruppe der Standardgruppe zuordnen?"
+msgstr	"Newslettergruppe %s löschen und Newsletter dieser Gruppe der Standardgruppe zuordnen?"
 
 #: ../include/nl_grp_list.inc:182
 msgid	"Newslettergruppe loeschen"
@@ -1655,17 +1614,15 @@ msgid	"Newsletter dieser Gruppe anzeigen"
 msgstr	"Newsletter dieser Gruppe anzeigen"
 
 #: ../include/nl_grp_list_legende.inc:25
-msgid	"Newsletter dieser Gruppe anzeigen, Anzahl der Newsletter in dieser "
-	"Gruppe"
-msgstr	"Newsletter dieser Gruppe anzeigen, Anzahl der Newsletter in dieser "
-	"Gruppe"
+msgid	"Newsletter dieser Gruppe anzeigen, Anzahl der Newsletter in dieser Gruppe"
+msgstr	"Newsletter dieser Gruppe anzeigen, Anzahl der Newsletter in dieser Gruppe"
 
 #: ../include/nl_grp_list_legende.inc:27
 msgid	"als Standardgruppe"
 msgstr	"als Standardgruppe"
 
 #: ../include/nl_grp_list_legende.inc:28
-msgid	"Gruppe l&ouml;schen und Newsletter der Standardgruppe zuordnen"
+msgid	"Gruppe löschen und Newsletter der Standardgruppe zuordnen"
 msgstr	"Gruppe löschen und Newsletter der Standardgruppe zuordnen"
 
 #: ../include/nl_grp_new.inc:44
@@ -1678,27 +1635,27 @@ msgid	"Newsletter verwalten"
 msgstr	"Newsletter verwalten"
 
 #: ../include/nl_list.inc:44
-msgid	"Bild wurde gel&ouml;scht."
+msgid	"Bild wurde gelöscht."
 msgstr	"Bild wurde gelöscht."
 
 #: ../include/nl_list.inc:46
-msgid	"Bild konnte nicht gel&ouml;scht werden."
+msgid	"Bild konnte nicht gelöscht werden."
 msgstr	"Bild konnte nicht gelöscht werden."
 
 #: ../include/nl_list.inc:53
-msgid	"HTML Datei wurde gel&ouml;scht."
+msgid	"HTML Datei wurde gelöscht."
 msgstr	"HTML Datei wurde gelöscht."
 
 #: ../include/nl_list.inc:55
-msgid	"HTML Datei konnte nicht gel&ouml;scht werden."
+msgid	"HTML Datei konnte nicht gelöscht werden."
 msgstr	"HTML Datei konnte nicht gelöscht werden."
 
 #: ../include/nl_list.inc:62
-msgid	"Anhang wurde gel&ouml;scht."
+msgid	"Anhang wurde gelöscht."
 msgstr	"Anhang wurde gelöscht."
 
 #: ../include/nl_list.inc:64
-msgid	"Anhang konnte nicht gel&ouml;scht werden."
+msgid	"Anhang konnte nicht gelöscht werden."
 msgstr	"Anhang konnte nicht gelöscht werden."
 
 #: ../include/nl_list.inc:75
@@ -1707,12 +1664,12 @@ msgid	"%s Queues fuer diese Newsletter wurden geloescht."
 msgstr	"%s Queues für diesen Newsletter wurden gelöscht."
 
 #: ../include/nl_list.inc:83
-msgid	"Eintrag und dazugeh&ouml;rige Dateien wurde kopiert."
+msgid	"Eintrag und dazugehörige Dateien wurde kopiert."
 msgstr	"Eintrag und dazugehörige Dateien wurde kopiert."
 
 #: ../include/nl_list.inc:111
 #, c-format
-msgid	"Gew&auml;hlte Gruppe: %s"
+msgid	"Gewählte Gruppe: %s"
 msgstr	"Gewählte Gruppe: %s"
 
 #: ../include/nl_list.inc:314 ../include/nl_list.inc:335
@@ -1738,17 +1695,15 @@ msgid	"Versandauftrag anlegen"
 msgstr	"Versandauftrag anlegen"
 
 #: ../include/nl_list.inc:395
-msgid	"Alle Q-Eintraege fuer diesen Newsletter loeschen? Achtung es werden "
-	"auch laufende Sendeauftraege geloescht!"
-msgstr	"Alle Q-Einträge für diesen Newsletter löschen? "
-	"Achtung es werden auch laufende Sendeaufträge gelöscht!"
+msgid	"Alle Q-Eintraege fuer diesen Newsletter loeschen? Achtung es werden auch laufende Sendeauftraege geloescht!"
+msgstr	"Alle Q-Einträge für diesen Newsletter löschen? Achtung es werden auch laufende Sendeaufträge gelöscht!"
 
 #: ../include/nl_list.inc:395
 msgid	"Q fuer dieses Newsletter loeschen"
 msgstr	"Q für dieses Newsletter löschen"
 
 #: ../include/nl_list.inc:395
-msgid	"Versandauftr&auml;ge l&ouml;schen"
+msgid	"Versandaufträge löschen"
 msgstr	"Versandaufträge löschen"
 
 #: ../include/nl_list.inc:396
@@ -1756,7 +1711,7 @@ msgid	"Q fuer dieses Newsletter anzeigen"
 msgstr	"Q für diesen Newsletter anzeigen"
 
 #: ../include/nl_list.inc:396
-msgid	"Versandauftr&auml;ge anzeigen"
+msgid	"Versandaufträge anzeigen"
 msgstr	"Versandaufträge anzeigen"
 
 #: ../include/nl_list.inc:401 ../include/queue_send.inc:15
@@ -1796,7 +1751,7 @@ msgid	"Bild loeschen"
 msgstr	"Bild löschen"
 
 #: ../include/nl_list.inc:417
-msgid	"Bild l&ouml;schen"
+msgid	"Bild löschen"
 msgstr	"Bild löschen"
 
 #: ../include/nl_list.inc:421 ../include/nl_list_legende.inc:36
@@ -1808,7 +1763,7 @@ msgid	"HTML Datei loeschen"
 msgstr	"HTML Datei löschen"
 
 #: ../include/nl_list.inc:422
-msgid	"HTML-Datei l&ouml;schen"
+msgid	"HTML-Datei löschen"
 msgstr	"HTML-Datei löschen"
 
 #: ../include/nl_list.inc:426
@@ -1824,7 +1779,7 @@ msgid	"Anhang loeschen"
 msgstr	"Anhang löschen"
 
 #: ../include/nl_list.inc:427 ../include/nl_list_legende.inc:34
-msgid	"Anhang l&ouml;schen"
+msgid	"Anhang löschen"
 msgstr	"Anhang löschen"
 
 #: ../include/nl_list.inc:431
@@ -1844,16 +1799,12 @@ msgid	"Newsletter loeschen"
 msgstr	"Newsletter löschen"
 
 #: ../include/nl_list.inc:442
-msgid	"L&ouml;schen"
+msgid	"Löschen"
 msgstr	"Löschen"
 
 #: ../include/nl_list.inc:444
-msgid	"Der Newsletter wurde bereits versendet, wollen Sie ihn wirklich "
-	"bearbeiten? Es wird empfohlen eine Kopie zu erstellen und diese zu "
-	"bearbeiten."
-msgstr	"Der Newsletter wurde bereits versendet, wollen Sie ihn wirklich "
-	"bearbeiten? Es wird empfohlen eine Kopie zu erstellen und diese zu "
-	"bearbeiten."
+msgid	"Der Newsletter wurde bereits versendet, wollen Sie ihn wirklich bearbeiten? Es wird empfohlen eine Kopie zu erstellen und diese zu bearbeiten."
+msgstr	"Der Newsletter wurde bereits versendet, wollen Sie ihn wirklich bearbeiten? Es wird empfohlen eine Kopie zu erstellen und diese zu bearbeiten."
 
 #: ../include/nl_list.inc:450 ../include/nl_list_legende.inc:44
 msgid	"Newsletter kopieren"
@@ -1876,7 +1827,7 @@ msgid	"Queue-Eintrag hinzufuegen, zum Versenden vorbereiten"
 msgstr	"Queue-Eintrag hinzufügen, zum Versenden vorbereiten"
 
 #: ../include/nl_list_legende.inc:22
-msgid	"Queue-Eintrag hinzuf&uuml;gen, zum Versenden vorbereiten"
+msgid	"Queue-Eintrag hinzufügen, zum Versenden vorbereiten"
 msgstr	"Queue-Eintrag hinzufügen, zum Versenden vorbereiten"
 
 #: ../include/nl_list_legende.inc:23
@@ -1884,15 +1835,15 @@ msgid	"Alle Queue-Eintraege loeschen"
 msgstr	"Alle Queue-Einträge löschen"
 
 #: ../include/nl_list_legende.inc:23
-msgid	"Alle Queue-Eintr&auml;ge f&uuml;r diesen Newsletter l&ouml;schen"
-msgstr	"Alle Queue-Einträge für diesen Newsletter l&ouml;schen"
+msgid	"Alle Queue-Einträge für diesen Newsletter löschen"
+msgstr	"Alle Queue-Einträge für diesen Newsletter löschen"
 
 #: ../include/nl_list_legende.inc:24
 msgid	"Queue-Eintraege fuer Newsletter anzeigen"
 msgstr	"Queue-Einträge für Newsletter anzeigen"
 
 #: ../include/nl_list_legende.inc:24
-msgid	"Queue-Eintraege f&uuml;r Newsletter anzeigen"
+msgid	"Queue-Eintraege für Newsletter anzeigen"
 msgstr	"Queue-Einträge für Newsletter anzeigen"
 
 #: ../include/nl_list_legende.inc:25
@@ -1904,15 +1855,15 @@ msgid	"Onlineversion des Newsletter anzeigen"
 msgstr	"Onlineversion des Newsletter anzeigen"
 
 #: ../include/nl_list_legende.inc:30
-msgid	"verkn&uuml;pftes Bild anzeigen"
+msgid	"verknüpftes Bild anzeigen"
 msgstr	"verknüpftes Bild anzeigen"
 
 #: ../include/nl_list_legende.inc:31
-msgid	"verkn&uuml;pftes Bild l&ouml;schen"
+msgid	"verknüpftes Bild löschen"
 msgstr	"verknüpftes Bild löschen"
 
 #: ../include/nl_list_legende.inc:36
-msgid	"verkn&uuml;pfte HTML Datei anzeigen"
+msgid	"verknüpfte HTML Datei anzeigen"
 msgstr	"verknüpfte HTML Datei anzeigen"
 
 #: ../include/nl_list_legende.inc:37
@@ -1920,11 +1871,11 @@ msgid	"HTML-Datei loeschen"
 msgstr	"HTML-Datei löschen"
 
 #: ../include/nl_list_legende.inc:37
-msgid	"verkn&uuml;pfte HTML-Datei l&ouml;schen"
+msgid	"verknüpfte HTML-Datei löschen"
 msgstr	"verknüpfte HTML-Datei löschen"
 
 #: ../include/nl_list_legende.inc:39
-msgid	"verkn&uuml;pften Link anzeigen"
+msgid	"verknüpften Link anzeigen"
 msgstr	"verknüpften Link anzeigen"
 
 #: ../include/nl_list_legende.inc:42
@@ -1936,7 +1887,7 @@ msgid	"Newsletter kopieren (ohne Dateien)"
 msgstr	"Newsletter kopieren (ohne Dateien)"
 
 #: ../include/nl_list_legende.inc:47
-msgid	"Newsletter l&ouml;schen"
+msgid	"Newsletter löschen"
 msgstr	"Newsletter löschen"
 
 #: ../include/nl_new.inc:15
@@ -1953,7 +1904,7 @@ msgid	"HTML-Datei erfolgreich hochgeladen."
 msgstr	"HTML-Datei erfolgreich hochgeladen."
 
 #: ../include/nl_upload.inc:51
-msgid	"HTML-Code wurde angef&uuml;gt."
+msgid	"HTML-Code wurde angefügt."
 msgstr	"HTML-Code wurde angefügt."
 
 #: ../include/nl_upload.inc:56
@@ -1962,11 +1913,11 @@ msgstr	"HTML-Datei konnte nicht hochgeladen werden."
 
 #: ../include/nl_upload.inc:60
 #, c-format
-msgid	"Die HTML-Datei darf nur eine Gr&ouml;sse von %s Byte haben."
+msgid	"Die HTML-Datei darf nur eine Grösse von %s Byte haben."
 msgstr	"Die HTML-Datei darf nur eine Grösse von %s Byte haben."
 
 #: ../include/nl_upload.inc:64
-msgid	"Die HTML-Datei besitzt eine ung&uuml;ltige Endung."
+msgid	"Die HTML-Datei besitzt eine ungültige Endung."
 msgstr	"Die HTML-Datei besitzt eine ungültige Endung."
 
 #: ../include/nl_upload.inc:82
@@ -1983,11 +1934,11 @@ msgstr	"BILD-Datei konnte nicht hochgeladen werden."
 
 #: ../include/nl_upload.inc:94
 #, c-format
-msgid	"Die BILD-Datei darf nur eine Gr&ouml;sse von %s Byte besitzen."
+msgid	"Die BILD-Datei darf nur eine Grösse von %s Byte besitzen."
 msgstr	"Die BILD-Datei darf nur eine Grösse von %s Byte besitzen."
 
 #: ../include/nl_upload.inc:98
-msgid	"Die BILD-Datei besitzt eine ung&uuml;ltige Endung."
+msgid	"Die BILD-Datei besitzt eine ungültige Endung."
 msgstr	"Die BILD-Datei besitzt eine ungültige Endung."
 
 #: ../include/nl_upload.inc:125
@@ -2000,7 +1951,7 @@ msgstr	"Anhang konnte nicht hochgeladen werden."
 
 #: ../include/nl_upload.inc:137
 #, c-format
-msgid	"Der Anhang Datei darf nur eine Gr&ouml;sse von %s Byte haben."
+msgid	"Der Anhang Datei darf nur eine Grösse von %s Byte haben."
 msgstr	"Der Anhang Datei darf nur eine Grösse von %s Byte haben."
 
 #: ../include/pager.inc:25
@@ -2065,16 +2016,16 @@ msgid	"Newsletter Warteschlange (Q)"
 msgstr	"Newsletter Warteschlange (Q)"
 
 #: ../include/queue_list.inc:74
-msgid	"Logfile wurde gel&ouml;scht."
+msgid	"Logfile wurde gelöscht."
 msgstr	"Logfile wurde gelöscht."
 
 #: ../include/queue_list.inc:76
-msgid	"Logfile konnte nicht gel&ouml;scht werden."
+msgid	"Logfile konnte nicht gelöscht werden."
 msgstr	"Logfile konnte nicht gelöscht werden."
 
 #: ../include/queue_list.inc:83
 #, c-format
-msgid	"gew&auml;hltes Newsletter: %s"
+msgid	"gewähltes Newsletter: %s"
 msgstr	"gewähltes Newsletter: %s"
 
 #: ../include/queue_list.inc:208
@@ -2146,7 +2097,7 @@ msgid	"Q loeschen"
 msgstr	"Q löschen"
 
 #: ../include/queue_list_legende.inc:21
-msgid	"Logfile l&ouml;schen"
+msgid	"Logfile löschen"
 msgstr	"Logfile löschen"
 
 #: ../include/queue_list_legende.inc:22
@@ -2162,7 +2113,7 @@ msgid	"Fortfahren"
 msgstr	"Fortfahren"
 
 #: ../include/queue_list_legende.inc:25
-msgid	"Q l&ouml;schen"
+msgid	"Q löschen"
 msgstr	"Q löschen"
 
 #: ../include/queue_new.inc:15
@@ -2171,49 +2122,39 @@ msgstr	"Newsletter zur Warteschlange (Q) hinzufügen"
 
 #: ../include/queue_new.inc:79
 #, c-format
-msgid	"F&uuml;r die Gruppe %s existieren bereits %s neue Eintr&auml;ge. "
-	"Nicht hinzugef&uuml;gt!"
-msgstr	"für die Gruppe %s existieren bereits %s neue Einträge. "
-	"Nicht hinzugefügt!"
+msgid	"Für die Gruppe %s existieren bereits %s neue Einträge. Nicht hinzugefügt!"
+msgstr	"für die Gruppe %s existieren bereits %s neue Einträge. Nicht hinzugefügt!"
 
 #: ../include/queue_new.inc:85
 #, c-format
-msgid	"F&uuml;r die Gruppe %s existieren bereits %s gestartete/wartende "
-	"Eintr&auml;ge. Nicht hinzugef&uuml;gt!"
-msgstr	"für die Gruppe %s existieren bereits %s gestartete/wartende "
-	"Einträge. Nicht hinzugefügt!"
+msgid	"Für die Gruppe %s existieren bereits %s gestartete/wartende Einträge. Nicht hinzugefügt!"
+msgstr	"für die Gruppe %s existieren bereits %s gestartete/wartende Einträge. Nicht hinzugefügt!"
 
 #: ../include/queue_new.inc:91
 #, c-format
-msgid	"F&uuml;r die Gruppe %s existieren bereits %s laufende Eintr&auml;ge. "
-	"Nicht hinzugef&uuml;gt!"
-msgstr	"für die Gruppe %s existieren bereits %s laufende "
-	"Einträge. Nicht hinzugefügt!"
+msgid	"Für die Gruppe %s existieren bereits %s laufende Einträge. Nicht hinzugefügt!"
+msgstr	"für die Gruppe %s existieren bereits %s laufende Einträge. Nicht hinzugefügt!"
 
 #: ../include/queue_new.inc:118
 #, c-format
-msgid	"In der  Gruppe %s existieren keine g&uuml;ltigen Adressen. Nicht "
-	"hinzugef&uuml;gt!"
-msgstr	"In der  Gruppe %s existieren keine gültigen Adressen. Nicht "
-	"hinzugefügt!"
+msgid	"In der  Gruppe %s existieren keine gültigen Adressen. Nicht hinzugefügt!"
+msgstr	"In der  Gruppe %s existieren keine gültigen Adressen. Nicht hinzugefügt!"
 
 #: ../include/queue_new.inc:120
 #, c-format
-msgid	"In der  Gruppe %s existieren %s g&uuml;ltige Adressen. Gruppe "
-	"hinzugef&uuml;gt!"
-msgstr	"In der  Gruppe %s existieren %s gültige Adressen. Gruppe "
-	"hinzugefügt!"
+msgid	"In der  Gruppe %s existieren %s gültige Adressen. Gruppe hinzugefügt!"
+msgstr	"In der  Gruppe %s existieren %s gültige Adressen. Gruppe hinzugefügt!"
 
 #: ../include/queue_new.inc:147
 msgid	"Neuer Eintrag wurde erstellt."
 msgstr	"Neuer Eintrag wurde erstellt."
 
 #: ../include/queue_new.inc:154
-msgid	"Keine Gruppe(n) gew&auml;hlt. Nichts hinzugef&uuml;gt"
+msgid	"Keine Gruppe(n) gewählt. Nichts hinzugefügt"
 msgstr	"Keine Gruppe(n) gewählt. Nichts hinzugefügt"
 
 #: ../include/queue_send.inc:46
-msgid	"Empf&auml;ngerliste wird generiert."
+msgid	"Empfängerliste wird generiert."
 msgstr	"Empfängerliste wird generiert."
 
 #: ../include/queue_send.inc:109
@@ -2222,12 +2163,12 @@ msgstr	"Der Versand wurde gestartet!"
 
 #: ../include/statistic.inc:44
 #, c-format
-msgid	"Statistik f&uuml;r Newsletter %s"
+msgid	"Statistik für Newsletter %s"
 msgstr	"Statistik für Newsletter %s"
 
 #: ../include/statistic.inc:49
 #, c-format
-msgid	"%s Sendeauftr&auml;ge insgesamt:"
+msgid	"%s Sendeaufträge insgesamt:"
 msgstr	"%s Sendeaufträge insgesamt:"
 
 #: ../include/statistic.inc:67
@@ -2241,7 +2182,7 @@ msgstr	"Details:"
 
 #: ../include/statistic.inc:122
 #, c-format
-msgid	"Statistik f&uuml;r Adressgruppe %s"
+msgid	"Statistik für Adressgruppe %s"
 msgstr	"Statistik für Adressgruppe %s"
 
 #: ../include/statistic.inc:126
@@ -2263,7 +2204,7 @@ msgid	"Status:"
 msgstr	"Status:"
 
 #: ../include/statistic.inc:236
-msgid	"Sendeauftr&auml;ge insgesamt:"
+msgid	"Sendeaufträge insgesamt:"
 msgstr	"Sendeaufträge insgesamt:"
 
 #: ../include/statistic.inc:251
@@ -2281,10 +2222,8 @@ msgid	"Versendet: %s"
 msgstr	"Versendet: %s"
 
 #: ../include/statistic.inc:286
-msgid	"Diese Funktion ist leider noch nicht implementiert. Bitte "
-	"unterst&uuml;tzen Sie die Entwicklung von Tellmatic."
-msgstr	"Diese Funktion ist leider noch nicht implementiert. Bitte "
-	"unterstützen Sie die Entwicklung von Tellmatic."
+msgid	"Diese Funktion ist leider noch nicht implementiert. Bitte unterstützen Sie die Entwicklung von Tellmatic."
+msgstr	"Diese Funktion ist leider noch nicht implementiert. Bitte unterstützen Sie die Entwicklung von Tellmatic."
 
 #: ../include/status.inc:46
 #, c-format
@@ -2368,7 +2307,7 @@ msgid	"Passwort wiederholen"
 msgstr	"Passwort wiederholen"
 
 #: ../include/user.inc:15
-msgid	"Benutzereinstellungen &auml;ndern"
+msgid	"Benutzereinstellungen ändern"
 msgstr	"Benutzereinstellungen ändern"
 
 #: ../include/user.inc:37
@@ -2385,7 +2324,7 @@ msgid	"Bitte geben Sie zweimal das gleiche Passwort an."
 msgstr	"Bitte geben Sie zweimal das gleiche Passwort an."
 
 #: ../include/user.inc:47
-msgid	"Das Passwort wurde nicht ge&auml;ndert."
+msgid	"Das Passwort wurde nicht geändert."
 msgstr	"Das Passwort wurde nicht geändert."
 
 #: ../include/Welcome.inc:15 ../include/Welcome.inc:17
@@ -2463,7 +2402,7 @@ msgid	"Hier erstellen Sie eine neue Adress-Gruppe"
 msgstr	"Hier erstellen Sie eine neue Adress-Gruppe"
 
 #: ../include/Menu.inc:107 ../include/Menu.inc:116
-msgid	"Hier k&ouml;nnen Sie Ihre Adressen suchen, anzeigen und bearbeiten"
+msgid	"Hier können Sie Ihre Adressen suchen, anzeigen und bearbeiten"
 msgstr	"Hier können Sie Ihre Adressen suchen, anzeigen und bearbeiten"
 
 #: ../include/Menu.inc:114 ../include/Menu.inc:123
@@ -2487,7 +2426,7 @@ msgid	"Adressen aus einer CSV-Datei importieren"
 msgstr	"Adressen aus einer CSV-Datei importieren"
 
 #: ../include/Menu.inc:125 ../include/Menu.inc:134
-msgid	"Importieren Sie Ihre Adressbest&auml;nde aus einer CSV-Datei"
+msgid	"Importieren Sie Ihre Adressbestände aus einer CSV-Datei"
 msgstr	"Importieren Sie Ihre Adressbestände aus einer CSV-Datei"
 
 #: ../include/Menu.inc:132 ../include/Menu.inc:141
@@ -2495,7 +2434,7 @@ msgid	"CSV-Export"
 msgstr	"CSV-Export"
 
 #: ../include/Menu.inc:134 ../include/Menu.inc:143
-msgid	"Exportieren Sie Ihre Adressbest&uuml;nde in eine CSV-Datei"
+msgid	"Exportieren Sie Ihre Adressbestünde in eine CSV-Datei"
 msgstr	"Exportieren Sie Ihre Adressbestände in eine CSV-Datei"
 
 #: ../include/Menu.inc:141 ../include/Menu.inc:142 ../include/Menu.inc:150
@@ -2504,7 +2443,7 @@ msgid	"Bounce-Management"
 msgstr	"Bounce-Management"
 
 #: ../include/Menu.inc:143 ../include/Menu.inc:152
-msgid	"Verwalten Sie fehlgeschlagene E-Mails und R&uuml;ckl&auml;ufer"
+msgid	"Verwalten Sie fehlgeschlagene E-Mails und Rückläufer"
 msgstr	"Verwalten Sie fehlgeschlagene E-Mails und Rückläufer"
 
 #: ../include/Menu.inc:150 ../include/Menu.inc:151 ../include/Menu.inc:159
@@ -2513,7 +2452,7 @@ msgid	"Datenbank bereinigen"
 msgstr	"Datenbank bereinigen"
 
 #: ../include/Menu.inc:152 ../include/Menu.inc:161
-msgid	"Datenbank aufr&auml;umen und Adressbest&auml;nde s&auml;ubern"
+msgid	"Datenbank aufräumen und Adressbestände säubern"
 msgstr	"Datenbank aufräumen und Adressbestände säubern"
 
 #: ../include/Menu.inc:164 ../include/Menu.inc:173
@@ -2553,11 +2492,11 @@ msgid	"Grundeinstellungen"
 msgstr	"Grundeinstellungen"
 
 #: ../include/Menu.inc:198 ../include/Menu.inc:207
-msgid	"Globale Einstellungen f&uuml;r Tellmatic"
+msgid	"Globale Einstellungen für Tellmatic"
 msgstr	"Globale Einstellungen für Tellmatic"
 
 #: ../include/Menu.inc:207 ../include/Menu.inc:216
-msgid	"Hier sehen Sie einige zus&auml;tzliche Informationen"
+msgid	"Hier sehen Sie einige zusätzliche Informationen"
 msgstr	"Hier sehen Sie einige zusätzliche Informationen"
 
 #: ../include/Menu.inc:214 ../include/Menu.inc:215 ../include/Menu.inc:223
@@ -2595,7 +2534,7 @@ msgid	"Benutzereinstellungen"
 msgstr	"Benutzereinstellungen"
 
 #: ../include/Menu.inc:248 ../include/Menu.inc:257
-msgid	"Hier &auml;ndern Sie Ihre pers&ouml;nlichen Einstellungen"
+msgid	"Hier ändern Sie Ihre persönlichen Einstellungen"
 msgstr	"Hier ändern Sie Ihre persönlichen Einstellungen"
 
 msgid	"Zur Zeit gibt es keine zu verarbeitenden Versandaufträge."
@@ -2607,10 +2546,8 @@ msgid	"Die Seite wird in %s Sekunden automatisch neu geladen."
 msgstr	"Die Seite wird in %s Sekunden automatisch neu geladen."
 
 #: ../include/send_it.php:632 ../include/send_it.php:648
-msgid	"Klicken Sie auf 'Neu laden' wenn Sie diese Seite erneut aufrufen "
-	"wollen."
-msgstr	"Klicken Sie auf 'Neu laden' wenn Sie diese Seite erneut aufrufen "
-	"wollen."
+msgid	"Klicken Sie auf 'Neu laden' wenn Sie diese Seite erneut aufrufen wollen."
+msgstr	"Klicken Sie auf 'Neu laden' wenn Sie diese Seite erneut aufrufen wollen."
 
 #: ../include/send_it.php:634 ../include/send_it.php:650
 msgid	"Neu laden"
@@ -2623,8 +2560,8 @@ msgstr	"Aktuell verfügbare Version: %s"
 
 #: ../include/status.inc:132
 #, c-format
-msgid	"Die TOP %s Liste  z&auml;hlt auch doppelte Klicks und Views!"
-msgstr	"Die TOP %s Liste  z&auml;hlt auch doppelte Klicks und Views!"
+msgid	"Die TOP %s Liste  zählt auch doppelte Klicks und Views!"
+msgstr	"Die TOP %s Liste  zählt auch doppelte Klicks und Views!"
 
 #: ../include/statistic.inc:50 ../include/statistic.inc:237
 msgid	"Auftragsstatus:"
@@ -2767,71 +2704,57 @@ msgstr	"Versand an:"
 
 #: ../include/nl_form.inc:249
 #, c-format
-msgid	"%s enth&auml;lt das hochgeladene Bild 'img src' | %s enth&auml;lt "
-	"nur die URL zum Bild"
-msgstr	"%s enth&auml;lt das hochgeladene Bild 'img src' | %s enth&auml;lt "
-	"nur die URL zum Bild"
+msgid	"%s enthält das hochgeladene Bild 'img src' | %s enthält nur die URL zum Bild"
+msgstr	"%s enthält das hochgeladene Bild 'img src' | %s enthält nur die URL zum Bild"
 
 #: ../include/nl_form.inc:250
 #, c-format
-msgid	"%s enth&auml;lt den angegebenen Link 'a href' | %s enth&auml;lt nur "
-	"die URL des Links"
-msgstr	"%s enth&auml;lt den angegebenen Link 'a href' | %s enth&auml;lt nur "
-	"die URL des Links"
+msgid	"%s enthält den angegebenen Link 'a href' | %s enthält nur die URL des Links"
+msgstr	"%s enthält den angegebenen Link 'a href' | %s enthält nur die URL des Links"
 
 #: ../include/nl_form.inc:251
 #, c-format
-msgid	"%s enth&auml;lt den Link zum Attachement 'a href' |  %s enth&auml;lt "
-	"nur die URL zum Attachement"
-msgstr	"%s enth&auml;lt den Link zum Attachement 'a href' |  %s enth&auml;lt "
-	"nur die URL zum Attachement"
+msgid	"%s enthält den Link zum Attachement 'a href' |  %s enthält nur die URL zum Attachement"
+msgstr	"%s enthält den Link zum Attachement 'a href' |  %s enthält nur die URL zum Attachement"
 
 #: ../include/nl_form.inc:252
 #, c-format
-msgid	"%s enth&auml;lt den Link zum abmelden |   %s enth&auml;lt nur die "
-	"URL zum Abmeldeformular"
-msgstr	"%s enth&auml;lt den Link zum abmelden |   %s enth&auml;lt nur die "
-	"URL zum Abmeldeformular"
+msgid	"%s enthält den Link zum abmelden |   %s enthält nur die URL zum Abmeldeformular"
+msgstr	"%s enthält den Link zum abmelden |   %s enthält nur die URL zum Abmeldeformular"
 
 #: ../include/nl_form.inc:253
 #, c-format
-msgid	"%s enth&auml;lt den Link zur Onlineversion 'a href' |  %s "
-	"enth&auml;lt nur die URL zur Onlineversion"
-msgstr	"%s enth&auml;lt den Link zur Onlineversion 'a href' |  %s "
-	"enth&auml;lt nur die URL zur Onlineversion"
+msgid	"%s enthält den Link zur Onlineversion 'a href' |  %s enthält nur die URL zur Onlineversion"
+msgstr	"%s enthält den Link zur Onlineversion 'a href' |  %s enthält nur die URL zur Onlineversion"
 
 #: ../include/nl_form.inc:254
 #, c-format
-msgid	"%s enth&auml;lt das schliessende TAG '/a' fuer die Links"
-msgstr	"%s enth&auml;lt das schliessende TAG '/a' fuer die Links"
+msgid	"%s enthält das schliessende TAG '/a' fuer die Links"
+msgstr	"%s enthält das schliessende TAG '/a' fuer die Links"
 
 #: ../include/nl_form.inc:255
-msgid	"Nur f&uuml; personalisierten Newsleter:"
-msgstr	"Nur f&uuml; personalisierten Newsleter:"
+msgid	"Nur fü personalisierten Newsleter:"
+msgstr	"Nur fü personalisierten Newsleter:"
 
 #: ../include/nl_form.inc:256
 #, c-format
-msgid	"%s enth&auml;lt ein 1x1 Pixel grosses transparentes PNG-Bild "
-	"(f&uuml;r View-Tracking, nur HTML-Mails)"
-msgstr	"%s enth&auml;lt ein 1x1 Pixel grosses transparentes PNG-Bild "
-	"(f&uuml;r View-Tracking, nur HTML-Mails)"
+msgid	"%s enthält ein 1x1 Pixel grosses transparentes PNG-Bild (für View-Tracking, nur HTML-Mails)"
+msgstr	"%s enthält ein 1x1 Pixel grosses transparentes PNG-Bild (für View-Tracking, nur HTML-Mails)"
 
 #: ../include/nl_form.inc:257
 #, c-format
-msgid	"%s enth&auml;lt die e-Mailadresse des Empfaengers"
-msgstr	"%s enth&auml;lt die e-Mailadresse des Empfaengers"
+msgid	"%s enthält die e-Mailadresse des Empfaengers"
+msgstr	"%s enthält die e-Mailadresse des Empfaengers"
 
 #: ../include/nl_form.inc:258
 #, c-format
-msgid	"%s bis %s enth&auml;lt die Felder aus den Formularen/Adressen"
-msgstr	"%s bis %s enth&auml;lt die Felder aus den Formularen/Adressen"
+msgid	"%s bis %s enthält die Felder aus den Formularen/Adressen"
+msgstr	"%s bis %s enthält die Felder aus den Formularen/Adressen"
 
 #: ../include/nl_form.inc:259
 #, c-format
-msgid	"%s enth&auml;lt den kompletten Link 'a href' zum Aktivierungslink "
-	"('(1st)-Touch-Opt-In) | %s enth&auml;lt nur die URL"
-msgstr	"%s enth&auml;lt den kompletten Link 'a href' zum Aktivierungslink "
-	"('(1st)-Touch-Opt-In) | %s enth&auml;lt nur die URL"
+msgid	"%s enthält den kompletten Link 'a href' zum Aktivierungslink ('(1st)-Touch-Opt-In) | %s enthält nur die URL"
+msgstr	"%s enthält den kompletten Link 'a href' zum Aktivierungslink ('(1st)-Touch-Opt-In) | %s enthält nur die URL"
 
 #: ../include/nl_list.inc:355
 #, c-format
@@ -2887,10 +2810,8 @@ msgstr	"%s Mails ergaben einen Treffer."
 
 #: ../include/bounce_filter_adr_list.inc:34
 #, c-format
-msgid	"Es wurden aus %s Adressen %s (eindeutige) potentiell fehlerhafte "
-	"Adressen erkannt."
-msgstr	"Es wurden aus %s Adressen %s (eindeutige) potentiell fehlerhafte "
-	"Adressen erkannt."
+msgid	"Es wurden aus %s Adressen %s (eindeutige) potentiell fehlerhafte Adressen erkannt."
+msgstr	"Es wurden aus %s Adressen %s (eindeutige) potentiell fehlerhafte Adressen erkannt."
 
 #: ../include/bounce_filter_adr_list.inc:42
 msgid	"Adresse"
@@ -2910,7 +2831,7 @@ msgid	"Adressgruppe"
 msgstr	"Adressgruppe"
 
 #: ../include/send_it.php:644
-msgid	"Zur Zeit gibt es keine zu verarbeitenden Versandauftraege."
+msgid	"Zur Zeit gibt es keine zu verarbeitenden Versandaufträge."
 msgstr	"Zur Zeit gibt es keine zu verarbeitenden Versandaufträge."
 
 #: ../include/Menu.inc:21

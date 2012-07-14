@@ -15,7 +15,6 @@
 $_MAIN_DESCR="Dateimanager";
 $_MAIN_MESSAGE.="";
 $_MAIN_OUTPUT.='
-<!--iframe src="'.$mnl_URL.'/'.$mnl_includedir.'/filemanager_bs.php" align="center"name="_filemanager" scrolling="no" marginheight="0px" marginwidth="0px" height="600" width="760"></iframe-->
-<iframe src="'.$mnl_URL.'/'.$mnl_includedir.'/myftphp/myftphp_4.php" align="center"name="_filemanager" scrolling="no" marginheight="0px" marginwidth="0px" height="480" width="728" style="border:1px dashed grey; -moz-border-radius:2em 2em 2em 2em; padding: 4px"></iframe>
+<iframe src="'.$mnl_URL_FE.'/'.$mnl_includedir.'/myftphp/myftphp_4.php" align="center"name="_filemanager" scrolling="no" marginheight="0px" marginwidth="0px" height="480" width="728" style="border:1px dashed grey; -moz-border-radius:2em 2em 2em 2em; padding: 4px"></iframe>
 ';
 ?>

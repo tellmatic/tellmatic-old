@@ -11,9 +11,54 @@
 /* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
 /********************************************************************************/
 
+*+*+*+*+*+*+*+*+*+*+*+ CHANGES V1.0.6  +*+*+*+*+*+*+*+*+*+*+*+*
+	30.07.2007 - some bugfixes and enhancements
+	changes in 1.0.6:
+
+		- index.php now moved to admin/index.php! (if updating: please delete the index.php from tellmatic installation directory from previous installs)
+		- all sourcefiles now saved as utf-8, this should solve problems with some languages and esp. german 'umlauts', there may be some other isssues with encoding, but this is only affectng the UI translation.
+		- export: enter filename for exportfile, choose delimiter
+		- import: 	* select delimiter
+						* select from previous uploaded import file
+						* delete imported addresses
+						* move existing addresses
+						* activate or deactivate new and/or existing addresses
+						* bulk-import (enter data directly to a textarea and import)
+						* choose how imported email addresses will be checked (default is global internal setting, or set to 'no check' (be very very careful!), 'check syntax' or 'check syntax +mx')
+		- themes: 	* energysave-theme for mozilla and IE
+						* theme directories are now autodetected and listed in the user settings, mnl.css must exist
+		- somewhat improved UI
+		- newsletter: subject now up to 255 characters.. was only 48 chars :>, sorry		
+		- forms: 	* captcha code is now crypted as md5 and compared to the md5 value of the entered code
+						* disable/enable use of captcha and amount of digits
+						* enter text for submit and reset button
+						* new var {FDESCR} contains the form description for templates. Be careful, this is for testing only, description is not 'html-save' at the moment
+						* new var {FMEMO} contains a memofiled, memos are saved in the address-details table
+						* activate/deactivate new subscribed addresses						
+		- adresses:	* Added a memo field
+							* Sort by multiple fields in the search mask
+		- adr-groups and nl-groups: * added missing author and editor fields		
+		- newsletter: 	* choose content type, send nesletter as combined text/html mail, only html or only text. (using "phphtmlparser")
+							* select or upload your own blindimage, jpg or png, 256colors or 24 bit with transparency,
+							choose from uploaded blindimage, or upload a new one, or use a blank png or select global settings.
+		- demo mode: set DEMO to TRUE in mnl_lib.inc  to activate demo mode. 
+							This will de-activate all delete functions and sending-routine. in demo mode the upload is limited to only 2 kb. 
+							Show faked passwords, dont save / change admin or user settings like passwords etc.
+		- debug mode: only used for gettext emulation now, shows some infos if the pattern matched or guessed or if the default string is returned..., set DEBUG to TRUE in mnl_lib.inc if you want to translate Tellmatic.
+		- admin:		* select global blindimage, choose an existing one or is a blank png should be used. Needed if you use global blindimage setting in your newsletter.
+						* optionally show news at the startpage and do a version check
+		- user:	set expert user ;) If you're an expert, the menu will only show the current section and others are hidden by javascript and will only be shown if you clkick on the menu header, check it out...
+					some help-texts and the legend will be hidden by js too.
+		
+		... and a lot of bugfixes, code cleanup etc.
+
+		Special Thanks goes to helios for sponsoring some of these nice new features! 
+		!And all other users who suggested new features and functionality.
+
+		
 *+*+*+*+*+*+*+*+*+*+*+ CHANGES V1.0.5  +*+*+*+*+*+*+*+*+*+*+*+*
 	21.05.2007 - some bugfixes and enhancements
-	changes in 1.0.4.2:
+	changes in 1.0.5 (1.0.4.2):
 		- Install:
 			- select language
 			- check DB Connection

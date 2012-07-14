@@ -48,10 +48,10 @@ if (!empty($set)) {
 //if ($set=="delete" && $doit==1) {
 if ($set=="delete" && $status!="delete_all") {
 	for ($acc=0;$acc<$ac;$acc++) {
-		$ADDRESS->delAdr($ADR[$acc]);
+		if (!DEMO) $ADDRESS->delAdr($ADR[$acc]);
 		//$_MAIN_MESSAGE.=$ADR[$acc]."<br>";
 	}
-	$_MAIN_MESSAGE.="<br>".sprintf(___("%s Eintr&auml;ge aus der Gruppe %s mit dem Status %s wurden gel&ouml;scht."),"<b>".$ac."</b>","<b>".$GRP[0]['name']."</b>","<b>".$STATUS['adr']['status'][$search['status']]."</b>");
+	$_MAIN_MESSAGE.="<br>".sprintf(___("%s Einträge aus der Gruppe %s mit dem Status %s wurden gelÖscht."),"<b>".$ac."</b>","<b>".$GRP[0]['name']."</b>","<b>".$STATUS['adr']['status'][$search['status']]."</b>");
 }
 
 
@@ -64,39 +64,28 @@ if ($set=="delete" && $status=="delete_all") { // && $doit==1
 	$ADR=$ADDRESS->getAdrID($adr_grp_id,$search);
 	$ac=count($ADR);
 	for ($acc=0;$acc<$ac;$acc++) {
-		$ADDRESS->delAdr($ADR[$acc]);
+		if (!DEMO) $ADDRESS->delAdr($ADR[$acc]);
 		//$_MAIN_MESSAGE.=$ADR[$acc]."<br>";
 	}
-	$_MAIN_MESSAGE.="<br>".sprintf(___("%s Eintr&auml;ge aus der Gruppe %s mit dem Status %s wurden gel&ouml;scht."),"<b>".$ac."</b>","<b>".$GRP[0]['name']."</b>","<b>".$STATUS['adr']['status'][$search['status']]."</b>");
+	$_MAIN_MESSAGE.="<br>".sprintf(___("%s Einträge aus der Gruppe %s mit dem Status %s wurden gelÖscht."),"<b>".$ac."</b>","<b>".$GRP[0]['name']."</b>","<b>".$STATUS['adr']['status'][$search['status']]."</b>");
 	//	9
 	$search['status']=9;
 	$ADR=$ADDRESS->getAdrID($adr_grp_id,$search);
 	$ac=count($ADR);
 	for ($acc=0;$acc<$ac;$acc++) {
-		$ADDRESS->delAdr($ADR[$acc]);
+		if (!DEMO) $ADDRESS->delAdr($ADR[$acc]);
 		//$_MAIN_MESSAGE.=$ADR[$acc]."<br>";
 	}
-	$_MAIN_MESSAGE.="<br>".sprintf(___("%s Eintr&auml;ge aus der Gruppe %s mit dem Status %s wurden gel&ouml;scht."),"<b>".$ac."</b>","<b>".$GRP[0]['name']."</b>","<b>".$STATUS['adr']['status'][$search['status']]."</b>");
-	/*
-	//	10
-	$search['status']=10;
-	$ADR=$ADDRESS->getAdrID($adr_grp_id,$search);
-	$ac=count($ADR);
-	for ($acc=0;$acc<$ac;$acc++) {
-		$ADDRESS->delAdr($ADR[$acc]);
-		//$_MAIN_MESSAGE.=$ADR[$acc]."<br>";
-	}
-	$_MAIN_MESSAGE.="<br>".sprintf(___("%s Eintr&auml;ge aus der Gruppe %s mit dem Status %s wurden gel&ouml;scht."),"<b>".$ac."</b>","<b>".$GRP[0]['name']."</b>","<b>".$STATUS['adr']['status'][$search['status']]."</b>");
-	*/
+	$_MAIN_MESSAGE.="<br>".sprintf(___("%s Einträge aus der Gruppe %s mit dem Status %s wurden gelÖscht."),"<b>".$ac."</b>","<b>".$GRP[0]['name']."</b>","<b>".$STATUS['adr']['status'][$search['status']]."</b>");
 	//	11
 	$search['status']=11;
 	$ADR=$ADDRESS->getAdrID($adr_grp_id,$search);
 	$ac=count($ADR);
 	for ($acc=0;$acc<$ac;$acc++) {
-		$ADDRESS->delAdr($ADR[$acc]);
+		if (!DEMO) $ADDRESS->delAdr($ADR[$acc]);
 		//$_MAIN_MESSAGE.=$ADR[$acc]."<br>";
 	}
-	$_MAIN_MESSAGE.="<br>".sprintf(___("%s Eintr&auml;ge aus der Gruppe %s mit dem Status %s wurden gel&ouml;scht."),"<b>".$ac."</b>","<b>".$GRP[0]['name']."</b>","<b>".$STATUS['adr']['status'][$search['status']]."</b>");
+	$_MAIN_MESSAGE.="<br>".sprintf(___("%s Einträge aus der Gruppe %s mit dem Status %s wurden gelÖscht."),"<b>".$ac."</b>","<b>".$GRP[0]['name']."</b>","<b>".$STATUS['adr']['status'][$search['status']]."</b>");
 
 
 }
@@ -105,7 +94,7 @@ if ($set=="delete" && $status=="delete_all") { // && $doit==1
 
 //uebersicht anzeigen!
 	//adr_grp_id
-	$_MAIN_OUTPUT.="<b>".___("&Uuml;bersicht").":</b><br><br>";
+	$_MAIN_OUTPUT.="<b>".___("Übersicht").":</b><br><br>";
 	$AG=$ADDRESS->getGroup();
 	$agc=count($AG);
 	for ($agcc=0;$agcc<$agc;$agcc++) {

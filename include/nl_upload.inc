@@ -48,8 +48,8 @@
 					$_MAIN_MESSAGE.= "<ul>".$_FILES["file"]["name"];
 					$_MAIN_MESSAGE.= " / ".$_FILES["file"]["size"]." Byte";
 					$_MAIN_MESSAGE.= ", ".$_FILES["file"]["type"];
-					$_MAIN_MESSAGE.= "<br>".___("HTML-Code wurde angef&uuml;gt.").
-											"<br>".___("Datei gespeichert unter:")." <a href=\"".$mnl_nldir."/".$NL_Filename."\" target=\"_preview\">".$mnl_nldir."/".$NL_Filename."</a>";
+					$_MAIN_MESSAGE.= "<br>".___("HTML-Code wurde angefügt.").
+											"<br>".___("Datei gespeichert unter:")." <a href=\"".$mnl_URL_FE."/".$mnl_nldir."/".$NL_Filename."\" target=\"_preview\">".$mnl_nldir."/".$NL_Filename."</a>";
 					$_MAIN_MESSAGE.= "</ul>";
 					$uploaded_html=true;
 				} else {
@@ -57,15 +57,14 @@
 					$check=false;
 				}//copy
 			} else {
-				$_MAIN_MESSAGE.= "<br>".sprintf(___("Die HTML-Datei darf nur eine Gr&ouml;sse von %s Byte haben."),$max_byte_size);
+				$_MAIN_MESSAGE.= "<br>".sprintf(___("Die HTML-Datei darf nur eine GrÖsse von %s Byte haben."),$max_byte_size);
 				$check=false;
 			}//max size
 		} else {
-			$_MAIN_MESSAGE.= "<br>".___("Die HTML-Datei besitzt eine ung&uuml;ltige Endung.");
+			$_MAIN_MESSAGE.= "<br>".___("Die HTML-Datei besitzt eine ungültige Endung.");
 			$check=false;
 		}//extension
 	} else {
-		//$_MAIN_MESSAGE.= "Keine HTML-Datei zum Hochladen angegeben.";
 	}//no file
 	//ende upload html
 
@@ -83,7 +82,7 @@
 					$_MAIN_MESSAGE.= "<ul>".$_FILES["image1"]["name"];
 					$_MAIN_MESSAGE.= " / ".$_FILES["image1"]["size"]." Byte";
 					$_MAIN_MESSAGE.= ", ".$_FILES["image1"]["type"];
-					$_MAIN_MESSAGE.= "<br>".___("gespeichert unter:")." <a href=\"".$mnl_nlimgdir."/".$NL_Imagename1."\"  target=\"_preview\">".$mnl_nlimgdir."/".$NL_Imagename1."</a>";
+					$_MAIN_MESSAGE.= "<br>".___("gespeichert unter:")." <a href=\"".$mnl_URL_FE."/".$mnl_nlimgdir."/".$NL_Imagename1."\"  target=\"_preview\">".$mnl_nlimgdir."/".$NL_Imagename1."</a>";
 					$_MAIN_MESSAGE.= "</ul>";
 					$uploaded_image1=true;
 				} else {
@@ -91,11 +90,11 @@
 					$check=false;
 				}//copy
 			} else {
-				$_MAIN_MESSAGE.= "<br>".sprintf(___("Die BILD-Datei darf nur eine Gr&ouml;sse von %s Byte besitzen."),$max_byte_size);
+				$_MAIN_MESSAGE.= "<br>".sprintf(___("Die BILD-Datei darf nur eine GrÖsse von %s Byte besitzen."),$max_byte_size);
 				$check=false;
 			}//max size
 		} else {
-			$_MAIN_MESSAGE.= "<br>".___("Die BILD-Datei besitzt eine ung&uuml;ltige Endung.");
+			$_MAIN_MESSAGE.= "<br>".___("Die BILD-Datei besitzt eine ungültige Endung.");
 			$check=false;
 		}//extension
 	} else {
@@ -126,7 +125,7 @@
 					$_MAIN_MESSAGE.= "<ul>".$_FILES["attach1"]["name"];
 					$_MAIN_MESSAGE.= " / ".$_FILES["attach1"]["size"]." Byte";
 					$_MAIN_MESSAGE.= ", ".$_FILES["attach1"]["type"];
-					$_MAIN_MESSAGE.= "<br>".___("gespeichert unter:")." <a href=\"".$mnl_nlattachdir."/".$NL_Attachname1."\"  target=\"_preview\">".$mnl_nlattachdir."/".$NL_Attachname1."</a>";
+					$_MAIN_MESSAGE.= "<br>".___("gespeichert unter:")." <a href=\"".$mnl_URL_FE."/".$mnl_nlattachdir."/".$NL_Attachname1."\"  target=\"_preview\">".$mnl_nlattachdir."/".$NL_Attachname1."</a>";
 					$_MAIN_MESSAGE.= "</ul>";
 					$uploaded_attach1=true;
 				} else {
@@ -134,12 +133,12 @@
 					$check=false;
 				}//copy
 			} else {
-				$_MAIN_MESSAGE.= "<br>".sprintf(___("Der Anhang Datei darf nur eine Gr&ouml;sse von %s Byte haben."),$max_byte_size);
+				$_MAIN_MESSAGE.= "<br>".sprintf(___("Der Anhang Datei darf nur eine GrÖsse von %s Byte haben."),$max_byte_size);
 				$check=false;
 			}//max size
 		/*
 		} else {
-			$_MAIN_MESSAGE.= "<br>".___("Der Anhang besitzt eine ung&uuml;tige Endung.");
+			$_MAIN_MESSAGE.= "<br>".___("Der Anhang besitzt eine ungütige Endung.");
 			$check=false;
 		}//extension
 		*/
@@ -149,6 +148,45 @@
 
 	
 //ende upload attachement
+
+	//image
+	//imageupload
+	// Wurde wirklich eine Datei hochgeladen?
+	$uploaded_track_image_new=false;
+	if(is_uploaded_file($_FILES["track_image_new"]["tmp_name"])) {
+		// Gültige Endung? ($ = Am Ende des Dateinamens) (/i = Groß- Kleinschreibung nicht berücksichtigen)
+		if(preg_match("/\." . $allowed_trackimage_filetypes . "$/i", $_FILES["track_image_new"]["name"])) {
+			// Datei auch nicht zu groß
+			if($_FILES["track_image_new"]["size"] <= $max_upload_size) {
+				// Alles OK -> Datei kopieren
+				$uploaded_track_image_new_name=$_FILES["track_image_new"]["name"];
+				if($check && copy($_FILES["track_image_new"]["tmp_name"], $mnl_nlimgpath."/".$uploaded_track_image_new_name)) { //$_FILES["image"]["name"]
+					$_MAIN_MESSAGE.= "<br>".___("Track-BILD-Datei erfolgreich hochgeladen.");
+					$_MAIN_MESSAGE.= "<ul>".$_FILES["track_image_new"]["name"];
+					$_MAIN_MESSAGE.= " / ".$_FILES["track_image_new"]["size"]." Byte";
+					$_MAIN_MESSAGE.= ", ".$_FILES["track_image_new"]["type"];
+					$_MAIN_MESSAGE.= "<br>".___("gespeichert unter:")." <a href=\"".$mnl_URL_FE."/".$mnl_nlimgdir."/".$uploaded_track_image_new_name."\"  target=\"_preview\">".$mnl_nlimgdir."/".$uploaded_track_image_new_name."</a>";
+					$_MAIN_MESSAGE.= "</ul>";
+					$uploaded_track_image_new=true;
+				} else {
+					$_MAIN_MESSAGE.= "<br>".___("Tracker-BILD-Datei konnte nicht hochgeladen werden.");
+					$check=false;
+				}//copy
+			} else {
+				$_MAIN_MESSAGE.= "<br>".sprintf(___("Die Tracker-BILD-Datei darf nur eine GrÖsse von %s Byte besitzen."),$max_byte_size);
+				$check=false;
+			}//max size
+		} else {
+			$_MAIN_MESSAGE.= "<br>".___("Die Tracker-BILD-Datei besitzt eine ungültige Endung.");
+			$check=false;
+		}//extension
+	} else {
+		//$_MAIN_MESSAGE.= "Keine HTML-Datei zum Hochladen angegeben.";
+	}//no file
+
+	
+//ende upload image
+
 
 	// kompletter content= $body + html content = $body_tmp	
 	if (file_exists($mnl_nlpath."/".$NL_Filename)) {
@@ -177,7 +215,7 @@
 	$ATTACH1_URL="";
 	//Bild
 	if (file_exists($mnl_nlimgpath."/".$NL_Imagename1)) {
-		$IMAGE1_URL=$mnl_URL."/".$mnl_nlimgdir."/".$NL_Imagename1;
+		$IMAGE1_URL=$mnl_URL_FE."/".$mnl_nlimgdir."/".$NL_Imagename1;
 		$IMAGE1="<img src=\"".$IMAGE1_URL."\" border=0>";
 	}
 	//Link
@@ -190,20 +228,20 @@
 	$NL_Attachfile1=$mnl_nlattachpath."/".$NL_Attachname1;
 	if (file_exists($NL_Attachfile1)) {
 		//link zum attachement fuer newsletter
-		$ATTACH1_URL=$mnl_URL."/".$mnl_nlattachdir."/".$NL_Attachname1;
+		$ATTACH1_URL=$mnl_URL_FE."/".$mnl_nlattachdir."/".$NL_Attachname1;
 		$ATTACH1="<a href=\"".$ATTACH1_URL."\" target=\"_blank\">";
 	}
 	//blindimage
-	$BLINDIMAGE_URL=$mnl_URL."/news_blank.png.php";//?nl_id=".$Q[$qcc]['nl_id'];
+	$BLINDIMAGE_URL=$mnl_URL_FE."/news_blank.png.php?nl_id=".$nl_id;//?nl_id=".$Q[$qcc]['nl_id'];
 	$BLINDIMAGE="<img src=\"".$BLINDIMAGE_URL."\" border=0>";
 	//link zu unsubscribe
-	$UNSUBSCRIBE_URL=$mnl_URL."/unsubscribe.php";//?nl_id=".$Q[$qcc]['nl_id'];
+	$UNSUBSCRIBE_URL=$mnl_URL_FE."/unsubscribe.php?nl_id=".$nl_id;//?nl_id=".$Q[$qcc]['nl_id'];
 	$UNSUBSCRIBE="<a href=\"".$UNSUBSCRIBE_URL."\" target=\"_blank\">";
 	//link zur onlineversion, geparsed
-	$NLONLINE_URL=$mnl_URL."/".$mnl_nldir."/".$NL_Filename_P;
+	$NLONLINE_URL=$mnl_URL_FE."/".$mnl_nldir."/".$NL_Filename_P;
 	$NLONLINE="<a href=\"".$NLONLINE_URL."\" target=\"_blank\">";
 
-	$SUBSCRIBE_URL=$mnl_URL."/subscribe.php?doptin=1&c=&email=";
+	$SUBSCRIBE_URL=$mnl_URL_FE."/subscribe.php?nl_id=".$nl_id."&doptin=1&c=&email=";
 	$SUBSCRIBE="<a href=\"".$SUBSCRIBE_URL."\" target=\"_blank\">";
 
 	//$SUBSCRIBE_URL="#";

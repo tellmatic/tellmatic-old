@@ -23,6 +23,7 @@ $Form->new_Form($FormularName,$_SERVER["PHP_SELF"],"post","_self");
 //$this->set_FormStyle($FormularName,"font-size:10pt;font-color=red;");
 ////$Form->set_FormStyleClass($FormularName,"mForm");
 ////$Form->set_FormInputStyleClass($FormularName,"mFormText","mFormTextFocus");
+$Form->set_FormType($FormularName,"multipart/form-data");
 $Form->set_FormJS($FormularName," onSubmit=\"switchSection('div_loader');\" ");
 //add a Description
 $Form->set_FormDesc($FormularName,___("Systemeinstellungen aendern"));
@@ -38,6 +39,7 @@ $Form->new_Input($FormularName,"set", "hidden", "save");
 
 //sender_name, email etc
 $Form->new_Input($FormularName,$InputName_SenderName,"text", $$InputName_SenderName);
+$Form->set_InputJS($FormularName,$InputName_SenderName," onChange=\"flash('submit','#ff0000');\" ");
 $Form->set_InputStyleClass($FormularName,$InputName_SenderName,"mFormText","mFormTextFocus");
 $Form->set_InputSize($FormularName,$InputName_SenderName,48,256);
 $Form->set_InputDesc($FormularName,$InputName_SenderName,___("Erscheint als Absender-name in der E-Mail"));
@@ -47,6 +49,7 @@ $Form->set_InputLabel($FormularName,$InputName_SenderName,"");
 
 //sender_name, email etc
 $Form->new_Input($FormularName,$InputName_SenderEMail,"text", $$InputName_SenderEMail);
+$Form->set_InputJS($FormularName,$InputName_SenderEMail," onChange=\"flash('submit','#ff0000');\" ");
 $Form->set_InputStyleClass($FormularName,$InputName_SenderEMail,"mFormText","mFormTextFocus");
 $Form->set_InputSize($FormularName,$InputName_SenderEMail,48,256);
 $Form->set_InputDesc($FormularName,$InputName_SenderEMail,___("Erscheint als Absender-E-Mail-Adresse in der E-Mail"));
@@ -56,6 +59,7 @@ $Form->set_InputLabel($FormularName,$InputName_SenderEMail,"");
 
 //emailcheck...
 $Form->new_Input($FormularName,$InputName_ECheckIntern,"select", "");
+$Form->set_InputJS($FormularName,$InputName_ECheckIntern," onChange=\"flash('submit','#ff0000');\" ");
 $Form->set_InputDefault($FormularName,$InputName_ECheckIntern,$$InputName_ECheckIntern);
 $Form->set_InputStyleClass($FormularName,$InputName_ECheckIntern,"mFormSelect","mFormSelectFocus");
 $Form->set_InputDesc($FormularName,$InputName_ECheckIntern,"");
@@ -66,13 +70,13 @@ $Form->set_InputSize($FormularName,$InputName_ECheckIntern,0,1);
 $Form->set_InputMultiple($FormularName,$InputName_ECheckIntern,false);
 //add Data
 $sc=count($EMAILCHECK['intern']);
-for ($scc=1; $scc<=$sc; $scc++)//0
-{
+for ($scc=0; $scc<$sc; $scc++) {
 	$Form->add_InputOption($FormularName,$InputName_ECheckIntern,$scc,$EMAILCHECK['intern'][$scc]);
 }
 
 //emailcheck...
 $Form->new_Input($FormularName,$InputName_ECheckSubscribe,"select", "");
+$Form->set_InputJS($FormularName,$InputName_ECheckSubscribe," onChange=\"flash('submit','#ff0000');\" ");
 $Form->set_InputDefault($FormularName,$InputName_ECheckSubscribe,$$InputName_ECheckSubscribe);
 $Form->set_InputStyleClass($FormularName,$InputName_ECheckSubscribe,"mFormSelect","mFormSelectFocus");
 $Form->set_InputDesc($FormularName,$InputName_ECheckSubscribe,"");
@@ -91,6 +95,7 @@ for ($scc=1; $scc<=$sc; $scc++)//0
 
 //notify
 $Form->new_Input($FormularName,$InputName_NotifySubscribe,"checkbox", 1);
+$Form->set_InputJS($FormularName,$InputName_NotifySubscribe," onChange=\"flash('submit','#ff0000');\" ");
 $Form->set_InputDefault($FormularName,$InputName_NotifySubscribe,$$InputName_NotifySubscribe);
 $Form->set_InputStyleClass($FormularName,$InputName_NotifySubscribe,"mFormText","mFormTextFocus");
 $Form->set_InputSize($FormularName,$InputName_NotifySubscribe,48,256);
@@ -101,6 +106,7 @@ $Form->set_InputLabel($FormularName,$InputName_NotifySubscribe,"");
 
 //notify
 $Form->new_Input($FormularName,$InputName_NotifyUnsubscribe,"checkbox", 1);
+$Form->set_InputJS($FormularName,$InputName_NotifyUnsubscribe," onChange=\"flash('submit','#ff0000');\" ");
 $Form->set_InputDefault($FormularName,$InputName_NotifyUnsubscribe,$$InputName_NotifyUnsubscribe);
 $Form->set_InputStyleClass($FormularName,$InputName_NotifyUnsubscribe,"mFormText","mFormTextFocus");
 $Form->set_InputSize($FormularName,$InputName_NotifyUnsubscribe,48,256);
@@ -111,6 +117,7 @@ $Form->set_InputLabel($FormularName,$InputName_NotifyUnsubscribe,"");
 
 //notify_mail etc
 $Form->new_Input($FormularName,$InputName_NotifyMail,"text", $$InputName_NotifyMail);
+$Form->set_InputJS($FormularName,$InputName_NotifyMail," onChange=\"flash('submit','#ff0000');\" ");
 $Form->set_InputStyleClass($FormularName,$InputName_NotifyMail,"mFormText","mFormTextFocus");
 $Form->set_InputSize($FormularName,$InputName_NotifyMail,48,256);
 $Form->set_InputDesc($FormularName,$InputName_NotifyMail,___("E-Mail-Adresse fuer Benachrichtigungen"));
@@ -120,6 +127,7 @@ $Form->set_InputLabel($FormularName,$InputName_NotifyMail,"");
 
 //return_mail etc
 $Form->new_Input($FormularName,$InputName_ReturnMail,"text", $$InputName_ReturnMail);
+$Form->set_InputJS($FormularName,$InputName_ReturnMail," onChange=\"flash('submit','#ff0000');\" ");
 $Form->set_InputStyleClass($FormularName,$InputName_ReturnMail,"mFormText","mFormTextFocus");
 $Form->set_InputSize($FormularName,$InputName_ReturnMail,48,256);
 $Form->set_InputDesc($FormularName,$InputName_ReturnMail,___("Return-Path, Adresse fuer E-Mail Fehlermeldungen"));
@@ -129,6 +137,7 @@ $Form->set_InputLabel($FormularName,$InputName_ReturnMail,"");
 
 //smtp
 $Form->new_Input($FormularName,$InputName_SMTPHost,"text", $$InputName_SMTPHost);
+$Form->set_InputJS($FormularName,$InputName_SMTPHost," onChange=\"flash('submit','#ff0000');\" ");
 $Form->set_InputStyleClass($FormularName,$InputName_SMTPHost,"mFormText","mFormTextFocus");
 $Form->set_InputSize($FormularName,$InputName_SMTPHost,48,256);
 $Form->set_InputDesc($FormularName,$InputName_SMTPHost,___("SMTP Servername / IP-Adresse"));
@@ -138,6 +147,7 @@ $Form->set_InputLabel($FormularName,$InputName_SMTPHost,"");
 
 //smtp
 $Form->new_Input($FormularName,$InputName_SMTPUser,"text", $$InputName_SMTPUser);
+$Form->set_InputJS($FormularName,$InputName_SMTPUser," onChange=\"flash('submit','#ff0000');\" ");
 $Form->set_InputStyleClass($FormularName,$InputName_SMTPUser,"mFormText","mFormTextFocus");
 $Form->set_InputSize($FormularName,$InputName_SMTPUser,48,256);
 $Form->set_InputDesc($FormularName,$InputName_SMTPUser,___("SMTP Benutzername"));
@@ -147,6 +157,7 @@ $Form->set_InputLabel($FormularName,$InputName_SMTPUser,"");
 
 //smtp
 $Form->new_Input($FormularName,$InputName_SMTPPass,"password", $$InputName_SMTPPass);
+$Form->set_InputJS($FormularName,$InputName_SMTPPass," onChange=\"flash('submit','#ff0000');\" ");
 $Form->set_InputStyleClass($FormularName,$InputName_SMTPPass,"mFormText","mFormTextFocus");
 $Form->set_InputSize($FormularName,$InputName_SMTPPass,48,256);
 $Form->set_InputDesc($FormularName,$InputName_SMTPPass,___("SMTP Passwort"));
@@ -156,6 +167,7 @@ $Form->set_InputLabel($FormularName,$InputName_SMTPPass,"");
 
 //smtp
 $Form->new_Input($FormularName,$InputName_SMTPDomain,"text", $$InputName_SMTPDomain);
+$Form->set_InputJS($FormularName,$InputName_SMTPDomain," onChange=\"flash('submit','#ff0000');\" ");
 $Form->set_InputStyleClass($FormularName,$InputName_SMTPDomain,"mFormText","mFormTextFocus");
 $Form->set_InputSize($FormularName,$InputName_SMTPDomain,48,256);
 $Form->set_InputDesc($FormularName,$InputName_SMTPDomain,___("SMTP Domain"));
@@ -166,6 +178,7 @@ $Form->set_InputLabel($FormularName,$InputName_SMTPDomain,"");
 
 //Retries
 $Form->new_Input($FormularName,$InputName_MaxRetry,"select", "");
+$Form->set_InputJS($FormularName,$InputName_MaxRetry," onChange=\"flash('submit','#ff0000');\" ");
 $Form->set_InputDefault($FormularName,$InputName_MaxRetry,$$InputName_MaxRetry);
 $Form->set_InputStyleClass($FormularName,$InputName_MaxRetry,"mFormSelect","mFormSelectFocus");
 $Form->set_InputDesc($FormularName,$InputName_MaxRetry,___("Maximale Anzahl Sendeversuche pro Adresse"));
@@ -184,6 +197,7 @@ for ($rtc=1; $rtc<=$rt; $rtc=$rtc+2)
 
 //Mails at once
 $Form->new_Input($FormularName,$InputName_MaxMails,"select", "");
+$Form->set_InputJS($FormularName,$InputName_MaxMails," onChange=\"flash('submit','#ff0000');\" ");
 $Form->set_InputDefault($FormularName,$InputName_MaxMails,$$InputName_MaxMails);
 $Form->set_InputStyleClass($FormularName,$InputName_MaxMails,"mFormSelect","mFormSelectFocus");
 $Form->set_InputDesc($FormularName,$InputName_MaxMails,___("Maximale Anzahl Mails pro Durchgang"));
@@ -207,6 +221,7 @@ $Form->add_InputOption($FormularName,$InputName_MaxMails,1000,"1000 - 2fast4u");
 
 //Mails Bcc
 $Form->new_Input($FormularName,$InputName_MaxMailsBcc,"select", "");
+$Form->set_InputJS($FormularName,$InputName_MaxMailsBcc," onChange=\"flash('submit','#ff0000');\" ");
 $Form->set_InputDefault($FormularName,$InputName_MaxMailsBcc,$$InputName_MaxMailsBcc);
 $Form->set_InputStyleClass($FormularName,$InputName_MaxMailsBcc,"mFormSelect","mFormSelectFocus");
 $Form->set_InputDesc($FormularName,$InputName_MaxMailsBcc,___("Maximale Anzahl BCC-Adressen pro Mail fuer Massenmailing"));
@@ -223,7 +238,51 @@ $Form->add_InputOption($FormularName,$InputName_MaxMailsBcc,50," 50");
 $Form->add_InputOption($FormularName,$InputName_MaxMailsBcc,75," 75");
 $Form->add_InputOption($FormularName,$InputName_MaxMailsBcc,100,"100");
 
+//check version and show news
+$Form->new_Input($FormularName,$InputName_CheckVersion,"checkbox", 1);
+$Form->set_InputJS($FormularName,$InputName_CheckVersion," onChange=\"flash('submit','#ff0000');\" ");
+$Form->set_InputDefault($FormularName,$InputName_CheckVersion,$$InputName_CheckVersion);
+$Form->set_InputStyleClass($FormularName,$InputName_CheckVersion,"mFormText","mFormTextFocus");
+$Form->set_InputSize($FormularName,$InputName_CheckVersion,48,256);
+$Form->set_InputDesc($FormularName,$InputName_CheckVersion,___("Aktuelle Version und News auf der Startseite einblenden"));
+$Form->set_InputReadonly($FormularName,$InputName_CheckVersion,false);
+$Form->set_InputOrder($FormularName,$InputName_CheckVersion,2);
+$Form->set_InputLabel($FormularName,$InputName_CheckVersion,"");
 
+//Select existing Trackimage
+$Form->new_Input($FormularName,$InputName_TrackImageExisting,"select", "");
+$Form->set_InputJS($FormularName,$InputName_TrackImageExisting," onChange=\"flash('submit','#ff0000');\" ");
+$Form->set_InputDefault($FormularName,$InputName_TrackImageExisting,$C[0]['track_image']);
+$Form->set_InputStyleClass($FormularName,$InputName_TrackImageExisting,"mFormSelect","mFormSelectFocus");
+$Form->set_InputDesc($FormularName,$InputName_TrackImageExisting,___("Blind-/Tracking-Bild auswählen"));
+$Form->set_InputReadonly($FormularName,$InputName_TrackImageExisting,false);
+$Form->set_InputOrder($FormularName,$InputName_TrackImageExisting,6);
+$Form->set_InputLabel($FormularName,$InputName_TrackImageExisting,"");
+$Form->set_InputSize($FormularName,$InputName_TrackImageExisting,0,1);
+$Form->set_InputMultiple($FormularName,$InputName_TrackImageExisting,false);
+//add Data
+unset($FileARRAY);
+gen_rec_files_array($mnl_nlimgpath);
+//sort array by name:
+foreach ($FileARRAY as $field) {  
+	$btsort[]=$field['filename'];
+}
+@array_multisort($btsort, SORT_ASC, $FileARRAY, SORT_ASC);
+$ic= count($FileARRAY);
+$Form->add_InputOption($FormularName,$InputName_TrackImageExisting,"_blank","-- BLANK --");
+for ($icc=0; $icc < $ic; $icc++) {
+	$Form->add_InputOption($FormularName,$InputName_TrackImageExisting,$FileARRAY[$icc]['filename'],$FileARRAY[$icc]['filename']);
+}
+
+//upload new trackingimage
+$Form->new_Input($FormularName,$InputName_TrackImageNew,"file", "");
+$Form->set_InputJS($FormularName,$InputName_TrackImageNew," onChange=\"flash('submit','#ff0000');\" ");
+$Form->set_InputStyleClass($FormularName,$InputName_TrackImageNew,"mFormText","mFormTextFocus");
+$Form->set_InputSize($FormularName,$InputName_TrackImageNew,48,48);
+$Form->set_InputDesc($FormularName,$InputName_TrackImageNew,___("neues Bild hochladen"));
+$Form->set_InputReadonly($FormularName,$InputName_TrackImageNew,false);
+$Form->set_InputOrder($FormularName,$InputName_TrackImageNew,91);
+$Form->set_InputLabel($FormularName,$InputName_TrackImageNew,"");
 
 //submit button 
 $Form->new_Input($FormularName,$InputName_Submit,"submit",___("Speichern"));
@@ -283,7 +342,7 @@ $_MAIN_OUTPUT.= "</tr>";
 
 $_MAIN_OUTPUT.= "<tr>";
 $_MAIN_OUTPUT.= "<td valign=top>";
-$_MAIN_OUTPUT.= ___("Pr&uuml;fung der E-Mail-Adressen, Intern + Versand");
+$_MAIN_OUTPUT.= ___("Prüfung der E-Mail-Adressen, Intern + Versand");
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "<td valign=top>";
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_ECheckIntern]['html'];
@@ -292,7 +351,7 @@ $_MAIN_OUTPUT.= "</tr>";
 
 $_MAIN_OUTPUT.= "<tr>";
 $_MAIN_OUTPUT.= "<td valign=top>";
-$_MAIN_OUTPUT.= ___("Pr&uuml;fung der E-Mail-Adressen bei Anmeldung");
+$_MAIN_OUTPUT.= ___("Prüfung der E-Mail-Adressen bei Anmeldung");
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "<td valign=top>";
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_ECheckSubscribe]['html'];
@@ -300,7 +359,7 @@ $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "</tr>";
 
 $_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top>";
+$_MAIN_OUTPUT.= "<td style=\"border-top:1px dashed grey\" valign=\"top\">";
 $_MAIN_OUTPUT.= ___("Benachrichtigung bei Neuanmeldung (subscribe)");
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "<td valign=top>";
@@ -327,7 +386,7 @@ $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "</tr>";
 
 $_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top>";
+$_MAIN_OUTPUT.= "<td style=\"border-top:1px dashed grey\" valign=\"top\">";
 $_MAIN_OUTPUT.= ___("Maximale Versuche pro E-Mail (Gesamt)");
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "<td valign=top>";
@@ -346,7 +405,7 @@ $_MAIN_OUTPUT.= "</tr>";
 
 $_MAIN_OUTPUT.= "<tr>";
 $_MAIN_OUTPUT.= "<td valign=top>";
-$_MAIN_OUTPUT.= ___("Maximale Anzahl Adressen pro Mail im BCC-Header f&uuml;r Massenmailing");
+$_MAIN_OUTPUT.= ___("Maximale Anzahl Adressen pro Mail im BCC-Headüuml;r Massenmailing");
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "<td valign=top>";
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_MaxMailsBcc]['html'];
@@ -355,7 +414,7 @@ $_MAIN_OUTPUT.= "</tr>";
 
 
 $_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top>";
+$_MAIN_OUTPUT.= "<td style=\"border-top:1px dashed grey\" valign=\"top\">";
 $_MAIN_OUTPUT.= ___("SMTP Servername / IP-Adresse");
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "<td valign=top>";
@@ -390,6 +449,23 @@ $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_SMTPDomain]['html'];
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "</tr>";
 
+$_MAIN_OUTPUT.= "<tr>";
+$_MAIN_OUTPUT.= "<td style=\"border-top:1px dashed grey\" valign=\"top\">";
+$_MAIN_OUTPUT.= ___("Versionsabfrage und News auf der Startseite");
+$_MAIN_OUTPUT.= "</td>";
+$_MAIN_OUTPUT.= "<td valign=top>";
+$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_CheckVersion]['html'];
+$_MAIN_OUTPUT.= "</td>";
+$_MAIN_OUTPUT.= "</tr>";
+$_MAIN_OUTPUT.= "<tr>";
+$_MAIN_OUTPUT.= "<td style=\"border-top:1px dashed grey\" valign=\"top\">";
+$_MAIN_OUTPUT.= ___("Blind- bzw. Tracking Bild auswählen oder neues Bild hochladen");
+$_MAIN_OUTPUT.= "</td>";
+$_MAIN_OUTPUT.= "<td valign=top>";
+$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_TrackImageExisting]['html']."&nbsp; oder<br>";
+$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_TrackImageNew]['html'];
+$_MAIN_OUTPUT.= "</td>";
+$_MAIN_OUTPUT.= "</tr>";
 $_MAIN_OUTPUT.= "<tr>";
 $_MAIN_OUTPUT.= "<td valign=top>";
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Submit]['html'];

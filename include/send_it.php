@@ -16,6 +16,7 @@
 
 require_once ("./mnl_config.inc");
 require_once($mnl_includepath."/Class_SMTP.inc");
+require_once ($mnl_includepath."/phphtmlparser/html2text.inc");
 
 $QUEUE=new mnlQ();
 $NEWSLETTER=new mnlNL();
@@ -76,8 +77,8 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 									"<br>erstellt (nur versand vorbereitet): /created (prepared): ".$created_date.
 									"<br>Versand terminiert fuer: / Send at: ".$Q[$qcc]['send_at'].
 									"<br>Gestartet: / Started: ".date("Y-m-d H:i:s").
-									"<br>Logfile: ".$mnl_URL."/".$mnl_logdir."/".$logfilename;
-			@SendMail($From,$From,$From,$From,$ReportMail_Subject,clear_text($ReportMail_HTML),$ReportMail_HTML);
+									"<br>Logfile: ".$mnl_URL_FE."/".$mnl_logdir."/".$logfilename;
+			if (!DEMO) @SendMail($From,$From,$From,$From,$ReportMail_Subject,clear_text($ReportMail_HTML),$ReportMail_HTML);
 		}
 		//
 
@@ -93,7 +94,7 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 
 		//online:
 		$NL_Filename_P="nl_".date_convert_to_string($NL[0]['created'])."_p.html";
-		$NLONLINE_URL=$mnl_URL."/".$mnl_nldir."/".$NL_Filename_P;
+		$NLONLINE_URL=$mnl_URL_FE."/".$mnl_nldir."/".$NL_Filename_P;
 		$NLONLINE="<a href=\"".$NLONLINE_URL."\" target=\"_blank\">";
 
 
@@ -107,8 +108,8 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 
 		//Bild
 		if (file_exists($mnl_nlimgpath."/".$NL_Imagename1)) {
-			$LOG.=  "\n  NL Image:".$mnl_URL."/".$mnl_nlimgdir."/".$NL_Imagename1;
-			$IMAGE1_URL=$mnl_URL."/".$mnl_nlimgdir."/".$NL_Imagename1;
+			$LOG.=  "\n  NL Image:".$mnl_URL_FE."/".$mnl_nlimgdir."/".$NL_Imagename1;
+			$IMAGE1_URL=$mnl_URL_FE."/".$mnl_nlimgdir."/".$NL_Imagename1;
 			$IMAGE1="<img src=\"".$IMAGE1_URL."\" border=0>";
 		}
 
@@ -116,7 +117,7 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 		$ATTM=Array();
 		$attach_file=false;
 		if (file_exists($NL_Attachfile1)) {
-			$LOG.=  "\n  NL Attachement:".$mnl_URL."/".$mnl_nlattachdir."/a".date_convert_to_string($NL[0]['created'])."_1.".$NL[0]['attm'];
+			$LOG.=  "\n  NL Attachement:".$mnl_URL_FE."/".$mnl_nlattachdir."/a".date_convert_to_string($NL[0]['created'])."_1.".$NL[0]['attm'];
 			$attach_file=true;
 			$ATTM=array(
 					"FileName"=>$NL_Attachfile1,
@@ -128,8 +129,8 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 			//bei massenmail wird die mail anders zusammengesetzt!
 
 			//link zum attachement fuer newsletter
-			$ATTACH1_URL=$mnl_URL."/".$mnl_nlattachdir."/a".date_convert_to_string($NL[0]['created'])."_1.".$NL[0]['attm'];
-			$ATTACH1="<a href=\"".$ATTACH1_URL."\" target=\"_blank\">";
+			$ATTACH1_URL=$mnl_URL_FE."/".$mnl_nlattachdir."/a".date_convert_to_string($NL[0]['created'])."_1.".$NL[0]['attm'];
+			$ATTACH1="<a href=\"".$ATTACH1_URL_FE."\" target=\"_blank\">";
 		}
 
 		//Link wird weiter unten aufbereitet da evtl personalisiert .....
@@ -219,10 +220,10 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 			$email_obj->SetEncodedEmailHeader("To",$To,$ToName);
 
 			$LOG.=  "\n prepare Template Vars for Massmail";
-			$BLINDIMAGE_URL=$mnl_URL."/news_blank.png.php?nl_id=".$Q[$qcc]['nl_id'];
-			$UNSUBSCRIBE_URL=$mnl_URL."/unsubscribe.php?nl_id=".$Q[$qcc]['nl_id'];
+			$BLINDIMAGE_URL=$mnl_URL_FE."/news_blank.png.php?nl_id=".$Q[$qcc]['nl_id'];
+			$UNSUBSCRIBE_URL=$mnl_URL_FE."/unsubscribe.php?nl_id=".$Q[$qcc]['nl_id'];
 
-			$SUBSCRIBE_URL=$mnl_URL."/subscribe.php?doptin=1&c=&email=";
+			$SUBSCRIBE_URL=$mnl_URL_FE."/subscribe.php?doptin=1&c=&email=";
 			$SUBSCRIBE="<a href=\"".$SUBSCRIBE_URL."\" target=\"_blank\">";
 			$LOG.=  "\n   Subscribe (touch/double optin): ".$SUBSCRIBE_URL;
 			
@@ -234,7 +235,7 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 			
 			
 			if (!empty($NL[0]['link'])) {
-				$LINK1_URL=$mnl_URL."/click.php?nl_id=".$Q[$qcc]['nl_id'];
+				$LINK1_URL=$mnl_URL_FE."/click.php?nl_id=".$Q[$qcc]['nl_id'];
 				$LINK1="<a href=\"".$LINK1_URL."\" target=\"_blank\">";
 				$LOG.=  "\n   Link1: ".$LINK1_URL;
 			}
@@ -271,8 +272,8 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 			$_Tpl_NL->setParseValue("F9","");
 			$LOG.=  "\n   render Template";
 			//Template rendern und body zusammenbauen
-			$NLBODY=$_Tpl_NL->renderTemplate($NL_Filename_N);//html
-			$NLBODY_TEXT="";//clear_text($NLBODY);//textversion
+			$NLBODY=$_Tpl_NL->renderTemplate($NL_Filename_N);//$_Tpl_NL->renderTemplate($NL_Filename_N)//html
+			$NLBODY_TEXT=$NEWSLETTER->convertNL2Text($NLBODY,$NL[0]['content_type']);
 		}//massmail
 
 
@@ -388,14 +389,14 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 									//bild fuer anzeigecheck! funktioniert nur bei html anzeige
 									//als parameter dienen h_id nl_id und adr_id
 									//nur nl_id bei massenmails! evtl qid wenn man unbedingt noch was auswerten will welche gruppe wieviel bekommen hat etc, geldesen... bla, views + clicks in q
-									$BLINDIMAGE_URL=$mnl_URL."/news_blank.png.php?h_id=".$H[$hcc]['id']."&nl_id=".$H[$hcc]['nl_id']."&a_id=".$H[$hcc]['adr_id'];
+									$BLINDIMAGE_URL=$mnl_URL_FE."/news_blank.png.php?h_id=".$H[$hcc]['id']."&nl_id=".$H[$hcc]['nl_id']."&a_id=".$H[$hcc]['adr_id'];
 									$BLINDIMAGE="<img src=\"".$BLINDIMAGE_URL."\" border=0>";
 									$LOG.=  "\n   Blindimage: ".$BLINDIMAGE_URL;
 									//link zu unsubscribe
-									$UNSUBSCRIBE_URL=$mnl_URL."/unsubscribe.php?h_id=".$H[$hcc]['id']."&nl_id=".$H[$hcc]['nl_id']."&a_id=".$H[$hcc]['adr_id']."&c=".$ADR[0]['code'];
+									$UNSUBSCRIBE_URL=$mnl_URL_FE."/unsubscribe.php?h_id=".$H[$hcc]['id']."&nl_id=".$H[$hcc]['nl_id']."&a_id=".$H[$hcc]['adr_id']."&c=".$ADR[0]['code'];
 									$UNSUBSCRIBE="<a href=\"".$UNSUBSCRIBE_URL."\" target=\"_blank\">";
 									
-									$SUBSCRIBE_URL=$mnl_URL."/subscribe.php?doptin=1&email=".$ADR[0]['email']."&c=".$ADR[0]['code']."&touch=1";
+									$SUBSCRIBE_URL=$mnl_URL_FE."/subscribe.php?doptin=1&email=".$ADR[0]['email']."&c=".$ADR[0]['code']."&touch=1";
 									$SUBSCRIBE="<a href=\"".$SUBSCRIBE_URL."\" target=\"_blank\">";
 
 									
@@ -403,7 +404,7 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 									$LOG.=  "\n   Subscribe (touch/double optin): ".$SUBSCRIBE_URL;
 
 									if (!empty($NL[0]['link'])) {
-										$LINK1_URL=$mnl_URL."/click.php?h_id=".$H[$hcc]['id']."&nl_id=".$H[$hcc]['nl_id']."&a_id=".$H[$hcc]['adr_id'];
+										$LINK1_URL=$mnl_URL_FE."/click.php?h_id=".$H[$hcc]['id']."&nl_id=".$H[$hcc]['nl_id']."&a_id=".$H[$hcc]['adr_id'];
 									}
 									$LINK1="<a href=\"".$LINK1_URL."\" target=\"_blank\">";
 									$LOG.=  "\n   Link1: ".$LINK1_URL;
@@ -444,8 +445,7 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 									$LOG.=  "\n   render Template";
 									//Template rendern und body zusammenbauen
 									$NLBODY=$_Tpl_NL->renderTemplate($NL_Filename_N);//html
-									$NLBODY_TEXT="";//clear_text($NLBODY);//textversion
-
+									$NLBODY_TEXT=$NEWSLETTER->convertNL2Text($NLBODY,$NL[0]['content_type']);
 								}
 
 								$LOG.=  "\n    create Mail, set To/From";
@@ -494,10 +494,17 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 				}
 
 			$LOG.=  "\n add Mail Body";
-			$email_message->AddQuotedPrintableHtmlPart($NLBODY);
-			//$email_message->WrapText($message)
-			$email_message->AddQuotedPrintableTextPart($NLBODY_TEXT);//$NLBODY_TEXT
-			//$email_message->WrapText($Text)
+			//text/html part anfuegen:
+			$LOG.=  "\n    Newsletter is from type: '".$NL[0]['content_type']."'";
+			if ($NL[0]['content_type']=="html" || $NL[0]['content_type']=="text/html") {
+				$LOG.=  "\n    add HTML Part";
+				$email_message->AddQuotedPrintableHtmlPart($NLBODY);
+			}
+
+			if ($NL[0]['content_type']=="text" || $NL[0]['content_type']=="text/html") {
+				$LOG.=  "\n    add TEXT Part";
+				$email_message->AddQuotedPrintableTextPart($NLBODY_TEXT);//$NLBODY_TEXT
+			}
 
 			//erst jetzt darf der part f.d. attachement hinzugefuegt werden!
 			if ($attach_file) {
@@ -508,7 +515,7 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 			//Versenden
 
 			$LOG.=  "\n\n SEND Mail\n";
-			$error=$email_message->Send();
+			if (!DEMO) $error=$email_message->Send();
 
 			if (empty($error)) {
 				$send_ok=true;
@@ -621,15 +628,15 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 									"<br>Fehler/Errors:".$hc_fail.
 									"<br>versendet am/sent at: ".$sent_date.
 									"<br>erstellt (nur versand vorbereitet)/created (prepared): ".$created_date.
-									"<br>Log: ".$mnl_URL."/".$mnl_logdir."/".$logfilename.
+									"<br>Log: ".$mnl_URL_FE."/".$mnl_logdir."/".$logfilename.
 									"</ul>";
-			@SendMail($From,$From,$From,$From,$ReportMail_Subject,clear_text($ReportMail_HTML),$ReportMail_HTML);
+			if (!DEMO) @SendMail($From,$From,$From,$From,$ReportMail_Subject,clear_text($ReportMail_HTML),$ReportMail_HTML);
 		}
 //	}//q status 2 o 3
 
 	$LOG.=  "\n\n".($qcc+1)." of $qc Qs \nend\n";
 	$LOG.=  "</pre>\n";
-	$LOG.= "\n\n\n\nwrite Log to ".$mnl_URL."/".$mnl_logdir."/".$logfilename;
+	$LOG.= "\n\n\n\nwrite Log to ".$mnl_URL_FE."/".$mnl_logdir."/".$logfilename;
 
 	update_file($mnl_logpath,$logfilename,$LOG);
 

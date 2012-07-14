@@ -25,6 +25,8 @@ Installation:
 
 	Archiv auf lokale Festplatte auspacken.
 	Das verzeichnis tellmatic-[xxx] oder den Inhalt des Verzeichnisses in ein Verzeichnis Ihrer Wahl auf den Server kopieren
+	Alternativ koennen Sie mit SSH etc. das Archiv auf den Server kopieren und dort entpacken.
+	(Denken Sie aber daran alle Benutzer und Gruppen für Dateien und Verzeichnisse auf Ihre Serverumgebung anzupassen (chown).)
 	
 	Das Verzeichnis in dem Sie Tellmatic installieren moechten muss fuer den Webserver beschreibbar sein - ftp-> chmod --> user/group/others -> read/write/execute (0775 oder 0777)
 	
@@ -45,6 +47,7 @@ Installation:
 		files/newsletter
 		files/newsletter/images
 		files/attachements
+		files/tmp
 	
 	Wird eine Fehlermeldung ausgegeben, befolgen Sie bitte die Anweisungen.
 
@@ -52,7 +55,7 @@ Installation:
 	'install.php'
 	loeschen oder umbenennen bzw an einen sicheren Ort verschieben.
 
-	Die Schreibrechte fuer das Verzeichnis include koennen wieder entfernt werden. (0755 rwxr-xr-x oder 0555 r-xr-xr-x)
+	Die Schreibrechte fuer das Verzeichnis include koennen wieder entfernt werden. (0755 rwxr-xr-x oder 0555 r-xr-xr-x oder entsprechend Ihrer Arbeitsumgebung.)
 
 		INFO:
 			Die Installationsroutine erstellt im Installationsverzeichnis eine Datei mit dem Namen .htusers.
@@ -61,9 +64,10 @@ Installation:
 	In include/send_it.php, subscribe.php und unsubscribe.php den Pfad zu mnl_confg.inc anpassen.
 	Hier muss der komplette Pfad, Docroot+Installdirectory angegeben werden.
 
+
 	Zum Versenden Cronjob erstellen: Aufruf von [user:passwort]@http://[domain]/[tellmatic-installdir]/include/send_it.php per wget (user/pw muss angegeben werden), 	oder per php CLI:
 		*/1 * * * * /pfad/zu/php-cli-binary /pfad/zu/include/send_it.php
-	'index.php' aufrufen, Name und Passwort eingeben , Fertig, viel Spass!
+	'admin/index.php' aufrufen, Name und Passwort eingeben , Fertig, viel Spass!
 
 Bei Fragen und Anregungen besuchen Sie bitte die Homepage www.tellmatic.org oder schicken eine E-Mail. Dort gibt es auch einen Weblog und ein Forum :) Feedback ist jederzeit willkommen!
 

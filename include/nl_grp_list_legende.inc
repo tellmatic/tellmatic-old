@@ -17,7 +17,7 @@ $_MAIN_OUTPUT.="<br><b><a href=\"javascript:switchSection('legende')\"><img src=
 $_MAIN_OUTPUT.= "<div id=\"legende\" class=\"legende\">";
 
 $_MAIN_OUTPUT.= "<h3>".___("Legende")."</h3>";
-$_MAIN_OUTPUT.= "<img src=\"".$mnl_iconURL."/page_white_lightning.png\" border=\"0\" title=\"".___("Standardgruppe")."\" alt=\"".___("Standardgruppe")."\">&nbsp;".___("Standardgruppe (kann nicht de-aktiviert und gel&ouml;scht werden)")."<br>";
+$_MAIN_OUTPUT.= "<img src=\"".$mnl_iconURL."/page_white_lightning.png\" border=\"0\" title=\"".___("Standardgruppe")."\" alt=\"".___("Standardgruppe")."\">&nbsp;".___("Standardgruppe (kann nicht de-aktiviert und gelÖscht werden)")."<br>";
 $_MAIN_OUTPUT.= "<img src=\"".$mnl_iconURL."/tick.png\" border=\"0\" title=\"".___("Aktiv")."\" alt=\"".___("Aktiv")."\">";
 $_MAIN_OUTPUT.= "<img src=\"".$mnl_iconURL."/cancel.png\" border=\"0\" title=\"".___("Inaktiv")."\" alt=\"".___("Inaktiv")."\">&nbsp;".___("Gruppe ist Aktiv/Inaktiv (Klick=Deaktivieren/Aktivieren)")."<br>";
 $_MAIN_OUTPUT.= "<img src=\"".$mnl_iconURL."/pencil.png\" border=\"0\" title=\"".___("Bearbeiten")."\" alt=\"".___("Bearbeiten")."\">&nbsp;".___("Bearbeiten")."<br>";
@@ -25,12 +25,13 @@ $_MAIN_OUTPUT.= "<img src=\"".$mnl_iconURL."/newspaper_add.png\" border=\"0\" ti
 $_MAIN_OUTPUT.= "<img src=\"".$mnl_iconURL."/newspaper_go.png\" border=\"0\" title=\"".___("Newsletter dieser Gruppe anzeigen")."\" alt=\"".___("Newsletter dieser Gruppe anzeigen")."\">&nbsp;".___("Newsletter dieser Gruppe anzeigen, Anzahl der Newsletter in dieser Gruppe")."<br>";
 //$_MAIN_OUTPUT.= "<img src=\"".$mnl_iconURL."/chart_pie.png\" border=\"0\" title=\"".___("Statistik")."\" alt=\"".___("Statistik")."\">&nbsp;".___("Statistik anzeigen")."<br>";
 $_MAIN_OUTPUT.= "<img src=\"".$mnl_iconURL."/page_white_go.png\" border=\"0\" title=\"".___("als Standardgruppe")."\" alt=\"".___("als Standardgruppe")."\">&nbsp;".___("Diese Gruppe als Standardgruppe definieren")."<br>";
-$_MAIN_OUTPUT.= "<img src=\"".$mnl_iconURL."/cross.png\" border=\"0\" title=\"".___("Loeschen")."\" alt=\"".___("Loeschen")."\">&nbsp;".___("Gruppe l&ouml;schen und Newsletter der Standardgruppe zuordnen")."<br>";
+$_MAIN_OUTPUT.= "<img src=\"".$mnl_iconURL."/cross.png\" border=\"0\" title=\"".___("Loeschen")."\" alt=\"".___("Loeschen")."\">&nbsp;".___("Gruppe lÖschen und Newsletter der Standardgruppe zuordnen")."<br>";
 
 $_MAIN_OUTPUT.= "</div><br><br>";
-$_MAIN_OUTPUT.= "<script type=\"text/javascript\">
-<!--	
-//switchSection('legende'); 
--->
+$_MAIN_OUTPUT.= "</div><br><br>";
+if ($user_is_expert) $_MAIN_OUTPUT.= "
+<script type=\"text/javascript\">
+	switchSection('legende');
 </script>";
+
 ?>

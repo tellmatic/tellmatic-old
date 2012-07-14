@@ -36,13 +36,13 @@
 <div id="head" class="head">&nbsp;</div>
 <div id="logo" class="logo">&nbsp;</div>
 <?php
-
+$created=date("Y-m-d H:i:s");
 //Daten ermitteln
 $MESSAGE="<h1>tellmatic installation</h1>";
 $MESSAGE.="<a href=\"README\" target=\"_blank\">README</a>&nbsp;-&nbsp;INSTALL.<a href=\"INSTALL.DE\" target=\"_blank\">DE</a>/<a href=\"INSTALL.EN\" target=\"_blank\">EN</a>
 &nbsp;&nbsp;<a href=\"UPDATE\" target=\"_blank\">UPDATE</a>&nbsp;&nbsp;<a href=\"CHANGES\" target=\"_blank\">CHANGES</a>&nbsp;&nbsp;<a href=\"http://www.tellmatic.org/?c=faq\" target=\"_blank\">FAQ</a>
 ";
-$mnl_docroot=$_SERVER["DOCUMENT_ROOT"];
+$mnl_docroot=realpath($_SERVER["DOCUMENT_ROOT"]);
 $mnl_Domain="http://".$_SERVER["HTTP_HOST"];
 $self=$_SERVER["PHP_SELF"];
 $pathinfo=pathinfo($self);
@@ -67,18 +67,20 @@ $mnl_nlattachdir="files/attachements";
 $mnl_formdir="files/forms";
 $mnl_datadir="files/import_export";
 $mnl_logdir="files/log";
+$mnl_tmpdir="files/tmp";
 $mnl_docdir="doc";
 
 //Paths	
 $mnl_path=$mnl_docroot."/".$mnl_dir;
 $mnl_includepath=$mnl_path."/".$mnl_includedir;
-$mnl_nlpath=$mnl_docroot."/".$mnl_dir."/".$mnl_nldir;
-$mnl_nlimgpath=$mnl_docroot."/".$mnl_dir."/".$mnl_nlimgdir;
-$mnl_nlattachpath=$mnl_docroot."/".$mnl_dir."/".$mnl_nlattachdir;
-$mnl_formpath=$mnl_docroot."/".$mnl_dir."/".$mnl_formdir;
-$mnl_datapath=$mnl_docroot."/".$mnl_dir."/".$mnl_datadir;
-$mnl_logpath=$mnl_docroot."/".$mnl_dir."/".$mnl_logdir;
-$mnl_tplpath=$mnl_docroot."/".$mnl_dir."/".$mnl_tpldir;
+$mnl_tmppath=$mnl_path."/".$mnl_tmpdir;
+$mnl_nlpath=$mnl_path."/".$mnl_nldir;
+$mnl_nlimgpath=$mnl_path."/".$mnl_nlimgdir;
+$mnl_nlattachpath=$mnl_path."/".$mnl_nlattachdir;
+$mnl_formpath=$mnl_path."/".$mnl_formdir;
+$mnl_datapath=$mnl_path."/".$mnl_datadir;
+$mnl_logpath=$mnl_path."/".$mnl_logdir;
+$mnl_tplpath=$mnl_path."/".$mnl_tpldir;
 //URLs
 $mnl_URL=$mnl_Domain."/".$mnl_dir;
 $mnl_imgURL=$mnl_URL."/".$mnl_imgdir;
@@ -213,12 +215,12 @@ if ($check) {
 
 	//check for windows
 	if (PHPWIN) {
-		$MESSAGE.="<p><font color=red><b>Achtung / Warning</b><br>PHP l&auml;uft unter Windows. Weitere Details finden Sie den den Dateien README und INSTALL oder der FAQ.
+		$MESSAGE.="<p><font color=red><b>Achtung / Warning</b><br>PHP läuft unter Windows. Weitere Details finden Sie den den Dateien README und INSTALL oder der FAQ.
 								<br>PHP is running on windows. More Details you can find in the README and INSTALL files or FAQ.</font></p>";
 	}
 	//check if php is running as cgi
 	if (ereg("cgi",$php_sapi)) {
-		$MESSAGE.="<p><font color=red><b>Achtung / Warning</b><br>PHP l&auml;uft als CGI. Weitere Details finden Sie den den Dateien README und INSTALL oder der FAQ.
+		$MESSAGE.="<p><font color=red><b>Achtung / Warning</b><br>PHP läuft als CGI. Weitere Details finden Sie den den Dateien README und INSTALL oder der FAQ.
 								<br>PHP is running as cgi. More Details you can find in the README and INSTALL files or FAQ.</font></p>";
 		//no error
 	}
@@ -245,33 +247,43 @@ if ($check) {
 		$check=false;
 	}
 	if (!is_writeable($mnl_datapath)) {
-		$ERR_MESSAGE.="<p><font color=red>Keine Schreibrechte f&uuml;r $mnl_datapath</font>";
+		$ERR_MESSAGE.="<p><font color=red>Keine Schreibrechte für $mnl_datapath</font>";
 		$ERR_MESSAGE.="<br><font color=red>No write permissions for $mnl_datapath</font></p>";
 		$check=false;
 	}
+	if (!is_writeable($mnl_tmppath)) {
+		$ERR_MESSAGE.="<p><font color=red>Keine Schreibrechte für $mnl_tmppath</font>";
+		$ERR_MESSAGE.="<br><font color=red>No write permissions for $mnl_tmppath</font></p>";
+		$check=false;
+	}
 	if (!is_writeable($mnl_nlpath)) {
-		$ERR_MESSAGE.="<p><font color=red>Keine Schreibrechte f&uuml;r $mnl_nlpath</font>";
+		$ERR_MESSAGE.="<p><font color=red>Keine Schreibrechte für $mnl_nlpath</font>";
 		$ERR_MESSAGE.="<br><font color=red>No write permissions for $mnl_nlpath</font></p>";
 		$check=false;
 	}
 	if (!is_writeable($mnl_nlattachpath)) {
-		$ERR_MESSAGE.="<p><font color=red>Keine Schreibrechte f&uuml;r $mnl_nlattachpath</font>";
+		$ERR_MESSAGE.="<p><font color=red>Keine Schreibrechte für $mnl_nlattachpath</font>";
 		$ERR_MESSAGE.="<br><font color=red>No write permissions for $mnl_nlattachpath</font></p>";
 		$check=false;
 	}
 	if (!is_writeable($mnl_nlimgpath)) {
-		$ERR_MESSAGE.="<p><font color=red>Keine Schreibrechte f&uuml;r $mnl_nlimgpath</font>";
+		$ERR_MESSAGE.="<p><font color=red>Keine Schreibrechte für $mnl_nlimgpath</font>";
 		$ERR_MESSAGE.="<br><font color=red>No write permissions for $mnl_nlimgpath</font></p>";
 		$check=false;
 	}
 	if (!is_writeable($mnl_logpath)) {
-		$ERR_MESSAGE.="<p><font color=red>Keine Schreibrechte f&uuml;r $mnl_logpath</font>";
+		$ERR_MESSAGE.="<p><font color=red>Keine Schreibrechte für $mnl_logpath</font>";
 		$ERR_MESSAGE.="<br><font color=red>No write permissions for $mnl_logpath</font></p>";
 		$check=false;
 	}
 	if (!is_writeable($mnl_formpath)) {
-		$ERR_MESSAGE.="<p><font color=red>Keine Schreibrechte f&uuml;r $mnl_formpath</font>";
+		$ERR_MESSAGE.="<p><font color=red>Keine Schreibrechte für $mnl_formpath</font>";
 		$ERR_MESSAGE.="<br><font color=red>No write permissions for $mnl_formpath</font></p>";
+		$check=false;
+	}
+	if (!is_writeable($mnl_tmppath)) {
+		$ERR_MESSAGE.="<p><font color=red>Keine Schreibrechte für $mnl_tmppath</font>";
+		$ERR_MESSAGE.="<br><font color=red>No write permissions for $mnl_tmppath</font></p>";
 		$check=false;
 	}
 
@@ -289,9 +301,8 @@ if ($set=="save" && $check) {
 	if (empty($pass)) {$check=false;$ERR_MESSAGE.="<br>Kein Passwort angegeben / Please enter password";}
 	if ($pass!=$pass2) {$check=false;$ERR_MESSAGE.="<br>Bitte 2x das gleiche Passwort angeben / Please repeat the pasword";}
 	if (empty($email)) {$check=false;$ERR_MESSAGE.="<br>E-Mail sollte nicht leer sein. / E-mail should not be empty";}
-	if (!checkemailadr($email,1)) {$check=false;$ERR_MESSAGE.="<br>E-Mail <em>$email</em> hat ein falsches Format oder Domain ist nicht g&uuml;ltig. / E-mail is invalid";}
-	if (empty($db_host) || empty($db_port) || empty($db_name) || empty($db_user) || empty($db_pass)) {$check=false;$ERR_MESSAGE.="<br>Daten f&uuml;r den Zugriff auf die Datenbank sind nicht vollst&auml;ndig. / Data for database are not complete.";}
-	//	if (empty($smtp_host) || empty($smtp_domain) || empty($smtp_user) || empty($smtp_pass)) {$check=false;$MESSAGE.="<br>Daten fuer den Zugriff auf den SMTP-Server sind nicht vollstaendig.";}
+	if (!checkemailadr($email,1)) {$check=false;$ERR_MESSAGE.="<br>E-Mail <em>$email</em> hat ein falsches Format oder Domain ist nicht gültig. / E-mail is invalid";}
+	if (empty($db_host) || empty($db_port) || empty($db_name) || empty($db_user) || empty($db_pass)) {$check=false;$ERR_MESSAGE.="<br>Daten für den Zugriff auf die Datenbank sind nicht vollständig. / Data for database are not complete.";}
 
 	if (!$check) {
 		$MESSAGE.="<p><font color=red><b>Eingabefehler: / Input error:</b>".$ERR_MESSAGE."</font></p>";
@@ -328,7 +339,7 @@ if ($set=="save" && $check) {
 		$MNL["DB"]["User"]=$db_user;
 		$MNL["DB"]["Pass"]=$db_pass;
 		//include_once ($mnl_includepath."/Classes.inc");
-		include_once ("./include/Classes.inc");
+		require_once ("./include/Classes.inc");
 
 		//$sql=stripslashes(file_get_contents($mnl_includepath."/mnl.sql"));
 $sql[0]['name']=" adr Adressen ";
@@ -362,6 +373,7 @@ $sql[1]['sql']="
 CREATE TABLE ".$mnl_tablePrefix."adr_details (
   id int(11) NOT NULL auto_increment,
   adr_id int(11) NOT NULL default '0',
+  memo text default '',
   siteid varchar(64) NOT NULL default '',
   f0 varchar(128) default NULL,
   f1 varchar(128) default NULL,
@@ -390,6 +402,10 @@ CREATE TABLE ".$mnl_tablePrefix."adr_grp (
   siteid varchar(64) NOT NULL default '',
   standard tinyint(4) NOT NULL default '0',
   color VARCHAR( 10 ) DEFAULT '#ffffff',
+  created datetime default NULL,
+  updated datetime default NULL,
+  author varchar(64) default NULL,
+  editor varchar(64) default NULL,
   PRIMARY KEY  (id),
   KEY name (name),
   KEY aktiv (aktiv),
@@ -433,6 +449,8 @@ CREATE TABLE ".$mnl_tablePrefix."config (
   max_mails_atonce smallint(4) NOT NULL default '25',
   max_mails_bcc smallint(4) NOT NULL default '50',
   max_mails_retry tinyint(4) NOT NULL default '5',
+  check_version  tinyint(4) NOT NULL default '1',
+  track_image varchar(255) NOT NULL default '_blank',
   PRIMARY KEY  (id),
   KEY siteid (siteid)
 ) TYPE=MyISAM
@@ -452,6 +470,11 @@ CREATE TABLE ".$mnl_tablePrefix."frm (
   editor varchar(64) default NULL,
   double_optin smallint(6) default '0',
   subscriptions int(11) NOT NULL default '0',
+  use_captcha tinyint(4) NOT NULL default '1',
+  digits_captcha tinyint(4) NOT NULL default '4',
+  submit_value varchar(255) default NULL,
+  reset_value varchar(255) default NULL,
+  subscribe_aktiv tinyint(4) NOT NULL default '1',
   f0 varchar(128) default NULL,
   f1 varchar(128) default NULL,
   f2 varchar(128) default NULL,
@@ -544,6 +567,7 @@ CREATE TABLE ".$mnl_tablePrefix."nl (
   grp_id int(11) NOT NULL default '0',
   content_type varchar(12) NOT NULL default 'html',
   attm varchar(255) default NULL,
+  track_image varchar(255) default NULL,
   siteid varchar(64) NOT NULL default '',
   PRIMARY KEY  (id),
   KEY aktiv (aktiv),
@@ -564,6 +588,10 @@ CREATE TABLE ".$mnl_tablePrefix."nl_grp (
   siteid varchar(64) NOT NULL default '',
   standard tinyint(4) NOT NULL default '0',
   color VARCHAR( 10 ) DEFAULT '#ffffff',
+  created datetime default NULL,
+  updated datetime default NULL,
+  author varchar(64) default NULL,
+  editor varchar(64) default NULL,
   PRIMARY KEY  (id),
   KEY name (name),
   KEY aktiv (aktiv),
@@ -623,6 +651,7 @@ CREATE TABLE ".$mnl_tablePrefix."user (
   admin smallint(6) NOT NULL default '0',
   style varchar(64) NOT NULL default 'default',
   lang VARCHAR( 8 ) NOT NULL DEFAULT 'de',
+  expert tinyint(6) NOT NULL default '0',
   siteid varchar(64) NOT NULL default '',
   PRIMARY KEY  (id),
   KEY name (name,passwd,aktiv,siteid),
@@ -684,7 +713,8 @@ CREATE TABLE ".$mnl_tablePrefix."frm_s (
 				"aktiv"=>1,
 				"admin"=>1,
 				"style"=>"default",
-				"lang"=>"en"
+				"lang"=>"en",
+				"expert"=>0
 				));
 			$MESSAGE.="<br>...Benutzer '$name' wurde angelegt.";
 			$CONFIG->addCFG(Array(
@@ -704,25 +734,27 @@ CREATE TABLE ".$mnl_tablePrefix."frm_s (
 				"smtp_user"=>$smtp_user,
 				"smtp_pass"=>$smtp_pass,
 				"emailcheck_intern"=>2,
-				"emailcheck_subscribe"=>2
+				"emailcheck_subscribe"=>2,
+				"check_version"=>1,
+				"track_image"=>'_blank'
 				));
 				$MESSAGE.="<br>...Grundeinstellungen wurden gespeichert.";
 				//config schreiben ---> per template
 				$mnl_config='<?php
 //domain
-$mnl_Domain="'.$mnl_Domain.'";
+$mnl_Domain=\''.$mnl_Domain.'\';
 //absoluter pfad , docroot
-$mnl_docroot="'.$mnl_docroot.'";
+$mnl_docroot=\''.$mnl_docroot.'\';
 //script verzeichnis
-$mnl_dir="'.$mnl_dir.'";
+$mnl_dir=\''.$mnl_dir.'\';
 //table prefix
-$mnl_tablePrefix="'.$mnl_tablePrefix_cfg.'";
+$mnl_tablePrefix=\''.$mnl_tablePrefix_cfg.'\';
 //database
-$MNL["DB"]["Name"]="'.$db_name.'";
-$MNL["DB"]["Host"]="'.$db_host.'";
-$MNL["DB"]["Port"]="'.$db_port.'";
-$MNL["DB"]["User"]="'.$db_user.'";
-$MNL["DB"]["Pass"]="'.$db_pass.'";
+$MNL["DB"]["Name"]=\''.$db_name.'\';
+$MNL["DB"]["Host"]=\''.$db_host.'\';
+$MNL["DB"]["Port"]=\''.$db_port.'\';
+$MNL["DB"]["User"]=\''.$db_user.'\';
+$MNL["DB"]["Pass"]=\''.$db_pass.'\';
 
 /////////////////////////////////
 include ($mnl_docroot."/".$mnl_dir."/include/mnl_lib.inc");
@@ -731,7 +763,7 @@ include ($mnl_docroot."/".$mnl_dir."/include/mnl_lib.inc");
 
 			$mnl_htaccess='
 AuthType Basic
-AuthName "Newsletter"
+AuthName "Tellmatic"
 AuthUserFile '.$mnl_includepath.'/.htpasswd
 require valid-user
 ';
@@ -741,26 +773,30 @@ require valid-user
 
 			write_file($mnl_includepath,"mnl_config.inc",$mnl_config);
 			$MESSAGE.="<br>...Konfigurationsdatei wurde gespeichert.";
+			$MESSAGE.="<br>...Config saved.";
 
 			write_file($mnl_includepath,".htpasswd",$mnl_htpasswd);
 			$MESSAGE.="<br>.htpasswd Datei wurden geschrieben.";
+			$MESSAGE.="<br>.htpasswd File created.";
 
 			write_file($mnl_includepath,".htaccess",$mnl_htaccess);
-			write_file($mnl_path."/files/import_export",".htaccess",$mnl_htaccess);
-			write_file($mnl_path."/files/attachements",".htaccess",$mnl_htaccess);
-			write_file($mnl_path."/tpl",".htaccess",$mnl_htaccess);
-			write_file($mnl_path."/files/forms",".htaccess",$mnl_htaccess);
-			write_file($mnl_path."/files/log",".htaccess",$mnl_htaccess);
+			write_file($mnl_datapath,".htaccess",$mnl_htaccess);
+			write_file($mnl_nlattachpath,".htaccess",$mnl_htaccess);
+			write_file($mnl_tplpath,".htaccess",$mnl_htaccess);
+			write_file($mnl_formpath,".htaccess",$mnl_htaccess);
+			write_file($mnl_logpath,".htaccess",$mnl_htaccess);
+			write_file($mnl_tmppath,".htaccess",$mnl_htaccess);
 
 			$MESSAGE.="<br>.htaccess Dateien wurden geschrieben.";
+			$MESSAGE.="<br>.htaccess Files created.";
 
 			$MESSAGE.="<br><br>Beispieldaten werden hinzugefuegt / Adding examples.";
 
 //nl gruppe
 		$NEWSLETTER=new mnlNL();
 		
-		$NEWSLETTER->addGrp(Array("name"=>"NL Group 1", "descr"=>"zum testen / for testings", "aktiv"=>1));
-		$NEWSLETTER->addGrp(Array("name"=>"NL Group 2", "descr"=>"zum testen / for testings", "aktiv"=>0));
+		$NEWSLETTER->addGrp(Array("name"=>"NL Group 1", "descr"=>"zum testen / for testings", "aktiv"=>1, "author"=>"install", "created"=>$created, "editor"=>"install", "updated"=>$created));
+		$NEWSLETTER->addGrp(Array("name"=>"NL Group 2", "descr"=>"zum testen / for testings", "aktiv"=>0, "author"=>"install", "created"=>$created, "editor"=>"install", "updated"=>$created));
 //nl: personal, massmailing
 		$body="
 					Hallo {F0} {F1} {F2}<br>
@@ -822,15 +858,17 @@ require valid-user
 									"created"=>date("Y-m-d H:i:s"), 
 									"author"=>"example", 
 									"grp_id"=>1,
-									"attm"=>""
+									"attm"=>"",
+									"track_image"=>"_blank",
+									"content_type"=>"text/html"
 									)
 								);
 
 //adr gruppe
 		$ADDRESS=new mnlADR();	
 		
-		$ADDRESS->addGrp(Array("name"=>"ADR Group 1", "descr"=>"zum testen / for testings", "aktiv"=>1));
-		$ADDRESS->addGrp(Array("name"=>"ADR Group 2", "descr"=>"zum testen / for testings", "aktiv"=>0));
+		$ADDRESS->addGrp(Array("name"=>"ADR Group 1", "descr"=>"zum testen / for testings", "aktiv"=>1, "author"=>"install", "created"=>$created, "editor"=>"install", "updated"=>$created));
+		$ADDRESS->addGrp(Array("name"=>"ADR Group 2", "descr"=>"zum testen / for testings", "aktiv"=>0, "author"=>"install", "created"=>$created, "editor"=>"install", "updated"=>$created));
 //adr : ok, bounce
 			$code=rand(111111,999999); 
 			$new_adr_grp[0]=1;
@@ -841,6 +879,7 @@ require valid-user
 					"author"=>"example", 
 					"status"=>3, 
 					"code"=>$code, 
+					"memo"=>$created,
 					"f0"=>"Herr",
 					"f1"=>"Telly",
 					"f2"=>"Tellmatic",
@@ -863,6 +902,7 @@ require valid-user
 					"author"=>"example", 
 					"status"=>1,
 					"code"=>$code,
+					"memo"=>$created,
 					"f0"=>"Herr",
 					"f1"=>"Tello",
 					"f2"=>"Bounce",
@@ -887,6 +927,11 @@ require valid-user
 				"created"=>date("Y-m-d H:i:s"),
 				"author"=>"example",
 				"double_optin"=>0,
+				"use_captcha"=>1,
+				"digits_captcha"=>4,
+				"subscribe_aktiv"=>1,
+				"submit_value"=>"Abschicken",
+				"reset_value"=>"Eingaben zurücksetzen",
 				"f0"=>"Anrede",
 				"f1"=>"Name",
 				"f2"=>"Name2",
@@ -929,20 +974,32 @@ require valid-user
 				"f9_value"=>""),
 				$new_adr_grp);
 			
-			$MESSAGE.= "Herzlichen Glueckwunsch,<br>
-					<br>Die Installation der Tellmatic Newslettermaschine auf ".$mnl_Domain."/".$mnl_dir." war erfogreich.<br>
-					<br>Besuchen Sie <br>".$mnl_Domain."/".$mnl_dir."/index.php<br>
+			$MESSAGE.= "Herzlichen Glückwunsch,<br>
+					<br>Die Installation der Tellmatic Newslettermaschine auf ".$mnl_Domain."/".$mnl_dir." war erfolgreich.<br>
+					<br>Besuchen Sie <br><a href=\"".$mnl_Domain."/".$mnl_dir."/admin/index.php\">".$mnl_Domain."/".$mnl_dir."/admin/index.php</a><br>
 					und melden sich mit Ihrem Benutzernamen und Passwort an.<br>";
+
+			$MESSAGE.= "<br><br>Congratulations,<br>
+					<br>Installation of Tellmatic Newslettermaschine on ".$mnl_Domain."/".$mnl_dir." was successful.<br>
+					<br>Visit <br><a href=\"".$mnl_Domain."/".$mnl_dir."/admin/index.php\">".$mnl_Domain."/".$mnl_dir."/admin/index.php</a><br>
+					and log in with your username and password.<br>";
 					
 			$MESSAGE_TEXT=str_replace("<br>","\n",$MESSAGE);
 			$MESSAGE_TEXT=strip_htmltags($MESSAGE_TEXT);
 			$MESSAGE_TEXT=strip_tags($MESSAGE_TEXT);
 
+			$headers = "";
+			$headers .= "Return-Path: <".$email.">\r\n";
+			$headers .= "From: ".$email." <".$email.">\r\n";
+			$headers .= "To: ".$email." <".$email.">\r\n";
+			$headers .= "X-Mailer: Tellmatic\r\n";
+			$headers .= "Content-Type: text/plain;\n\tcharset=\"utf-8\"\n";
+			
 			@mail($email,
 					"Tellmatic Installation",
-					$MESSAGE_TEXT,
-					"from:".$email."\r\n"
-					);
+					$MESSAGE,
+					$headers
+					);//					$MESSAGE_TEXT,
 		}//checkDB
 
 	}//if check
@@ -1009,6 +1066,7 @@ if ($set!="save" || !$check) {
 	//add Data
 	$Form->add_InputOption($FormularName,$InputName_Lang,"de","de - Deutsch");
 	$Form->add_InputOption($FormularName,$InputName_Lang,"en","en - English");
+	$Form->add_InputOption($FormularName,$InputName_Lang,"it","it - Italiano (not complete yet)");
 
 	//email
 	$Form->new_Input($FormularName,$InputName_EMail,"text", $$InputName_EMail);
@@ -1117,16 +1175,6 @@ if ($set!="save" || !$check) {
 	$Form->set_InputReadonly($FormularName,$InputName_Submit,false);
 	$Form->set_InputOrder($FormularName,$InputName_Submit,998);
 	$Form->set_InputLabel($FormularName,$InputName_Submit,"");
-
-/*
-	//a reset button
-	$Form->new_Input($FormularName,$InputName_Reset,"reset","Reset");
-	$Form->set_InputStyleClass($FormularName,$InputName_Reset,"mFormReset","mFormResetFocus");
-	$Form->set_InputDesc($FormularName,$InputName_Reset,"Reset");
-	$Form->set_InputReadonly($FormularName,$InputName_Reset,false);
-	$Form->set_InputOrder($FormularName,$InputName_Reset,999);
-	$Form->set_InputLabel($FormularName,$InputName_Reset,"");
-*/
 
 
 $MESSAGE.=$Form->get_Form($FormularName);

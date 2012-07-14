@@ -40,6 +40,21 @@ $$InputName_Aktiv=getVar($InputName_Aktiv);
 $InputName_DoubleOptin="double_optin";//range from
 $$InputName_DoubleOptin=getVar($InputName_DoubleOptin);
 
+$InputName_UseCaptcha="use_captcha";
+$$InputName_UseCaptcha=getVar($InputName_UseCaptcha);
+
+$InputName_DigitsCaptcha="digits_captcha";
+$$InputName_DigitsCaptcha=getVar($InputName_DigitsCaptcha);
+
+$InputName_SubAktiv="subscribe_aktiv";
+$$InputName_SubAktiv=getVar($InputName_SubAktiv);
+
+$InputName_SubmitValue="submit_value";
+$$InputName_SubmitValue=getVar($InputName_SubmitValue);
+
+$InputName_ResetValue="reset_value";
+$$InputName_ResetValue=getVar($InputName_ResetValue);
+
 $InputName_F0="f0";//range from
 $$InputName_F0=getVar($InputName_F0);
 $InputName_F1="f1";//range from
@@ -137,7 +152,12 @@ if ($set=="save") {
 				"aktiv"=>$aktiv, 
 				"created"=>$created, 
 				"author"=>$author,
+				"use_captcha"=>$use_captcha,
+				"digits_captcha"=>$digits_captcha,
 				"double_optin"=>$double_optin, 
+				"subscribe_aktiv"=>$subscribe_aktiv,
+				"submit_value"=>$submit_value,
+				"reset_value"=>$reset_value,
 				"f0"=>$f0,
 				"f1"=>$f1,
 				"f2"=>$f2,
@@ -198,6 +218,11 @@ if ($set=="save") {
 	$descr=$FRM[0]['descr'];
 	$aktiv=$FRM[0]['aktiv'];
 	$double_optin=$FRM[0]['double_optin'];
+	$use_captcha=$FRM[0]['use_captcha'];
+	$digits_captcha=$FRM[0]['digits_captcha'];
+	$subscribe_aktiv=$FRM[0]['subscribe_aktiv'];
+	$submit_value=$FRM[0]['submit_value'];
+	$reset_value=$FRM[0]['reset_value'];
 	$f0=$FRM[0]['f0'];
 	$f1=$FRM[0]['f1'];
 	$f2=$FRM[0]['f2'];

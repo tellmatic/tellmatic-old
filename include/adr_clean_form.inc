@@ -36,6 +36,7 @@ $Form->new_Input($FormularName,"act", "hidden", $action);
 //////////////////
 //EMAIL
 $Form->new_Input($FormularName,$InputName_Name,"text", $$InputName_Name);
+$Form->set_InputJS($FormularName,$InputName_Name," onChange=\"flash('submit','#ff0000');\" ");
 $Form->set_InputStyleClass($FormularName,$InputName_Name,"mFormText","mFormTextFocus");
 $Form->set_InputSize($FormularName,$InputName_Name,48,256);
 $Form->set_InputDesc($FormularName,$InputName_Name,___("Filtern nach E-Mail"));
@@ -45,6 +46,7 @@ $Form->set_InputLabel($FormularName,$InputName_Name,"");
 
 //Gruppe src
 $Form->new_Input($FormularName,$InputName_Group,"select", "");
+$Form->set_InputJS($FormularName,$InputName_Group," onChange=\"flash('submit','#ff0000');\" ");
 $Form->set_InputDefault($FormularName,$InputName_Group,$adr_grp_id);
 $Form->set_InputStyleClass($FormularName,$InputName_Group,"mFormSelect","mFormSelectFocus");
 $Form->set_InputDesc($FormularName,$InputName_Group,___("Gruppe"));
@@ -64,6 +66,7 @@ for ($accg=0; $accg<$acg; $accg++)
 
 //Gruppe dst
 $Form->new_Input($FormularName,$InputName_GroupDst,"select", "");
+$Form->set_InputJS($FormularName,$InputName_GroupDst," onChange=\"flash('submit','#ff0000');\" ");
 $Form->set_InputDefault($FormularName,$InputName_GroupDst,$adr_grp_id_dst);
 $Form->set_InputStyleClass($FormularName,$InputName_GroupDst,"mFormSelect","mFormSelectFocus");
 $Form->set_InputDesc($FormularName,$InputName_GroupDst,___("Gruppe"));
@@ -85,6 +88,7 @@ for ($accg=0; $accg<$acg; $accg++)
 
 //Status
 $Form->new_Input($FormularName,$InputName_Status,"select", "");
+$Form->set_InputJS($FormularName,$InputName_Status," onChange=\"flash('submit','#ff0000');\" ");
 $Form->set_InputDefault($FormularName,$InputName_Status,$status);
 $Form->set_InputStyleClass($FormularName,$InputName_Status,"mFormSelect","mFormSelectFocus");
 $Form->set_InputDesc($FormularName,$InputName_Status,___("Suche nach Adress-Status"));
@@ -106,6 +110,7 @@ for ($scc=$sc; $scc>7; $scc--)//>0 , array beginnt bei 1!
 
 //set!
 $Form->new_Input($FormularName,$InputName_Set,"select", "");
+$Form->set_InputJS($FormularName,$InputName_Set," onChange=\"flash('submit','#ff0000');\" ");
 $Form->set_InputDefault($FormularName,$InputName_Set,$set);
 $Form->set_InputStyleClass($FormularName,$InputName_Set,"mFormSelect","mFormSelectFocus");
 $Form->set_InputDesc($FormularName,$InputName_Set,___("Aktion"));
@@ -156,7 +161,7 @@ $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "</tr>";
 $_MAIN_OUTPUT.= "<tr>";
 
-$_MAIN_OUTPUT.= "<td valign=top colspan=1>".___("aus der Gruppe:")."<br>";
+$_MAIN_OUTPUT.= "<td valign=top colspan=1><img src=\"".$mnl_iconURL."/group.png\" border=\"0\">&nbsp;".___("aus der Gruppe:")."";
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Group]['html'];
 //$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_GroupDst]['html'];
 $_MAIN_OUTPUT.= "</td>";

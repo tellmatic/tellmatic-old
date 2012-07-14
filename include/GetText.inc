@@ -110,20 +110,26 @@ function load_translateStrings($locale) {
 
 function translate($str) {
 	global $translateStrings;
+	$translated=Array();
     /* Try finding the exact string */
     if (isset($translateStrings[$str])) {
-        return $translateStrings[$str];
+    	$translated[0]=$translateStrings[$str];
+		$translated[1]=1;//1=match
     } else {
-    	return guess($str);
+    	//guess?
+       	#$translated[0] guess($str);
+		#$translated[1]=2;//2=guess
+       	//return input 1:1
+		$translated[0]=$str;
+		$translated[1]=0;//0=no match
     }
-    
+    return $translated;
 }
 
 function guess($str) {
-	global $translateStrings;
-
     /* Look for a string that is very close to the one we want
        Very computationally expensive */
+    global $translateStrings;
     $oldPercent = 0;
     $oldStr = '';
     $newPercent = 0;

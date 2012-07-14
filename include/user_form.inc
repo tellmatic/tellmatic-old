@@ -20,16 +20,11 @@ $Form=new mSimpleForm();
 $FormularName="user";
 //make new Form
 $Form->new_Form($FormularName,$_SERVER["PHP_SELF"],"post","_self");
-//$this->set_FormStyle($FormularName,"font-size:10pt;font-color=red;");
-////$Form->set_FormStyleClass($FormularName,"mForm");
-////$Form->set_FormInputStyleClass($FormularName,"mFormText","mFormTextFocus");
 $Form->set_FormJS($FormularName," onSubmit=\"switchSection('div_loader');\" ");
 //add a Description
 $Form->set_FormDesc($FormularName,___("Benutzereinstellungen aendern"));
-//$Form->set_FormType($FormularName,"multipart/form-data");
 
 //variable content aus menu als hidden field!
-//$Form->new_Input($FormularName,"type", "hidden", $content);
 $Form->new_Input($FormularName,"act", "hidden", $action);
 $Form->new_Input($FormularName,"set", "hidden", "save");
 //////////////////
@@ -38,6 +33,7 @@ $Form->new_Input($FormularName,"set", "hidden", "save");
 
 //passwd
 $Form->new_Input($FormularName,$InputName_Pass,"password", "");
+$Form->set_InputJS($FormularName,$InputName_Pass," onChange=\"flash('submit','#ff0000');\" ");
 $Form->set_InputStyleClass($FormularName,$InputName_Pass,"mFormText","mFormTextFocus");
 $Form->set_InputSize($FormularName,$InputName_Pass,48,256);
 $Form->set_InputDesc($FormularName,$InputName_Pass,___("Passwort"));
@@ -47,6 +43,7 @@ $Form->set_InputLabel($FormularName,$InputName_Pass,"");
 
 //passwd 2
 $Form->new_Input($FormularName,$InputName_Pass2,"password", "");
+$Form->set_InputJS($FormularName,$InputName_Pass2," onChange=\"flash('submit','#ff0000');\" ");
 $Form->set_InputStyleClass($FormularName,$InputName_Pass2,"mFormText","mFormTextFocus");
 $Form->set_InputSize($FormularName,$InputName_Pass2,48,256);
 $Form->set_InputDesc($FormularName,$InputName_Pass2,___("Passwort"));
@@ -56,6 +53,7 @@ $Form->set_InputLabel($FormularName,$InputName_Pass2,"");
 
 //Style
 $Form->new_Input($FormularName,$InputName_Style,"select", "");
+$Form->set_InputJS($FormularName,$InputName_Style," onChange=\"flash('submit','#ff0000');\" ");
 $Form->set_InputDefault($FormularName,$InputName_Style,$$InputName_Style);
 $Form->set_InputStyleClass($FormularName,$InputName_Style,"mFormSelect","mFormSelectFocus");
 $Form->set_InputDesc($FormularName,$InputName_Style,___("Layout / Style"));
@@ -65,12 +63,14 @@ $Form->set_InputLabel($FormularName,$InputName_Style,"");
 $Form->set_InputSize($FormularName,$InputName_Style,0,1);
 $Form->set_InputMultiple($FormularName,$InputName_Style,false);
 //add Data
-$Form->add_InputOption($FormularName,$InputName_Style,"default","Tellmatic");
-$Form->add_InputOption($FormularName,$InputName_Style,"cadillac","Weisser Cadillac");
-$Form->add_InputOption($FormularName,$InputName_Style,"wine","Rotwein");
+$css_c=count($CSSDirs);
+for ($css_cc=0; $css_cc < $css_c; $css_cc++) {
+	$Form->add_InputOption($FormularName,$InputName_Style,$CSSDirs[$css_cc]['dir'],$CSSDirs[$css_cc]['name']);
+}
 
 //lang
 $Form->new_Input($FormularName,$InputName_Lang,"select", "");
+$Form->set_InputJS($FormularName,$InputName_Lang," onChange=\"flash('submit','#ff0000');\" ");
 $Form->set_InputDefault($FormularName,$InputName_Lang,$$InputName_Lang);
 $Form->set_InputStyleClass($FormularName,$InputName_Lang,"mFormSelect","mFormSelectFocus");
 $Form->set_InputDesc($FormularName,$InputName_Lang,___("Sprache"));
@@ -85,7 +85,16 @@ for ($lcc=0;$lcc<$lc;$lcc++) {
 	$Form->add_InputOption($FormularName,$InputName_Lang,$LANGUAGES['lang'][$lcc],$LANGUAGES['text'][$lcc]);
 }
 
-
+//Expert
+$Form->new_Input($FormularName,$InputName_Expert,"checkbox", 1);
+$Form->set_InputJS($FormularName,$InputName_Expert," onChange=\"flash('submit','#ff0000');\" ");
+$Form->set_InputDefault($FormularName,$InputName_Expert,$$InputName_Expert);
+$Form->set_InputStyleClass($FormularName,$InputName_Expert,"mFormText","mFormTextFocus");
+$Form->set_InputSize($FormularName,$InputName_Expert,48,256);
+$Form->set_InputDesc($FormularName,$InputName_Expert,___("Experten-Modus"));
+$Form->set_InputReadonly($FormularName,$InputName_Expert,false);
+$Form->set_InputOrder($FormularName,$InputName_Expert,2);
+$Form->set_InputLabel($FormularName,$InputName_Expert,"");
 
 //submit button 
 $Form->new_Input($FormularName,$InputName_Submit,"submit",sprintf(___("Einstellungen fuer Benutzer %s aendern"),$LOGIN->USER['name']));
@@ -116,7 +125,7 @@ $_MAIN_OUTPUT.= $Form->INPUT[$FormularName]['set']['html'];
 $_MAIN_OUTPUT.= "<table>";
 
 $_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top>";
+$_MAIN_OUTPUT.= "<td valign=top width=\"200\"><img src=\"".$mnl_iconURL."/user_comment.png\" border=\"0\">&nbsp;";
 $_MAIN_OUTPUT.= ___("Sprache");
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "<td valign=top>";
@@ -126,7 +135,7 @@ $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "</tr>";
 
 $_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top>";
+$_MAIN_OUTPUT.= "<td valign=top><img src=\"".$mnl_iconURL."/monitor.png\" border=\"0\">&nbsp;";
 $_MAIN_OUTPUT.= ___("Layout / Style");
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "<td valign=top>";
@@ -135,7 +144,16 @@ $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "</tr>";
 
 $_MAIN_OUTPUT.= "<tr>";
+$_MAIN_OUTPUT.= "<td valign=top><img src=\"".$mnl_iconURL."/tux.png\" border=\"0\">&nbsp;";
+$_MAIN_OUTPUT.= ___("Erfahrener Benutzer, Hilfen ausblenden etc.");
+$_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "<td valign=top>";
+$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Expert]['html'];
+$_MAIN_OUTPUT.= "</td>";
+$_MAIN_OUTPUT.= "</tr>";
+
+$_MAIN_OUTPUT.= "<tr>";
+$_MAIN_OUTPUT.= "<td valign=top><img src=\"".$mnl_iconURL."/pilcrow.png\" border=\"0\">&nbsp;";
 $_MAIN_OUTPUT.= ___("Passwort");
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "<td valign=top>";
@@ -144,7 +162,7 @@ $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "</tr>";
 
 $_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top>";
+$_MAIN_OUTPUT.= "<td valign=top><img src=\"".$mnl_iconURL."/pilcrow.png\" border=\"0\">&nbsp;";
 $_MAIN_OUTPUT.= ___("Passwort wiederholen");
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "<td valign=top>";

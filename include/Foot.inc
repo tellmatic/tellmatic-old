@@ -14,7 +14,6 @@
 
 //DEBUG DATA!!!
 $_FOOT="";
-//$_FOOT.="<a href=\"javascript:switchSection('div_debug');\">&nbsp;i&nbsp;</a>";
 
 $_FOOT.= "<div id=\"div_debug\" class=\"debug\">";
 $_FOOT.= "<a href=\"javascript:switchSection('div_debug');\"><img src=\"".$mnl_iconURL."/information.png\" border=\"0\"></a>";
@@ -26,7 +25,7 @@ $_FOOT.= "<br>".sprintf(___("Bearbeitungszeit: %s Sekunden"),$T->Result());
 $_FOOT.= "<br>".sprintf(___("Max. Upload: %s Byte"),get_cfg_var("upload_max_filesize"));
 $_FOOT.= "<br>".sprintf(___("Speicherlimit: %s"),get_cfg_var("memory_limit"));
 $_FOOT.= "<br>".sprintf(___("Max. POST Data: %s"),get_cfg_var("post_max_size"));
-$_FOOT.= "<br>".sprintf(___("Max. Ausf&uuml;hrungszeit: %s Sekunden"),get_cfg_var("max_execution_time"));
+$_FOOT.= "<br>".sprintf(___("Max. Ausführungszeit: %s Sekunden"),get_cfg_var("max_execution_time"));
 $_FOOT.= "<br>".sprintf(___("%s Mails pro Durchlauf"),$max_mails_atonce);
 $real_path=realpath("./index.php");
 $path_info=pathinfo($real_path);
@@ -38,7 +37,6 @@ $_FOOT.= "<br>Domain=: ".$host;
 $_FOOT.= "<br>Docroot=: ".$doc_root;
 $_FOOT.= "<br>Dir=: ".$pathinfo['dirname'];
 $_FOOT.= "<br><br><a href=\"javascript:switchSection('div_debug');\">(X) ".___("Fenster schliessen")."</a><br><br>";
-//$_FOOT.= "<br><font color=\"#ff0000\">&copy; volker augustin 2006/7</font><br>";
 $_FOOT.= $ApplicationText."&nbsp;<br>&copy;&nbsp;2006/2007&nbsp;-&nbsp;Volker Augustin&nbsp;"; 
 $_FOOT.= "</div>";
 

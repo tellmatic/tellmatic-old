@@ -22,13 +22,45 @@ $status_new=getVar("status_new");
 $InputName_StatusEx="status_exists";//
 $status_ex=getVar("status_exists");
 
+//aktiv fuer neue adr.
+$InputName_AktivNew="aktiv_new";//
+$aktiv_new=getVar("aktiv_new");
+//aktiv fuer existierende adr.
+$InputName_AktivEx="aktiv_existing";//
+$aktiv_existing=getVar("aktiv_existing");
+
+//trennzeichen
+$InputName_Delimiter="delimiter";//
+$$InputName_Delimiter=getVar($InputName_Delimiter);
+
 //array mit gruppen
 $adr_grp=Array();
 $InputName_Group="adr_grp";//
 pt_register("POST","adr_grp");
 
-$InputName_File="file";//datei
-pt_register("POST","file");
+$InputName_File="file_new";//datei
+pt_register("POST","file_new");
+
+//trennzeichen
+$InputName_Bulk="bulk";//
+$$InputName_Bulk=getVar($InputName_Bulk,0);
+
+$InputName_FileExisting="file_existing";//trackimage auswahl
+$$InputName_FileExisting=getVar($InputName_FileExisting);
+
+//delete
+$InputName_Delete="delete";//
+$$InputName_Delete=getVar($InputName_Delete);
+
+//merge groups
+$InputName_GroupsMerge="merge_groups";//
+$$InputName_GroupsMerge=getVar($InputName_GroupsMerge);
+
+//emailcheck
+$InputName_ECheckImport="check_mail_import";//
+$$InputName_ECheckImport=getVar($InputName_ECheckImport);
+
+$uploaded_file_new=false;
 
 if ($set=="import") {
 	$created=date("Y-m-d H:i:s");
@@ -37,17 +69,18 @@ if ($set=="import") {
 
 	$check=false;
 //upload prozedur
-	if(is_uploaded_file($_FILES["file"]["tmp_name"])) {
+	if(is_uploaded_file($_FILES["file_new"]["tmp_name"])) {
+		$uploaded_file_new=true;
 		// Gültige Endung? ($ = Am Ende des Dateinamens) (/i = Groß- Kleinschreibung nicht berücksichtigen)
-		if(preg_match("/\." . $allowed_csv_filetypes . "$/i", $_FILES["file"]["name"])) {
+		if(preg_match("/\." . $allowed_csv_filetypes . "$/i", $_FILES["file_new"]["name"])) {
 			// Datei auch nicht zu groß
-			if($_FILES["file"]["size"] <= $max_upload_size) {
+			if($_FILES["file_new"]["size"] <= $max_upload_size) {
 				// Alles OK -> Datei kopieren
-				if(copy($_FILES["file"]["tmp_name"], $mnl_datapath."/".$CSV_Filename)) { //$_FILES["file"]["name"]
+				if(copy($_FILES["file_new"]["tmp_name"], $mnl_datapath."/".$CSV_Filename)) { //$_FILES["file"]["name"]
 					$_MAIN_MESSAGE.= "<br>HTML-Datei erfolgreich hochgeladen!";
-					$_MAIN_MESSAGE.= "<ul>".$_FILES["file"]["name"];
-					$_MAIN_MESSAGE.= " / ".$_FILES["file"]["size"]." Byte";
-					$_MAIN_MESSAGE.= ", ".$_FILES["file"]["type"];
+					$_MAIN_MESSAGE.= "<ul>".$_FILES["file_new"]["name"];
+					$_MAIN_MESSAGE.= " / ".$_FILES["file_new"]["size"]." Byte";
+					$_MAIN_MESSAGE.= ", ".$_FILES["file_new"]["type"];
 					$_MAIN_MESSAGE.= "<br>".sprintf(___("Datei gespeichert unter: %s"),"<a href=\"".$mnl_datadir."/".$CSV_Filename."\" target=\"_preview\">".$mnl_datadir."/".$CSV_Filename."</a>");
 					$_MAIN_MESSAGE.= "</ul>";
 					$check=true;
@@ -56,11 +89,11 @@ if ($set=="import") {
 					$check=false;
 				}//copy
 			} else {
-				$_MAIN_MESSAGE.= "<br>".sprintf(___("Die CSV-Datei darf nur eine Gr&ouml;sse von %s Byte besitzen."),$max_byte_size);
+				$_MAIN_MESSAGE.= "<br>".sprintf(___("Die CSV-Datei darf nur eine GrÖsse von %s Byte besitzen."),$max_byte_size);
 				$check=false;
 			}//max size
 		} else {
-			$_MAIN_MESSAGE.= "<br>".___("Die CSV-Datei besitzt eine ung&uuml;ltige Endung.");
+			$_MAIN_MESSAGE.= "<br>".___("Die CSV-Datei besitzt eine ungültige Endung.");
 			$check=false;
 		}//extension
 	} else {
@@ -69,23 +102,122 @@ if ($set=="import") {
 	}//no file
 	//ende upload 
 
-	$_MAIN_MESSAGE.="<br>".___("Status f&uuml;r neue Adressen: ");	
+	if (!$uploaded_file_new) {
+		if (!empty($file_existing)) {
+			$_MAIN_MESSAGE.="<br>".sprintf(___("Importiere bestehende CSV-Datei %s"),"<b>".$mnl_datadir."/".$CSV_Filename."</b>");
+			$CSV_Filename=$file_existing;
+			$check=true;
+		}
+	}
+
+	if ($check && $delete!=1) {
+		$_MAIN_MESSAGE.="<br>".___("Status für neue Adressen: ");	
 	$_MAIN_MESSAGE.= "<img src=\"".$mnl_iconURL."/".$STATUS['adr']['statimg'][$status_new]."\" border=\"0\"   title=\"".$STATUS['adr']['descr'][$status_new]."\" alt=\"".$STATUS['adr']['descr'][$status_new]."\">";
 	$_MAIN_MESSAGE.= "  ".$STATUS['adr']['status'][$status_new]."  (".$STATUS['adr']['descr'][$status_new].")";
 
-	$_MAIN_MESSAGE.="<br>".___("Status f&uuml;r bestehende Adressen: ");	
+		$_MAIN_MESSAGE.="<br>".___("Status für bestehende Adressen: ");	
 	if ($status_ex>0) {
 		$_MAIN_MESSAGE.= "<img src=\"".$mnl_iconURL."/".$STATUS['adr']['statimg'][$status_ex]."\" border=\"0\"   title=\"".$STATUS['adr']['descr'][$status_ex]."\" alt=\"".$STATUS['adr']['descr'][$status_ex]."\">";
 		$_MAIN_MESSAGE.= "  ".$STATUS['adr']['status'][$status_ex]."  (".$STATUS['adr']['descr'][$status_ex].")";
 	} else {
-		$_MAIN_MESSAGE.= " ".___("Keine &Auml;nderung");
+			$_MAIN_MESSAGE.= " ".___("Keine Änderung");
 	}
+		if ($aktiv_new==1) {
+			$_MAIN_MESSAGE.= "<br><img src=\"".$mnl_iconURL."/tick.png\" border=\"0\">";
+			$_MAIN_MESSAGE.= "&nbsp;".___("Neue Adressen sind aktiv.");
+		} else {
+			$_MAIN_MESSAGE.= "<br><img src=\"".$mnl_iconURL."/cancel.png\" border=\"0\">";
+			$_MAIN_MESSAGE.= "&nbsp;".___("Neue Adressen sind inaktiv.");
+		}
+		if ($aktiv_existing==1) {
+			$_MAIN_MESSAGE.= "<br><img src=\"".$mnl_iconURL."/tick.png\" border=\"0\">";
+			$_MAIN_MESSAGE.= "&nbsp;".___("Bestehende Adressen werden aktiviert.");
+		}
+		if ($aktiv_existing==0) {
+			$_MAIN_MESSAGE.= "<br><img src=\"".$mnl_iconURL."/cancel.png\" border=\"0\">";
+			$_MAIN_MESSAGE.= "&nbsp;".___("Bestehende Adressen werden de-aktiviert.");
+		}
 
+	}//check && delete !=1
 //datei einlesen
 	$author=$LOGIN->USER['name'];
 	$code=0;
 	$lines=0;
+	$lines_b=0;
+	$lines_f=0;	
+	//Bulk Import
+	if (!empty($bulk)) {
+		//jede zeile eine email...
+	  	$_MAIN_MESSAGE.= "<br>".___("Importiere E-Mail-Adressen aus Textfeld")."<br>";
+		$lines_bulk = explode("\n", $bulk);
+		$lc=count($lines_bulk);
+		for ($lcc=0; $lcc<$lc; $lcc++) {
+			$row=$lines_bulk[$lcc];
+			#$addr[$lines]['email']=$lines_bulk[$lcc];
+////////////////
+		      $fields=explode($delimiter, $row);
+		      if (isset($fields[0]) && !empty($fields[0])) {
+			      $addr[$lines]['email']=str_replace("\"","",trim($fields[0]));
 
+			      if (isset($fields[1]) && !empty($fields[1])) {
+				      $addr[$lines]['f0']=str_replace("\"","",trim($fields[1]));
+			      } else {
+				      $addr[$lines]['f0']="";
+			      }
+			      if (isset($fields[2]) && !empty($fields[2])) {
+				      $addr[$lines]['f1']=str_replace("\"","",trim($fields[2]));
+			      } else {
+				      $addr[$lines]['f1']="";
+			      }
+			      if (isset($fields[3]) && !empty($fields[3])) {
+		  		      $addr[$lines]['f2']=str_replace("\"","",trim($fields[3]));
+			      } else {
+				      $addr[$lines]['f2']="";
+			      }
+			      if (isset($fields[4]) && !empty($fields[4])) {
+		  		      $addr[$lines]['f3']=str_replace("\"","",trim($fields[4]));
+			      } else {
+				      $addr[$lines]['f3']="";
+			      }
+			      if (isset($fields[5]) && !empty($fields[5])) {
+		  		      $addr[$lines]['f4']=str_replace("\"","",trim($fields[5]));
+			      } else {
+				      $addr[$lines]['f4']="";
+			      }
+			      if (isset($fields[6]) && !empty($fields[6])) {
+		  		      $addr[$lines]['f5']=str_replace("\"","",trim($fields[6]));
+			      } else {
+				      $addr[$lines]['f5']="";
+			      }
+			      if (isset($fields[7]) && !empty($fields[7])) {
+		  		      $addr[$lines]['f6']=str_replace("\"","",trim($fields[7]));
+			      } else {
+				      $addr[$lines]['f6']="";
+			      }
+			      if (isset($fields[8]) && !empty($fields[8])) {
+		  		      $addr[$lines]['f7']=str_replace("\"","",trim($fields[8]));
+			      } else {
+				      $addr[$lines]['f7']="";
+			      }
+			      if (isset($fields[9]) && !empty($fields[9])) {
+		  		      $addr[$lines]['f8']=str_replace("\"","",trim($fields[9]));
+			      } else {
+				      $addr[$lines]['f8']="";
+			      }
+			      if (isset($fields[10]) && !empty($fields[10])) {
+		  		      $addr[$lines]['f9']=str_replace("\"","",trim($fields[10]));
+			      } else {
+				      $addr[$lines]['f9']="";
+			      }
+		      }
+
+//////////
+	    	$lines++;
+			$lines_b++;
+		}
+	     $_MAIN_MESSAGE.="<br>".sprintf(___("%s Einträge gefunden!"),$lines_b);
+	}//!empty bulk
+	//CSV Datei einlesen:
 	if ($check && file_exists($mnl_datapath."/".$CSV_Filename))
 	{   
 		  $uf=fopen($mnl_datapath."/".$CSV_Filename,"r");
@@ -95,7 +227,7 @@ if ($set=="import") {
 		   while(!feof($uf))
 	 		{
 				$row=fgets($uf, 4096);
-		      $fields=explode(",", $row);
+		      $fields=explode($delimiter, $row);
 		      if (isset($fields[0]) && !empty($fields[0])) {
 			      $addr[$lines]['email']=str_replace("\"","",trim($fields[0]));
 
@@ -151,8 +283,9 @@ if ($set=="import") {
 			      }
 		      }
 		      $lines++;
+			$lines_f++;
 	     }
-		     $_MAIN_MESSAGE.="<br>".sprintf(___("%s Eintr&auml;ge gefunden!"),$lines);
+		     $_MAIN_MESSAGE.="<br>".sprintf(___("%s Einträge gefunden!"),$lines_f);
 	    } else {
 			$_MAIN_MESSAGE.= "<br>".sprintf(___("%s existiert nicht!"),$mnl_datapath."/".$CSV_Filename);
 		}
@@ -161,17 +294,19 @@ if ($set=="import") {
 //neue addressen anlegen	
 	
 	if ($lines>0) {
+		$EMailcheck_Import=$check_mail_import;
 		$ADDRESS=new mnlADR();
 		$iok=0;
 		$ifail=0;
 		$idouble=0;
+		$idelete=0;
 		for ($i=0;$i<$lines;$i++) {
 			srand((double)microtime()*1000000); 
 			$code=rand(111111,999999); 
 			 // $_MAIN_MESSAGE.= $i.":".$addr[$i]['name1']." ".$addr[$i]['name2']." ".$addr[$i]['email']."<br>";
 			//eintragen des datensatzes
 			if (isset($addr[$i]['email'])) {
-				if (checkemailadr($addr[$i]['email'],$EMailcheck_Intern)) {
+				if (checkemailadr($addr[$i]['email'],$EMailcheck_Import)) {
 					//dublettencheck
 					$search['email']=$addr[$i]['email'];
 					//auf existenz pruefen und wenn email noch nicht existiert dann eintragen.
@@ -183,35 +318,37 @@ if ($set=="import") {
 					if ($ac>0) {
 						///////////////////////////
 						//oh! adresse ist bereits vorhanden!
+						if ($merge_groups==1) {
 						//wir diffen die gruppen und fuegen nur die referenzen hinzu die noch nicht existieren!
-		//				$check=false;
 						//gruppen denen die adr bereits  angehoert
 						$old_adr_grp = $ADDRESS->getGroupID(0,$ADR[0]['id'],0);
 						//neue gruppen nur die die neu sind, denen die adr noch nicht angehoert!
 						//adr_grp=gruppen aus dem formular
 						$new_adr_grp = array_diff($adr_grp,$old_adr_grp);
 						$all_adr_grp = array_merge($old_adr_grp, $new_adr_grp);
-	
-						/*
-						echo "<hr>".$addr[$i]['email']."<hr>";
-						print_r($adr_grp);echo "<hr>";
-						print_r($old_adr_grp);echo "<hr>";
-						print_r($new_adr_grp);echo "<hr>";
-						print_r($all_adr_grp);echo "<hr>";
-						*/
+						} else {// merge groups
+							$all_adr_grp=$new_adr_grp;
+						}
 						$adr_exists=true;
 					}
 					//////////////////////
 					if ($adr_exists) {
-					//wenn adresse existiert, adressdaten updaten!
-					//
+					//wenn adresse existiert, 
+						if ($delete!=1) {
+							//adressdaten updaten!
 						$code=$ADR[0]['code'];
+							if ($aktiv_existing==-1) {
+								$aktiv_update=$ADR[0]['aktiv'];
+							} else {
+								$aktiv_update=$aktiv_existing;
+							}
 						$ADDRESS->updateAdr(Array(
 							"id"=>$ADR[0]['id'],
 							"email"=>$addr[$i]['email'],
-							"aktiv"=>$ADR[0]['aktiv'],
+								"aktiv"=>$aktiv_update,
 							"created"=>$created, 
 							"author"=>$author, 
+								"memo"=>$ADR[0]['memo'],
 							"f0"=>$addr[$i]['f0'],
 							"f1"=>$addr[$i]['f1'],
 							"f2"=>$addr[$i]['f2'],
@@ -231,24 +368,32 @@ if ($set=="import") {
 							if ($status_ex>0) {
 								$ADDRESS->setStatus($ADR[0]['id'],$status_ex);
 							}
-
+							//und neue referenzen zu neuen gruppen hinzufügen
+							//$ADDRESS->addRef($ADR[0]['id'],$new_adr_grp);
+							// ^^^ nur fuer den fall das daten nicht geupdated werden!!! sondern nur referenzen hinzugefuegt!
+							//optional nachzuruesten und in den settings einstellbar :)
+							// ok: merge
 							$idouble++;
-
-						//
-						//und neue referenzen zu neuen gruppen hinzufuegen
-						//$ADDRESS->addRef($ADR[0]['id'],$new_adr_grp);
-						// ^^^ nur fuer den fall das daten nicht geupdated werden!!! sondern nur referenzen hinzugefuegt!
-						//optional nachzuruesten und in den settings einstellbar :)
+						} // delete != 1
+						//importierte Adressen loeschen?
+						if ($delete==1) {
+							if (!DEMO) $ADDRESS->delAdr($ADR[0]['id']);
+							$_MAIN_MESSAGE.="<br>".sprintf(___("Zeile %s: E-Mail %s wurde gelöscht."),($i+1),"<em>".$addr[$i]['email']."</em>");
+							$idelete++;
+						}
 											
-						} else {
+					} else { // exists
+
+						if ($delete != 1) {
 						//wenn adresse noch nicht existiert , neu anlegen
 							$ADDRESS->addAdr(Array(
 								"email"=>$addr[$i]['email'],
-								"aktiv"=>1, 
+								"aktiv"=>$aktiv_new, 
 								"created"=>$created, 
 								"author"=>$author, 
 								"status"=>$status_new, 
 								"code"=>$code, 
+								"memo"=>"", 
 								"f0"=>$addr[$i]['f0'],
 								"f1"=>$addr[$i]['f1'],
 								"f2"=>$addr[$i]['f2'],
@@ -262,6 +407,7 @@ if ($set=="import") {
 								),
 								$new_adr_grp);
 						$iok++;
+						} // ! delete
 					}//adr exists
 				} else {//emailcheck
 					$_MAIN_MESSAGE.="<br>".sprintf(___("Zeile %s: E-Mail %s hat ein falsches Format."),($i+1),"<em>".$addr[$i]['email']."</em>");
@@ -269,18 +415,20 @@ if ($set=="import") {
 				}//emailcheck
 			}//isset email
 		}//for
-		$_MAIN_MESSAGE.= "<br><br>".sprintf(___("Es wurden %s von %s Eintr&auml;gen importiert und in die gew&auml;hlten Gruppen eingetragen."),$iok,($i-1));
-		$_MAIN_MESSAGE.= "<br>".sprintf(___("%s Eintr&auml;ge waren Fehlerhaft und wurden NICHT importiert."),$ifail);
-		$_MAIN_MESSAGE.= "<br>".sprintf(___("%s Eintraege sind bereits vorhanden und wurden aktualisiert."),$idouble);
+		if ($delete==1) {
+			$_MAIN_MESSAGE.= "<br><br>".sprintf(___("Es wurden %s von %s Einträgen gelöscht."),$idelete,($i-1));
+		} else {
+			$_MAIN_MESSAGE.= "<br><br>".sprintf(___("Es wurden %s von %s Einträgen importiert und in die gewählten Gruppen eingetragen."),$iok,($i-1));
+			$_MAIN_MESSAGE.= "<br>".sprintf(___("%s Einträge waren Fehlerhaft und wurden NICHT importiert."),$ifail);
+			$_MAIN_MESSAGE.= "<br>".sprintf(___("%s Eintraege sind bereits vorhanden und wurden aktualisiert."),$idouble);
+		}
 		$action="adr_import";
 		//include_once ("adr_list.inc");
-		include_once ($mnl_includepath."/adr_import_form.inc");
 	} else {//if lines>0
 		//upload_form
-		include_once ($mnl_includepath."/adr_import_form.inc");
 	}
 } else {
 	//upload_form
-	include_once ($mnl_includepath."/adr_import_form.inc");
 }
+require_once ($mnl_includepath."/adr_import_form.inc");
 ?>

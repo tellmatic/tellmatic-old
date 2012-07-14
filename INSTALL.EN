@@ -25,7 +25,7 @@ Notes:
 Installation:
 
 	Unpack the archive file to your local harddisc. Copy the directory tellmatic-[xxx] or the content of this directory completely to your server via ftp into a directory of your choice.
-	
+	You can also copy the archiv via ssh or similar or use wget on your server. Please update user and groups for your needs after unpacking (chown)
 	The directory where you install Tellmatic and the 'include' directory must be writeable by the webserver - use chmod function of your ftp programm and set permissions to 0775 or 0777
 	
 	Now call install.php via your famous Browser and enter your data.
@@ -43,6 +43,7 @@ Installation:
 		files/newsletter
 		files/newsletter/images
 		files/attachements
+		files/tmp
 
 	If there occurs some error, please follow the instructions.
 
@@ -56,12 +57,12 @@ Installation:
 	
 			install.php creates a file called '.htusers', it includes username and crypted password for acces to the restricted directories
 
-	Please edit path to 'mnl_config.inc' in 'include/send_it.php', 'sunbscribe.php' and 'unsubscribe.php' - enter complete path here
+	Please edit path to 'mnl_config.inc' in 'include/send_it.php', 'subscribe.php' and 'unsubscribe.php' - enter complete path here
 	
 	To send via cronjob, call [user:passwort]@http://[domain]/[tellmatic-installdir]/include/send_it.php with wget (add username and pw), or use php cli (recommended!)
-		*/1 * * * * /path/to/php-cli-binary /pfad/zu/include/send_it.php
+		*/1 * * * * /path/to/php-cli-binary /path/to/include/send_it.php
 
-	call index.php, enter username and password, ready, enjoy mailing
+	call admin/index.php, enter username and password, ready, enjoy mailing
 
 
 For questions and suggestions please visit www.tellmatic.org or wrote an e-mail. Feel free to contact me, you're welcome! There is also a Tellmatic-Weblog and Forum at my Homepage.

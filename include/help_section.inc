@@ -24,4 +24,5 @@ if (file_exists($helpfile)) {
 	$_Tpl_HelpS->setParseValue("H_TEXT", $H_TEXT);
 	$_MAIN_HELP=$_Tpl_HelpS->renderTemplate("help.html");
 }
+
 ?>

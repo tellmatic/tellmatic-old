@@ -33,9 +33,8 @@ for ($scc=1; $scc<=$sc; $scc++)//0
 }
 
 $_MAIN_OUTPUT.= "</div><br><br>";
-$_MAIN_OUTPUT.= "<script type=\"text/javascript\">
-<!--	
-//switchSection('legende'); 
--->
+if ($user_is_expert) $_MAIN_OUTPUT.= "
+<script type=\"text/javascript\">
+	switchSection('legende');
 </script>";
 ?>

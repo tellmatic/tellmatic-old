@@ -15,6 +15,9 @@
 $_MAIN_DESCR=___("Neue Newslettergruppe erstellen");
 $_MAIN_MESSAGE.="";
 
+$created=date("Y-m-d H:i:s");
+$author=$LOGIN->USER['name'];
+
 $set=getVar("set");
 $nl_grp_id=0;
 $standard=0;
@@ -40,7 +43,13 @@ if ($set=="save") {
 	if (empty($name)) {$check=false;$_MAIN_MESSAGE.="<br>".___("Name der Gruppe sollte nicht leer sein.");}
 	if ($check) {
 		$NEWSLETTER=new mnlNL();
-		$NEWSLETTER->addGrp(Array("name"=>$name, "descr"=>$descr, "aktiv"=>$aktiv));
+		$NEWSLETTER->addGrp(Array(
+					"name"=>$name,
+					"descr"=>$descr,
+					"aktiv"=>$aktiv,
+					"created"=>$created, 
+					"author"=>$author
+					));
 		$_MAIN_MESSAGE.="<br>".sprintf(___("Neue Newslettergruppe %s wurde erstellt."),"'<b>".$name."</b>'");
 		$action="nl_grp_list";
 		include_once ($mnl_includepath."/nl_grp_list.inc");
