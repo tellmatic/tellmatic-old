@@ -66,6 +66,7 @@ class tm_Q {
 											.TM_TABLE_NL_Q.".send_at, "
 											.TM_TABLE_NL_Q.".check_blacklist, "
 											.TM_TABLE_NL_Q.".autogen, "
+											.TM_TABLE_NL_Q.".touch, "
 											.TM_TABLE_NL_Q.".sent, "
 											.TM_TABLE_NL_Q.".siteid
 						FROM ".TM_TABLE_NL_Q."
@@ -110,6 +111,7 @@ class tm_Q {
 			$this->Q[$ac]['send_at']=$this->DB->Record['send_at'];
 			$this->Q[$ac]['check_blacklist']=$this->DB->Record['check_blacklist'];
 			$this->Q[$ac]['autogen']=$this->DB->Record['autogen'];
+			$this->Q[$ac]['touch']=$this->DB->Record['touch'];
 			$this->Q[$ac]['sent']=$this->DB->Record['sent'];
 			$this->Q[$ac]['nl_id']=$this->DB->Record['nl_id'];
 			$this->Q[$ac]['grp_id']=$this->DB->Record['grp_id'];
@@ -163,6 +165,7 @@ class tm_Q {
 		*/
 
 	}
+
 	function setAutogen($id=0,$autogen=1) {
 		$Return=false;
 		if (check_dbid($id)) {
@@ -452,16 +455,18 @@ class tm_Q {
 		$gc=count($grp);
 		if (check_dbid($q['nl_id'])) {
 			for ($gcc=0;$gcc<$gc;$gcc++) {
-				$Query ="INSERT INTO ".TM_TABLE_NL_Q." (nl_id,grp_id,host_id,status,send_at,check_blacklist,author,created,siteid)
-									VALUES (".checkset_int($q["nl_id"]).","
-													.checkset_int($grp[$gcc]).","
-													.checkset_int($q["host_id"]).","
-													.checkset_int($q["status"]).", '"
-													.dbesc($q["send_at"])."',"
-													.checkset_int($q["check_blacklist"]).", '"
-													.dbesc($q["author"])."', '"
-													.dbesc($q["created"])."', '"
-													.TM_SITEID."'
+				$Query ="INSERT INTO ".TM_TABLE_NL_Q." (nl_id,grp_id,host_id,status,send_at,check_blacklist,touch,author,created,siteid)
+									VALUES ("
+										.checkset_int($q["nl_id"]).","
+										.checkset_int($grp[$gcc]).","
+										.checkset_int($q["host_id"]).","
+										.checkset_int($q["status"]).","
+										."'".dbesc($q["send_at"])."',"
+										.checkset_int($q["check_blacklist"]).","
+										.checkset_int($q["touch"]).","
+										."'".dbesc($q["author"])."',"
+										."'".dbesc($q["created"])."',"
+										."'".TM_SITEID."'
 										)";
 				if ($this->DB->Query($Query)) {
 					$Return[$qc]['result']=true;
@@ -724,11 +729,12 @@ class tm_Q {
 			SELECT 
 				/*select adr_id from recipients list nl_h*/
 				".TM_TABLE_NL_H.".adr_id AS nl_h_adr_id,
+				/* for debugging */
 				".TM_TABLE_ADR.".status AS adr_status,
 				".TM_TABLE_NL_H.".nl_id AS nl_h_status,
 				".TM_TABLE_NL_H.".nl_id AS nl_h_nl_id,
 				/*with siteid*/
-				'".TM_SITEID."' as siteid
+				'".TM_SITEID."' as tmp_siteid
 			FROM ".TM_TABLE_NL_H."
 				/* join with addresstable */
 				INNER JOIN ".TM_TABLE_ADR." 
@@ -864,6 +870,25 @@ class tm_Q {
 		}
 		return $Return;
 	}//addHQ
+	
+	function restart_failed($q_id=0) {
+		$Return=false;
+		if (check_dbid($q_id)) {
+			$Query ="UPDATE ".TM_TABLE_NL_H." ". 
+						"SET status=1 ".
+						"WHERE ".
+						"q_id=".checkset_int($q_id)." ".
+						"AND (status=4 OR status=6) ".
+						"AND siteid='".TM_SITEID."'";
+			if ($this->DB->Query($Query)) {
+				//log
+				if (TM_LOG) $this->LOG->log(Array("data"=>Array("restart_failed"=>1,"id"=>$q_id),"object"=>"q","action"=>"edit"));
+				$Return=true;
+			}
+		}
+		return $Return;
+		//anzahl affected rows etc zurueckgeben, siehe addHQ
+	}//restart_failed
 
 }  //class
 ?>

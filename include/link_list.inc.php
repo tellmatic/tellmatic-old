@@ -93,48 +93,48 @@ $mSTDURL->addParam("lnk_grp_id",$lnk_grp_id);
 $mSTDURL->addParam("st",$sortType);
 $mSTDURL->addParam("si",$sortIndex);
 
-$firstURLPara=$mSTDURL;
+$firstURLPara=tmObjCopy($mSTDURL);
 $firstURLPara->addParam("act","link_list");
 $firstURLPara->addParam("offset",0);
 $firstURLPara_=$firstURLPara->getAllParams();
 
-$lastURLPara=$mSTDURL;
+$lastURLPara=tmObjCopy($mSTDURL);
 $lastURLPara->addParam("act","link_list");
 $lastURLPara->addParam("offset",($entrys_total-$limit));
 $lastURLPara_=$lastURLPara->getAllParams();
 
-$nextURLPara=$mSTDURL;
+$nextURLPara=tmObjCopy($mSTDURL);
 //neuer offset!
 $nextURLPara->addParam("offset",($offset+$limit));
 $nextURLPara->addParam("act","link_list");
 $nextURLPara_=$nextURLPara->getAllParams();
 
-$prevURLPara=$mSTDURL;
+$prevURLPara=tmObjCopy($mSTDURL);
 $prevURLPara->addParam("lnk_grp_id",$lnk_grp_id);
 //neuer offset!
 $prevURLPara->addParam("offset",($offset-$limit));
 $prevURLPara->addParam("act","link_list");
 $prevURLPara_=$prevURLPara->getAllParams();
 
-$pagesURLPara=$mSTDURL;
+$pagesURLPara=tmObjCopy($mSTDURL);
 //will be defined and use in pager.inc.php
 
-$sortURLPara=$mSTDURL;
+$sortURLPara=tmObjCopy($mSTDURL);
 $sortURLPara->addParam("act","link_list");
 $sortURLPara_=$sortURLPara->getAllParams();
 
-$editURLPara=$mSTDURL;
+$editURLPara=tmObjCopy($mSTDURL);
 $editURLPara->addParam("lnk_id",$lnk_id);
 $editURLPara->addParam("act","link_edit");
 
-$aktivURLPara=$mSTDURL;
+$aktivURLPara=tmObjCopy($mSTDURL);
 $aktivURLPara->addParam("lnk_grp_id",$lnk_grp_id);
 $aktivURLPara->addParam("offset",$offset);
 $aktivURLPara->addParam("limit",$limit);
 $aktivURLPara->addParam("act","link_list");
 $aktivURLPara->addParam("set","aktiv");
 
-$delURLPara=$mSTDURL;
+$delURLPara=tmObjCopy($mSTDURL);
 $delURLPara->addParam("lnk_grp_id",$lnk_grp_id);
 $delURLPara->addParam("offset",$offset);
 $delURLPara->addParam("limit",$limit);

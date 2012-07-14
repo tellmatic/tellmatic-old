@@ -2,7 +2,7 @@
 /*
  * getmxrr.php
  *
- * @(#) $Header: /cvsroot/tellmatic/tellmatic/include/smtp/getmxrr.php,v 1.1 2007/11/29 23:52:52 mcms09 Exp $
+ * @(#) $Header: /home/mlemos/cvsroot/PHPlibrary/getmxrr.php,v 1.1 2002/06/21 05:33:42 mlemos Exp $
  *
  */
 

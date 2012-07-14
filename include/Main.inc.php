@@ -15,6 +15,11 @@
 if (file_exists(TM_PATH."/install.php")) {
 	$_MAIN_MESSAGE.="<br><font size=2 color=red><b>".___("ACHTUNG! /install.php existiert! Die Datei install.php bitte nach erfolgreicher Installation verschieben oder löschen!")."</b></font>";
 }
+
+if(!function_exists('file_get_contents')) {
+	$MAIN_MESSAGE.="<br><font color=\"red\">".___("FEHLER! file_get_contents() ist deaktiviert")."</font>";
+}
+
 if (is_writeable(TM_INCLUDEPATH)) {
 }
 
@@ -97,7 +102,7 @@ if (TM_LOG) $LOGS->log(Array("data"=>Array("id"=>$LOGIN->USER['id'],"act"=>$acti
 		case 'host_new' : if ($user_is_admin) require_once (TM_INCLUDEPATH."/host_new.inc.php"); break;
 		case 'host_edit' : if ($user_is_admin) require_once (TM_INCLUDEPATH."/host_edit.inc.php"); break;
 		//auch als manager
-		case 'log_list' : if ($user_is_admin) require_once (TM_INCLUDEPATH."/log_list.inc.php"); break;
+		case 'log_list' : if ($user_is_admin || $user_is_manager) require_once (TM_INCLUDEPATH."/log_list.inc.php"); break;
 		//user
 		case 'user' : require_once (TM_INCLUDEPATH."/user.inc.php"); break;
 		//verwaltung
@@ -114,6 +119,7 @@ if (TM_LOG) $LOGS->log(Array("data"=>Array("id"=>$LOGIN->USER['id'],"act"=>$acti
 		case 'nl_grp_new' : require_once (TM_INCLUDEPATH."/nl_grp_new.inc.php"); break;
 		case 'nl_grp_edit' : require_once (TM_INCLUDEPATH."/nl_grp_edit.inc.php"); break;
 		case 'nl_list' : require_once (TM_INCLUDEPATH."/nl_list.inc.php"); break;
+		case 'nl_list_tpl' : $s_nl_istemplate=1;require_once (TM_INCLUDEPATH."/nl_list.inc.php"); break;
 		case 'nl_new' : require_once (TM_INCLUDEPATH."/nl_new.inc.php"); break;
 		case 'nl_edit' : require_once (TM_INCLUDEPATH."/nl_edit.inc.php"); break;
 		case 'queue_new' : require_once (TM_INCLUDEPATH."/queue_new.inc.php"); break;
@@ -124,6 +130,7 @@ if (TM_LOG) $LOGS->log(Array("data"=>Array("id"=>$LOGIN->USER['id'],"act"=>$acti
 		case 'adr_grp_new' : require_once (TM_INCLUDEPATH."/adr_grp_new.inc.php"); break;
 		case 'adr_grp_edit' : require_once (TM_INCLUDEPATH."/adr_grp_edit.inc.php"); break;
 		case 'adr_list' : require_once (TM_INCLUDEPATH."/adr_list.inc.php"); break;
+		case 'adr_list_search' : $no_list=1;require_once (TM_INCLUDEPATH."/adr_list.inc.php"); break;
 		case 'adr_new' : require_once (TM_INCLUDEPATH."/adr_new.inc.php"); break;
 		case 'adr_edit' : require_once (TM_INCLUDEPATH."/adr_edit.inc.php"); break;
 		case 'adr_import' : if ($user_is_manager) require_once (TM_INCLUDEPATH."/adr_import.inc.php"); break;
@@ -139,8 +146,8 @@ if (TM_LOG) $LOGS->log(Array("data"=>Array("id"=>$LOGIN->USER['id'],"act"=>$acti
 		case 'form_list' : require_once (TM_INCLUDEPATH."/form_list.inc.php"); break;
 		case 'form_new' : require_once (TM_INCLUDEPATH."/form_new.inc.php"); break;
 		case 'form_edit' : require_once (TM_INCLUDEPATH."/form_edit.inc.php"); break;
-		//tools
-		case 'filemanager' : require_once (TM_INCLUDEPATH."/filemanager.inc.php"); break;
+		//filemanager
+		case 'file_edit' : require_once (TM_INCLUDEPATH."/file_edit.inc.php"); break;
 		//status + statistik
 		case 'status' : require_once (TM_INCLUDEPATH."/status.inc.php"); break;
 		case 'status_top_x' : require_once (TM_INCLUDEPATH."/status_top_x.inc.php"); break;
@@ -169,8 +176,8 @@ if (TM_LOG) $LOGS->log(Array("data"=>Array("id"=>$LOGIN->USER['id'],"act"=>$acti
 		$_MAIN_MESSAGE.="<hr noshade><br>".$_ERROR['html']."<br><hr noshade><br>";
 	}
 
-	if (DEBUG) $_MAIN_MESSAGE.="<br>available_mem=$available_mem Byte";
-	if (DEBUG) $_MAIN_MESSAGE.="<br>adr_row_limit=$adr_row_limit";
+	if (DEBUG) $_MAIN_MESSAGE.=tm_debugmessage("available_mem=$available_mem Byte");
+	if (DEBUG) $_MAIN_MESSAGE.=tm_debugmessage("adr_row_limit=$adr_row_limit");
 
 	$pwchanged=getVar("pwchanged");
 	$usr_message=getVar("usr_message",1,"");
@@ -185,14 +192,14 @@ if (TM_LOG) $LOGS->log(Array("data"=>Array("id"=>$LOGIN->USER['id'],"act"=>$acti
     //wichtig, triggerfunction f. menu: id ist "me_0_1"
     //only if logged in, else it throws a $trigger has no property js error because there is no menu!
     $_MAIN_OUTPUT.= "<script language=\"javascript\" type=\"text/javascript\">".
-										"toggleSlide('me_0_1','main_info',0);".
-										"toggleSlide('me_0_2','main_help',0);".
+										"toggleSlide('me_0_2','main_info',0);".
+										"toggleSlide('me_0_3','main_help',0);".
 										"</script>";
 
 
 	//show log summary
 	//search for logs, only section
-	$search_log=Array();//empty=all
+	$search_log=Array("object"=>'');//empty=all
 	include(TM_INCLUDEPATH."/log_summary_section.inc.php");
 
 
@@ -221,6 +228,14 @@ $_MAIN_OUTPUT.= '
 </script>
 ';
 
+//show last xx lines of tellmatic php logfile: ... if there is something to show...
+if ($user_is_admin && TM_PHP_LOG_TAIL && file_exists(TM_PHP_LOGFILE) && filesize(TM_PHP_LOGFILE)>0) {
+	$_MAIN_MESSAGE.="<br><div>";
+	$_MAIN_MESSAGE.=sprintf(___("Die letzten %s Einträge in der Tellmatic PHP Fehler-Log-Datei %s:"),TM_PHP_LOG_TAIL_LINES,TM_PHP_LOGFILE)."<br>";
+	$_MAIN_MESSAGE.="<font size=1>".mtail(TM_PHP_LOGFILE,TM_PHP_LOG_TAIL_LINES)."</font>";
+	$_MAIN_MESSAGE.="</div>";	
+}
+
 //new Template
 $_Tpl_Main=new tm_Template();
 $_Tpl_Main->setTemplatePath(TM_TPLPATH."/".$Style);
@@ -229,5 +244,5 @@ $_Tpl_Main->setParseValue("_MAIN_MESSAGE", $_MAIN_MESSAGE);
 $_Tpl_Main->setParseValue("_MAIN_HELP", $_MAIN_HELP);
 $_Tpl_Main->setParseValue("_MAIN_OUTPUT", $_MAIN_OUTPUT);
 $_MAIN=$_Tpl_Main->renderTemplate("Main.html")."\n";
-$_MAIN.= "<br><br><center>&copy;-left 2006-2010 <a href=\"http://www.tellmatic.org\" target=\"blank\">".$ApplicationText."</a></center><br><br>";
+$_MAIN.= "<br><br><center>&copy;-left 2006-2010 <a href=\"http://www.tellmatic.org\" target=\"blank\">".TM_APPTEXT."</a></center><br><br>";
 ?>

@@ -61,41 +61,4 @@ $Form->set_InputDesc($FormularName,$InputName_Reset,___("Reset"));
 $Form->set_InputReadonly($FormularName,$InputName_Reset,false);
 $Form->set_InputOrder($FormularName,$InputName_Reset,999);
 $Form->set_InputLabel($FormularName,$InputName_Reset,"");
-
-/*RENDER FORM*/
-
-$Form->render_Form($FormularName);
-//then you dont have to render the head and foot .....
-
-/*DISPLAY*/
-$_MAIN_OUTPUT.= $Form->FORM[$FormularName]['head'];
-$_MAIN_OUTPUT.= "<table>";
-
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top><img src=\"".$tm_iconURL."/user_comment.png\" border=\"0\" alt=\"".___("Benutzer")."\">&nbsp;";
-$_MAIN_OUTPUT.= ___("Benutzer");
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "<td valign=top>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_User]['html'];
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top><img src=\"".$tm_iconURL."/pilcrow.png\" border=\"0\"  alt=\"".___("Passwort")."\">&nbsp;";
-$_MAIN_OUTPUT.= ___("Passwort");
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "<td valign=top>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Pass]['html'];
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top colspan=2>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Submit]['html'];
-//$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Reset]['html'];
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-$_MAIN_OUTPUT.= "</table>";
-$_MAIN_OUTPUT.= $Form->FORM[$FormularName]['foot'];
-
 ?>

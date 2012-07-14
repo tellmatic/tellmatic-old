@@ -19,24 +19,29 @@
 /**/
 /**/
 /**/
+	define("TM_DISCLAIMER",'Disclaimer! The Coder(s) of Tellmatic is/are not responsible for any content in this Newsletter! Tellmatic is only the software used to create and send this mail to your email address! Tellmatic is free and Open Source Software! We are not responsible for misuse of Tellmatic sending Spam! Unfortunately sometimes Spammers use Tellmatic. I/we do not support Spam in any way.');
+	
 //Header and Footer that gets added to each Newsletter:
 //{TITLE} and {TITLE_SUB} are replaces by actual NL Title und Sub-Title!
 //in the default shown here i mixed up quotes and double quotes ;-) almost to add ne lines and format the source, and to not have to escape doublequotes for doctype etc.
 			$TM_NL_HTML_Start='<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">'.
 												"\n<html>\n<head>\n".
-												'<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">'.
+												'<meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">'.
 												"\n".
-												'<META CONTENT="{TM_APPTEXT}" NAME="created-with">'.
+												'<meta name="application" content="{TM_APPTEXT}">'.
 												"\n".												
-												'<META CONTENT="{TM_VERSION}" NAME="tellmatic-version">'.
+												'<meta name="tellmatic-version" content="{TM_VERSION}">'.
 												"\n".
-												'<title>{TITLE}-{TITLE_SUB}</title>'.
+												'<title>{SUBJECT} - {TITLE}-{TITLE_SUB}</title>'.
 												"\n".
 												'</head>'.
 												"\n".
 												'<body>';
 			$TM_NL_HTML_End="\n".
-												'<br><div style="font-size:7pt">Newsletter created with {TM_APPTEXT}</div>'.
+												'<br><div style="font-size:7pt; color:#dddddd;">Newsletter created with {TM_APPTEXT}'.
+												'<br>'.
+												TM_DISCLAIMER.
+												'</div>'.
 												"\n".
 												'</body>'.
 												"\n".
@@ -71,13 +76,29 @@ if (!$tm_config) {
 	//en: Y-m-d
 	//de: d.m.Y
 	//see: www.php.net/date
+
 	/***********************************************************/
 	//demomode und debugmode
 	/***********************************************************/
 	define ("DEMO", FALSE);//use demo mode
+
+	/***********************************************************/
+	//use PHPIDS
+	/***********************************************************/
+	define ("TM_PHPIDS", FALSE);//use demo mode
+
+	/***********************************************************/
+	//demomode und debugmode
+	/***********************************************************/
 	define ("DEBUG", FALSE);//printout useful infos
+	define ("DEBUG_LANG", FALSE);//printout useful infos
+	define ("DEBUG_LANG_LEVEL", 3);// 1: mark only words, 2: only list 3: both
 	define ("DEBUG_SQL", FALSE);//Warning! this will print out all sql queries!!!
 	define ("DEBUG_SMTP", FALSE);//Warning! this will print out all smtp messages and communication with server
+
+	/***********************************************************/
+	//logging
+	/***********************************************************/
 	define ("TM_LOG", TRUE);//use logbook
 
 	/***********************************************************/
@@ -120,15 +141,18 @@ if (!$tm_config) {
 //STOP
 // ab hier nichts aendern!!! // DO NOT CHANGE
 /***********************************************************/
+	$_MAIN_MESSAGE="";
+	$_MAIN_HELP="";
+	$_MAIN_OUTPUT="";
+	$_MENU="";
 
 /***********************************************************/
 //hacks for php5
 /***********************************************************/
 	if (version_compare(phpversion(), "5.0", ">=")) {   $usePhp5=true; } else {  $usePhp5=false; }
 	define("PHP5",$usePhp5);
-	if (PHP5) ini_set('zend.ze1_compatibility_mode', '1');
 
-	function getObjInstance($O) {
+	function tmObjCopy($O) {
 		if (PHP5) {
 			include (TM_INCLUDEPATH."/PHP5_clone.inc.php");//$obj=clone $O;
 			return $obj;
@@ -222,6 +246,8 @@ if (!$tm_config) {
 	//temp, sessions etc
 	$tm_tmppath=TM_PATH."/".$tm_tmpdir;
 
+	define ("TM_PHP_LOGFILE", $tm_logpath."/tellmatic_php_error.log");
+
 /***********************************************************/
 //URLs
 /***********************************************************/
@@ -281,6 +307,12 @@ if (!$tm_config) {
 /***********************************************************/
 	require_once (TM_INCLUDEPATH."/Functions.inc.php");
 
+/******************************************/
+//php ids
+/******************************************/
+	#phpids sucks a lot, we need explicitely define the include dir, base path has no effect! ;P bad style, doesnt really work as explained, lacks documentation, example is just a fake. needs too much tweaking.
+	if (TM_PHPIDS) require_once (TM_INCLUDEPATH."/PHPIDS.inc.php");
+	
 /***********************************************************/
 //handle magic quotes
 /***********************************************************/
@@ -307,24 +339,10 @@ if (!$tm_config) {
 	set_error_handler("userErrorHandler");
 
 /***********************************************************/
-//eigene gettext emulation:
-/***********************************************************/
-	define("DEFAULT_LOCALE", 'de');
-	require_once(TM_INCLUDEPATH."/GetText.inc.php");
-
-/***********************************************************/
 //htmlparser, convert html to text
 /***********************************************************/
 	require_once (TM_INCLUDEPATH."/phphtmlparser/html2text.inc");
 
-/***********************************************************/
-//array mit verfuegbaren sprachen
-/***********************************************************/
-
-	$LANGUAGES=Array(	'lang' => Array('de','en','es','it','nl','pt'),
-										'text' => Array('Deutsch','English','Espana','Italiano','Dutch','Poruguese (BR)'),
-									);
-	$supported_locales = $LANGUAGES['lang'];//array('en', 'de');
 
 /***********************************************************/
 //klassen
@@ -344,6 +362,24 @@ if (!$tm_config) {
 	$EMailcheck_Subscribe=$C[0]['emailcheck_subscribe'];
 	$EMailcheck_Sendit=$C[0]['emailcheck_sendit'];
 	$EMailcheck_Checkit=$C[0]['emailcheck_checkit'];
+
+
+/***********************************************************/
+//eigene gettext emulation:
+/***********************************************************/
+	#define("DEFAULT_LOCALE", 'de');
+	define("DEFAULT_LOCALE", $C[0]['lang']);
+	require_once(TM_INCLUDEPATH."/GetText.inc.php");
+
+/***********************************************************/
+//array mit verfuegbaren sprachen
+/***********************************************************/
+
+	$LANGUAGES=Array(	'lang' => Array('de','en','es','fr','it','nl','pt'),
+										'text' => Array('Deutsch','English','Espana','France','Italiano','Dutch','Portuguese (BR)'),
+									);
+	$supported_locales = $LANGUAGES['lang'];//array('en', 'de');
+	//^^^ lang array auch in install_conf einfuegen, hardcoded!
 
 /***********************************************************/
 //SMTP/POP3 Config
@@ -388,7 +424,8 @@ if (!$tm_config) {
 //Messages, f. subscribe/unsubscribe
 /***********************************************************/
 
-	require_once(TM_INCLUDEPATH."/Messages.inc.php");
+	#require_once(TM_INCLUDEPATH."/Messages.inc.php");
+	//no more needed, language for unsubscrbe/login is now from default language >= tm 1090rc2
 
 /***********************************************************/
 	if (DEBUG) $debug_translated=Array();

@@ -23,127 +23,30 @@ if ($check) {
 //nl gruppe
 		$NEWSLETTER=new tm_NL();
 
-		$NEWSLETTER->addGrp(Array("name"=>"Newsletter Group 1", "descr"=>"zum testen / for testings", "aktiv"=>1, "author"=>"install", "created"=>$created, "editor"=>"install", "updated"=>$created));
-		$NEWSLETTER->setGRPStd(1,1);
-		$NEWSLETTER->addGrp(Array("name"=>"Newsletter Group 2", "descr"=>"zum testen / for testings", "aktiv"=>0, "author"=>"install", "created"=>$created, "editor"=>"install", "updated"=>$created));
-//nl: personal, massmailing
-		$body=	"\n".
-					"<a name=\"top\"></a>\n".
-					"{TITLE}<br>\n".
-					"{TITLE_SUB}<br><br>\n".
-					"{SUMMARY}<br><br>\n".
-					"Hallo {F0} {F1} {F2}<br>\n".
-					"<br>\n".
-					"Attachements<br>\n".
-					"{ATTACHEMENTS}<br>\n".
-					"<br>\n".
-					"Link-URL<br>\n".
-					"{LINK1_URL}<br>\n".
-					"<br>\n".
-					"Link mit Link<br>\n".
-					"{LINK1}{LINK1_URL}{CLOSELINK}<br>\n".
-					"<br>\n".
-					"Links:<br>\n".
-					"<br>\n".
-					"show link from shortname<br>\n".
-					"{LNK:tm.home}<br>\n".
-					"show link url from shortname<br>\n".
-					"{LNK_URL:tm.home}<br>\n".
-					"show link group<br>\n".
-					"{LNKGRP:tellmatic}<br>\n".
-					"show link by id<br>\n".
-					"{LNKID:1}<br>\n".
-					"show link url by id<br>\n".
-					"{LNKID_URL:1}<br>\n".
-					"show raw link url by id<br>\n".
-					"{LNKID_URLRAW:1}<br>\n".
-					"show raw link url by shortname<br>\n".
-					"{LNK_URLRAW:tm.home}<br>\n".
-					"show link group by shortname<br>\n".
-					"{LNKGRP:tm}<br>\n".
-					"show link group by shortname<br>\n".
-					"{LNKGRP:index}<br>\n".
-					"show link group by id<br>\n".
-					"{LNKGRPID:1}<br>\n".
-					"<br>\n".
-					"Bild-URL<br>\n".
-					"{IMAGE1_URL}<br>\n".
-					"<br>\n".
-					"Bild<br>\n".
-					"{IMAGE1}<br>\n".
-					"<br>\n".
-					"Bild mit Link<br>\n".
-					"{LINK1}{IMAGE1}{CLOSELINK}<br>\n".
-					"<br>\n".
-					"Online-URL<br>\n".
-					"{NLONLINE_URL}<br>\n".
-					"<br>\n".
-					"Online Link<br>\n".
-					"{NLONLINE} {NLONLINE_URL} {CLOSELINK}<br>\n".
-					"<br>\n".
-					"Ihre bei uns gespeicherten Daten:<br>\n".
-					"{F3}, {F4}, {F5}, {F6}, {F7}, {F8}, {F9}<br>\n".
-					"Die E-Mail-Adresse mit der Sie bei unserem Newsletter angemeldet sind lautet: {EMAIL}<br>\n".
-					"Wenn Sie unseren Newsletter nicht mehr erhalten möchten, koennen Sie sich<br>\n".
-					"{UNSUBSCRIBE_URL}<br>\n".
-					"{UNSUBSCRIBE}HIER{CLOSELINK} abmelden.<br>\n".
-					"{UNSUBSCRIBE}{UNSUBSCRIBE_URL}{CLOSELINK}<br>\n".
-					"<br>\n".
-					"Url zum Blindimage:<br>\n".
-					" {BLINDIMAGE_URL}<br>\n".
-					"<br>\n".
-					"Blindimage:<br>\n".
-					"{BLINDIMAGE}<br>\n".
-					"Der Link zum Bestätigen des Newsletter Empfangs f. 1st-touch-opt-in:<br>\n".
-					"{SUBSCRIBE_URL}<br>\n".
-					"<br>\n".
-					"{SUBSCRIBE}{SUBSCRIBE_URL}{CLOSELINK}<br>\n".
-					"<br>\n".
-					"Ihre bei uns gespeicherten Daten:<br>\n".
-					"<br>\n".
-					"{MEMO}\n".
-					"Viel Spass mit tellmatic! :-)<br>\n".
-					"<a name=\"bottom\"></a>".
-					"\n";
-					
-		$body_text="{TITLE}\n".
-					"{TITLE_SUB}\n\n".
-					"{SUMMARY}\n\n".
-					"Hallo {F0} {F1} {F2}\n".
-					"\n".
-					"Attachements\n".
-					"{ATTACHEMENTS}\n".
-					"Link-URL\n".
-					"{LINK1_URL}\n".
-					"Online-URL\n".
-					"{NLONLINE_URL}\n".
-					"Ihre bei uns gespeicherten Daten:\n".
-					"{F3}, {F4}, {F5}, {F6}, {F7}, {F8}, {F9}\n".
-					"Die E-Mail-Adresse mit der Sie bei unserem Newsletter angemeldet sind lautet: {EMAIL}\n".
-					"Wenn Sie unseren Newsletter nicht mehr erhalten möchten, können Sie sich unter folgender URL abmelden:\n".
-					"{UNSUBSCRIBE_URL}\n".
-					"Der Link zum Bestätigen des Newsletter Empfangs f. 1st-touch-opt-in:\n".
-					"{SUBSCRIBE_URL}\n".
-					"\n".
-					"Ihre bei uns gespeicherten Daten:\n".
-					"\n".
-					"{MEMO}\n".
+		//create a new group
+		$example_nl_group_1_id=$NEWSLETTER->addGrp(Array("name"=>"Newsletter Group 1", "descr"=>"zum testen / for testings", "aktiv"=>1, "author"=>"install", "created"=>$created, "editor"=>"install", "updated"=>$created));
+		//make this group the default group
+		$NEWSLETTER->setGRPStd($example_nl_group_1_id,1);
+		
+		//create a 2nd example group
+		$example_nl_group_2_id=$NEWSLETTER->addGrp(Array("name"=>"Newsletter Group 2", "descr"=>"zum testen / for testings", "aktiv"=>0, "author"=>"install", "created"=>$created, "editor"=>"install", "updated"=>$created));
 
-					"\n".
-					"Viel Spass mit tellmatic! :-)\n";
+		//create a 3rd group used for templates (subscribe form)
+		$example_nl_group_3_id=$NEWSLETTER->addGrp(Array("name"=>"Subscribe", "descr"=>"templates for subscribe mails send by subscribe-forms", "aktiv"=>1, "author"=>"install", "created"=>$created, "editor"=>"install", "updated"=>$created));
 
-		$NEWSLETTER->addNL(
+		//add a first testnewsletter in first group
+		$example_nl_1_id=$NEWSLETTER->addNL(
 								Array(
 									"subject"=>"{DATE} Newsletter 1",
-									"body"=>$body,
-									"body_text"=>$body_text,
+									"body"=>$example_nl_body_html,
+									"body_text"=>$example_nl_body_text,
 									"aktiv"=>1,
 									"status"=>1,
 									"massmail"=>0,
 									"link"=>"http://www.tellmatic.org",
 									"created"=>date("Y-m-d H:i:s"),
 									"author"=>"install",
-									"grp_id"=>1,
+									"grp_id"=>$example_nl_group_1_id,
 									"rcpt_name"=>"Newsletter",
 									"track_image"=>"_blank",
 									"content_type"=>"text/html",
@@ -155,7 +58,106 @@ if ($check) {
 									"track_personalized"=>1,
 									)
 								);
-								//									"attm"=>"",//1082
+
+		//add a second testnewsletter in 2nd group
+		$example_nl_2_id=$NEWSLETTER->addNL(
+								Array(
+									"subject"=>"{DATE} Newsletter 2",
+									"body"=>$example_nl_body_html,
+									"body_text"=>$example_nl_body_text,
+									"aktiv"=>1,
+									"status"=>1,
+									"massmail"=>0,
+									"link"=>"http://www.tellmatic.org",
+									"created"=>date("Y-m-d H:i:s"),
+									"author"=>"install",
+									"grp_id"=>$example_nl_group_2_id,
+									"rcpt_name"=>"Newsletter",
+									"track_image"=>"_blank",
+									"content_type"=>"text/html",
+									"attachements"=>Array(),
+									"is_template"=>0,
+									"title"=>'Titel',
+									"title_sub"=>'Titel 2',
+									"summary"=>'Zusammenfassender Text zBsp. zur Anzeige auf der Webseite etc.',
+									"track_personalized"=>1,
+									)
+								);
+
+		//add newsletter for doubleoptin message, use 3rd example group
+		$example_nl_doptin_id=$NEWSLETTER->addNL(
+								Array(
+									"subject"=>"Newsletteranmeldung / Subscribe {DATE}",
+									"body"=>$example_nl_doptin_body_html,
+									"body_text"=>$example_nl_doptin_body_text,
+									"aktiv"=>1,
+									"status"=>1,
+									"massmail"=>0,
+									"link"=>"http://www.tellmatic.org",
+									"created"=>date("Y-m-d H:i:s"),
+									"author"=>"install",
+									"grp_id"=>$example_nl_group_3_id,
+									"rcpt_name"=>"Newsletter",
+									"track_image"=>"_blank",
+									"content_type"=>"text/html",
+									"attachements"=>Array(),
+									"is_template"=>1,
+									"title"=>'',
+									"title_sub"=>'',
+									"summary"=>'',
+									"track_personalized"=>1,
+									)
+								);
+		
+		//add newsletter for welcome/subscribe message, use 3rd example group
+		$example_nl_welcome_id=$NEWSLETTER->addNL(
+								Array(
+									"subject"=>"Willkommen / Welcome {DATE}",
+									"body"=>$example_nl_welcome_body_html,
+									"body_text"=>$example_nl_welcome_body_text,
+									"aktiv"=>1,
+									"status"=>1,
+									"massmail"=>0,
+									"link"=>"http://www.tellmatic.org",
+									"created"=>date("Y-m-d H:i:s"),
+									"author"=>"install",
+									"grp_id"=>$example_nl_group_3_id,
+									"rcpt_name"=>"Newsletter",
+									"track_image"=>"_blank",
+									"content_type"=>"text/html",
+									"attachements"=>Array(),
+									"is_template"=>1,
+									"title"=>'',
+									"title_sub"=>'',
+									"summary"=>'',
+									"track_personalized"=>1,
+									)
+								);
+
+		//add newsletter for update mail, use 3rd example group
+		$example_nl_update_id=$NEWSLETTER->addNL(
+								Array(
+									"subject"=>"Aktualisierung / Update {DATE}",
+									"body"=>$example_nl_update_body_html,
+									"body_text"=>$example_nl_update_body_text,
+									"aktiv"=>1,
+									"status"=>1,
+									"massmail"=>0,
+									"link"=>"http://www.tellmatic.org",
+									"created"=>date("Y-m-d H:i:s"),
+									"author"=>"install",
+									"grp_id"=>$example_nl_group_3_id,
+									"rcpt_name"=>"Newsletter",
+									"track_image"=>"_blank",
+									"content_type"=>"text/html",
+									"attachements"=>Array(),
+									"is_template"=>1,
+									"title"=>'',
+									"title_sub"=>'',
+									"summary"=>'',
+									"track_personalized"=>1,
+									)
+								);
 
 //add link groups
 $LINKS=new tm_LNK();
@@ -244,9 +246,9 @@ $LINKS=new tm_LNK();
 //adr gruppe
 		$ADDRESS=new tm_ADR();
 
-		$ADDRESS->addGrp(Array("name"=>"ADR Group 1", "descr"=>"zum testen / for testings", "aktiv"=>1, "author"=>"install", "created"=>$created, "editor"=>"install", "updated"=>$created, "public"=>1, "public_name"=>"Test 1"));
+		$ADDRESS->addGrp(Array("name"=>"ADR Group 1", "descr"=>"zum testen / for testings", "aktiv"=>1, "prod"=>1, "author"=>"install", "created"=>$created, "editor"=>"install", "updated"=>$created, "public"=>1, "public_name"=>"Test 1"));
 		$ADDRESS->setGRPStd(1,1);
-		$ADDRESS->addGrp(Array("name"=>"ADR Group 2", "descr"=>"zum testen / for testings", "aktiv"=>0, "author"=>"install", "created"=>$created, "editor"=>"install", "updated"=>$created, "public"=>0, "public_name"=>"Test 2"));
+		$ADDRESS->addGrp(Array("name"=>"ADR Group 2", "descr"=>"zum testen / for testings", "aktiv"=>0, "prod"=>0, "author"=>"install", "created"=>$created, "editor"=>"install", "updated"=>$created, "public"=>0, "public_name"=>"Test 2"));
 //adr : ok, bounce
 			$code=rand(111111,999999);
 			$new_adr_grp[0]=1;
@@ -257,6 +259,10 @@ $LINKS=new tm_LNK();
 					"author"=>"install",
 					"status"=>3,
 					"code"=>$code,
+					"proof"=>0,
+					"source"=>"user",
+					"source_id"=>1,
+					"source_extern_id"=>0,					
 					"memo"=>$created,
 					"f0"=>"Herr",
 					"f1"=>"Telly",
@@ -280,6 +286,10 @@ $LINKS=new tm_LNK();
 					"author"=>"install",
 					"status"=>1,
 					"code"=>$code,
+					"proof"=>0,
+					"source"=>"user",
+					"source_id"=>1,
+					"source_extern_id"=>0,					
 					"memo"=>$created,
 					"f0"=>"Herr",
 					"f1"=>"Tello",
@@ -303,17 +313,27 @@ $LINKS=new tm_LNK();
 				"action_url"=>"",
 				"descr"=>"zum testen / for testing",
 				"aktiv"=>1,
+				"standard"=>1,
 				"created"=>date("Y-m-d H:i:s"),
 				"author"=>"install",
 				"double_optin"=>1,
 				"use_captcha"=>1,
 				"digits_captcha"=>4,
 				"check_blacklist"=>1,
+				"proof"=>1,
 				"force_pubgroup"=>0,
 				"overwrite_pubgroup"=>0,
+				"multiple_pubgroup"=>1,
 				"subscribe_aktiv"=>1,
-				"submit_value"=>"Abschicken",
-				"reset_value"=>"Eingaben zurücksetzen",
+				"nl_id_doptin"=>$example_nl_doptin_id,
+				"nl_id_greeting"=>$example_nl_welcome_id,
+				"nl_id_update"=>$example_nl_update_id,
+				"message_doptin"=>"Double OptIn Message",
+				"message_greeting"=>"Greeting Message",
+				"message_update"=>"Update Message",
+				"host_id"=>1,
+				"submit_value"=>"Subscribe / Anmelden",
+				"reset_value"=>"Reset / Eingaben zurücksetzen",
 				"email"=>"E-Mail-Adresse",
 				"f0"=>"Anrede",
 				"f1"=>"Name",
@@ -381,6 +401,9 @@ $LINKS=new tm_LNK();
 				"f9_errmsg"=>""
 				),
 				$new_adr_grp);
+			$FORMULAR->setStd(1);
+			
+			
 	}//demo
 }//if check
 ?>

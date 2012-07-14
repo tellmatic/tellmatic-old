@@ -61,9 +61,11 @@ if ($set=="save") {
 		$action="bl_list";
 		include_once (TM_INCLUDEPATH."/bl_list.inc.php");
 	} else {//check
-		include_once (TM_INCLUDEPATH."/bl_form.inc.php");
+		require_once (TM_INCLUDEPATH."/bl_form.inc.php");
+		require_once (TM_INCLUDEPATH."/bl_form_show.inc.php");
 	}//check
 } else {//set==save
-	include_once (TM_INCLUDEPATH."/bl_form.inc.php");
+	require_once (TM_INCLUDEPATH."/bl_form.inc.php");
+	require_once (TM_INCLUDEPATH."/bl_form_show.inc.php");
 }//set==save
 ?>

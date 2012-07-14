@@ -2,7 +2,7 @@
 /*
  * test_urgent_mail.php
  *
- * @(#) $Header: /cvsroot/tellmatic/tellmatic/include/mimemessage/test_urgent_mail.php,v 1.1 2007/11/29 23:50:53 mcms09 Exp $
+ * @(#) $Header: /home/mlemos/cvsroot/mimemessage/test_urgent_mail.php,v 1.1 2004/07/27 08:20:40 mlemos Exp $
  *
  *
  */

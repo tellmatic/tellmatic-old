@@ -2,7 +2,7 @@
 /*
  * sendmail_message.php
  *
- * @(#) $Header: /cvsroot/tellmatic/tellmatic/include/mimemessage/sendmail_message.php,v 1.1 2007/11/29 23:50:53 mcms09 Exp $
+ * @(#) $Header: /home/mlemos/cvsroot/mimemessage/sendmail_message.php,v 1.17 2009/07/27 22:07:23 mlemos Exp $
  *
  *
  */
@@ -14,7 +14,7 @@
 	<package>net.manuellemos.mimemessage</package>
 
 	<name>sendmail_message_class</name>
-	<version>@(#) $Id: sendmail_message.php,v 1.1 2007/11/29 23:50:53 mcms09 Exp $</version>
+	<version>@(#) $Id: sendmail_message.php,v 1.17 2009/07/27 22:07:23 mlemos Exp $</version>
 	<copyright>Copyright © (C) Manuel Lemos 1999-2004</copyright>
 	<title>MIME E-mail message composing and sending using Sendmail</title>
 	<author>Manuel Lemos</author>
@@ -189,8 +189,6 @@ class sendmail_message_class extends email_message_class
 	</variable>
 {/metadocument}
 */
-	var $delivery_mode=SENDMAIL_DELIVERY_DEFAULT;
-
 	var $bulk_mail_delivery_mode=SENDMAIL_DELIVERY_QUEUE;
 
 /*
@@ -213,7 +211,7 @@ class sendmail_message_class extends email_message_class
 {metadocument}
 	<variable>
 		<name>mailer_delivery</name>
-		<value>sendmail $Revision: 1.1 $</value>
+		<value>sendmail $Revision: 1.17 $</value>
 		<documentation>
 			<purpose>Specify the text that is used to identify the mail
 				delivery class or sub-class. This text is appended to the
@@ -224,7 +222,7 @@ class sendmail_message_class extends email_message_class
 	</variable>
 {/metadocument}
 */
-	var $mailer_delivery='sendmail $Revision: 1.1 $';
+	var $mailer_delivery='sendmail $Revision: 1.17 $';
 
 	Function SendMail($to,$subject,$body,$headers,$return_path)
 	{
@@ -243,7 +241,7 @@ class sendmail_message_class extends email_message_class
 		if($this->delivery_mode!=SENDMAIL_DELIVERY_DEFAULT)
 			$command.=" -od".$this->delivery_mode;
 		if(strlen($return_path))
-			$command.=" -f '".ereg_replace("'", "'\\''",$return_path)."'";
+			$command.=" -f '".preg_replace("/'/", "'\\''",$return_path)."'";
 		if(strlen($this->sendmail_arguments))
 			$command.=" ".$this->sendmail_arguments;
 		if(!($pipe=@popen($command,"w")))

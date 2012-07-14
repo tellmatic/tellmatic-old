@@ -2,7 +2,7 @@
 /*
  * test_smarty_personalized_mailing.php
  *
- * @(#) $Header: /cvsroot/tellmatic/tellmatic/include/mimemessage/test_smarty_personalized_mailing.php,v 1.1 2007/11/29 23:50:53 mcms09 Exp $
+ * @(#) $Header: /home/mlemos/cvsroot/mimemessage/test_smarty_personalized_mailing.php,v 1.5 2005/02/16 04:04:03 mlemos Exp $
  *
  */
 

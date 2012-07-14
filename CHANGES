@@ -2,7 +2,7 @@
 /* this file is part of: / diese Datei ist ein Teil von:                        */
 /* tellmatic, the newslettermachine                                             */
 /* tellmatic, die Newslettermaschine                                            */
-/* 2006/10 by Volker Augustin, multi.art.studio Hanau                            */
+/* 2006/11 by Volker Augustin, multi.art.studio Hanau                            */
 /* Contact/Kontakt: info@tellmatic.org                                      */
 /* Homepage: www.tellmatic.org                                                   */
 /* leave this header in file!                                                   */
@@ -11,12 +11,190 @@
 /* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
 /********************************************************************************/
 
+*+*+*+*+*+*+*+*+*+*+*+ CHANGES V1.0.9.0-rc1  +*+*+*+*+*+*+*+*+*+*+*+*
+	09.03.2011
+	
+	*** New features/enhancements:
+
+		* TM license changed/upgraded to GPL/AGPL! http://www.gnu.org/licenses/gpl.html / http://www.gnu.org/licenses/agpl.html 
+		* New language added: French
+		* form: select smtp host, fallback is default smtp host! if smtp_host_id=0		
+		* production groups: adr groups can be flagged as a production group. you can only send to production groups!
+			- mark adr group as production group, to send to, and to filter, in adr list mark with (p) /search, and add filter in adrgrp list.
+			- prod groups are used for delivery etc, intern noprod groups are for organizing, e.g. 3 groups, import1, import2, and prod group import_all
+
+		* send emails for doptin, greeting, update!:		
+			- forms/sub: select nl for optin, greeting, update: nl must be active and template and personalized!
+			subscribe procedure changed a bit: instead of using html templates or hardcoded textmessages for subscribe mail etc, tellmatic now uses predefined newsletter templates for sending subscribe, confirm, double optin and update messages/mails.
+						- forms/sub: select nl for optin, greeting, update: nl must be active and template and personalized!
+			- save greeting, double optin and update message in form, displayed after new subscription with/without doptin and/or update
+			- no more form_[id]_s/o/os needed, configure valid double optin mail, greeting mai land update mai lin form!!!11!!!11eleven!elf1
+				UPDATE all forms first! and test it!!!
+			- show success, show greeting, show update and confirmation using Form_[id]_success.html
+			- success, update and double optin message now also comes from db! as configured in the form! no more template, no more Messages.inc needed here for subscribe.
+			- Form_[id]_success.html is used to display form messages after subscription, doptin or confirmation!
+		* forms/sub: pgroup, multiple or only one!
+		* set std form, if use touch optin or no form id is defined, check and use default form.
+		* nl: parse subject! etc in send_it, subscribe, unsubscribe mit nl, etc! ueberall da wo parsenl auch benutzt wird..., new method! view.php too!
+		* Restart finished Q's with failed and skipped/canceled records. (set status 1 to nl_h  where status = 4|6 failed/canceled and q_id=, set q to status 1 (new))				
+		* completely removed zend compat mode, tellmatic should be ready for php 5.3 now		
+		* proofing, db preparation, class update: new qualitycheck feature coming soon!
+			- added config options in admin settings
+					proof: global enable/disable
+					proof_url: url for proofing
+					proof_trigger: min adr count before proofing starts
+					proof_pc: how many percent should be proofed
+			- queue, history: do proof option
+					show icon in list (gold medal)
+					nl_q: column proof is 1 if proofing enabled
+					nl_h: column 'proof' contains return value from proofing (if enabled etc)
+			- import: proof: add checkbox in import form 
+			- forms: proof checkbox f. forms, db, (proof all new subscribed adr, no trigger/pc used)
+			- show icon in form list + legende (gold medal)
+			- queue: proof
+				show icon in list + legende (gold medal, gold_medal_1.png)
+				nl_q: column proof is 1 if proofing enabled
+				nl_h: column 'proof' contains return value from proofing (if enabled etc)
+
+		* address sources - in the next releases this is used to save the source key of an entry, e.g. "user" (manual entry), "form","import","subscribe", "sync" or "extern", external id and so on
+			  "extern" is for user defineable sources, your own scripts and so on
+			  "sync" is ment to log data from the upcoming external-data sync feature (to sync address records between cms, shop, etc with tellmatic)
+  			- sync sources will be a new feature in upcoming releases which allows you to conect to external db datasources like your blog, cms, crm tool, shop or whatever 
+	  			new column source_id in table adr contains the id of the source: user_id, form_id or sync_id for external tellmatic built in database sources...
+				source_extern_id contains the original id in the external database!			
+				source_id is user_id on import , or form_id on subscribe!
+				source_extern_id is 0 on import
+				source/_id/extern_id is only set for new entries! not updates! updates may change source if sync feature is used! 
+
+		* q: prepare db for touch optin option
+		* admin settings/unsubscribe: unsubscribe action: added: blacklist / blacklist & delete
+			- addresses now can be unsubscribed, deleted, blacklisted or blacklisted and deleted on unsubscribe, used for global setting at this time, later we will have configurable unsubscrbe forms and a user frontend to change subscriptions				
+	
+	
+	*** Enhancements:
+		
+		* import: create new group while importing and merge with optionally selected groups. 
+		* set std form, if use touch optin or no form id is defined, check and use default form.
+		* admin settings/unsubscribe: unsubscribe action: added: blacklist / blacklist & delete
+			- addresses now can be unsubscribed, deleted, blacklisted or blacklisted and deleted on unsubscribe, used for global setting at this time, later we will have configurable unsubscrbe forms and a user frontend to change subscriptions				
+		* New language added: French
+		* form: select smtp host, fallback is default smtp host! if smtp_host_id=0		
+		* import: create a new group and merge with selected groups (optional)
+		* subcribe: wenn frm descr empty, dann nihct anzeigen
+		* q_list: link zu adr in gruppen bei klick auf gruppenname, adr_list&adr_grp_id
+		* logout link at top of menu
+		* use E_STRICT		
+		* PHP>=5.3: split is outdated! use preg_split or explode instead		
+		* q-list: now shows status more detailed, also skipped adr etc are counted
+		* TM_VERSION etc: are now constants, replace vars with constants! see tm_version.inc.php
+		* adr_list: mark unsubscribed adr in different color
+		* typo: corrected typo: Poruguese vs. Portuguese 
+
+		* subcribe: wenn frm descr empty, dann nihct anzeigen
+		* nl_form: legende is now own file, 		* nl_form_legende shows new link syntax with optional parameter
+		* tm_lib: define TM_PHP_LOGFILE
+		* show new link syntax with optional parameter in nl-variable legend		
+		* admin settings: allow syntax & syntax/dns check for check_it
+		* DEBUG: debug language/translations: DEBUG_LANG,TRUE , DEBUG_LANG_LEVEL, 1|2|3 marks words, shows list or both		
+		* Main.inc: show last xx loglines, tail function! (admin only) new function mtail()
+		* nl: new var, {SUBJECT} replaced by subject via parse_Subject()
+		* nl: new var  {GROUP} (shows public group references for adr record)
+		* send_it: add new mail header:  List-Unsubscribe: <http://......../unsubscribe.php?>
+		* wysiwyg: add tellmatic menu for inserting variables like {DATE} etc. with a mouseclick
+		* hosts: add optional delay/pause (microseconds) between two mails when sending out newsletter
+		* DATE in newsletters will be replaced by send_at date from queue. not current date!
+		* add a warning at install routine if config file already exists
+		* config: select default style 
+		* config: select default language (used by login mask, unsubscribe and forms)
+		* config: select host for unsubscribe messages
+		* config/user: select startpage shown after successfully logged in
+	
+	*** Code changes / Optimizations:			
+		
+		* hosts: max_mails_bcc always 1, changed host_form and install
+		* split xxx_form.inc.php into xxx_form.inc.php and xxx_form_show.inc.php
+			xxx_form_show creates the rendered output. xx_form is to set up fields.
+			in list forms, we have to start the form rendering in _form, continue in _list and finish in _form_show  
+		* Class_NL addNL returns new nl id
+		* Class_NL addGrp returns new group id
+		* install.php: split into install.php and include/install/install.inc.php
+		* install: add install_examples_conf 
+		* use E_STRICT		
+		* PHP>=5.3: split is outdated! use preg_split or explode instead		
+		* TM_VERSION etc: are now constants, replace vars with constants! see tm_version.inc.php
+		* adr_list: mark unsubscribed adr in different color
+		* typo: corrected typo: Poruguese vs. Portuguese 
+		* subcribe: wenn frm descr empty, dann nihct anzeigen
+		* nl_form: legende is now own file, 		* nl_form_legende shows new link syntax with optional parameter
+		* tm_lib: define TM_PHP_LOGFILE
+		* DEBUG: debug language/translations: DEBUG_LANG,TRUE , DEBUG_LANG_LEVEL, 1|2|3 marks words, shows list or both
+		* nl: parse subject! etc in send_it, subscribe, unsubscribe mit nl, etc! ueberall da wo parsenl auch benutzt wird..., new method! view.php too!
+		* completely removed zend compat mode, tellmatic should be ready for php 5.3 now
+		* if DEBUG us enabled, TM uses tm_debugmessage to format nicer output.		
+		* bounce_filter_adr_list.inc.php used hardcoded image urls, now unsing tm_icon function
+		
+	*** fixed Bugs:
+			
+		* fixed: hide info fenster at logout will hide the login link too ;)
+
+		1089 - 1090:
+		*	3121248  	 Invalid From-Address
+			https://sourceforge.net/tracker/?func=detail&aid=3121248&group_id=190396&atid=933192
+			$from addess in bouncemanagement not set if email is invalid, e.g. Mailer Daemon etc
+		*	3114589  	 GeoIP
+			https://sourceforge.net/tracker/?func=detail&aid=3114589&group_id=190396&atid=933192
+			error where geoip can not determine ip of user
+		*	3114571  	 Vermeiden von unnötigem Output in den Errorlogs
+			https://sourceforge.net/tracker/?func=detail&aid=3114571&group_id=190396&atid=933192			
+			fix some warnings 
+		*	3114550  	 Special Chars in Statistics, converted to HTML Entities
+			https://sourceforge.net/tracker/?func=detail&aid=3114550&group_id=190396&atid=933192
+			add new parameter to ___() function, if 0, do not use display() function in return value		
+			add new param 0 to Stats.inc.php and use display where status is printed out
+		*	errno:8 | errtype:Notice	errmsg:"ob_flush(): failed to flush buffer. No buffer to flush."	errfile:include/send_it.php	errline:78
+		*	3106176  	 Missing initialization of $_MAIN_DESCR
+			https://sourceforge.net/tracker/?func=detail&aid=3106176&group_id=190396&atid=933192
+		*  3106166  	 Missing initialization of $search_log
+			https://sourceforge.net/tracker/?func=detail&aid=3106166&group_id=190396&atid=933192		
+			should be fixed, gives a warning if no obj index is defined			
+			errmsg:"Undefined index:  object";
+			errfile: include/log_summary_section.inc.php
+		*  3106156	https://sourceforge.net/tracker/?func=detail&aid=3106156&group_id=190396&atid=933192
+			form_list, in mouseover werden keine gruppen mehr angezeigt, weird!!! OK,  public_frm_ref in group wurde gegen frm_id gecheckt statt public flag in frm_ref
+		* 3106156  	 Wrong database query for (non-)public groups of forms 
+			BUG: forms: form_form: pubgroups werden nihct markiert, stattdessen werden die globalen gruppenlinks markiert? hä? OK,  public_frm_ref in group wurde gegen frm_id gecheckt statt public flag in frm_ref
+		 	https://sourceforge.net/tracker/?group_id=190396&atid=933192
+		*  3106138  	 Blindimage description, not really a bug.
+				https://sourceforge.net/tracker/?func=detail&aid=3106138&group_id=190396&atid=933192			
+				alt text is now parsed subject
+		*	3106130  	 Date not inserted in unsubscribe notifications
+			https://sourceforge.net/tracker/?func=detail&aid=3106130&group_id=190396&atid=933192
+		*	3106121  	 Missing notification mail address in subscribe notifications
+			https://sourceforge.net/tracker/?func=detail&aid=3106121&group_id=190396&atid=933192
+		*	3106111  	 Wrong activation link for double opt-in
+			subscribe rewritten,now uses newsletters for notification mails
+		* nl views/clicks was not reset to 0 if nl was copied! nl with currently 0 views in nl_h will show old values from copied newsletter.
+		* mit jeder mail wird neuer connect aufgebaut trotz bulkmail=1, liegt an neuem object, stattdessen bulkmail und replace part von mailklasse nutzen!!! kein neues object erzeugen. das liegt daran da das obj. fuer mail jedesmal neu instanziert wird statt altes zu nutzen und zu resetten und neuen body, neuen header zu nehmen.
+		* send_it: finally fixed bug where blacklisted adr gets marked errorness and failed. Use status 'canceled' instead
+
+
+
+	*** Known Issues:
+		no known critical issues yet, you may want to visit the bugtracker ;-)
+		here and there eregi is still used.....
+		
+	*** Upcoming / Future Plans:
+		many!
+		finish prepared new features
+	
+
+
 *+*+*+*+*+*+*+*+*+*+*+ CHANGES V1.0.8.9  +*+*+*+*+*+*+*+*+*+*+*+*
 	26.09.2010
 	
 	*** New features/enhancements:
 		
-	*** Enhacements, Code changes / Optimizations:
+	*** Enhancements, Code changes / Optimizations:
 		* Skip existing Adresses on Import!
 		* Wysiwyg: TinyMce only creates xhtml/xml headers. Sucks a bit, theheader is a bit buggy too, so i get rid of the fullpage plugin and add my own header!
 			Tinymce still /> at end of some tags, but this is only a warning and still valid HTML! :P
@@ -27,6 +205,7 @@
 		* Class_Q: addHQ: add more indexes in temporary table, speed up next query by ~10%
 		* Queue-List: Show % done (%done total, %done-OK, %done-with-Failure, %done-current-with-Failure)
 		* NL: nl_group_list: Count Newsletters/Templates
+		* Linkmanager: add parameters to anchor tag. Separated by comma: e.g. {LNKID:5,style="color:#ff0000"}
 		 
 	*** fixed Bugs:
 	

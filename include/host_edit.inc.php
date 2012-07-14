@@ -74,6 +74,9 @@ $$InputName_ReplyTo=getVar($InputName_ReplyTo);
 $InputName_Aktiv="aktiv";
 $$InputName_Aktiv=getVar($InputName_Aktiv);
 
+$InputName_Delay="delay";
+$$InputName_Delay=getVar($InputName_Delay);//delay between messages send to this host in send_it.php!
+
 //we MUST remove leading slashes from imap options, if not we get invalid remote specification error. 
 if (strpos($options, "/")==0) $options=substr_replace($options, '', 0, 1);
 
@@ -121,14 +124,16 @@ if ($set=="save") {
 				"sender_name"=>$sender_name,
 				"sender_email"=>$sender_email,
 				"return_mail"=>$return_mail,
-				"reply_to"=>$reply_to
+				"reply_to"=>$reply_to,
+				"delay"=>$delay
 				));
 		}
 		$_MAIN_MESSAGE.="<br>".sprintf(___("Mail-Server %s wurde bearbeitet."),"<b>".display($name)."</b>")."";
 		$action="host_list";
-		include_once ("host_list.inc.php");
+		require_once ("host_list.inc.php");
 	} else {//check
-		include_once (TM_INCLUDEPATH."/host_form.inc.php");
+		require_once (TM_INCLUDEPATH."/host_form.inc.php");
+		require_once (TM_INCLUDEPATH."/host_form_show.inc.php");
 	}//check
 } else {//save
 	$name=$HOST[0]['name'];
@@ -181,6 +186,8 @@ if ($set=="save") {
 	} else {
 		$reply_to="reply@my-domain.tld";
 	}
-	include_once (TM_INCLUDEPATH."/host_form.inc.php");
+	$delay=$HOST[0]['delay'];
+	require_once (TM_INCLUDEPATH."/host_form.inc.php");
+	require_once (TM_INCLUDEPATH."/host_form_show.inc.php");
 }
 ?>

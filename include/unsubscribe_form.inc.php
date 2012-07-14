@@ -29,6 +29,7 @@ $Form->new_Input($FormularName,"nl_id", "hidden", $nl_id);
 $Form->new_Input($FormularName,"code", "hidden", $code);
 
 $Form->new_Input($FormularName,"cpt", "hidden", $captcha_md5);
+
 $Form->set_InputID($FormularName,"set", "set_u");
 $Form->set_InputID($FormularName,"email", "email_u");
 $Form->set_InputID($FormularName,"fcpt", "fcpt_u");
@@ -61,23 +62,4 @@ $Form->set_InputDesc($FormularName,$InputName_Submit,"");
 $Form->set_InputReadonly($FormularName,$InputName_Submit,false);
 $Form->set_InputOrder($FormularName,$InputName_Submit,998);
 $Form->set_InputLabel($FormularName,$InputName_Submit,"");
-
-/*RENDER FORM*/
-
-$Form->render_Form($FormularName);
-
-/*DISPLAY*/
-
-$FHEAD= $Form->FORM[$FormularName]['head'];
-$FHEAD.= $Form->INPUT[$FormularName]['a_id']['html'];
-$FHEAD.= $Form->INPUT[$FormularName]['h_id']['html'];
-$FHEAD.= $Form->INPUT[$FormularName]['nl_id']['html'];
-$FHEAD.= $Form->INPUT[$FormularName]['code']['html'];
-$FHEAD.= $Form->INPUT[$FormularName]['cpt']['html'];//captcha
-$FHEAD.= $Form->INPUT[$FormularName]['set']['html'];
-$FEMAIL= $Form->INPUT[$FormularName][$InputName_Name]['html'];
-$FCAPTCHA= $Form->INPUT[$FormularName][$InputName_Captcha]['html'];
-$FSUBMIT= $Form->INPUT[$FormularName][$InputName_Submit]['html'];
-$FFOOT=$Form->FORM[$FormularName]['foot'];
-
 ?>

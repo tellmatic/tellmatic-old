@@ -3,7 +3,7 @@
 /* this file is part of: / diese Datei ist ein Teil von:                        */
 /* tellmatic, the newslettermachine                                             */
 /* tellmatic, die Newslettermaschine                                            */
-/* 2006/7 by Volker Augustin, multi.art.studio Hanau                            */
+/* 2006/11 by Volker Augustin, multi.art.studio Hanau                            */
 /* Contact/Kontakt: info@tellmatic.org                                      */
 /* Homepage: www.tellmatic.org                                                   */
 /* leave this header in file!                                                   */
@@ -91,12 +91,26 @@ $InputName_Offset="import_offset_user";//
 $$InputName_Offset=getVar($InputName_Offset);
 if (empty($$InputName_Offset)) $$InputName_Offset=0;
 
+//proof
+$InputName_Proof="proof";//
+$$InputName_Proof=getVar($InputName_Proof);
+
+//new group?
+$InputName_GroupNew="group_new";//
+$$InputName_GroupNew=getVar($InputName_GroupNew,0);
+
+//new group name
+$InputName_GroupNewName="group_new_name";//
+$$InputName_GroupNewName=getVar($InputName_GroupNewName,0);
+
+
 $uploaded_file_new=false;
 
 $IMPORT_MESSAGE="";
 $IMPORT_LOG="";
 
 if ($set=="import") {
+	$ADDRESS=new tm_ADR();
 	$BLACKLIST=new tm_BLACKLIST();
 	$created=date("Y-m-d H:i:s");
 	$author=$LOGIN->USER['name'];
@@ -169,17 +183,39 @@ if ($set=="import") {
 		}
 	}
 
+#######################
+//new group?
+	if ($check && $group_new==1 && $delete!=1 && $blacklist!=1 && $blacklist_domains!=1) {
+		if (empty($group_new_name)) {
+			$_MAIN_MESSAGE.="<br>".___("Name der Gruppe nicht angegeben.");
+			$group_new_name="Import ".$created;
+		}
+		$new_group_id=$ADDRESS->addGrp(Array(
+						"name"=>$group_new_name,
+						"public"=>0,
+						"public_name"=>"",
+						"descr"=>$group_new_name,
+						"aktiv"=>1,
+						"prod"=>0,
+						"created"=>$created,
+						"author"=>$author
+						));
+			$_MAIN_MESSAGE.="<br>".sprintf(___("Neue Addressgruppe %s wurde erstellt."),"'<b>".display($group_new_name)."</b>'");
+			//gruppe zu ausgewaehlten hinzufuegen
+			$adr_grp[count($adr_grp)]=$new_group_id;
+	}
 
+#######################
 
 	if ($check && $delete!=1 && $blacklist!=1 && $blacklist_domains!=1) {
 		$IMPORT_MESSAGE.="<br>".___("Status für neue Adressen: ");
-		$IMPORT_MESSAGE.=tm_icon($STATUS['adr']['statimg'][$status_new],$STATUS['adr']['descr'][$status_new]);
-		$IMPORT_MESSAGE.= "  ".$STATUS['adr']['status'][$status_new]."  (".$STATUS['adr']['descr'][$status_new].")";
+		$IMPORT_MESSAGE.=tm_icon($STATUS['adr']['statimg'][$status_new],display($STATUS['adr']['descr'][$status_new]));
+		$IMPORT_MESSAGE.= "  ".display($STATUS['adr']['status'][$status_new])."  (".display($STATUS['adr']['descr'][$status_new]).")";
 
 		$IMPORT_MESSAGE.="<br>".___("Status für bestehende Adressen: ");
 		if ($status_ex>0) {
-		$IMPORT_MESSAGE.=tm_icon($STATUS['adr']['statimg'][$status_ex],$STATUS['adr']['descr'][$status_ex]);
-			$IMPORT_MESSAGE.= "  ".$STATUS['adr']['status'][$status_ex]."  (".$STATUS['adr']['descr'][$status_ex].")";
+		$IMPORT_MESSAGE.=tm_icon($STATUS['adr']['statimg'][$status_ex],display($STATUS['adr']['descr'][$status_ex]));
+			$IMPORT_MESSAGE.= "  ".display($STATUS['adr']['status'][$status_ex])."  (".display($STATUS['adr']['descr'][$status_ex]).")";
 		} else {
 			$IMPORT_MESSAGE.= " ".___("Keine Änderung");
 		}
@@ -218,6 +254,15 @@ if ($set=="import") {
 		} else {
 			$IMPORT_MESSAGE.= "<br>".___("Bestehende Adressen werden aktualisiert.");		
 		}
+		
+	#proof?!
+		if ($C[0]['proof']==1) {
+			if ($proof==1) {
+				$IMPORT_MESSAGE.= "<br>".___("Proofing aktiv");
+				$ADDRESS->proof();
+			}
+		}	
+	
 
 	}//check && delete !=1 && blacklist!=1 && blacklist_domains!=1
 
@@ -242,6 +287,8 @@ if ($set=="import") {
 		$lc=count($lines_bulk);
 		for ($lcc=0; $lcc<$lc; $lcc++) {
 			$row=$lines_bulk[$lcc];
+			#$fields=explode($delimiter, $row);
+	    	//bugged, use function splitWithEscape ($str, $delimiterChar = ',', $escapeChar = '"')  instead!
 			$fields=splitWithEscape($row, $delimiter,'"');//escape char is "
 			if (isset($fields[0]) && !empty($fields[0])) {
 		    	$field_0=str_replace("\"","",trim($fields[0]));
@@ -327,6 +374,8 @@ if ($set=="import") {
 				//zeilen auslesen und vergessen
 			  	while(!feof($uf) && $lines_tmp < $import_offset_user) {
 				  	$tmp=fgets($uf);//, 4096
+				  	#unset($tmp);
+					#if (DEBUG) $_MAIN_MESSAGE.=$lines_tmp.".";
 					$lines_tmp++;
 			  	}//while
 			  	unset($tmp);
@@ -334,6 +383,8 @@ if ($set=="import") {
 			//zeilen auslesen bis limit erreicht
 			while(!feof($uf) && $lines_f < $import_limit_user) {
 				$row=fgets($uf, 4096);
+		    	#$fields=explode($delimiter, $row);
+		    	//bugged, use function splitWithEscape ($str, $delimiterChar = ',', $escapeChar = '"')  instead!
 				$fields=splitWithEscape($row, $delimiter,'"');//escape char is "
 				//erstes feld, emil, muss gefuellt sein!
 				//adr in array speichern
@@ -410,13 +461,20 @@ if ($set=="import") {
 //neue addressen anlegen
 	//wenn min. 1 adresse gefudnen wurde//lines=anzahl adressen
 	if ($lines>0) { //!empty($adr_grp) && // check nicht pruefen, sonst werden keine bulkadressen aus dem textfeld importiert
-		$ADDRESS=new tm_ADR();
 		$iok=0;
 		#$ifail=0;//oben!!! vor dem einlesen, da email check schon beim einlesen
 		$idouble=0;
 		$iskipdouble=0;		
 		$idelete=0;
 		$iblacklist=0;
+		
+		#proof?!
+		if ($C[0]['proof']==1) {
+				if ($QP[$qpcc]['proof']==1) {
+				$ADDRESS->proof();
+			}
+		}	
+		
 		srand((double)microtime()*1000000);#aus der schleife rausgenommen
 		for ($i=0;$i<$lines;$i++) {
 			$code=rand(111111,999999);
@@ -553,6 +611,9 @@ if ($set=="import") {
 								"status"=>$status_new,
 								"code"=>$code,
 								"memo"=>"import",
+								"source"=>"import",
+								"source_id"=>$LOGIN->USER['id'],
+								"source_extern_id"=>0,
 								"f0"=>$addr[$i]['f0'],
 								"f1"=>$addr[$i]['f1'],
 								"f2"=>$addr[$i]['f2'],
@@ -646,5 +707,8 @@ if ($set=="import") {
 } else {
 }
 $_MAIN_MESSAGE.=$IMPORT_MESSAGE;
+
+$group_new_name="";
 require_once (TM_INCLUDEPATH."/adr_import_form.inc.php");
+require_once (TM_INCLUDEPATH."/adr_import_form_show.inc.php");
 ?>

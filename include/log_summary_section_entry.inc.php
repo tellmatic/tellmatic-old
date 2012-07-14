@@ -18,7 +18,7 @@ if ($user_is_admin) {
 	$LOGSC=new tm_LOG();
 	$logcount=$LOGSC->count($search_log);		
 	if ($logcount>0) {
-		$LogbookURLPara=$mSTDURL;
+		$LogbookURLPara=tmObjCopy($mSTDURL);
 		$LogbookURLPara->addParam("act","log_list");
 		$LogbookURLPara->addParam("set","search");
 		$LogbookURLPara->addParam("s_obj",$search_log['object']);

@@ -3,7 +3,7 @@
 /* this file is part of: / diese Datei ist ein Teil von:                        */
 /* tellmatic, the newslettermachine                                             */
 /* tellmatic, die Newslettermaschine                                            */
-/* 2006/7 by Volker Augustin, multi.art.studio Hanau                            */
+/* 2006/11 by Volker Augustin, multi.art.studio Hanau                            */
 /* Contact/Kontakt: info@tellmatic.org                                      */
 /* Homepage: www.tellmatic.org                                                   */
 /* leave this header in file!                                                   */
@@ -47,7 +47,15 @@ $GRP=$ADDRESS->getGroup(0,0,0,1);
 $acg=count($GRP);
 for ($accg=0; $accg<$acg; $accg++)
 {
-	$Form->add_InputOption($FormularName,$InputName_Group,$GRP[$accg]['id'],$GRP[$accg]['name']." (".$GRP[$accg]['adr_count'].")");
+	$grp_option_text=$GRP[$accg]['name'];
+	$grp_option_text.=" (".$GRP[$accg]['adr_count'].")";
+	if ($GRP[$accg]['aktiv']!=1) {
+		$grp_option_text.=" (na)";
+	}
+	if ($GRP[$accg]['prod']==1) {
+		$grp_option_text.=" (pro)";
+	}
+	$Form->add_InputOption($FormularName,$InputName_Group,$GRP[$accg]['id'],$grp_option_text);
 }
 
 //Status
@@ -65,7 +73,7 @@ $Form->set_InputMultiple($FormularName,$InputName_Status,false);
 $Form->add_InputOption($FormularName,$InputName_Status,0,"Alle");
 $sc=count($STATUS['adr']['status']);
 for ($scc=1; $scc<=$sc; $scc++) {
-	$Form->add_InputOption($FormularName,$InputName_Status,$scc,$STATUS['adr']['status'][$scc]." (".$STATUS['adr']['descr'][$scc].")");
+	$Form->add_InputOption($FormularName,$InputName_Status,$scc,display($STATUS['adr']['status'][$scc])." (".display($STATUS['adr']['descr'][$scc]).")");
 }
 
 //trennzeichen
@@ -127,7 +135,7 @@ $Form->set_InputStyleClass($FormularName,$InputName_Limit,"mFormText","mFormText
 $Form->set_InputSize($FormularName,$InputName_Limit,20,10);
 $Form->set_InputDesc($FormularName,$InputName_Limit,___("Limit: Anzahl maximal zu exportierender Datensätze."));
 $Form->set_InputReadonly($FormularName,$InputName_Limit,false);
-$Form->set_InputOrder($FormularName,$InputName_Limit,4);
+$Form->set_InputOrder($FormularName,$InputName_Limit,9);
 $Form->set_InputLabel($FormularName,$InputName_Limit,"");
 
 //append to file
@@ -181,83 +189,4 @@ $Form->set_InputDesc($FormularName,$InputName_Reset,"Reset");
 $Form->set_InputReadonly($FormularName,$InputName_Reset,false);
 $Form->set_InputOrder($FormularName,$InputName_Reset,999);
 $Form->set_InputLabel($FormularName,$InputName_Reset,"");
-
-/*RENDER FORM*/
-
-$Form->render_Form($FormularName);
-
-/*DISPLAY*/
-$_MAIN_OUTPUT.= $Form->FORM[$FormularName]['head'];
-//hidden fieldsnicht vergessen!
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName]['act']['html'];
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName]['set']['html'];
-$_MAIN_OUTPUT.= "<table>";
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top>";
-$_MAIN_OUTPUT.= tm_icon("group.png",___("Gruppe"))."&nbsp;".___("Gruppe")."<br>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Group]['html'];
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top>";
-$_MAIN_OUTPUT.= tm_icon("lightbulb.png",___("Status"))."&nbsp;".___("Adressen mit folgendem Status").":<br>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Status]['html'];
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top>";
-$_MAIN_OUTPUT.= tm_icon("ruby.png",___("Blacklist"))."&nbsp;".___("Blacklist Überprüfen").":<br>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Blacklist]['html'];
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top>";
-$_MAIN_OUTPUT.= ___("Trennzeichen").":<br>";
-$_MAIN_OUTPUT.= tm_icon("pilcrow.png",___("Trennzeichen"))."&nbsp;";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Delimiter]['html'];
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top>";
-$_MAIN_OUTPUT.= ___("Dateiname").":<br>";
-$_MAIN_OUTPUT.= tm_icon("disk.png",___("Dateiname"))."&nbsp;";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_File]['html'].".csv";
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top>";
-$_MAIN_OUTPUT.= ___("Dateiname").":<br>";
-$_MAIN_OUTPUT.= tm_icon("disk_multiple.png",___("Dateiname"))."&nbsp;";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_FileExisting]['html'];
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top>";
-$_MAIN_OUTPUT.= ___("Anfügen").":<br>";
-$_MAIN_OUTPUT.= tm_icon("bullet_add.png",___("Anfügen"))."&nbsp;";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Append]['html'];
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top>";
-$_MAIN_OUTPUT.= ___("Offset").":<br>";
-$_MAIN_OUTPUT.= tm_icon("control_fastforward.png",___("Offset"))."&nbsp;";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Offset]['html'];
-$_MAIN_OUTPUT.= " ".___("0= Anfang")."</td>";
-$_MAIN_OUTPUT.= "</tr>";
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top>";
-$_MAIN_OUTPUT.= ___("Limit").":<br>";
-$_MAIN_OUTPUT.= tm_icon("control_end.png",___("Limit"))."&nbsp;";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Limit]['html'];
-$_MAIN_OUTPUT.= "&nbsp;".___("0= Alle")."</td>";
-$_MAIN_OUTPUT.= "</tr>";
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Submit]['html'];
-//$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Reset]['html'];
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-$_MAIN_OUTPUT.= "</table>";
-$_MAIN_OUTPUT.= $Form->FORM[$FormularName]['foot'];
 ?>

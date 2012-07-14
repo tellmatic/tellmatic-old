@@ -64,9 +64,9 @@ if ($set=="nl" && check_dbid($nl_id)) {
 		if ($qc>0) {
 			$_MAIN_OUTPUT.="<br>".
 							"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".$qc.
-							"&nbsp;".tm_icon($STATUS['q']['statimg'][$qscc],$STATUS['q']['status'][$qscc]).
-							"&nbsp;".$STATUS['q']['status'][$qscc].
-							"&nbsp;(".$STATUS['q']['descr'][$qscc].")";
+							"&nbsp;".tm_icon($STATUS['q']['statimg'][$qscc],display($STATUS['q']['status'][$qscc])).
+							"&nbsp;".display($STATUS['q']['status'][$qscc]).
+							"&nbsp;(".display($STATUS['q']['descr'][$qscc]).")";
 		}
 	}
 	$_MAIN_OUTPUT.="<br>";
@@ -79,7 +79,7 @@ if ($set=="nl" && check_dbid($nl_id)) {
 	$chart->setLogo(TM_IMGPATH."/blank.png");//tellmatic_logo_256.png
 	$hc=$QUEUE->countH(0,$nl_id);
 	//add total value to graph
-	$chart->addPoint(new Point(___("Summe")." (100%)", $hc));
+	$chart->addPoint(new Point(___("Summe",0)." (100%)", $hc));
 	$_MAIN_OUTPUT.="<br>".sprintf(___("Versand an insgesamt %s Adressen:"),"<b>$hc</b>");
 	$_MAIN_OUTPUT.= "<br><img alt=\"Chart\"  src=\"".$tm_URL_FE."/".$tm_reportdir."/nl_status_".$nl_id.".png\"><br>";
 	$_MAIN_OUTPUT.="<br>&nbsp;&nbsp;&nbsp;".___("Versandstatus:");
@@ -89,16 +89,16 @@ if ($set=="nl" && check_dbid($nl_id)) {
 		if ($hcs>0) {
 			$_MAIN_OUTPUT.="<br>".
 							"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".$hcs.
-							"&nbsp;".tm_icon($STATUS['h']['statimg'][$hscc],$STATUS['h']['status'][$hscc]).
-							"&nbsp;".$STATUS['h']['status'][$hscc].
-							"&nbsp;(".$STATUS['h']['descr'][$hscc].")";
+							"&nbsp;".tm_icon($STATUS['h']['statimg'][$hscc],display($STATUS['h']['status'][$hscc])).
+							"&nbsp;".display($STATUS['h']['status'][$hscc]).
+							"&nbsp;(".display($STATUS['h']['descr'][$hscc]).")";
 			//add values to chart
 			$qc_pc=$hcs/($hc/100);//anteil in prozent
 			$chart->addPoint(new Point($STATUS['h']['status'][$hscc]." (".number_format($qc_pc, 2, ',', '')."%)", $hcs));
 		}
 	}
 //create chart
-	$chart->setTitle(sprintf(___("Newsletter %s"),"\"".$N[0]['subject']."\""));
+	$chart->setTitle(sprintf(___("Newsletter %s",0),"\"".$N[0]['subject']."\""));
 	$chart->render($tm_reportpath."/nl_status_".$nl_id.".png");
 
 	////////////////////////////////////////////////////////////////////////////////////////
@@ -107,7 +107,7 @@ if ($set=="nl" && check_dbid($nl_id)) {
 	$_MAIN_OUTPUT.="<hr>";
 	$_MAIN_OUTPUT.="<br><br><b>".___("Details:")."</b>";
 
-	$showadrgURLPara=$mSTDURL;
+	$showadrgURLPara=tmObjCopy($mSTDURL);
 	$showadrgURLPara->addParam("act","statistic");
 	$showadrgURLPara->addParam("s","s_menu_adr,s_menu_st");
 	$showadrgURLPara->addParam("set","adrg");
@@ -127,9 +127,9 @@ if ($set=="nl" && check_dbid($nl_id)) {
 		$_MAIN_OUTPUT.="<br>".
 							"<br>&nbsp;&nbsp;".
 							sprintf(___("Versand an Gruppe %s"),"<a href=\"".$tm_URL."/".$showadrgURLPara_."\"><b>".display($AG[0]['name'])."</b> (".tm_icon("chart_pie.png",___("Statistik anzeigen")).")</a>");
-		$_MAIN_OUTPUT.=":&nbsp;".tm_icon($STATUS['q']['statimg'][$Q[$qcc]['status']],$STATUS['q']['status'][$Q[$qcc]['status']]).
-							"&nbsp;".$STATUS['q']['status'][$Q[$qcc]['status']].
-							"&nbsp;(".$STATUS['q']['descr'][$Q[$qcc]['status']].")";
+		$_MAIN_OUTPUT.=":&nbsp;".tm_icon($STATUS['q']['statimg'][$Q[$qcc]['status']],display($STATUS['q']['status'][$Q[$qcc]['status']])).
+							"&nbsp;".display($STATUS['q']['status'][$Q[$qcc]['status']]).
+							"&nbsp;(".display($STATUS['q']['descr'][$Q[$qcc]['status']]).")";
 		$_MAIN_OUTPUT.= "<br><img alt=\"Chart\"  src=\"".$tm_URL_FE."/".$tm_reportdir."/nl_".$N[0]['id']."_adrgrp_".$AG[0]['id']."_".$Q[$qcc]['id'].".png\"><br>";
 		$_MAIN_OUTPUT.="&nbsp;&nbsp;".sprintf(___("Erstellt am: %s von %s"),"<b>".$Q[$qcc]['created']."</b>","<b>".$Q[$qcc]['author']."</b>");
 		$_MAIN_OUTPUT.="<br>&nbsp;&nbsp;".sprintf(___("Versand gestartet: %s"),"<b>".$Q[$qcc]['send_at']."</b>");
@@ -141,16 +141,16 @@ if ($set=="nl" && check_dbid($nl_id)) {
 		$chart->setLogo(TM_IMGPATH."/blank.png");//tellmatic_logo_256.png
 		$hc=$QUEUE->countH($Q[$qcc]['id'],$Q[$qcc]['nl_id'],$AG[0]['id']);
 		//add total value to graph
-		$chart->addPoint(new Point(___("Summe")." (100%)", $hc));
+		$chart->addPoint(new Point(___("Summe",0)." (100%)", $hc));
 
 		for ($hscc=1; $hscc<=$hsc; $hscc++) {
 			$hcs=$QUEUE->countH($Q[$qcc]['id'],$Q[$qcc]['nl_id'],$AG[0]['id'],0,$hscc);
 			if ($hcs>0) {
 				$_MAIN_OUTPUT.="<br>".
 								"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".$hcs.
-								"&nbsp;".tm_icon($STATUS['h']['statimg'][$hscc],$STATUS['h']['status'][$hscc]).
-								"&nbsp;".$STATUS['h']['status'][$hscc].
-								"&nbsp;(".$STATUS['h']['descr'][$hscc].")";
+								"&nbsp;".tm_icon($STATUS['h']['statimg'][$hscc],display($STATUS['h']['status'][$hscc])).
+								"&nbsp;".display($STATUS['h']['status'][$hscc]).
+								"&nbsp;(".display($STATUS['h']['descr'][$hscc]).")";
 				//add values to chart
 				$qc_pc=$hcs/($hc/100);//anteil in prozent
 				$chart->addPoint(new Point($STATUS['h']['status'][$hscc]." (".number_format($qc_pc, 2, ',', '')."%)", $hcs));
@@ -158,7 +158,7 @@ if ($set=="nl" && check_dbid($nl_id)) {
 		}
 		$_MAIN_OUTPUT.="<hr>";
 		//create chart
-		$chart->setTitle(sprintf(___("Newsletter %s an Gruppe %s"),"\"".$N[0]['subject']."\"","\"".$AG[0]['name']."\""));
+		$chart->setTitle(sprintf(___("Newsletter %s an Gruppe %s",0),"\"".$N[0]['subject']."\"","\"".$AG[0]['name']."\""));
 		$chart->render($tm_reportpath."/nl_".$N[0]['id']."_adrgrp_".$AG[0]['id']."_".$Q[$qcc]['id'].".png");
 
 	}//for qcc

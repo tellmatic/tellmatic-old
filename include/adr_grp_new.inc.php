@@ -3,7 +3,7 @@
 /* this file is part of: / diese Datei ist ein Teil von:                        */
 /* tellmatic, the newslettermachine                                             */
 /* tellmatic, die Newslettermaschine                                            */
-/* 2006/7 by Volker Augustin, multi.art.studio Hanau                            */
+/* 2006/11 by Volker Augustin, multi.art.studio Hanau                            */
 /* Contact/Kontakt: info@tellmatic.org                                      */
 /* Homepage: www.tellmatic.org                                                   */
 /* leave this header in file!                                                   */
@@ -37,7 +37,9 @@ $$InputName_Public=getVar($InputName_Public);
 
 $InputName_PublicName="public_name";//range from
 $$InputName_PublicName=getVar($InputName_PublicName);
-//
+
+$InputName_Prod="prod";//range from
+$$InputName_Prod=getVar($InputName_Prod);
 
 $check=true;
 if ($set=="save") {
@@ -51,6 +53,7 @@ if ($set=="save") {
 					"public_name"=>$public_name,
 					"descr"=>$descr,
 					"aktiv"=>$aktiv,
+					"prod"=>$prod,
 					"created"=>$created,
 					"author"=>$author
 					));
@@ -59,13 +62,16 @@ if ($set=="save") {
 		require_once (TM_INCLUDEPATH."/adr_grp_list.inc.php");
 	} else {
 		require_once (TM_INCLUDEPATH."/adr_grp_form.inc.php");
+		require_once (TM_INCLUDEPATH."/adr_grp_form_show.inc.php");
 	}
 
 } else {
 	$$InputName_Aktiv=1;
+	$$InputName_Prod=0;
 	$$InputName_Name=___("Neue Gruppe");
 	$$InputName_PublicName=___("Neue Gruppe");
 	$$InputName_Descr=___("Neue Gruppe");
 	require_once (TM_INCLUDEPATH."/adr_grp_form.inc.php");
+	require_once (TM_INCLUDEPATH."/adr_grp_form_show.inc.php");
 }
 ?>

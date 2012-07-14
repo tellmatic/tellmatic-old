@@ -69,7 +69,7 @@ if ($set=="check") {
 	if (!$check_mail[0]) {
 		$_MAIN_MESSAGE.="<br><font color=\"red\">".___("Die E-Mail-Adresse ist nicht gültig.")."</font>";
 		$_MAIN_MESSAGE.="<br><font color=\"red\">".___("E-Mail wurde als fehlerhaft markiert.")."</font>";
-		$_MAIN_MESSAGE.="&nbsp;".tm_icon($STATUS['adr']['statimg'][9],$STATUS['adr']['status'][9])."&nbsp;\"<b>".$STATUS['adr']['status'][9]."</b>\"";
+		$_MAIN_MESSAGE.="&nbsp;".tm_icon($STATUS['adr']['statimg'][9],display($STATUS['adr']['status'][9]))."&nbsp;\"<b>".display($STATUS['adr']['status'][9])."</b>\"";
 		$ADDRESS->setStatus($adr_id,9);
 		$ADDRESS->addMemo($adr_id,$check_mail[1]);
 	} else {
@@ -136,7 +136,7 @@ if ($user_is_manager && $set=="blacklist_domain_del") {
 
 
 
-require_once(TM_INCLUDEPATH."/adr_list_form_head.inc.php");
+require_once(TM_INCLUDEPATH."/adr_list_form.inc.php");
 
 $ac_multi=count($adr_id_arr);
 
@@ -146,7 +146,7 @@ if ($ac_multi>0) { // wenn min 1 adr gewaehlt
 	$_MAIN_MESSAGE.="<br>".sprintf(___("%s Adressen ausgewählt."),$ac_multi);
 	if ($set=="check_syntax_multi" || $set=="check_mx_multi" || $set=="check_validate_multi") {
 		$_MAIN_MESSAGE.="<br>".___("Ausgewählte Adressen werden geprüft");
-		$_MAIN_MESSAGE.="<br>".___("Status für fehlerhafte Adressen wird geändert.")."&nbsp;".tm_icon($STATUS['adr']['statimg'][9],$STATUS['adr']['status'][9])."&nbsp;\"<b>".$STATUS['adr']['status'][9]."</b>\"";
+		$_MAIN_MESSAGE.="<br>".___("Status für fehlerhafte Adressen wird geändert.")."&nbsp;".tm_icon($STATUS['adr']['statimg'][9],display($STATUS['adr']['status'][9]))."&nbsp;\"<b>".display($STATUS['adr']['status'][9])."</b>\"";
 		if ($set=="check_syntax_multi") $_MAIN_MESSAGE.="<br>".___("Syntax");
 		if ($set=="check_mx_multi") $_MAIN_MESSAGE.="<br>".___("Syntax, MX/DNS");
 		if ($set=="check_validate_multi") $_MAIN_MESSAGE.="<br>".___("Syntax, MX/DNS + Validate");
@@ -162,7 +162,7 @@ if ($ac_multi>0) { // wenn min 1 adr gewaehlt
 		$_MAIN_MESSAGE.="<br>".___("Ausgewählte Adressen werden deaktiviert.");
 	}
 	if ($set=="set_status_multi") {
-		$_MAIN_MESSAGE.="<br>".sprintf(___("Setze neuen Status für ausgewählte Adressen auf %s"),tm_icon($STATUS['adr']['statimg'][$status_multi],$STATUS['adr']['status'][$status_multi])."&nbsp;\"<b>".$STATUS['adr']['status'][$status_multi])."</b>\"";
+		$_MAIN_MESSAGE.="<br>".sprintf(___("Setze neuen Status für ausgewählte Adressen auf %s"),tm_icon($STATUS['adr']['statimg'][$status_multi],display($STATUS['adr']['status'][$status_multi]))."&nbsp;\"<b>".display($STATUS['adr']['status'][$status_multi]))."</b>\"";
 	}
 	if ($set=="delete_multi") {
 		$_MAIN_MESSAGE.="<br>".___("Ausgewählte Adressen werden gelöscht.");
@@ -196,6 +196,8 @@ if ($ac_multi>0) { // wenn min 1 adr gewaehlt
 			$check_mail=checkEmailAdr($ADR_check[0]['email'],$EMailcheck);
 			if (!$check_mail[0]) {
 				$_MAIN_MESSAGE.="<br><em>".display($ADR_check[0]['email'])."</em> <font color=\"red\">".___("FEHLER")."</font>";
+				//$_MAIN_MESSAGE.="<br>".___("Die E-Mail-Adresse ist nicht gültig.");
+				//$_MAIN_MESSAGE.="<br><pre><em>".display($check_mail[1])."</em></pre>";
 				$ADDRESS->setStatus($adr_id_arr[$acc_m],9);
 				$ADDRESS->addMemo($adr_id_arr[$acc_m],$check_mail[1]);
 			} else {
@@ -325,7 +327,7 @@ if ($adr_grp_id>0)
 }
 
 if ($s_status >0) {
-	$_MAIN_OUTPUT.="<br>".___("gewählter Status").":&nbsp;".tm_icon($STATUS['adr']['statimg'][$s_status],$STATUS['adr']['status'][$s_status])."&nbsp;\"<b>".$STATUS['adr']['status'][$s_status]."</b>\"";
+	$_MAIN_OUTPUT.="<br>".___("gewählter Status").":&nbsp;".tm_icon($STATUS['adr']['statimg'][$s_status],display($STATUS['adr']['status'][$s_status]))."&nbsp;\"<b>".display($STATUS['adr']['status'][$s_status])."</b>\"";
 }
 
 $ac=count($ADR);
@@ -362,6 +364,9 @@ $_MAIN_OUTPUT.="<br></div>";
 //globale parameter die angefuegt werden sollen!
 $mSTDURL->addParam("offset",$offset);
 $mSTDURL->addParam("limit",$limit);
+$mSTDURL->addParam("no_list",0);
+$mSTDURL->addParam("reset_adr_search_values",0);
+
 #$mSTDURL->addParam("st",$sortType);
 #$mSTDURL->addParam("si",$sortIndex);
 if (isset($s_email)) {
@@ -387,86 +392,86 @@ $mSTDURL->addParam("adr_grp_id",$adr_grp_id);
 $mSTDURL->addParam("st",$sortType);
 $mSTDURL->addParam("si",$sortIndex);
 
-$firstURLPara=$mSTDURL;
+$firstURLPara=tmObjCopy($mSTDURL);
 $firstURLPara->addParam("act","adr_list");
 $firstURLPara->addParam("offset",0);
 $firstURLPara_=$firstURLPara->getAllParams();
 
-$lastURLPara=$mSTDURL;
+$lastURLPara=tmObjCopy($mSTDURL);
 $lastURLPara->addParam("act","adr_list");
 $lastURLPara->addParam("offset",($entrys_total-$limit));
 $lastURLPara_=$lastURLPara->getAllParams();
 
-$nextURLPara=$mSTDURL;
+$nextURLPara=tmObjCopy($mSTDURL);
 //neuer offset!
 $nextURLPara->addParam("offset",($offset+$limit));
 $nextURLPara->addParam("act","adr_list");
 $nextURLPara_=$nextURLPara->getAllParams();
 
-$prevURLPara=$mSTDURL;
+$prevURLPara=tmObjCopy($mSTDURL);
 $prevURLPara->addParam("adr_grp_id",$adr_grp_id);
 //neuer offset!
 $prevURLPara->addParam("offset",($offset-$limit));
 $prevURLPara->addParam("act","adr_list");
 $prevURLPara_=$prevURLPara->getAllParams();
 
-$pagesURLPara=$mSTDURL;
+$pagesURLPara=tmObjCopy($mSTDURL);
 //will be defined and use in pager.inc.php
 
-$sortURLPara=$mSTDURL;
+$sortURLPara=tmObjCopy($mSTDURL);
 $sortURLPara->addParam("act","adr_list");
 $sortURLPara_=$sortURLPara->getAllParams();
 
-$editURLPara=$mSTDURL;
+$editURLPara=tmObjCopy($mSTDURL);
 $editURLPara->addParam("adr_id",$adr_id);
 $editURLPara->addParam("act","adr_edit");
 
-$aktivURLPara=$mSTDURL;
+$aktivURLPara=tmObjCopy($mSTDURL);
 $aktivURLPara->addParam("adr_grp_id",$adr_grp_id);
 $aktivURLPara->addParam("offset",$offset);
 $aktivURLPara->addParam("limit",$limit);
 $aktivURLPara->addParam("act","adr_list");
 $aktivURLPara->addParam("set","aktiv");
 
-$checkURLPara=$mSTDURL;
+$checkURLPara=tmObjCopy($mSTDURL);
 $checkURLPara->addParam("adr_grp_id",$adr_grp_id);
 $checkURLPara->addParam("offset",$offset);
 $checkURLPara->addParam("limit",$limit);
 $checkURLPara->addParam("act","adr_list");
 $checkURLPara->addParam("set","check");
 
-$delURLPara=$mSTDURL;
+$delURLPara=tmObjCopy($mSTDURL);
 $delURLPara->addParam("adr_grp_id",$adr_grp_id);
 $delURLPara->addParam("offset",$offset);
 $delURLPara->addParam("limit",$limit);
 $delURLPara->addParam("act","adr_list");
 $delURLPara->addParam("set","delete");
 
-$delHistoryURLPara=$mSTDURL;
+$delHistoryURLPara=tmObjCopy($mSTDURL);
 $delHistoryURLPara->addParam("adr_grp_id",$adr_grp_id);
 $delHistoryURLPara->addParam("offset",$offset);
 $delHistoryURLPara->addParam("limit",$limit);
 $delHistoryURLPara->addParam("act","adr_list");
 $delHistoryURLPara->addParam("set","delete_history");
 
-$statURLPara=$mSTDURL;
+$statURLPara=tmObjCopy($mSTDURL);
 $statURLPara->addParam("act","statistic");
 $statURLPara->addParam("set","adr");
 
-$blacklistURLPara=$mSTDURL;
+$blacklistURLPara=tmObjCopy($mSTDURL);
 $blacklistURLPara->addParam("adr_grp_id",$adr_grp_id);
 $blacklistURLPara->addParam("offset",$offset);
 $blacklistURLPara->addParam("limit",$limit);
 $blacklistURLPara->addParam("set","blacklist");
 $blacklistURLPara->addParam("act","adr_list");
 
-$blacklistDomainURLPara=$blacklistURLPara;
+$blacklistDomainURLPara=tmObjCopy($blacklistURLPara);
 $blacklistDomainURLPara->addParam("set","blacklist_domain");
 
-$blacklistDelURLPara=$blacklistURLPara;
+$blacklistDelURLPara=tmObjCopy($blacklistURLPara);
 $blacklistDelURLPara->addParam("set","blacklist_del");
 
-$blacklistDomainDelURLPara=$blacklistURLPara;
+$blacklistDomainDelURLPara=tmObjCopy($blacklistURLPara);
 $blacklistDomainDelURLPara->addParam("set","blacklist_domain_del");
 
 //show log summary
@@ -476,7 +481,7 @@ include(TM_INCLUDEPATH."/log_summary_section.inc.php");
 
 //show a link to create new entry if list is empty, e.g. if searching email doesnt match, etc.
 if ($ac==0) {
-	$newURLPara=$mSTDURL;
+	$newURLPara=tmObjCopy($mSTDURL);
 	$newURLPara->addParam("adr_grp_id",$adr_grp_id);
 	$newURLPara->addParam("email",$s_email);
 	$newURLPara->addParam("act","adr_new");
@@ -488,7 +493,7 @@ include(TM_INCLUDEPATH."/pager.inc.php");
 $_MAIN_OUTPUT.="<table border=\"0\" cellpadding=\"1\" cellspacing=\"1\" width=\"100%\">";
 $_MAIN_OUTPUT.= "<thead>".
 						"<tr>".
-						"<td><b>".___("ID")."</b>".
+						"<td width=100><b>".___("ID")."</b>".
 						"<a href=\"".$tm_URL."/".$sortURLPara_."&amp;si=id&amp;st=0\">".$img_arrowup."</a>".
 						"<a href=\"".$tm_URL."/".$sortURLPara_."&amp;si=id&amp;st=1\">".$img_arrowdown."</a>".
 						"</td>".
@@ -498,7 +503,7 @@ $_MAIN_OUTPUT.= "<thead>".
 						"</td>".
 						"<td>&nbsp;".
 						"</td>".
-						"<td><b>".___("Status")."</b>".
+						"<td width=100><b>".___("Status")."</b>".
 						"<a href=\"".$tm_URL."/".$sortURLPara_."&amp;si=status&amp;st=0\">".$img_arrowup."</a>".
 						"<a href=\"".$tm_URL."/".$sortURLPara_."&amp;si=status&amp;st=1\">".$img_arrowdown."</a>".
 						"</td>".
@@ -507,7 +512,7 @@ $_MAIN_OUTPUT.= "<thead>".
 						"<a href=\"".$tm_URL."/".$sortURLPara_."&amp;si=aktiv&amp;st=0\">".$img_arrowup."</a>".
 						"<a href=\"".$tm_URL."/".$sortURLPara_."&amp;si=aktiv&amp;st=1\">".$img_arrowdown."</a>".
 						"</td>".
-						"<td>...</td>".
+						"<td width=145>...</td>".
 						"</tr>".
 						"</thead>".
 						"<tbody>";
@@ -521,7 +526,11 @@ for ($acc=0;$acc<$ac;$acc++) {
 	} else {
 		$new_aktiv=0;
 	}
-
+	if ($ADR[$acc]['status']==11 || $ADR[$acc]['errors']>=($C[0]['max_mails_retry'])) {	
+		$bgcolor=$row_bgcolor_fail;
+		//$bgcolor=$STATUS['adr']['color'][$ADR[$acc]['status']];
+	}
+	
 	$created_date=$ADR[$acc]['created'];
 	$updated_date=$ADR[$acc]['updated'];
 
@@ -670,7 +679,7 @@ for ($acc=0;$acc<$ac;$acc++) {
 		$_MAIN_OUTPUT.=  ___("(Inaktiv)");
 	}
 
-	$_MAIN_OUTPUT.= "<br>".sprintf(___("Status: %s"),tm_icon($STATUS['adr']['statimg'][$ADR[$acc]['status']],$STATUS['adr']['status'][$ADR[$acc]['status']]));
+	$_MAIN_OUTPUT.= "<br>".sprintf(___("Status: %s"),tm_icon($STATUS['adr']['statimg'][$ADR[$acc]['status']],display($STATUS['adr']['status'][$ADR[$acc]['status']])));
 
 	$_MAIN_OUTPUT.= "<br>CODE: ".$ADR[$acc]['code']." &nbsp;".
 							"<br>".sprintf(___("Erstellt am: %s von %s"),$created_date,$author).
@@ -697,7 +706,7 @@ for ($acc=0;$acc<$ac;$acc++) {
 	$_MAIN_OUTPUT.= "</td>";
 
 	$_MAIN_OUTPUT.= "<td>";
-	$_MAIN_OUTPUT.= tm_icon($STATUS['adr']['statimg'][$ADR[$acc]['status']],$STATUS['adr']['descr'][$ADR[$acc]['status']])."&nbsp;".$STATUS['adr']['status'][$ADR[$acc]['status']];
+	$_MAIN_OUTPUT.= tm_icon($STATUS['adr']['statimg'][$ADR[$acc]['status']],display($STATUS['adr']['descr'][$ADR[$acc]['status']]))."&nbsp;".display($STATUS['adr']['status'][$ADR[$acc]['status']]);
 	$_MAIN_OUTPUT.= "</td>";
 	$_MAIN_OUTPUT.= "<td>";
 	for ($accg=0;$accg<$acg;$accg++) {
@@ -770,7 +779,7 @@ for ($acc=0;$acc<$ac;$acc++) {
 
 $_MAIN_OUTPUT.= "</tbody></table>";
 
-require_once(TM_INCLUDEPATH."/adr_list_form.inc.php");
+require_once(TM_INCLUDEPATH."/adr_list_form_show.inc.php");
 
 include(TM_INCLUDEPATH."/pager.inc.php");
 

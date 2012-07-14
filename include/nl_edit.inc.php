@@ -153,10 +153,11 @@ if ($set=="save") {
 				"</ul>";
 
 		$action="nl_list";
-		include_once (TM_INCLUDEPATH."/nl_list.inc.php");
+		require_once (TM_INCLUDEPATH."/nl_list.inc.php");
 	} else {
 		$body=stripslashes(strtr($body, $trans));
-		include_once (TM_INCLUDEPATH."/nl_form.inc.php");
+		require_once (TM_INCLUDEPATH."/nl_form.inc.php");
+		require_once (TM_INCLUDEPATH."/nl_form_show.inc.php");
 	}
 
 } else {
@@ -185,6 +186,7 @@ if ($set=="save") {
 		$atc++;
 	}
 	
-	include_once (TM_INCLUDEPATH."/nl_form.inc.php");
+	require_once (TM_INCLUDEPATH."/nl_form.inc.php");
+	require_once (TM_INCLUDEPATH."/nl_form_show.inc.php");
 }
 ?>

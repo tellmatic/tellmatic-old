@@ -53,24 +53,4 @@ $Form->set_InputDesc($FormularName,$InputName_Submit,"");
 $Form->set_InputReadonly($FormularName,$InputName_Submit,false);
 $Form->set_InputOrder($FormularName,$InputName_Submit,998);
 $Form->set_InputLabel($FormularName,$InputName_Submit,"");
-
-
-/*RENDER FORM*/
-
-$Form->render_Form($FormularName);
-
-/*DISPLAY*/
-$_MAIN_OUTPUT.= $Form->FORM[$FormularName]['head'];
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName]['act']['html'];
-$_MAIN_OUTPUT.= "<table border=\"0\" align=\"center\">";
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=\"top\">";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_TopX]['html'];
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "<td valign=\"bottom\">";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Submit]['html'];
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-$_MAIN_OUTPUT.= "</table>";
-$_MAIN_OUTPUT.= $Form->FORM[$FormularName]['foot'];
 ?>

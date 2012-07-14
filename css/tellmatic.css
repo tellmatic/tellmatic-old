@@ -32,6 +32,13 @@
 .link_logbook_section {
 	background-color:#eeeeff;
 }
+
+.tm_debugmessage {
+	font-size:9pt;
+	color:#990000;
+	background-color:#ffff99;
+}
+
 /*
  .image_fader{ 
  	position:relative; 

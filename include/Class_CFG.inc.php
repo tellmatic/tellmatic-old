@@ -142,6 +142,7 @@ class tm_CFG {
 							style,
 							lang,
 							expert,
+							startpage,
 							aktiv,
 							siteid
 						FROM ".TM_TABLE_USER."
@@ -170,6 +171,7 @@ class tm_CFG {
 			$USER[$uc]['style']=$this->DB->Record['style'];
 			$USER[$uc]['lang']=$this->DB->Record['lang'];
 			$USER[$uc]['expert']=$this->DB->Record['expert'];
+			$USER[$uc]['startpage']=$this->DB->Record['startpage'];
 			$USER[$uc]['aktiv']=$this->DB->Record['aktiv'];
 			$USER[$uc]['siteid']=$this->DB->Record['siteid'];
 			$uc++;
@@ -179,12 +181,25 @@ class tm_CFG {
 
 	function addUSER($user) {
 		$Return=false;
-		$Query ="INSERT INTO
-						".TM_TABLE_USER."
-					(name,passwd,crypt,email,last_login,aktiv,admin,manager,style,lang,expert,siteid)
-					VALUES
-					('".dbesc($user['name'])."','".dbesc($user['passwd'])."','".dbesc($user['crypt'])."','".dbesc($user['email'])."',0,".checkset_int($user['aktiv']).",".checkset_int($user['admin']).",".checkset_int($user['manager']).",'".dbesc($user['style'])."','".dbesc($user['lang'])."',".checkset_int($user['expert']).",'".dbesc($user['siteid'])."')
-					";
+		$Query ="INSERT INTO "
+					.TM_TABLE_USER
+					." (
+					name,passwd,crypt,email,last_login,aktiv,admin,manager,style,lang,expert,startpage,siteid
+					) VALUES (	"
+					."'".dbesc($user['name'])."',"
+					."'".dbesc($user['passwd'])."',"
+					."'".dbesc($user['crypt'])."',"
+					."'".dbesc($user['email'])."',"
+					."0,"
+					.checkset_int($user['aktiv']).","
+					.checkset_int($user['admin']).","
+					.checkset_int($user['manager']).","
+					."'".dbesc($user['style'])."',"
+					."'".dbesc($user['lang'])."',"
+					.checkset_int($user['expert']).","
+					."'".dbesc($user['startpage'])."',"
+					."'".dbesc($user['siteid'])."'"
+					.")	";
 		if ($this->DB->Query($Query)) {
 			//log
 			$user['id']=$this->DB->LastInsertID;
@@ -201,12 +216,13 @@ class tm_CFG {
 					SET
 					name='".dbesc($user["name"])."',
 					email='".dbesc($user["email"])."',
-					admin='".dbesc($user["admin"])."',
-					manager='".dbesc($user["manager"])."',
+					admin='".checkset_int($user["admin"])."',
+					manager='".checkset_int($user["manager"])."',
 					style='".dbesc($user["style"])."',
 					lang='".dbesc($user["lang"])."',
-					expert='".dbesc($user["expert"])."',
-					aktiv='".dbesc($user["aktiv"])."'
+					expert='".checkset_int($user["expert"])."',
+					startpage='".dbesc($user["startpage"])."',
+					aktiv='".checkset_int($user["aktiv"])."'
 					WHERE id=".checkset_int($user['id'])." AND siteid='".TM_SITEID."'";
 			if ($this->DB->Query($Query)) {
 				if (TM_LOG) $this->LOG->log(Array("data"=>$user,"object"=>"usr","action"=>"edit"));
@@ -282,6 +298,18 @@ class tm_CFG {
 		return $Return;
 	}//setLang
 
+	function setStartpage($user,$startpage="Welcome") {
+		$U=$this->getUser($user);
+		$Return=false;
+		$Query ="UPDATE ".TM_TABLE_USER." SET `startpage`='".dbesc($startpage)."' WHERE siteid='".TM_SITEID."' AND name='".dbesc($user)."'";
+		if ($this->DB->Query($Query)) {
+			if (TM_LOG) $this->LOG->log(Array("data"=>Array("startpage"=>$startpage,"id"=>$U['id']),"object"=>"usr","action"=>"edit"));
+			$Return=true;
+		}
+		return $Return;
+	}//setLang
+
+
 	function setExpert($user,$expert=0) {
 		$U=$this->getUser($user);
 		$Return=false;
@@ -354,6 +382,8 @@ class tm_CFG {
 						SELECT id,
 							siteid,
 							name,
+							lang,
+							style,
 							notify_mail,
 							notify_subscribe,
 							notify_unsubscribe,
@@ -369,6 +399,7 @@ class tm_CFG {
 							unsubscribe_digits_captcha,
 							unsubscribe_sendmail,
 							unsubscribe_action,
+							unsubscribe_host,
 							checkit_limit,
 							checkit_from_email,
 							checkit_adr_reset_error,
@@ -378,7 +409,11 @@ class tm_CFG {
 							bounceit_action,
 							bounceit_search,
 							bounceit_filter_to,
-							bounceit_filter_to_email
+							bounceit_filter_to_email,
+							proof,
+							proof_url,
+							proof_trigger,
+							proof_pc
 						FROM ".TM_TABLE_CONFIG."
 						WHERE siteid='".TM_SITEID."'
 						LIMIT 1
@@ -389,7 +424,8 @@ class tm_CFG {
 			$this->C[$cc]['id']=$this->DB->Record['id'];
 			$this->C[$cc]['siteid']=$this->DB->Record['siteid'];
 			$this->C[$cc]['name']=$this->DB->Record['name'];
-			#$this->C[$cc]['siteid']=$siteid;
+			$this->C[$cc]['lang']=$this->DB->Record['lang'];
+			$this->C[$cc]['style']=$this->DB->Record['style'];
 			$this->C[$cc]['siteid']=TM_SITEID;
 			$this->C[$cc]['notify_mail']=$this->DB->Record['notify_mail'];
 			$this->C[$cc]['notify_subscribe']=$this->DB->Record['notify_subscribe'];
@@ -406,6 +442,7 @@ class tm_CFG {
 			$this->C[$cc]['unsubscribe_digits_captcha']=$this->DB->Record['unsubscribe_digits_captcha'];
 			$this->C[$cc]['unsubscribe_sendmail']=$this->DB->Record['unsubscribe_sendmail'];
 			$this->C[$cc]['unsubscribe_action']=$this->DB->Record['unsubscribe_action'];
+			$this->C[$cc]['unsubscribe_host']=$this->DB->Record['unsubscribe_host'];
 			$this->C[$cc]['checkit_limit']=$this->DB->Record['checkit_limit'];
 			$this->C[$cc]['checkit_from_email']=$this->DB->Record['checkit_from_email'];
 			$this->C[$cc]['checkit_adr_reset_error']=$this->DB->Record['checkit_adr_reset_error'];
@@ -416,6 +453,10 @@ class tm_CFG {
 			$this->C[$cc]['bounceit_search']=$this->DB->Record['bounceit_search'];
 			$this->C[$cc]['bounceit_filter_to']=$this->DB->Record['bounceit_filter_to'];
 			$this->C[$cc]['bounceit_filter_to_email']=$this->DB->Record['bounceit_filter_to_email'];
+			$this->C[$cc]['proof']=$this->DB->Record['proof'];
+			$this->C[$cc]['proof_url']=$this->DB->Record['proof_url'];
+			$this->C[$cc]['proof_trigger']=$this->DB->Record['proof_trigger'];
+			$this->C[$cc]['proof_pc']=$this->DB->Record['proof_pc'];
 		}
 		return $this->C;
 	}//getCFG
@@ -427,6 +468,8 @@ class tm_CFG {
 						".TM_TABLE_CONFIG."
 					(
 					name,
+					lang,
+					style,
 					notify_mail,
 					notify_subscribe,
 					notify_unsubscribe,
@@ -442,6 +485,7 @@ class tm_CFG {
 					unsubscribe_digits_captcha,
 					unsubscribe_sendmail,
 					unsubscribe_action,
+					unsubscribe_host,
 					checkit_limit,
 					checkit_from_email,
 					checkit_adr_reset_error,
@@ -452,11 +496,17 @@ class tm_CFG {
 					bounceit_search,
 					bounceit_filter_to,
 					bounceit_filter_to_email,
+					proof,
+					proof_url,
+					proof_trigger,
+					proof_pc,
 					siteid
 					)
 					VALUES
 					(
 					'".dbesc($cfg["name"])."',
+					'".dbesc($cfg["lang"])."',
+					'".dbesc($cfg["style"])."',
 					'".dbesc($cfg["notify_mail"])."',
 					".checkset_int($cfg["notify_subscribe"]).",
 					".checkset_int($cfg["notify_unsubscribe"]).",
@@ -472,6 +522,7 @@ class tm_CFG {
 					".checkset_int($cfg["unsubscribe_digits_captcha"]).",
 					".checkset_int($cfg["unsubscribe_sendmail"]).",
 					'".dbesc($cfg["unsubscribe_action"])."',
+					".checkset_int($cfg["unsubscribe_host"]).",
 					".checkset_int($cfg["checkit_limit"]).",
 					'".dbesc($cfg["checkit_from_email"])."',
 					".checkset_int($cfg["checkit_adr_reset_error"]).",
@@ -482,6 +533,10 @@ class tm_CFG {
 					'".dbesc($cfg["bounceit_search"])."',
 					".checkset_int($cfg["bounceit_filter_to"]).",
 					'".dbesc($cfg["bounceit_filter_to_email"])."',
+					".checkset_int($cfg["proof"]).",
+					'".dbesc($cfg["proof_url"])."',
+					".checkset_int($cfg["proof_trigger"]).",
+					".checkset_int($cfg["proof_pc"]).",
 					'".dbesc($cfg["siteid"])."'
 					)
 					";
@@ -502,6 +557,8 @@ class tm_CFG {
 		$Query ="UPDATE ".TM_TABLE_CONFIG."
 					SET
 					name='".dbesc($cfg["name"])."',
+					lang='".dbesc($cfg["lang"])."',
+					style='".dbesc($cfg["style"])."',
 					notify_mail='".dbesc($cfg["notify_mail"])."',
 					notify_subscribe=".checkset_int($cfg["notify_subscribe"]).",
 					notify_unsubscribe=".checkset_int($cfg["notify_unsubscribe"]).",
@@ -517,6 +574,7 @@ class tm_CFG {
 					unsubscribe_digits_captcha=".checkset_int($cfg["unsubscribe_digits_captcha"]).",
 					unsubscribe_sendmail=".checkset_int($cfg["unsubscribe_sendmail"]).",
 					unsubscribe_action='".dbesc($cfg["unsubscribe_action"])."',
+					unsubscribe_host='".dbesc($cfg["unsubscribe_host"])."',
 					checkit_limit=".checkset_int($cfg["checkit_limit"]).",
 					checkit_from_email='".dbesc($cfg["checkit_from_email"])."',
 					checkit_adr_reset_error=".checkset_int($cfg["checkit_adr_reset_error"]).",
@@ -526,7 +584,11 @@ class tm_CFG {
 					bounceit_action='".dbesc($cfg["bounceit_action"])."',
 					bounceit_search='".dbesc($cfg["bounceit_search"])."',
 					bounceit_filter_to=".checkset_int($cfg["bounceit_filter_to"]).",
-					bounceit_filter_to_email='".dbesc($cfg["bounceit_filter_to_email"])."'
+					bounceit_filter_to_email='".dbesc($cfg["bounceit_filter_to_email"])."',
+					proof=".checkset_int($cfg["proof"]).",
+					proof_url='".dbesc($cfg["proof_url"])."',
+					proof_trigger=".checkset_int($cfg["proof_trigger"]).",
+					proof_pc=".checkset_int($cfg["proof_pc"])."
 					WHERE siteid='".dbesc($cfg["siteid"])."'
 					";
 		if ($this->DB->Query($Query)) {

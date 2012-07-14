@@ -30,6 +30,17 @@ if ($set=="aktiv") {
 		$_MAIN_MESSAGE.="<br>".___("Eintrag wurde de-aktiviert.");
 	}
 }
+
+if ($set=="prod" && $doit==1) {
+	$ADDRESS->setGRPProd($adr_grp_id,$val);
+	if ($val==1) {
+		$_MAIN_MESSAGE.="<br>".___("Eintrag ist Produktiv.");
+	} else  {
+		$_MAIN_MESSAGE.="<br>".___("Eintrag ist nicht Produktiv.");
+	}
+}
+
+
 if ($set=="standard") {
 	$ADDRESS->setGRPStd($adr_grp_id,$val);
 	$_MAIN_MESSAGE.="<br>".___("Neue Standardgruppe wurde definiert.");
@@ -58,44 +69,48 @@ $GRP=sort_array($GRP,$sortIndex,$sortType);
 //count entries:
 $acg=count($GRP);
 
-$editURLPara=$mSTDURL;
+$editURLPara=tmObjCopy($mSTDURL);
 $editURLPara->addParam("act","adr_grp_edit");
 
-$addadrURLPara=$mSTDURL;
+$addadrURLPara=tmObjCopy($mSTDURL);
 $addadrURLPara->addParam("act","adr_new");
 
-$showadrURLPara=$mSTDURL;
+$showadrURLPara=tmObjCopy($mSTDURL);
 $showadrURLPara->addParam("act","adr_list");
 
-$aktivURLPara=$mSTDURL;
+$aktivURLPara=tmObjCopy($mSTDURL);
 $aktivURLPara->addParam("act","adr_grp_list");
 $aktivURLPara->addParam("set","aktiv");
 
-$delURLPara=$mSTDURL;
+$prodURLPara=tmObjCopy($mSTDURL);
+$prodURLPara->addParam("act","adr_grp_list");
+$prodURLPara->addParam("set","prod");
+
+$delURLPara=tmObjCopy($mSTDURL);
 $delURLPara->addParam("act","adr_grp_list");
 $delURLPara->addParam("set","delete");
 
-$delallURLPara=$mSTDURL;
+$delallURLPara=tmObjCopy($mSTDURL);
 $delallURLPara->addParam("act","adr_grp_list");
 $delallURLPara->addParam("set","deleteall");
 
-$stdURLPara=$mSTDURL;
+$stdURLPara=tmObjCopy($mSTDURL);
 $stdURLPara->addParam("act","adr_grp_list");
 $stdURLPara->addParam("set","standard");
 
-$statURLPara=$mSTDURL;
+$statURLPara=tmObjCopy($mSTDURL);
 $statURLPara->addParam("act","statistic");
 $statURLPara->addParam("set","adrg");
 
-$sortURLPara=$mSTDURL;
+$sortURLPara=tmObjCopy($mSTDURL);
 $sortURLPara->addParam("act","adr_grp_list");
 $sortURLPara_=$sortURLPara->getAllParams();
 
-$refreshRCPTListURLPara=$mSTDURL;
+$refreshRCPTListURLPara=tmObjCopy($mSTDURL);
 $refreshRCPTListURLPara->addParam("act","queue_send");
 $refreshRCPTListURLPara->addParam("set","adrg");
 
-$showqURLPara=$mSTDURL;
+$showqURLPara=tmObjCopy($mSTDURL);
 $showqURLPara->addParam("act","queue_list");
 //vars loeschen da q liste sonst bei limit offset sort etc beeintraechtigt wird.
 $showqURLPara->delParam("offset");
@@ -135,7 +150,12 @@ $_MAIN_OUTPUT.= "<thead>".
 						"<a href=\"".$tm_URL."/".$sortURLPara_."&amp;si=aktiv&amp;st=0\">".$img_arrowup."</a>".
 						"<a href=\"".$tm_URL."/".$sortURLPara_."&amp;si=aktiv&amp;st=1\">".$img_arrowdown."</a>".
 						"</td>".
-						"<td>...</td>".
+						"<td><b>".___("Pro")."</b>".
+						"<a href=\"".$tm_URL."/".$sortURLPara_."&amp;si=prod&amp;st=0\">".$img_arrowup."</a>".
+						"<a href=\"".$tm_URL."/".$sortURLPara_."&amp;si=prod&amp;st=1\">".$img_arrowdown."</a>".
+						"</td>".
+
+						"<td width=\"100\">...</td>".
 						"</tr>".
 						"</thead>".
 						"<tbody>";
@@ -148,6 +168,13 @@ for ($accg=0;$accg<$acg;$accg++) {
 	} else {
 		$new_aktiv=0;
 	}
+
+	if ($GRP[$accg]['prod']!=1) {
+		$new_prod=1;
+	} else {
+		$new_prod=0;
+	}
+
 	//anz. gueltige adressen
 	$valid_adr_c=$ADDRESS->countValidADR($GRP[$accg]['id']);
 
@@ -163,6 +190,10 @@ for ($accg=0;$accg<$acg;$accg++) {
 	$aktivURLPara->addParam("adr_grp_id",$GRP[$accg]['id']);
 	$aktivURLPara->addParam("val",$new_aktiv);
 	$aktivURLPara_=$aktivURLPara->getAllParams();
+
+	$prodURLPara->addParam("adr_grp_id",$GRP[$accg]['id']);
+	$prodURLPara->addParam("val",$new_prod);
+	$prodURLPara_=$prodURLPara->getAllParams();
 
 	$delURLPara->addParam("adr_grp_id",$GRP[$accg]['id']);
 	$delURLPara_=$delURLPara->getAllParams();
@@ -191,7 +222,7 @@ for ($accg=0;$accg<$acg;$accg++) {
 		$_MAIN_OUTPUT.= "&nbsp;".tm_icon("page_white_lightning.png",___("Diese Gruppe ist die Standardgruppe"));
 	}
 	if ($GRP[$accg]['public']==1) {
-		$_MAIN_OUTPUT.= "&nbsp;".tm_icon("cup.png",___("Diese Gruppe ist die öffentlich"));
+		$_MAIN_OUTPUT.= "&nbsp;".tm_icon("cup.png",___("Diese Gruppe ist öffentlich"));
 	}
 	$_MAIN_OUTPUT.= "</td>";
 	$_MAIN_OUTPUT.= "<td onmousemove=\"showToolTip('tt_adr_grp_list_".$GRP[$accg]['id']."')\" onmouseout=\"hideToolTip();\">";
@@ -199,9 +230,17 @@ for ($accg=0;$accg<$acg;$accg++) {
 	$_MAIN_OUTPUT.= "<div id=\"tt_adr_grp_list_".$GRP[$accg]['id']."\" class=\"tooltip\">";
 	$_MAIN_OUTPUT.="<b>".display($GRP[$accg]['name'])."</b>";
 	if ($GRP[$accg]['public']==1) {
-		$_MAIN_OUTPUT.= "<br>".tm_icon("cup.png",___("Diese Gruppe ist die öffentlich"))."&nbsp;".___("Diese Gruppe ist die öffentlich");
+		$_MAIN_OUTPUT.= "<br>".tm_icon("cup.png",___("Diese Gruppe ist öffentlich"))."&nbsp;".___("Diese Gruppe ist öffentlich");
 		$_MAIN_OUTPUT.="<br>".___("Name (öffentlich)").": <b>".display($GRP[$accg]['name'])."</b>";
 	}
+
+	if ($GRP[$accg]['prod']==1) {
+		$_MAIN_OUTPUT.= "<br>".tm_icon("rosette.png",___("Diese Gruppe ist produktiv"))."&nbsp;".___("Diese Gruppe ist produktiv");
+	} else {
+		$_MAIN_OUTPUT.= "<br>".tm_icon("bullet_error.png",___("Diese Gruppe ist nicht produktiv"),"","","","rosette.png")."&nbsp;".___("Diese Gruppe ist nicht produktiv");
+	}
+
+
 	$_MAIN_OUTPUT.= "<br><font size=\"-1\">".display($GRP[$accg]['descr'])."</font>";
 	$_MAIN_OUTPUT.= "<br>ID: ".$GRP[$accg]['id']." ";
 	if ($GRP[$accg]['aktiv']==1) {
@@ -249,12 +288,35 @@ for ($accg=0;$accg<$acg;$accg++) {
 		$_MAIN_OUTPUT.= "</a>";
 	}
 	$_MAIN_OUTPUT.= "</td>";
+
+	$_MAIN_OUTPUT.= "<td>";
+	//wenn gruppe keine standardgruppe ist, dann link zum deaktivieren, deaktivierete gruppen koennen naemlich keine standardgruppe sein
+	
+ 	
+	
+	if ($GRP[$accg]['prod']==1) {
+		$_MAIN_OUTPUT.= "<a href=\"".$tm_URL."/".$prodURLPara_."\" onclick=\"return confirmLink(this, '".sprintf(___("Adressgruppe %s als nicht produktiv markieren?"),display($GRP[$accg]['name']))."')\" title=\"".sprintf(___("Adressgruppe %s als nicht produktiv markieren?"),display($GRP[$accg]['name']))."\">";
+		$_MAIN_OUTPUT.= tm_icon("rosette.png",sprintf(___("Adressgruppe %s als nicht produktiv markieren?"),display($GRP[$accg]['name'])))."&nbsp;";
+		$_MAIN_OUTPUT.= "</a>";
+	} else {
+		$_MAIN_OUTPUT.= "<a href=\"".$tm_URL."/".$prodURLPara_."\" onclick=\"return confirmLink(this, '".sprintf(___("Adressgruppe %s als produktiv markieren?"),display($GRP[$accg]['name']))."')\" title=\"".sprintf(___("Adressgruppe %s als produktiv markieren?"),display($GRP[$accg]['name']))."\">";
+		$_MAIN_OUTPUT.= tm_icon("bullet_error.png",sprintf(___("Adressgruppe %s als produktiv markieren?"),display($GRP[$accg]['name'])),"","","","rosette.png")."&nbsp;";
+		$_MAIN_OUTPUT.= "</a>";
+	}
+	//link schliessen
+	$_MAIN_OUTPUT.= "</a>";
+	$_MAIN_OUTPUT.= "</td>";
+
+
 	$_MAIN_OUTPUT.= "<td>";
 	$_MAIN_OUTPUT.= "&nbsp;<a href=\"".$tm_URL."/".$editURLPara_."\" title=\"".___("Adressgruppe bearbeiten")."\">".tm_icon("pencil.png",___("Adressgruppe bearbeiten"))."</a>";
 	$_MAIN_OUTPUT.= "&nbsp;<a href=\"".$tm_URL."/".$addadrURLPara_."\" title=\"".___("Neue Adresse in dieser Gruppe anlegen")."\">".tm_icon("vcard_add.png",___("Neue Adresse in dieser Gruppe anlegen"))."</a>";
-	$_MAIN_OUTPUT.= "&nbsp;<a href=\"".$tm_URL."/".$showadrURLPara_."\" title=\"".___("Alle Adressen in dieser Gruppe anzeigen")."\">".tm_icon("group_go.png",___("Alle Adressen in dieser Gruppe anzeigen"))."</a>";;
+	$_MAIN_OUTPUT.= "&nbsp;<a href=\"".$tm_URL."/".$showadrURLPara_."\" title=\"".___("Alle Adressen in dieser Gruppe anzeigen")."\">".tm_icon("group_go.png",___("Alle Adressen in dieser Gruppe anzeigen"))."</a>";
+	#."&nbsp;".$GRP[$accg]['adr_count']."</a>";
 	$_MAIN_OUTPUT.=  "&nbsp;<a href=\"".$tm_URL."/".$statURLPara_."\" title=\"".___("Statistik anzeigen")."\">".tm_icon("chart_pie.png",___("Statistik anzeigen"))."</a>";
 	if ($GRP[$accg]['standard']==1) {
+		//wenn gruppe standard ist, dann bildchen anzeigen, wird auch neben id angezeigt
+		//$_MAIN_OUTPUT.=  "&nbsp;<img src=\"".$tm_iconURL."/page_white_lightning.png\" border=\"0\">";
 	} else {
 		//wenn gruppe aktiv ist, dann darf man sie als standard definieren
 		if ($GRP[$accg]['aktiv']==1) {

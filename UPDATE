@@ -11,6 +11,124 @@
 /* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
 /********************************************************************************/
 
+*+*+*+*+*+*+*+*+*+*+*+ 1.0.8.9 to 1.0.9.0rc1
+
+--en
+	* Finish running jobs! No delivery jobs should run when you perform an update!
+	* Delete error Logfile files/logs/tellmatic_php_error.log (if exist)
+	* Read the CHANGES file carefully! It contains the list of new features and changes with some more or less technical details! 
+	* Please also read INSTALL.EN on how to set up cronjob scripts, auto-validation and auto-bounce,amagement.	
+
+	* Backup all your files and the database!
+	* To update earlier Versions than 1.0.8.9 please follow instructions for update to 1.0.8.9
+	* Backup all your files and the database!	
+	* Copy newer files and don't forget to set path in *.php in / and include/send_it.php after updating if you plan to use cronjobs!
+	* Backup the database! Do it now!
+	* Update Database use phpMyAdmin or console etc, see SQL below!
+	
+--de
+	* Beenden Sie laufende Versandauftraege.
+	* Loeschen Sie das Error Logfile 	files/logs/tellmatic_php_error.log (falls es existiert)
+	* Lesen sie die Datei CHANGES aufmerksam durch. Hier stehen nuetzlich Hinweise und einige technische Infos zu den Aenderungen!!!
+	* Bitte lesen Sie auch die INSTALL.DE Datei. Dort wird beschrieben wie man die neuen Scripte fuer automatisches Boundemanagement und E-Mail-Adressen Validierung einrichtet.
+	* Sichern Sie alle Daten und Datenbanken!
+	* Zum Update von einer frueheren Version als 1.0.8.8 befolgen Sie zuerst die Anweisungen fuer das Update auf 1.0.8.8
+	* Sichern Sie alle Daten und Datenbanken!
+	* Kopieren Sie die neuen Dateien auf den Server. Vergessen Sie nicht den Pfad in den *.php Dateien im Installationsverzeichnis anzupassen / sowie include/send_it.php / check_it.php / bounce_it.php wenn Cronjobs genutzt werden sollen.
+	* Sichern Sie die alte Datenbank! Jetzt!
+	* Aktualisieren Sie die Datenbank, s.u.
+	
+	* Nachdem die Datenbank aktualisiert wurden sind noch einige Schritte in der Weboberflaeche noetig:
+
+		- Melden Sie sich als Administrator an Tellmatic an
+
+		- Standardsprache und Layout festlegen:
+			Tellmatic verwendet ab Version 1.0.9.0 Benutzerdefinierte Sprache und Layout fuer die Anmeldung an die GUI und fuer das Abmelde-/Unsubscribe-Formular.
+			Waehlen Sie unter 'Admin' - 'Einstellungen' die Standard-Sprache und das Standard-Layout aus und speichern die Einstellungen.
+			Die Anmelde-/Login-Maske erscheint nun in der gewaehlten Sprache und Layout/Style.
+
+			Die Datei Messages.inc.php fuer die Meldungen aus dem Abmelde-Formular wird nicht mehr genutzt. 
+			Stattdessen verwendet Tellmatic die global eingestellte Sprache fuer die Uebersetzung der Meldungen im Abmelde-/Unsubscribe-Formular.
+		
+		- Newsletter fuer die Anmelde-/Subscribe-Formulare erstellen:
+			Seit 1.0.9.0 wurden die einzelnen Templates fuer Anmeldeformulare fuer Double-OptIn, Anmeldung etc durch Newsletter ersetzt.
+			Das heisst, statt den bisherigen teilweise fest kodierten Texten oder fuer das Formular hinterlegte Templates Form_[id]_s/o.html etc werden nun vordefinierte, personalisierte Newsletter verschickt!
+			Erstellen Sie 3 neue Newsletter als Template: 
+				1 Newsletter fuer die Double-Optin-Mail
+				1 Newsletter fuer die Mail zur Bestaetigung des Eintrages
+				und 1 Newsletter fuer die Mail welche bei einem Update des Eintrages versendet werden soll.
+	
+				Zur Generierung des Bestaetigungslink fuer das Double-Opt-In Newsletter/Mail verwenden Sie die {SUBSCRIBE} oder/und {SUBSCRIBE_URL} Variable 
+			 
+		- Meldungen fuer Anmeldeformulare anpassen:
+			Die Meldungen fuer die Anmeldeformulare werden nun in der Formularmaske hinterlegt. 
+			Es muessen hierfuer keine Templates mehr angepasst werden.
+			Das Template Form_[ID].html wird aber weiterhin verwendet.
+			Fuer die Ausgabe der Meldungen im Anmeldeforumlar ist nun die Datei Form_success.html zustaendig.
+			
+			Bitte passen Sie die Meldungen fuer die Formulare an in dem Sie das Formular bearbeiten und die entsprechenden Texte in den Textfeldern eintragen.
+			
+			
+
+-- SQL update 1.0.8.9 --> 1.0.9.0rc2
+
+Datenbank aktualisieren: / Update Database:
+!Order does matter / Reihenfolge beachten!
+
+		ALTER TABLE `adr` ADD `proof` SMALLINT NOT NULL DEFAULT '0' AFTER `recheck` ;
+		ALTER TABLE `adr` ADD `source` ENUM( 'user', 'import', 'subscribe', 'sync' , 'extern') NOT NULL AFTER `proof` ;
+		ALTER TABLE `adr` ADD `source_id` INT NOT NULL DEFAULT '0' AFTER `source` ;
+		ALTER TABLE `adr` ADD `source_extern_id` INT NOT NULL DEFAULT '0' AFTER `source_id` ;
+		ALTER TABLE `adr` ADD INDEX ( `source` ) ;			
+		ALTER TABLE `adr` ADD INDEX ( `source_id` ) ;
+		ALTER TABLE `adr` ADD INDEX ( `source_extern_id` ) ;
+		ALTER TABLE `adr` ADD INDEX ( `proof` ) ;
+
+		ALTER TABLE `user` ADD `startpage` VARCHAR( 64 ) NOT NULL DEFAULT 'Welcome' COMMENT 'page/action after login' AFTER `expert` ;
+
+		ALTER TABLE `config` ADD `lang` VARCHAR( 5 ) NOT NULL DEFAULT 'de' AFTER `name` ;	
+		ALTER TABLE `config` ADD `style` VARCHAR( 64 ) NOT NULL DEFAULT 'default' AFTER `lang` ;
+		ALTER TABLE `config` ADD `proof` TINYINT( 1 ) NOT NULL DEFAULT '1' COMMENT 'enable proof' ;
+		ALTER TABLE `config` ADD `proof_url` VARCHAR( 255 ) NOT NULL DEFAULT 'http://proof.tellmatic.org' AFTER `proof` ;			
+		ALTER TABLE `config` ADD `proof_trigger` INT NOT NULL DEFAULT '10' AFTER `proof_url`;
+		ALTER TABLE `config` ADD `proof_pc` INT NOT NULL DEFAULT '10' AFTER `proof_trigger`;
+		ALTER TABLE `config` ADD `unsubscribe_host` INT NOT NULL DEFAULT '0' AFTER `unsubscribe_action` ;
+		ALTER TABLE `config` ADD INDEX ( `unsubscribe_host` ) ;
+
+		ALTER TABLE `config` CHANGE `unsubscribe_action` `unsubscribe_action` ENUM( 'unsubscribe', 'delete', 'blacklist', 'blacklist_delete' ) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT 'unsubscribe'
+
+		ALTER TABLE `adr_grp` ADD `prod` TINYINT( 1 ) NOT NULL DEFAULT '0' AFTER `standard` ;
+		ALTER TABLE `adr_grp` ADD INDEX ( `prod` ) ;		
+
+		ALTER TABLE `nl_q` ADD `touch` TINYINT NOT NULL AFTER `autogen` ;		
+		ALTER TABLE `nl_q` ADD `proof` TINYINT( 1 ) NOT NULL DEFAULT '1' COMMENT 'do proofing?' AFTER `check_blacklist` ;
+		ALTER TABLE `nl_q` ADD INDEX ( `touch` ) ;
+		ALTER TABLE `nl_q` ADD INDEX ( `proof` ) ;
+
+		ALTER TABLE `nl_h` ADD `proof` SMALLINT '0' COMMENT 'optional proof return value' AFTER `errors` ;		
+
+		ALTER TABLE `hosts` ADD `delay` INT NOT NULL DEFAULT '100000' AFTER `reply_to` ;
+
+
+		ALTER TABLE `frm` ADD `multiple_pubgroup` TINYINT( 1 ) NOT NULL DEFAULT '0' COMMENT 'allow multiple public groups' AFTER `overwrite_pubgroup` ;
+		ALTER TABLE `frm` ADD `nl_id_doptin` INT NOT NULL DEFAULT '0' AFTER `multiple_pubgroup`;
+		ALTER TABLE `frm` ADD `nl_id_greeting` INT NOT NULL DEFAULT '0' AFTER `nl_id_doptin`;
+		ALTER TABLE `frm` ADD `nl_id_update` INT NOT NULL DEFAULT '0' AFTER `nl_id_greeting`;
+		ALTER TABLE `frm` ADD `message_doptin` TEXT CHARACTER SET utf8 COLLATE utf8_bin NOT NULL AFTER `nl_id_update`;
+		ALTER TABLE `frm` ADD `message_greeting` TEXT CHARACTER SET utf8 COLLATE utf8_bin NOT NULL AFTER `message_doptin`;
+		ALTER TABLE `frm` ADD `message_update` TEXT CHARACTER SET utf8 COLLATE utf8_bin NOT NULL AFTER `message_greeting` ;
+
+		ALTER TABLE `frm` ADD `host_id` INT NOT NULL DEFAULT '0' COMMENT 'SMTP Host ID' AFTER `nl_id_update` ;		
+
+		ALTER TABLE `frm` ADD `standard` TINYINT( 1 ) NOT NULL DEFAULT '0' AFTER `siteid` ;
+		ALTER TABLE `frm` ADD `proof` TINYINT( 1 ) NOT NULL DEFAULT '1' COMMENT 'do proofing?' AFTER `check_blacklist` ;
+		ALTER TABLE `frm` ADD INDEX ( `standard` ) ;
+
+		UPDATE `frm` set `multiple_pubgroup`=1;
+		UPDATE `adr_grp` SET `prod`=1;
+		UPDATE `nl` SET `massmail`=0;
+
+		
 *+*+*+*+*+*+*+*+*+*+*+ 1.0.8.9
 --en
 	Read the CHANGES file carefully! It contains the list of new features and changes with some more or less technical details! 

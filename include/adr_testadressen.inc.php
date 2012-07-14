@@ -27,9 +27,13 @@ $_MAIN_MESSAGE.="";
 
 if (!DEMO && $user_is_admin) {
 	$created=date("Y-m-d H:i:s");
-	$f_text="0123456789abcdefghijklmnopqrstuvwxyz";
+	#$f_text="0123456789abcdefghijklmnopqrstuvwxyz";
 	$author=$LOGIN->USER['name'];
-	$rnd=rand(111111,999999); 
+	$source='user';
+	$source_id=$LOGIN->USER['id'];
+	$source_extern_id=0;
+		
+	$rnd=rand(1111111,9999999); 
 	$gc=count($adr_grp);
 	$_MAIN_MESSAGE.="<br>".sprintf(___("Erstelle %s Testadressen in der(den) Gruppe(n) :"),$max_adr);
 	$ADDRESS=new tm_ADR();
@@ -52,16 +56,19 @@ if (!DEMO && $user_is_admin) {
 							"status"=>$status, 
 							"code"=>$code,
 							"memo"=>"$adr_c testadressen",
+					"source"=>"user",
+					"source_id"=>$LOGIN->USER['id'],
+					"source_extern_id"=>0,
 							"f0"=>"f0_".$code,
 							"f1"=>"f1_".$code,
 							"f2"=>"f2_".$code,
-							"f3"=>$f_text,
-							"f4"=>$f_text,
-							"f5"=>$f_text,
-							"f6"=>$f_text,
-							"f7"=>$f_text,
-							"f8"=>$f_text,
-							"f9"=>$f_text
+							"f3"=>"f3_".$code,
+							"f4"=>"f4_".$code,
+							"f5"=>"f5_".$code,
+							"f6"=>"f6_".$code,
+							"f7"=>"f7_".$code,
+							"f8"=>"f8_".$code,
+							"f9"=>"f9_".$code
 							),
 							$adr_grp);
 	}//for

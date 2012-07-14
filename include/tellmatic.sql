@@ -1,10 +1,6 @@
--- Tellmatic 1.0.8.8
+-- Tellmatic 1.0.9rc1-test
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
-
---
--- Datenbank: `m200001_tm-dev`
---
 
 -- --------------------------------------------------------
 
@@ -29,6 +25,7 @@ CREATE TABLE `adr` (
   `views` smallint(1) default '0',
   `newsletter` smallint(1) default '0',
   `recheck` tinyint(1) default NULL COMMENT 'marked for email validation',
+  `proof` smallint(6) NOT NULL,
   PRIMARY KEY  (`id`),
   KEY `email` (`email`),
   KEY `aktiv` (`aktiv`),
@@ -37,7 +34,8 @@ CREATE TABLE `adr` (
   KEY `code` (`code`),
   KEY `adr_siteid_status` (`siteid`,`status`),
   KEY `adr_siteid_email` (`siteid`,`email`),
-  KEY `adr_siteid_id` (`id`,`siteid`)
+  KEY `adr_siteid_id` (`id`,`siteid`),
+  KEY `proof` (`proof`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
@@ -182,6 +180,7 @@ CREATE TABLE `frm` (
   `action_url` varchar(255) collate utf8_bin NOT NULL default '',
   `descr` tinytext collate utf8_bin NOT NULL,
   `siteid` varchar(64) collate utf8_bin NOT NULL default '',
+  `standard` tinyint(1) NOT NULL,
   `aktiv` tinyint(1) NOT NULL default '1',
   `created` datetime default NULL,
   `updated` datetime default NULL,
@@ -197,6 +196,14 @@ CREATE TABLE `frm` (
   `check_blacklist` tinyint(1) NOT NULL default '1',
   `force_pubgroup` smallint(1) NOT NULL default '0',
   `overwrite_pubgroup` smallint(1) NOT NULL default '0',
+  `multiple_pubgroup` tinyint(1) NOT NULL default '0' COMMENT 'allow multiple public groups',
+  `nl_id_doptin` int(11) NOT NULL default '0',
+  `nl_id_greeting` int(11) NOT NULL default '0',
+  `nl_id_update` int(11) NOT NULL default '0',
+  `message_doptin` text collate utf8_bin NOT NULL,
+  `message_greeting` text collate utf8_bin NOT NULL,
+  `message_update` text collate utf8_bin NOT NULL,
+  `host_id` int(11) NOT NULL default '0' COMMENT 'SMTP Host ID',
   `email` varchar(255) collate utf8_bin NOT NULL default '',
   `f0` varchar(128) collate utf8_bin default NULL,
   `f1` varchar(128) collate utf8_bin default NULL,
@@ -265,7 +272,10 @@ CREATE TABLE `frm` (
   PRIMARY KEY  (`id`),
   KEY `name` (`name`),
   KEY `siteid` (`siteid`),
-  KEY `aktiv` (`aktiv`)
+  KEY `aktiv` (`aktiv`),
+  KEY `nl_id_doptin` (`nl_id_doptin`),
+  KEY `nl_id_greeting` (`nl_id_greeting`),
+  KEY `standard` (`standard`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
@@ -333,6 +343,7 @@ CREATE TABLE `hosts` (
   `sender_email` varchar(255) collate utf8_bin NOT NULL default '',
   `return_mail` varchar(255) collate utf8_bin NOT NULL default '',
   `reply_to` varchar(255) collate utf8_bin NOT NULL default '',
+  `delay` INT(11) NOT NULL default '100000',
   `siteid` varchar(64) collate utf8_bin NOT NULL default '',
   PRIMARY KEY  (`id`),
   KEY `aktiv` (`aktiv`),
@@ -401,7 +412,7 @@ CREATE TABLE `lnk_grp` (
   `editor` varchar(64) collate utf8_bin NOT NULL COMMENT 'editor name/id',
   `aktiv` tinyint(1) NOT NULL,
   `standard` tinyint(1) NOT NULL default '0',
-  `short` varchar(48) collate utf8_bin NOT NULL,
+  `short` varchar(16) collate utf8_bin NOT NULL,
   `name` varchar(255) collate utf8_bin NOT NULL,
   `descr` tinytext collate utf8_bin NOT NULL,
   PRIMARY KEY  (`id`)
@@ -573,6 +584,7 @@ CREATE TABLE `nl_q` (
   `send_at` datetime default NULL,
   `check_blacklist` tinyint(4) NOT NULL default '1',
   `autogen` tinyint(1) NOT NULL default '0',
+  `touch` tinyint(4) NOT NULL,
   `sent` datetime default NULL,
   `author` varchar(64) collate utf8_bin default NULL,
   `siteid` varchar(64) collate utf8_bin NOT NULL default '',
@@ -581,11 +593,11 @@ CREATE TABLE `nl_q` (
   KEY `siteid` (`siteid`),
   KEY `send_at` (`send_at`),
   KEY `host_id` (`host_id`),
-  KEY `autostart` (`autogen`)
+  KEY `autostart` (`autogen`),
+  KEY `touch` (`touch`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
-
 
 --
 -- Tabellenstruktur für Tabelle `user`
@@ -609,4 +621,3 @@ CREATE TABLE `user` (
   KEY `name` (`name`,`passwd`,`aktiv`,`siteid`),
   KEY `lang` (`lang`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-

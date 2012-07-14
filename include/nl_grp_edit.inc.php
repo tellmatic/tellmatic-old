@@ -54,14 +54,16 @@ if ($set=="save") {
 					));
 		$_MAIN_MESSAGE.="<br>".sprintf(___("Newslettergruppe %s wurde aktualisiert."),"'<b>".display($name)."</b>'");
 		$action="nl_grp_list";
-		include_once (TM_INCLUDEPATH."/nl_grp_list.inc.php");
+		require_once (TM_INCLUDEPATH."/nl_grp_list.inc.php");
 	} else {
-		include_once (TM_INCLUDEPATH."/nl_grp_form.inc.php");
+		require_once (TM_INCLUDEPATH."/nl_grp_form.inc.php");
+		require_once (TM_INCLUDEPATH."/nl_grp_form_show.inc.php");
 	}
 } else {
 	$name=$GRP[0]['name'];
 	$descr=$GRP[0]['descr'];//strtr($GRP[0]['descr'],$trans);
 	$aktiv=$GRP[0]['aktiv'];
-	include_once (TM_INCLUDEPATH."/nl_grp_form.inc.php");
+	require_once (TM_INCLUDEPATH."/nl_grp_form.inc.php");
+	require_once (TM_INCLUDEPATH."/nl_grp_form_show.inc.php");
 }
 ?>

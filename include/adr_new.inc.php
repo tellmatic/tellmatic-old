@@ -3,7 +3,7 @@
 /* this file is part of: / diese Datei ist ein Teil von:                        */
 /* tellmatic, the newslettermachine                                             */
 /* tellmatic, die Newslettermaschine                                            */
-/* 2006/7 by Volker Augustin, multi.art.studio Hanau                            */
+/* 2006/11 by Volker Augustin, multi.art.studio Hanau                            */
 /* Contact/Kontakt: info@tellmatic.org                                      */
 /* Homepage: www.tellmatic.org                                                   */
 /* leave this header in file!                                                   */
@@ -93,7 +93,6 @@ if ($set=="save") {
 	$check_mail=checkEmailAdr($email,$EMailcheck_Intern);
 	if (!$check_mail[0]) {$check=false;$_MAIN_MESSAGE.="<br>".___("Die E-Mail-Adresse ist nicht gültig.")." ".$check_mail[1];}
 	if ($check) {
-
 		$ADDRESS=new tm_ADR();
 		///////////////////////////
 		//dublettencheck
@@ -160,6 +159,9 @@ if ($set=="save") {
 					"status"=>$status,
 					"code"=>$code,
 					"memo"=>$memo,
+					"source"=>"user",
+					"source_id"=>$LOGIN->USER['id'],
+					"source_extern_id"=>0,
 					"f0"=>$f0,
 					"f1"=>$f1,
 					"f2"=>$f2,
@@ -174,12 +176,15 @@ if ($set=="save") {
 					$new_adr_grp);
 			$_MAIN_MESSAGE.="<br>".sprintf(___("Neue Adresse %s wurde angelegt."),"'<b>".display($email)."</b>'");
 		}
+
 		$action="adr_list";
 		include_once (TM_INCLUDEPATH."/adr_list.inc.php");
 	} else {
-		include_once (TM_INCLUDEPATH."/adr_form.inc.php");
+		require_once (TM_INCLUDEPATH."/adr_form.inc.php");
+		require_once (TM_INCLUDEPATH."/adr_form_show.inc.php");
 	}
 } else {
-	include_once (TM_INCLUDEPATH."/adr_form.inc.php");
+	require_once (TM_INCLUDEPATH."/adr_form.inc.php");
+	require_once (TM_INCLUDEPATH."/adr_form_show.inc.php");
 }
 ?>

@@ -57,63 +57,72 @@ $$InputName_Send=getVar($InputName_Send);
 
 $InputName_Autogen="autogen";
 $$InputName_Autogen=getVar($InputName_Autogen);
+
 $InputName_Blacklist="check_blacklist";
 $$InputName_Blacklist=getVar($InputName_Blacklist);
+
+$InputName_Proof="proof";
+$$InputName_Proof=getVar($InputName_Proof);
+
 
 $check=true;
 //abgeschickt?
 if ($set=="save") {
 	if (!empty($nl_id)) {
-	$HOST=$HOSTS->getHost($host_id,Array("aktiv"=>1,"type"=>"smtp"));
-	//SMTP Server ausgewaehlt?
-	if (count($HOST)==1) {
-		$gc=count($adr_grp);
-		//sind ueberhaupt gruppen gewaehlt???
-		if ($gc>0) {
-			$QUEUE=new tm_Q();
-			$ADDRESS=new tm_ADR();
-			
-			$_MAIN_MESSAGE.="<br>".sprintf(___("Ausgewählter Mail-Server: %s"),$HOST[0]['name']);
-			if ($check_blacklist==1) {
-				$_MAIN_MESSAGE.= "<br>".tm_icon("ruby.png",___("Blacklist"))."&nbsp;".___("Blacklist Überprüfung aktiv");
-			}
-			//nur q eintraege hinzufügen die noch nicht vorhanden sind oder status gesendet haben
-			//status gesendet=4,
-			//NICHT:    neu=1, gestartet/wait=2, running=3
-			//fuer jede gruppe im array adr_grp!
-			for ($gcc=0;$gcc<$gc;$gcc++) {
-				$group_add=false;
-				$grp_id=$adr_grp[$gcc];
-				$GRP=$ADDRESS->getGroup($grp_id);
-				$Qnew=$QUEUE->getQ(0,0,0,$nl_id,$grp_id,1);
-				$qc_new=count($Qnew);
-				if ($qc_new!=0) { //gefunden ? nicht hinzufügen
-					unset($adr_grp[$gcc]);
-					$_MAIN_MESSAGE.="<br><font color=\"red\">".sprintf(___("Für die Gruppe %s existieren bereits %s neue Einträge. Nicht hinzugefügt!"),"'<b>".display($GRP[0]['name'])."</b>'","<b>".$qc_new."</b>")."</font>";
-				} else {//qnew!=0
-					$Qwait=$QUEUE->getQ(0,0,0,$nl_id,$grp_id,2);
-					$qc_wait=count($Qwait);
-					if ($qc_wait!=0) { //
+		$HOST=$HOSTS->getHost($host_id,Array("aktiv"=>1,"type"=>"smtp"));
+		//SMTP Server ausgewaehlt?
+		if (count($HOST)==1) {
+			$gc=count($adr_grp);
+			//sind ueberhaupt gruppen gewaehlt???
+			if ($gc>0) {
+				$QUEUE=new tm_Q();
+				$ADDRESS=new tm_ADR();
+				
+				$_MAIN_MESSAGE.="<br>".sprintf(___("Ausgewählter Mail-Server: %s"),$HOST[0]['name']);
+				if ($check_blacklist==1) {
+					$_MAIN_MESSAGE.= "<br>".tm_icon("ruby.png",___("Blacklist"))."&nbsp;".___("Blacklist Überprüfung aktiv");
+				}
+				//nur q eintraege hinzufügen die noch nicht vorhanden sind oder status gesendet haben
+				//status gesendet=4,
+				//NICHT:    neu=1, gestartet/wait=2, running=3
+				//fuer jede gruppe im array adr_grp!
+				for ($gcc=0;$gcc<$gc;$gcc++) {
+					$group_add=false;
+					$grp_id=$adr_grp[$gcc];
+					$GRP=$ADDRESS->getGroup($grp_id);
+					//function getQ($id=0,$offset=0,$limit=0,$nl_id=0,$grp_id=0,$status=0)
+					$Qnew=$QUEUE->getQ(0,0,0,$nl_id,$grp_id,1);
+					$qc_new=count($Qnew);
+					if ($qc_new!=0) { //gefunden ? nicht hinzufügen
 						unset($adr_grp[$gcc]);
-						$_MAIN_MESSAGE.="<br><font color=\"red\">".sprintf(___("Für die Gruppe %s existieren bereits %s gestartete/wartende Einträge. Nicht hinzugefügt!"),"'<b>".display($GRP[0]['name'])."</b>'","<b>".$qc_wait."</b>")."</font>";
-					} else {//qwait!=0
-						$Qrun=$QUEUE->getQ(0,0,0,$nl_id,$grp_id,3);
-						$qc_run=count($Qrun);
-						if ($qc_run!=0) { //
+						$_MAIN_MESSAGE.="<br><font color=\"red\">".sprintf(___("Für die Gruppe %s existieren bereits %s neue Einträge. Nicht hinzugefügt!"),"'<b>".display($GRP[0]['name'])."</b>'","<b>".$qc_new."</b>")."</font>";
+					} else {//qnew!=0
+						$Qwait=$QUEUE->getQ(0,0,0,$nl_id,$grp_id,2);
+						$qc_wait=count($Qwait);
+						if ($qc_wait!=0) { //
 							unset($adr_grp[$gcc]);
-							$_MAIN_MESSAGE.="<br><font color=\"red\">".sprintf(___("Für die Gruppe %s existieren bereits %s laufende Einträge. Nicht hinzugefügt!"),"'<b>".display($GRP[0]['name'])."</b>'","<b>".$qc_run."</b>")."</font>";
-						} else {
+							$_MAIN_MESSAGE.="<br><font color=\"red\">".sprintf(___("Für die Gruppe %s existieren bereits %s gestartete/wartende Einträge. Nicht hinzugefügt!"),"'<b>".display($GRP[0]['name'])."</b>'","<b>".$qc_wait."</b>")."</font>";
+						} else {//qwait!=0
+							$Qrun=$QUEUE->getQ(0,0,0,$nl_id,$grp_id,3);
+							$qc_run=count($Qrun);
+							if ($qc_run!=0) { //
+								unset($adr_grp[$gcc]);
+								$_MAIN_MESSAGE.="<br><font color=\"red\">".sprintf(___("Für die Gruppe %s existieren bereits %s laufende Einträge. Nicht hinzugefügt!"),"'<b>".display($GRP[0]['name'])."</b>'","<b>".$qc_run."</b>")."</font>";
+							} else {
+								
 								//ok, hier auch status 5 checken, angehaltene q's
-							//ok, die gruppe enthaelt brauchbare daten
-							$group_add=true;
-						}//qrun!=0
-					}
-				}//$qnew=0
-				//natuerlich macht es nur sinn die gruppe in die q aufzunehmen und fuer den versand vorzubereiten wenn diese gruppe auch ein paar aressen enthaelt, also aktive adressen die nihct unsubscribed sind etc.
-				//das wird zwar beim versand und erstellen der sendeliste auch geprueft, jedoch koennen die zeiten zu denen beide listen angelegt werden variieren. --> manuelles anlegen der history
-				//wir wollen aber wirklich nur gruppen aufnehmen ind enen taugliche adressen existieren.
+
+								//ok, die gruppe enthaelt brauchbare daten
+								$group_add=true;
+							}//qrun!=0
+						}//qwait!=0
+					}//$qnew=0
+					//natuerlich macht es nur sinn die gruppe in die q aufzunehmen und fuer den versand vorzubereiten wenn diese gruppe auch ein paar aressen enthaelt, also aktive adressen die nihct unsubscribed sind etc.
+					//das wird zwar beim versand und erstellen der sendeliste auch geprueft, jedoch koennen die zeiten zu denen beide listen angelegt werden variieren. --> manuelles anlegen der history
+					//wir wollen aber wirklich nur gruppen aufnehmen ind enen taugliche adressen existieren.
 					//Adr status=1 oder 2 oder 3 oder 4, 10 oder 12
-				//und nur aktive
+					//und nur aktive
+					//neue methode countValidADR(group_id)
 					$ac=$ADDRESS->countValidADR($grp_id);
 					//keine benutzbaren adressen gefunden
 					if ($ac==0) {
@@ -138,38 +147,45 @@ if ($set=="save") {
 							"host_id"=>$host_id,
 							"send_at"=>$send_at,
 							"check_blacklist"=>$check_blacklist,
-							"autogen"=>$autogen
+							"proof"=>$proof,
+							"autogen"=>$autogen,
+							"touch"=>0
 							),
 							$adr_grp);
-						//						
-				//nl auf status queued setzen =2/6=terminiert
-				$NEWSLETTER=new tm_NL();
-				$NEWSLETTER->setStatus($nl_id,6);//war 2, ist 6 fuer terminierten versand!!
-				$_MAIN_MESSAGE.="<br>".___("Neuer Eintrag wurde erstellt.");
-				$action="queue_list";
-				if ($send_now==1) {
-					require_once (TM_INCLUDEPATH."/queue_send.inc.php");
+							//						
+						//nl auf status queued setzen =2/6=terminiert
+						$NEWSLETTER=new tm_NL();
+						$NEWSLETTER->setStatus($nl_id,6);//war 2, ist 6 fuer terminierten versand!!
+						$_MAIN_MESSAGE.="<br>".___("Neuer Eintrag wurde erstellt.");
+						$action="queue_list";
+						if ($send_now==1) {
+							require_once (TM_INCLUDEPATH."/queue_send.inc.php");
+						}
+						#require_once (TM_INCLUDEPATH."/nl_list.inc.php");
+						//show q list instead
+						require_once (TM_INCLUDEPATH."/queue_list.inc.php");
+				} else {// $gc>0
+					$_MAIN_MESSAGE.="<br>".___("Keine Gruppe(n) gewählt. Nichts hinzugefügt");
+					require_once (TM_INCLUDEPATH."/queue_form.inc.php");
+					require_once (TM_INCLUDEPATH."/queue_form_show.inc.php");
 				}
-				#require_once (TM_INCLUDEPATH."/nl_list.inc.php");
-				//show q list instead
-				require_once (TM_INCLUDEPATH."/queue_list.inc.php");
-			} else {// $gc>0
-				$_MAIN_MESSAGE.="<br>".___("Keine Gruppe(n) gewählt. Nichts hinzugefügt");
+			} else {
 				require_once (TM_INCLUDEPATH."/queue_form.inc.php");
+				require_once (TM_INCLUDEPATH."/queue_form_show.inc.php");
 			}
-		} else {
-			require_once (TM_INCLUDEPATH."/queue_form.inc.php");
+		} else { //$host_c==1
+				$_MAIN_MESSAGE.="<br>".___("Kein Mail-Server gewählt. Nichts hinzugefügt");
+				require_once (TM_INCLUDEPATH."/queue_form.inc.php");
+				require_once (TM_INCLUDEPATH."/queue_form_show.inc.php");
 		}
-	} else { //$host_c==1
-			$_MAIN_MESSAGE.="<br>".___("Kein Mail-Server gewählt. Nichts hinzugefügt");
-			require_once (TM_INCLUDEPATH."/queue_form.inc.php");
-	}
 	} else {
 				$_MAIN_MESSAGE.="<br>".___("Kein Newsletter gewählt. Nichts hinzugefügt");
 				require_once (TM_INCLUDEPATH."/queue_form.inc.php");
+				require_once (TM_INCLUDEPATH."/queue_form_show.inc.php");
 	}
 } else {//set==save
 	require_once (TM_INCLUDEPATH."/queue_form.inc.php");
+	require_once (TM_INCLUDEPATH."/queue_form_show.inc.php");
 }
 			#$_MAIN_MESSAGE.="<br>send_now: ".$send_now;
 ?>

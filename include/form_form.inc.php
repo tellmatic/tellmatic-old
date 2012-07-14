@@ -3,7 +3,7 @@
 /* this file is part of: / diese Datei ist ein Teil von:                        */
 /* tellmatic, the newslettermachine                                             */
 /* tellmatic, die Newslettermaschine                                            */
-/* 2006/7 by Volker Augustin, multi.art.studio Hanau                            */
+/* 2006/11 by Volker Augustin, multi.art.studio Hanau                            */
 /* Contact/Kontakt: info@tellmatic.org                                      */
 /* Homepage: www.tellmatic.org                                                   */
 /* leave this header in file!                                                   */
@@ -83,6 +83,18 @@ $Form->set_InputLabel($FormularName,$InputName_ActionUrl,"");
 	$Form->set_InputOrder($FormularName,$InputName_Blacklist,7);
 	$Form->set_InputLabel($FormularName,$InputName_Blacklist,"");
 
+//do proofing
+	$Form->new_Input($FormularName,$InputName_Proof,"checkbox", 1);
+	$Form->set_InputJS($FormularName,$InputName_Proof," onChange=\"flash('submit','#ff0000');\" ");
+	$Form->set_InputDefault($FormularName,$InputName_Proof,$$InputName_Proof);
+	$Form->set_InputStyleClass($FormularName,$InputName_Proof,"mFormText","mFormTextFocus");
+	$Form->set_InputSize($FormularName,$InputName_Proof,48,1024);
+	$Form->set_InputDesc($FormularName,$InputName_Proof,___("Proofing"));
+	$Form->set_InputReadonly($FormularName,$InputName_Proof,false);
+	$Form->set_InputOrder($FormularName,$InputName_Proof,7);
+	$Form->set_InputLabel($FormularName,$InputName_Proof,"");
+
+
 //Force Publicgroups selection
 	$Form->new_Input($FormularName,$InputName_ForcePubGroup,"checkbox", 1);
 	$Form->set_InputJS($FormularName,$InputName_ForcePubGroup," onChange=\"flash('submit','#ff0000');\" ");
@@ -150,6 +162,109 @@ $Form->add_InputOption($FormularName,$InputName_DigitsCaptcha,10,"10");
 	$Form->set_InputOrder($FormularName,$InputName_DoubleOptin,4);
 	$Form->set_InputLabel($FormularName,$InputName_DoubleOptin,"");
 
+
+//Multiple Pubgroups?
+	$Form->new_Input($FormularName,$InputName_MultiPubGroup,"checkbox", 1);
+	$Form->set_InputJS($FormularName,$InputName_MultiPubGroup," onChange=\"flash('submit','#ff0000');\" ");
+	$Form->set_InputDefault($FormularName,$InputName_MultiPubGroup,$$InputName_MultiPubGroup);
+	$Form->set_InputStyleClass($FormularName,$InputName_MultiPubGroup,"mFormText","mFormTextFocus");
+	$Form->set_InputSize($FormularName,$InputName_MultiPubGroup,48,1024);
+	$Form->set_InputDesc($FormularName,$InputName_MultiPubGroup,___("Besucher kann mehrere Gruppen wählen"));
+	$Form->set_InputReadonly($FormularName,$InputName_MultiPubGroup,false);
+	$Form->set_InputOrder($FormularName,$InputName_MultiPubGroup,3);
+	$Form->set_InputLabel($FormularName,$InputName_MultiPubGroup,"");
+
+//NL send for double optin
+$Form->new_Input($FormularName,$InputName_NLDOptin,"select", "");
+$Form->set_InputJS($FormularName,$InputName_NLDOptin," onChange=\"flash('submit','#ff0000');\" ");
+$Form->set_InputDefault($FormularName,$InputName_NLDOptin,$nl_id_doptin);
+$Form->set_InputStyleClass($FormularName,$InputName_NLDOptin,"mFormSelect","mFormSelectFocus");
+$Form->set_InputDesc($FormularName,$InputName_NLDOptin,___("Newsletter wählen"));
+$Form->set_InputReadonly($FormularName,$InputName_NLDOptin,false);
+$Form->set_InputOrder($FormularName,$InputName_NLDOptin,14);
+$Form->set_InputLabel($FormularName,$InputName_NLDOptin,"");
+$Form->set_InputSize($FormularName,$InputName_NLDOptin,0,1);
+$Form->set_InputMultiple($FormularName,$InputName_NLDOptin,false);
+//add Data
+$NEWSLETTER=new tm_NL();
+#$NL=$NEWSLETTER->getNL();
+//nur aktive, keine templates
+$NL=$NEWSLETTER->getNL(0,0,0,0,0,$sortIndex="id",$sortType=1,Array("aktiv"=>1, "is_template"=>1));//, "massmail"=>0 does not work yet
+$nc=count($NL);
+$Form->add_InputOption($FormularName,$InputName_NLDOptin,0,"--");
+for ($ncc=0; $ncc<$nc; $ncc++)
+{
+	//only use personalized mailing!
+	if ($NL[$ncc]['massmail']==0) {
+		//nur nl mit existierenden templates f. html/textparts
+		if (file_exists($tm_nlpath."/nl_".date_convert_to_string($NL[$ncc]['created'])."_n.html") 
+			&& file_exists($tm_nlpath."/nl_".date_convert_to_string($NL[$ncc]['created'])."_t.txt")) {
+			$NLSubj=display($NL[$ncc]['subject']);
+			$Form->add_InputOption($FormularName,$InputName_NLDOptin,$NL[$ncc]['id'],$NLSubj);
+		}
+	}
+}
+
+//NL send as greeting mail
+$Form->new_Input($FormularName,$InputName_NLGreeting,"select", "");
+$Form->set_InputJS($FormularName,$InputName_NLGreeting," onChange=\"flash('submit','#ff0000');\" ");
+$Form->set_InputDefault($FormularName,$InputName_NLGreeting,$nl_id_greeting);
+$Form->set_InputStyleClass($FormularName,$InputName_NLGreeting,"mFormSelect","mFormSelectFocus");
+$Form->set_InputDesc($FormularName,$InputName_NLGreeting,___("Newsletter wählen"));
+$Form->set_InputReadonly($FormularName,$InputName_NLGreeting,false);
+$Form->set_InputOrder($FormularName,$InputName_NLGreeting,15);
+$Form->set_InputLabel($FormularName,$InputName_NLGreeting,"");
+$Form->set_InputSize($FormularName,$InputName_NLGreeting,0,1);
+$Form->set_InputMultiple($FormularName,$InputName_NLGreeting,false);
+//add Data
+$NEWSLETTER=new tm_NL();
+//nur aktive, keine templates
+$NL=$NEWSLETTER->getNL(0,0,0,0,0,$sortIndex="id",$sortType=1,Array("aktiv"=>1, "is_template"=>1));//, "massmail"=>0 does not work yet
+$nc=count($NL);
+$Form->add_InputOption($FormularName,$InputName_NLGreeting,0,"--");
+for ($ncc=0; $ncc<$nc; $ncc++)
+{
+	//only use personalized mailing!
+	if ($NL[$ncc]['massmail']==0) {
+		//nur nl mit existierenden templates f. html/textparts
+		if (file_exists($tm_nlpath."/nl_".date_convert_to_string($NL[$ncc]['created'])."_n.html") 
+			&& file_exists($tm_nlpath."/nl_".date_convert_to_string($NL[$ncc]['created'])."_t.txt")) {
+			$NLSubj=display($NL[$ncc]['subject']);
+			$Form->add_InputOption($FormularName,$InputName_NLGreeting,$NL[$ncc]['id'],$NLSubj);
+		}
+	}
+}
+
+//NL send as update mail
+$Form->new_Input($FormularName,$InputName_NLUpdate,"select", "");
+$Form->set_InputJS($FormularName,$InputName_NLUpdate," onChange=\"flash('submit','#ff0000');\" ");
+$Form->set_InputDefault($FormularName,$InputName_NLUpdate,$nl_id_update);
+$Form->set_InputStyleClass($FormularName,$InputName_NLUpdate,"mFormSelect","mFormSelectFocus");
+$Form->set_InputDesc($FormularName,$InputName_NLUpdate,___("Newsletter wählen"));
+$Form->set_InputReadonly($FormularName,$InputName_NLUpdate,false);
+$Form->set_InputOrder($FormularName,$InputName_NLUpdate,15);
+$Form->set_InputLabel($FormularName,$InputName_NLUpdate,"");
+$Form->set_InputSize($FormularName,$InputName_NLUpdate,0,1);
+$Form->set_InputMultiple($FormularName,$InputName_NLUpdate,false);
+//add Data
+$NEWSLETTER=new tm_NL();
+//nur aktive, keine templates
+$NL=$NEWSLETTER->getNL(0,0,0,0,0,$sortIndex="id",$sortType=1,Array("aktiv"=>1, "is_template"=>1));//, "massmail"=>0 does not work yet
+$nc=count($NL);
+$Form->add_InputOption($FormularName,$InputName_NLUpdate,0,"--");
+for ($ncc=0; $ncc<$nc; $ncc++)
+{
+	//only use personalized mailing!
+	if ($NL[$ncc]['massmail']==0) {
+		//nur nl mit existierenden templates f. html/textparts
+		if (file_exists($tm_nlpath."/nl_".date_convert_to_string($NL[$ncc]['created'])."_n.html") 
+			&& file_exists($tm_nlpath."/nl_".date_convert_to_string($NL[$ncc]['created'])."_t.txt")) {
+			$NLSubj=display($NL[$ncc]['subject']);
+			$Form->add_InputOption($FormularName,$InputName_NLUpdate,$NL[$ncc]['id'],$NLSubj);
+		}
+	}
+}
+
 //Beschreibung
 $Form->new_Input($FormularName,$InputName_Descr,"textarea", display($$InputName_Descr));
 $Form->set_InputJS($FormularName,$InputName_Descr," onChange=\"flash('submit','#ff0000');\" ");
@@ -159,6 +274,34 @@ $Form->set_InputDesc($FormularName,$InputName_Descr,___("Beschreibung"));
 $Form->set_InputReadonly($FormularName,$InputName_Descr,false);
 $Form->set_InputOrder($FormularName,$InputName_Descr,13);
 $Form->set_InputLabel($FormularName,$InputName_Descr,"");
+
+//Double Optin Message
+$Form->new_Input($FormularName,$InputName_MessageDOptin,"textarea", display($$InputName_MessageDOptin));
+$Form->set_InputJS($FormularName,$InputName_MessageDOptin," onChange=\"flash('submit','#ff0000');\" ");
+$Form->set_InputStyleClass($FormularName,$InputName_MessageDOptin,"mFormTextarea","mFormTextareaFocus");
+$Form->set_InputSize($FormularName,$InputName_MessageDOptin,20,3);
+$Form->set_InputDesc($FormularName,$InputName_MessageDOptin,___("Meldung bei Double-Opt-In"));
+$Form->set_InputReadonly($FormularName,$InputName_MessageDOptin,false);
+$Form->set_InputOrder($FormularName,$InputName_MessageDOptin,13);
+$Form->set_InputLabel($FormularName,$InputName_MessageDOptin,"");
+//Welcome Message
+$Form->new_Input($FormularName,$InputName_MessageGreeting,"textarea", display($$InputName_MessageGreeting));
+$Form->set_InputJS($FormularName,$InputName_MessageGreeting," onChange=\"flash('submit','#ff0000');\" ");
+$Form->set_InputStyleClass($FormularName,$InputName_MessageGreeting,"mFormTextarea","mFormTextareaFocus");
+$Form->set_InputSize($FormularName,$InputName_MessageGreeting,20,3);
+$Form->set_InputDesc($FormularName,$InputName_MessageGreeting,___("Meldung bei Neueintrag"));
+$Form->set_InputReadonly($FormularName,$InputName_MessageGreeting,false);
+$Form->set_InputOrder($FormularName,$InputName_MessageGreeting,13);
+$Form->set_InputLabel($FormularName,$InputName_MessageGreeting,"");
+//Update Message
+$Form->new_Input($FormularName,$InputName_MessageUpdate,"textarea", display($$InputName_MessageUpdate));
+$Form->set_InputJS($FormularName,$InputName_MessageUpdate," onChange=\"flash('submit','#ff0000');\" ");
+$Form->set_InputStyleClass($FormularName,$InputName_MessageUpdate,"mFormTextarea","mFormTextareaFocus");
+$Form->set_InputSize($FormularName,$InputName_MessageUpdate,20,3);
+$Form->set_InputDesc($FormularName,$InputName_MessageUpdate,___("Meldung bei Aktualisierung"));
+$Form->set_InputReadonly($FormularName,$InputName_MessageUpdate,false);
+$Form->set_InputOrder($FormularName,$InputName_MessageUpdate,13);
+$Form->set_InputLabel($FormularName,$InputName_MessageUpdate,"");
 
 //Gruppe
 $Form->new_Input($FormularName,$InputName_Group,"select", "");
@@ -190,7 +333,6 @@ $Form->set_InputDesc($FormularName,$InputName_GroupPub,___("Gruppen wählen, STR
 $Form->set_InputReadonly($FormularName,$InputName_GroupPub,false);
 $Form->set_InputOrder($FormularName,$InputName_GroupPub,13);
 $Form->set_InputLabel($FormularName,$InputName_GroupPub,"");
-//$Form->set_InputValue($FormularName,$InputName_GroupPub,"");
 $Form->set_InputSize($FormularName,$InputName_GroupPub,0,5);
 $Form->set_InputMultiple($FormularName,$InputName_GroupPub,true);
 //add Data
@@ -224,6 +366,26 @@ $Form->set_InputReadonly($FormularName,$InputName_ResetValue,false);
 $Form->set_InputOrder($FormularName,$InputName_ResetValue,301);
 $Form->set_InputLabel($FormularName,$InputName_ResetValue,"");
 
+//HOST
+$Form->new_Input($FormularName,$InputName_Host,"select", "");
+$Form->set_InputJS($FormularName,$InputName_Host," onChange=\"flash('submit','#ff0000');\" ");
+$Form->set_InputDefault($FormularName,$InputName_Host,$$InputName_Host);
+$Form->set_InputStyleClass($FormularName,$InputName_Host,"mFormSelect","mFormSelectFocus");
+$Form->set_InputSize($FormularName,$InputName_Host,1,1);
+$Form->set_InputDesc($FormularName,$InputName_Host,___("SMTP Server auswählen"));
+$Form->set_InputReadonly($FormularName,$InputName_Host,false);
+$Form->set_InputOrder($FormularName,$InputName_Host,9);
+$Form->set_InputLabel($FormularName,$InputName_Host,"");
+$Form->set_InputMultiple($FormularName,$InputName_Host,false);
+#Hostliste....
+//smtp hosts
+$HOSTS=new tm_Host();
+$HOST_=$HOSTS->getHost(0,Array("aktiv"=>1, "type"=>"smtp"));//id,filter
+$hcg=count($HOST_);
+for ($hccg=0; $hccg<$hcg; $hccg++)
+{
+		$Form->add_InputOption($FormularName,$InputName_Host,$HOST_[$hccg]['id'],display($HOST_[$hccg]['name']));
+}
 
 //Femailname
 $Form->new_Input($FormularName,$InputName_email,"text", display($$InputName_email));
@@ -383,185 +545,4 @@ $Form->set_InputDesc($FormularName,$InputName_Reset,___("Eingaben zurücksetzen"
 $Form->set_InputReadonly($FormularName,$InputName_Reset,false);
 $Form->set_InputOrder($FormularName,$InputName_Reset,999);
 $Form->set_InputLabel($FormularName,$InputName_Reset,"");
-
-/*RENDER FORM*/
-
-$Form->render_Form($FormularName);
-//then you dont have to render the head and foot .....
-
-/*DISPLAY*/
-$_MAIN_OUTPUT.= $Form->FORM[$FormularName]['head'];
-//hidden fieldsnicht vergessen!
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName]['act']['html'];
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName]['set']['html'];
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName]['frm_id']['html'];
-$_MAIN_OUTPUT.= "<table border=0>";
-
-if (!empty($frm_id)) {
-	$_MAIN_OUTPUT.= "<tr>";
-	$_MAIN_OUTPUT.= "<td colspan=\"2\">";
-	$_MAIN_OUTPUT.= "ID: <b>".$FRM[0]['id']."</b>";
-	$_MAIN_OUTPUT.= "<br>";
-	$_MAIN_OUTPUT.= sprintf(___("Erstellt am: %s von %s"),"<b>".$FRM[0]['author']."</b>","<b>".$FRM[0]['created']."</b>");
-	$_MAIN_OUTPUT.= "<br>";
-	$_MAIN_OUTPUT.= sprintf(___("Bearbeitet am: %s von %s"),"<b>".$FRM[0]['editor']."</b>","<b>".$FRM[0]['updated']."</b>");
-	$_MAIN_OUTPUT.= "<br><br>";
-	$_MAIN_OUTPUT.= "</td>";
-	$_MAIN_OUTPUT.= "</tr>";
-}
-
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top>";
-$_MAIN_OUTPUT.= tm_icon("folder.png",___("Name"))."&nbsp;".___("Name");
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "<td valign=top colspan=1>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Name]['html'];
-$_MAIN_OUTPUT.= "</td>";
-
-$_MAIN_OUTPUT.= "<td valign=top rowspan=9>";
-$_MAIN_OUTPUT.= tm_icon("group.png",___("Gruppen"))."&nbsp;".___("Gruppen")."<br>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Group]['html'];
-$_MAIN_OUTPUT.= "<br>".tm_icon("group.png",___("Gruppen"))."&nbsp;".___("öffentliche Gruppen")."<br>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_GroupPub]['html'];
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top>";
-$_MAIN_OUTPUT.= tm_icon("world.png",___("URL"))."&nbsp;".___("URL");
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "<td valign=top colspan=1>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_ActionUrl]['html'];
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top>";
-$_MAIN_OUTPUT.= tm_icon("tick.png",___("Aktiv")).tm_icon("cancel.png",___("Inaktiv"))."&nbsp;".___("Aktiv");
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "<td valign=top colspan=1>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Aktiv]['html'];
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top>";
-$_MAIN_OUTPUT.= tm_icon("arrow_refresh.png",___("Double Opt-in"))."&nbsp;".___("Double Opt-in");
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "<td valign=top colspan=1>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_DoubleOptin]['html'];
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top>";
-$_MAIN_OUTPUT.= tm_icon("sport_8ball.png",___("Captcha"))."&nbsp;".___("Captcha/Spamcode prüfen");
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "<td valign=top colspan=1>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_UseCaptcha]['html'];
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_DigitsCaptcha]['html'];
-$_MAIN_OUTPUT.= ___("Ziffern");
-$_MAIN_OUTPUT.= "<br>".___("Fehlermeldung")." ".$Form->INPUT[$FormularName][$InputName_captcha_errmsg]['html'];
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top>";
-$_MAIN_OUTPUT.= tm_icon("ruby.png",___("Blacklist"))."&nbsp;".___("Blacklist prüfen");
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "<td valign=top colspan=1>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Blacklist]['html'];
-$_MAIN_OUTPUT.= "<br>".___("Fehlermeldung")." ".$Form->INPUT[$FormularName][$InputName_Blacklist_errmsg]['html'];
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top>";
-$_MAIN_OUTPUT.= tm_icon("group_error.png",___("Auswahl für Gruppen erzwingen"))."&nbsp;".___("Auswahl für Gruppen erzwingen");
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "<td valign=top colspan=1>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_ForcePubGroup]['html'];
-$_MAIN_OUTPUT.= "<br>".___("Fehlermeldung")." ".$Form->INPUT[$FormularName][$InputName_PubGroup_errmsg]['html'];
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top>";
-$_MAIN_OUTPUT.= tm_icon("group_link.png",___("Gruppen aktualisieren, nur Neue hinzu"))."&nbsp;".tm_icon("group_gear.png",___("Gruppen überschreiben"))."&nbsp;".___("Gruppen Auswahl");
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "<td valign=top colspan=1>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_OverwritePubgroup]['html'];
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top>";
-$_MAIN_OUTPUT.= tm_icon("tick.png",___("Aktiv")).tm_icon("cancel.png",___("Inaktiv"))."&nbsp;".___("Neuanmeldungen sind aktiv");
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "<td valign=top colspan=1>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_SubAktiv]['html'];
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top colspan=3>". tm_icon("layout.png",___("Beschreibung"))."&nbsp;".___("Beschreibung")."<br>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Descr]['html'];
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top colspan=3 style=\"border-top:1px solid #000000\">".___("Fn / Pflichtfeld / Typ / Name");
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top colspan=3  style=\"border-top:1px dashed #666666\">E-Mail ";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_email]['html'];
-$_MAIN_OUTPUT.= " ".___("Fehler")." ".$Form->INPUT[$FormularName][$InputName_email_errmsg]['html'];
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-
-//render form, F0-F9
-for ($fc=0;$fc<=9;$fc++) {
-	$FInputName="InputName_F".$fc;
-	$_MAIN_OUTPUT.= "<tr>";
-	$_MAIN_OUTPUT.= "<td valign=top colspan=3  style=\"border-top:1px dashed #666666\">F".$fc." ";
-	$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$$FInputName."_required"]['html'];
-	$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$$FInputName."_type"]['html'];
-	$_MAIN_OUTPUT.= " ".___("Name")." ".$Form->INPUT[$FormularName][$$FInputName]['html'];
-	$_MAIN_OUTPUT.= " ".___("Werte")." ".$Form->INPUT[$FormularName][$$FInputName."_value"]['html'];
-	$_MAIN_OUTPUT.= "<br>".___("Fehler")." ".$Form->INPUT[$FormularName][$$FInputName."_errmsg"]['html'];
-	$_MAIN_OUTPUT.= " ".___("RegExpr")." ".$Form->INPUT[$FormularName][$$FInputName."_expr"]['html'];
-	$_MAIN_OUTPUT.= "</td>";
-	$_MAIN_OUTPUT.= "</tr>";
-}
-
-
-//FSubmit value
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top colspan=1  style=\"border-top:1px dashed #666666\">".tm_icon("tag_blue.png",___("Submit"))."&nbsp;".___("Submit");
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "<td valign=top colspan=2 align=\"left\"  style=\"border-top:1px dashed #666666\">";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_SubmitValue]['html'];
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-
-//FReset value
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top colspan=1>".tm_icon("tag_red.png",___("Reset"))."&nbsp;".___("Reset");
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "<td valign=top colspan=2 align=\"left\">";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_ResetValue]['html'];
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-
-//Submit, save form
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top colspan=3  style=\"border-top:1px solid #000000\">";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Submit]['html'];
-//$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Reset]['html'];
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-$_MAIN_OUTPUT.= "</table>";
-$_MAIN_OUTPUT.= $Form->FORM[$FormularName]['foot'];
 ?>

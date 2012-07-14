@@ -3,7 +3,7 @@
 /* this file is part of: / diese Datei ist ein Teil von:                        */
 /* tellmatic, the newslettermachine                                             */
 /* tellmatic, die Newslettermaschine                                            */
-/* 2006/7 by Volker Augustin, multi.art.studio Hanau                            */
+/* 2006/11 by Volker Augustin, multi.art.studio Hanau                            */
 /* Contact/Kontakt: info@tellmatic.org                                      */
 /* Homepage: www.tellmatic.org                                                   */
 /* leave this header in file!                                                   */
@@ -53,6 +53,7 @@ $$InputName_User=getVar($InputName_User);
 
 $InputName_Pass="pass";
 $$InputName_Pass=getVar($InputName_Pass);
+
 $InputName_MaxMails="max_mails_atonce";
 $$InputName_MaxMails=getVar($InputName_MaxMails);
 
@@ -73,6 +74,9 @@ $$InputName_ReplyTo=getVar($InputName_ReplyTo);
 
 $InputName_Aktiv="aktiv";
 $$InputName_Aktiv=getVar($InputName_Aktiv);
+
+$InputName_Delay="delay";
+$$InputName_Delay=getVar($InputName_Delay);//delay between messages send to this host in send_it.php!
 
 //we MUST remove leading slashes from imap options, if not we get invalid remote specification error. 
 if (strpos($options, "/")==0) $options=substr_replace($options, '', 0, 1);
@@ -95,6 +99,7 @@ if ($set=="save") {
 		$check_mail=checkEmailAdr($return_mail,$EMailcheck_Intern);
 		if (!$check_mail[0]) {$check=false;$_MAIN_MESSAGE.="<br>".___("Die E-Mail-Adresse für Fehlermeldungen ist nicht gültig.")." ".$check_mail[1];}
 	}
+
 	if ($check) {
 			if (!DEMO) {
 				$HOSTS=new tm_HOST();
@@ -117,16 +122,19 @@ if ($set=="save") {
 							"sender_name"=>$sender_name,
 							"sender_email"=>$sender_email,
 							"return_mail"=>$return_mail,
-							"reply_to"=>$reply_to
+							"reply_to"=>$reply_to,
+							"delay"=>$delay
 							));
 		}//demo
 		$_MAIN_MESSAGE.="<br>".sprintf(___("Neuer Mailserver %s wurde angelegt."),"'<b>".display($name)."</b>'");
 		$action="host_list";
-		include_once (TM_INCLUDEPATH."/host_list.inc.php");
+		require_once (TM_INCLUDEPATH."/host_list.inc.php");
 	} else {//check
-		include_once (TM_INCLUDEPATH."/host_form.inc.php");
+		require_once (TM_INCLUDEPATH."/host_form.inc.php");
+		require_once (TM_INCLUDEPATH."/host_form_show.inc.php");
 	}//check
 } else {//set==save
-	include_once (TM_INCLUDEPATH."/host_form.inc.php");
+	require_once (TM_INCLUDEPATH."/host_form.inc.php");
+	require_once (TM_INCLUDEPATH."/host_form_show.inc.php");
 }//set==save
 ?>

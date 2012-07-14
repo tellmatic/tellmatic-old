@@ -61,7 +61,7 @@ if ($set=="adr" && check_dbid($adr_id)) {
 		$editor="Form_".$editor;
 	}
 
-	$_MAIN_OUTPUT.= " ".___("Status:")."&nbsp;".tm_icon($STATUS['adr']['statimg'][$ADR[0]['status']],$STATUS['adr']['status'][$ADR[0]['status']]).$STATUS['adr']['status'][$ADR[0]['status']];
+	$_MAIN_OUTPUT.= " ".___("Status:")."&nbsp;".tm_icon($STATUS['adr']['statimg'][$ADR[0]['status']],display($STATUS['adr']['status'][$ADR[0]['status']])).display($STATUS['adr']['status'][$ADR[0]['status']]);
 	$nlc=$QUEUE->countH(0,0,0,$ADR[0]['id'],0);
 	$_MAIN_OUTPUT.= "<br>CODE: ".$ADR[0]['code']." &nbsp;".
 							"<br>".sprintf(___("erstellt am: %s von: %s"),$created_date,$author).
@@ -81,7 +81,7 @@ if ($set=="adr" && check_dbid($adr_id)) {
 	//	function countH($q_id=0,$nl_id=0,$grp_id=0,$adr_id=0,$status=0) {	//countH($nl_id=0,$grp_id=0,$status=0)
 	$hc=$QUEUE->countH(0,0,0,$adr_id,0);
 	//add total value to graph
-	$chart->addPoint(new Point(___("Summe")." (100%)", $hc));
+	$chart->addPoint(new Point(___("Summe",0)." (100%)", $hc));
 	$_MAIN_OUTPUT.="<b>$hc</b> ".___("Sendeaufträge insgesamt:");
 	$_MAIN_OUTPUT.= "<br><img alt=\"Chart\"  src=\"".$tm_URL_FE."/".$tm_reportdir."/adr_".$adr_id.".png\"><br>";
 	$_MAIN_OUTPUT.="<br>".___("Auftragsstatus:")."";
@@ -91,16 +91,16 @@ if ($set=="adr" && check_dbid($adr_id)) {
 		$hcs=$QUEUE->countH(0,0,0,$adr_id,$hscc);
 		if ($hcs>0) {
 			$_MAIN_OUTPUT.="	&nbsp;".$hcs.
-							"&nbsp;".tm_icon($STATUS['h']['statimg'][$hscc],$STATUS['h']['status'][$hscc]).
-							"&nbsp;".$STATUS['h']['status'][$hscc].
-							"&nbsp;(".$STATUS['h']['descr'][$hscc].")<br>";
+							"&nbsp;".tm_icon($STATUS['h']['statimg'][$hscc],display($STATUS['h']['status'][$hscc])).
+							"&nbsp;".display($STATUS['h']['status'][$hscc]).
+							"&nbsp;(".display($STATUS['h']['descr'][$hscc]).")<br>";
 			//add values to chart
 			$ac_pc=$hcs/($hc/100);//anteil in prozent
 			$chart->addPoint(new Point($STATUS['h']['status'][$hscc]." (".number_format($ac_pc, 2, ',', '')."%)", $hcs));
 		}
 	}
 	//create chart
-	$chart->setTitle(sprintf(___("Empfänger %s"),"\"".$ADR[0]['email']."\""));
+	$chart->setTitle(sprintf(___("Empfänger %s",0),"\"".$ADR[0]['email']."\""));
 	$chart->render($tm_reportpath."/adr_".$adr_id.".png");
 
 	$_MAIN_OUTPUT.="<br>";
@@ -111,12 +111,12 @@ if ($set=="adr" && check_dbid($adr_id)) {
 	////////////////////////////////////////////////////////////////////////////////////////
 	$_MAIN_OUTPUT.="".___("Versand-Details:")."";
 
-	$shownlURLPara=$mSTDURL;
+	$shownlURLPara=tmObjCopy($mSTDURL);
 	$shownlURLPara->addParam("s","s_menu_nl,s_menu_st");
 	$shownlURLPara->addParam("act","statistic");
 	$shownlURLPara->addParam("set","nl");
 
-	$showadrgURLPara=$mSTDURL;
+	$showadrgURLPara=tmObjCopy($mSTDURL);
 	$showadrgURLPara->addParam("act","statistic");
 	$showadrgURLPara->addParam("s","s_menu_adr,s_menu_st");
 	$showadrgURLPara->addParam("set","adrg");
@@ -141,9 +141,9 @@ if ($set=="adr" && check_dbid($adr_id)) {
 			$_MAIN_OUTPUT.="<br><br><a href=\"".$tm_URL."/".$shownlURLPara_."\"><b>".display($NL[0]['subject'])."</b> (".tm_icon("chart_pie.png",___("Statistik anzeigen")).")</a>";
 			$_MAIN_OUTPUT.=	"<br>".___("an Adressgruppe")." <a href=\"".$tm_URL."/".$showadrgURLPara_."\"><b>".display($G[0]['name'])."</b> (".tm_icon("chart_pie.png",___("Statistik anzeigen")).")</a>:";
 
-			$_MAIN_OUTPUT.="<br>&nbsp;".tm_icon($STATUS['h']['statimg'][$H[$hcc]['status']],$STATUS['h']['status'][$H[$hcc]['status']]).
-									"&nbsp;".$STATUS['h']['status'][$H[$hcc]['status']].
-									"&nbsp;(".$STATUS['h']['descr'][$H[$hcc]['status']].")";
+			$_MAIN_OUTPUT.="<br>&nbsp;".tm_icon($STATUS['h']['statimg'][$H[$hcc]['status']],display($STATUS['h']['status'][$H[$hcc]['status']])).
+									"&nbsp;".display($STATUS['h']['status'][$H[$hcc]['status']]).
+									"&nbsp;(".display($STATUS['h']['descr'][$H[$hcc]['status']]).")";
 			$_MAIN_OUTPUT.="<br>".sprintf(___("Erstellt am: %s"),$H[$hcc]['created']);
 			if (!empty($Q[0]['send_at'])) {
 				$_MAIN_OUTPUT.="<br>".sprintf(___("Q Versand (start): %s"),$Q[0]['send_at']);

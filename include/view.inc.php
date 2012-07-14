@@ -153,7 +153,7 @@ if (check_dbid($nl_id)) {
 		if ($personalized && $valid_adr && $valid_h) {
 			//personalisiert
 			$_NEWSLETTER=$NEWSLETTER->parseNL(Array('nl'=>$NL[0],'adr'=>$ADR[0],'h'=>Array('id'=>$H[0]['id']),'q'=>Array('id'=>$H[0]['q_id'])),$content_type);
-			if (DEBUG) echo "personalized<br>"	;
+			if (DEBUG) echo "personalized<br>";
 		} else {
 			if (DEBUG) echo "no valid adr OR no valid h OR not personalized<br>";
 			//hierdurch wird noch erreicht das nur unpersonalisierte nl als solche ausgegeben werden 

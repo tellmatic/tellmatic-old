@@ -32,6 +32,9 @@ $$InputName_Lang=getVar($InputName_Lang);
 $InputName_Expert="expert";
 $$InputName_Expert=getVar($InputName_Expert);
 
+$InputName_Startpage="startpage";
+$$InputName_Startpage=getVar($InputName_Startpage);
+
 $InputName_EMail="email";
 $$InputName_EMail=getVar($InputName_EMail);
 
@@ -43,7 +46,7 @@ if ($set=="save") {
 	if (empty($pass)) {$check=false;$usr_message.="<br>".___("Kein Passwort angegeben.");}
 	if (strlen($pass)<$minlength_pw) {$check=false;$usr_message.="<br>".sprintf(___("Passwort sollte mindestens %s Zeichen haben."),$minlength_pw);}
 	if ($pass != $pass2) {$check=false;$usr_message.="<br>".___("Bitte geben Sie zweimal das gleiche Passwort an.");}
-	
+
 	$check_mail=checkEmailAdr($email,$EMailcheck_Intern);
 	if (!$check_mail[0]) {$check=false;$usr_message.="<br>".___("E-Mail-Adresse ist nicht gültig.")." ".$check_mail[1];}
 	$USER=new tm_CFG();
@@ -72,6 +75,7 @@ if ($set=="save") {
 	$USER->setStyle($LOGIN->USER['name'],$style);
 	$USER->setLang($LOGIN->USER['name'],$lang);
 	$USER->setExpert($LOGIN->USER['name'],$expert);
+	$USER->setStartpage($LOGIN->USER['name'],$startpage);
 	$check_val=0;
 	if ($check) $check_val=1;
 	header('Location: '.$tm_URL."/?act=user&amp;pwchanged=".$pwchanged."&amp;check=".$check_val."&amp;usr_message=".urlencode($usr_message));
@@ -99,5 +103,7 @@ unset($CSSDirsTmp);
 $$InputName_Style=$LOGIN->USER['style'];
 $$InputName_Lang=$LOGIN->USER['lang'];
 $$InputName_Expert=$LOGIN->USER['expert'];
+$$InputName_Startpage=$LOGIN->USER['startpage'];
 require_once (TM_INCLUDEPATH."/user_form.inc.php");
+require_once (TM_INCLUDEPATH."/user_form_show.inc.php");
 ?>

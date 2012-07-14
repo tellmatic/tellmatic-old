@@ -48,6 +48,10 @@ CREATE TABLE ".$tm_tablePrefix."adr (
   views smallint default '0',
   newsletter smallint default '0',
   recheck tinyint default '0',
+  proof smallint NOT NULL default '0',
+  source enum('user', 'import', 'subscribe', 'sync' , 'extern') collate utf8_bin NOT NULL,
+  source_id int NOT NULL default '0',
+  source_extern_id int NOT NULL default '0',
   PRIMARY KEY  (id),
   KEY email (email),
   KEY aktiv (aktiv),
@@ -56,7 +60,11 @@ CREATE TABLE ".$tm_tablePrefix."adr (
   KEY code (code),
   KEY adr_siteid_status (siteid,`status`),
   KEY adr_siteid_email (siteid,email),
-  KEY adr_siteid_id (id,siteid)
+  KEY adr_siteid_id (id,siteid),
+  KEY source (source),
+  KEY source_id (source_id),
+  KEY source_extern_id (source_extern_id),
+  KEY proof (proof)
 ) ENGINE=".$db_type."  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 ";
 
@@ -95,6 +103,7 @@ CREATE TABLE ".$tm_tablePrefix."adr_grp (
   aktiv tinyint NOT NULL default '0',
   siteid varchar(64) collate utf8_bin NOT NULL default '',
   standard tinyint NOT NULL default '0',
+  prod tinyint NOT NULL default '0',
   color varchar(10) collate utf8_bin default '#ffffff',
   created datetime NOT NULL default '0000-00-00 00:00:00',
   updated datetime NOT NULL default '0000-00-00 00:00:00',
@@ -104,7 +113,8 @@ CREATE TABLE ".$tm_tablePrefix."adr_grp (
   KEY name (name),
   KEY aktiv (aktiv),
   KEY siteid (siteid),
-  KEY standard (standard)
+  KEY standard (standard),
+  KEY prod (prod)
 ) ENGINE=".$db_type."  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 ";
@@ -130,6 +140,8 @@ $sql[4]['sql']="
 CREATE TABLE ".$tm_tablePrefix."config (
   id int NOT NULL auto_increment,
   name varchar(255) collate utf8_bin NOT NULL default '',
+  lang varchar(5) collate utf8_bin NOT NULL default 'de',
+  style varchar(64) collate utf8_bin NOT NULL default 'default',
   siteid varchar(64) collate utf8_bin NOT NULL default '',
   notify_mail varchar(128) collate utf8_bin default NULL,
   notify_subscribe tinyint NOT NULL default '1',
@@ -145,7 +157,8 @@ CREATE TABLE ".$tm_tablePrefix."config (
   unsubscribe_use_captcha tinyint NOT NULL default '1',
   unsubscribe_digits_captcha tinyint NOT NULL default '4',
   unsubscribe_sendmail tinyint NOT NULL default '1',
-  unsubscribe_action enum('unsubscribe','delete') collate utf8_bin NOT NULL,
+  unsubscribe_action enum('unsubscribe', 'delete', 'blacklist', 'blacklist_delete') collate utf8_bin NOT NULL,
+  unsubscribe_host int NOT NULL default '0',
   checkit_limit smallint NOT NULL default '25',
   checkit_from_email varchar( 255 ) NOT NULL default '',
   checkit_adr_reset_error tinyint NOT NULL default '1',
@@ -156,6 +169,10 @@ CREATE TABLE ".$tm_tablePrefix."config (
   bounceit_search enum('header','body','headerbody') collate utf8_bin NOT NULL default 'headerbody',
   bounceit_filter_to tinyint NOT NULL default '0',
   bounceit_filter_to_email varchar( 255 ) NOT NULL default '',
+  proof tinyint NOT NULL default '1',  
+  proof_url varchar( 255 ) NOT NULL default 'http://proof.tellmatic.org',
+  proof_trigger int NOT NULL default '10',
+  proof_pc int NOT NULL default '10',
   PRIMARY KEY  (id),
   KEY siteid (siteid)
 ) ENGINE=".$db_type."  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
@@ -169,6 +186,7 @@ CREATE TABLE ".$tm_tablePrefix."frm (
   action_url varchar(255) collate utf8_bin NOT NULL default '',
   descr tinytext collate utf8_bin NOT NULL default '',
   siteid varchar(64) collate utf8_bin NOT NULL default '',
+  standard tinyint(1) NOT NULL default '0',
   aktiv tinyint NOT NULL default '1',
   created datetime default NULL,
   updated datetime default NULL,
@@ -176,14 +194,23 @@ CREATE TABLE ".$tm_tablePrefix."frm (
   editor varchar(64) collate utf8_bin default NULL,
   double_optin tinyint NOT NULL default '0',
   subscriptions int NOT NULL default '0',
-  use_captcha tinyint default '1',
+  use_captcha tinyint(1) default '1',
   digits_captcha tinyint NOT NULL default '4',
   submit_value varchar(255) collate utf8_bin NOT NULL default '',
   reset_value varchar(255) collate utf8_bin NOT NULL default '',
-  subscribe_aktiv tinyint NOT NULL default '1',
-  check_blacklist tinyint NOT NULL default '1',
-  force_pubgroup tinyint NOT NULL default '0',
-  overwrite_pubgroup tinyint NOT NULL default '0',
+  subscribe_aktiv tinyint(1) NOT NULL default '1',
+  check_blacklist tinyint(1) NOT NULL default '1',
+  proof tinyint(1) NOT NULL default '1',
+  force_pubgroup tinyint(1) NOT NULL default '0',
+  overwrite_pubgroup tinyint(1) NOT NULL default '0',
+  multiple_pubgroup tinyint(1) NOT NULL default '0',
+  nl_id_doptin INT NOT NULL DEFAULT '0' ,
+  nl_id_greeting INT NOT NULL DEFAULT '0' ,
+  nl_id_update INT NOT NULL DEFAULT '0' ,
+  host_id INT NOT NULL DEFAULT '0',
+  message_doptin TEXT CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+  message_greeting TEXT CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+  message_update TEXT CHARACTER SET utf8 COLLATE utf8_bin NOT NULL, 
   email varchar(255) collate utf8_bin NOT NULL default '',
   f0 varchar(128) collate utf8_bin default NULL,
   f1 varchar(128) collate utf8_bin default NULL,
@@ -252,7 +279,8 @@ CREATE TABLE ".$tm_tablePrefix."frm (
   PRIMARY KEY  (id),
   KEY name (name),
   KEY siteid (siteid),
-  KEY aktiv (aktiv)
+  KEY aktiv (aktiv),
+  KEY standard (standard)
 ) ENGINE=".$db_type."  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 ";
 
@@ -343,6 +371,7 @@ CREATE TABLE ".$tm_tablePrefix."nl_h (
   status tinyint default NULL,
   created datetime default NULL,
   errors tinyint default NULL,
+  proof smallint default '0',
   sent datetime default NULL,
   ip varchar(16) collate utf8_bin NOT NULL default '0.0.0.0',
   siteid varchar(64) collate utf8_bin NOT NULL default '',
@@ -374,7 +403,9 @@ CREATE TABLE ".$tm_tablePrefix."nl_q (
   created datetime default NULL,
   send_at datetime default NULL,
   check_blacklist tinyint NOT NULL default '1',
+  proof tinyint NOT NULL default '1',
   autogen tinyint NOT NULL default '0',
+  touch tinyint NOT NULL default '0',
   sent datetime default NULL,
   author varchar(64) collate utf8_bin default NULL,
   siteid varchar(64) collate utf8_bin NOT NULL default '',
@@ -382,7 +413,9 @@ CREATE TABLE ".$tm_tablePrefix."nl_q (
   KEY nl_id (nl_id,grp_id,`status`),
   KEY siteid (siteid),
   KEY host_id (host_id),
-  KEY send_at (send_at)
+  KEY send_at (send_at),
+  KEY touch (touch),
+  KEY proof (proof)
 ) ENGINE=".$db_type."  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 ";
 
@@ -401,6 +434,7 @@ CREATE TABLE ".$tm_tablePrefix."user (
   style varchar(64) collate utf8_bin NOT NULL default 'default',
   lang varchar(8) collate utf8_bin NOT NULL default 'de',
   expert tinyint default '0',
+  startpage varchar(64) collate utf8_bin NOT NULL default 'Welcome',
   siteid varchar(64) collate utf8_bin NOT NULL default '',
   PRIMARY KEY  (id),
   KEY name (name,passwd,aktiv,siteid),
@@ -447,6 +481,7 @@ CREATE TABLE ".$tm_tablePrefix."hosts (
   sender_email varchar(255) collate utf8_bin NOT NULL default '',
   return_mail varchar(128) collate utf8_bin NOT NULL default '',
   reply_to varchar(128) collate utf8_bin NOT NULL default '',
+  delay INT NOT NULL default '100000',
   siteid varchar(64) collate utf8_bin NOT NULL default '',
   PRIMARY KEY  (id),
   KEY aktiv (aktiv),

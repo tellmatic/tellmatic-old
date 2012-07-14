@@ -53,7 +53,7 @@ if ($check) {
 			$headers .= "X-Mailer: Tellmatic\r\n";
 			$headers .= "Content-Type: text/plain;\n\tcharset=\"utf-8\"\n";
 			@mail("install@tellmatic.org",
-				"Installation ".$ApplicationVersion,
+				"Installation ".TM_VERSION,
 				display($regmsg),
 				$headers
 			);//,

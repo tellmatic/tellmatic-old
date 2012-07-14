@@ -3,7 +3,7 @@
 /* this file is part of: / diese Datei ist ein Teil von:                        */
 /* tellmatic, the newslettermachine                                             */
 /* tellmatic, die Newslettermaschine                                            */
-/* 2006/7 by Volker Augustin, multi.art.studio Hanau                            */
+/* 2006/11 by Volker Augustin, multi.art.studio Hanau                            */
 /* Contact/Kontakt: info@tellmatic.org                                      */
 /* Homepage: www.tellmatic.org                                                   */
 /* leave this header in file!                                                   */
@@ -110,9 +110,10 @@ if ($set=="save") {
 
 		$_MAIN_MESSAGE.="<br>".sprintf(___("Adresse %s wurde bearbeitet."),"<b>".display($email)."</b>");
 		$action="adr_list";
-		include_once ("adr_list.inc.php");
+		require_once ("adr_list.inc.php");
 	} else {//check
-		include_once (TM_INCLUDEPATH."/adr_form.inc.php");
+		require_once (TM_INCLUDEPATH."/adr_form.inc.php");
+		require_once (TM_INCLUDEPATH."/adr_form_show.inc.php");
 	}//check
 
 } else {
@@ -131,6 +132,7 @@ if ($set=="save") {
 	$f8=$ADR[0]['f8'];
 	$f9=$ADR[0]['f9'];
 	$memo=$ADR[0]['memo'];
-	include_once (TM_INCLUDEPATH."/adr_form.inc.php");
+	require_once (TM_INCLUDEPATH."/adr_form.inc.php");
+	require_once (TM_INCLUDEPATH."/adr_form_show.inc.php");
 }
 ?>

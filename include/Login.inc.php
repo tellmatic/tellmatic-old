@@ -41,21 +41,23 @@ $log_in = include(TM_INCLUDEPATH."/Login_guard_ret.inc.php");
 $logged_in=$log_in[0];
 $_MAIN_MESSAGE.=$log_in[1];
 
-if (DEBUG) $_MAIN_OUTPUT.="\n session id : ".session_id()."<br>\n";
+$Style=$C[0]['style'];
+
+if (DEBUG) $_MAIN_OUTPUT.=tm_debugmessage("session id : ".session_id());
 if (DEBUG) {
 	if (isset($_COOKIE[session_name()])) {
-		$_MAIN_MESSAGE.="\n cookie: ".$_COOKIE[session_name()]."<br>\n";
+		$_MAIN_MESSAGE.=tm_debugmessage("cookie: ".$_COOKIE[session_name()]);
 	} else {
-		$_MAIN_MESSAGE.="\n _COOKIE[sessionname], sessionname: ".session_name()." not set yet<br>\n";
+		$_MAIN_MESSAGE.=tm_debugmessage("_COOKIE[sessionname], sessionname: ".session_name()." not set yet");
 	}
 }
-if (DEBUG) $_MAIN_MESSAGE.="\n old session id: ".session_id()."<br>\n";
+if (DEBUG) $_MAIN_MESSAGE.=tm_debugmessage("old session id: ".session_id());
 
 /***********************************************************/
 //neue sessionid
 /***********************************************************/
 session_regenerate_id();
-if (DEBUG) $_MAIN_MESSAGE.="\n new session id: ".session_id()."<br>\n";
+if (DEBUG) $_MAIN_MESSAGE.=tm_debugmessage("new session id: ".session_id());
 
 /***********************************************************/
 //set cookie
@@ -80,8 +82,9 @@ if ($logged_in) {
 /***********************************************************/
 //login screen
 /***********************************************************/
-if (!$logged_in && $action!="logout") {
+if (!$logged_in) {
 	$_MAIN_DESCR=___("Bitte melden Sie sich mit Ihrem Benutzernamen und Passwort an.")."<br>";
 	require_once (TM_INCLUDEPATH."/Login_form.inc.php");
+	require_once (TM_INCLUDEPATH."/Login_form_show.inc.php");
 }
 ?>

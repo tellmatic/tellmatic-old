@@ -24,13 +24,22 @@ $$InputName_F=getVar($InputName_F);
 
 $InputName_Status="s_status";//
 $$InputName_Status=getVar($InputName_Status);
+#pt_register("POST","s_status");
+#if (!isset($s_status)) {
+#	$s_status[0]=getVar("s_status");
+#}
 
 $InputName_Aktiv="s_aktiv";//
 $$InputName_Aktiv=getVar($InputName_Aktiv);
 
 $InputName_Group="adr_grp_id";//
 $$InputName_Group=getVar($InputName_Group);
-
+//pt_register("POST","adr_grp");
+/*
+if (!isset($adr_grp)) {
+	$adr_grp[0]=getVar("adr_grp_id");
+}
+*/
 $InputName_Author="s_author";//
 $$InputName_Author=getVar($InputName_Author);
 
@@ -107,7 +116,7 @@ if ($reset_adr_search_values==1) {
 
 ###
 //parameters and link to reset all values to default, empty
-$resetSearchValuesURL=$mSTDURL;
+$resetSearchValuesURL=tmObjCopy($mSTDURL);
 $resetSearchValuesURL->addParam("act","adr_list");
 $resetSearchValuesURL->addParam("no_list",1);
 $resetSearchValuesURL->addParam("reset_adr_search_values",1);
@@ -120,12 +129,15 @@ $resetSearchValuesURL->addParam("f0_9","*");// * weil wenn leer wieder der sessi
 $resetSearchValuesURL->addParam("s_aktiv","");
 
 $resetSearchValuesURL_=$resetSearchValuesURL->getAllParams();
-include_once (TM_INCLUDEPATH."/adr_search_form.inc.php");
+//$_MAIN_OUTPUT.= "<a href=\"".$tm_URL."/".$resetSearchValuesURL_."\" title=\"".___("Such-Parameter zurücksetzen")."\">".tm_icon("cancel.png",___("Such-Parameter zurücksetzen"))."&nbsp;".___("Such-Parameter zurücksetzen")."</a>";
 
-	$search['email']=str_replace("*","%",$s_email);
-	$search['status']=$s_status;
-	$search['author']=$s_author;
-	$search['f0_9']=str_replace("*","%",$f0_9);
-	$search['group']=$adr_grp_id;
-	$search['aktiv']="$s_aktiv";
+require_once (TM_INCLUDEPATH."/adr_search_form.inc.php");
+require_once (TM_INCLUDEPATH."/adr_search_form_show.inc.php");
+
+$search['email']=str_replace("*","%",$s_email);
+$search['status']=$s_status;
+$search['author']=$s_author;
+$search['f0_9']=str_replace("*","%",$f0_9);
+$search['group']=$adr_grp_id;
+$search['aktiv']="$s_aktiv";
 ?>

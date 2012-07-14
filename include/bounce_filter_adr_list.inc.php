@@ -55,11 +55,14 @@ if ($bc) { //bc>0
 		if (isset($ADR[0]['id'])) {
 			$_MAIN_OUTPUT.= "<br>ID: ".$ADR[0]['id']."&nbsp;&nbsp;<br>";
 			if ($ADR[0]['aktiv']==1) {
-				$_MAIN_OUTPUT.=  "<img src=\"".$tm_iconURL."/tick.png\" border=\"0\" title=\"".___("Aktiv")."\">";
+				$_MAIN_OUTPUT.=   tm_icon("tick.png",___("Aktiv"))."&nbsp;";
 			} else {
-				$_MAIN_OUTPUT.=  "<img src=\"".$tm_iconURL."/cancel.png\" border=\"0\" title=\"".___("Inaktiv")."\">";
+				$_MAIN_OUTPUT.=   tm_icon("cancel.png",___("Aktiv"))."&nbsp;";
 			}
-			$_MAIN_OUTPUT.= "<br><img src=\"".$tm_iconURL."/".$STATUS['adr']['statimg'][$ADR[0]['status']]."\" border=\"0\" title=\"".$STATUS['adr']['status'][$ADR[0]['status']]."\">&nbsp;".$STATUS['adr']['status'][$ADR[0]['status']];
+			$_MAIN_OUTPUT.= "<br>"
+											.tm_icon($STATUS['adr']['statimg'][$ADR[0]['status']], display($STATUS['adr']['descr'][$ADR[0]['status']]))
+											."&nbsp;".display($STATUS['adr']['status'][$ADR[0]['status']]);			
+			
 			$_MAIN_OUTPUT.= "<br>".
 								"<br>".sprintf(___("Newsletter Gesamt: %s"),$ADR[0]['newsletter']).
 								"<br>".sprintf(___("Views: %s"),$ADR[0]['views']).
@@ -68,38 +71,34 @@ if ($bc) { //bc>0
 		} else {
 			$_MAIN_OUTPUT.= "<br>".___("Unbekannt / nicht in der Datenbank");
 		}
-
-
 		$_MAIN_OUTPUT.= "</div>";
 		$_MAIN_OUTPUT.= "</td>";
-
 		$_MAIN_OUTPUT.= "<td>";
 		$_MAIN_OUTPUT.= "<b>".$Bounces[$bcc]."</b>";
 		$_MAIN_OUTPUT.= "</td>";
-
 		$_MAIN_OUTPUT.= "<td>";
-
 		if (isset($ADR[0]['id'])) {
 			$_MAIN_OUTPUT.= "ID: ".$ADR[0]['id']."&nbsp;&nbsp;";
 			if ($ADR[0]['aktiv']==1) {
-				$_MAIN_OUTPUT.=  "<img src=\"".$tm_iconURL."/tick.png\" border=\"0\" title=\"".___("Aktiv")."\">";
+				$_MAIN_OUTPUT.=   tm_icon("tick.png",___("Aktiv"))."&nbsp;";
 			} else {
-				$_MAIN_OUTPUT.=  "<img src=\"".$tm_iconURL."/cancel.png\" border=\"0\" title=\"".___("Inaktiv")."\">";
+				$_MAIN_OUTPUT.=   tm_icon("cancel.png",___("Inaktiv"))."&nbsp;";
 			}
-			$_MAIN_OUTPUT.= "&nbsp;<img src=\"".$tm_iconURL."/".$STATUS['adr']['statimg'][$ADR[0]['status']]."\" border=\"0\" title=\"".$STATUS['adr']['status'][$ADR[0]['status']]."\">&nbsp;".$STATUS['adr']['status'][$ADR[0]['status']];
+			$_MAIN_OUTPUT.= "<br>"
+											.tm_icon($STATUS['adr']['statimg'][$ADR[0]['status']],display($STATUS['adr']['descr'][$ADR[0]['status']]))
+											."&nbsp;".display($STATUS['adr']['status'][$ADR[0]['status']]);			
 		} else {
 			$_MAIN_OUTPUT.= "&nbsp;".___("Unbekannt / nicht in der Datenbank");
 		}
 		$_MAIN_OUTPUT.= "</td>";
-
 		$_MAIN_OUTPUT.= "</tr>";
 	}
 		$_MAIN_OUTPUT.= "<tr>";
 		$_MAIN_OUTPUT.= "<td colspan=3>";
 		$_MAIN_OUTPUT.= "<a href=\"javascript:checkAllForm('".$FormularName."');\" title=\"".___("Markierung für alle angezeigten Adressen umkehren")."\">".___("Alle auswählen / Markierung für alle angezeigten Adressen umkehren")."</a><br><br>";
+	//	$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_ActionAdr]['html'];
 		$_MAIN_OUTPUT.= "</td>";
 		$_MAIN_OUTPUT.= "</tr>";
-
 	$_MAIN_OUTPUT.= "</tbody></table><br>";
 } //if bc
 ?>

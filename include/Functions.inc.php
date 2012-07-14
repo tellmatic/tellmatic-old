@@ -3,7 +3,7 @@
 /* this file is part of: / diese Datei ist ein Teil von:                        */
 /* tellmatic, the newslettermachine                                             */
 /* tellmatic, die Newslettermaschine                                            */
-/* 2006/7 by Volker Augustin, multi.art.studio Hanau                            */
+/* 2006/11 by Volker Augustin, multi.art.studio Hanau                            */
 /* Contact/Kontakt: info@tellmatic.org                                      */
 /* Homepage: www.tellmatic.org                                                   */
 /* leave this header in file!                                                   */
@@ -13,6 +13,90 @@
 /********************************************************************************/
 
 /**functions**/
+
+//get rss feed
+function fetchRSS($url) {
+	$doc = new DOMDocument();
+ 	$doc->load($url);
+  	$arrFeeds = array();
+  	foreach ($doc->getElementsByTagName('item') as $node) {
+    	$itemRSS = array ( 
+      	'title' => $node->getElementsByTagName('title')->item(0)->nodeValue,
+      	'desc' => $node->getElementsByTagName('description')->item(0)->nodeValue,
+      	'link' => $node->getElementsByTagName('link')->item(0)->nodeValue,
+      	'date' => $node->getElementsByTagName('pubDate')->item(0)->nodeValue
+      	);
+    	array_push($arrFeeds, $itemRSS);
+  	}
+  	return $arrFeeds;
+ }
+ 
+//show tm debugmessages
+function tm_debugmessage($text="",$addnewline=TRUE) {
+	$Return="";
+	if (!empty($text)) {
+		#$Return.="\n<div class=\"tm_debugmessage\">DEBUG: ";
+		$Return.="\n<div style=\"color:990000;background-color:#ffff99; font-size:9pt;\">DEBUG: ";
+		$Return.=display($text);
+		if ($addnewline) {
+			#$Return.="<br>";
+		}
+		$Return.="</div>\n";
+	}
+	return $Return;
+}
+
+//mtail, tail xx lines of a file
+function mtail($file,$lines=1,$chunk=1024) {
+	$Return="";	
+	if (DEBUG) $Return.=tm_debugmessage("mtail: file: $file , lines: $lines , chunk: $chunk");
+	if ($fp = fopen($file, 'r')) {
+		#if (DEBUG) $Return.=tm_debugmessage("open $file");
+		$offset_seek=($chunk)* -($lines);
+		#fseek($fp, $offset_seek, SEEK_END);
+		$fs=filesize($file);
+		if ($offset_seek > $fs) {
+			$offset_seek=0;
+		}
+		$fpos=ftell($fp);
+		// read some data
+		#$data = fgets($fp, $chunk*($lines+1)-1);
+		//string file_get_contents  ( string $filename  [, bool $use_include_path = false  [, resource $context  [, int $offset = -1  [, int $maxlen = -1  ]]]] )
+		
+		$offset=$chunk*$lines;
+		$offset2=$fs-$offset;
+		$data=file_get_contents($file,false,NULL,$offset2);
+		#$tail_lines=explode("\n",$data);
+		$tail_lines = preg_split('/[\r\n]+/', $data, -1, PREG_SPLIT_NO_EMPTY);		
+		$lc=count($tail_lines);
+		if (DEBUG) $Return.=tm_debugmessage("offset (chunk * -(lines)): $offset fs: $fs fpos: $fpos fs-fpos: ".($fs-$fpos)." lc: $lc");
+		#if (DEBUG) $Return.=tm_debugmessage("data:");
+		#if (DEBUG) $Return.=tm_debugmessage($data);
+		#if (DEBUG) $Return.=tm_debugmessage("tail_lines:");
+		#if (DEBUG) $Return.=tm_debugmessage(print_r($tail_lines,TRUE));	
+		
+		if ($lc<=$lines) {
+			//noch mehr daten einlesen
+		}
+		if ($lc<1) {
+			#if (DEBUG) $Return.=tm_debugmessage("lc<=1 $lc<=1");
+			$Return.="<font color=\"green\">".sprintf(___("Datei %s hat keine Einträge!"),$file)."</font>";
+		}
+		if ($lc>0) {
+			#if (DEBUG) $Return.=tm_debugmessage("lc>1");
+			for ($lcc=$lc;$lcc>($lc-$lines);$lcc--) { 
+				$Return.="* <font color=\"red\"> ".$tail_lines[$lcc-1]."</font><br>";
+			}
+		}
+		
+		fclose($fp);
+	} else {
+		$Return.=sprintf(___("Fehler: Datei %s kann nicht geöffnet werden!"),$file);
+	}
+	#$Return .="<hr>";
+	return $Return;
+}
+
 
 //displays 2 for 2.00 or 2.01 for 2.01, preserves decimal values
 //Jeroen de Bruijn [NL]
@@ -100,27 +184,36 @@ function createThumb($image,$outputimage,$maxsize=180,$quality=95) {
 }
 
 //gettext wrapper function
-function ___($s) {
-	if (DEBUG) global $debug_translated,$debug_not_translated,$debug_same_translated;
+function ___($s,$convert=1) {
+	//if convert == 1 then use display function, else return raw output
+	if (DEBUG_LANG) global $debug_translated,$debug_not_translated,$debug_same_translated;
 	//return $s;//disabled
 	//return _($s);//native gettext
 	//return __($s);//php_gettext emulation
 	$translated=translate($s);//'eigene' gettext emulation! adapted from old squirrelmail
 	$text=$translated[0];
 	$match=$translated[1];//=0 no match, =1 match, =2 guess
-	if (DEBUG && $match==0) {
-		$text.="(-)";
+	if (DEBUG_LANG && $match==0) {
+		if (DEBUG_LANG_LEVEL == 1 || DEBUG_LANG_LEVEL==3) $text.="(-)";
 		$debug_not_translated[]=$s;
 	}
-	if (DEBUG && $match==1) {
-		$text.="(+)";
+	if (DEBUG_LANG && $match==1) {
+		if (DEBUG_LANG_LEVEL == 1 || DEBUG_LANG_LEVEL==3) $text.="(+)";
 		$debug_translated[]=$s." ==&gt; ".$translated[0];
 	}
-	if (DEBUG && $match==2) {
-		$text.="(~)";
+	if (DEBUG_LANG && $match==2) {
+		if (DEBUG_LANG_LEVEL == 1 || DEBUG_LANG_LEVEL==3) $text.="(~)";
 		$debug_same_translated[]=$s." ==&gt; ".$translated[0];
 	}
-	$return=display($text);
+	//fix bug 3114550
+	//https://sourceforge.net/tracker/index.php?func=detail&aid=3114550&group_id=190396&atid=933192
+	//do not convert if used in images etc.
+	//thx to tms-schmidt
+	if ($convert===1) {
+		$return=display($text);
+	} else {
+		$return=$text;
+	}
 	return $return;
 }
 
@@ -130,7 +223,7 @@ function dbesc($val) {
 }
 function display($val) {
 	//function to display strings and values from db
-	$Return=htmlentities($val,ENT_QUOTES,"UTF-8");
+	$Return=htmlentities($val,ENT_QUOTES,"UTF-8",false);
 	return $Return;
 }
 
@@ -158,7 +251,7 @@ function remove_old_admin_files() {
 	while (($filename = readdir($handle))!==false) {
 		if (($filename != ".") && ($filename != "..")) {
 			$file=$path."/".$filename;
-			if (is_file($file) && $filename!=".htaccess") {
+			if (is_file($file) && $filename!=".htaccess" && $filename!="phpids.cache" && $filename!="phpids.log") {
 				$diff=time()-filemtime($file);
 				if ( $diff > 6) { // wenn datei aelter als 6 sekunden, löschen!
 					$Return.="".$filename." (".$diff."s) removed!\n";
@@ -194,29 +287,21 @@ function tm_icon($iconname,$title="",$alt="",$id="",$bgcolor="",$bgimage="") {
 
 //fetch current messages and news from tellmatic homepage
 function getMessages() {
+	$msg="";  
   $file_source = "http://www.tellmatic.org/MESSAGES";
-  if (($rh = fopen($file_source, 'rb')) === FALSE) {
+  if (($msg = file_get_contents($file_source)) === FALSE) {
   	return "<br><font color=red>".___("Kann Tellmatic News nicht öffnen.").": <a href=\"http://www.tellmatic.org/MESSAGES\" target=\"_blank\">http://www.tellmatic.org/MESSAGES</a></font>";
   }
-  $ver="";
-  while (!feof($rh))  {
-	  $ver.=fread($rh, 1024);
-  }
-  fclose($rh);
-  return $ver;
+  return $msg;
 }
 
 //fetch current version from tellmatic homepage
 function getCurrentVersion() {
-  $file_source = "http://www.tellmatic.org/CURRENT_VERSION";
-  if (($rh = fopen($file_source, 'rb')) === FALSE) {
-  	return "<br><font color=red>".___("Kann Tellmatic Versionsinfo nicht öffnen").": <a href=\"http://www.tellmatic.org/CURRENT_VERSION\" target=\"_blank\">http://www.tellmatic.org/CURRENT_VERSION</a></font>";
-  }
-  $ver="";
-  while (!feof($rh))  {
-	  $ver.=fread($rh, 1024);
-  }
-  fclose($rh);
+	$ver="";
+	$file_source = "http://www.tellmatic.org/CURRENT_VERSION";
+	if (($ver = file_get_contents($file_source)) === FALSE) {
+		return "<br><font color=red>".___("Kann Tellmatic Versionsinfo nicht öffnen").": <a href=\"http://www.tellmatic.org/CURRENT_VERSION\" target=\"_blank\">http://www.tellmatic.org/CURRENT_VERSION</a></font>";
+	}
   return $ver;
 }
 
@@ -274,7 +359,7 @@ function array_unset($array,$index) {
 //get domainname from email
 function getDomainFromEmail($str) {
 	$return="";
-	$domain=split("@",$str);
+	$domain=explode("@",$str,2);//use explode instead of split, php5.3
 	if (isset($domain[1])) {
 		$return=$domain[1];	
 	} else {
@@ -300,7 +385,14 @@ function getIP() {
 		$ip = long2ip(ip2long($_SERVER['REMOTE_ADDR']));
 	} else { //PROXY!
 		$proxy_ip = long2ip(ip2long($_SERVER['REMOTE_ADDR']));
-		$token1 = (int) substr($_SERVER['HTTP_X_FORWARDED_FOR'],0,strpos($_SERVER['HTTP_X_FORWARDED_FOR'],"."));
+		//fixed bug: https://sourceforge.net/tracker/?func=detail&aid=3114571&group_id=190396&atid=933192
+		//bug id: 3114571
+		//thx to tms-schmidt		
+		#$token1 = (int) substr($_SERVER['HTTP_X_FORWARDED_FOR'],0,strpos($_SERVER['HTTP_X_FORWARDED_FOR'],"."));		
+		if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+			$token1 = (int) substr($_SERVER['HTTP_X_FORWARDED_FOR'],0,strpos($_SERVER['HTTP_X_FORWARDED_FOR'],"."));
+		}
+		
 		$tokenc1="0.0.0.0";		
 		if (isset($_SERVER['HTTP_CLIENT_IP'])) {
 			$tokenc1 = (int) substr($_SERVER['HTTP_CLIENT_IP'],0,strpos($_SERVER['HTTP_CLIENT_IP'],"."));
@@ -309,7 +401,7 @@ function getIP() {
 				$tokenc1 = (int) substr($_SERVER['HTTP_VIA'],0,strpos($_SERVER['HTTP_VIA'],"."));
 			}
 		}
-		if (!($token1 == 10 || $token1 == 192 || $token1 == 127 || $token1 == 224) && isset($_SERVER['HTTP_X_FORWARDED_FOR'])) { // Proxy is nicht lokal (Firewall oder Transparent-Proxy)
+		if (isset($_SERVER['HTTP_X_FORWARDED_FOR']) && !($token1 == 10 || $token1 == 192 || $token1 == 127 || $token1 == 224) && isset($_SERVER['HTTP_X_FORWARDED_FOR'])) { // Proxy is nicht lokal (Firewall oder Transparent-Proxy)
 			$ip = long2ip(ip2long($_SERVER['HTTP_X_FORWARDED_FOR']));
 		} elseif(isset($_SERVER['HTTP_CLIENT_IP']) && !($tokenc1 == 10 || $tokenc1 == 192 || $tokenc1 == 127 || $tokenc1 == 224)) {
 			$ip = long2ip(ip2long($_SERVER['HTTP_CLIENT_IP']));
@@ -420,6 +512,7 @@ function write_file($file_path,$file_name,$file_content="") {
 	}
 	fclose($fp);
 	chmod ($file_path."/".$file_name, 0644);
+	return true;
 }
 
 //update existing file
@@ -433,6 +526,7 @@ function update_file($file_path,$file_name,$file_content="") {
 	}
 	fclose($fp);
 	chmod ($file_path."/".$file_name, 0664);
+	return true;
 }
 
 function append_file($file_path,$file_name,$file_content="") {
@@ -492,7 +586,7 @@ function checkEmailList($eMailList,$debug=0,$level=2) {
 			$Message.="<br>";
 		}
 		if ($debug==1) {
-			echo $Message;
+			echo tm_debugmessage($Message);
 		}
 	} else {
 		//wenn leer ok
@@ -501,12 +595,12 @@ function checkEmailList($eMailList,$debug=0,$level=2) {
 	return $Return;
 }
 
-//start zlib http compression
+//start zlib http compression if available.
 function m_obstart() {
 $encode = getenv("http_ACCEPT_ENCODING");
 if(ereg("gzip",$encode)) {
-	//ob_start("ob_gzhandler");
-	ob_start("zlib.output_handler");
+		//ob_start("ob_gzhandler");
+		ob_start("zlib.output_handler");
 	} else {
 		ob_start();
 	}
@@ -740,8 +834,7 @@ function SendMail($from_address,$from_name,$to_address,$to_name,$subject,$text,$
 }
 
 function SendMail_smtp($from_address,$from_name,$to_address,$to_name,$subject,$text,$html,$AttmFiles=Array(),$HOST=Array()) {
-	global $ApplicationText;
-	global $encoding;//use default encoding
+	global $encoding,$tm_URL_FE;//use default encoding
 	$return=false;
 	if (!isset($HOST[0])) {
 		$HOSTS=new tm_HOST();
@@ -784,12 +877,13 @@ function SendMail_smtp($from_address,$from_name,$to_address,$to_name,$subject,$t
 			$email_message->smtp_html_debug=0;
 		}
 	$email_message->maximum_piped_recipients=$HOST[0]['smtp_max_piped_rcpt'];//sends only XX rcpt to before waiting for ok from server!
-	$email_message->mailer=$ApplicationText." using smtp";
+	$email_message->mailer=TM_APPTEXT." using smtp";
 	$email_message->SetEncodedEmailHeader("To",$to_address,$to_name);
 	$email_message->SetEncodedEmailHeader("From",$HOST[0]['sender_email'],$HOST[0]['sender_name']);
 	$email_message->SetEncodedEmailHeader("Reply-To",$HOST[0]['reply_to'],$HOST[0]['sender_name']);
 	$email_message->SetHeader("Return-Path",$HOST[0]['return_mail']);
 	$email_message->SetEncodedEmailHeader("Errors-To",$HOST[0]['return_mail'],$HOST[0]['sender_name']);
+	$email_message->SetEncodedHeader("List-Unsubscribe",$tm_URL_FE."/unsubscribe.php");
 	$email_message->SetEncodedHeader("Subject",$subject);
 	$partids=array();//array of partnumbers, returned by reference from createpart etc
 	//we want mixed multipart, with alternative text/html and attachements, inlineimages and all that
@@ -826,7 +920,6 @@ function SendMail_smtp($from_address,$from_name,$to_address,$to_name,$subject,$t
 
 
 function SendMail_mail($From,$FromName,$To,$ToName,$Subject,$Text,$Html,$AttmFiles){
-	global 	$ApplicationText;
 	/*
 	$From      ... sender mail address like "my@address.com"
 	$FromName  ... sender name like "My Name"
@@ -862,7 +955,7 @@ function SendMail_mail($From,$FromName,$To,$ToName,$Subject,$Text,$Html,$AttmFil
 	$headers .= "From: ".$FromName." <".$From.">\r\n";
 	$headers .="To: ".$ToName." <".$To.">\r\n";
 	$headers .="Reply-To: ".$FromName." <".$From.">\r\n";
-	$headers .= "X-Mailer: ".$ApplicationText."\r\n";
+	$headers .= "X-Mailer: ".TM_APPTEXT."\r\n";
 	$headers .="Content-Type: multipart/mixed;\n\t";
 	$headers.="boundary=\"".$OB."\"\r\n";
 
@@ -937,7 +1030,22 @@ function checkEmailAdr($email,$level=1,$from="") {
 	//default level ist 2, mx dns und sytax!
 
 	if ($level>=1) {
+		//syntax
+		//$regex="([-!#\$%&'*+./0-9=?A-Z^_`a-z{|}~])+@([-!#\$%&'*+/0-9=?A-Z^_`a-z{|}~]+\\.)+[a-zA-Z]{2,6}";
+		// ^^^^^^^^^ findet auch adresen innerhalb des textes!
+		//$regex="^[0-9a-z]([-_.]?[0-9a-z])*@[0-9a-z]([-.]?[0-9a-z])*\\.[a-z]{2,4}$"; // hat probleme mit a.-b.cde@x-yz.td
+		//2007-05-03		: http://www.markussipila.info/pub/emailvalidator.php?action=validate
 		$regex="^[a-z0-9,!#\$%&'\*\+/=\?\^_`\{\|}~-]+(\.[a-z0-9,!#\$%&'\*\+/=\?\^_`\{\|}~-]+)*(\.{0,1})@[a-z0-9-]+(\.[a-z0-9-]+)*\.([a-z]{2,})$";
+		//oder auch: "^[_a-z0-9-]+(\.[_a-z0-9-]+)*(\.{0,1})@[_a-z0-9-]+(\.[_a-z0-9-]+)*(\.[a-z]{2,3}|\.info|\.gouv|\.name|\.museum)\$"
+		//von: http://www.zend.com/zend/spotlight/ev12apr.php?article=ev12apr&kind=sl&id=12978&open=0&anc=0&view=1#notes
+		//if(ereg ("<($regex)>", $email, $email_V))
+		//if (eregi("^[0-9a-z]([-_.]?[0-9a-z])*@[0-9a-z]([-.]?[0-9a-z])*\\.[a-z]{2,4}$", $email, $check)) {
+		
+		/*
+		yes! i know this regex has bugs, and its not possible to write a regex that nearly matches all valid emails. and this regex may fail with unicode domains. 
+		so, please, instead of complaining about that, tell me a better solution :) critics are welcome!
+		
+		*/
 		if (eregi("$regex", $email, $check)) {
 			$Return[0]=true;
 		} else {
@@ -949,7 +1057,30 @@ function checkEmailAdr($email,$level=1,$from="") {
 
 	if ($level>=2) {
 		//split array
-		list($userName, $mailDomain) = split("@", $email);
+		list($userName, $mailDomain) = explode("@", $email,2);//use explode instead of split, php5.3
+		/*
+		//das ganze is nich ganz rfc konform.....
+		//mx
+		$mx=getmxrr($mailDomain,$mxhosts);//print_r($mxhosts);
+		if($mx==1) {
+		//if(getmxrr(substr(strstr($check[0], '@'), 1), $validate_email_temp)) {
+			$Return[0]=true;
+		} else {
+			$Return[0]=false;
+			$Return[1]=___("Kein MX Eintrag");
+			return $Return;
+		}
+		//dns
+		$dns=checkdnsrr($mailDomain, "MX");
+		//checkdnsrr(substr(strstr($check[0], '@'), 1),"ANY")
+		if ($dns==1) {
+			$Return[0]=true;
+		} else {
+			$Return[0]=false;
+			$Return[1]=___("MX DNS Problem");
+			return $Return;
+		}
+		*/
 		//unter beruecksichtigung der rfc darf es bei fehlendem mx zu keinem fehler kommen....
 		//check mx+dns
 		//true if mx is found, if no mx is found check ANY dns entry
@@ -987,7 +1118,7 @@ function validate_email($email,$from="") {
 	}
 	
 	$Return=Array(0=>true, 1=>"OK");
-	list($userName, $mailDomain) = split("@", $email);
+	list($userName, $mailDomain) = explode("@", $email,2);//use explode instead of split, php5.3
 	$protocol.="from: ".$from." \n";
 	$protocol.="to: ".$email." \n";
 	$mx=getmxrr($mailDomain,$mxhosts);
@@ -996,7 +1127,11 @@ function validate_email($email,$from="") {
 		//wir preuefen nur mal den ersten mx
 		$host=$mxhosts[0];
 		$protocol.=$host." \n";
-		$Connect = fsockopen ( $host, 25, $errno, $errstr, 0.5);//timeout 0,5 sec
+		//added @ to suppress possible error messages, thx to tms-schmidt
+		//fixed bug id: 3114571
+		//https://sourceforge.net/tracker/?func=detail&aid=3114571&group_id=190396&atid=933192
+		$Connect = @fsockopen ( $host, 25, $errno, $errstr, 0.5);//timeout 0,5 sec
+		usleep(100000);
 		if ($Connect) {
 	        //aol hack
 	        /*
@@ -1007,16 +1142,19 @@ function validate_email($email,$from="") {
 	        */
 	        if (ereg("^220", $Out = fgets($Connect, 1024))) {
 	        //aol: if (ereg("^220", $Out)) {
+ 				usleep(100000);
 	           fputs ($Connect, "HELO ".$HOST[0]['smtp_domain']."\r\n");
 	           $Out = fgets ( $Connect, 1024 );
 	           $protocol.=$Out." \n";
-	           fputs ($Connect, "MAIL FROM: <{$from}>\r\n");
+				usleep(100000);
+	           fputs ($Connect, "MAIL FROM: $from\r\n");
 	           $From = fgets ( $Connect, 1024 );
-	           usleep(200000);
 					$protocol.=$From." \n";
-	           fputs ($Connect, "RCPT TO: <{$email}>\r\n");
+				usleep(100000);
+	           fputs ($Connect, "RCPT TO: $email\r\n");
 	           $To = fgets ($Connect, 1024);
 	           $protocol.=$To." \n";
+				usleep(100000);
 	           fputs ($Connect, "QUIT\r\n");
 	           fclose($Connect);
 	           //http://www.faqs.org/rfcs/rfc821.html
@@ -1198,14 +1336,13 @@ function formatFileSize($val) {
 }
 
  function getMime($file,$host='',$port=80)  { 
- 	global $ApplicationText;
    $host = $host ? $host : TM_DOMAIN; 
 	$host=str_replace("http://","",$host);
 	$host=str_replace("https://","",$host);
  	#return $host." | ".$file;
 
    $response = send_http_request("HEAD $file HTTP/1.0\r\nUser-Agent: 
- ".$ApplicationText."\r\n". 
+ ".TM_APPTEXT."\r\n". 
                                  "Host: $host:$port\r\n\r\n"); 
    if($response['header']['HTTP_STATUS_CODE'] == 200) { 
    	return $response['header']['HTTP_CONTENT-TYPE']; 

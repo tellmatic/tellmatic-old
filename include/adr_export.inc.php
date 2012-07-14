@@ -3,7 +3,7 @@
 /* this file is part of: / diese Datei ist ein Teil von:                        */
 /* tellmatic, the newslettermachine                                             */
 /* tellmatic, die Newslettermaschine                                            */
-/* 2006/7 by Volker Augustin, multi.art.studio Hanau                            */
+/* 2006/11 by Volker Augustin, multi.art.studio Hanau                            */
 /* Contact/Kontakt: info@tellmatic.org                                      */
 /* Homepage: www.tellmatic.org                                                   */
 /* leave this header in file!                                                   */
@@ -223,8 +223,8 @@ run:2
 	$status_message=___("Alle");
 	if (!empty($status)) {
 		$status_message="&nbsp;<img src=\"".$tm_iconURL."/".$STATUS['adr']['statimg'][$status]."\" border=\"0\">".
-								"&nbsp;".$STATUS['adr']['status'][$status].
-								"&nbsp;(".$STATUS['adr']['descr'][$status].")";
+								"&nbsp;".display($STATUS['adr']['status'][$status]).
+								"&nbsp;(".display($STATUS['adr']['descr'][$status]).")";
 	}
 	$_MAIN_MESSAGE.="<br>".sprintf(___("mit Status: %s"),$status_message);
 	$_MAIN_MESSAGE.= "<br>".sprintf(___("%s Einträge gesamt."),$adc);
@@ -336,5 +336,6 @@ run:2
 		$_MAIN_MESSAGE.= "<br>".sprintf(___("Datei gespeichert unter: %s"),"<a href=\"".$tm_URL_FE."/".$tm_datadir."/".$CSV_Filename."\" target=\"_preview\">".$tm_datadir."/".$CSV_Filename."</a>");
 	}//adc>0
 }//export
-include (TM_INCLUDEPATH."/adr_export_form.inc.php");
+require_once (TM_INCLUDEPATH."/adr_export_form.inc.php");
+require_once (TM_INCLUDEPATH."/adr_export_form_show.inc.php");
 ?>

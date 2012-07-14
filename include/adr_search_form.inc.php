@@ -3,7 +3,7 @@
 /* this file is part of: / diese Datei ist ein Teil von:                        */
 /* tellmatic, the newslettermachine                                             */
 /* tellmatic, die Newslettermaschine                                            */
-/* 2006/7 by Volker Augustin, multi.art.studio Hanau                            */
+/* 2006/11 by Volker Augustin, multi.art.studio Hanau                            */
 /* Contact/Kontakt: info@tellmatic.org                                      */
 /* Homepage: www.tellmatic.org                                                   */
 /* leave this header in file!                                                   */
@@ -79,10 +79,10 @@ $Form->new_Input($FormularName,$InputName_Author,"select", "");
 $Form->set_InputJS($FormularName,$InputName_Author," onChange=\"flash('submit','#ff0000');\" ");
 $Form->set_InputDefault($FormularName,$InputName_Author,$$InputName_Author);
 $Form->set_InputStyleClass($FormularName,$InputName_Author,"mFormSelect","mFormSelectFocus");
-$Form->set_InputDesc($FormularName,$InputName_Author,___("Author, angemeldet über Formular"));
+$Form->set_InputDesc($FormularName,$InputName_Author,___("Herkunft / Quelle"));
 $Form->set_InputReadonly($FormularName,$InputName_Author,false);
 $Form->set_InputOrder($FormularName,$InputName_Author,6);
-$Form->set_InputLabel($FormularName,$InputName_Author,___("angemeldet über")."<br>");
+$Form->set_InputLabel($FormularName,$InputName_Author,___("Herkunft / Quelle")."<br>");
 $Form->set_InputSize($FormularName,$InputName_Author,0,1);
 $Form->set_InputMultiple($FormularName,$InputName_Author,false);
 //add Data
@@ -114,7 +114,7 @@ $sc=count($STATUS['adr']['status']);
 $Form->add_InputOption($FormularName,$InputName_Status,"","-- ".___("Egal"));
 for ($scc=1; $scc<=$sc; $scc++)//0
 {
-	$Form->add_InputOption($FormularName,$InputName_Status,$scc,$STATUS['adr']['status'][$scc]);
+	$Form->add_InputOption($FormularName,$InputName_Status,$scc,display($STATUS['adr']['status'][$scc]));
 }
 
 
@@ -264,56 +264,20 @@ $Form->set_InputDesc($FormularName,$InputName_Reset,___("Reset"));
 $Form->set_InputReadonly($FormularName,$InputName_Reset,false);
 $Form->set_InputOrder($FormularName,$InputName_Reset,999);
 $Form->set_InputLabel($FormularName,$InputName_Reset,"");
+//$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Status]['html'];
+//$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_F]['html'];
 
-/*RENDER FORM*/
-
-$Form->render_Form($FormularName);
-
-/*DISPLAY*/
-$_MAIN_OUTPUT.= $Form->FORM[$FormularName]['head'];
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName]['act']['html'];
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName]['set_search']['html'];
-$_MAIN_OUTPUT.= "<table style=\"border: 1px dashed #cccccc; width:100%;\">";
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top>";
-$_MAIN_OUTPUT.= tm_icon("email.png",___("Suche nach E-Mail-Adresse")).$Form->INPUT[$FormularName][$InputName_Name]['html'];
+/*
+$_MAIN_OUTPUT.= "<td valign=top colspan=1>";
+$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_SI0]['html'];
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "<td valign=top colspan=1>";
-$_MAIN_OUTPUT.= tm_icon("textfield.png",___("Suche in F0-F9")).$Form->INPUT[$FormularName][$InputName_F]['html'];
+$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_SI1]['html'];
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "<td valign=top colspan=1>";
-$_MAIN_OUTPUT.= tm_icon("group.png",___("Filtern nach Gruppe")).$Form->INPUT[$FormularName][$InputName_Group]['html'];
+$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_SI2]['html'];
 $_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "<td valign=top colspan=1>";
-$_MAIN_OUTPUT.= tm_icon("lightbulb.png",___("Filtern nach Status")).$Form->INPUT[$FormularName][$InputName_Status]['html'];
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "<td valign=top colspan=1>";
-$_MAIN_OUTPUT.= tm_icon("tick.png",___("Aktiv"))."&nbsp;".tm_icon("cancel.png",___("Deaktiviert"))."&nbsp;".$Form->INPUT[$FormularName][$InputName_Aktiv]['html'];
-$_MAIN_OUTPUT.= "</td>";
+*/
 
-$_MAIN_OUTPUT.= "<td valign=top colspan=1>";
-$_MAIN_OUTPUT.= tm_icon("application_form.png",___("Filtern nach Author/Formular")).$Form->INPUT[$FormularName][$InputName_Author]['html'];
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-
-$_MAIN_OUTPUT.= "<tr>";
-
-$_MAIN_OUTPUT.= "<td valign=top colspan=1>";
-$_MAIN_OUTPUT.= "<td valign=top colspan=1>";
-$_MAIN_OUTPUT.= tm_icon("bullet_wrench.png",___("Zeige maximal N Adressen pro Seite")).$Form->INPUT[$FormularName][$InputName_Limit]['html'];
-$_MAIN_OUTPUT.= "</td>";
-
-$_MAIN_OUTPUT.= "<td valign=top colspan=1>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_SaveSearch]['html'];
-$_MAIN_OUTPUT.= "</td>";
-
-$_MAIN_OUTPUT.= "<td valign=bottom colspan=3>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Submit]['html'];
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Reset]['html'];
-$_MAIN_OUTPUT.= "&nbsp;";
-$_MAIN_OUTPUT.= "<a href=\"".$tm_URL."/".$resetSearchValuesURL_."\" title=\"".___("Suchparameter zurücksetzen")."\">".tm_icon("cancel.png",___("Suchparameter zurücksetzen"))."&nbsp;".___("Such-Parameter zurücksetzen")."</a>";
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-$_MAIN_OUTPUT.= "</table>";
-$_MAIN_OUTPUT.= $Form->FORM[$FormularName]['foot'];
+#$_MAIN_OUTPUT.= "<div id=\"avail\" name=\"avail\" style=\"overflow:auto; height:100px; margin:5px; background-color:#ffffff;\">avail:<br>&nbsp;</div>";
 ?>

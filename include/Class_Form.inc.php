@@ -3,7 +3,7 @@
 /* this file is part of: / diese Datei ist ein Teil von:                        */
 /* tellmatic, the newslettermachine                                             */
 /* tellmatic, die Newslettermaschine                                            */
-/* 2006/7 by Volker Augustin, multi.art.studio Hanau                            */
+/* 2006/10 by Volker Augustin, multi.art.studio Hanau                            */
 /* Contact/Kontakt: info@tellmatic.org                                      */
 /* Homepage: www.tellmatic.org                                                   */
 /* leave this header in file!                                                   */
@@ -45,33 +45,124 @@ class tm_FRM {
 		if (TM_LOG) $this->LOG=new tm_LOG();
   	}
 
-	function getForm($id=0,$offset=0,$limit=0,$group_id=0,$sortIndex="",$sortType=0) {
+	function getForm($id=0,$offset=0,$limit=0,$group_id=0,$sortIndex="",$sortType=0,$search=Array()) {
 		$this->FRM=Array();
-		#$DB=new tm_DB();
-		$Query ="	SELECT ".TM_TABLE_FRM.".id, ".TM_TABLE_FRM.".siteid, ".TM_TABLE_FRM.".name, ".TM_TABLE_FRM.".action_url, ".TM_TABLE_FRM.".descr, ".TM_TABLE_FRM.".aktiv, ".TM_TABLE_FRM.".author, ".TM_TABLE_FRM.".created, ".TM_TABLE_FRM.".editor, ".TM_TABLE_FRM.".updated, ".TM_TABLE_FRM.".double_optin, ".TM_TABLE_FRM.".subscriptions,
-						 ".TM_TABLE_FRM.".use_captcha,  ".TM_TABLE_FRM.".digits_captcha,  ".TM_TABLE_FRM.".subscribe_aktiv, ".TM_TABLE_FRM.".check_blacklist,
-						 ".TM_TABLE_FRM.".force_pubgroup, ".TM_TABLE_FRM.".overwrite_pubgroup,
-						 ".TM_TABLE_FRM.".submit_value, ".TM_TABLE_FRM.".reset_value,
-						".TM_TABLE_FRM.".email, ".TM_TABLE_FRM.".f0, ".TM_TABLE_FRM.".f1, ".TM_TABLE_FRM.".f2, ".TM_TABLE_FRM.".f3, ".TM_TABLE_FRM.".f4, ".TM_TABLE_FRM.".f5, ".TM_TABLE_FRM.".f6, ".TM_TABLE_FRM.".f7, ".TM_TABLE_FRM.".f8, ".TM_TABLE_FRM.".f9,
-						".TM_TABLE_FRM.".f0_type, ".TM_TABLE_FRM.".f1_type, ".TM_TABLE_FRM.".f2_type, ".TM_TABLE_FRM.".f3_type, ".TM_TABLE_FRM.".f4_type, ".TM_TABLE_FRM.".f5_type, ".TM_TABLE_FRM.".f6_type, ".TM_TABLE_FRM.".f7_type, ".TM_TABLE_FRM.".f8_type, ".TM_TABLE_FRM.".f9_type,
-						".TM_TABLE_FRM.".f0_required, ".TM_TABLE_FRM.".f1_required, ".TM_TABLE_FRM.".f2_required, ".TM_TABLE_FRM.".f3_required, ".TM_TABLE_FRM.".f4_required, ".TM_TABLE_FRM.".f5_required, ".TM_TABLE_FRM.".f6_required, ".TM_TABLE_FRM.".f7_required, ".TM_TABLE_FRM.".f8_required, ".TM_TABLE_FRM.".f9_required,
-						".TM_TABLE_FRM.".f0_value, ".TM_TABLE_FRM.".f1_value, ".TM_TABLE_FRM.".f2_value, ".TM_TABLE_FRM.".f3_value, ".TM_TABLE_FRM.".f4_value, ".TM_TABLE_FRM.".f5_value, ".TM_TABLE_FRM.".f6_value, ".TM_TABLE_FRM.".f7_value, ".TM_TABLE_FRM.".f8_value, ".TM_TABLE_FRM.".f9_value,
-						".TM_TABLE_FRM.".email_errmsg, ".TM_TABLE_FRM.".captcha_errmsg, ".TM_TABLE_FRM.".blacklist_errmsg, ".TM_TABLE_FRM.".pubgroup_errmsg, ".TM_TABLE_FRM.".f0_errmsg, ".TM_TABLE_FRM.".f1_errmsg, ".TM_TABLE_FRM.".f2_errmsg, ".TM_TABLE_FRM.".f3_errmsg, ".TM_TABLE_FRM.".f4_errmsg, ".TM_TABLE_FRM.".f5_errmsg, ".TM_TABLE_FRM.".f6_errmsg, ".TM_TABLE_FRM.".f7_errmsg, ".TM_TABLE_FRM.".f8_errmsg, ".TM_TABLE_FRM.".f9_errmsg,
-						".TM_TABLE_FRM.".f0_expr, ".TM_TABLE_FRM.".f1_expr, ".TM_TABLE_FRM.".f2_expr, ".TM_TABLE_FRM.".f3_expr, ".TM_TABLE_FRM.".f4_expr, ".TM_TABLE_FRM.".f5_expr, ".TM_TABLE_FRM.".f6_expr, ".TM_TABLE_FRM.".f7_expr, ".TM_TABLE_FRM.".f8_expr, ".TM_TABLE_FRM.".f9_expr
-						FROM ".TM_TABLE_FRM."
+		$Query ="	SELECT ".TM_TABLE_FRM.".id, "
+											.TM_TABLE_FRM.".siteid, "
+											.TM_TABLE_FRM.".name, "
+											.TM_TABLE_FRM.".action_url, "
+											.TM_TABLE_FRM.".descr, "
+											.TM_TABLE_FRM.".aktiv, "
+											.TM_TABLE_FRM.".author, "
+											.TM_TABLE_FRM.".created, "
+											.TM_TABLE_FRM.".editor, "
+											.TM_TABLE_FRM.".updated, "
+											.TM_TABLE_FRM.".double_optin, "
+											.TM_TABLE_FRM.".subscriptions, "
+											.TM_TABLE_FRM.".standard, "
+						 					.TM_TABLE_FRM.".use_captcha,  "
+						 					.TM_TABLE_FRM.".digits_captcha,  "
+						 					.TM_TABLE_FRM.".subscribe_aktiv, "
+						 					.TM_TABLE_FRM.".check_blacklist, "
+						 					.TM_TABLE_FRM.".proof, "
+											.TM_TABLE_FRM.".force_pubgroup, "
+											.TM_TABLE_FRM.".overwrite_pubgroup, "
+											.TM_TABLE_FRM.".multiple_pubgroup, "
+											.TM_TABLE_FRM.".nl_id_doptin, "
+											.TM_TABLE_FRM.".nl_id_greeting, "
+											.TM_TABLE_FRM.".nl_id_update, "
+											.TM_TABLE_FRM.".message_doptin, "
+											.TM_TABLE_FRM.".message_greeting, "
+											.TM_TABLE_FRM.".message_update, "
+						 					.TM_TABLE_FRM.".submit_value, "
+						 					.TM_TABLE_FRM.".reset_value, "
+						 					.TM_TABLE_FRM.".host_id, "
+						 					.TM_TABLE_FRM.".email, "
+						 					.TM_TABLE_FRM.".f0, "
+						 					.TM_TABLE_FRM.".f1, "
+						 					.TM_TABLE_FRM.".f2, "
+						 					.TM_TABLE_FRM.".f3, "
+						 					.TM_TABLE_FRM.".f4, "
+						 					.TM_TABLE_FRM.".f5, "
+						 					.TM_TABLE_FRM.".f6, "
+						 					.TM_TABLE_FRM.".f7, "
+						 					.TM_TABLE_FRM.".f8, "
+						 					.TM_TABLE_FRM.".f9, "
+						 					.TM_TABLE_FRM.".f0_type, "
+						 					.TM_TABLE_FRM.".f1_type, "
+						 					.TM_TABLE_FRM.".f2_type, "
+						 					.TM_TABLE_FRM.".f3_type, "
+						 					.TM_TABLE_FRM.".f4_type, "
+						 					.TM_TABLE_FRM.".f5_type, "
+						 					.TM_TABLE_FRM.".f6_type, "
+						 					.TM_TABLE_FRM.".f7_type, "
+						 					.TM_TABLE_FRM.".f8_type, "
+						 					.TM_TABLE_FRM.".f9_type, "
+						 					.TM_TABLE_FRM.".f0_required, "
+						 					.TM_TABLE_FRM.".f1_required, "
+						 					.TM_TABLE_FRM.".f2_required, "
+						 					.TM_TABLE_FRM.".f3_required, "
+						 					.TM_TABLE_FRM.".f4_required, "
+						 					.TM_TABLE_FRM.".f5_required, "
+						 					.TM_TABLE_FRM.".f6_required, "
+						 					.TM_TABLE_FRM.".f7_required, "
+						 					.TM_TABLE_FRM.".f8_required, "
+						 					.TM_TABLE_FRM.".f9_required, "
+						 					.TM_TABLE_FRM.".f0_value, "
+						 					.TM_TABLE_FRM.".f1_value, "
+						 					.TM_TABLE_FRM.".f2_value, "
+						 					.TM_TABLE_FRM.".f3_value, "
+						 					.TM_TABLE_FRM.".f4_value, "
+						 					.TM_TABLE_FRM.".f5_value, "
+						 					.TM_TABLE_FRM.".f6_value, "
+						 					.TM_TABLE_FRM.".f7_value, "
+						 					.TM_TABLE_FRM.".f8_value, "
+						 					.TM_TABLE_FRM.".f9_value, "
+						 					.TM_TABLE_FRM.".email_errmsg, "
+						 					.TM_TABLE_FRM.".captcha_errmsg, "
+						 					.TM_TABLE_FRM.".blacklist_errmsg, "
+						 					.TM_TABLE_FRM.".pubgroup_errmsg, "
+						 					.TM_TABLE_FRM.".f0_errmsg, "
+						 					.TM_TABLE_FRM.".f1_errmsg, "
+						 					.TM_TABLE_FRM.".f2_errmsg, "
+						 					.TM_TABLE_FRM.".f3_errmsg, "
+						 					.TM_TABLE_FRM.".f4_errmsg, "
+						 					.TM_TABLE_FRM.".f5_errmsg, "
+						 					.TM_TABLE_FRM.".f6_errmsg, "
+						 					.TM_TABLE_FRM.".f7_errmsg, "
+						 					.TM_TABLE_FRM.".f8_errmsg, "
+						 					.TM_TABLE_FRM.".f9_errmsg, "
+						 					.TM_TABLE_FRM.".f0_expr, "
+						 					.TM_TABLE_FRM.".f1_expr, "
+						 					.TM_TABLE_FRM.".f2_expr, "
+						 					.TM_TABLE_FRM.".f3_expr, "
+						 					.TM_TABLE_FRM.".f4_expr, "
+						 					.TM_TABLE_FRM.".f5_expr, "
+						 					.TM_TABLE_FRM.".f6_expr, "
+						 					.TM_TABLE_FRM.".f7_expr, "
+						 					.TM_TABLE_FRM.".f8_expr, "
+						 					.TM_TABLE_FRM.".f9_expr "
+						."FROM ".TM_TABLE_FRM."
 					";
 		if (check_dbid($group_id)) {
-			$Query .="LEFT JOIN ".TM_TABLE_FRM_GRP_REF." ON ".TM_TABLE_FRM.".id = ".TM_TABLE_FRM_GRP_REF.".frm_id";
+			$Query .="LEFT JOIN ".TM_TABLE_FRM_GRP_REF
+								." ON ".TM_TABLE_FRM.".id = ".TM_TABLE_FRM_GRP_REF.".frm_id";
 		}
 		$Query .=" WHERE ".TM_TABLE_FRM.".siteid='".TM_SITEID."'";
-		if ($group_id!=0) {
+		if (check_dbid($group_id)) {
 			$Query .=" AND ".TM_TABLE_FRM_GRP_REF.".siteid='".TM_SITEID."'
-						  AND ".TM_TABLE_FRM_GRP_REF.".grp_id=".checkset_int($group_id)."
+						  		AND ".TM_TABLE_FRM_GRP_REF.".grp_id=".checkset_int($group_id)."
 						";
 		}
 						//achtung, durch AND adr_details.siteid='".TM_SITEID."' werden nur die eintraege angezeigt die auch eien detaildatensatz haben!!!
 		if (check_dbid($id)) {
 			$Query .= " AND ".TM_TABLE_FRM.".id=".checkset_int($id);
+		}
+		if (isset($search['aktiv']) && !empty($search['aktiv'])) {
+			$Query .= " AND ".TM_TABLE_FRM.".aktiv=".checkset_int($search['aktiv']);
+		}
+		if (isset($search['standard']) && !empty($search['standard'])) {
+			$Query .= " AND ".TM_TABLE_FRM.".standard=".checkset_int($search['standard']);
 		}
 		if (!empty($sortIndex)) {
 			$Query .= " ORDER BY ".dbesc($sortIndex);
@@ -93,6 +184,7 @@ class tm_FRM {
 			$this->FORM[$ac]['name']=$this->DB->Record['name'];
 			$this->FORM[$ac]['action_url']=$this->DB->Record['action_url'];
 			$this->FORM[$ac]['aktiv']=$this->DB->Record['aktiv'];
+			$this->FORM[$ac]['standard']=$this->DB->Record['standard'];
 			$this->FORM[$ac]['descr']=$this->DB->Record['descr'];
 			$this->FORM[$ac]['author']=$this->DB->Record['author'];
 			$this->FORM[$ac]['created']=$this->DB->Record['created'];
@@ -104,10 +196,19 @@ class tm_FRM {
 			$this->FORM[$ac]['digits_captcha']=$this->DB->Record['digits_captcha'];
 			$this->FORM[$ac]['subscribe_aktiv']=$this->DB->Record['subscribe_aktiv'];
 			$this->FORM[$ac]['check_blacklist']=$this->DB->Record['check_blacklist'];
+			$this->FORM[$ac]['proof']=$this->DB->Record['proof'];
 			$this->FORM[$ac]['force_pubgroup']=$this->DB->Record['force_pubgroup'];
-			$this->FORM[$ac]['overwrite_pubgroup']=$this->DB->Record['overwrite_pubgroup'];			
+			$this->FORM[$ac]['overwrite_pubgroup']=$this->DB->Record['overwrite_pubgroup'];
+			$this->FORM[$ac]['multiple_pubgroup']=$this->DB->Record['multiple_pubgroup'];	
+			$this->FORM[$ac]['nl_id_doptin']=$this->DB->Record['nl_id_doptin'];	
+			$this->FORM[$ac]['nl_id_greeting']=$this->DB->Record['nl_id_greeting'];
+			$this->FORM[$ac]['nl_id_update']=$this->DB->Record['nl_id_update'];	
+			$this->FORM[$ac]['message_doptin']=$this->DB->Record['message_doptin'];	
+			$this->FORM[$ac]['message_greeting']=$this->DB->Record['message_greeting'];
+			$this->FORM[$ac]['message_update']=$this->DB->Record['message_update'];	
 			$this->FORM[$ac]['submit_value']=$this->DB->Record['submit_value'];
 			$this->FORM[$ac]['reset_value']=$this->DB->Record['reset_value'];
+			$this->FORM[$ac]['host_id']=$this->DB->Record['host_id'];
 			$this->FORM[$ac]['email']=$this->DB->Record['email'];
 			$this->FORM[$ac]['f0']=$this->DB->Record['f0'];
 			$this->FORM[$ac]['f1']=$this->DB->Record['f1'];
@@ -250,24 +351,48 @@ class tm_FRM {
 		//neues Formular speichern
 		$Query ="INSERT INTO
 					".TM_TABLE_FRM."
-					(
-					name,action_url,descr,aktiv,author,created,editor,updated,double_optin,subscriptions,use_captcha,digits_captcha,subscribe_aktiv,check_blacklist,
-					force_pubgroup,overwrite_pubgroup,
-					submit_value, reset_value, siteid,
-					email, f0,f1,f2,f3,f4,f5,f6,f7,f8,f9,
-					f0_type, f1_type, f2_type, f3_type, f4_type, f5_type, f6_type, f7_type, f8_type, f9_type,
-					f0_required, f1_required, f2_required, f3_required, f4_required, f5_required, f6_required, f7_required, f8_required, f9_required,
-					f0_value, f1_value, f2_value, f3_value, f4_value, f5_value, f6_value, f7_value, f8_value, f9_value,
-					email_errmsg, captcha_errmsg, blacklist_errmsg, pubgroup_errmsg, f0_errmsg, f1_errmsg, f2_errmsg, f3_errmsg, f4_errmsg, f5_errmsg, f6_errmsg, f7_errmsg, f8_errmsg, f9_errmsg,
-					f0_expr, f1_expr, f2_expr, f3_expr, f4_expr, f5_expr, f6_expr, f7_expr, f8_expr, f9_expr
+					(			
+						name, 
+						action_url, 
+						descr, 
+						aktiv, 
+						author, 
+						created, 
+						editor, 
+						updated,
+						standard, 
+						double_optin,
+						subscriptions,
+						use_captcha,
+						digits_captcha,
+						subscribe_aktiv,
+						check_blacklist,
+						proof,
+						force_pubgroup,
+						overwrite_pubgroup,
+						multiple_pubgroup,
+						nl_id_doptin, nl_id_greeting, nl_id_update,
+						message_doptin, message_greeting, message_update,
+						submit_value, reset_value, 
+						host_id, siteid,
+						email, 
+						f0,f1,f2,f3,f4,f5,f6,f7,f8,f9,
+						f0_type, f1_type, f2_type, f3_type, f4_type, f5_type, f6_type, f7_type, f8_type, f9_type,
+						f0_required, f1_required, f2_required, f3_required, f4_required, f5_required, f6_required, f7_required, f8_required, f9_required,
+						f0_value, f1_value, f2_value, f3_value, f4_value, f5_value, f6_value, f7_value, f8_value, f9_value,
+						email_errmsg, captcha_errmsg, blacklist_errmsg, pubgroup_errmsg, f0_errmsg, f1_errmsg, f2_errmsg, f3_errmsg, f4_errmsg, f5_errmsg, f6_errmsg, f7_errmsg, f8_errmsg, f9_errmsg,
+						f0_expr, f1_expr, f2_expr, f3_expr, f4_expr, f5_expr, f6_expr, f7_expr, f8_expr, f9_expr
 					)
 					VALUES
 					(
-					'".dbesc($frm["name"])."', '".dbesc($frm["action_url"])."', '".dbesc($frm["descr"])."', ".checkset_int($frm["aktiv"]).", '".dbesc($frm["author"])."', '".dbesc($frm["created"])."', '".dbesc($frm["author"])."', '".dbesc($frm["created"])."',
+					'".dbesc($frm["name"])."', '".dbesc($frm["action_url"])."', '".dbesc($frm["descr"])."', ".checkset_int($frm["aktiv"]).", '".dbesc($frm["author"])."', '".dbesc($frm["created"])."', '".dbesc($frm["author"])."', '".dbesc($frm["created"])."', 0,
 					".checkset_int($frm["double_optin"]).", 0, ".checkset_int($frm["use_captcha"]).",
 					".checkset_int($frm["digits_captcha"]).", ".checkset_int($frm["subscribe_aktiv"]).", ".checkset_int($frm["check_blacklist"]).",
-					'".dbesc($frm["force_pubgroup"])."', '".dbesc($frm["overwrite_pubgroup"])."',
-					'".dbesc($frm["submit_value"])."', '".dbesc($frm["reset_value"])."',
+					".checkset_int($frm["proof"]).",
+					".checkset_int($frm["force_pubgroup"]).", ".checkset_int($frm["overwrite_pubgroup"]).", ".checkset_int($frm["multiple_pubgroup"]).",
+					".checkset_int($frm["nl_id_doptin"]).", ".checkset_int($frm["nl_id_greeting"]).", ".checkset_int($frm["nl_id_update"]).",
+					'".dbesc($frm["message_doptin"])."', '".dbesc($frm["message_greeting"])."', '".dbesc($frm["message_update"])."',
+					'".dbesc($frm["submit_value"])."', '".dbesc($frm["reset_value"])."','".dbesc($frm["host_id"])."',
 					'".TM_SITEID."',
 					'".dbesc($frm["email"])."',
 					'".dbesc($frm["f0"])."',
@@ -342,11 +467,9 @@ class tm_FRM {
 			return $Return;
 		}
 		//Abfragen! und ID suchen, die brauchen wir fuer die Verknuepfung zu den Adressgruppen
-		//use last insert id istead
 		//wenn ein eintrag gefunden wurde....:
 		$new_frm_id=$this->DB->LastInsertID;
 		if (check_dbid($new_frm_id)) {
-			//neue id
 			//gruppen eintragen
 			$acg=count($grp);
 			for ($accg=0;$accg<$acg;$accg++) {
@@ -374,42 +497,30 @@ class tm_FRM {
 				}//if query
 			}//for
 		}
-
 		//jetzt die Formularvorlage speichern!
 		//templatevariablen einfuegen etc.
 		//namen der Felder einschreiben wenn angegeben
 		//nur angegebene Felder!
 		$Form_Filename_TPL="/Form.html";
-		$Form_Filename_S_TPL="/Form_s.html";
-		$Form_Filename_O_TPL="/Form_o.html";
-		$Form_Filename_OS_TPL="/Form_os.html";
 		$Form_Filename="/Form_".$new_frm_id.".html";
-		$Form_Filename_S="/Form_".$new_frm_id."_s.html";
-		$Form_Filename_P="/Form_".$new_frm_id."_p.html";
-		$Form_Filename_O="/Form_".$new_frm_id."_o.html";
-		$Form_Filename_OS="/Form_".$new_frm_id."_os.html";
+
+		$Form_Success_Filename_TPL="/Form_success.html";
+		$Form_Success_Filename="/Form_".$new_frm_id."_success.html";
 
 		$_Tpl_FRM=new tm_Template();
 		$_Tpl_FRM->setTemplatePath(TM_TPLPATH);
-
 		//Formular Template erzeugen
 		$Form_Html=$_Tpl_FRM->renderTemplate($Form_Filename_TPL);
 		write_file($tm_formpath,$Form_Filename,$Form_Html);
-		//Formular Template erzeugen, Meldung wenn subscribed
-		$Form_S_Html=$_Tpl_FRM->renderTemplate($Form_Filename_S_TPL);
-		write_file($tm_formpath,$Form_Filename_S,$Form_S_Html);
-		//Formular Template erzeugen, OptinMail
-		$Form_O_Html=$_Tpl_FRM->renderTemplate($Form_Filename_O_TPL);
-		write_file($tm_formpath,$Form_Filename_O,$Form_O_Html);
-		//Formular Template erzeugen, OptinMail nach Bestaetigung
-		$Form_OS_Html=$_Tpl_FRM->renderTemplate($Form_Filename_OS_TPL);
-		write_file($tm_formpath,$Form_Filename_OS,$Form_OS_Html);
+		
+		$Form_Success_Html=$_Tpl_FRM->renderTemplate($Form_Success_Filename_TPL);
+		write_file($tm_formpath,$Form_Success_Filename,$Form_Success_Html);
+		
 		//log
 		$frm['id']=$new_frm_id;
 		$frm['grp']=$grp;
 		$frm['grp_pub']=$grp_pub;
 		if (TM_LOG) $this->LOG->log(Array("data"=>$frm,"object"=>"frm","action"=>"new"));
-
 		return $Return;
 	}//addForm
 
@@ -419,7 +530,10 @@ class tm_FRM {
 		if (check_dbid($frm['id'])) {
 			if (TM_LOG) $this->LOG->log(Array("data"=>$frm,"object"=>"frm","action"=>"edit"));
 			$Query ="UPDATE ".TM_TABLE_FRM." SET
-						name='".dbesc($frm["name"])."', action_url='".dbesc($frm["action_url"])."', descr='".dbesc($frm["descr"])."', aktiv=".checkset_int($frm["aktiv"]).",
+						name='".dbesc($frm["name"])."', 
+						action_url='".dbesc($frm["action_url"])."', 
+						descr='".dbesc($frm["descr"])."', 
+						aktiv=".checkset_int($frm["aktiv"]).",
 						updated='".dbesc($frm["created"])."',
 						editor='".dbesc($frm["author"])."',
 						double_optin=".checkset_int($frm["double_optin"]).",
@@ -427,10 +541,19 @@ class tm_FRM {
 						digits_captcha=".checkset_int($frm["digits_captcha"]).",
 						subscribe_aktiv=".checkset_int($frm["subscribe_aktiv"]).",
 						check_blacklist=".checkset_int($frm["check_blacklist"]).",
+						proof=".checkset_int($frm["proof"]).",
 						force_pubgroup=".checkset_int($frm["force_pubgroup"]).",
 						overwrite_pubgroup=".checkset_int($frm["overwrite_pubgroup"]).",
+						multiple_pubgroup=".checkset_int($frm["multiple_pubgroup"]).",
+						nl_id_doptin=".checkset_int($frm["nl_id_doptin"]).",
+						nl_id_greeting=".checkset_int($frm["nl_id_greeting"]).",
+						nl_id_update=".checkset_int($frm["nl_id_update"]).",
+						message_doptin='".dbesc($frm["message_doptin"])."',
+						message_greeting='".dbesc($frm["message_greeting"])."',
+						message_update='".dbesc($frm["message_update"])."',
 						submit_value='".dbesc($frm["submit_value"])."',
 						reset_value='".dbesc($frm["reset_value"])."',
+						host_id=".checkset_int($frm["host_id"]).",
 						email='".dbesc($frm["email"])."',
 						f0='".dbesc($frm["f0"])."',
 						f1='".dbesc($frm["f1"])."',
@@ -594,6 +717,50 @@ class tm_FRM {
 		}//query
 		return $Return;
 	}//countSubs
+
+	function getStd() {
+		//function getForm($id=0,$offset=0,$limit=0,$group_id=0,$sortIndex="",$sortType=0,$search=Array()) {
+		$Return=$this->getForm(0,0,0,0,0,0,Array("standard"=>1, "aktiv"=>1));
+		return $Return;
+	}
+	//set standard form
+	function setStd($id=0) {
+		$Return=false;
+		//if valid id
+		if (check_dbid($id)) {
+			$Query ="UPDATE ".TM_TABLE_FRM."
+						SET standard=0
+						WHERE standard=1
+						AND siteid='".TM_SITEID."'";
+			//log
+			#get current std		
+			$FRMSTD=$this->getStd();
+			if (isset($FRMSTD[0]) && check_dbid($FRMSTD[0]['id'])) {
+				if ($this->DB->Query($Query)) {
+					//log				
+					if (TM_LOG) $this->LOG->log(Array("data"=>Array("standard"=>0,"id"=>$FRMSTD[0]['id']),"object"=>"frm","action"=>"edit"));
+					$Return=true;
+				} else {
+					$Return=false;
+					return $Return;
+				}
+			}
+			//set new std
+			$Query ="UPDATE ".TM_TABLE_FRM."
+						SET standard=1
+						WHERE id=".checkset_int($id)."
+						AND siteid='".TM_SITEID."'";
+			if ($this->DB->Query($Query)) {
+				//log				
+				if (TM_LOG) $this->LOG->log(Array("data"=>Array("standard"=>1,"id"=>$id),"object"=>"frm","action"=>"edit"));			
+				$Return=true;
+			} else {
+				$Return=false;
+				return $Return;
+			}
+		}
+		return $Return;
+	}//setStd
 
 	function makeMap(&$img,&$gi,$frm_id,$width,$height) {
 		$Query ="SELECT ip FROM ".TM_TABLE_FRM_S."

@@ -68,33 +68,33 @@ $entrys_total=$BLACKLIST->countBL(Array("type"=>$type));
 
 $mSTDURL->addParam("type",$type);
 
-$editURLPara=$mSTDURL;
+$editURLPara=tmObjCopy($mSTDURL);
 
-$aktivURLPara=$mSTDURL;
+$aktivURLPara=tmObjCopy($mSTDURL);
 $aktivURLPara->addParam("set","aktiv");
 
-$delURLPara=$mSTDURL;
+$delURLPara=tmObjCopy($mSTDURL);
 $delURLPara->addParam("set","delete");
 
-$sortURLPara=$mSTDURL;
+$sortURLPara=tmObjCopy($mSTDURL);
 $sortURLPara->addParam("act","bl_list");
 $sortURLPara_=$sortURLPara->getAllParams();
 
-$firstURLPara=$mSTDURL;
+$firstURLPara=tmObjCopy($mSTDURL);
 $firstURLPara->addParam("act","bl_list");
 $firstURLPara->addParam("offset",0);
 $firstURLPara->addParam("st",$sortType);
 $firstURLPara->addParam("si",$sortIndex);
 $firstURLPara_=$firstURLPara->getAllParams();
 
-$lastURLPara=$mSTDURL;
+$lastURLPara=tmObjCopy($mSTDURL);
 $lastURLPara->addParam("act","bl_list");
 $lastURLPara->addParam("offset",($entrys_total-$limit));
 $lastURLPara->addParam("st",$sortType);
 $lastURLPara->addParam("si",$sortIndex);
 $lastURLPara_=$lastURLPara->getAllParams();
 
-$nextURLPara=$mSTDURL;
+$nextURLPara=tmObjCopy($mSTDURL);
 $nextURLPara->addParam("act","bl_list");
 $nextURLPara->addParam("offset",($offset+$limit));
 $nextURLPara->addParam("limit",$limit);
@@ -102,7 +102,7 @@ $nextURLPara->addParam("st",$sortType);
 $nextURLPara->addParam("si",$sortIndex);
 $nextURLPara_=$nextURLPara->getAllParams();
 
-$prevURLPara=$mSTDURL;
+$prevURLPara=tmObjCopy($mSTDURL);
 $prevURLPara->addParam("act","bl_list");
 $prevURLPara->addParam("offset",($offset-$limit));
 $prevURLPara->addParam("limit",$limit);
@@ -110,7 +110,7 @@ $prevURLPara->addParam("st",$sortType);
 $prevURLPara->addParam("si",$sortIndex);
 $prevURLPara_=$prevURLPara->getAllParams();
 
-$exportURLPara=$mSTDURL;
+$exportURLPara=tmObjCopy($mSTDURL);
 $exportURLPara->addParam("set","export_blacklist");
 $exportURLPara_=$exportURLPara->getAllParams();
 
@@ -119,7 +119,7 @@ $BL=sort_array($BL,$sortIndex,$sortType);
 $bc=count($BL);
 $entrys=$bc; // fuer pager.inc!!!
 
-$pagesURLPara=$mSTDURL;
+$pagesURLPara=tmObjCopy($mSTDURL);
 //will be defined and use in pager.inc.php
 
 //show log summary
@@ -128,6 +128,7 @@ $search_log['object']="bl";
 include(TM_INCLUDEPATH."/log_summary_section.inc.php");
 
 require_once(TM_INCLUDEPATH."/bl_list_form.inc.php");
+require_once(TM_INCLUDEPATH."/bl_list_form_show.inc.php");
 //pager
 require(TM_INCLUDEPATH."/pager.inc.php");
 

@@ -95,26 +95,34 @@ $Form->new_Input($FormularName,$InputName_GroupPub,"select", "");
 $Form->set_InputJS($FormularName,$InputName_GroupPub," onChange=\"flash('submit','#ff0000');\" ");
 //$Form->set_InputDefault($FormularName,$InputName_GroupPub,$adr_grp_pub);
 $Form->set_InputStyleClass($FormularName,$InputName_GroupPub,"tm_form_group_select","tm_form_focus_group_select");
-#$Form->set_InputDesc($FormularName,$InputName_GroupPub,___("Gruppen wählen, STRG/CTRL gedrückt halten und klicken f. Mehrfachauswahl"));
+#$Form->set_InputDesc($FormularName,$InputName_GroupPub,___("Gruppen wÃ¤hlen, STRG/CTRL gedrÃ¼ckt halten und klicken f. Mehrfachauswahl"));
 $Form->set_InputReadonly($FormularName,$InputName_GroupPub,false);
 $Form->set_InputOrder($FormularName,$InputName_GroupPub,111);
 $Form->set_InputLabel($FormularName,$InputName_GroupPub,"");
-//$Form->set_InputValue($FormularName,$InputName_GroupPub,"");
-$Form->set_InputSize($FormularName,$InputName_GroupPub,0,5);
-$Form->set_InputMultiple($FormularName,$InputName_GroupPub,true);
+//allow multiple public groups?
+if ($FRM[0]['multiple_pubgroup'] == 1) {
+	$Form->set_InputMultiple($FormularName,$InputName_GroupPub,TRUE);
+} else {
+	$Form->set_InputMultiple($FormularName,$InputName_GroupPub,FALSE);
+}
 //add Data
 $ADDRESS=new tm_ADR();
 $GRPPUB=$ADDRESS->getGroup(0,0,$frm_id,0,Array("public_frm_ref"=>1,"aktiv"=>1,"public"=>1));
 $acgp=count($GRPPUB);
+//set size after counting... no more than 5 rows (only if select, not option. we do not have options yet, but may come)
+if ($acgp <5) {
+	$Form->set_InputSize($FormularName,$InputName_GroupPub,0,5);
+} else {
+	$Form->set_InputSize($FormularName,$InputName_GroupPub,0,$acgp);
+}
+
 for ($accgp=0; $accgp<$acgp; $accgp++)
 {
 		$Form->add_InputOption($FormularName,$InputName_GroupPub,$GRPPUB[$accgp]['id'],$GRPPUB[$accgp]['public_name']);
 		
 		$FGROUPDESCR.="<strong>".display($GRPPUB[$accgp]['public_name'])."</strong><br>";
-		$FGROUPDESCR.=display($GRPPUB[$accgp]['descr'])."<br>";
+		if (!empty($GRPPUB[$accgp]['descr'])) $FGROUPDESCR.=display($GRPPUB[$accgp]['descr'])."<br>";
 }
-
-
 
 //submit button
 $Form->new_Input($FormularName,$InputName_Submit,"submit",display($FRM[0]['submit_value']));

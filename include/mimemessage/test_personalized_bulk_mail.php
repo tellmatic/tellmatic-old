@@ -2,7 +2,7 @@
 /*
  * test_personalized_bulk_mail.php
  *
- * @(#) $Header: /cvsroot/tellmatic/tellmatic/include/mimemessage/test_personalized_bulk_mail.php,v 1.1 2007/11/29 23:50:53 mcms09 Exp $
+ * @(#) $Header: /home/mlemos/cvsroot/mimemessage/test_personalized_bulk_mail.php,v 1.6 2005/02/16 04:04:03 mlemos Exp $
  *
  */
 

@@ -160,6 +160,8 @@
 	//attaxchement upload
 	// Wurde wirklich eine Datei hochgeladen?
 	if(is_uploaded_file($_FILES["attach1"]["tmp_name"])) {
+		// Gültige Endung? ($ = Am Ende des Dateinamens) (/i = Groß- Kleinschreibung nicht berücksichtigen)
+		//if(preg_match("/\." . $allowed_attach_filetypes . "$/i", $_FILES["attach1"]["name"])) {
 			// Datei auch nicht zu groß
 			if($_FILES["attach1"]["size"] <= $max_upload_size) {
 				// Alles OK -> Datei kopieren
@@ -189,6 +191,12 @@
 				$_MAIN_MESSAGE.= "<br>".sprintf(___("Der Anhang Datei darf nur eine Grösse von %s Byte haben."),$max_byte_size);
 				$check=false;
 			}//max size
+		/*
+		} else {
+			$_MAIN_MESSAGE.= "<br>".___("Der Anhang besitzt eine ungültige Endung.");
+			$check=false;
+		}//extension
+		*/
 	} else {
 	}//no file
 
@@ -243,7 +251,7 @@
 
 	// kompletter content= $body + html content = $body_tmp
 	if (file_exists($tm_nlpath."/".$NL_Filename)) {
-		$file_content.=file_get_contents($tm_nlpath."/".$NL_Filename);
+		$file_content=file_get_contents($tm_nlpath."/".$NL_Filename);
 	}
 	$body_tmp=$body.$file_content;
 	// wenn html datei hochgeladen, datei auslesen und an eingegebenen Content anhaengen! $body_tmp !

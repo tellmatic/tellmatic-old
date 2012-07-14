@@ -19,6 +19,12 @@ if (!isset($tm_config_admin)) {
 if (!$tm_config_admin) {
 
 /***********************************************************/
+//tail xx lines of logfile
+/***********************************************************/
+	define("TM_PHP_LOG_TAIL",FALSE);//show last TM_PHP_LOG_TAIL_LINES lines of TM_PHP_LOGFILE	
+	define("TM_PHP_LOG_TAIL_LINES",3);
+
+/***********************************************************/
 //uploads
 /***********************************************************/
 	$allowed_html_filetypes = "(htm|html|txt)";
@@ -69,9 +75,33 @@ if (!$tm_config_admin) {
 //kleinkram
 /***********************************************************/
 	$row_bgcolor="#ffffff";
-	$row_bgcolor2="#eeefee";
+	$row_bgcolor2="#dddddd";
 	$row_bgcolor_inactive="#ff9999";
+	#$row_bgcolor_hilite="#bbd6ff";
 	$row_bgcolor_hilite="#ffcc00";
+	#$row_bgcolor_click="#ffcc00";
+	$row_bgcolor_fail="#ffbbbb";
+/***********************************************************/
+//proof
+/***********************************************************/
+
+	define ("TM_PROOF",TRUE);
+	define ("TM_PROOF_URL","http://proof.tellmatic.org");#get from db! this is default
+	define ("TM_PROOF_TRIGGER",10);#min adr, trigger proofing, default, get from db, if adr amount to check exceeds this value. proofing gets active if enabled, 1 to proof even 1 adr
+	define ("TM_PROOF_PC",10);#how many percents, default, get from db, how many percent of all adr should be proofed? set to 100 to enable for all
+	
+/***********************************************************/
+//paths for fm sections
+/***********************************************************/
+$file_path['path']['nl']=TM_PATH."/".$tm_nldir;
+$file_path['name']['nl']=___("Newsletter-Templates");
+$file_path['path']['nl']=TM_PATH."/".$tm_nlimgdir;
+$file_path['name']['nl']=___("Newsletter-Bilder");
+$file_path['path']['attm']=TM_PATH."/".$tm_nlattachdir;
+$file_path['name']['attm']=___("Newsletter-Anhänge");
+$file_path['path']['frm']=TM_PATH."/".$tm_formdir;
+$file_path['name']['frm']=___("Formular-Templates");
+
 /***********************************************************/
 //php settings etc
 /***********************************************************/
@@ -99,7 +129,7 @@ if (!$tm_config_admin) {
 	header("Content-type: text/html; charset=$encoding");
 	
 /***********************************************************/
-//start compression output
+//start gzip compression output if available
 /***********************************************************/
 	m_obstart();
 

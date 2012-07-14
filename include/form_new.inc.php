@@ -62,17 +62,44 @@ $$InputName_SubAktiv=getVar($InputName_SubAktiv);
 $InputName_Blacklist="check_blacklist";
 $$InputName_Blacklist=getVar($InputName_Blacklist);
 
+$InputName_Proof="proof";
+$$InputName_Proof=getVar($InputName_Proof);
+
 $InputName_ForcePubGroup="force_pubgroup";
 $$InputName_ForcePubGroup=getVar($InputName_ForcePubGroup);
 
+$InputName_MultiPubGroup="multiple_pubgroup";
+$$InputName_MultiPubGroup=getVar($InputName_MultiPubGroup);
+
 $InputName_OverwritePubgroup="overwrite_pubgroup";
 $$InputName_OverwritePubgroup=getVar($InputName_OverwritePubgroup);
+
+$InputName_NLDOptin="nl_id_doptin";
+$$InputName_NLDOptin=getVar($InputName_NLDOptin);
+
+$InputName_NLGreeting="nl_id_greeting";
+$$InputName_NLGreeting=getVar($InputName_NLGreeting);
+
+$InputName_NLUpdate="nl_id_update";
+$$InputName_NLUpdate=getVar($InputName_NLUpdate);
+
+$InputName_MessageDOptin="message_doptin";
+$$InputName_MessageDOptin=getVar($InputName_MessageDOptin);
+
+$InputName_MessageGreeting="message_greeting";
+$$InputName_MessageGreeting=getVar($InputName_MessageGreeting);
+
+$InputName_MessageUpdate="message_update";
+$$InputName_MessageUpdate=getVar($InputName_MessageUpdate);
 
 $InputName_SubmitValue="submit_value";
 $$InputName_SubmitValue=getVar($InputName_SubmitValue);
 
 $InputName_ResetValue="reset_value";
 $$InputName_ResetValue=getVar($InputName_ResetValue);
+
+$InputName_Host="host_id";
+$$InputName_Host=getVar($InputName_Host);
 
 $InputName_email="email";
 $$InputName_email=getVar($InputName_email);
@@ -216,6 +243,9 @@ $check=true;
 if ($set=="save") {
 	//checkinput
 	if (empty($name)) {$check=false;$_MAIN_MESSAGE.=___("Name sollte nicht leer sein.");}
+	if (!check_dbid($nl_id_doptin)) {$check=false;$_MAIN_MESSAGE.="<br>".___("Wählen Sie ein Newsletter für die Double-Opt-In Mail.");}
+	if (!check_dbid($nl_id_greeting)) {$check=false;$_MAIN_MESSAGE.="<br>".___("Wählen Sie ein Newsletter für die Bestätigungsmail.");}
+	if (!check_dbid($nl_id_update)) {$check=false;$_MAIN_MESSAGE.="<br>".___("Wählen Sie ein Newsletter für Updates.");}
 	if ($check) {
 		$FORMULAR=new tm_FRM();
 		$FORMULAR->addForm(Array(
@@ -230,10 +260,19 @@ if ($set=="save") {
 				"digits_captcha"=>$digits_captcha,
 				"subscribe_aktiv"=>$subscribe_aktiv,
 				"check_blacklist"=>$check_blacklist,
+				"proof"=>$proof,
 				"force_pubgroup"=>$force_pubgroup,
 				"overwrite_pubgroup"=>$overwrite_pubgroup,
+				"multiple_pubgroup"=>$multiple_pubgroup,
+				"nl_id_doptin"=>$nl_id_doptin,	
+				"nl_id_greeting"=>$nl_id_greeting,
+				"nl_id_update"=>$nl_id_update,
+				"message_doptin"=>$message_doptin,	
+				"message_greeting"=>$message_greeting,
+				"message_update"=>$message_update,
 				"submit_value"=>$submit_value,
 				"reset_value"=>$reset_value,
+				"host_id"=>$host_id,
 				"email"=>$email,
 				"f0"=>$f0,
 				"f1"=>$f1,
@@ -304,13 +343,16 @@ if ($set=="save") {
 				$adr_grp_pub);//details, references adr_group, adr_grp_pub!
 		$_MAIN_MESSAGE.="<br>".sprintf(___("Neues Formular %s wurde erstellt."),"'<b>".display($name)."</b>'");
 		$action="form_list";
-		include_once (TM_INCLUDEPATH."/form_list.inc.php");
+		require_once (TM_INCLUDEPATH."/form_list.inc.php");
 	} else {
-		include_once (TM_INCLUDEPATH."/form_form.inc.php");
+		require_once (TM_INCLUDEPATH."/form_form.inc.php");
+		require_once (TM_INCLUDEPATH."/form_form_show.inc.php");
 	}
 
 } else {
 	$$InputName_Aktiv=1;
+	$$InputName_Proof=1;
+	$$InputName_Blacklist=1;
 	$$InputName_DoubleOptin=1;
 	$$InputName_Name=___("neues Formular");
 	$$InputName_Descr=___("neues Formular");
@@ -320,6 +362,10 @@ if ($set=="save") {
 	$$InputName_PubGroup_errmsg=___("Fehler");
 	$$InputName_SubmitValue=___("Absenden");
 	$$InputName_ResetValue=___("Zurücksetzen");
-	include_once (TM_INCLUDEPATH."/form_form.inc.php");
+	$$InputName_MessageDOptin=___("Nachricht für Double-Opt-In");
+	$$InputName_MessageGreeting=___("Nachricht für Neueintrag");
+	$$InputName_MessageUpdate=___("Nachricht für Aktualisierung");
+	require_once (TM_INCLUDEPATH."/form_form.inc.php");
+	require_once (TM_INCLUDEPATH."/form_form_show.inc.php");
 }
 ?>

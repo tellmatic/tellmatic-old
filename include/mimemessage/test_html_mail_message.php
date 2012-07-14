@@ -2,7 +2,7 @@
 /*
  * test_html_mail_message.php
  *
- * @(#) $Header: /cvsroot/tellmatic/tellmatic/include/mimemessage/test_html_mail_message.php,v 1.1 2007/11/29 23:50:53 mcms09 Exp $
+ * @(#) $Header: /home/mlemos/cvsroot/mimemessage/test_html_mail_message.php,v 1.14 2008/04/07 22:19:08 mlemos Exp $
  *
  */
 
@@ -52,7 +52,7 @@
  *  like image files, style sheet files, HTML frame files, etc..,
  *  needs to be composed as a multipart/related message part.
  *  Different parts need to be created before they can be added
- *  to the message.
+ *  later to the message.
  *
  *  Parts can be created from files that can be opened and read.
  *  The data content type needs to be specified. The can try to guess
@@ -61,7 +61,13 @@
 	$image=array(
 		"FileName"=>"http://www.phpclasses.org/graphics/logo.gif",
 		"Content-Type"=>"automatic/name",
-		"Disposition"=>"inline"
+		"Disposition"=>"inline",
+/*
+ *  You can set the Cache option if you are going to send the same message
+ *  to multiple users but this file part does not change.
+ *
+		"Cache"=>1
+ */
 	);
 	$email_message->CreateFilePart($image,$image_part);
 
@@ -79,24 +85,36 @@
 	$image=array(
 		"FileName"=>"http://www.phpclasses.org/graphics/background.gif",
 		"Content-Type"=>"automatic/name",
-		"Disposition"=>"inline"
+		"Disposition"=>"inline",
+/*
+ *  You can set the Cache option if you are going to send the same message
+ *  to multiple users but this file part does not change.
+ *
+		"Cache"=>1
+ */
 	);
 	$email_message->CreateFilePart($image,$background_image_part);
 
 /*
  *  Related file parts may also be embedded in the actual HTML code in the
  *  form of URL like those referenced by the SRC attribute of IMG tags.
+ *  This example is commented out because not all mail programs support
+ *  this method of embedding images in HTML messages.
+ *
+ *  $image=array(
+ *    "FileName"=>"http://www.phpclasses.org/graphics/elephpant_logo.gif",
+ *    "Content-Type"=>"automatic/name",
+ *  );
+ *  $image_data_url=$email_message->GetDataURL($image);
  */
-	$image=array(
-		"FileName"=>"http://www.phpclasses.org/graphics/elephpant_logo.gif",
-		"Content-Type"=>"automatic/name",
-	);
-	$image_data_url=$email_message->GetDataURL($image);
 
 /*
  *  Use different identifiers to reference different related file parts.
+ *  Some e-mail programs do not support setting the background image in the
+ *  body tag or style. A workaround consists on using a table with 100%
+ *  with the background attribute set to the image URL.
  */
-	$background_image_content_id=$email_message->GetPartContentID($background_image_part);
+		$background_image_content_id="cid:".$email_message->GetPartContentID($background_image_part);
 
 /*
  *  The URL of referenced parts in HTML starts with cid:
@@ -106,34 +124,35 @@
 <head>
 <title>$subject</title>
 <style type=\"text/css\"><!--
-body { color: black ; font-family: arial, helvetica, sans-serif ; background-image: url(cid:".$background_image_content_id.") ; background-color: #A3C5CC }
+body { color: black ; font-family: arial, helvetica, sans-serif ; background-color: #A3C5CC }
 A:link, A:visited, A:active { text-decoration: underline }
 --></style>
 </head>
 <body>
+<table background=\"$background_image_content_id\" width=\"100%\">
+<tr>
+<td>
 <center><h1>$subject</h1></center>
 <hr>
 <P>Hello ".strtok($to_name," ").",<br><br>
 This message is just to let you know that the <a href=\"http://www.phpclasses.org/mimemessage\">MIME E-mail message composing and sending PHP class</a> is working as expected.<br><br>
 <center><h2>Here is an image embedded in a message as a separate part:</h2></center>
-<center><img src=\"cid:".$image_content_id."\"></center>
-<center><h2>Here is an image embedded directly in the HTML:</h2></center>
-<center><img src=\"".$image_data_url."\"></center>
-Thank you,<br>
+<center><img src=\"cid:".$image_content_id."\"></center>".
+/*
+ * This example of embedding images in HTML messages is commented out
+ * because not all mail programs support this method.
+ *
+ * <center><h2>Here is an image embedded directly in the HTML:</h2></center>
+ * <center><img src=\"".$image_data_url."\"></center>
+ */
+"Thank you,<br>
 $from_name</p>
+</td>
+</tr>
+</table>
 </body>
 </html>";
 	$email_message->CreateQuotedPrintableHTMLPart($html_message,"",$html_part);
-
-/*
- *  The complete HTML parts are gathered in a single multipart/related part.
- */
-	$related_parts=array(
-		$html_part,
-		$image_part,
-		$background_image_part
-	);
-	$email_message->CreateRelatedMultipart($related_parts,$html_parts);
 
 /*
  *  It is strongly recommended that when you send HTML messages,
@@ -153,9 +172,19 @@ $from_name</p>
  */
 	$alternative_parts=array(
 		$text_part,
-		$html_parts
+		$html_part
 	);
-	$email_message->AddAlternativeMultipart($alternative_parts);
+	$email_message->CreateAlternativeMultipart($alternative_parts,$alternative_part);
+
+/*
+ *  All related parts are gathered in a single multipart/related part.
+ */
+	$related_parts=array(
+		$alternative_part,
+		$image_part,
+		$background_image_part
+	);
+	$email_message->AddRelatedMultipart($related_parts);
 
 /*
  *  One or more additional parts may be added as attachments.
@@ -165,7 +194,13 @@ $from_name</p>
 		"Data"=>"This is just a plain text attachment file named attachment.txt .",
 		"Name"=>"attachment.txt",
 		"Content-Type"=>"automatic/name",
-		"Disposition"=>"attachment"
+		"Disposition"=>"attachment",
+/*
+ *  You can set the Cache option if you are going to send the same message
+ *  to multiple users but this file part does not change.
+ *
+		"Cache"=>1
+ */
 	);
 	$email_message->AddFilePart($attachment);
 
@@ -180,4 +215,5 @@ $from_name</p>
 		echo "Error: $error\n";
 	else
 		echo "Message sent to $to_name\n";
+	var_dump($email_message->parts);
 ?>

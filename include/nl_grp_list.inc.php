@@ -43,28 +43,28 @@ if ($set=="delete" && $doit==1) {
 $GRP=$NEWSLETTER->getGroup(0,0,1);
 $ncg=count($GRP);
 
-$editURLPara=$mSTDURL;
+$editURLPara=tmObjCopy($mSTDURL);
 $editURLPara->addParam("act","nl_grp_edit");
 
-$shownlURLPara=$mSTDURL;
+$shownlURLPara=tmObjCopy($mSTDURL);
 $shownlURLPara->addParam("act","nl_list");
 
-$addnlURLPara=$mSTDURL;
+$addnlURLPara=tmObjCopy($mSTDURL);
 $addnlURLPara->addParam("act","nl_new");
 
-$aktivURLPara=$mSTDURL;
+$aktivURLPara=tmObjCopy($mSTDURL);
 $aktivURLPara->addParam("act","nl_grp_list");
 $aktivURLPara->addParam("set","aktiv");
 
-$delURLPara=$mSTDURL;
+$delURLPara=tmObjCopy($mSTDURL);
 $delURLPara->addParam("act","nl_grp_list");
 $delURLPara->addParam("set","delete");
 
-$stdURLPara=$mSTDURL;
+$stdURLPara=tmObjCopy($mSTDURL);
 $stdURLPara->addParam("act","nl_grp_list");
 $stdURLPara->addParam("set","standard");
 
-$statURLPara=$mSTDURL;
+$statURLPara=tmObjCopy($mSTDURL);
 $statURLPara->addParam("act","statistic");
 $statURLPara->addParam("set","nlg");
 
@@ -181,7 +181,10 @@ for ($nccg=0;$nccg<$ncg;$nccg++) {
 	$_MAIN_OUTPUT.= "&nbsp;<a href=\"".$tm_URL."/".$addnlURLPara_."\" title=\"".___("Neuen Newsletter in dieser Gruppe erstellen")."\">".tm_icon("newspaper_add.png",___("Neuen Newsletter in dieser Gruppe erstellen"))."</a>";
 	$_MAIN_OUTPUT.= "&nbsp;<a href=\"".$tm_URL."/".$shownlURLPara_."\" title=\"".___("Alle Newsletter in dieser Gruppe anzeigen")."\">".tm_icon("newspaper_go.png",___("Alle Newsletter in dieser Gruppe anzeigen"))."&nbsp;"."</a>";//.$GRP[$nccg]['nl_count']
 	$_MAIN_OUTPUT.=$nlcount_notpl."/".$nlcount_tpl;
+	//$_MAIN_OUTPUT.=  "&nbsp;<a href=\"".$tm_URL."/".$statURLPara_."\" title=\"Statistik anzeigen\"><img src=\"".$tm_iconURL."/chart_pie.png\" border=\"0\"></a>";
 	if ($GRP[$nccg]['standard']==1) {
+		//wenn gruppe standard ist, dann bildchen anzeigen, wird auch neben id angezeigt
+		//$_MAIN_OUTPUT.=  "&nbsp;<img src=\"".$tm_iconURL."/page_white_lightning.png\" border=\"0\">";
 	} else {
 		//wenn gruppe aktiv ist, dann darf man sie als standard definieren
 		if ($GRP[$nccg]['aktiv']==1) {

@@ -2,7 +2,7 @@
 /*
  * test_smtp_message.php
  *
- * @(#) $Header: /cvsroot/tellmatic/tellmatic/include/mimemessage/test_smtp_message.php,v 1.1 2007/11/29 23:50:53 mcms09 Exp $
+ * @(#) $Header: /home/mlemos/cvsroot/mimemessage/test_smtp_message.php,v 1.14 2009/04/12 08:20:39 mlemos Exp $
  *
  */
 
@@ -37,7 +37,8 @@
 	$email_message->localhost="localhost";
 
 	/* SMTP server address, probably your ISP address,
-	 * or smtp.gmail.com for Gmail */
+	 * or smtp.gmail.com for Gmail
+	 * or smtp.live.com for Hotmail */
 	$email_message->smtp_host="localhost";
 
 	/* SMTP server port, usually 25 but can be 465 for Gmail */
@@ -45,6 +46,9 @@
 
 	/* Use SSL to connect to the SMTP server. Gmail requires SSL */
 	$email_message->smtp_ssl=0;
+
+	/* Use TLS after connecting to the SMTP server. Hotmail requires TLS */
+	$email_message->smtp_start_tls=0;
 
 	/* Deliver directly to the recipients destination SMTP server */
 	$email_message->smtp_direct_delivery=0;
@@ -88,6 +92,11 @@
 	/* if smtp_debug is 1,
 	 * set this to 1 to make the debug output appear in HTML */
 	$email_message->smtp_html_debug=1;
+
+	/* If you use the SetBulkMail function to send messages to many users,
+	 * change this value if your SMTP server does not accept sending
+	 * so many messages within the same SMTP connection */
+	$email_message->maximum_bulk_deliveries=100;
 
 	$email_message->SetEncodedEmailHeader("To",$to_address,$to_name);
 	$email_message->SetEncodedEmailHeader("From",$from_address,$from_name);

@@ -11,18 +11,9 @@
 /* check Homepage for Updates and more Infos                                    */
 /* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
 /********************************************************************************/
-	
-	
 	define ('TM_APPNAME','Tellmatic');
-	define ('TM_VERSION','1.0.8.9');
+	define ('TM_VERSION','1.0.9.0-rc1');
 	define ('TM_APPDESC',___("Die Newsletter Maschine"));
 	define ('TM_APPURL','www.tellmatic.org');
 	define ('TM_APPTEXT', TM_APPNAME.' v'.TM_VERSION.' - '.TM_APPDESC.' ('.TM_APPURL.')');
-	
-	//for backwards compatibility
-	$ApplicationName=TM_APPNAME;
-	$ApplicationVersion=TM_VERSION;
-	$ApplicationDescr=TM_APPDESC;
-	$ApplicationUrl=TM_APPURL;
-	$ApplicationText=TM_APPTEXT;
 ?>

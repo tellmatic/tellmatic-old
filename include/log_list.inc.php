@@ -92,45 +92,45 @@ if ($set=="search") {
 $mSTDURL->addParam("st",$sortType);
 $mSTDURL->addParam("si",$sortIndex);
 
-$firstURLPara=$mSTDURL;
+$firstURLPara=tmObjCopy($mSTDURL);
 $firstURLPara->addParam("act","log_list");
 $firstURLPara->addParam("offset",0);
 $firstURLPara_=$firstURLPara->getAllParams();
 
-$lastURLPara=$mSTDURL;
+$lastURLPara=tmObjCopy($mSTDURL);
 $lastURLPara->addParam("act","log_list");
 $lastURLPara->addParam("offset",($entrys_total-$limit));
 $lastURLPara_=$lastURLPara->getAllParams();
 
-$nextURLPara=$mSTDURL;
+$nextURLPara=tmObjCopy($mSTDURL);
 $nextURLPara->addParam("offset",($offset+$limit));
 $nextURLPara->addParam("act","log_list");
 $nextURLPara_=$nextURLPara->getAllParams();
 
-$prevURLPara=$mSTDURL;
+$prevURLPara=tmObjCopy($mSTDURL);
 $prevURLPara->addParam("offset",($offset-$limit));
 $prevURLPara->addParam("act","log_list");
 $prevURLPara_=$prevURLPara->getAllParams();
 
-$pagesURLPara=$mSTDURL;
+$pagesURLPara=tmObjCopy($mSTDURL);
 //will be defined and use in pager.inc.php
 
-$sortURLPara=$mSTDURL;
+$sortURLPara=tmObjCopy($mSTDURL);
 $sortURLPara->addParam("act","log_list");
 $sortURLPara_=$sortURLPara->getAllParams();
 
-$delURLPara=$mSTDURL;
+$delURLPara=tmObjCopy($mSTDURL);
 $delURLPara->addParam("offset",$offset);
 $delURLPara->addParam("limit",$limit);
 $delURLPara->addParam("act","log_list");
 $delURLPara->addParam("set","delete");
 
-$editIDURLPara=$mSTDURL;
+$editIDURLPara=tmObjCopy($mSTDURL);
 $editIDURLPara->addParam("offset",$offset);
 $editIDURLPara->addParam("limit",$limit);
 $editIDURLPara->addParam("act","log_list");
 
-$flushURLPara=$mSTDURL;
+$flushURLPara=tmObjCopy($mSTDURL);
 $flushURLPara->addParam("act","log_list");
 $flushURLPara->addParam("set","flush");
 $flushURLPara_=$flushURLPara->getAllParams();

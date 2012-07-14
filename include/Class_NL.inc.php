@@ -12,7 +12,6 @@
 /* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
 /********************************************************************************/
 
-
 class tm_NL {
 	/**
 	* Newsletter
@@ -184,7 +183,8 @@ class tm_NL {
 			//log
 			$nl['id']=$new_nl_id;
 			if (TM_LOG) $this->LOG->log(Array("data"=>$nl,"object"=>"nl","action"=>"new"));
-			$Return=true;
+			#$Return=true;
+			$Return=$nl['id'];
 		}
 		return $Return;
 	}//addNL
@@ -415,6 +415,7 @@ class tm_NL {
 						SET views=views+1
 						WHERE siteid='".TM_SITEID."'
 						AND id=".checkset_int($nl_id);
+
 			if ($this->DB->Query($Query)) {
 				$Return=true;
 			} else {
@@ -502,6 +503,8 @@ class tm_NL {
 			$NL_copy['created']=$created;
 			$NL_copy['author']=$author;
 			$NL_copy['status']=$status;
+			$NL_copy['views']=0;
+			$NL_copy['clicks']=0;
 			//explizit kein template!			
 			$NL_copy['is_template']=0;
 			//copy attachement references
@@ -707,7 +710,8 @@ class tm_NL {
 			//log
 			$group['id']=$this->DB->LastInsertID;
 			if (TM_LOG) $this->LOG->log(Array("data"=>$group,"object"=>"nl_grp","action"=>"new"));
-			$Return=true;
+			#$Return=true;
+			$Return=$group['id'];
 		}
 		return $Return;
 	}//addGrp
@@ -781,10 +785,18 @@ class tm_NL {
 		global $encoding;
 		$text=$html;
 		if ($type=="html" || $type=="text/html") {
+			#$text=str_replace("<br>","\n", $text);
+			#$text=strip_htmltags($text);
+			#$text=strip_tags($text);
 			$htmlToText=new Html2Text($html, 80);//class has apache license, may be in conflict with gpl???
+		    #$text=htmlspecialchars_decode($text);//php5 only
+		    #$text=html_entity_decode($text);
 		    $text=$htmlToText->convert();
+	   		#$text=strip_tags($text);
+		    #$text=html_entity_decode($text,ENT_NOQUOTES,$encoding);
 			$text = preg_replace('~<[^>]+>~', '', $text); // remove any HTML tags that are still left
-	}
+			#$text=str_replace("&quot;","'",$text);
+		}
 		return $text;
 	}//convertNL2Text
 
@@ -793,24 +805,60 @@ class tm_NL {
 /********************************************************************************************/
 /********************************************************************************************/
 
+	function parseSubject($data) {
+		#['date'], ['text'], ['adr']=Array('email','code', 'f0'-'f9')
+		if (!isset($data['adr'])) {
+			$data['adr']=Array('email'=>"",'code'=>"",'f0'=>"",'f1'=>"",'f2'=>"",'f3'=>"",'f4'=>"",'f5'=>"",'f6'=>"",'f7'=>"",'f8'=>"",'f9'=>"");		
+		}
+		if (!isset($data['date'])) {
+			#$data['date']=date(TM_NL_DATEFORMAT);
+			//datum aus q send_at nehmen!
+			//parse date
+			//if valid q id, then use send_at date! and convert to format for nl
+			//if not valid q_id given, use now
+			$QUEUE=new tm_Q();
+			$Q=$QUEUE->getQ($q_id);
+			if (isset($Q[0])) {
+				$data['date']=strftime(TM_NL_DATEFORMAT,mk_microtime($Q[0]['send_at']));
+			} else {
+				$data['date']=date(TM_NL_DATEFORMAT);
+			}
+				
+		}
+		if (!isset($data['text'])) {
+			$data['text']="";
+		}
+		$search = array("{F0}","{F1}","{F2}","{F3}","{F4}","{F5}","{F6}","{F7}","{F8}","{F9}","{EMAIL}","{DATE}","{CODE}","{TM_APPNAME}", "{TM_VERSION}","{TM_APPDESC}","{TM_APPURL}","{TM_APPTEXT}","{TM_DISCLAIMER}");
+		$replace = array($data['adr']['f0'], $data['adr']['f1'], $data['adr']['f2'], $data['adr']['f3'], $data['adr']['f4'], $data['adr']['f5'], $data['adr']['f6'], $data['adr']['f7'], $data['adr']['f8'], $data['adr']['f9'],$data['adr']['email'],$data['date'],$data['adr']['code'],TM_APPNAME, TM_VERSION,TM_APPDESC,TM_APPURL,TM_APPTEXT,TM_DISCLAIMER);
+		$subject= str_replace($search, $replace, $data['text']);
+		return $subject;
+	}
+	
+	function parseRcptName($data=Array()) {
+		return $this->parseSubject($data);
+	}
+
+	function parseHeader($data=Array()) {
+		return $this->parseSubject($data);
+	}
+
 	//now we have a parsing function that does all the weird stuff...., added in 1088
 	function parseNL($data,$type) {
 		//$data=Array( nl => $NL(Array) , adr => $ADR(Array))
 		//e.g. pass NL[0] as $data['nl']
 		//e.g. pass ADR[0] as $data['adr']
-		
-		#TODO: subject		
-		
 		//ouch, another global
 		global $tm_URL_FE;//should become a constant		
 		global $tm_nldir,$tm_nlattachdir,$tm_nlimgdir,$tm_nlimgpath,$tm_nlpath;//should become a constant too
 		
 		$Log=Array();
+		$AGroups=Array();//groups the adr belongs to
 		$Return="";
 		$nl_id=0;
 		$a_id=0;
 		$q_id=0;
 		$h_id=0;
+		$frm_id=0;
 
 		$email="";
 		$code="";
@@ -828,16 +876,18 @@ class tm_NL {
 			$Return="!nl_id";
 			return $Return;
 		}
-		
 		//next we need to know the type, parse html or testpart? if not set, exit and return empty string!
 		if ($type != "text" && $type != "html") {
-			$Return=___("!type");
+			$Return="!type";
 			return $Return;		
 		}
 
+		$data['text']=$data['nl']['subject'];
+		$NLSUBJECT=$this->parseSubject($data);
+
 		//if isset $data['adr'] we assume that the newsletter is personalized and need personalized parsing with all parameters and variables, unles personalized tracking is disabled, then do not track h_id and adr_id 
-		
 		if (isset($data['adr']) && isset($data['adr']['id']) && check_dbid($data['adr']['id']) ) {
+			$ADDRESS=new tm_ADR();
 			#$personalized=true;
 			$a_id=$data['adr']['id'];
 			$email=$data['adr']['email'];
@@ -853,8 +903,8 @@ class tm_NL {
 			$f7=$data['adr']['f7'];
 			$f8=$data['adr']['f8'];
 			$f9=$data['adr']['f9'];
+			$AGroups=$ADDRESS->getGroup(0,$a_id,$frm_id,0,Array("aktiv"=>1,"public"=>1));//fetch only public groups! dont show internal groups, "public_frm_ref"=>1, to show only pub groups with ref to form!
 		}
-
 		if (isset($data['q']) && isset($data['q']['id']) && check_dbid($data['q']['id']) ) {
 			$q_id=$data['q']['id'];
 		}
@@ -862,21 +912,25 @@ class tm_NL {
 			$h_id=$data['h']['id'];
 		}
 
+		//parse date
+		//if valid q id, then use send_at date! and convert to format for nl
+		//if not valid q_id given, use now
+		$QUEUE=new tm_Q();
+		$Q=$QUEUE->getQ($q_id);
+		if (isset($Q[0])) {
+			$DATE=strftime(TM_NL_DATEFORMAT,mk_microtime($Q[0]['send_at']));
+		} else {
+			$DATE=date(TM_NL_DATEFORMAT);
+		}
 			
-		//filenames zusammensetzen
-		//html datei//template fuer html parts
+		//filenames
+		//html datei//template for html parts
 		$NL_Filename_N="nl_".date_convert_to_string($data['nl']['created'])."_n.html";
-		//text datei//template fuer textparts
+		//text datei//template for textparts
 		$NL_Filename_T="nl_".date_convert_to_string($data['nl']['created'])."_t.txt";
-		//bild
+		//image1
 		$NL_Imagename1="nl_".date_convert_to_string($data['nl']['created'])."_1.jpg";
 
-		//online:
-		/*
-		$NL_Filename_P="nl_".date_convert_to_string($data['nl']['created'])."_p.html";
-		$NLONLINE_URL=$tm_URL_FE."/".$tm_nldir."/".$NL_Filename_P;
-		$NLONLINE="<a href=\"".$NLONLINE_URL."\" target=\"_blank\">";
-		*/
 		//use view.php (1088)
 		if ($data['nl']['massmail']!=1) {
 			$NLONLINE_URL=$tm_URL_FE."/view.php?1=1&amp;nl_id=".$nl_id."&amp;q_id=".$q_id."&amp;a_id=".$a_id."&amp;h_id=".$h_id;
@@ -885,8 +939,6 @@ class tm_NL {
 		}
 		$NLONLINE="<a href=\"".$NLONLINE_URL."\" target=\"_blank\">";
 
-
-
 		//template values
 		$IMAGE1="";
 		$IMAGE1_URL="";
@@ -894,8 +946,12 @@ class tm_NL {
 		$LINK1_URL="";
 		$ATTACHEMENTS="";
 		$ATTACHEMENTS_TEXT="";
+		$GROUP="";
+		foreach ($AGroups as $AGroup) {
+			$GROUP .= display($AGroup['name'])."<br>";
+		}
 
-		//Bild
+		//IMAGE1
 		if (file_exists($tm_nlimgpath."/".$NL_Imagename1)) {
 			#send_log("NL Image:".$tm_URL_FE."/".$tm_nlimgdir."/".$NL_Imagename1);
 			$Log[]="NL Image:".$tm_URL_FE."/".$tm_nlimgdir."/".$NL_Imagename1;
@@ -903,7 +959,7 @@ class tm_NL {
 			$IMAGE1="<img src=\"".$IMAGE1_URL."\" border=0 alt=\"Image1\">";
 		}
 
-//Attachements!
+		//Attachements!
 		$attachements=$data['nl']['attachements'];
 		$atc=count($attachements);
 		if ($atc>0) {
@@ -916,6 +972,7 @@ class tm_NL {
 			}//foreach
 		}//if count/atc
 
+		//Blindimage
 		if ($data['nl']['track_personalized']==1) {
 			$BLINDIMAGE_URL=$tm_URL_FE."/news_blank.png.php?nl_id=".$nl_id."&amp;q_id=".$q_id."&amp;a_id=".$a_id."&amp;h_id=".$h_id;
 		} else {
@@ -923,17 +980,24 @@ class tm_NL {
 			//koennte auch ggf oben global gesetzt werden, hier doppelt!
 			$BLINDIMAGE_URL=$tm_URL_FE."/news_blank.png.php?nl_id=".$nl_id."&amp;q_id=".$q_id;
 		}
-		$BLINDIMAGE="<img src=\"".$BLINDIMAGE_URL."\" border=0 alt=\"Blindimage\">";
+		$BLINDIMAGE="<img src=\"".$BLINDIMAGE_URL."\" border=0 alt=\"\">";//no alt!
 		#send_log("NL track personalized: ".$data['nl']['track_personalized']);
 		$Log[]="NL track personalized: ".$data['nl']['track_personalized'];
 		#send_log("Blindimage: ".$BLINDIMAGE_URL);
 		$Log[]="Blindimage: ".$BLINDIMAGE_URL;
 		
-		//link zu unsubscribe
+		//link to unsubscribe
 		$UNSUBSCRIBE_URL=$tm_URL_FE."/unsubscribe.php?nl_id=".$nl_id."&amp;q_id=".$q_id."&amp;a_id=".$a_id."&amp;h_id=".$h_id."&amp;code=".$code;
 		$UNSUBSCRIBE="<a href=\"".$UNSUBSCRIBE_URL."\" target=\"_blank\">";
-
-		$SUBSCRIBE_URL=$tm_URL_FE."/subscribe.php?doptin=1&amp;email=".$email."&amp;code=".$code."&amp;touch=1";
+		
+		//subscribe link for touch optin or subscribe
+		$SUBSCRIBE_URL=$tm_URL_FE."/subscribe.php?doptin=1&amp;email=".$email."&amp;code=".$code;//."&amp;touch=1"
+		//optional fid form id parameter! for optin mails etc
+		//check if we have a valid form id, used in subscribe url e.g. for doptin mails!
+		if (isset($data['frm']) && isset($data['frm']['id']) && check_dbid($data['frm']['id']) ) {
+			//add frm_id of form, needed to send subscribe mail and get greeting nl id!
+			$SUBSCRIBE_URL.="&amp;fid=".$data['frm']['id'];
+		}
 		$SUBSCRIBE="<a href=\"".$SUBSCRIBE_URL."\" target=\"_blank\">";
 
 		#send_log("Unsubscribe: ".$UNSUBSCRIBE_URL);
@@ -973,7 +1037,7 @@ class tm_NL {
 		$_Tpl_NL->setParseValue("BLINDIMAGE_URL", $BLINDIMAGE_URL);
 		$_Tpl_NL->setParseValue("UNSUBSCRIBE_URL", $UNSUBSCRIBE_URL);
 		$_Tpl_NL->setParseValue("SUBSCRIBE_URL", $SUBSCRIBE_URL);
-		$_Tpl_NL->setParseValue("DATE", date(TM_NL_DATEFORMAT));
+		$_Tpl_NL->setParseValue("DATE", $DATE);
 		$_Tpl_NL->setParseValue("EMAIL",$email);
 		$_Tpl_NL->setParseValue("CODE",$code);
 		$_Tpl_NL->setParseValue("F0",$f0);
@@ -990,6 +1054,14 @@ class tm_NL {
 		$_Tpl_NL->setParseValue("TITLE",$data['nl']['title']);
 		$_Tpl_NL->setParseValue("TITLE_SUB",$data['nl']['title_sub']);
 		$_Tpl_NL->setParseValue("SUMMARY",$data['nl']['summary']);			
+		$_Tpl_NL->setParseValue("GROUP",$GROUP);
+		$_Tpl_NL->setParseValue("SUBJECT",$NLSUBJECT);
+		$_Tpl_NL->setParseValue("TM_VERSION",TM_VERSION);
+		$_Tpl_NL->setParseValue("TM_APPNAME",TM_APPNAME);
+		$_Tpl_NL->setParseValue("TM_APPDESC",TM_APPDESC);
+		$_Tpl_NL->setParseValue("TM_APPURL",TM_APPURL);
+		$_Tpl_NL->setParseValue("TM_APPTEXT",TM_APPTEXT);
+		$_Tpl_NL->setParseValue("TM_DISCLAIMER",TM_DISCLAIMER);
 
 		//add htmlpart! 
 		if ($type=="html") {
@@ -1000,11 +1072,15 @@ class tm_NL {
 			$_Tpl_NL->setParseValue("ATTACHEMENTS", $ATTACHEMENTS);
 			//Template rendern und body zusammenbauen
 			//create header:
-			//parse {TM_VERSION} {TM_APPTEXT} {TITLE} {TITLE_SUB} etc.
-			$HTML_search = array("{TM_VERSION}","{TM_APPTEXT}","{TITLE}","{TITLE_SUB}");
-			$HTML_replace = array(TM_VERSION,TM_APPTEXT,display($data['nl']['title']),display($data['nl']['title_sub']));
-			$HTML_Head= str_replace($HTML_search, $HTML_replace, TM_NL_HTML_START);
-			$HTML_Foot= str_replace($HTML_search, $HTML_replace, TM_NL_HTML_END);			
+			//1st parse header:
+			$HTML_Head= $this->parseHeader(array("text"=>TM_NL_HTML_START));
+			$HTML_Foot= $this->parseHeader(array("text"=>TM_NL_HTML_END));			
+			//replacement array
+			$HTML_search = array("{TITLE}","{TITLE_SUB}","{SUBJECT}");
+			$HTML_replace = array(display($data['nl']['title']),display($data['nl']['title_sub']),$NLSUBJECT);
+			//replace nl vars, title subttle, subject
+			$HTML_Head= str_replace($HTML_search, $HTML_replace, $HTML_Head);
+			$HTML_Foot= str_replace($HTML_search, $HTML_replace, $HTML_Foot);			
 			$Return=$HTML_Head.$_Tpl_NL->renderTemplate($NL_Filename_N).$HTML_Foot;
 		}
 		//add textpart! 

@@ -2,7 +2,7 @@
 /*
  * test_forwarding_message.php
  *
- * @(#) $Header: /cvsroot/tellmatic/tellmatic/include/mimemessage/test_forwarding_message.php,v 1.1 2007/11/29 23:50:53 mcms09 Exp $
+ * @(#) $Header: /home/mlemos/cvsroot/mimemessage/test_forwarding_message.php,v 1.1 2004/06/24 06:34:11 mlemos Exp $
  *
  */
 

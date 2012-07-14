@@ -2,7 +2,7 @@
 /*
  * test_pickup_message.php
  *
- * @(#) $Header: /cvsroot/tellmatic/tellmatic/include/mimemessage/test_pickup_message.php,v 1.1 2007/11/29 23:50:53 mcms09 Exp $
+ * @(#) $Header: /home/mlemos/cvsroot/mimemessage/test_pickup_message.php,v 1.2 2004/09/22 20:13:26 mlemos Exp $
  *
  */
 

@@ -2,7 +2,7 @@
 /*
  * test_smtp_prepare_data.php
  *
- * @(#) $Header: /cvsroot/tellmatic/tellmatic/include/smtp/test_smtp_prepare_data.php,v 1.1 2007/11/29 23:52:52 mcms09 Exp $
+ * @(#) $Header: /home/mlemos/cvsroot/smtp/test_smtp_prepare_data.php,v 1.1 2003/08/26 07:39:59 mlemos Exp $
  *
  */
 

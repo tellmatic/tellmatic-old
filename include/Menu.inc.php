@@ -22,11 +22,11 @@ $MENU=Array(
 						'links' => Array(
 									0 => Array(
 										'aktiv'=>1,
-										'js' => 1,
-										'link' => $_SERVER["PHP_SELF"]."",
-										'name' => ___("Startseite"),
-										'description' => ___("Aktuelle Meldungen ein-/ausblenden"),
-										'text' => ___("Zur Startseite"),
+										'js' => 0,
+										'link' => $_SERVER["PHP_SELF"]."?act=Welcome",
+										'name' => ___("Tellmatic"),
+										'description' => ___("Tellmatic Startseite"),
+										'text' => ___("Zur Tellmatic Startseite"),
 										'icon' => 'house.png',
 										'target' => '_self',
 										'indent' => '0',
@@ -34,6 +34,19 @@ $MENU=Array(
 										'manager' => '0',
 										),
 									1 => Array(
+										'aktiv'=>1,
+										'js' => 0,
+										'link' => $_SERVER["PHP_SELF"]."?act=".$LOGIN->USER['startpage'],
+										'name' => ___("Startseite"),
+										'description' => ___("Benutzer Startseite"),
+										'text' => ___("Zur Startseite"),
+										'icon' => 'house.png',
+										'target' => '_self',
+										'indent' => '0',
+										'admin' => '0',
+										'manager' => '0',
+										),
+									2 => Array(
 										'aktiv'=>1,
 										'js' => 1,
 										'link' => "#",//javascript:switchSection('main_info')
@@ -46,7 +59,7 @@ $MENU=Array(
 										'admin' => '0',
 										'manager' => '0',
 										),
-									2 => Array(
+									3 => Array(
 										'aktiv'=>1,
 										'js' => 1,
 										'link' => "#",//javascript:switchSection('main_help')
@@ -54,6 +67,19 @@ $MENU=Array(
 										'description' => ___("Hilfe ein-/ausblenden"),
 										'text' => ___("Hilfe"),
 										'icon' => 'help.png',
+										'target' => '_self',
+										'indent' => '0',
+										'admin' => '0',
+										'manager' => '0',
+										),
+									4 => Array(
+										'aktiv'=>1,
+										'js' => 0,
+										'link' => $_SERVER["PHP_SELF"]."?act=logout",
+										'name' => ___("Logout"),
+										'description' => ___("Logout"),
+										'text' => ___("Logout"),
+										'icon' => 'door_out.png',
 										'target' => '_self',
 										'indent' => '0',
 										'admin' => '0',
@@ -529,10 +555,10 @@ $MENU=Array(
 									0 => Array(
 										'aktiv'=>1,
 										'js' => 0,
-										'link' => $_SERVER["PHP_SELF"]."?act=filemanager",
+										'link' => $_SERVER["PHP_SELF"]."?act=file_list",
 										'name' => ___("Filemanager"),
 										'description' => ___("Filemanager"),
-										'text' => ___("Filemanager from myftphp.sf.net - thx to Knittl"),
+										'text' => ___("Filemanager"),
 										'icon' => 'folder_wrench.png',
 										'target' => '_self',
 										'indent' => '0',
@@ -729,7 +755,13 @@ $MENU=Array(
 
 //MENU SECTIONS
 $sections=getVar('s');
-$menu_sections=split(",",$sections);
+
+if (PHP5) {
+	$menu_sections=explode(",",$sections);//use explode instead of split
+} else {
+	$menu_sections=split(",",$sections);
+}
+
 $menu_sections_c=count($menu_sections);
 $_SESSION["s"]=$sections;
 
@@ -766,6 +798,7 @@ for ($mtcc=0;$mtcc<$mtc;$mtcc++) {
 					$_Tpl_Menu_Entry->setParseValue("_TEXT", $MENU[$mtcc]['links'][$mlcc]['text']);
 					if ($MENU[$mtcc]['links'][$mlcc]['js'] != 1) {
 						$_Tpl_Menu_Entry->setParseValue("_LINK", $MENU[$mtcc]['links'][$mlcc]['link']."&amp;s=s_".$MENU[$mtcc]['id']);
+						#$_Tpl_Menu_Entry->setParseValue("_LOADER", "onMousedown=\"load();switchSection('div_loader');\"" );
 						$_Tpl_Menu_Entry->setParseValue("_LOADER", "" );
 					} else {
 						$_Tpl_Menu_Entry->setParseValue("_LINK", $MENU[$mtcc]['links'][$mlcc]['link']);
@@ -784,7 +817,7 @@ for ($mtcc=0;$mtcc<$mtc;$mtcc++) {
 		$_MENU_FOOT=$_Tpl_Menu_Foot->renderTemplate("Menu_foot.html");
 	}//$MENU[$mtcc]['aktiv']==1
 	
-	//toggle out if expert
+	//toggle in/out
 	$_MENU_FOOT.="<script language=\"javascript\" type=\"text/javascript\">\n //$_ID\n";
 	if (($mtcc>0 && is_in("s_".$_ID,$menu_sections) ) || $_ID=="menu_tm") {//$user_is_expert && 
 		$_MENU_FOOT.="toggleSlide('".$_ID."','s_".$_ID."',0);";
@@ -797,13 +830,13 @@ for ($mtcc=0;$mtcc<$mtc;$mtcc++) {
 	$_MENU.=$_MENU_HEAD."\n".$_MENU_ENTRY."\n".$_MENU_FOOT."\n\n";
 }//for mtcc //topics
 
-$_MENU.= "<div class=\"userinfo\"><!--a href=\"http://www.tellmatic.org\" target=\"blank\">".$ApplicationText."</a><br-->".
-									sprintf(___("Benutzer: %s"),$LOGIN->USER['name']).
-									" (".$LOGIN->USER['style']." / ".$LOGIN->USER['lang'].")".
-									" ".___("Zuletzt angemeldet:")." ".date("F, D d-m-Y H:i:s",$LOGIN->USER['last_login']).
-									"<br>".
-									$_TIMEOUT.
-									"</div>\n";
+$_MENU.= "<div class=\"userinfo\"><!--a href=\"http://www.tellmatic.org\" target=\"blank\">".TM_APPTEXT."</a><br-->".
+					sprintf(___("Benutzer: %s"),$LOGIN->USER['name']).
+					" (".$LOGIN->USER['style']." / ".$LOGIN->USER['lang'].")".
+					" ".___("Zuletzt angemeldet:")." ".date("F, D d-m-Y H:i:s",$LOGIN->USER['last_login']).
+					"<br>".
+					$_TIMEOUT.
+					"</div>\n";
 
 
 //some Cookie Testcode

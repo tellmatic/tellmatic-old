@@ -21,10 +21,11 @@ $created=date("Y-m-d H:i:s");
 $author=$LOGIN->USER['name'];
 
 //field names for query
-$InputName_Group="adr_grp";//range from
-pt_register("POST","adr_grp");
-if (!isset($adr_grp)) {
-	$adr_grp=Array();
+//default groups the subscriber gets added to....
+$InputName_Group="adr_grp";
+pt_register("POST",$InputName_Group);
+if (!isset($$InputName_Group)) {
+	$$InputName_Group=Array();
 }
 
 //public groups the subscriber can choose....
@@ -40,13 +41,13 @@ $$InputName_Name=getVar($InputName_Name);
 $InputName_ActionUrl="action_url";//url
 $$InputName_ActionUrl=getVar($InputName_ActionUrl);
 
-$InputName_Descr="descr";//range from
+$InputName_Descr="descr";
 $$InputName_Descr=getVar($InputName_Descr,0);//varname,slashes? 0=no add slashes
 
-$InputName_Aktiv="aktiv";//range from
+$InputName_Aktiv="aktiv";
 $$InputName_Aktiv=getVar($InputName_Aktiv);
 
-$InputName_DoubleOptin="double_optin";//range from
+$InputName_DoubleOptin="double_optin";
 $$InputName_DoubleOptin=getVar($InputName_DoubleOptin);
 
 $InputName_UseCaptcha="use_captcha";
@@ -60,11 +61,36 @@ $$InputName_SubAktiv=getVar($InputName_SubAktiv);
 
 $InputName_Blacklist="check_blacklist";
 $$InputName_Blacklist=getVar($InputName_Blacklist);
+
+$InputName_Proof="proof";
+$$InputName_Proof=getVar($InputName_Proof);
+
 $InputName_ForcePubGroup="force_pubgroup";
 $$InputName_ForcePubGroup=getVar($InputName_ForcePubGroup);
 
+$InputName_MultiPubGroup="multiple_pubgroup";
+$$InputName_MultiPubGroup=getVar($InputName_MultiPubGroup);
+
 $InputName_OverwritePubgroup="overwrite_pubgroup";
 $$InputName_OverwritePubgroup=getVar($InputName_OverwritePubgroup);
+
+$InputName_NLDOptin="nl_id_doptin";
+$$InputName_NLDOptin=getVar($InputName_NLDOptin);
+
+$InputName_NLGreeting="nl_id_greeting";
+$$InputName_NLGreeting=getVar($InputName_NLGreeting);
+
+$InputName_NLUpdate="nl_id_update";
+$$InputName_NLUpdate=getVar($InputName_NLUpdate);
+
+$InputName_MessageDOptin="message_doptin";
+$$InputName_MessageDOptin=getVar($InputName_MessageDOptin);
+
+$InputName_MessageGreeting="message_greeting";
+$$InputName_MessageGreeting=getVar($InputName_MessageGreeting);
+
+$InputName_MessageUpdate="message_update";
+$$InputName_MessageUpdate=getVar($InputName_MessageUpdate);
 
 $InputName_SubmitValue="submit_value";
 $$InputName_SubmitValue=getVar($InputName_SubmitValue);
@@ -72,70 +98,73 @@ $$InputName_SubmitValue=getVar($InputName_SubmitValue);
 $InputName_ResetValue="reset_value";
 $$InputName_ResetValue=getVar($InputName_ResetValue);
 
+$InputName_Host="host_id";
+$$InputName_Host=getVar($InputName_Host);
+
 $InputName_email="email";
 $$InputName_email=getVar($InputName_email);
 
-$InputName_F0="f0";//range from
+$InputName_F0="f0";
 $$InputName_F0=getVar($InputName_F0);
-$InputName_F1="f1";//range from
+$InputName_F1="f1";
 $$InputName_F1=getVar($InputName_F1);
-$InputName_F2="f2";//range from
+$InputName_F2="f2";
 $$InputName_F2=getVar($InputName_F2);
-$InputName_F3="f3";//range from
+$InputName_F3="f3";
 $$InputName_F3=getVar($InputName_F3);
-$InputName_F4="f4";//range from
+$InputName_F4="f4";
 $$InputName_F4=getVar($InputName_F4);
-$InputName_F5="f5";//range from
+$InputName_F5="f5";
 $$InputName_F5=getVar($InputName_F5);
-$InputName_F6="f6";//range from
+$InputName_F6="f6";
 $$InputName_F6=getVar($InputName_F6);
-$InputName_F7="f7";//range from
+$InputName_F7="f7";
 $$InputName_F7=getVar($InputName_F7);
-$InputName_F8="f8";//range from
+$InputName_F8="f8";
 $$InputName_F8=getVar($InputName_F8);
-$InputName_F9="f9";//range from
+$InputName_F9="f9";
 $$InputName_F9=getVar($InputName_F9);
 
-$InputName_F0_type="f0_type";//range from
+$InputName_F0_type="f0_type";
 $$InputName_F0_type=getVar($InputName_F0_type);
-$InputName_F1_type="f1_type";//range from
+$InputName_F1_type="f1_type";
 $$InputName_F1_type=getVar($InputName_F1_type);
-$InputName_F2_type="f2_type";//range from
+$InputName_F2_type="f2_type";
 $$InputName_F2_type=getVar($InputName_F2_type);
-$InputName_F3_type="f3_type";//range from
+$InputName_F3_type="f3_type";
 $$InputName_F3_type=getVar($InputName_F3_type);
-$InputName_F4_type="f4_type";//range from
+$InputName_F4_type="f4_type";
 $$InputName_F4_type=getVar($InputName_F4_type);
-$InputName_F5_type="f5_type";//range from
+$InputName_F5_type="f5_type";
 $$InputName_F5_type=getVar($InputName_F5_type);
-$InputName_F6_type="f6_type";//range from
+$InputName_F6_type="f6_type";
 $$InputName_F6_type=getVar($InputName_F6_type);
-$InputName_F7_type="f7_type";//range from
+$InputName_F7_type="f7_type";
 $$InputName_F7_type=getVar($InputName_F7_type);
-$InputName_F8_type="f8_type";//range from
+$InputName_F8_type="f8_type";
 $$InputName_F8_type=getVar($InputName_F8_type);
-$InputName_F9_type="f9_type";//range from
+$InputName_F9_type="f9_type";
 $$InputName_F9_type=getVar($InputName_F9_type);
 
-$InputName_F0_required="f0_required";//range from
+$InputName_F0_required="f0_required";
 $$InputName_F0_required=getVar($InputName_F0_required);
-$InputName_F1_required="f1_required";//range from
+$InputName_F1_required="f1_required";
 $$InputName_F1_required=getVar($InputName_F1_required);
-$InputName_F2_required="f2_required";//range from
+$InputName_F2_required="f2_required";
 $$InputName_F2_required=getVar($InputName_F2_required);
-$InputName_F3_required="f3_required";//range from
+$InputName_F3_required="f3_required";
 $$InputName_F3_required=getVar($InputName_F3_required);
-$InputName_F4_required="f4_required";//range from
+$InputName_F4_required="f4_required";
 $$InputName_F4_required=getVar($InputName_F4_required);
-$InputName_F5_required="f5_required";//range from
+$InputName_F5_required="f5_required";
 $$InputName_F5_required=getVar($InputName_F5_required);
-$InputName_F6_required="f6_required";//range from
+$InputName_F6_required="f6_required";
 $$InputName_F6_required=getVar($InputName_F6_required);
-$InputName_F7_required="f7_required";//range from
+$InputName_F7_required="f7_required";
 $$InputName_F7_required=getVar($InputName_F7_required);
-$InputName_F8_required="f8_required";//range from
+$InputName_F8_required="f8_required";
 $$InputName_F8_required=getVar($InputName_F8_required);
-$InputName_F9_required="f9_required";//range from
+$InputName_F9_required="f9_required";
 $$InputName_F9_required=getVar($InputName_F9_required);
 
 $InputName_F0_value="f0_value";
@@ -210,10 +239,18 @@ $$InputName_F8_expr=getVar($InputName_F8_expr);
 $InputName_F9_expr="f9_expr";
 $$InputName_F9_expr=getVar($InputName_F9_expr);
 
+
+	$FORMULAR=new tm_FRM();
+	$FRM=$FORMULAR->getForm($frm_id);
+
+
 $check=true;
 if ($set=="save") {
 	//checkinput
 	if (empty($name)) {$check=false;$_MAIN_MESSAGE.="<br>".___("Name sollte nicht leer sein.");}
+	if (!check_dbid($nl_id_doptin)) {$check=false;$_MAIN_MESSAGE.="<br>".___("Wählen Sie ein Newsletter für die Double-Opt-In Mail.");}
+	if (!check_dbid($nl_id_greeting)) {$check=false;$_MAIN_MESSAGE.="<br>".___("Wählen Sie ein Newsletter für die Bestätigungsmail.");}
+	if (!check_dbid($nl_id_update)) {$check=false;$_MAIN_MESSAGE.="<br>".___("Wählen Sie ein Newsletter für Updates.");}
 	if ($check) {
 		$FORMULAR=new tm_FRM();
 		$FORMULAR->updateForm(Array(
@@ -229,10 +266,19 @@ if ($set=="save") {
 				"double_optin"=>$double_optin,
 				"subscribe_aktiv"=>$subscribe_aktiv,
 				"check_blacklist"=>$check_blacklist,
+				"proof"=>$proof,
 				"force_pubgroup"=>$force_pubgroup,
 				"overwrite_pubgroup"=>$overwrite_pubgroup,
+				"multiple_pubgroup"=>$multiple_pubgroup,
+				"nl_id_doptin"=>$nl_id_doptin,	
+				"nl_id_greeting"=>$nl_id_greeting,
+				"nl_id_update"=>$nl_id_update,
+				"message_doptin"=>$message_doptin,	
+				"message_greeting"=>$message_greeting,
+				"message_update"=>$message_update,
 				"submit_value"=>$submit_value,
 				"reset_value"=>$reset_value,
+				"host_id"=>$host_id,
 				"email"=>$email,
 				"f0"=>$f0,
 				"f1"=>$f1,
@@ -305,13 +351,12 @@ if ($set=="save") {
 		$action="form_list";
 		include_once (TM_INCLUDEPATH."/form_list.inc.php");
 	} else {
-		include_once (TM_INCLUDEPATH."/form_form.inc.php");
+		require_once (TM_INCLUDEPATH."/form_form.inc.php");
+		require_once (TM_INCLUDEPATH."/form_form_show.inc.php");
 	}
 
 } else {
 
-	$FORMULAR=new tm_FRM();
-	$FRM=$FORMULAR->getForm($frm_id);
 	$ADDRESS=new tm_ADR();
 	$adr_grp_pub=$ADDRESS->getGroupID(0,0,$frm_id,Array("public_frm_ref"=>1));
 	$adr_grp=$ADDRESS->getGroupID(0,0,$frm_id);
@@ -321,17 +366,26 @@ if ($set=="save") {
 	$adr_grp=array_values($adr_grp);
 	$name=$FRM[0]['name'];
 	$action_url=$FRM[0]['action_url'];
-	$descr=display$FRM[0]['descr'];
+	$descr=$FRM[0]['descr'];
 	$aktiv=$FRM[0]['aktiv'];
 	$double_optin=$FRM[0]['double_optin'];
 	$use_captcha=$FRM[0]['use_captcha'];
 	$digits_captcha=$FRM[0]['digits_captcha'];
 	$subscribe_aktiv=$FRM[0]['subscribe_aktiv'];
 	$check_blacklist=$FRM[0]['check_blacklist'];
+	$proof=$FRM[0]['proof'];
 	$force_pubgroup=$FRM[0]['force_pubgroup'];
 	$overwrite_pubgroup=$FRM[0]['overwrite_pubgroup'];
+	$multiple_pubgroup=$FRM[0]['multiple_pubgroup'];
+	$nl_id_doptin=$FRM[0]['nl_id_doptin'];
+	$nl_id_greeting=$FRM[0]['nl_id_greeting'];
+	$nl_id_update=$FRM[0]['nl_id_update'];
+	$message_doptin=$FRM[0]['message_doptin'];
+	$message_greeting=$FRM[0]['message_greeting'];
+	$message_update=$FRM[0]['message_update'];
 	$submit_value=$FRM[0]['submit_value'];
 	$reset_value=$FRM[0]['reset_value'];
+	$host_id=$FRM[0]['host_id'];
 	$email=$FRM[0]['email'];
 	$f0=$FRM[0]['f0'];
 	$f1=$FRM[0]['f1'];
@@ -397,6 +451,7 @@ if ($set=="save") {
 	$f7_expr=$FRM[0]['f7_expr'];
 	$f8_expr=$FRM[0]['f8_expr'];
 	$f9_expr=$FRM[0]['f9_expr'];
-	include_once (TM_INCLUDEPATH."/form_form.inc.php");
+	require_once (TM_INCLUDEPATH."/form_form.inc.php");
+	require_once (TM_INCLUDEPATH."/form_form_show.inc.php");
 }
 ?>

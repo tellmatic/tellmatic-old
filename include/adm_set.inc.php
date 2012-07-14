@@ -3,7 +3,7 @@
 /* this file is part of: / diese Datei ist ein Teil von:                        */
 /* tellmatic, the newslettermachine                                             */
 /* tellmatic, die Newslettermaschine                                            */
-/* 2006/7 by Volker Augustin, multi.art.studio Hanau                            */
+/* 2006/11 by Volker Augustin, multi.art.studio Hanau                            */
 /* Contact/Kontakt: info@tellmatic.org                                      */
 /* Homepage: www.tellmatic.org                                                   */
 /* leave this header in file!                                                   */
@@ -34,6 +34,12 @@ if ($user_is_admin) {
 	//field names for query
 	$InputName_Name="name";//name
 	$$InputName_Name=getVar($InputName_Name);
+
+	$InputName_Lang="lang";
+	$$InputName_Lang=getVar($InputName_Lang);
+
+	$InputName_Style="style";
+	$$InputName_Style=getVar($InputName_Style);
 
 	$InputName_NotifySubscribe="notify_subscribe";
 	$$InputName_NotifySubscribe=getVar($InputName_NotifySubscribe);
@@ -82,6 +88,9 @@ if ($user_is_admin) {
 	
 	$InputName_UnsubAction="unsubscribe_action";
 	$$InputName_UnsubAction=getVar($InputName_UnsubAction);
+
+	$InputName_UnsubHost="unsubscribe_host";
+	$$InputName_UnsubHost=getVar($InputName_UnsubHost);
 	
 	$InputName_CheckitLimit="checkit_limit";
 	$$InputName_CheckitLimit=getVar($InputName_CheckitLimit);
@@ -113,8 +122,41 @@ if ($user_is_admin) {
 	$InputName_BounceitFilterToEmail="bounceit_filter_to_email";
 	$$InputName_BounceitFilterToEmail=getVar($InputName_BounceitFilterToEmail);
 
+	$InputName_Proof="proof";
+	$$InputName_Proof=getVar($InputName_Proof);
+
+	$InputName_ProofURL="proof_url";
+	$$InputName_ProofURL=getVar($InputName_ProofURL);
+
+	$InputName_ProofTrigger="proof_trigger";
+	$$InputName_ProofTrigger=getVar($InputName_ProofTrigger);
+
+	$InputName_ProofPc="proof_pc";
+	$$InputName_ProofPc=getVar($InputName_ProofPc);
+
+
 	$CONFIG=new tm_CFG();
 	$HOSTS=new tm_HOST();
+	
+	//read css directories and check for stylesheets and template directories
+	$CSSDirs=Array();
+	$CSSDirsTmp=getCSSDirectories(TM_PATH."/css");
+	$css_c=count($CSSDirsTmp);
+	$css_i=0;
+	for ($css_cc=0; $css_cc < $css_c; $css_cc++) {
+		$css_file=TM_PATH."/css/".$CSSDirsTmp[$css_cc]."/tellmatic.css";
+		$tpl_dir=TM_TPLPATH."/".$CSSDirsTmp[$css_cc];
+		if (file_exists($css_file)) {
+			if (is_dir($tpl_dir)) {
+				$CSSDirs[$css_i]["dir"]=$CSSDirsTmp[$css_cc];
+				$CSSDirs[$css_i]["name"]=$CSSDirsTmp[$css_cc];
+				$css_i++;
+			}
+		}
+	}
+	unset($CSSDirsTmp);
+	
+	
 	
 	$check=true;
 	if ($set=="save") {
@@ -184,6 +226,8 @@ if ($user_is_admin) {
 			$CONFIG->updateCFG(Array(
 					"siteid"=>TM_SITEID,
 					"name"=>$name,
+					"lang"=>$lang,
+					"style"=>$style,
 					"notify_mail"=>$notify_mail,
 					"notify_subscribe"=>$notify_subscribe,
 					"notify_unsubscribe"=>$notify_unsubscribe,
@@ -199,6 +243,7 @@ if ($user_is_admin) {
 					"unsubscribe_digits_captcha"=>$unsubscribe_digits_captcha,
 					"unsubscribe_sendmail"=>$unsubscribe_sendmail,
 					"unsubscribe_action"=>$unsubscribe_action,
+					"unsubscribe_host"=>$unsubscribe_host,
 					"checkit_limit"=>$checkit_limit,
 					"checkit_from_email"=>$checkit_from_email,
 					"checkit_adr_reset_error"=>$checkit_adr_reset_error,
@@ -209,6 +254,10 @@ if ($user_is_admin) {
 					"bounceit_search"=>$bounceit_search,
 					"bounceit_filter_to"=>$bounceit_filter_to,
 					"bounceit_filter_to_email"=>$bounceit_filter_to_email,
+					"proof"=>$proof,
+					"proof_url"=>$proof_url,
+					"proof_trigger"=>$proof_trigger,
+					"proof_pc"=>$proof_pc,
 					));
 			$_MAIN_MESSAGE.="<br>".___("Die Einstellungen wurden gespeichert und sind ab sofort gültig")."!";
 			$action="adm_set";
@@ -216,6 +265,8 @@ if ($user_is_admin) {
 	} else {
 		$C=$CONFIG->getCFG(TM_SITEID);
 		$$InputName_Name=$C[0]['name'];//
+		$$InputName_Lang=$C[0]['lang'];//
+		$$InputName_Style=$C[0]['style'];//
 		$$InputName_NotifySubscribe=$C[0]['notify_subscribe'];//
 		$$InputName_NotifyUnsubscribe=$C[0]['notify_unsubscribe'];//
 		$$InputName_NotifyMail=$C[0]['notify_mail'];//
@@ -231,6 +282,7 @@ if ($user_is_admin) {
 		$$InputName_UnsubDigitsCaptcha=$C[0]['unsubscribe_digits_captcha'];
 		$$InputName_UnsubSendMail=$C[0]['unsubscribe_sendmail'];
 		$$InputName_UnsubAction=$C[0]['unsubscribe_action'];
+		$$InputName_UnsubHost=$C[0]['unsubscribe_host'];
 		$$InputName_CheckitLimit=$C[0]['checkit_limit'];
 		$$InputName_CheckitFromEmail=$C[0]['checkit_from_email'];
 		$$InputName_CheckitAdrResetError=$C[0]['checkit_adr_reset_error'];
@@ -241,8 +293,12 @@ if ($user_is_admin) {
 		$$InputName_BounceitSearch=$C[0]['bounceit_search'];
 		$$InputName_BounceitFilterTo=$C[0]['bounceit_filter_to'];
 		$$InputName_BounceitFilterToEmail=$C[0]['bounceit_filter_to_email'];
-		#$_MAIN_OUTPUT.="<br><br><a href=\"javascript:switchSection('div_debug');\">".tm_icon("information.png",___("Serverinfo"))."&nbsp;".___("Serverinfo")."</a>";
+		$$InputName_Proof=$C[0]['proof'];
+		$$InputName_ProofURL=$C[0]['proof_url'];
+		$$InputName_ProofTrigger=$C[0]['proof_trigger'];
+		$$InputName_ProofPc=$C[0]['proof_pc'];
 	}
-	include_once (TM_INCLUDEPATH."/adm_set_form.inc.php");
+	require_once (TM_INCLUDEPATH."/adm_set_form.inc.php");
+	require_once (TM_INCLUDEPATH."/adm_set_form_show.inc.php");
 }//user_is_admin
 ?>

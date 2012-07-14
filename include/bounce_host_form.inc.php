@@ -3,7 +3,7 @@
 /* this file is part of: / diese Datei ist ein Teil von:                        */
 /* tellmatic, the newslettermachine                                             */
 /* tellmatic, die Newslettermaschine                                            */
-/* 2006/7 by Volker Augustin, multi.art.studio Hanau                            */
+/* 2006/11 by Volker Augustin, multi.art.studio Hanau                            */
 /* Contact/Kontakt: info@tellmatic.org                                      */
 /* Homepage: www.tellmatic.org                                                   */
 /* leave this header in file!                                                   */
@@ -95,15 +95,16 @@ $Form->add_InputOption($FormularName,$InputName_Limit,"75","75 Mails");
 $Form->add_InputOption($FormularName,$InputName_Limit,"100","100 Mails");
 
 //nur bounces
-	$Form->new_Input($FormularName,$InputName_Bounce,"checkbox", 1);
-	$Form->set_InputJS($FormularName,$InputName_Bounce," onChange=\"flash('submit','#ff0000');\" ");
-	$Form->set_InputDefault($FormularName,$InputName_Bounce,$$InputName_Bounce);
-	$Form->set_InputStyleClass($FormularName,$InputName_Bounce,"mFormText","mFormTextFocus");
-	$Form->set_InputSize($FormularName,$InputName_Bounce,48,48);
-	$Form->set_InputDesc($FormularName,$InputName_Bounce,___("Nur Bouncemails anzeigen"));
-	$Form->set_InputReadonly($FormularName,$InputName_Bounce,false);
+$Form->new_Input($FormularName,$InputName_Bounce,"checkbox", 1);
+$Form->set_InputJS($FormularName,$InputName_Bounce," onChange=\"flash('submit','#ff0000');\" ");
+$Form->set_InputDefault($FormularName,$InputName_Bounce,$$InputName_Bounce);
+$Form->set_InputStyleClass($FormularName,$InputName_Bounce,"mFormText","mFormTextFocus");
+$Form->set_InputSize($FormularName,$InputName_Bounce,48,48);
+$Form->set_InputDesc($FormularName,$InputName_Bounce,___("Nur Bouncemails anzeigen"));
+$Form->set_InputReadonly($FormularName,$InputName_Bounce,false);
 $Form->set_InputOrder($FormularName,$InputName_Bounce,7);
-	$Form->set_InputLabel($FormularName,$InputName_Bounce,"");
+$Form->set_InputLabel($FormularName,$InputName_Bounce,"");
+
 //bounce method, type: header, body, body&header
 $Form->new_Input($FormularName,$InputName_BounceType,"select", "");
 $Form->set_InputJS($FormularName,$InputName_BounceType," onChange=\"flash('submit','#ff0000');\" ");
@@ -155,6 +156,8 @@ for ($hccr=0; $hccr<$hcr; $hccr++)
 			$Form->add_InputOption($FormularName,$InputName_FilterToSMTPReturnPath,$HOST_[$hccr]['reply_to'],display($HOST_[$hccr]['reply_to']),display($HOST_[$hccr]['name']),"background-color:#ffcc00;");
 		}
 }
+
+
 //submit button
 $Form->new_Input($FormularName,$InputName_Submit,"submit",___("Verbinden und e-Mails abrufen"));
 $Form->set_InputStyleClass($FormularName,$InputName_Submit,"mFormSubmit","mFormSubmitFocus");
@@ -170,46 +173,4 @@ $Form->set_InputDesc($FormularName,$InputName_Reset,"Reset");
 $Form->set_InputReadonly($FormularName,$InputName_Reset,false);
 $Form->set_InputOrder($FormularName,$InputName_Reset,999);
 $Form->set_InputLabel($FormularName,$InputName_Reset,"");
-
-/*RENDER FORM*/
-
-$Form->render_Form($FormularName);
-
-/*DISPLAY*/
-$_MAIN_OUTPUT.="\n\n<!-- bounce_host_form.inc -->\n\n";
-$_MAIN_OUTPUT.= $Form->FORM[$FormularName]['head'];
-//hidden fieldsnicht vergessen!
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName]['act']['html'];
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName]['set']['html'];
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName]['val']['html'];
-$_MAIN_OUTPUT.= "<table border=0>";
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top>".tm_icon("computer.png",___("Host"))."&nbsp;".___("Host").":&nbsp;";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Host]['html'];
-$_MAIN_OUTPUT.= "&nbsp;".tm_icon("control_fastforward.png",___("Offset"))."&nbsp;".___("Offset").":&nbsp;";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Offset]['html'];
-$_MAIN_OUTPUT.= "&nbsp;".tm_icon("control_end.png",___("Limit"))."&nbsp;".___("Limit").":&nbsp;";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Limit]['html'];
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top colspan=3>";
-$_MAIN_OUTPUT.= tm_icon("status_offline.png",___("Returnmails"))."&nbsp;".___("Nur Returnmails")."&nbsp;".$Form->INPUT[$FormularName][$InputName_FilterTo]['html']."&nbsp;";
-$_MAIN_OUTPUT.= ___("TO:")."&nbsp;".$Form->INPUT[$FormularName][$InputName_FilterToSMTPReturnPath]['html'];
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top colspan=3>";
-$_MAIN_OUTPUT.= tm_icon("sport_soccer.png",___("Bouncemails"))."&nbsp;";
-$_MAIN_OUTPUT.= ___("Adressen suchen in:")."&nbsp;".$Form->INPUT[$FormularName][$InputName_BounceType]['html'];
-$_MAIN_OUTPUT.= ___("Nur Bouncemails anzeigen")."&nbsp;".$Form->INPUT[$FormularName][$InputName_Bounce]['html']."&nbsp;";
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=bottom colspan=3>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Submit]['html'];
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-$_MAIN_OUTPUT.= "</table>";
-$_MAIN_OUTPUT.= $Form->FORM[$FormularName]['foot'];
 ?>

@@ -11,38 +11,41 @@
 /* check Homepage for Updates and more Infos                                    */
 /* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
 /********************************************************************************/
-	//Form
-	$Form=new tm_SimpleForm();
-	$FormularName="tm_i_lang";
-	//make new Form
-	$Form->new_Form($FormularName,$_SERVER["PHP_SELF"],"post","_self");
+//Form
+$Form=new tm_SimpleForm();
+$FormularName="tm_i_lang";
+$Form->new_Form($FormularName,$_SERVER["PHP_SELF"],"post","_self");
 $Form->set_FormDesc($FormularName,"Tellmatic Installation - Select Language / Sprache wählen");
-	$Form->new_Input($FormularName,"set", "hidden", "language");
-	//////////////////
-	//add inputfields and buttons....
-	//////////////////
-
-	//lang
-	$Form->new_Input($FormularName,$InputName_Lang,"select", "");
-	$Form->set_InputDefault($FormularName,$InputName_Lang,$$InputName_Lang);
-	$Form->set_InputStyleClass($FormularName,$InputName_Lang,"mFormSelect","mFormSelectFocus");
-	$Form->set_InputDesc($FormularName,$InputName_Lang,"Sprache / Language");
-	$Form->set_InputReadonly($FormularName,$InputName_Lang,false);
-	$Form->set_InputOrder($FormularName,$InputName_Lang,2);
+$Form->new_Input($FormularName,"set", "hidden", "language");
+//////////////////
+//add inputfields and buttons....
+//////////////////
+//lang
+$Form->new_Input($FormularName,$InputName_Lang,"select", "");
+$Form->set_InputDefault($FormularName,$InputName_Lang,$$InputName_Lang);
+$Form->set_InputStyleClass($FormularName,$InputName_Lang,"mFormSelect","mFormSelectFocus");
+$Form->set_InputDesc($FormularName,$InputName_Lang,"Sprache / Language");
+$Form->set_InputReadonly($FormularName,$InputName_Lang,false);
+$Form->set_InputOrder($FormularName,$InputName_Lang,2);
 $Form->set_InputLabel($FormularName,$InputName_Lang,"Sprache / Language");
-	$Form->set_InputSize($FormularName,$InputName_Lang,0,1);
-	$Form->set_InputMultiple($FormularName,$InputName_Lang,false);
-	//add Data
-	$Form->add_InputOption($FormularName,$InputName_Lang,"de","de - Deutsch");
-	$Form->add_InputOption($FormularName,$InputName_Lang,"en","en - English");
+$Form->set_InputSize($FormularName,$InputName_Lang,0,1);
+$Form->set_InputMultiple($FormularName,$InputName_Lang,false);
+//add Data
+$lc=count($LANGUAGES['lang']);
+for ($lcc=0;$lcc<$lc;$lcc++) {
+	$Form->add_InputOption($FormularName,$InputName_Lang,$LANGUAGES['lang'][$lcc],$LANGUAGES['text'][$lcc]);
+}
 
-	//submit button
-	$Form->new_Input($FormularName,$InputName_Submit,"submit","Continue / Weiter");
-	$Form->set_InputStyleClass($FormularName,$InputName_Submit,"mFormSubmit","mFormSubmitFocus");
-	$Form->set_InputDesc($FormularName,$InputName_Submit,"");
-	$Form->set_InputReadonly($FormularName,$InputName_Submit,false);
-	$Form->set_InputOrder($FormularName,$InputName_Submit,998);
-	$Form->set_InputLabel($FormularName,$InputName_Submit,"");
+
+//submit button
+$Form->new_Input($FormularName,$InputName_Submit,"submit","Continue / Weiter");
+$Form->set_InputStyleClass($FormularName,$InputName_Submit,"mFormSubmit","mFormSubmitFocus");
+$Form->set_InputDesc($FormularName,$InputName_Submit,"");
+$Form->set_InputReadonly($FormularName,$InputName_Submit,false);
+$Form->set_InputOrder($FormularName,$InputName_Submit,998);
+$Form->set_InputLabel($FormularName,$InputName_Submit,"");
+
+#$FORM_LANG=$Form->get_Form($FormularName);
 
 /*RENDER FORM*/
 $Form->render_Form($FormularName);
@@ -61,7 +64,7 @@ $FORM_LANG.= "</tr>";
 $FORM_LANG.= "</thead>";
 $FORM_LANG.= "<tbody>";
 $FORM_LANG.= "<tr>";
-$FORM_LANG.= "<td valign=top align=\"left\">";
+$FORM_LANG.= "<td valign=top align=\"left\" width=200>";
 $FORM_LANG.= $Form->INPUT[$FormularName][$InputName_Lang]['html'];
 $FORM_LANG.= "</td>";
 $FORM_LANG.= "<td valign=top align=\"right\">";

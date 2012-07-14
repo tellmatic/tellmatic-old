@@ -3,7 +3,7 @@
 /* this file is part of: / diese Datei ist ein Teil von:                        */
 /* tellmatic, the newslettermachine                                             */
 /* tellmatic, die Newslettermaschine                                            */
-/* 2006/7 by Volker Augustin, multi.art.studio Hanau                            */
+/* 2006/11 by Volker Augustin, multi.art.studio Hanau                            */
 /* Contact/Kontakt: info@tellmatic.org                                      */
 /* Homepage: www.tellmatic.org                                                   */
 /* leave this header in file!                                                   */
@@ -76,11 +76,20 @@ $Form->set_InputSize($FormularName,$InputName_Group,0,10);
 $Form->set_InputMultiple($FormularName,$InputName_Group,true);
 //add Data
 $ADDRESS=new tm_ADR();
-$GRP=$ADDRESS->getGroup();
+$GRP=$ADDRESS->getGroup(0,0,0,1);
 $acg=count($GRP);
 for ($accg=0; $accg<$acg; $accg++)
 {
-	$Form->add_InputOption($FormularName,$InputName_Group,$GRP[$accg]['id'],$GRP[$accg]['name']);
+	$grp_option_text=$GRP[$accg]['name'];
+	$grp_option_text.=" (".$GRP[$accg]['adr_count'].")";
+	if ($GRP[$accg]['aktiv']!=1) {
+		$grp_option_text.=" (na)";
+	}
+	if ($GRP[$accg]['prod']==1) {
+		$grp_option_text.=" (pro)";
+	}
+
+	$Form->add_InputOption($FormularName,$InputName_Group,$GRP[$accg]['id'],$grp_option_text);
 }
 
 //Status
@@ -99,7 +108,7 @@ $sc=count($STATUS['adr']['status']);
 
 for ($scc=1; $scc<=$sc; $scc++)//0
 {
-	$Form->add_InputOption($FormularName,$InputName_Status,$scc,$STATUS['adr']['status'][$scc],"","color:".$STATUS['adr']['textcolor'][$scc]."; background-color:".$STATUS['adr']['color'][$scc].";");
+	$Form->add_InputOption($FormularName,$InputName_Status,$scc,display($STATUS['adr']['status'][$scc]),"","color:".$STATUS['adr']['textcolor'][$scc]."; background-color:".$STATUS['adr']['color'][$scc].";");
 }
 
 //MEMO
@@ -140,117 +149,4 @@ $Form->set_InputDesc($FormularName,$InputName_Reset,___("Reset"));
 $Form->set_InputReadonly($FormularName,$InputName_Reset,false);
 $Form->set_InputOrder($FormularName,$InputName_Reset,999);
 $Form->set_InputLabel($FormularName,$InputName_Reset,"");
-
-/*RENDER FORM*/
-
-$Form->render_Form($FormularName);
-
-/*DISPLAY*/
-$_MAIN_OUTPUT.= $Form->FORM[$FormularName]['head'];
-//hidden fieldsnicht vergessen!
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName]['act']['html'];
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName]['set']['html'];
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName]['adr_id']['html'];
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName]['offset']['html'];
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName]['limit']['html'];
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName]['s_email']['html'];
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName]['s_status']['html'];
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName]['s_author']['html'];
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName]['s_aktiv']['html'];
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName]['adr_grp_id']['html'];
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName]['st']['html'];
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName]['si']['html'];
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName]['si0']['html'];
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName]['si1']['html'];
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName]['si2']['html'];
-$_MAIN_OUTPUT.= "<table border=0>";
-
-if (!empty($adr_id)) {
-	$_MAIN_OUTPUT.= "<tr>";
-	$_MAIN_OUTPUT.= "<td colspan=\"2\">";
-	$_MAIN_OUTPUT.= "ID: <b>".$ADR[0]['id']."</b>";
-	$_MAIN_OUTPUT.= "<br>";
-	$_MAIN_OUTPUT.= sprintf(___("Erstellt am: %s von %s"),"<b>".$ADR[0]['created']."</b>","<b>".$ADR[0]['author']."</b>");
-	$_MAIN_OUTPUT.= "<br>";
-	$_MAIN_OUTPUT.= sprintf(___("Bearbeitet am: %s von %s"),"<b>".$ADR[0]['updated']."</b>","<b>".$ADR[0]['editor']."</b>");
-	$_MAIN_OUTPUT.= "<br><br>";
-	$_MAIN_OUTPUT.= "</td>";
-	$_MAIN_OUTPUT.= "</tr>";
-}
-
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=\"top\">";
-$_MAIN_OUTPUT.= tm_icon("email.png",___("E-Mail"))."&nbsp;".___("E-Mail");
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "<td valign=\"top\">";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Name]['html'];
-$_MAIN_OUTPUT.= "</td>";
-
-$_MAIN_OUTPUT.= "<td valign=\"top\" rowspan=13 align=left>";
-$_MAIN_OUTPUT.= tm_icon("group.png",___("Gruppen"))."&nbsp;".___("Gruppen")."<br>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Group]['html'];
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=\"top\">";
-$_MAIN_OUTPUT.= tm_icon("tick.png",___("Aktiv")).tm_icon("cancel.png",___("Inaktiv"))."&nbsp;".___("Aktiv");
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "<td valign=\"top\" 	align=left>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Aktiv]['html'];
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=\"top\">";
-$_MAIN_OUTPUT.= tm_icon("lightbulb.png",___("Status"))."&nbsp;".___("Status");
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "<td valign=\"top\" 	align=left>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Status]['html'];
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-
-//F, neu f0-9
-for ($fc=0;$fc<=9;$fc++) {
-	$FInputName="InputName_F".$fc;
-	$_MAIN_OUTPUT.= "<tr>";
-	$_MAIN_OUTPUT.= "<td valign=\"top\">";
-	$_MAIN_OUTPUT.= "F".$fc;
-	$_MAIN_OUTPUT.= "</td>";
-	$_MAIN_OUTPUT.= "<td valign=\"top\" colspan=1 align=left>";
-	$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$$FInputName]['html'];
-	$_MAIN_OUTPUT.= "</td>";
-	$_MAIN_OUTPUT.= "</tr>";
-
-}
-
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=\"top\" colspan=1>";
-$_MAIN_OUTPUT.= tm_icon("layout.png",___("Memo"))."&nbsp;".___("Memo");
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "<td valign=\"top\" align=\"left\"colspan=2>";
-$_MAIN_OUTPUT.= tm_icon("pencil.png",___("Memo einblenden/bearbeiten"),___("Memo einblenden/bearbeiten"),"toggle_adrmemo")."&nbsp;".___("Memo einblenden/bearbeiten");
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=\"top\" colspan=3>";
-$_MAIN_OUTPUT.= "<div id=\"adr_memo\">";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Memo]['html'];
-$_MAIN_OUTPUT.= "</div>";
-$_MAIN_OUTPUT.= "
-	<script type=\"text/javascript\">
-		toggleSlide('toggle_adrmemo','adr_memo',1);
-	</script>";
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-
-
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=\"top\" colspan=3><br>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Submit]['html'];
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-$_MAIN_OUTPUT.= "</table>";
-$_MAIN_OUTPUT.= $Form->FORM[$FormularName]['foot'];
-
 ?>

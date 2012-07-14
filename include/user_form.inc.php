@@ -104,6 +104,40 @@ $Form->set_InputReadonly($FormularName,$InputName_Expert,false);
 $Form->set_InputOrder($FormularName,$InputName_Expert,3);
 $Form->set_InputLabel($FormularName,$InputName_Expert,"");
 
+//Startpage
+$Form->new_Input($FormularName,$InputName_Startpage,"select", "");
+$Form->set_InputJS($FormularName,$InputName_Startpage," onChange=\"flash('submit','#ff0000');\" ");
+$Form->set_InputDefault($FormularName,$InputName_Startpage,$$InputName_Startpage);
+$Form->set_InputStyleClass($FormularName,$InputName_Startpage,"mFormSelect","mFormSelectFocus");
+$Form->set_InputDesc($FormularName,$InputName_Startpage,___("Startseite"));
+$Form->set_InputReadonly($FormularName,$InputName_Startpage,false);
+$Form->set_InputOrder($FormularName,$InputName_Startpage,1);
+$Form->set_InputLabel($FormularName,$InputName_Startpage,"");
+$Form->set_InputSize($FormularName,$InputName_Startpage,0,1);
+$Form->set_InputMultiple($FormularName,$InputName_Startpage,false);
+//add Data
+	$Form->add_InputOption($FormularName,$InputName_Startpage,"Welcome",___("Tellmatic default"));
+	$Form->add_InputOption($FormularName,$InputName_Startpage,"Help",___("Hilfe"));
+	$Form->add_InputOption($FormularName,$InputName_Startpage,"Doc",___("Dokumentation"));
+	$Form->add_InputOption($FormularName,$InputName_Startpage,"nl_grp_list",___("Newsletter: Gruppen: Liste"));
+	$Form->add_InputOption($FormularName,$InputName_Startpage,"nl_list",___("Newsletter: Liste"));
+	$Form->add_InputOption($FormularName,$InputName_Startpage,"nl_list_tpl",___("Newsletter: Liste: Vorlagen"));
+	$Form->add_InputOption($FormularName,$InputName_Startpage,"nl_new",___("Newsletter: Neu"));
+	$Form->add_InputOption($FormularName,$InputName_Startpage,"adr_list_search",___("Adressen: Suche"));
+	$Form->add_InputOption($FormularName,$InputName_Startpage,"adr_list",___("Adressen: Liste"));
+	$Form->add_InputOption($FormularName,$InputName_Startpage,"adr_new",___("Adressen: Neu"));
+	$Form->add_InputOption($FormularName,$InputName_Startpage,"form_list",___("Formulare: Liste"));
+	$Form->add_InputOption($FormularName,$InputName_Startpage,"link_grp_list",___("Links: Gruppen: Liste"));
+	$Form->add_InputOption($FormularName,$InputName_Startpage,"link_list",___("Links: Liste"));
+	$Form->add_InputOption($FormularName,$InputName_Startpage,"queue_list",___("Queue/Aufträge: Liste"));
+	$Form->add_InputOption($FormularName,$InputName_Startpage,"status",___("Status"));	
+	$Form->add_InputOption($FormularName,$InputName_Startpage,"status_top_x",___("Status: Top X"));
+	$Form->add_InputOption($FormularName,$InputName_Startpage,"status_map",___("Status: Map"));
+	$Form->add_InputOption($FormularName,$InputName_Startpage,"bounce",___("Verwaltung: Bouncemanagement"));
+	$Form->add_InputOption($FormularName,$InputName_Startpage,"adr_clean",___("Verwaltung: DB Bereinigen"));
+	$Form->add_InputOption($FormularName,$InputName_Startpage,"log_list",___("Logbuch: Liste"));
+
+
 //submit button
 $Form->new_Input($FormularName,$InputName_Submit,"submit",sprintf(___("Einstellungen für Benutzer %s ändern"),$LOGIN->USER['name']));
 $Form->set_InputStyleClass($FormularName,$InputName_Submit,"mFormSubmit","mFormSubmitFocus");
@@ -119,80 +153,4 @@ $Form->set_InputDesc($FormularName,$InputName_Reset,___("Reset"));
 $Form->set_InputReadonly($FormularName,$InputName_Reset,false);
 $Form->set_InputOrder($FormularName,$InputName_Reset,999);
 $Form->set_InputLabel($FormularName,$InputName_Reset,"");
-
-/*RENDER FORM*/
-
-$Form->render_Form($FormularName);
-//then you dont have to render the head and foot .....
-
-/*DISPLAY*/
-$_MAIN_OUTPUT.= $Form->FORM[$FormularName]['head'];
-//hidden fieldsnicht vergessen!
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName]['act']['html'];
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName]['set']['html'];
-$_MAIN_OUTPUT.= "<table>";
-
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top width=\"200\">".tm_icon("user_comment.png",___("Sprache"))."&nbsp;";
-$_MAIN_OUTPUT.= ___("Sprache");
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "<td valign=top>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Lang]['html'];
-$_MAIN_OUTPUT.= "<br><a href=\"http://www.tellmatic.org\" target=\"_blank\">Please help translating Tellmatic</a>";
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top>".tm_icon("monitor.png",___("Style"))."&nbsp;";
-$_MAIN_OUTPUT.= ___("Layout / Style");
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "<td valign=top>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Style]['html'];
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top>".tm_icon("tux.png",___("Erfahrener Benutzer"))."&nbsp;";
-$_MAIN_OUTPUT.= ___("Erfahrener Benutzer, Hilfen ausblenden etc.");
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "<td valign=top>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Expert]['html'];
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top>".tm_icon("email.png",___("E-Mail-Adresse"))."&nbsp;";
-$_MAIN_OUTPUT.= ___("E-Mail-Adresse");
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "<td valign=top>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_EMail]['html'];
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top>".tm_icon("pilcrow.png",___("Passwort"))."&nbsp;";
-$_MAIN_OUTPUT.= ___("Passwort");
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "<td valign=top>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Pass]['html'];
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top>".tm_icon("pilcrow.png",___("Passwort"))."&nbsp;";
-$_MAIN_OUTPUT.= ___("Passwort wiederholen");
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "<td valign=top>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Pass2]['html'];
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top colspan=2>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Submit]['html'];
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-$_MAIN_OUTPUT.= "</table>";
-$_MAIN_OUTPUT.= $Form->FORM[$FormularName]['foot'];
-
 ?>

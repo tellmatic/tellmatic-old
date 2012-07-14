@@ -32,28 +32,25 @@ $search_nl['aktiv']=1;
 $search_nl['status']=Array(3,4,5);//started, sent, archiv, see Stats.inc.php
 $Q=$QUEUE->getQ(0,0,$nl_limit,0,$nl_grpid,4);
 
-$_RSS='<?xml version="1.0"?>
-<rss version="2.0">
-<channel>
-<title>Newsletter</title>
-<description>Tellmatic</description>
-<link>http://www.tellmatic.org</link>
-';
+$_RSS='<?xml version="1.0"?>'."\n".
+'<rss version="2.0">'."\n".
+'<channel>'."\n".
+'<title>Newsletter</title>'."\n".
+'<description>Tellmatic</description>'."\n".
+'<link>http://www.tellmatic.org</link>'."\n".
+''."\n".;
 
 foreach ($Q as $q) {
 	$N=$NL->getNL($q['nl_id'],0,1,0,1,"",1,$search_nl);
 	$nl=$N[0];
-	$_RSS.='
-	<item>
-	<title>'.$nl['subject'].'</title>
-	<link>'.$tm_URL_FE.'/'.$tm_nldir.'/nl_'.date_convert_to_string($nl['created']).'_p.html</link>
-	</item>
-	';
+	$_RSS.='<item>'."\n".
+	'<title>'.$nl['subject'].'</title>'."\n".
+	'<link>'.$tm_URL_FE.'/'.$tm_nldir.'/nl_'.date_convert_to_string($nl['created']).'_p.html</link>'."\n".
+	'</item>'."\n";
 }
 
-$_RSS.='
-</channel>
-</rss>
-';
+$_RSS.='</channel>'."\n".
+	'</rss>'."\n";
+
 write_file(TM_PATH,$rss_output_filename,$_RSS);
 ?>

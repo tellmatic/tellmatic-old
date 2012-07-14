@@ -77,6 +77,7 @@ function checkHostType() {
 								['max_mails_atonce',false],
 								['max_mails_bcc',false],
 								['smtp_max_piped_rcpt',false],
+								['delay',false],
 								['options',true],
 							];
 	items_nomatch=[	['smtp_auth',true], 
@@ -90,6 +91,7 @@ function checkHostType() {
 								['max_mails_atonce',true],
 								['max_mails_bcc',true],
 								['smtp_max_piped_rcpt',true],
+								['delay',true],
 								['options',false],
 							];
 	checkFormSettings(form_id,items_match,items_nomatch,check_id,check_value);

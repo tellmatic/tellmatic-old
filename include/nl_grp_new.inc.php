@@ -52,15 +52,17 @@ if ($set=="save") {
 					));
 		$_MAIN_MESSAGE.="<br>".sprintf(___("Neue Newslettergruppe %s wurde erstellt."),"'<b>".display($name)."</b>'");
 		$action="nl_grp_list";
-		include_once (TM_INCLUDEPATH."/nl_grp_list.inc.php");
+		require_once (TM_INCLUDEPATH."/nl_grp_list.inc.php");
 	} else {
-		include_once (TM_INCLUDEPATH."/nl_grp_form.inc.php");
+		require_once (TM_INCLUDEPATH."/nl_grp_form.inc.php");
+		require_once (TM_INCLUDEPATH."/nl_grp_form_show.inc.php");
 	}
 
 } else {
 	$$InputName_Aktiv=1;
 	$$InputName_Name=___("Neue Gruppe");
 	$$InputName_Descr=___("Neue Gruppe");
-	include_once (TM_INCLUDEPATH."/nl_grp_form.inc.php");
+	require_once (TM_INCLUDEPATH."/nl_grp_form.inc.php");
+	require_once (TM_INCLUDEPATH."/nl_grp_form_show.inc.php");
 }
 ?>

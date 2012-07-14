@@ -27,5 +27,6 @@ $$InputName_Offset=getVar($InputName_Offset,0,0);//default 0
 //limit
 $InputName_Limit="usr_limit";
 $$InputName_Limit=getVar($InputName_Limit,0,$default_h_limit);//default ^^
+
 $HOSTS=new tm_HOST();
 ?>

@@ -10,7 +10,7 @@ A:HOVER     {
   	color:#000099;
 }
 BODY {
-	background-color:#ffffff;
+	background-color:#eeeeff;
 }
 
 .widget{
@@ -82,7 +82,7 @@ BODY {
 	display:none;
 	position: absolute;
 	padding:4px;
-	width:480px;
+	min-width:480px;
 	z-index:0;
 	color:#000066;
 	background: #ffffff;

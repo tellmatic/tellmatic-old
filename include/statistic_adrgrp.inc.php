@@ -17,7 +17,7 @@
 /////////////////////////////////////
 if ($set=="adrg" && check_dbid($adr_grp_id)) {
 
-	$showadrURLPara=$mSTDURL;
+	$showadrURLPara=tmObjCopy($mSTDURL);
 	$showadrURLPara->addParam("act","adr_list");
 	$showadrURLPara->addParam("adr_grp_id",$adr_grp_id);
 	$showadrURLPara->addParam("s","s_menu_adr,s_menu_st");
@@ -36,7 +36,7 @@ if ($set=="adrg" && check_dbid($adr_grp_id)) {
 	////////////////////////////////////////////////////////////////////////////////////////
 	$ac=$ADDRESS->countADR($adr_grp_id);
 	//add total value to graph
-	$chart->addPoint(new Point(___("Summe")." (100%)", $ac));
+	$chart->addPoint(new Point(___("Summe",0)." (100%)", $ac));
 	$_MAIN_OUTPUT.="<br>".sprintf(___("Insgesamt %s Adressen:"),"<b>".$ac)."</b>";
 	$_MAIN_OUTPUT.= "<br><img alt=\"Chart\"  src=\"".$tm_URL_FE."/".$tm_reportdir."/adrg_".$adr_grp_id.".png\"><br>";
 	//per adr status:
@@ -49,16 +49,16 @@ if ($set=="adrg" && check_dbid($adr_grp_id)) {
 		if ($acs>0) {
 			$_MAIN_OUTPUT.="<br>".
 							"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"".$tm_URL."/".$showadrURLPara_."\">".$acs.
-							"&nbsp;".tm_icon($STATUS['adr']['statimg'][$ascc],$STATUS['adr']['status'][$ascc]).
-							"&nbsp;".$STATUS['adr']['status'][$ascc]."</a>".
-							"&nbsp;(".$STATUS['adr']['descr'][$ascc].")";
+							"&nbsp;".tm_icon($STATUS['adr']['statimg'][$ascc],display($STATUS['adr']['status'][$ascc])).
+							"&nbsp;".display($STATUS['adr']['status'][$ascc])."</a>".
+							"&nbsp;(".display($STATUS['adr']['descr'][$ascc]).")";
 			//add values to chart
 			$ac_pc=$acs/($ac/100);//anteil in prozent
 			$chart->addPoint(new Point($STATUS['adr']['status'][$ascc]." (".number_format($ac_pc, 2, ',', '')."%)", $acs));
 		}
 	}
 	//create chart
-	$chart->setTitle(sprintf(___("Empfängergruppe %s"),"\"".$AG[0]['name']."\""));
+	$chart->setTitle(sprintf(___("Empfängergruppe %s",0),"\"".$AG[0]['name']."\""));
 	$chart->render($tm_reportpath."/adrg_".$adr_grp_id.".png");
 
 	$_MAIN_OUTPUT.="<hr>";
@@ -66,7 +66,7 @@ if ($set=="adrg" && check_dbid($adr_grp_id)) {
 	////////////////////////////////////////////////////////////////////////////////////////
 	//Q Status per Newsletter
 	////////////////////////////////////////////////////////////////////////////////////////
-	$shownlURLPara=$mSTDURL;
+	$shownlURLPara=tmObjCopy($mSTDURL);
 	$shownlURLPara->addParam("s","s_menu_nl,s_menu_st");
 	$shownlURLPara->addParam("act","statistic");
 	$shownlURLPara->addParam("set","nl");
@@ -86,9 +86,9 @@ if ($set=="adrg" && check_dbid($adr_grp_id)) {
 		$shownlURLPara_=$shownlURLPara->getAllParams();
 
 		$_MAIN_OUTPUT.="<br>".sprintf(___("Versand von %s"),"<a href=\"".$tm_URL."/".$shownlURLPara_."\"><b>".display($NL[0]['subject'])."</b> (".tm_icon("chart_pie.png",___("Statistik anzeigen")).")</a>");
-		$_MAIN_OUTPUT.=":&nbsp;".tm_icon($STATUS['q']['statimg'][$Q[$qcc]['status']],$STATUS['q']['status'][$Q[$qcc]['status']]).
-							"&nbsp;".$STATUS['q']['status'][$Q[$qcc]['status']].
-							"&nbsp;(".$STATUS['q']['descr'][$Q[$qcc]['status']].")";
+		$_MAIN_OUTPUT.=":&nbsp;".tm_icon($STATUS['q']['statimg'][$Q[$qcc]['status']],display($STATUS['q']['status'][$Q[$qcc]['status']])).
+							"&nbsp;".display($STATUS['q']['status'][$Q[$qcc]['status']]).
+							"&nbsp;(".display($STATUS['q']['descr'][$Q[$qcc]['status']]).")";
 
 		$_MAIN_OUTPUT.="<br>".sprintf(___("Inhalt-Typ: %s"),"");
 		if ($NL[0]['content_type']=="text/html") {
@@ -117,7 +117,7 @@ if ($set=="adrg" && check_dbid($adr_grp_id)) {
 		$hc=$QUEUE->countH($Q[$qcc]['id'],$Q[$qcc]['nl_id'],$AG[0]['id']);
 		$hsc=count($STATUS['h']['status']);
 		//add total value to graph
-		$chart->addPoint(new Point(___("Summe")." (100%)", $hc));
+		$chart->addPoint(new Point(___("Summe",0)." (100%)", $hc));
 		$_MAIN_OUTPUT.="<br>".sprintf(___("Insgesamt %s Adressen"),"<b>".$hc)."</b>";
 		$_MAIN_OUTPUT.="<br>".sprintf(___("Erstellt am: %s von %s"),"<b>".$Q[$qcc]['created']."</b>","<b>".$Q[$qcc]['author']."</b>");
 		$_MAIN_OUTPUT.="<br>".sprintf(___("Versand gestartet: %s"),"<b>".$Q[$qcc]['send_at']."</b>");
@@ -129,9 +129,9 @@ if ($set=="adrg" && check_dbid($adr_grp_id)) {
 			if ($hcs>0) {
 				$_MAIN_OUTPUT.="<br>".
 								"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".$hcs.
-								"&nbsp;".tm_icon($STATUS['h']['statimg'][$hscc],$STATUS['h']['status'][$hscc]).
-								"&nbsp;".$STATUS['h']['status'][$hscc].
-								"&nbsp;(".$STATUS['h']['descr'][$hscc].")";
+								"&nbsp;".tm_icon($STATUS['h']['statimg'][$hscc],display($STATUS['h']['status'][$hscc])).
+								"&nbsp;".display($STATUS['h']['status'][$hscc]).
+								"&nbsp;(".display($STATUS['h']['descr'][$hscc]).")";
 				//add values to chart
 				$qc_pc=$hcs/($hc/100);//anteil in prozent
 				$chart->addPoint(new Point($STATUS['h']['status'][$hscc]." (".number_format($qc_pc, 2, ',', '')."%)", $hcs));
@@ -139,7 +139,7 @@ if ($set=="adrg" && check_dbid($adr_grp_id)) {
 		}
 		$_MAIN_OUTPUT.="<hr>";
 		//create chart
-		$chart->setTitle(sprintf(___("Newsletter %s an Gruppe %s"),"\"".$NL[0]['subject']."\"","\"".$AG[0]['name']."\""));
+		$chart->setTitle(sprintf(___("Newsletter %s an Gruppe %s",0),"\"".$NL[0]['subject']."\"","\"".$AG[0]['name']."\""));
 		$chart->render($tm_reportpath."/adrg_".$adr_grp_id."_nl_".$Q[$qcc]['nl_id'].".png");
 
 	}//qcc

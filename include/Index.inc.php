@@ -19,16 +19,11 @@ $action=getVar("act");
 //Sprache festlegen! wird unten erneut aufgerufen!! wenn eingeloggt.
 require (TM_INCLUDEPATH."/Lang.inc.php");
 
-$_MAIN_MESSAGE="";
+//set default style!
+$Style=$C[0]['style'];
+if (DEBUG) $_MAIN_MESSAGE.="<br><font size=2 color=red><h1>".___("DEBUG Modus")."</h1></font><br>";
 if (DEMO) $_MAIN_MESSAGE.="<br><font color=\"red\"><strong>Demo</strong>! Some functions and features may be disabled! You can not delete items!</font></br>";
-$_MAIN_HELP="";
-$_MAIN_OUTPUT="";
-$_MENU="";
-$Style="default";
-//default action
-if (!isset($action) || empty($action)) {
-	$action="Welcome";
-}
+
 
 //remove old temporrary admin html  files!
 //if file is older then 3 seconds, remove!
@@ -51,6 +46,13 @@ if (!empty($LOGIN->USER['style'])) {
 	$Style=$LOGIN->USER['style'];
 }
 
+//default action, user default page after login, $action
+if (!isset($action) || empty($action)) {
+	$action=$LOGIN->USER['startpage'];//set default action after login
+	#$action="Welcome";//set default action after login
+}
+
+
 //HTML-head
 require_once (TM_INCLUDEPATH."/Header.inc.php"); // = $_HEAD_HTML
 require_once (TM_INCLUDEPATH."/Head.inc.php");
@@ -70,7 +72,7 @@ require_once (TM_INCLUDEPATH."/Footer.inc.php");// = $_FOOTER
 //new Template
 $_Tpl=new tm_Template();
 
-if (DEBUG) {
+if (DEBUG_LANG && (DEBUG_LANG_LEVEL == 2 || DEBUG_LANG_LEVEL==3) ) {
 	$debug_not_translated=unify_array($debug_not_translated);
 	$_MAIN.="<div><b><font color=\"red\">NOT TRANSLATED:</font></b><font size=-2>";
 	foreach ($debug_not_translated as $word) {

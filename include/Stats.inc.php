@@ -14,35 +14,36 @@
 	//STATUSCODES
 	//statuscodes der adressen und bilder dazu
 	//achtung!!! wenn neuer status dann auch beim versenden beachten......... und evtll. anfuegen an if abfrage, send.inc
+	
 	$STATUS=Array(
 						"adr"=>Array(
 								"status"=>Array(
-												1=>___("Neu"),
-												2=>___("OK"),
-												3=>___("Bestätigt"),
-												4=>___("Angezeigt"),
-												5=>___("Warten"),
+												1=>___("Neu",0),
+												2=>___("OK",0),
+												3=>___("Bestätigt",0),
+												4=>___("Angezeigt",0),
+												5=>___("Warten",0),
 												6=>"6 --",
 												7=>"7 --",
-												8=>___("Fehler C"),
-												9=>___("Fehler A"),
-												10=>___("Fehler S"),
-												11=>___("Abgemeldet"),
-												12=>___("Touch"),
+												8=>___("Fehler C",0),
+												9=>___("Fehler A",0),
+												10=>___("Fehler S",0),
+												11=>___("Abgemeldet",0),
+												12=>___("Touch",0),
 								),
 								"descr"=>Array(
-												1=>___("Neuanmeldung"),
-												2=>___("manuell Eingetragen, Syntax Geprüft, Senden OK"),
-												3=>___("Bestätigt, Double-Opt-In"),
-												4=>___("Rechecked, NL/Blindimage angezeigt"),
-												5=>___("Warten auf Bestätigung (Double-Opt-IN)"),
-												6=>___("undefiniert"),
-												7=>___("undefiniert"),
-												8=>___("Fehler beim versenden, Status/Aktiv wurde geändert vor dem versenden!"),
-												9=>___("Fehlerhafte Adresse o. Rückläufer"),
-												10=>___("Fehler beim versenden, neuer Versuch"),
-												11=>___("Abgemeldet"),
-												12=>___("1st-Touch-Opt-In"),
+												1=>___("Neuanmeldung",0),
+												2=>___("manuell Eingetragen, Syntax Geprüft, Senden OK",0),
+												3=>___("Bestätigt, Double-Opt-In",0),
+												4=>___("Rechecked, NL/Blindimage angezeigt",0),
+												5=>___("Warten auf Bestätigung (Double-Opt-IN)",0),
+												6=>___("undefiniert",0),
+												7=>___("undefiniert",0),
+												8=>___("Fehler beim versenden, Status/Aktiv wurde geändert vor dem versenden!",0),
+												9=>___("Fehlerhafte Adresse o. Rückläufer",0),
+												10=>___("Fehler beim versenden, neuer Versuch",0),
+												11=>___("Abgemeldet",0),
+												12=>___("1st-Touch-Opt-In",0),
 								),
 								"statimg"=>Array(
 												1=>"new.png",
@@ -90,20 +91,20 @@
 
 						"nl"=>Array(
 								"status"=>Array(
-												"1"=>___("Neu"),
-												"2"=>___("Queued"),
-												"3"=>___("Versand"),
-												"4"=>___("Gesendet"),
-												"5"=>___("Archiv"),
-												"6"=>___("Warten")
+												"1"=>___("Neu",0),
+												"2"=>___("Queued",0),
+												"3"=>___("Versand",0),
+												"4"=>___("Gesendet",0),
+												"5"=>___("Archiv",0),
+												"6"=>___("Warten",0),
 								),
 								"descr"=>Array(
-												"1"=>___("Keine Versandaufträge oder Historie f. dieses Newsletter"),
-												"2"=>___("In der Warteschlange"),
-												"3"=>___("Versand gestartet"),
-												"4"=>___("Versendet"),
-												"5"=>___("Archiviert - Qs wurden gelöscht"),
-												"6"=>___("Versand vorbereitet, Warten auf Versand (terminiert)")
+												"1"=>___("Keine Versandaufträge oder Historie f. dieses Newsletter",0),
+												"2"=>___("In der Warteschlange",0),
+												"3"=>___("Versand gestartet",0),
+												"4"=>___("Versendet",0),
+												"5"=>___("Archiviert - Qs wurden gelöscht",0),
+												"6"=>___("Versand vorbereitet, Warten auf Versand (terminiert)",0),
 								),
 								"statimg"=>Array(
 												"1"=>"new.png",
@@ -125,18 +126,18 @@
 
 						"q"=>Array(
 								"status"=>Array(
-												"1"=>___("Neu"),
-												"2"=>___("Gestartet"),
-												"3"=>___("Running"),
-												"4"=>___("Fertig"),
-												"5"=>___("Angehalten")
+												"1"=>___("Neu",0),
+												"2"=>___("Gestartet",0),
+												"3"=>___("Running",0),
+												"4"=>___("Fertig",0),
+												"5"=>___("Angehalten",0),
 								),
 								"descr"=>Array(
-												"1"=>___("Neu"),
-												"2"=>___("Wird versendet"),
-												"3"=>___("In Arbeit"),
-												"4"=>___("Versendet"),
-												"5"=>___("Angehalten")
+												"1"=>___("Neu",0),
+												"2"=>___("Wird versendet",0),
+												"3"=>___("In Arbeit",0),
+												"4"=>___("Versendet",0),
+												"5"=>___("Angehalten",0),
 								),
 								"statimg"=>Array(
 												"1"=>"new.png",
@@ -149,22 +150,22 @@
 
 						"h"=>Array(
 								"status"=>Array(
-												"1"=>___("Neu"),
-												"2"=>___("Fertig"),
-												"3"=>___("View"),
-												"4"=>___("Fehler"),
-												"5"=>___("Versand"),
-												"6"=>___("Abbruch"),
-												"7"=>___("Abgemeldet")
+												"1"=>___("Neu",0),
+												"2"=>___("Fertig",0),
+												"3"=>___("View",0),
+												"4"=>___("Fehler",0),
+												"5"=>___("Versand",0),
+												"6"=>___("Abbruch",0),
+												"7"=>___("Abgemeldet",0),
 								),
 								"descr"=>Array(
-												"1"=>___("Warten auf Versand"),
-												"2"=>___("Versendet, OK"),
-												"3"=>___("Versendet, angezeigt"),
-												"4"=>___("Versendet, Fehler"),
-												"5"=>___("Wird in diesem Moment versendet!!!"),
-												"6"=>___("Abgebrochen, Q gelöscht"),
-												"7"=>___("Abgemeldet")
+												"1"=>___("Warten auf Versand",0),
+												"2"=>___("Versendet, OK",0),
+												"3"=>___("Versendet, angezeigt",0),
+												"4"=>___("Versendet, Fehler",0),
+												"5"=>___("Wird in diesem Moment versendet!!!",0),
+												"6"=>___("Abgebrochen, Q gelöscht",0),
+												"7"=>___("Abgemeldet",0),
 								),
 								"statimg"=>Array(
 												"1"=>"new.png",

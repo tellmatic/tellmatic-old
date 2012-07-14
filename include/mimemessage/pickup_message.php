@@ -2,7 +2,7 @@
 /*
  * pickup_message.php
  *
- * @(#) $Header: /cvsroot/tellmatic/tellmatic/include/mimemessage/pickup_message.php,v 1.1 2007/11/29 23:50:53 mcms09 Exp $
+ * @(#) $Header: /home/mlemos/cvsroot/mimemessage/pickup_message.php,v 1.4 2006/05/04 01:24:35 mlemos Exp $
  *
  *
  */
@@ -14,7 +14,7 @@
 	<package>net.manuellemos.mimemessage</package>
 
 	<name>pickup_message_class</name>
-	<version>@(#) $Id: pickup_message.php,v 1.1 2007/11/29 23:50:53 mcms09 Exp $</version>
+	<version>@(#) $Id: pickup_message.php,v 1.4 2006/05/04 01:24:35 mlemos Exp $</version>
 	<copyright>Copyright ¿ (C) Manuel Lemos 1999-2004</copyright>
 	<title>MIME E-mail message composing and sending using a Windows mail
 		server pickup directory</title>
@@ -102,7 +102,7 @@ class pickup_message_class extends email_message_class
 {metadocument}
 	<variable>
 		<name>mailer_delivery</name>
-		<value>pickup $Revision: 1.1 $</value>
+		<value>pickup $Revision: 1.4 $</value>
 		<documentation>
 			<purpose>Specify the text that is used to identify the mail
 				delivery class or sub-class. This text is appended to the
@@ -113,7 +113,7 @@ class pickup_message_class extends email_message_class
 	</variable>
 {/metadocument}
 */
-	var $mailer_delivery='pickup $Revision: 1.1 $';
+	var $mailer_delivery='pickup $Revision: 1.4 $';
 
 	Function CleanupMessageFile()
 	{

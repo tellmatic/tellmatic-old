@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-09-26 11:27+0200\n"
+"POT-Creation-Date: 2011-02-27 14:19+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -4914,4 +4914,348 @@ msgstr ""
 
 #, c-format
 msgid "%s erledigt, davon %s OK, %s Adressen mit Fehler beim Versand (entspricht aktuell %s aller verarbeiteten Adressen)"
+msgstr ""
+
+msgid "Parameter"
+msgstr ""
+
+#, c-format
+msgid "Bearbeitet: %s"
+msgstr ""
+
+#, c-format
+msgid "Übersprungen: %s"
+msgstr ""
+
+msgid "Übersprungen: "
+msgstr ""
+
+#, c-format
+msgid "%s erledigt, davon: %s Übersprungen, %s Versendet + %s Versendet u. Angezeigt, %s Adressen mit Fehler beim Versand (entspricht aktuell %s aller verarbeiteten Adressen)"
+msgstr ""
+
+#, c-format
+msgid "%s exisitert bereits."
+msgstr ""
+
+msgid "FEHLER! Tellmatic benoetigt mindestens PHP Version 5.2"
+msgstr ""
+
+#, c-format
+msgid "%s ist nicht aktiviert."
+msgstr ""
+
+msgid "Sie verwenden Windows."
+msgstr ""
+
+msgid "Blacklist/Robinsonliste"
+msgstr ""
+
+msgid "Blacklist/Robinsonliste & Löschen"
+msgstr ""
+
+msgid "Proofing aktiviert"
+msgstr ""
+
+msgid "Proofing URL"
+msgstr ""
+
+msgid "Proofing Trigger"
+msgstr ""
+
+msgid "Proofing Anteil"
+msgstr ""
+
+msgid "Anmeldeformular"
+msgstr ""
+
+msgid "SMTP-Server"
+msgstr ""
+
+msgid "Proofing, Validierung und Qualifizierung der Adressbestaende gegen eine externe Datenbank"
+msgstr ""
+
+msgid "Proofing aktivieren"
+msgstr ""
+
+msgid "Tellmatic default"
+msgstr ""
+
+msgid "Newsletter: Gruppen: Liste"
+msgstr ""
+
+msgid "Newsletter: Liste"
+msgstr ""
+
+msgid "Newsletter: Liste: Vorlagen"
+msgstr ""
+
+msgid "Newsletter: Neu"
+msgstr ""
+
+msgid "Adressen: Suche"
+msgstr ""
+
+msgid "Adressen: Liste"
+msgstr ""
+
+msgid "Adressen: Neu"
+msgstr ""
+
+msgid "Formulare: Liste"
+msgstr ""
+
+msgid "Links: Gruppen: Liste"
+msgstr ""
+
+msgid "Links: Liste"
+msgstr ""
+
+msgid "Queue/Aufträge: Liste"
+msgstr ""
+
+msgid "Status: Top X"
+msgstr ""
+
+msgid "Status: Map"
+msgstr ""
+
+msgid "Verwaltung: Bouncemanagement"
+msgstr ""
+
+msgid "Verwaltung: DB Bereinigen"
+msgstr ""
+
+msgid "Logbuch: Liste"
+msgstr ""
+
+msgid "Produktiv"
+msgstr ""
+
+msgid "Eintrag ist Produktiv."
+msgstr ""
+
+msgid "Eintrag ist nicht Produktiv."
+msgstr ""
+
+msgid "Pro"
+msgstr ""
+
+msgid "Diese Gruppe ist öffentlich"
+msgstr ""
+
+msgid "Diese Gruppe ist produktiv"
+msgstr ""
+
+msgid "Diese Gruppe ist nicht produktiv"
+msgstr ""
+
+#, c-format
+msgid "Adressgruppe %s als nicht produktiv markieren?"
+msgstr ""
+
+#, c-format
+msgid "Adressgruppe %s als produktiv markieren?"
+msgstr ""
+
+msgid "Gruppe ist Produktiv"
+msgstr ""
+
+msgid "Nicht Produktiv"
+msgstr ""
+
+msgid "Gruppe ist Produktiv / nicht Produktiv (Klick=Ändern)"
+msgstr ""
+
+msgid "Proofing"
+msgstr ""
+
+msgid "Proofing aktiv"
+msgstr ""
+
+msgid "Herkunft / Quelle"
+msgstr ""
+
+msgid "Datei bearbeiten"
+msgstr ""
+
+#, c-format
+msgid "Datei %s wurde gespeichert."
+msgstr ""
+
+#, c-format
+msgid "Fehler bem speichern der Datei %s."
+msgstr ""
+
+msgid "Wählen Sie ein Newsletter für die Double-Opt-In Mail."
+msgstr ""
+
+msgid "Wählen Sie ein Newsletter für die Bestätigungsmail."
+msgstr ""
+
+msgid "Wählen Sie ein Newsletter für Updates."
+msgstr ""
+
+msgid "Besucher kann mehrere Gruppen wählen"
+msgstr ""
+
+msgid "Meldung bei Double-Opt-In"
+msgstr ""
+
+msgid "Meldung bei Neueintrag"
+msgstr ""
+
+msgid "Meldung bei Aktualisierung"
+msgstr ""
+
+msgid "Mehrere Gruppen"
+msgstr ""
+
+msgid "Double Opt-in Mail"
+msgstr ""
+
+msgid "Bestätigungs-Mail"
+msgstr ""
+
+msgid "Aktualisierungs-Mail"
+msgstr ""
+
+msgid "Neues Standardformular wurde definiert."
+msgstr ""
+
+msgid "Diese Formular ist das Standardformular"
+msgstr ""
+
+msgid "Gruppen aktualisieren, nur Neue hinzufügen"
+msgstr ""
+
+msgid "Dieses Formular ist das Standardformular"
+msgstr ""
+
+msgid "Standardformular"
+msgstr ""
+
+msgid "Newsletter welcher als Double-Opt-In Mail verschickt wird"
+msgstr ""
+
+msgid "-- STANDARD --"
+msgstr ""
+
+msgid "Newsletter welcher als Bestätigungs-Mail verschickt wird"
+msgstr ""
+
+msgid "Aktulisierungs-Mail"
+msgstr ""
+
+msgid "Newsletter welcher als Aktualisierungs-Mail verschickt wird"
+msgstr ""
+
+msgid "Template bearbeiten"
+msgstr ""
+
+#, c-format
+msgid "Formular %s als Standard definieren."
+msgstr ""
+
+msgid "Dieses Formular als Standardformular"
+msgstr ""
+
+msgid "Standardformular (kann nicht de-aktiviert und gelöscht werden)"
+msgstr ""
+
+msgid "Nur neue öffentliche Gruppen Referenzen hinzufügen"
+msgstr ""
+
+msgid "Dieses Formular als Standardformular definieren"
+msgstr ""
+
+msgid "Nachricht für Double-Opt-In"
+msgstr ""
+
+msgid "Nachricht für Neueintrag"
+msgstr ""
+
+msgid "Nachricht für Aktualisierung"
+msgstr ""
+
+#, c-format
+msgid "Datei %s hat keine Einträge!"
+msgstr ""
+
+#, c-format
+msgid "Fehler: Datei %s kann nicht geöffnet werden!"
+msgstr ""
+
+msgid "Pause"
+msgstr ""
+
+msgid "Sekunden"
+msgstr ""
+
+msgid "Pause zwischen zwei Mails"
+msgstr ""
+
+msgid "DEBUG Modus"
+msgstr ""
+
+msgid "FEHLER! file_get_contents() ist deaktiviert"
+msgstr ""
+
+#, c-format
+msgid "Die letzten %s Einträge in der Tellmatic PHP Fehler-Log-Datei %s:"
+msgstr ""
+
+msgid "Tellmatic"
+msgstr ""
+
+msgid "Tellmatic Startseite"
+msgstr ""
+
+msgid "Zur Tellmatic Startseite"
+msgstr ""
+
+msgid "Benutzer Startseite"
+msgstr ""
+
+msgid "Legende f. Variablen ein-ausblenden"
+msgstr ""
+
+msgid "Legende Variablen"
+msgstr ""
+
+msgid "Variablen"
+msgstr ""
+
+#, c-format
+msgid "%s enthält den Betreff"
+msgstr ""
+
+msgid "Q mit fehlgeschlagenen und übersprungenen Adressen neu starten."
+msgstr ""
+
+msgid "Q mit fehlgeschlagenen und übersprungenen Adressen neu starten"
+msgstr ""
+
+msgid "Newsletter-Templates"
+msgstr ""
+
+msgid "Newsletter-Bilder"
+msgstr ""
+
+msgid "Newsletter-Anhänge"
+msgstr ""
+
+msgid "Formular-Templates"
+msgstr ""
+
+msgid "Ungültiger Captcha Code!"
+msgstr ""
+
+msgid "Ihre Adresse wurde aus unserem Verteiler entfernt."
+msgstr ""
+
+msgid "Ein Fehler ist aufgetreten"
+msgstr ""
+
+msgid "Ihre Adresse ist (nicht mehr) angemeldet."
 msgstr ""

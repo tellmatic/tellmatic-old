@@ -2,7 +2,7 @@
 /* this file is part of: / diese Datei ist ein Teil von:                        */
 /* tellmatic, the newslettermachine                                             */
 /* tellmatic, die Newslettermaschine                                            */
-/* 2006/7 by Volker Augustin, multi.art.studio Hanau                            */
+/* 2006/11 by Volker Augustin, multi.art.studio Hanau                            */
 /* Contact/Kontakt: info@tellmatic.org                                      */
 /* Homepage: www.tellmatic.org                                                   */
 /* leave this header in file!                                                   */
@@ -32,10 +32,16 @@ Installation:
 	
 	Das Verzeichnis in dem Sie Tellmatic installieren moechten muss fuer den Webserver beschreibbar sein - ftp-> chmod --> user/group/others -> read/write/execute (0775 oder 0777)
 	
+	Bei fcgi/cgi versionen reicht es die Verzeichnisse mit den Rechten 0750 oder 0770 zu versehen.
+		
 	Nun mit dem Browser die Datei
+	
 	install.php
+
 	aufrufen, 
+
 	Sprache fuer die Installation waehlen und Lizenz akzeptieren,
+
 	Daten eingeben und bestaetigen.
 	
 	Sollten Fehler auftreten, folgen Sie bitte den Anweisungen.

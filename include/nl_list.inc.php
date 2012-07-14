@@ -135,51 +135,51 @@ $mSTDURL->addParam("st",$sortType);
 $mSTDURL->addParam("si",$sortIndex);
 $mSTDURL->addParam("s_nl_istemplate",$s_nl_istemplate);
 
-$firstURLPara=$mSTDURL;
+$firstURLPara=tmObjCopy($mSTDURL);
 $firstURLPara->addParam("nl_grp_id",$nl_grp_id);
 $firstURLPara->addParam("offset",0);
 $firstURLPara_=$firstURLPara->getAllParams();
 
-$lastURLPara=$mSTDURL;
+$lastURLPara=tmObjCopy($mSTDURL);
 $lastURLPara->addParam("act","nl_list");
 $lastURLPara->addParam("offset",($entrys_total-$limit));
 $lastURLPara_=$lastURLPara->getAllParams();
 
-$nextURLPara=$mSTDURL;
+$nextURLPara=tmObjCopy($mSTDURL);
 $nextURLPara->addParam("nl_grp_id",$nl_grp_id);
 $nextURLPara->addParam("offset",($offset+$limit));
 $nextURLPara_=$nextURLPara->getAllParams();
 
-$prevURLPara=$mSTDURL;
+$prevURLPara=tmObjCopy($mSTDURL);
 $prevURLPara->addParam("nl_grp_id",$nl_grp_id);
 $prevURLPara->addParam("offset",($offset-$limit));
 $prevURLPara_=$prevURLPara->getAllParams();
 
-$pagesURLPara=$mSTDURL;
+$pagesURLPara=tmObjCopy($mSTDURL);
 //will be defined and use in pager.inc.php
 
-$sortURLPara=$mSTDURL;
+$sortURLPara=tmObjCopy($mSTDURL);
 $sortURLPara->addParam("nl_grp_id","$nl_grp_id");
 $sortURLPara->delparam("st");
 $sortURLPara->delparam("si");
 $sortURLPara_=$sortURLPara->getAllParams();
 
-$editURLPara=$mSTDURL;
+$editURLPara=tmObjCopy($mSTDURL);
 $editURLPara->addParam("act","nl_edit");
 $editURLPara->addParam("nl_grp_id","$nl_grp_id");
 
-$addqURLPara=$mSTDURL;
+$addqURLPara=tmObjCopy($mSTDURL);
 $addqURLPara->addParam("act","queue_new");
 
-$delqURLPara=$mSTDURL;
+$delqURLPara=tmObjCopy($mSTDURL);
 $delqURLPara->addParam("set","queue_delete");
 $delqURLPara->addParam("nl_grp_id","$nl_grp_id");
 
-$delHistoryURLPara=$mSTDURL;
+$delHistoryURLPara=tmObjCopy($mSTDURL);
 $delHistoryURLPara->addParam("set","delete_history");
 $delHistoryURLPara->addParam("nl_grp_id","$nl_grp_id");
 
-$showqURLPara=$mSTDURL;
+$showqURLPara=tmObjCopy($mSTDURL);
 $showqURLPara->addParam("act","queue_list");
 //vars loeschen da q liste sonst bei limit offset sort etc beeintraechtigt wird.
 $showqURLPara->delParam("offset");
@@ -187,40 +187,40 @@ $showqURLPara->delParam("limit");
 $showqURLPara->delParam("st");
 $showqURLPara->delParam("si");
 
-$aktivURLPara=$mSTDURL;
+$aktivURLPara=tmObjCopy($mSTDURL);
 $aktivURLPara->addParam("nl_grp_id",$nl_grp_id);
 $aktivURLPara->addParam("set","aktiv");
 
-$sendFastURLPara=$mSTDURL;
+$sendFastURLPara=tmObjCopy($mSTDURL);
 $sendFastURLPara->addParam("act","queue_send");
 $sendFastURLPara->addParam("set","nl");
 $sendFastURLPara->addParam("startq",1);
 
-$refreshRCPTListURLPara=$mSTDURL;
+$refreshRCPTListURLPara=tmObjCopy($mSTDURL);
 $refreshRCPTListURLPara->addParam("act","queue_send");
 $refreshRCPTListURLPara->addParam("set","nl");
 
-$delURLPara=$mSTDURL;
+$delURLPara=tmObjCopy($mSTDURL);
 $delURLPara->addParam("nl_grp_id",$nl_grp_id);
 $delURLPara->addParam("set","delete");
 
-$delimgURLPara=$mSTDURL;
+$delimgURLPara=tmObjCopy($mSTDURL);
 $delimgURLPara->addParam("nl_grp_id",$nl_grp_id);
 $delimgURLPara->addParam("set","delete_img");
 
-$delhtmlURLPara=$mSTDURL;
+$delhtmlURLPara=tmObjCopy($mSTDURL);
 $delhtmlURLPara->addParam("nl_grp_id",$nl_grp_id);
 $delhtmlURLPara->addParam("set","delete_html");
 
-$copyURLPara=$mSTDURL;
+$copyURLPara=tmObjCopy($mSTDURL);
 $copyURLPara->addParam("nl_grp_id",$nl_grp_id);
 $copyURLPara->addParam("set","copy");
 
-$copyallURLPara=$mSTDURL;
+$copyallURLPara=tmObjCopy($mSTDURL);
 $copyallURLPara->addParam("nl_grp_id",$nl_grp_id);
 $copyallURLPara->addParam("set","copyall");
 
-$statURLPara=$mSTDURL;
+$statURLPara=tmObjCopy($mSTDURL);
 $statURLPara->addParam("act","statistic");
 $statURLPara->addParam("set","nl");
 
@@ -288,7 +288,6 @@ for ($ncc=0;$ncc<$nc;$ncc++) {
 	$showqURLPara->addParam("nl_id",$NL[$ncc]['id']);
 	$showqURLPara_=$showqURLPara->getAllParams();
 
-
 	$sendFastURLPara->addParam("nl_id",$NL[$ncc]['id']);
 	$sendFastURLPara_=$sendFastURLPara->getAllParams();
 
@@ -322,6 +321,8 @@ for ($ncc=0;$ncc<$nc;$ncc++) {
 	$hc_ok=$QUEUE->countH(0,$NL[$ncc]['id'],0,0,2);
 	$hc_view=$QUEUE->countH(0,$NL[$ncc]['id'],0,0,3);
 	$hc_fail=$QUEUE->countH(0,$NL[$ncc]['id'],0,0,4);
+	$hc_current=$QUEUE->countH(0,$NL[$ncc]['id'],0,0,5);//status 5: currently working on this adr
+	$hc_skip=$QUEUE->countH(0,$NL[$ncc]['id'],0,0,6);//status 6 : canceled, blacklisted at sending time etc, skipped!
 
 	//gibt es ueberhaupt q eintraege fuer das nl? zum anzeigen
 	$Q=$QUEUE->getQID($NL[$ncc]['id']);
@@ -410,7 +411,7 @@ for ($ncc=0;$ncc<$nc;$ncc++) {
 
 	$_MAIN_OUTPUT.=  "<br>".___("Tracking Bild").": \"".$NL[$ncc]['track_image']."\"";
 
-	$_MAIN_OUTPUT.= "<br>".tm_icon($STATUS['nl']['statimg'][$NL[$ncc]['status']],$STATUS['nl']['status'][$NL[$ncc]['status']])."&nbsp;".$STATUS['nl']['status'][$NL[$ncc]['status']];
+	$_MAIN_OUTPUT.= "<br>".tm_icon($STATUS['nl']['statimg'][$NL[$ncc]['status']],display($STATUS['nl']['status'][$NL[$ncc]['status']]))."&nbsp;".display($STATUS['nl']['status'][$NL[$ncc]['status']]);
 	$_MAIN_OUTPUT.= "<br>".sprintf(___("Erstellt am: %s von %s"),$created_date,$author).
 							"<br>".sprintf(___("Bearbeitet am: %s von %s"),$updated_date,$editor);
 	$_MAIN_OUTPUT.= "<br>".___("Gruppe:")." ";
@@ -433,10 +434,12 @@ for ($ncc=0;$ncc<$nc;$ncc++) {
 					"<br>".sprintf(___("Clicks: %s"),$NL[$ncc]['clicks']).
 					"<br><b>".___("Versand an:")."</b><br>".
 					sprintf(___("insgesamt %s Adressen"),$hc)."<br>".
+					sprintf(___("Bearbeitet: %s"),($hc_ok+$hc_fail+$hc_skip+$hc_view))."<br>".							
 					sprintf(___("Wartend: %s"),$hc_new)."<br>".
 					sprintf(___("Gesendet: %s"),$hc_ok)."<br>".
+					sprintf(___("Übersprungen: %s"),$hc_skip)."<br>".
+					sprintf(___("Angezeigt: %s"),$hc_view)."<br>".
 					sprintf(___("Fehler: %s"),$hc_fail)."<br>".
-					sprintf(___("Angezeigt: %s"),$hc_view).
 					"";
 	}
 	$_MAIN_OUTPUT.= "</div>\n";
@@ -453,7 +456,7 @@ for ($ncc=0;$ncc<$nc;$ncc++) {
 
 	$_MAIN_OUTPUT.= "<td>\n";
 	if ($NL[$ncc]['is_template']!=1) {
-		$_MAIN_OUTPUT.= tm_icon($STATUS['nl']['statimg'][$NL[$ncc]['status']],$STATUS['nl']['descr'][$NL[$ncc]['status']])."&nbsp;".$STATUS['nl']['status'][$NL[$ncc]['status']];
+		$_MAIN_OUTPUT.= tm_icon($STATUS['nl']['statimg'][$NL[$ncc]['status']],display($STATUS['nl']['descr'][$NL[$ncc]['status']]))."&nbsp;".display($STATUS['nl']['status'][$NL[$ncc]['status']]);
 	}	
 	if ($NL[$ncc]['is_template']==1) {
 		$_MAIN_OUTPUT.= tm_icon("textfield_rename.png",___("Vorlage"))."&nbsp;".___("Vorlage");

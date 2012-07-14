@@ -58,9 +58,11 @@ function userErrorHandler ($errno, $errmsg, $filename, $linenum, $vars) {
                 128 =>  "Compile Warning",
                 256 =>  "User Error",
                 512 =>  "User Warning",
-                1024=>  "User Notice"
+                1024=>  "User Notice",
+				2048=>	"Strict",
+				4096=>	"Recoverable Error"
                 );
-    $user_errors = array( E_ALL, E_USER_NOTICE, E_ERROR,  E_PARSE, E_USER_ERROR, E_USER_WARNING, E_WARNING, E_NOTICE );//E_WARNING, E_NOTICE
+    $user_errors = array( E_ALL, E_USER_NOTICE, E_ERROR,  E_PARSE, E_USER_ERROR, E_USER_WARNING, E_STRICT, E_RECOVERABLE_ERROR );//E_WARNING, E_NOTICE,
 
 /*
     $err = "<errorentry>\n";
@@ -101,6 +103,8 @@ function userErrorHandler ($errno, $errmsg, $filename, $linenum, $vars) {
 		$_ERROR['html'].=$err_html;
      }
 	//Error in Datei loggen
-	error_log($_ERROR['text'], 3, $tm_logpath."/tellmatic_php_error.log");
+	error_log($_ERROR['text'], 3, TM_PHP_LOGFILE);
+	#debug_print_backtrace();
+	#chmod (TM_PHP_LOGFILE, 0664);
 }
 ?>

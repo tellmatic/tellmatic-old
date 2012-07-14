@@ -71,6 +71,7 @@ class tm_HOST {
 										.TM_TABLE_HOST.".sender_email, "
 										.TM_TABLE_HOST.".return_mail, "
 										.TM_TABLE_HOST.".reply_to, "
+										.TM_TABLE_HOST.".delay, "
 										.TM_TABLE_HOST.".siteid";
 		$Query .=" FROM ".TM_TABLE_HOST;
 		$Query .=" WHERE ".TM_TABLE_HOST.".siteid='".TM_SITEID."'";
@@ -118,6 +119,7 @@ class tm_HOST {
 			$this->HOST[$hc]['sender_email']=$this->DB->Record['sender_email'];
 			$this->HOST[$hc]['return_mail']=$this->DB->Record['return_mail'];
 			$this->HOST[$hc]['reply_to']=$this->DB->Record['reply_to'];
+			$this->HOST[$hc]['delay']=$this->DB->Record['delay'];
 			$this->HOST[$hc]['siteid']=$this->DB->Record['siteid'];
 			$hc++;
 		}
@@ -154,6 +156,7 @@ class tm_HOST {
 					user,pass,
 					max_mails_atonce, max_mails_bcc,
 					sender_name, sender_email, return_mail,reply_to,
+					delay,
 					aktiv,standard,
 					siteid
 					)
@@ -168,6 +171,7 @@ class tm_HOST {
 					'".dbesc($host["user"])."',	'".dbesc($host["pass"])."',
 					".checkset_int($host["max_mails_atonce"]).",".checkset_int($host["max_mails_bcc"]).",
 					'".dbesc($host["sender_name"])."',	'".dbesc($host["sender_email"])."',	'".dbesc($host["return_mail"])."',	'".dbesc($host["reply_to"])."',
+					".checkset_int($host["delay"]).",					
 					".checkset_int($host["aktiv"]).",0,
 					'".TM_SITEID."')";
 		if ($this->DB->Query($Query)) {
@@ -197,6 +201,7 @@ class tm_HOST {
 					user='".dbesc($host["user"])."', pass='".dbesc($host["pass"])."',
 					max_mails_atonce=".checkset_int($host["max_mails_atonce"]).", max_mails_bcc=".checkset_int($host["max_mails_bcc"]).",
 					sender_name='".dbesc($host["sender_name"])."', sender_email='".dbesc($host["sender_email"])."', return_mail='".dbesc($host["return_mail"])."', reply_to='".dbesc($host["reply_to"])."',
+					aktiv=".checkset_int($host["aktiv"]).",
 					aktiv=".checkset_int($host["aktiv"])."
 					WHERE siteid='".TM_SITEID."' AND id=".checkset_int($host["id"]);
 			if ($this->DB->Query($Query)) {

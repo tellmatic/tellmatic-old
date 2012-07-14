@@ -74,12 +74,12 @@ $Form->set_InputSize($FormularName,$InputName_Group,0,5);
 $Form->set_InputMultiple($FormularName,$InputName_Group,true);
 //add Data
 $ADDRESS=new tm_ADR();
-$GRP=$ADDRESS->getGroup(0,0,0,1);
+$GRP=$ADDRESS->getGroup(0,0,0,1,Array("aktiv"=>1, "prod"=>1));
 $acg=count($GRP);
 for ($accg=0; $accg<$acg; $accg++)
 {
 	$valid_adr_c=$ADDRESS->countValidADR($GRP[$accg]['id']);
-	if ($GRP[$accg]['aktiv']==1 && $valid_adr_c>0) {
+	if ($valid_adr_c>0) {
 		$Form->add_InputOption($FormularName,$InputName_Group,$GRP[$accg]['id'],display($GRP[$accg]['name'])." (".$GRP[$accg]['adr_count']." / ".$valid_adr_c." ".___("Adressen").")");
 	}
 }
@@ -94,6 +94,18 @@ for ($accg=0; $accg<$acg; $accg++)
 	$Form->set_InputReadonly($FormularName,$InputName_Blacklist,false);
 	$Form->set_InputOrder($FormularName,$InputName_Blacklist,6);
 	$Form->set_InputLabel($FormularName,$InputName_Blacklist,"");
+
+//Proof
+	$Form->new_Input($FormularName,$InputName_Proof,"checkbox", 1);
+	$Form->set_InputJS($FormularName,$InputName_Proof," onChange=\"flash('submit','#ff0000');\"");
+	$Form->set_InputDefault($FormularName,$InputName_Proof,1);
+	$Form->set_InputStyleClass($FormularName,$InputName_Proof,"mFormText","mFormTextFocus");
+	$Form->set_InputSize($FormularName,$InputName_Proof,48,256);
+	$Form->set_InputDesc($FormularName,$InputName_Proof,___("Versand automatisch starten / Empfängerliste automatisch aktualisieren"));
+	$Form->set_InputReadonly($FormularName,$InputName_Proof,false);
+	$Form->set_InputOrder($FormularName,$InputName_Proof,6);
+	$Form->set_InputLabel($FormularName,$InputName_Proof,"");
+
 
 //send now
 	$Form->new_Input($FormularName,$InputName_Send,"checkbox", 1);
@@ -219,87 +231,16 @@ $Form->set_InputReadonly($FormularName,$InputName_Reset,false);
 $Form->set_InputOrder($FormularName,$InputName_Reset,999);
 $Form->set_InputLabel($FormularName,$InputName_Reset,"");
 
-/*RENDER FORM*/
-
-$Form->render_Form($FormularName);
-
-/*DISPLAY*/
-$_MAIN_OUTPUT.= $Form->FORM[$FormularName]['head'];
-//hidden fieldsnicht vergessen!
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName]['act']['html'];
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName]['set']['html'];
-$_MAIN_OUTPUT.= "<table border=0>";
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=\"top\">".tm_icon("newspaper.png",___("Newsletter"))."&nbsp;".___("Newsletter")."<br>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_NL]['html'];
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "<td valign=\"middle\">";
-$_MAIN_OUTPUT.= "".___("versenden an:");
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "<td valign=\"top\">".tm_icon("group.png",___("Gruppen"))."&nbsp;".___("Gruppen")."<br>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Group]['html'];
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=\"top\" colspan=3>".tm_icon("calendar.png",___("Versanddatum"))."&nbsp;".___("Versand starten am:")."<br>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_SendAt]['html'];
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_SendAtTimeH]['html'];
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_SendAtTimeM]['html'];
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=\"top\" colspan=3>";
-$_MAIN_OUTPUT.= "<br>".tm_icon("ruby.png",___("Blacklist prüfen"))."&nbsp;".___("Blacklist prüfen");
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Blacklist]['html']."&nbsp;&nbsp;";
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=\"top\" colspan=3>";
-$_MAIN_OUTPUT.= "<br>".tm_icon("cog.png",___("Versand automatisch starten / Empfängerliste automatisch aktualisieren"))."&nbsp;".___("Versand automatisch starten / Empfängerliste automatisch aktualisieren");
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Autogen]['html']."&nbsp;&nbsp;";
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=\"top\" colspan=3>";
-$_MAIN_OUTPUT.= "<br>".tm_icon("hourglass.png",___("Versandliste sofort erstellen"))."&nbsp;".___("Versandliste sofort erstellen");
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Send]['html']."&nbsp;&nbsp;";
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=\"top\" colspan=3>";
-$_MAIN_OUTPUT.= "<br>".tm_icon("server.png",___("Mail-Server"))."&nbsp;".___("Mail-Server");
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Host]['html']."&nbsp;&nbsp;";
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-
-
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=\"top\" colspan=3>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Submit]['html'];
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Reset]['html'];
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-
-$_MAIN_OUTPUT.= "</table>";
-$_MAIN_OUTPUT.= $Form->FORM[$FormularName]['foot'];
-
-$_MAIN_OUTPUT.= '
-<script type="text/javascript">
-  Calendar.setup(
-    {
-      inputField  : "send_at_date",         // ID of the input field
-      ifFormat    : "%Y-%m-%d",    // the date format
-      button      : "send_at_date",       // ID of the button
-      date			: "",
-      firstDay		: 0
-    }
-  );
-</script>
-';
+#$_MAIN_OUTPUT.= "<br>".tm_icon("car.png",___("Schnelles einfügen"))."&nbsp;".___("Schnelles einfügen");
+#$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Fast]['html']."&nbsp;&nbsp;";
+/*
+$_MAIN_OUTPUT.= "<br>";
+$_MAIN_OUTPUT.= tm_icon("control_fastforward.png",___("Offset"))."&nbsp;";
+$_MAIN_OUTPUT.= ___("Offset").":";
+$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Offset]['html']."&nbsp;&nbsp;";
+$_MAIN_OUTPUT.= tm_icon("control_end.png",___("Limit"))."&nbsp;";
+$_MAIN_OUTPUT.= ___("Limit").":";
+$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Limit]['html']."&nbsp;&nbsp;";
+*/
 
 ?>

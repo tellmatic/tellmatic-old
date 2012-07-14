@@ -3,7 +3,7 @@
 /* this file is part of: / diese Datei ist ein Teil von:                        */
 /* tellmatic, the newslettermachine                                             */
 /* tellmatic, die Newslettermaschine                                            */
-/* 2006/7 by Volker Augustin, multi.art.studio Hanau                            */
+/* 2006/11 by Volker Augustin, multi.art.studio Hanau                            */
 /* Contact/Kontakt: info@tellmatic.org                                      */
 /* Homepage: www.tellmatic.org                                                   */
 /* leave this header in file!                                                   */
@@ -38,15 +38,15 @@ if ($set=="delete" && $doit==1) {
 $USER=$USERS->getUsers();
 $uc=count($USER);
 
-$editURLPara=$mSTDURL;
+$editURLPara=tmObjCopy($mSTDURL);
 
-$aktivURLPara=$mSTDURL;
+$aktivURLPara=tmObjCopy($mSTDURL);
 $aktivURLPara->addParam("set","aktiv");
 
-$delURLPara=$mSTDURL;
+$delURLPara=tmObjCopy($mSTDURL);
 $delURLPara->addParam("set","delete");
 
-#$statURLPara=$mSTDURL;
+#$statURLPara=tmObjCopy($mSTDURL);
 #$statURLPara->addParam("act","statistic");
 #$statURLPara->addParam("set","user");
 
@@ -68,6 +68,8 @@ $_MAIN_OUTPUT.= "<thead>".
 						"</td>".
 						"<td><b>".___("Sprache")."</b>".
 						"</td>".
+						"<td><b>".___("Startseite")."</b>".
+						"</td>".
 						"<td><b>".___("Aktiv")."</b>".
 						"</td>".
 						"<td>...</td>".
@@ -83,7 +85,7 @@ for ($ucc=0;$ucc<$uc;$ucc++) {
 	} else {
 		$new_aktiv=0;
 	}
-	
+
 	$editURLPara->addParam("act","adm_user_edit");
 	if ($USER[$ucc]['name']==$LOGIN->USER['name']) {
 		$editURLPara->addParam("act","user");
@@ -98,7 +100,7 @@ for ($ucc=0;$ucc<$uc;$ucc++) {
 	$aktivURLPara->addParam("u_id",$USER[$ucc]['id']);
 	$aktivURLPara->addParam("val",$new_aktiv);
 	$aktivURLPara_=$aktivURLPara->getAllParams();
-	
+
 	$delURLPara->addParam("act","adm_user_list");
 	if ($USER[$ucc]['name']==$LOGIN->USER['name']) {
 		$delURLPara->addParam("act","user");
@@ -134,6 +136,7 @@ for ($ucc=0;$ucc<$uc;$ucc++) {
 	$_MAIN_OUTPUT.= "<br><font size=\"-1\">".display($USER[$ucc]['email'])."</font>";
 	$_MAIN_OUTPUT.= "<br>ID: ".$USER[$ucc]['id']." ";
 	$_MAIN_OUTPUT.= "<br>".___("Layout").": ".$USER[$ucc]['style']." ";
+	$_MAIN_OUTPUT.= "<br>".___("Startseite").": ".$USER[$ucc]['startpage']." ";
 	$_MAIN_OUTPUT.= "<br>".___("Sprache").": ".$USER[$ucc]['lang']." ";
 	if ($USER[$ucc]['aktiv']==1) {
 		$_MAIN_OUTPUT.=  "<br>".tm_icon("tick.png",___("Aktiv"))."&nbsp;";
@@ -153,6 +156,9 @@ for ($ucc=0;$ucc<$uc;$ucc++) {
 	$_MAIN_OUTPUT.= "</td>";
 	$_MAIN_OUTPUT.= "<td>";
 	$_MAIN_OUTPUT.= display($USER[$ucc]['lang']);
+	$_MAIN_OUTPUT.= "</td>";
+	$_MAIN_OUTPUT.= "<td>";
+	$_MAIN_OUTPUT.= display($USER[$ucc]['startpage']);
 	$_MAIN_OUTPUT.= "</td>";
 	$_MAIN_OUTPUT.= "<td>";
 	//wenn gruppe keine standardgruppe ist, dann link zum deaktivieren, deaktivierete gruppen koennen naemlich keine standardgruppe sein

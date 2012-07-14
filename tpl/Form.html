@@ -1,14 +1,17 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta name="author" content="Volker">
-<meta name="Publisher" content="">
-<meta name="Description" content="">
+<meta HTTP-EQUIV="Content-Type" content="text/html; charset=UTF-8">
+<meta name="author" content="Tellmatic">
+<meta name="Publisher" content="Tellmatic">
+<meta name="Description" content="Subscribe">
 <meta name="Page-topic" content="Newsletter">
 <meta name="Audience" content="all">
 <meta name="Robots" content="INDEX,NOFOLLOW">
 <meta name="Keywords" content="Newsletter">
-<meta http-equiv="Content-Language" content="de"> 
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"> 
+<meta name="application" content="{TM_APPTEXT}">
+<meta name="tellmatic-version" content="{TM_VERSION}">
+<META http-equiv="Content-Language" content="de"> 
 <link rel="shortcut icon" href="img/favicon.ico">
 <title>
 {FNAME} :: {FDESCR}
@@ -16,15 +19,14 @@
 <style type="text/css">
 @import url(css/form.css);
 </style>
-<!--script type="text/javascript" src="javascript.js"></script-->
 </head>
 <body bgcolor="#ffffff">
-<!-- Template : Stamdardvorlage fuer neue oder kopierte Formulare ; wird mit jedem Formular aus diesem Template neu erzeugt -->
 <h1>{FNAME}</h1>
 <b>{FDESCR}</b>
-<br><br><b>{FMESSAGE}</b><br>
+<br><br>{FMESSAGE}<br>
 {FHEAD}
 <table border=0 bgcolor="#ffffff">
+<tbody>
 <tr><td>{FEMAILNAME}</td><td>{FEMAIL}</td></tr>
 <tr><td>{F0NAME}</td><td>{F0}</td></tr>
 <tr><td>{F1NAME}</td><td>{F1}</td></tr>
@@ -43,7 +45,10 @@ Interessen:<br>
 <tr><td>Memo:</td><td>{MEMO}</td></tr>
 <tr><td>{FCAPTCHAIMG}</td><td>{FCAPTCHA}</td></tr>
 <tr><td>{FRESET}</td><td>{FSUBMIT}</td></tr>
+</tbody>
 </table>
 {FFOOT}
+
+<br><div style="font-size:7pt; color:#dddddd;"><a href="http://TM_APPURL" target="_blank">TM_APPTEXT</a></div>
 </body>
 </html>

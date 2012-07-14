@@ -60,32 +60,32 @@ $GRP=sort_array($GRP,$sortIndex,$sortType);
 //count entries:
 $acg=count($GRP);
 
-$editURLPara=$mSTDURL;
+$editURLPara=tmObjCopy($mSTDURL);
 $editURLPara->addParam("act","link_grp_edit");
 
-$addlnkURLPara=$mSTDURL;
+$addlnkURLPara=tmObjCopy($mSTDURL);
 $addlnkURLPara->addParam("act","link_new");
 
-$showlnkURLPara=$mSTDURL;
+$showlnkURLPara=tmObjCopy($mSTDURL);
 $showlnkURLPara->addParam("act","link_list");
 
-$aktivURLPara=$mSTDURL;
+$aktivURLPara=tmObjCopy($mSTDURL);
 $aktivURLPara->addParam("act","link_grp_list");
 $aktivURLPara->addParam("set","aktiv");
 
-$delURLPara=$mSTDURL;
+$delURLPara=tmObjCopy($mSTDURL);
 $delURLPara->addParam("act","link_grp_list");
 $delURLPara->addParam("set","delete");
 
-$delallURLPara=$mSTDURL;
+$delallURLPara=tmObjCopy($mSTDURL);
 $delallURLPara->addParam("act","link_grp_list");
 $delallURLPara->addParam("set","deleteall");
 
-$stdURLPara=$mSTDURL;
+$stdURLPara=tmObjCopy($mSTDURL);
 $stdURLPara->addParam("act","link_grp_list");
 $stdURLPara->addParam("set","standard");
 
-$sortURLPara=$mSTDURL;
+$sortURLPara=tmObjCopy($mSTDURL);
 $sortURLPara->addParam("act","link_grp_list");
 $sortURLPara_=$sortURLPara->getAllParams();
 

@@ -17,12 +17,8 @@
 	//LOGOUT
 	if ($action=="logout") {
 		$LOGIN->Logout();
-		#$action="";
-		//global in ->Logout():
-		#$user_name="";
-		#$user_pw="";
 		$Return[0]=FALSE;
-		$Return[1]=___("Sie wurden abgemeldet.")." <a href=\"".$tm_URL."\" title=\"".___("Anmelden")."\">".___("Anmelden")."</a>";
+		$Return[1]=___("Sie wurden abgemeldet.");
 		return $Return;
 	}
 

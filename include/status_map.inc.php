@@ -25,6 +25,7 @@ $create=getVar("create");
 
 ////////////////////////////////////////////////////////////////////////////////////////
 require_once (TM_INCLUDEPATH."/status_map_form.inc.php");
+require_once (TM_INCLUDEPATH."/status_map_form_show.inc.php");
 ////////////////////////////////////////////////////////////////////////////////////////
 
 if ($create==1) {
@@ -46,11 +47,11 @@ if ($create==1) {
 	$im_earthmap = ImageCreateFromJPEG(TM_IMGPATH."/earthmap_800.jpg");
 	$im_size_x = imagesx($im_earthmap);
 	$im_size_y = imagesy($im_earthmap);
-	
+
 	$im_flag = ImageCreateFromPNG(TM_ICONPATH."/house.png");
 	$im_size_flag_x = imagesx($im_flag);
 	$im_size_flag_y = imagesy($im_flag);
-	
+
 	#$im_map_user = ImageCreateTrueColor($im_size_x,$im_size_y); #ImageCreateTrueColor($im_size_x,$im_size_y);
 	#$Black = ImageColorAllocate($im_map_user , 0,0,0);
 	#$White = ImageColorAllocate($im_map_user , 255,255,255);
@@ -68,13 +69,17 @@ if ($create==1) {
 	#ImageFill($im_map_user, 0, 0, $Black);
 	#Imageinterlace($im_map_user, 1);
 	#ImageAlphaBlending($im_map_user, true);
-	
+
 	#$im_earthmap_user = ImageCreateTrueColor($im_size_x,$im_size_y);
 	#ImageAlphaBlending($im_earthmap_user, true);
-	
+
 	//ip auslesen, koordinaten ermitteln und in x,y umsetzen, punkt markieren
 	$geoip = geoip_record_by_addr($gi,getIP());
-	$pt = getlocationcoords($geoip->latitude, $geoip->longitude, $im_size_x, $im_size_y);
+	#$pt = getlocationcoords($geoip->latitude, $geoip->longitude, $im_size_x, $im_size_y);
+	//https://sourceforge.net/tracker/index.php?func=detail&aid=3114589&group_id=190396&atid=933192
+	//bug fixed, id: 3114589
+	//thx to tms-schmidt
+	if (!is_null($geoip)) $pt = getlocationcoords($geoip->latitude, $geoip->longitude, $im_size_x, $im_size_y);
 	
 	/*****************************************************************/
 	//Map Forms
@@ -113,7 +118,12 @@ if ($create==1) {
 	}
 
 	//flag setzen in usermap, aktueller Standort! Headquarter :)
-	ImageCopy($im_earthmap, $im_flag,$pt["x"]-round($im_size_flag_x/2) ,$pt["y"]-$im_size_flag_x , 0, 0, $im_size_flag_x, $im_size_flag_y);
+	//https://sourceforge.net/tracker/index.php?func=detail&aid=3114589&group_id=190396&atid=933192
+	//bug fixed, id: 3114589
+	//thx to tms-schmidt
+	if (!is_null($geoip)) {
+		ImageCopy($im_earthmap, $im_flag,$pt["x"]-round($im_size_flag_x/2) ,$pt["y"]-$im_size_flag_x , 0, 0, $im_size_flag_x, $im_size_flag_y);
+	}
 	#ImageCopy($im_map_user, $im_flag,$pt["x"]-round($im_size_flag_x/2) ,$pt["y"]-$im_size_flag_x , 0, 0, $im_size_flag_x, $im_size_flag_y);
 	//datum und beschreibung in usermap einfuegen
 	#imagefilledrectangle($im_map_user, 0, $im_size_y-26, $im_size_x, $im_size_y-10, $White);

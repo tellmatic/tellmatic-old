@@ -15,7 +15,7 @@
 $_HELLO=___("Hallo");
 $_USER_NAME=$LOGIN->USER['name'];
 
-$_WELCOME=sprintf(___("Willkommen bei %s"),$ApplicationText);
+$_WELCOME=sprintf(___("Willkommen bei %s"),TM_APPTEXT);
 $_LOGGED_IN_AS=sprintf(___("Angemeldet als: %s"),"<b>".$_USER_NAME."</b>");
 
 $_MAIN_HELP.=$_WELCOME."<br>".$_LOGGED_IN_AS;

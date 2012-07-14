@@ -2,7 +2,7 @@
 /*
  * test_smtp.php
  *
- * @(#) $Header: /cvsroot/tellmatic/tellmatic/include/smtp/test_smtp.php,v 1.1 2007/11/29 23:52:52 mcms09 Exp $
+ * @(#) $Header: /home/mlemos/cvsroot/smtp/test_smtp.php,v 1.18 2009/04/11 22:23:24 mlemos Exp $
  *
  */
 
@@ -26,6 +26,7 @@
 	$smtp->host_name="localhost";       /* Change this variable to the address of the SMTP server to relay, like "smtp.myisp.com" */
 	$smtp->host_port=25;                /* Change this variable to the port of the SMTP server to use, like 465 */
 	$smtp->ssl=0;                       /* Change this variable if the SMTP server requires an secure connection using SSL */
+	$smtp->start_tls=0;                 /* Change this variable if the SMTP server requires security by starting TLS during the connection */
 	$smtp->localhost="localhost";       /* Your computer address */
 	$smtp->direct_delivery=0;           /* Set to 1 to deliver directly to the recepient SMTP server */
 	$smtp->timeout=10;                  /* Set to the number of seconds wait for a successful connection to the SMTP server */

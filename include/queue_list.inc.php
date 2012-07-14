@@ -42,6 +42,13 @@ if ($set=="stop" && $doit==1 && check_dbid($q_id)) {
 	$LOG="[".microtime(TRUE)."][0],".date("Y-m-d H:i:s").",q:".$q_id.",n:0,g:0,a:0,t: Q ID $q_id halted\n";
 	update_file($tm_logpath,$logfilename,$LOG);
 }
+
+//restart queue with failed or canceled/skipped records
+if ($set=="restart_failed" && $doit==1 && check_dbid($q_id)) {
+	$QUEUE->restart_failed($q_id);
+	$QUEUE->setStatus($q_id,1);
+}
+
 //continue stopped queue
 if ($set=="continue" && $doit==1 && check_dbid($q_id)) {
 	$QUEUE->setStatus($q_id,2);
@@ -108,27 +115,31 @@ $Q=$QUEUE->getQ($id=0,$offset=0,$limit=0,$nl_id,$grp_id,$status=0,$search=Array(
 $qc=count($Q);
 
 //Action URLS
-$reloadURLPara=$mSTDURL;
+$reloadURLPara=tmObjCopy($mSTDURL);
 $reloadURLPara->addParam("act","queue_list");
 $reloadURLPara->addParam("nl_id",$nl_id);
 
-$showhistURLPara=$mSTDURL;
+$showhistURLPara=tmObjCopy($mSTDURL);
 $showhistURLPara->addParam("act","queue_list");
 $showhistURLPara->addParam("nl_id",$nl_id);
 
 
-$sendFastURLPara=$mSTDURL;
+$sendFastURLPara=tmObjCopy($mSTDURL);
 $sendFastURLPara->addParam("act","queue_send");
 $sendFastURLPara->addParam("set","q");
 $sendFastURLPara->addParam("nl_id",$nl_id);
 $sendFastURLPara->addParam("startq",1);
 
-$refreshRCPTListURLPara=$mSTDURL;
+$restartQFailedURLPara=tmObjCopy($mSTDURL);
+$restartQFailedURLPara->addParam("act","queue_list");
+$restartQFailedURLPara->addParam("set","restart_failed");
+
+$refreshRCPTListURLPara=tmObjCopy($mSTDURL);
 $refreshRCPTListURLPara->addParam("act","queue_send");
 $refreshRCPTListURLPara->addParam("set","q");
 $refreshRCPTListURLPara->addParam("nl_id",$nl_id);
 
-$delURLPara=$mSTDURL;
+$delURLPara=tmObjCopy($mSTDURL);
 $delURLPara->addParam("act","queue_list");
 $delURLPara->addParam("set","delete");
 $delURLPara->addParam("nl_id",$nl_id);
@@ -137,24 +148,27 @@ $delAllURLPara=$delURLPara;
 $delAllURLPara->addParam("set","delete_all");
 $delAllURLPara->addParam("nl_id",$nl_id);
 
-$dellogURLPara=$mSTDURL;
+$dellogURLPara=tmObjCopy($mSTDURL);
 $dellogURLPara->addParam("act","queue_list");
 $dellogURLPara->addParam("set","delete_log");
 $dellogURLPara->addParam("nl_id",$nl_id);
 
-$stopURLPara=$mSTDURL;
+$stopURLPara=tmObjCopy($mSTDURL);
 $stopURLPara->addParam("act","queue_list");
 $stopURLPara->addParam("set","stop");
 $stopURLPara->addParam("nl_id",$nl_id);
 
-$continueURLPara=$mSTDURL;
+$continueURLPara=tmObjCopy($mSTDURL);
 $continueURLPara->addParam("act","queue_list");
 $continueURLPara->addParam("set","continue");
 $continueURLPara->addParam("nl_id",$nl_id);
 
-$statURLPara=$mSTDURL;
+$statURLPara=tmObjCopy($mSTDURL);
 $statURLPara->addParam("act","statistic");
 $statURLPara->addParam("set","queue");
+
+$showadrURLPara=tmObjCopy($mSTDURL);
+$showadrURLPara->addParam("act","adr_list");
 
 //show log summary
 //search for logs, only section
@@ -201,10 +215,29 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 	//dann holen wir uns die daten fuer die q eintraege! vorher ist eh null... :)
 		//wenn status > neu, also gestartet, versendet etc, dann summary anzeigen....
 		$hc=$QUEUE->countH($Q[$qcc]['id']);
-		$hc_new=$QUEUE->countH($Q[$qcc]['id'],0,0,0,1);
-		$hc_ok=$QUEUE->countH($Q[$qcc]['id'],0,0,0,2);
-		$hc_view=$QUEUE->countH($Q[$qcc]['id'],0,0,0,3);
-		$hc_fail=$QUEUE->countH($Q[$qcc]['id'],0,0,0,4);
+		$hc_new=$QUEUE->countH($Q[$qcc]['id'],0,0,0,1);//new entry
+		$hc_ok=$QUEUE->countH($Q[$qcc]['id'],0,0,0,2);//ok, done
+		$hc_view=$QUEUE->countH($Q[$qcc]['id'],0,0,0,3);//ok,done,viewed
+		$hc_fail=$QUEUE->countH($Q[$qcc]['id'],0,0,0,4);//error, failed
+		$hc_current=$QUEUE->countH($Q[$qcc]['id'],0,0,0,5);//status 5: currently working on this adr
+		$hc_skip=$QUEUE->countH($Q[$qcc]['id'],0,0,0,6);//status 6 : canceled, blacklisted at sending time etc, skipped!
+
+	//status %
+	//1%
+	$one_percent=($hc / 100);
+	//erledigt gesamt
+	$percent_done_formatted= ($one_percent > 0)  ? DisplayDouble( ( ($hc_ok + $hc_fail + $hc_view + $hc_skip) / $one_percent ), 2,",",".") : 0;
+	//anteil ok	
+	$percent_ok_formatted=($one_percent > 0) ? DisplayDouble( ($hc_ok / $one_percent) , 2,",",".") : 0;
+	//anteil ok+view	
+	$percent_view_formatted=($one_percent > 0) ? DisplayDouble( ($hc_view / $one_percent) , 2,",",".") : 0;
+	//anteil skip	
+	$percent_skip_formatted=($one_percent > 0) ? DisplayDouble( ($hc_skip / $one_percent) , 2,",",".") : 0;
+	//anteil failed
+	$percent_fail_formatted=($one_percent > 0) ? DisplayDouble( ($hc_fail / $one_percent) , 2,",",".") : 0;
+	//anteil failed aktuell
+	$percent_done_fail_formatted=($hc_fail > 0 || $hc_ok > 0) ? DisplayDouble( ($hc_fail / ( ($hc_fail + $hc_ok) / 100 ) ) , 2,",",".") : 0;
+
 
 	$GRP=$ADDRESS->getGroup($Q[$qcc]['grp_id']);
 	$NL=$NEWSLETTER->getNL($Q[$qcc]['nl_id']);
@@ -223,6 +256,9 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 
 	$sendFastURLPara->addParam("q_id",$Q[$qcc]['id']);
 	$sendFastURLPara_=$sendFastURLPara->getAllParams();
+
+	$restartQFailedURLPara->addParam("q_id",$Q[$qcc]['id']);
+	$restartQFailedURLPara_=$restartQFailedURLPara->getAllParams();
 
 	$refreshRCPTListURLPara->addParam("q_id",$Q[$qcc]['id']);
 	$refreshRCPTListURLPara_=$refreshRCPTListURLPara->getAllParams();
@@ -248,24 +284,16 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 	$statURLPara->addParam("q_id",$Q[$qcc]['id']);
 	$statURLPara_=$statURLPara->getAllParams();
 
-
-	//status %
-	//1%
-	$one_percent=($hc / 100);
-	//erledigt gesamt
-	$percent_done_formatted= ($one_percent > 0)  ? DisplayDouble( ( ($hc_ok + $hc_fail) / $one_percent ), 2,",",".") : 0;
-	//anteil ok	
-	$percent_ok_formatted=($one_percent > 0) ? DisplayDouble( ($hc_ok / $one_percent) , 2,",",".") : 0;
-	//anteil failed
-	$percent_fail_formatted=($one_percent > 0) ? DisplayDouble( ($hc_fail / $one_percent) , 2,",",".") : 0;
-	//anteil failed aktuell
-	$percent_done_fail_formatted=($hc_fail > 0 || $hc_ok > 0) ? DisplayDouble( ($hc_fail / ( ($hc_fail + $hc_ok) / 100 ) ) , 2,",",".") : 0;
-	
+	$showadrURLPara->addParam("adr_grp_id",$Q[$qcc]['grp_id']);
+	$showadrURLPara_=$showadrURLPara->getAllParams();
 
 	$_MAIN_OUTPUT.= "<tr id=\"row_".$qcc."\"  bgcolor=\"".$bgcolor."\"  onmouseover=\"setBGColor('row_".$qcc."','".$row_bgcolor_hilite."');\" onmouseout=\"setBGColor('row_".$qcc."','".$bgcolor."');\">";
 	$_MAIN_OUTPUT.= "<td width=50>";
 	if ($Q[$qcc]['check_blacklist']==1) {
 		$_MAIN_OUTPUT.=  "&nbsp;".tm_icon("ruby.png",___("Blacklist"));
+	}
+	if ($Q[$qcc]['proof']==1) {
+		$_MAIN_OUTPUT.=  "&nbsp;".tm_icon("medal_gold_1.png",___("Proofing aktiv"));
 	}
 	if ($Q[$qcc]['autogen']==1) {
 		if ($Q[$qcc]['status']==1) {
@@ -300,17 +328,39 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 	$_MAIN_OUTPUT.= display($NL[0]['subject']);
 	$_MAIN_OUTPUT.= "</td>";
 	$_MAIN_OUTPUT.= "<td>";
-	$_MAIN_OUTPUT.= display($GRP[0]['name']);
-
+	
+	$_MAIN_OUTPUT.= "<a href=\"".$tm_URL."/".$showadrURLPara_."\" title=\"".___("Alle Adressen in dieser Gruppe anzeigen")."\">";
+	$_MAIN_OUTPUT.= tm_icon("group_go.png",___("Alle Adressen in dieser Gruppe anzeigen"))."&nbsp;";
+	$_MAIN_OUTPUT.= display($GRP[0]['name'])."&nbsp;";
+	$_MAIN_OUTPUT.= "</a>";
 	$_MAIN_OUTPUT.= "<div id=\"tt_q_list_".$Q[$qcc]['id']."\" class=\"tooltip\">";
 	$_MAIN_OUTPUT.="<b>".display($NL[0]['subject'])."</b>";
 	$_MAIN_OUTPUT.="<br>".sprintf(___("An Gruppe: %s"),"<b>".display($GRP[0]['name'])."</b>");
 	$_MAIN_OUTPUT.="&nbsp (".sprintf(___("%s gültige Adressen"),"<b>".display($valid_adr_c)."</b>").")";
 	$_MAIN_OUTPUT.= "<br>ID: ".$Q[$qcc]['id']." ";
-	$_MAIN_OUTPUT.= "<br>".tm_icon($STATUS['q']['statimg'][$Q[$qcc]['status']],$STATUS['q']['status'][$Q[$qcc]['status']])."&nbsp;".$STATUS['q']['status'][$Q[$qcc]['status']];
+	$_MAIN_OUTPUT.= "<br>".tm_icon($STATUS['q']['statimg'][$Q[$qcc]['status']],display($STATUS['q']['status'][$Q[$qcc]['status']]))."&nbsp;".display($STATUS['q']['status'][$Q[$qcc]['status']]);
 	$_MAIN_OUTPUT.="<br>".sprintf(___("Erstellt am: %s"),"<b>".display($created_date)."</b>");
 	$_MAIN_OUTPUT.="<br>".sprintf(___("Versand startet am/um: %s"),"<b>".display($send_at)."</b>");
 	$_MAIN_OUTPUT.="<br>".sprintf(___("Erstellt von: %s"),"<b>".display($Q[$qcc]['author'])."</b>");
+
+	if ($Q[$qcc]['check_blacklist']==1) {
+		$_MAIN_OUTPUT.=  "<br>".tm_icon("ruby.png",___("Blacklist"))."&nbsp;".___("Blacklist");
+	}
+	if ($Q[$qcc]['proof']==1) {
+		$_MAIN_OUTPUT.=  "<br>".tm_icon("medal_gold_1.png",___("Proofing"))."&nbsp;".___("Proofing");
+	}
+	if ($Q[$qcc]['autogen']==1) {
+		if ($Q[$qcc]['status']==1) {
+			$_MAIN_OUTPUT.=  "<br>".tm_icon("bullet_green.png",___("Empfängerliste automatisch erstellen / aktualisieren  und Q starten"),"","","","cog.png")."&nbsp;".___("Empfängerliste automatisch erstellen / aktualisieren  und Q starten");
+		}
+		if ($Q[$qcc]['status']==2) {
+			$_MAIN_OUTPUT.=  "<br>".tm_icon("bullet_star.png",___("Empfängerliste automatisch erstellen / aktualisieren  und Q starten"),"","","","cog.png")."&nbsp;".___("Empfängerliste automatisch erstellen / aktualisieren  und Q starten");
+		}
+		if ($Q[$qcc]['status']>2) {
+			$_MAIN_OUTPUT.=  "<br>".tm_icon("bullet_black.png",___("Empfängerliste automatisch erstellen / aktualisieren  und Q starten"),"","","","cog.png")."&nbsp;".___("Empfängerliste automatisch erstellen / aktualisieren  und Q starten");
+		}
+	}
+
 	if (isset($HOST[0])) {
 		$_MAIN_OUTPUT.="<br>".sprintf(___("Mail-Server: %s"),display($HOST[0]['name']));
 		if ($HOST[0]['aktiv']!=1) {
@@ -323,17 +373,20 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 	}
 		$_MAIN_OUTPUT .="<br>".
 								___("Adressen: ").$hc.
-								"<br>".___("Bearbeitet: ").($hc_ok+$hc_fail)." = ".$percent_done_formatted."%".								
+								"<br>".___("Bearbeitet: ").($hc_ok+$hc_fail+$hc_skip+$hc_view)." = ".$percent_done_formatted."%".								
 								"<br>".___("Wartend: ").$hc_new.
+								"<br>".___("Übersprungen: ").$hc_skip." = ".$percent_skip_formatted."%".
 								"<br>".___("Gesendet: ").$hc_ok." = ".$percent_ok_formatted."%".
-								"<br>".___("Fehler: ").$hc_fail." = ".$percent_fail_formatted."%"." == ".$percent_done_fail_formatted."%".
+								"<br>".___("Angezeigt: ").$hc_view." = ".$percent_view_formatted."%".
+								"<br>".___("Fehler: ").$hc_fail." = ".$percent_fail_formatted."%"." / ".$percent_done_fail_formatted."%".
 								"<br>".___("versendet am: ").$sent_date.
-								"<br>".___("Angezeigt: ").$hc_view.
 								"";
 //evtl noch zeit anzeigen wann der auftrag bei der aktuellen geschwindigkeit beendet ist, sinnloser wert wenn der versand enmal fuer laenger unterbrochen wurde, aber weils spass macht koennte man es hier hinzufuegen, datum versand start in microtime umrechnen, erledigte adressen von damals bis jetzt, zeit pro adr ermitteln und mit dem rest multiplizieren, dann zurueckrechnen wie lange es noch dauert in stunden/minuten und zeit wann es beendet sein wird.
 
 
-	$_MAIN_OUTPUT.=sprintf(___("%s erledigt, davon %s OK, %s Adressen mit Fehler beim Versand (entspricht aktuell %s aller verarbeiteten Adressen)"),"<br><strong>".$percent_done_formatted."%</strong>","&nbsp;<font color=\"green\">".$percent_ok_formatted."%</font>"," <font color=\"red\">".$percent_fail_formatted."%</font>","&nbsp;<font color=\"red\">".$percent_done_fail_formatted."%</font>");
+	$_MAIN_OUTPUT.="<br>".sprintf(___("%s erledigt, davon: %s Übersprungen, %s Versendet + %s Versendet u. Angezeigt, %s Adressen mit Fehler beim Versand (entspricht aktuell %s aller verarbeiteten Adressen)"),"<br><strong>".$percent_done_formatted."%</strong>","&nbsp;<font color=\"orange\">".$percent_skip_formatted."%</font>","&nbsp;<font color=\"green\">".$percent_ok_formatted."%</font>","&nbsp;<font color=\"green\">".$percent_view_formatted."%</font>"," <font color=\"red\">".$percent_fail_formatted."%</font>","&nbsp;<font color=\"red\">".$percent_done_fail_formatted."%</font>");
+
+
 	$_MAIN_OUTPUT.= "</div>";
 
 	$_MAIN_OUTPUT.= "</td>";
@@ -360,12 +413,14 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 	if ($Q[$qcc]['status']==3) {
 		$_MAIN_OUTPUT.= "<blink>";
 	}
-	$_MAIN_OUTPUT.= tm_icon($STATUS['q']['statimg'][$Q[$qcc]['status']],$STATUS['q']['descr'][$Q[$qcc]['status']])."&nbsp;".$STATUS['q']['status'][$Q[$qcc]['status']];
+	$_MAIN_OUTPUT.= tm_icon($STATUS['q']['statimg'][$Q[$qcc]['status']],display($STATUS['q']['descr'][$Q[$qcc]['status']]))."&nbsp;".display($STATUS['q']['status'][$Q[$qcc]['status']]);
 	if ($Q[$qcc]['status']==3) {
 		$_MAIN_OUTPUT.= "</blink>";
 	}
 
-	$_MAIN_OUTPUT.="<br><strong>".$percent_done_formatted."%</strong>&nbsp;<font color=\"green\">".$percent_ok_formatted."%</font> <font color=\"red\">".$percent_fail_formatted."%</font>&nbsp;<font color=\"red\">".$percent_done_fail_formatted."%</font>";
+	$_MAIN_OUTPUT.="<br><strong>".$percent_done_formatted."%</strong>&nbsp;<font color=\"orange\">".$percent_skip_formatted."%</font>".
+						" <font color=\"green\">".$percent_ok_formatted."%</font>&nbsp;<font color=\"green\">".$percent_view_formatted."%</font>".
+						" <font color=\"red\">".$percent_fail_formatted."%</font>&nbsp;<font color=\"red\">".$percent_done_fail_formatted."%</font>";
 
 	$_MAIN_OUTPUT.= "</td>";
 	$_MAIN_OUTPUT.= "<td>";
@@ -374,6 +429,7 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 		$_MAIN_OUTPUT.= "&nbsp;<a href=\"".$tm_URL."/".$sendFastURLPara_."\" title=\"".___("Newsletter an gewählte Gruppe versenden")."\">".tm_icon("bullet_star.png",___("Senden"),"","","","email_go.png")."</a>";
 	}
 	if ($Q[$qcc]['status']==4) {
+//		$_MAIN_OUTPUT.=  "&nbsp;<a href=\"".$tm_URL."/".$statURLPara_."\" title=\"Statistik anzeigen\"><img src=\"".$tm_iconURL."/chart_pie.png\" border=\"0\"></a>";
 	}
 
 //adressen nachfassen!
@@ -382,6 +438,11 @@ if ($hc_new < $valid_adr_c) {
 	if (($Q[$qcc]['status']==2 || $Q[$qcc]['status']==5) && isset($HOST[0]) && $HOST[0]['aktiv']==1) {
 		$_MAIN_OUTPUT.= "&nbsp;<a href=\"".$tm_URL."/".$refreshRCPTListURLPara_."\" title=\"".___("Adressen nachfassen / Empfängerliste aktualisieren")."\">".tm_icon("arrow_switch.png",___("Adressen nachfassen / Empfängerliste aktualisieren"),"","","","email_go.png")."</a>";
 	}
+}
+
+//restart failed, if q finished, active and hc_fail / skip >0
+if ($Q[$qcc]['status']==4 && ($hc_skip>0 || $hc_fail>0)) {
+	$_MAIN_OUTPUT.= "&nbsp;<a href=\"".$tm_URL."/".$restartQFailedURLPara_."\" onclick=\"return confirmLink(this, '".sprintf(___("Q mit fehlgeschlagenen und übersprungenen Adressen neu starten."),$Q[$qcc]['id'])."')\" title=\"".___("Q mit fehlgeschlagenen und übersprungenen Adressen neu starten")."\">".tm_icon("error_go.png",___("Q mit fehlgeschlagenen und übersprungenen Adressen neu starten"))."</a>";
 }
 
 //anhalten, weitermachen

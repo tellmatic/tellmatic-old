@@ -2,7 +2,7 @@
 /*
  * smtp_message.php
  *
- * @(#) $Header: /cvsroot/tellmatic/tellmatic/include/mimemessage/smtp_message.php,v 1.6 2009/07/05 23:42:30 mcms09 Exp $
+ * @(#) $Header: /home/mlemos/cvsroot/mimemessage/smtp_message.php,v 1.34 2009/04/12 08:20:39 mlemos Exp $
  *
  *
  */
@@ -14,7 +14,7 @@
 	<package>net.manuellemos.mimemessage</package>
 
 	<name>smtp_message_class</name>
-	<version>@(#) $Id: smtp_message.php,v 1.6 2009/07/05 23:42:30 mcms09 Exp $</version>
+	<version>@(#) $Id: smtp_message.php,v 1.34 2009/04/12 08:20:39 mlemos Exp $</version>
 	<copyright>Copyright © (C) Manuel Lemos 1999-2004</copyright>
 	<title>MIME E-mail message composing and sending via SMTP</title>
 	<author>Manuel Lemos</author>
@@ -58,6 +58,14 @@
 			<integervalue>465</integervalue>.<paragraphbreak />
 			SSL support requires at least PHP 4.3.0 with OpenSSL extension
 			enabled.<paragraphbreak />
+			<b>- Secure SMTP connections starting TLS after connections is established</b><paragraphbreak />
+			Some SMTP servers, like for instance Hotmail, require starting the
+			TLS protocol after the connection is already established to exchange
+			data securely. In that case it is necessary to set the
+			<variablelink>smtp_start_tls</variablelink> variable to
+			<booleanvalue>1</booleanvalue>.<paragraphbreak />
+			Starting TLS protocol on an already established connection requires
+			at least PHP 5.1.0 with OpenSSL extension enabled.<paragraphbreak />
 			<b>- Authentication</b><paragraphbreak />
 			Most servers only allow relaying messages sent by authorized
 			users. If the SMTP server that you want to use requires
@@ -129,6 +137,7 @@ class smtp_message_class extends email_message_class
 
 	var $smtp;
 	var $line_break="\r\n";
+	var $delivery = 0;
 
 	/* Public variables */
 
@@ -202,6 +211,24 @@ class smtp_message_class extends email_message_class
 {/metadocument}
 */
 	var $smtp_ssl=0;
+
+/*
+{metadocument}
+	<variable>
+		<name>smtp_start_tls</name>
+		<type>BOOLEAN</type>
+		<value>0</value>
+		<documentation>
+			<purpose>Specify whether it should use secure connections starting
+				TLS protocol after connecting to the SMTP server.</purpose>
+			<usage>Certain e-mail services like Hotmail require starting TLS
+				protocol after the connection to the SMTP server is already
+				established.</usage>
+		</documentation>
+	</variable>
+{/metadocument}
+*/
+	var $smtp_start_tls=0;
 
 /*
 {metadocument}
@@ -456,7 +483,7 @@ class smtp_message_class extends email_message_class
 {metadocument}
 	<variable>
 		<name>mailer_delivery</name>
-		<value>smtp $Revision: 1.6 $</value>
+		<value>smtp $Revision: 1.34 $</value>
 		<documentation>
 			<purpose>Specify the text that is used to identify the mail
 				delivery class or sub-class. This text is appended to the
@@ -467,7 +494,27 @@ class smtp_message_class extends email_message_class
 	</variable>
 {/metadocument}
 */
-	var $mailer_delivery='smtp $Revision: 1.6 $';
+	var $mailer_delivery='smtp $Revision: 1.34 $';
+
+/*
+{metadocument}
+	<variable>
+		<name>maximum_bulk_deliveries</name>
+		<type>INTEGER</type>
+		<value>100</value>
+		<documentation>
+			<purpose>Specify the number of consecutive bulk mail deliveries
+				without disconnecting.</purpose>
+			<usage>Lower this value if you have enabled the bulk mail mode but
+				the SMTP server does not accept sending more than a number of
+				messages within the same SMTP connection.<paragraphbreak />
+				Set this value to <integervalue>0</integervalue> to never
+				disconnect during bulk mail mode unless an error occurs.</usage>
+		</documentation>
+	</variable>
+{/metadocument}
+*/
+	var $maximum_bulk_deliveries=100;
 /*
 {metadocument}
 	<variable>
@@ -497,6 +544,20 @@ class smtp_message_class extends email_message_class
 		return(1);
 	}
 
+	Function ResetConnection($error)
+	{
+		if(IsSet($this->smtp))
+		{
+			if(!$this->smtp->Disconnect()
+			&& strlen($error) == 0)
+				$error = $this->smtp->error;
+			UnSet($this->smtp);
+		}
+		if(strlen($error))
+			$this->OutputError($error);
+		return($error);
+	}
+
 	Function StartSendingMessage()
 	{
 		if(function_exists("class_exists")
@@ -509,6 +570,7 @@ class smtp_message_class extends email_message_class
 		$this->smtp->host_name=$this->smtp_host;
 		$this->smtp->host_port=$this->smtp_port;
 		$this->smtp->ssl=$this->smtp_ssl;
+		$this->smtp->start_tls=$this->smtp_start_tls;
 		$this->smtp->timeout=$this->timeout;
 		$this->smtp->debug=$this->smtp_debug;
 		$this->smtp->html_debug=$this->smtp_html_debug;
@@ -524,10 +586,11 @@ class smtp_message_class extends email_message_class
 		$this->smtp->esmtp=$this->esmtp;
 		$this->smtp->maximum_piped_recipients=$this->maximum_piped_recipients;
 		if($this->smtp->Connect())
+		{
+			$this->delivery = 0;
 			return("");
-		$error=$this->smtp->error;
-		UnSet($this->smtp);
-		return($this->OutputError($error));
+		}
+		return($this->ResetConnection($this->smtp->error));
 	}
 
 	Function SendMessageHeaders($headers)
@@ -540,18 +603,6 @@ class smtp_message_class extends email_message_class
 			$local_ip=gethostbyname($this->localhost);
 			$header_data.=$this->FormatHeader("Received","FROM ".$this->localhost." ([".$local_ip."]) BY ".$this->localhost." ([".$local_ip."]) WITH SMTP; ".$date)."\r\n";
 		}
-		#echo "\n\n";
-		#print_r($headers);
-		
-		//important tellmatic hack!!! we remove empty indexes, because somewhere a invalid empty To is defined, this breaks smtp!
-		#if ($headers['To']=="") echo "ALARM!";//we have a empty index ... thats bad! it adds a \n\r after C which breaks smtp!
-		//setting to undisclosed-...won't work because the header is checked and needs to contain a valid emailaddress...hmmmm! 
-		//if ($headers['To']=="") $headers['To']="undisclosed-recipients:;";
-		//so just remove empty indexes and rehash the array
-		$headers=array_remove_empty($headers);
-		//we will check later on if we have a to: header, if not exists, fake one
-		#print_r($headers);
-		
 		for($message_id_set=$date_set=0,$header=0,$return_path=$from=$to=$recipients=array(),Reset($headers);$header<count($headers);$header++,Next($headers))
 		{
 			$header_name=Key($headers);
@@ -561,10 +612,10 @@ class smtp_message_class extends email_message_class
 					$return_path[$headers[$header_name]]=1;
 					break;
 				case "from":
-					$this->GetRFC822Addresses($headers[$header_name],$from);
+					$error=$this->GetRFC822Addresses($headers[$header_name],$from);
 					break;
 				case "to":
-					$this->GetRFC822Addresses($headers[$header_name],$to);
+					$error=$this->GetRFC822Addresses($headers[$header_name],$to);
 					break;
 				case "cc":
 				case "bcc":
@@ -577,54 +628,26 @@ class smtp_message_class extends email_message_class
 					$message_id_set=1;
 					break;
 			}
-			if(isset($error) && strcmp($error,""))
-				return($this->OutputError($error));
+			if(strcmp($error,""))
+				return($this->ResetConnection($error));
 			if(strtolower($header_name)=="bcc")
 				continue;
-			//tellmatic hack, 
-			//lets see if we have a to: address, if not, fake one
-			//will also not work here... if (!isset($headers['To'])) $headers['To']="undisclosed-recipients:;";
-			//ok, ok, so we dont add a to: at all if its not set, lets see if this breaks smtp or getting rejected by some MTA's ... ouch, ...
-			//... 
-			//if (!isset($headers['To'])) $headers['To']="undisclosed-recipients:;";
 			$header_data.=$this->FormatHeader($header_name,$headers[$header_name])."\r\n";
-			//tm hack: and unset again... and rehash
-			//hmmm, bad, if we unset again it says we have no valid fro, thats weird....   $headers=array_unset($headers,'To');
-		
-			//aaaha! a default To is set... even if we do not set a To , so it add a linebrak! ouch.. $headers["To"] is empty.... but set... whyever... we don't need that if we use bcc, otherwise we would set a to header.
-			//this seems to be a bug in the messageclass.!
-			#echo "\n\n<hr>$header_name = $headers[$header_name] === header_data=$header_data<hr>\n\n";
 		}
 		if(count($from)==0)
-			return($this->OutputError("it was not specified a valid From header"));
-		if(count($to)==0)
-			//tellmatic hack!
-			//first: disabled return error, because we must not add a valid to header, this is odd if we need to send via bcc only!
-			#return($this->OutputError("it was not specified a valid To header"));
-			//but unfortunately the class has a bug and adds a return after C if no to header is set, crazy.
-			//lets see how to fix it...... searching for a solution for 6h now and counting
-			
+			return($this->ResetConnection("it was not specified a valid From header"));
 		Reset($return_path);
 		Reset($from);
 		$this->invalid_recipients=array();
-		if(!$this->smtp->MailFrom(count($return_path) ? Key($return_path) : Key($from))
-		|| !$this->SetRecipients($to,$valid_recipients))
-			return($this->OutputError($this->smtp->error));
-		if($valid_recipients==0)
-			//tellmatic hack!
-			//first: disabled return error, because we must not add a valid to header, this is odd if we need to send via bcc only!
-			#return($this->OutputError("it were not specified any valid recipients"));
-			//but unfortunately the class has a bug and adds a return after C if no to header is set, crazy.
-			//lets see how to fix it...... searching for a solution for 6h now and counting
-			
-		//tellmatic hack
-		//now, lets add a to: headerfield if there is none
-		//a to: headerfield is needed, at least to undisclosed-recipients:; if no valid email is set in to: , blablabla
-		//spamcheckers may think our mail is spam if there is no to:
-		if(!isset($headers['To'])) {
-			$header_data="To: undisclosed-recipients:;\r\n".$header_data;
+		if(!$this->smtp->MailFrom(count($return_path) ? Key($return_path) : Key($from)))
+			return($this->ResetConnection($this->smtp->error));
+		$r = 0;
+		if(count($to))
+		{
+			if(!$this->SetRecipients($to,$valid_recipients))
+				return($this->ResetConnection($this->smtp->error));
+			$r += $valid_recipients;
 		}
-		
 		if(!$date_set)
 			$header_data.="Date: ".$date."\r\n";
 		if(!$message_id_set
@@ -633,32 +656,39 @@ class smtp_message_class extends email_message_class
 			$sender=(count($return_path) ? Key($return_path) : Key($from));
 			$header_data.=$this->GenerateMessageID($sender)."\r\n";
 		}
-		if(!$this->SetRecipients($recipients,$valid_recipients)
-		|| !$this->smtp->StartData()
+		if(count($recipients))
+		{
+			if(!$this->SetRecipients($recipients,$valid_recipients))
+				return($this->ResetConnection($this->smtp->error));
+			$r += $valid_recipients;
+		}
+		if($r==0)
+			return($this->ResetConnection("it were not specified any valid recipients"));
+		if(!$this->smtp->StartData()
 		|| !$this->smtp->SendData($header_data."\r\n"))
-			return($this->OutputError($this->smtp->error));
+			return($this->ResetConnection($this->smtp->error));
 		return("");
 	}
 
 	Function SendMessageBody($data)
 	{
-		$this->smtp->PrepareData($data,$output);
-		return($this->smtp->SendData($output) ? "" : $this->OutputError($this->smtp->error));
+		return($this->smtp->SendData($this->smtp->PrepareData($data)) ? "" : $this->ResetConnection($this->smtp->error));
 	}
 
 	Function EndSendingMessage()
 	{
-		return($this->smtp->EndSendingData() ? "" : $this->OutputError($this->smtp->error));
+		return($this->smtp->EndSendingData() ? "" : $this->ResetConnection($this->smtp->error));
 	}
 
 	Function StopSendingMessage()
 	{
+		++$this->delivery;
 		if($this->bulk_mail
-		&& !$this->smtp_direct_delivery)
+		&& !$this->smtp_direct_delivery
+		&& ($this->maximum_bulk_deliveries == 0
+		|| $this->delivery < $this->maximum_bulk_deliveries))
 			return("");
-		$error=($this->smtp->Disconnect() ? "" : $this->OutputError($this->smtp->error));
-		UnSet($this->smtp);
-		return($error);
+		return($this->ResetConnection(''));
 	}
 
 	Function ChangeBulkMail($on)
@@ -666,9 +696,7 @@ class smtp_message_class extends email_message_class
 		if($on
 		|| !IsSet($this->smtp))
 			return(1);
-		$error=($this->smtp->Disconnect() ? "" : $this->OutputError($this->smtp->error));
-		UnSet($this->smtp);
-		return(strlen($error)==0);
+		return($this->smtp->Disconnect() ? "" : $this->ResetConnection($this->smtp->error));
 	}
 };
 

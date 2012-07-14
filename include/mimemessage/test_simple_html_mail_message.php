@@ -2,7 +2,7 @@
 /*
  * test_simple_html_mail_message.php
  *
- * @(#) $Header: /cvsroot/tellmatic/tellmatic/include/mimemessage/test_simple_html_mail_message.php,v 1.1 2007/11/29 23:50:53 mcms09 Exp $
+ * @(#) $Header: /home/mlemos/cvsroot/mimemessage/test_simple_html_mail_message.php,v 1.1 2005/02/10 03:45:02 mlemos Exp $
  *
  */
 

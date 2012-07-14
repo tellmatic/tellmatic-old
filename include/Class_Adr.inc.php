@@ -79,6 +79,10 @@ class tm_ADR {
 										.TM_TABLE_ADR.".views, "
 										.TM_TABLE_ADR.".newsletter, "
 										.TM_TABLE_ADR.".recheck, "
+										.TM_TABLE_ADR.".proof, "
+										.TM_TABLE_ADR.".source, "
+										.TM_TABLE_ADR.".source_id, "
+										.TM_TABLE_ADR.".source_extern_id, "
 										.TM_TABLE_ADR.".siteid ";
 			$Query .=", ".TM_TABLE_ADR_DETAILS.".id as d_id,"
 								.TM_TABLE_ADR_DETAILS.".memo";
@@ -205,6 +209,10 @@ class tm_ADR {
 			$this->ADR[$ac]['code']=$this->DB->Record['code'];
 			$this->ADR[$ac]['memo']=$this->DB->Record['memo'];
 			$this->ADR[$ac]['recheck']=$this->DB->Record['recheck'];
+			$this->ADR[$ac]['proof']=$this->DB->Record['proof'];
+			$this->ADR[$ac]['source']=$this->DB->Record['source'];
+			$this->ADR[$ac]['source_id']=$this->DB->Record['source_id'];
+			$this->ADR[$ac]['source_extern_id']=$this->DB->Record['source_extern_id'];
 			$this->ADR[$ac]['d_id']=$this->DB->Record['d_id'];
 			$this->ADR[$ac]['siteid']=$this->DB->Record['siteid'];
 			if ($Details==1) {
@@ -378,87 +386,89 @@ class tm_ADR {
 
 	function getGroup($id=0,$adr_id=0,$frm_id=0,$count=0,$search=Array()) {
 		$this->GRP=Array();
-		$Query ="
-			SELECT ".TM_TABLE_ADR_GRP.".id, "
+		$Query = "SELECT ";
+		if (check_dbid($adr_id) || check_dbid($frm_id)) {
+			$Query .= "DISTINCT ";
+		}
+		
+		$Query .= TM_TABLE_ADR_GRP.".id, "
 							.TM_TABLE_ADR_GRP.".name, "
 							.TM_TABLE_ADR_GRP.".public, "
 							.TM_TABLE_ADR_GRP.".public_name, "
 							.TM_TABLE_ADR_GRP.".descr, "
 							.TM_TABLE_ADR_GRP.".aktiv, "
-							.TM_TABLE_ADR_GRP.".standard,
-							".TM_TABLE_ADR_GRP.".author,
-							".TM_TABLE_ADR_GRP.".editor,
-							".TM_TABLE_ADR_GRP.".created,
-							".TM_TABLE_ADR_GRP.".updated,
-							".TM_TABLE_ADR_GRP.".siteid
-			FROM ".TM_TABLE_ADR_GRP."
+							.TM_TABLE_ADR_GRP.".standard, "
+							.TM_TABLE_ADR_GRP.".prod, "
+							.TM_TABLE_ADR_GRP.".author, "
+							.TM_TABLE_ADR_GRP.".editor, "
+							.TM_TABLE_ADR_GRP.".created, "
+							.TM_TABLE_ADR_GRP.".updated, "
+							."
+							";
+		
+		if (check_dbid($frm_id)) {
+			$Query .= "
+				".TM_TABLE_FRM_GRP_REF.".public as public_frm_ref,
+				";
+		}
+		$Query .= "
+				".TM_TABLE_ADR_GRP.".siteid 
+				";
+			
+		$Query .= "
+			FROM ".TM_TABLE_ADR_GRP." ";
+		if (check_dbid($adr_id)) {
+			$Query .= ", ".TM_TABLE_ADR_GRP_REF." ";
+		}
+		if (check_dbid($frm_id)) {
+			$Query .= ", ".TM_TABLE_FRM_GRP_REF." ";
+		}
+		
+		$Query .= "
 			WHERE ".TM_TABLE_ADR_GRP.".siteid='".TM_SITEID."'
 			";
+
+		//nur public groups? 0/1
+		if ( isset($search['public']) ) {
+			$Query .= "
+				AND ".TM_TABLE_ADR_GRP.".public=".checkset_int($search['public'])."
+				";
+		}
+		
+		if (isset($search['aktiv']) && (checkset_int($search['aktiv'])===1 || checkset_int($search['aktiv'])===0)) {//!!! we have to compare strings, weird php! argh.
+			$Query .= " AND ".TM_TABLE_ADR_GRP.".aktiv=".checkset_int($search['aktiv']);
+		}
+
+//aah! string compare wnn per url uebergeben! bzw int wenn ueber interne abfrage! weird! also fuer flags und zahlen und ids alles auf checkset_int umruesten
+
+		if (isset($search['prod']) && (checkset_int($search['prod'])===1 || checkset_int($search['prod'])===0)) {//!!! we have to compare strings, weird php! argh.
+			$Query .= " AND ".TM_TABLE_ADR_GRP.".prod=".checkset_int($search['prod']);
+		}
+		
 		if (check_dbid($id)) {
 			$Query .= " AND ".TM_TABLE_ADR_GRP.".id=".checkset_int($id);
 		}
-		if ($adr_id >0) {
-			$Query ="";
+
+		if (check_dbid($adr_id)) {
 			$Query .= "
-				SELECT DISTINCT ".TM_TABLE_ADR_GRP.".id, "
-												.TM_TABLE_ADR_GRP.".name, "
-												.TM_TABLE_ADR_GRP.".public, "
-												.TM_TABLE_ADR_GRP.".public_name, "
-												.TM_TABLE_ADR_GRP.".descr, "
-												.TM_TABLE_ADR_GRP.".aktiv, "
-												.TM_TABLE_ADR_GRP.".standard,
-												".TM_TABLE_ADR_GRP.".author,
-												".TM_TABLE_ADR_GRP.".editor,
-												".TM_TABLE_ADR_GRP.".created,
-												".TM_TABLE_ADR_GRP.".updated,
-												".TM_TABLE_ADR_GRP.".siteid
-				FROM ".TM_TABLE_ADR_GRP.", ".TM_TABLE_ADR_GRP_REF."
-				WHERE ".TM_TABLE_ADR_GRP.".id=".TM_TABLE_ADR_GRP_REF.".grp_id
-				AND ".TM_TABLE_ADR_GRP.".siteid='".TM_SITEID."'
+				AND ".TM_TABLE_ADR_GRP.".id=".TM_TABLE_ADR_GRP_REF.".grp_id
 				AND ".TM_TABLE_ADR_GRP_REF.".siteid='".TM_SITEID."'
 				AND ".TM_TABLE_ADR_GRP_REF.".adr_id=".checkset_int($adr_id);
 		}
+		
 		if (check_dbid($frm_id)) {
-			$Query ="";
 			$Query .= "
-				SELECT DISTINCT ".TM_TABLE_ADR_GRP.".id, "
-												.TM_TABLE_ADR_GRP.".name, "
-											.TM_TABLE_ADR_GRP.".public, "
-											.TM_TABLE_ADR_GRP.".public_name, "
-												.TM_TABLE_ADR_GRP.".descr, "
-												.TM_TABLE_ADR_GRP.".aktiv, "
-												.TM_TABLE_ADR_GRP.".standard,
-				".TM_TABLE_ADR_GRP.".author,
-				".TM_TABLE_ADR_GRP.".editor,
-				".TM_TABLE_ADR_GRP.".created,
-				".TM_TABLE_ADR_GRP.".updated,
-				".TM_TABLE_ADR_GRP.".siteid,
-				".TM_TABLE_FRM_GRP_REF.".public as public_frm_ref
-				FROM ".TM_TABLE_ADR_GRP.", ".TM_TABLE_FRM_GRP_REF."
-				WHERE ".TM_TABLE_ADR_GRP.".id=".TM_TABLE_FRM_GRP_REF.".grp_id
-				AND ".TM_TABLE_ADR_GRP.".siteid='".TM_SITEID."'
+				AND ".TM_TABLE_ADR_GRP.".id=".TM_TABLE_FRM_GRP_REF.".grp_id
 				AND ".TM_TABLE_FRM_GRP_REF.".siteid='".TM_SITEID."'
 				AND ".TM_TABLE_FRM_GRP_REF.".frm_id=".checkset_int($frm_id);
 		}
-
-			//nur opublic groups? 0/1
-			if ( isset($search['public']) ) {
-				$Query .= "
-				AND ".TM_TABLE_ADR_GRP.".public=".checkset_int($search['public'])."
-				";
-			}
-			//nur pub groups references
-			if ( isset($search['public_frm_ref']) ) {
-				$Query .= "
-				AND ".TM_TABLE_FRM_GRP_REF.".frm_id=".checkset_int($search['public_frm_ref'])."
-				";
-			
-			}
-
-		
-		if (isset($search['aktiv']) && ($search['aktiv']==="1" || $search['aktiv']==="0")) {//!!! we have to compare strings, weird php! argh.
-			$Query .= " AND ".TM_TABLE_ADR_GRP.".aktiv=".checkset_int($search['aktiv']);
+		//nur pub groups references used in forms 0|1
+		if (check_dbid($frm_id) && isset($search['public_frm_ref']) ) {
+			$Query .= "
+				AND ".TM_TABLE_FRM_GRP_REF.".public=".checkset_int($search['public_frm_ref'])."
+			";
 		}
+
 		$Query .= "	ORDER BY ".TM_TABLE_ADR_GRP.".name";
 		$this->DB->Query($Query);
 		$ac=0;
@@ -471,6 +481,7 @@ class tm_ADR {
 			$this->GRP[$ac]['descr']=$this->DB->Record['descr'];
 			$this->GRP[$ac]['aktiv']=$this->DB->Record['aktiv'];
 			$this->GRP[$ac]['standard']=$this->DB->Record['standard'];
+			$this->GRP[$ac]['prod']=$this->DB->Record['prod'];
 			$this->GRP[$ac]['author']=$this->DB->Record['author'];
 			$this->GRP[$ac]['editor']=$this->DB->Record['editor'];
 			$this->GRP[$ac]['created']=$this->DB->Record['created'];
@@ -538,6 +549,19 @@ class tm_ADR {
 		return $Return;
 	}//setGrpAktiv
 
+	function setGrpProd($id=0,$aktiv=1) {
+		$Return=false;
+		if (check_dbid($id)) {
+			$Query ="UPDATE ".TM_TABLE_ADR_GRP." SET prod=".checkset_int($aktiv)." WHERE id=".checkset_int($id)." AND siteid='".TM_SITEID."'";
+			if ($this->DB->Query($Query)) {
+				if (TM_LOG) $this->LOG->log(Array("data"=>Array("prod"=>$aktiv,"id"=>$id),"object"=>"adr_grp","action"=>"edit"));
+				$Return=true;
+			}
+		}
+		return $Return;
+	}//setGrpAktiv
+
+
 	function setGrpStd($id=0) {
 		$Return=false;
 		if (check_dbid($id)) {
@@ -568,8 +592,13 @@ class tm_ADR {
 	function addGrp($group) {
 		$Return=false;
 		$Query ="INSERT INTO ".TM_TABLE_ADR_GRP." (
-					name,public,public_name,descr,aktiv,
+					name,
+					public,
+					public_name,
+					descr,
+					aktiv, 
 					standard,
+					prod,
 					created,author,
 					updated,editor,
 					siteid
@@ -579,7 +608,9 @@ class tm_ADR {
 					".checkset_int($group["public"]).",
 					'".dbesc($group["public_name"])."',
 					'".dbesc($group["descr"])."',
-					".checkset_int($group["aktiv"]).", 0,
+					".checkset_int($group["aktiv"]).", 
+					0,
+					".checkset_int($group["prod"]).", 
 					'".dbesc($group["created"])."', '".dbesc($group["author"])."',
 					'".dbesc($group["created"])."', '".dbesc($group["author"])."',
 					'".TM_SITEID."')";
@@ -589,7 +620,7 @@ class tm_ADR {
 			if (TM_LOG) $this->LOG->log(Array("data"=>$group,"object"=>"adr_grp","action"=>"new"));
 			$Return=true;
 		}
-		return $Return;
+		return $group['id'];
 		//should return ID!!!
 	}//addGrp
 
@@ -603,6 +634,7 @@ class tm_ADR {
 					public_name='".dbesc($group["public_name"])."',
 					descr='".dbesc($group["descr"])."',
 					aktiv=".checkset_int($group["aktiv"]).",
+					prod=".checkset_int($group["prod"]).",
 					updated='".dbesc($group["created"])."',
 					editor='".dbesc($group["author"])."'
 					WHERE siteid='".TM_SITEID."' AND id=".checkset_int($group["id"]);
@@ -935,6 +967,9 @@ class tm_ADR {
 							clicks,
 							views,
 							newsletter,
+							source,
+							source_id,
+							source_extern_id,
 							siteid
 						)
 					VALUES 
@@ -948,6 +983,9 @@ class tm_ADR {
 						'".dbesc($adr["author"])."',
 						'".dbesc($adr["created"])."',
 						0, 0, 0,
+						'".dbesc($adr["source"])."',
+						".checkset_int($adr["source_id"]).",
+						".checkset_int($adr["source_extern_id"]).",
 						'".TM_SITEID."'
 						)";
 		if ($this->DB->Query($Query)) {
@@ -1393,7 +1431,7 @@ function mergeGroups($grp1,$grp2) {
 	}//count_duplicates
 	
 	function genCSVHeader($delimiter=",") {
-	 	$CSV="\"email\"$delimiter\"f0\"$delimiter\"f1\"$delimiter\"f2\"$delimiter\"f3\"$delimiter\"f4\"$delimiter\"f5\"$delimiter\"f6\"$delimiter\"f7\"$delimiter\"f8\"$delimiter\"f9\"$delimiter\"id\"$delimiter\"created\"$delimiter\"author\"$delimiter\"updated\"$delimiter\"editor\"$delimiter\"aktiv\"$delimiter\"status\"$delimiter\"code\"$delimiter\"errors\"$delimiter\"clicks\"$delimiter\"views\"$delimiter\"newsletter\"$delimiter\"memo\"\n";
+	 	$CSV="\"email\"$delimiter\"f0\"$delimiter\"f1\"$delimiter\"f2\"$delimiter\"f3\"$delimiter\"f4\"$delimiter\"f5\"$delimiter\"f6\"$delimiter\"f7\"$delimiter\"f8\"$delimiter\"f9\"$delimiter\"id\"$delimiter\"created\"$delimiter\"author\"$delimiter\"updated\"$delimiter\"editor\"$delimiter\"aktiv\"$delimiter\"status\"$delimiter\"code\"$delimiter\"errors\"$delimiter\"clicks\"$delimiter\"views\"$delimiter\"newsletter\"$delimiter\"source\"$delimiter\"source_id\"$delimiter\"source_extern_id\"$delimiter\"memo\"\n";
 		return $CSV;	
 	}
 	
@@ -1424,9 +1462,18 @@ function mergeGroups($grp1,$grp2) {
 		$CSV.="\"".$ADR['clicks']."\"$delimiter";
 		$CSV.="\"".$ADR['views']."\"$delimiter";
 		$CSV.="\"".$ADR['newsletter']."\"$delimiter";
+		$CSV.="\"".$ADR['source']."\"$delimiter";
+		$CSV.="\"".$ADR['source_id']."\"$delimiter";
+		$CSV.="\"".$ADR['source_extern_id']."\"$delimiter";
 		$CSV.="\"".$memo."\"$delimiter";
 		$CSV.="\n";
 		return $CSV;
 	}
+	
+	function proof() {
+	}
+	
+	function proof_adr(&$adr) {
+	}//proof
 }//class
 ?>

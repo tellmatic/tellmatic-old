@@ -1,3 +1,23 @@
+.head1 {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	font-size: 12px;
+	background-color: #eeeeee;
+	color: #000000;
+	text-indent:4px;
+	border: 1px solid #cccccc;
+}
+.block1 {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-weight: normal;
+	font-size: 10px;
+	background-color: #ffffff;
+	color: #000000;
+	text-indent:4px;
+	border: 1px solid #cccccc;
+}
+
+
 .console {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-weight: bold;
@@ -40,6 +60,5 @@
 .green {
 	background-color: #0000ff;
 }
-.edit_tinymce_css_for_new_style {
-	background-color: #ffffff;
+.edit_tinymce_css_for_new_style_classes {
 }

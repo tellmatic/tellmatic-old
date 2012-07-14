@@ -2,6 +2,11 @@
 .s { width:1px; height:1px; color: black; background-color: red; font-size : 2pt; }
 .w { width:1px; height:1px; color: white; background-color: white; font-size : 2pt; }
 
+.tm_debugmessage {
+	font-size:9pt;
+	color:#990000;
+	background-color:#ffff99;
+}
 
 .tm_form_email {
   border:1px solid #dddddd;  padding:1px;

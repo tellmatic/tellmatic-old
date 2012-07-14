@@ -21,36 +21,33 @@ $ADDRESS=new tm_ADR();
 $QUEUE=new tm_Q();
 $FORMULAR=new tm_FRM();
 
-$shownlgURLPara=$mSTDURL;
+$shownlgURLPara=tmObjCopy($mSTDURL);
 $shownlgURLPara->addParam("act","nl_grp_list");
 $shownlgURLPara->addParam("s","s_menu_nl,s_menu_st");
 $shownlgURLPara_=$shownlgURLPara->getAllParams();
 
-$shownlURLPara=$mSTDURL;
+$shownlURLPara=tmObjCopy($mSTDURL);
 $shownlURLPara->addParam("s","s_menu_nl,s_menu_st");
 
-$showformURLPara=$mSTDURL;
+$showformURLPara=tmObjCopy($mSTDURL);
 $showformURLPara->addParam("s","s_menu_frm,s_menu_st");
 
-$showadrURLPara=$mSTDURL;
+$showadrURLPara=tmObjCopy($mSTDURL);
 $showadrURLPara->addParam("act","statistic");
 $showadrURLPara->addParam("s","s_menu_adr,s_menu_st");
 $showadrURLPara->addParam("set","adr");
 
-$showadrgURLPara=$mSTDURL;
+$showadrgURLPara=tmObjCopy($mSTDURL);
 $showadrgURLPara->addParam("act","statistic");
 $showadrgURLPara->addParam("s","s_menu_adr,s_menu_st");
 $showadrgURLPara->addParam("set","adrg");
 
-$showgrpURLPara=$mSTDURL;
+$showgrpURLPara=tmObjCopy($mSTDURL);
 $showgrpURLPara->addParam("act","adr_grp_list");
 $showgrpURLPara->addParam("s","s_menu_adr,s_menu_st");
-
 //$showadrURLPara->addParam("set","search");//wird nicht mehr benoteigt.... suchmaske bestandteil der liste!
 $showadrURLPara_=$showadrURLPara->getAllParams();
 $showgrpURLPara_=$showgrpURLPara->getAllParams();
-
-
 
 //übersicht
 $_MAIN_OUTPUT.="<div class=\"adr_summary\">";#ccdddd
@@ -100,7 +97,7 @@ $_MAIN_OUTPUT.= "<br><img alt=\"Chart\"  src=\"".$tm_URL_FE."/".$tm_reportdir."/
 $AG=$ADDRESS->getGroup(0,0,0,1);//count!
 $agc=count($AG);
 $ac=$ADDRESS->countAdr();
-$chart->addPoint(new Point(___("Summe")." (100%)", $ac));
+$chart->addPoint(new Point(___("Summe",0)." (100%)", $ac));
 $showadrURLPara->delParam("email");
 $showadrURLPara->delParam("adr_id");
 $showadrURLPara->addParam("act","adr_list");
@@ -142,7 +139,7 @@ for ($agcc=0; $agcc<$agc; $agcc++) {
 }
 $_MAIN_OUTPUT.="</table>";
 //create chart
-$chart->setTitle(___("Adressgruppen")." ".TM_TODAY);
+$chart->setTitle(___("Adressgruppen",0)." ".TM_TODAY);
 $chart->render($tm_reportpath."/status_adrg_total_".TM_TODAY.".png");
 
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -166,7 +163,7 @@ $_MAIN_OUTPUT.= "<br><img alt=\"Chart\"  src=\"".$tm_URL_FE."/".$tm_reportdir."/
 //
 $AG=$ADDRESS->getGroup();
 $agc=count($AG);
-$chart->addPoint(new Point(___("Summe")." (100%)", $ac));
+$chart->addPoint(new Point(___("Summe",0)." (100%)", $ac));
 $showadrURLPara->delParam("email");
 $showadrURLPara->delParam("adr_id");
 $showadrURLPara->addParam("act","adr_list");
@@ -199,7 +196,7 @@ for ($ascc=1; $ascc<=$asc; $ascc++)//0
 	$_MAIN_OUTPUT.=$adc;
 	$_MAIN_OUTPUT.="</td>";	
 	$_MAIN_OUTPUT.="<td valign=\"top\" align=\"left\">";
-	$_MAIN_OUTPUT.=tm_icon($STATUS['adr']['statimg'][$ascc],$STATUS['adr']['status'][$ascc])."&nbsp;".$STATUS['adr']['status'][$ascc]."&nbsp;(".$STATUS['adr']['descr'][$ascc].")	";
+	$_MAIN_OUTPUT.=tm_icon($STATUS['adr']['statimg'][$ascc],display($STATUS['adr']['status'][$ascc]))."&nbsp;".display($STATUS['adr']['status'][$ascc])."&nbsp;(".display($STATUS['adr']['descr'][$ascc]).")	";
 	$_MAIN_OUTPUT.="</td>";	
 	$_MAIN_OUTPUT.="<td valign=\"top\" align=\"left\">";
 	$_MAIN_OUTPUT.="<a href=\"".$tm_URL."/".$showadrURLPara_."\" title=\"".___("Anzeigen")."\">".tm_icon("folder_go.png",___("Anzeigen"))."</a>";
@@ -213,7 +210,7 @@ for ($ascc=1; $ascc<=$asc; $ascc++)//0
 }
 $_MAIN_OUTPUT.="</table>";
 //create chart
-$chart->setTitle(___("Adressen")." ".TM_TODAY);
+$chart->setTitle(___("Adressen",0)." ".TM_TODAY);
 $chart->render($tm_reportpath."/status_adr_total_".TM_TODAY.".png");
 
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -240,7 +237,7 @@ $N=$NEWSLETTER->getNLID();//$group
 $nlc=count($N);
 $hc=$QUEUE->countH();
 //add total value to graph
-$chart->addPoint(new Point(___("Summe")." (100%)", $hc));
+$chart->addPoint(new Point(___("Summe",0)." (100%)", $hc));
 $shownlURLPara->addParam("act","nl_list");
 $shownlURLPara->addParam("set","");
 $shownlURLPara->delParam("nl_id","");
@@ -274,9 +271,9 @@ for ($hscc=1; $hscc<=$hsc; $hscc++)//0
 	$_MAIN_OUTPUT.=$qc;
 	$_MAIN_OUTPUT.="</td>";	
 	$_MAIN_OUTPUT.="<td valign=\"top\" align=\"left\">";
-	$_MAIN_OUTPUT.=tm_icon($STATUS['h']['statimg'][$hscc],$STATUS['h']['status'][$hscc]).
-										"&nbsp;".$STATUS['h']['status'][$hscc].
-										"&nbsp;(".$STATUS['h']['descr'][$hscc].")";
+	$_MAIN_OUTPUT.=tm_icon($STATUS['h']['statimg'][$hscc],display($STATUS['h']['status'][$hscc])).
+										"&nbsp;".display($STATUS['h']['status'][$hscc]).
+										"&nbsp;(".display($STATUS['h']['descr'][$hscc]).")";
 	$_MAIN_OUTPUT.="</td>";	
 	$_MAIN_OUTPUT.="</tr>";	
 	//add values to chart
@@ -285,7 +282,7 @@ for ($hscc=1; $hscc<=$hsc; $hscc++)//0
 }
 $_MAIN_OUTPUT.="</table>";	
 //create chart
-$chart->setTitle(___("Newsletter Queue")." ".TM_TODAY);
+$chart->setTitle(___("Newsletter Queue",0)." ".TM_TODAY);
 $chart->render($tm_reportpath."/status_q_total_".TM_TODAY.".png");
 
 ////////////////////////////////////////////////////////////////////////////////////////

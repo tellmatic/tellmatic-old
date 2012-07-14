@@ -2,7 +2,7 @@
 /* this file is part of: / diese Datei ist ein Teil von:                        */
 /* tellmatic, the newslettermachine                                             */
 /* tellmatic, die Newslettermaschine                                            */
-/* 2006/10 by Volker Augustin, multi.art.studio Hanau                            */
+/* 2006/11 by Volker Augustin, multi.art.studio Hanau                            */
 /* Contact/Kontakt: info@tellmatic.org                                      */
 /* Homepage: www.tellmatic.org                                                   */
 /* leave this header in file!                                                   */
@@ -14,31 +14,33 @@
 *+*+*+*+*+*+*+*+*+*+*+ README +*+*+*+*+*+*+*+*+*+*+*+*
 
 	tellmatic - the newslettermachine, die Newslettermaschine
-	2006/10 by Volker Augustin, multi.art.studio Hanau
+	2006/11 by Volker Augustin, multi.art.studio Hanau
 	Contact/Kontakt: info@tellmatic.org
 	Homepage: www.tellmatic.org
 	check Homepage for Updates and more Infos
 	Besuchen Sie die Homepage für Updates und weitere Infos
 
 
-	Diese Software ist OpenSource und steht unter der GPL Lizenz.
-	Es besteht keinerlei Gewaehrleistung!
+	Diese Software ist OpenSource und steht unter der GPL/AGPL Lizenz.
+	Es besteht keinerlei Gewaehrleistung oder Garantie!
 
 *+*+*+*+*+*+*+*+*+*+ LICENSE +*+*+*+*+*+*+*+*+*+*+*
 
 	GPL V2.1 ++
 	http://www.gnu.org/licenses/gpl.html
-
+	AGPL	
+	http://www.gnu.org/licenses/agpl.html
+	
 *+*+*+*+*+*+*+*+*+*+ REQUIREMENTS +*+*+*+*+*+*+*+*+*+*+*
 	Server / ISP:
 		- Linux oder MacosX, (NO Windows!)
 		- Apache HTTP Server (or similar, must support .htaccess) => http://httpd.apache.org/download.cgi
-		- PHP >= 4.4 => http://www.php.net/downloads.php , no early php5 (full of bugs)! 
-           + Imap Library + Mysql + GD-Lib
+		- PHP >= 5.2 => http://www.php.net/downloads.php , no early php5/php4 (full of bugs)! 
+           + Imap Library + Mysql Lib + GD-Lib
            
-           (Tellmatic is developed and tested under PHP 4.4.7 and latest PHP5.2 stable releases + suhosin + fcgi)
+           (Tellmatic is developed and tested under PHP5.2 stable releases + suhosin + fcgi)
 		- Mysql >= v4.1 (Mysql 4.1.x/5.x, NO Mysql3!)
-           (Tellmatic is developed and tested under latest Mysql 4.x and latest Mysql5 stable releases)
+           (Tellmatic is developed and tested under Mysql5 stable releases)
 		- Access to SMTP, POP3 and/or IMAP Server
 		- Optional: Cronjobs, PHP CLI or wget (Cronjobs execute at least every 10 Min. to be effective)
     
@@ -47,12 +49,15 @@
        IE Support is limited1 Please use a standard browser.
 
 *+*+*+*+*+*+*+*+*+*+ BASIC-FEATURES V1.0.x +*+*+*+*+*+*+*+*+*+*+*
-	Eaysy installation, installed in 2 minutes
+	Easy installation, installed in 2 minutes
 	Comfortable and intuitive web frontend
 	Multiuser
 	Online help
 	Multilingual
 	Filemanager
+	Linkmanager
+	Quality checks
+	Search for double entries
 	Different styles for frontend
 	Wysiwyg Online-Editor (TinyMCE) & spellchecker	
 	Blacklist (blacklist by email, domain or regular expression)

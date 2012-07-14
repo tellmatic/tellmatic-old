@@ -61,6 +61,7 @@ Class tm_Mail {
 
 	function delete($no) {
 		imap_delete($this->mbox,$no);
+		//imap_setflag_full($this->mbox, imap_uid($this->mbox, 0), "\\Deleted \\Seen", ST_UID);
 		$this->count_msg=imap_num_msg($this->mbox);
 	}
 		
@@ -80,22 +81,33 @@ Class tm_Mail {
 		}
 		
 		$cc=0;
-					
 		for ($i=$offset; $i < ($offset+$limit); $i++) {
 		  	$header = imap_headerinfo($this->mbox, $i+1, 80, 80);//$i+1 !! messageno beginnt bei 1 und array bei 0!!!
-
 			//alternative statt headerinfo etcie x header aus nach dnen wir ja auch unbedingt suchen wollen:
 			//enthaelt den kompletten header
 			$Mail[$cc]['header'] = imap_fetchheader($this->mbox, $i+1);
+			//=explode("\n", imap_fetchheader($mbox, $i));
+			
 			$to = (isset($header->to) && isset($header->to[0]->mailbox) && isset($header->to[0]->host)) ? $header->to[0]->mailbox."@".$header->to[0]->host : "k.a.";//: '".display($header->to[0]->mailbox."@".$header->to[0]->host)."'";
-			$from=$header->from[0]->mailbox."@".$header->from[0]->host;
+			#$from=$header->from[0]->mailbox."@".$header->from[0]->host;
+			//fixed bug where from addrress is not a valid email address, e.g. From: MAILER-DAEMON (Mail Delivery System)
+			//https://sourceforge.net/tracker/?func=detail&aid=3121248&group_id=190396&atid=933192
+			//bug id 3121248
+			//thx to tms-schmidt
+			$from = (isset($header->from) && isset($header->from[0]->mailbox) && isset($header->from[0]->host)) ? $header->from[0]->mailbox."@".$header->from[0]->host : "k.a.";//: '".display($header->from[0]->mailbox."@".$header->from[0]->host)."'";
 
 			//wenn kein filter oder filter matched, TO
 			if (!isset($search['to']) || $search['to']==$to) {
 				$Mail[$cc]['to_box'] = (isset($header->to[0]->mailbox)) ? $header->to[0]->mailbox : "k.a.";
 				$Mail[$cc]['to_host'] = (isset($header->to[0]->host)) ? $header->to[0]->host : "k.a.";
-				$Mail[$cc]['from_box'] =  $header->from[0]->mailbox;
-				$Mail[$cc]['from_host'] =  $header->from[0]->host;
+				#$Mail[$cc]['from_box'] =  $header->from[0]->mailbox;
+				#$Mail[$cc]['from_host'] =  $header->from[0]->host;
+				//fixed bug where from addrress is not a valid email address, e.g. From: MAILER-DAEMON (Mail Delivery System)
+				//https://sourceforge.net/tracker/?func=detail&aid=3121248&group_id=190396&atid=933192
+				//bug id 3121248
+				//thx to tms-schmidt
+				$Mail[$cc]['from_box'] = (isset($header->from[0]->mailbox)) ? $header->from[0]->mailbox : "k.a.";
+				$Mail[$cc]['from_host'] = (isset($header->from[0]->host)) ? $header->from[0]->host : "k.a.";
 				$Mail[$cc]['to'] = $to;
 				$Mail[$cc]['from'] = $from;
 				$Mail[$cc]['subject'] = (isset($header->fetchsubject)) ? $header->fetchsubject : "no Subject";
@@ -115,6 +127,10 @@ Class tm_Mail {
 				//$limit++; //limit um 1 erhoehen wenn filter gesetzt und nichts gefunden! damit wir immer $limit ergebnisse bekommen , maximal!
 				// kann aber zu einer komischen schleife fuehren, liefert mehr ergebnisse als limit ist... :)
 				//pruefen ob max nazahl mails ueberschritten, wenn ja, schleife abbrechen!
+				#if (($offset+$limit+1)>$this->count_msg) {
+				#	$i=$this->count_msg;
+				#}
+				#$limit++; // limit um 1 erhoehen!
 			}
 			//imap_setflag_full($this->mbox, $i, "\\SEEN"); 
 			//nur imap!!! imap_setflag_full($this->mbox, imap_uid($this->mbox, $i), "\\Seen", ST_UID);

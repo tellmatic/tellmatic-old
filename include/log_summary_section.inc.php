@@ -18,12 +18,19 @@ if ($user_is_admin) {
 	$LOGSC=new tm_LOG();
 	$logcount=$LOGSC->count($search_log);		
 	if ($logcount>0) {
-		$LogbookURLPara=$mSTDURL;
+		$LogbookURLPara=tmObjCopy($mSTDURL);
 		$LogbookURLPara->addParam("act","log_list");
 		$LogbookURLPara->addParam("set","search");
+		if (!isset($search_log['object'])) {
+			$search_log['object']="";
+		}
 		$LogbookURLPara->addParam("s_obj",$search_log['object']);
 		$LogbookURLPara_=$LogbookURLPara->getAllParams();
 		$_MAIN_OUTPUT.= "<div class=\"link_logbook_section\">";
+		if (!isset($search_log['object'])) {		
+			$_MAIN_OUTPUT.= "<br><b>...oops,no obj for log in $act</strong><br>";
+			$_MAIN_MESSAGE.= "<br><b>...oops,no obj for log in $act</strong><br>";
+		}
 		$_MAIN_OUTPUT.= "<a href=\"".$tm_URL."/".$LogbookURLPara_."\" title=\"".___("Logbuch anzeigen")."\">".tm_icon("script.png",___("Logbuch anzeigen"))."&nbsp;".___("Logbuch anzeigen")."&nbsp;(".$logcount.")</a>";
 		$_MAIN_OUTPUT.= "</div>";
 	}

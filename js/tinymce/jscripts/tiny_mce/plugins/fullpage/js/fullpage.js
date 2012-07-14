@@ -1,3 +1,4 @@
+/*bugfix: http://tinymce.moxiecode.com/punbb/viewtopic.php?id=22749*/
 tinyMCEPopup.requireLangPack();
 
 var doc;

@@ -6,7 +6,6 @@
 		top: 96px;
 		width:760px;
 		 border-top:2px solid #ffffff;
-		background-color:#ffffff;
 }		
 
 .main td {
@@ -40,7 +39,6 @@
 	font-family : Arial,Helvetica; 
 	font-size:9pt; 
 	padding:4px;
-	background-color:#ffffff;
 	border:3px solid #07499c;
 	color:#000000;
 	position:absolute;
@@ -54,7 +52,6 @@
 	font-family : Arial,Helvetica; 
 	font-size:9pt; 
 	padding:4px;
-	background-color:#ffffff;
 	border:3px solid #cccccc;
 	color:#000000;
 	top:48px;
@@ -75,7 +72,6 @@
 .main_detail{
 	font-family : Arial,Helvetica; 
 	font-size:9pt; 
-	background-color:#ffffff;
 	border-top:8px solid #ffffff;
 }	
 
@@ -92,8 +88,9 @@
 .main thead{
 	font-family : Arial,Helvetica; 
 	font-size:9pt; 
-	background-color:#eeeeee;
-	color:#000000;
+	 background-color:#3871b7;
+	  -moz-border-radius:0.5em 0.5em 0 0;
+	color:#ffffff;
 }		
 
 

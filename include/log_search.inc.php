@@ -68,6 +68,7 @@ if (empty($sortType)) {
 }
 
 require_once (TM_INCLUDEPATH."/log_search_form.inc.php");
+require_once (TM_INCLUDEPATH."/log_search_form_show.inc.php");
 
 	$search['object']=$s_obj;
 	$search['action']=$s_action;

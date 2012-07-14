@@ -12,6 +12,8 @@
 /* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
 /********************************************************************************/
 
+$_MAIN_OUTPUT.="\n\n<!-- bounce.inc -->\n\n";
+
 $_MAIN_DESCR=___("Bounce Management");
 $_MAIN_MESSAGE.="";
 
@@ -70,6 +72,7 @@ $InputName_ActionAdr="val2";
 $$InputName_ActionAdr=getVar($InputName_ActionAdr);
 
 	require_once (TM_INCLUDEPATH."/bounce_host_form.inc.php");
+	require_once (TM_INCLUDEPATH."/bounce_host_form_show.inc.php");
 
 //server ausgewaehlt, wir connecten
 if ($set=="connect") {
@@ -114,16 +117,16 @@ if ($set=="connect") {
 	
 	//Liste der Mails anzeigen
 	if ($val=="list") {
-		require_once (TM_INCLUDEPATH."/bounce_mail_form_head.inc.php");
-		require_once (TM_INCLUDEPATH."/bounce_mail_list.inc.php");
 		require_once (TM_INCLUDEPATH."/bounce_mail_form.inc.php");
+		require_once (TM_INCLUDEPATH."/bounce_mail_list.inc.php");
+		require_once (TM_INCLUDEPATH."/bounce_mail_form_show.inc.php");
 	}
 	if ($val=="filter" || $val=="filter_delete") {
 		$mc=count($mailno);
 		if ($mc>0) {
-			require_once (TM_INCLUDEPATH."/bounce_filter_form_head.inc.php");//formularokpf und felder
+			require_once (TM_INCLUDEPATH."/bounce_filter_form.inc.php");//formularokpf und felder
 			require_once (TM_INCLUDEPATH."/bounce_filter_adr_list.inc.php");//liste der aressen mit checkboxen
-			require_once (TM_INCLUDEPATH."/bounce_filter_form.inc.php");//render formular! aktion waehlen etc
+			require_once (TM_INCLUDEPATH."/bounce_filter_form_show.inc.php");//render formular! aktion waehlen etc
 		} else {
 			$_MAIN_MESSAGE.= "<br>".___("Es wurden keine Mails zum Bearbeiten ausgewählt.");
 			$val="list";
@@ -154,9 +157,6 @@ if ($set=="connect") {
 			$val="list";
 		}
 	}
-
-
-
 	//val2==..... aktionen fuer die adressen
 	if (!empty($val2)) {
 		$ac=count($adr);
@@ -252,5 +252,6 @@ if ($set=="connect") {
 	$Mailer->disconnect();
 } else {
 	//require_once (TM_INCLUDEPATH."/bounce_host_form.inc.php");
+	//require_once (TM_INCLUDEPATH."/bounce_host_form_show.inc.php");
 }
 ?>

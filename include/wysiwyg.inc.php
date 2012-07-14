@@ -32,6 +32,168 @@ $TinyMCE_Header='<!-- TinyMCE -->
 ';
 */
 
+$TinyMCE_Plugin='
+// Creates a new plugin class and a custom listbox
+tinymce.create("tinymce.plugins.TellmaticPlugin", {
+	createControl: function(n, cm) {
+		switch (n) {
+			case "tm_menubutton":
+			var c = cm.createMenuButton("tm_menubutton", {
+				title : "Tellmatic",
+				image : "'.$tm_URL_FE.'/'.TM_IMGDIR.'/tellmatic_logo.png",
+				icons : false
+			});
+			c.onRenderMenu.add(function(c, m) {
+				m.add({title : "'.___("Betreff").' {SUBJECT}", onclick : function() {
+					tinyMCE.activeEditor.execCommand("mceInsertContent", false, "{SUBJECT}");
+				}});
+				m.add({title : "'.___("Datum").' {DATE}", onclick : function() {
+					tinyMCE.activeEditor.execCommand("mceInsertContent", false, "{DATE}");
+				}});
+				m.add({title : "'.___("Titel").' {TITLE}", onclick : function() {
+					tinyMCE.activeEditor.execCommand("mceInsertContent", false, "{TITLE}");
+				}});
+				m.add({title : "'.___("Sub-Titel").' {TITLE_SUB}", onclick : function() {
+					tinyMCE.activeEditor.execCommand("mceInsertContent", false, "{TITLE_SUB}");
+				}});
+				m.add({title : "'.___("Zusammenfassung").' {SUMMARY}", onclick : function() {
+					tinyMCE.activeEditor.execCommand("mceInsertContent", false, "{SUMMARY}");
+				}});
+
+				m.add({title : "'.___("Bild").' {IMAGE1}", onclick : function() {
+					tinyMCE.activeEditor.execCommand("mceInsertContent", false, "{IMAGE1}");
+				}});
+				m.add({title : "'.___("Bild-URL").' {IMAGE1_URL}", onclick : function() {
+					tinyMCE.activeEditor.execCommand("mceInsertContent", false, "{IMAGE1_URL}");
+				}});
+				m.add({title : "'.___("Anhänge").' {ATTACHEMENTS}", onclick : function() {
+					tinyMCE.activeEditor.execCommand("mceInsertContent", false, "{ATTACHEMENTS}");
+				}});
+				m.add({title : "'.___("Tracking Bild").' {BLINDIMAGE}", onclick : function() {
+					tinyMCE.activeEditor.execCommand("mceInsertContent", false, "{BLINDIMAGE}");
+				}});
+				m.add({title : "'.___("Newsletter Online").' {NLONLINE}", onclick : function() {
+					tinyMCE.activeEditor.execCommand("mceInsertContent", false, "{NLONLINE}");
+				}});
+				m.add({title : "'.___("Newsletter Online URL").' {NLONLINE_URL}", onclick : function() {
+					tinyMCE.activeEditor.execCommand("mceInsertContent", false, "{NLONLINE_URL}");
+				}});
+
+				var sub_subscribe;
+				sub_subscribe = m.addMenu({title : "'.___("Anmelden/Abmelden").'"});
+
+				sub_subscribe.add({title : "'.___("Anmelden").' {SUBSCRIBE}", onclick : function() {
+					tinyMCE.activeEditor.execCommand("mceInsertContent", false, "{SUBSCRIBE}");
+				}});
+				sub_subscribe.add({title : "'.___("Anmelden-URL").' {SUBSCRIBE_URL}", onclick : function() {
+					tinyMCE.activeEditor.execCommand("mceInsertContent", false, "{SUBSCRIBE_URL}");
+				}});
+
+				sub_subscribe.add({title : "'.___("Abmelden").' {UNSUBSCRIBE}", onclick : function() {
+					tinyMCE.activeEditor.execCommand("mceInsertContent", false, "{UNSUBSCRIBE}");
+				}});
+				sub_subscribe.add({title : "'.___("Abmelden-URL").' {UNSUBSCRIBE_URL}", onclick : function() {
+					tinyMCE.activeEditor.execCommand("mceInsertContent", false, "{UNSUBSCRIBE_URL}");
+				}});
+
+				var sub_links;
+				sub_links = m.addMenu({title : "'.___("Links").'"});
+				sub_links.add({title : "'.___("Link").' {LINK1}", onclick : function() {
+					tinyMCE.activeEditor.execCommand("mceInsertContent", false, "{LINK1}");
+				}});
+				sub_links.add({title : "'.___("Link-URL").' {LINK1_URL}", onclick : function() {
+					tinyMCE.activeEditor.execCommand("mceInsertContent", false, "{LINK1_URL}");
+				}});
+				sub_links.add({title : "'.___("Link schliessen").' {CLOSELINK}", onclick : function() {
+					tinyMCE.activeEditor.execCommand("mceInsertContent", false, "{CLOSELINK}");
+				}});
+				sub_links.add({title : "'.___("Link").' {LNK:short,}", onclick : function() {
+					tinyMCE.activeEditor.execCommand("mceInsertContent", false, "{LNK:short,}");
+				}});
+				sub_links.add({title : "'.___("Link").' {LNKID:id,}", onclick : function() {
+					tinyMCE.activeEditor.execCommand("mceInsertContent", false, "{LNKID:0,}");
+				}});
+				sub_links.add({title : "'.___("Link-Gruppe").' {LNKGRP:short,}", onclick : function() {
+					tinyMCE.activeEditor.execCommand("mceInsertContent", false, "{LNKGRP:short,}");
+				}});
+				sub_links.add({title : "'.___("Link-Gruppe").' {LNKGRPID:id,}", onclick : function() {
+					tinyMCE.activeEditor.execCommand("mceInsertContent", false, "{LNKGRPID:0,}");
+				}});
+
+
+				sub_links.add({title : "'.___("Link").' {LNK_AHREF:short,}", onclick : function() {
+					tinyMCE.activeEditor.execCommand("mceInsertContent", false, "{LNK_AHREF:short,}");
+				}});
+				sub_links.add({title : "'.___("Link").' {LNKID_AHREF:id,}", onclick : function() {
+					tinyMCE.activeEditor.execCommand("mceInsertContent", false, "{LNKID_AHREF:0,}");
+				}});
+
+				sub_links.add({title : "'.___("Link").' {LNK_URL:short}", onclick : function() {
+					tinyMCE.activeEditor.execCommand("mceInsertContent", false, "{LNK_URL:short}");
+				}});
+				sub_links.add({title : "'.___("Link").' {LNKID_URL:id}", onclick : function() {
+					tinyMCE.activeEditor.execCommand("mceInsertContent", false, "{LNKID_URL:0}");
+				}});
+
+				sub_links.add({title : "'.___("Link").' {LNK_URLRAW:short}", onclick : function() {
+					tinyMCE.activeEditor.execCommand("mceInsertContent", false, "{LNK_URLRAW:short}");
+				}});
+				sub_links.add({title : "'.___("Link").' {LNKID_URLRAW:id}", onclick : function() {
+					tinyMCE.activeEditor.execCommand("mceInsertContent", false, "{LNKID_URLRAW:0}");
+				}});
+
+
+
+
+				var sub_data;
+				sub_data = m.addMenu({title : "'.___("Daten").'"});
+				sub_data.add({title : "'.___("E-Mail").' {EMAIL}", onclick : function() {
+					tinyMCE.activeEditor.execCommand("mceInsertContent", false, "{EMAIL}");
+				}});
+				sub_data.add({title : "'."F0".' {F0}", onclick : function() {
+					tinyMCE.activeEditor.execCommand("mceInsertContent", false, "{F0}");
+				}});
+				sub_data.add({title : "'."F1".' {F1}", onclick : function() {
+					tinyMCE.activeEditor.execCommand("mceInsertContent", false, "{F1}");
+				}});
+				sub_data.add({title : "'."F2".' {F2}", onclick : function() {
+					tinyMCE.activeEditor.execCommand("mceInsertContent", false, "{F2}");
+				}});
+				sub_data.add({title : "'."F3".' {F3}", onclick : function() {
+					tinyMCE.activeEditor.execCommand("mceInsertContent", false, "{F3}");
+				}});
+				sub_data.add({title : "'."F4".' {F4}", onclick : function() {
+					tinyMCE.activeEditor.execCommand("mceInsertContent", false, "{F4}");
+				}});
+				sub_data.add({title : "'."F5".' {F5}", onclick : function() {
+					tinyMCE.activeEditor.execCommand("mceInsertContent", false, "{F5}");
+				}});
+				sub_data.add({title : "'."F6".' {F6}", onclick : function() {
+					tinyMCE.activeEditor.execCommand("mceInsertContent", false, "{F6}");
+				}});
+				sub_data.add({title : "'."F7".' {F7}", onclick : function() {
+					tinyMCE.activeEditor.execCommand("mceInsertContent", false, "{F7}");
+				}});
+				sub_data.add({title : "'."F8".' {F8}", onclick : function() {
+					tinyMCE.activeEditor.execCommand("mceInsertContent", false, "{F8}");
+				}});
+				sub_data.add({title : "'."F9".' {F9}", onclick : function() {
+					tinyMCE.activeEditor.execCommand("mceInsertContent", false, "{F9}");
+				}});
+
+
+			});
+		// Return the new menu button instance
+		return c;
+		}//switch
+	return null;
+	}//create control
+});//create plugin
+
+// Register plugin with a short name
+tinymce.PluginManager.add("tellmatic", tinymce.plugins.TellmaticPlugin);
+';
+
 //TinyMCE Init: Init_Start + Options + Init_End
 $TinyMCE_Init_Start='
 //function loadWysiwyg() {
@@ -74,18 +236,20 @@ $TinyMCE_Options='
 		browsers : "msie,gecko",
 		//button_tile_map : true,
 		language : "'.$LOGIN->USER['lang'].'",
-		plugins : "table,advimage,advhr,insertdatetime,preview,searchreplace,contextmenu,paste,directionality,spellchecker,layer,fullscreen,media,emotions", //flash
+		plugins : "-tellmatic,table,advimage,advhr,insertdatetime,preview,searchreplace,contextmenu,paste,directionality,spellchecker,layer,fullscreen,media,emotions", //flash
 		//plugins : "table,advimage,advhr,insertdatetime,preview,searchreplace,contextmenu,paste,directionality,spellchecker,layer,fullscreen,media,emotions", //fullpage,flash
-		theme_advanced_buttons1_add_before : "help,preview,fullscreen,separator,spellchecker,separator,cut,copy,paste,pastetext,pasteword,separator,search,replace,separator",
+		theme_advanced_buttons1_add_before : "tm_menubutton,separator,help,preview,fullscreen,separator,spellchecker,separator,cut,copy,paste,pastetext,pasteword,separator,search,replace,separator",
 		//theme_advanced_buttons1_add_before : "help,fullpage,preview,fullscreen,separator,spellchecker,separator,cut,copy,paste,pastetext,pasteword,separator,search,replace,separator", //fullpage,
 		theme_advanced_buttons1_add : "",
 		theme_advanced_buttons2_add_before: "fontselect,fontsizeselect,forecolor,backcolor",
 		theme_advanced_buttons2_add : "separator,insertdate,inserttime,separator,flash,media",
 		theme_advanced_buttons3_add_before : "tablecontrols,separator",
 		theme_advanced_buttons3_add : "advhr,separator,ltr,rtl,separator,insertlayer,moveforward,movebackward,absolute,separator,emotions",
-		theme_advanced_toolbar_location : "top",
+		theme_advanced_toolbar_location : "external",
 		theme_advanced_toolbar_align : "left",
 		theme_advanced_path_location : "bottom",
+		theme_advanced_statusbar_location : "bottom",
+		theme_advanced_resizing : true,
 		content_css : "'.$tm_URL_FE.'/css/tinymce.css",
 		';
 	    #spellchecker_languages : "+English=en,Deutsch=de,Francais=fr,Italiano=it",
@@ -142,6 +306,7 @@ $TinyMCE_Footer='</script>
 ';
 
 	$_MAIN_OUTPUT.=$TinyMCE_Header
+						.$TinyMCE_Plugin
 						.$TinyMCE_Init_Start
 						.$TinyMCE_Options
 						.$TinyMCE_Init_End

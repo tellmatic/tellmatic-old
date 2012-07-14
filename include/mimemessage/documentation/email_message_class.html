@@ -7,7 +7,7 @@
 <center><h1>Class: MIME E-mail message composing and sending</h1></center>
 <hr />
 <ul>
-<p><b>Version:</b> <tt>@(#) $Id: email_message_class.html,v 1.1 2007/11/29 23:50:53 mcms09 Exp $</tt></p>
+<p><b>Version:</b> <tt>@(#) $Id: email_message.php,v 1.85 2008/04/17 04:15:56 mlemos Exp $</tt></p>
 <h2><a name="table_of_contents">Contents</a></h2>
 <ul>
 <li><a href="#2.1.1">Summary</a></li>
@@ -88,7 +88,7 @@
 <h3><a name="3.2.0.1">Copyright</a></h3>
 <p>Copyright &copy; (C) Manuel Lemos 1999-2004</p>
 <h3><a name="3.2.0.2">Version</a></h3>
-<p>@(#) $Id: email_message_class.html,v 1.1 2007/11/29 23:50:53 mcms09 Exp $</p>
+<p>@(#) $Id: email_message.php,v 1.85 2008/04/17 04:15:56 mlemos Exp $</p>
 <h3><a name="3.2.0.3">Purpose</a></h3>
 <p>Compose and send e-mail messages according to the MIME standards.</p>
 <h3><a name="3.2.0.4">Translation</a></h3>
@@ -158,6 +158,7 @@
 <p> The actual optimizations that are performed depend on the delivery method that is used by this class or any of its subclasses specialized on the different delivery methods that are supported. Check the documentation of the subclass that you use to learn about the optimizations that are performed, if any.</p>
 <p> If you intend to send messages with the same body to all recipients, the class can optimize the generation of the messages and reduce significantly the composition time if you set the <tt><a href="#variable_cache_body">cache_body</a></tt> variable to <tt>1</tt>.</p>
 <p> If you really need to personalize the content of a message part with different text, HTML or file to each recipient, you should use the <tt><a href="#function_ReplacePart">ReplacePart</a></tt> function to avoid as much as possible the overhead of composing a new message to each of the recipients of the mailing.</p>
+<p> If you are sending personalized messages to multiple recipients but the messages include attached or embedded files that are the same for all recipients, you should also set the 'Cached' option of the <tt><a href="#argument_CreateFilePart_file">file</a></tt> parameter of the <tt><a href="#function_CreateFilePart">CreateFilePart</a></tt> function.</p>
 <p> Other than that, take a look at the documentation of the this class sub-classes that may be used in your PHP environment, as these may provide more efficient delivery solutions for mass mailing.</p>
 <p> <b>- Error handling</b></p>
 <p> Most of the functions of this class that may fail, return an error message string that describes the error that has occurred. If there was no error, the functions return an empty string.</p>
@@ -196,11 +197,11 @@
 <h3>Type</h3>
 <p><tt><i>string</i></tt></p>
 <h3>Default value</h3>
-<p><tt>'http://www.phpclasses.org/mimemessage $Revision: 1.1 $'</tt></p>
+<p><tt>'http://www.phpclasses.org/mimemessage $Revision: 1.85 $'</tt></p>
 <h3>Purpose</h3>
 <p>Specify the base text that is used identify the name and the version of the class that is used to send the message by setting an implicit the <tt>X-Mailer</tt> message header. This is meant mostly to assist on the debugging of delivery problems.</p>
 <h3>Usage</h3>
-<p>Change this to set another mailer identification string or set it to an empty string to prevent that the <tt>X-Mailer</tt> header be added to the message.</p>
+<p>Change this to set another mailer identification string or leave it to an empty string to prevent that the <tt>X-Mailer</tt> header be added to the message.</p>
 <p><a href="#variables">Variables</a></p>
 <h3><a name="variable_mailer_delivery"></a><li><a name="5.2.13">mailer_delivery</a></li></h3>
 <h3>Type</h3>
@@ -449,7 +450,8 @@
 <h3>Synopsis</h3>
 <p><tt><i>string</i> SetEncodedHeader(</tt><ul>
 <tt><i>string</i> </tt><tt><a href="#argument_SetEncodedHeader_header">header</a></tt><tt>,</tt><br />
-<tt><i>string</i> </tt><tt><a href="#argument_SetEncodedHeader_value">value</a></tt></ul>
+<tt><i>string</i> </tt><tt><a href="#argument_SetEncodedHeader_value">value</a></tt><tt>,</tt><br />
+<tt><i>string</i> </tt><tt><a href="#argument_SetEncodedHeader_encoding_charset">encoding_charset</a></tt> [default '']</ul>
 <tt>)</tt></p>
 <h3>Purpose</h3>
 <p>The same as the <tt><a href="#function_SetHeader">SetHeader</a></tt> function assuming the default character set specified by the <tt><a href="#variable_default_charset">default_charset</a></tt> variable.</p>
@@ -459,6 +461,7 @@
 <ul>
 <p><tt><b><a name="argument_SetEncodedHeader_header">header</a></b></tt> - Name of the header.</p>
 <p><tt><b><a name="argument_SetEncodedHeader_value">value</a></b></tt> - Text value for the header.</p>
+<p><tt><b><a name="argument_SetEncodedHeader_encoding_charset">encoding_charset</a></b></tt> - Character set used in the header value. If it is set to an empty string, it is assumed the character set defined by the <tt><a href="#variable_default_charset">default_charset</a></tt> variable.</p>
 </ul>
 <h3>Return value</h3>
 <p>An error message in case there was an error or an empty string otherwise. This return value may be safely ignored if the function parameters are set correctly.</p>
@@ -468,7 +471,8 @@
 <p><tt><i>string</i> SetEncodedEmailHeader(</tt><ul>
 <tt><i>string</i> </tt><tt><a href="#argument_SetEncodedEmailHeader_header">header</a></tt><tt>,</tt><br />
 <tt><i>string</i> </tt><tt><a href="#argument_SetEncodedEmailHeader_address">address</a></tt><tt>,</tt><br />
-<tt><i>string</i> </tt><tt><a href="#argument_SetEncodedEmailHeader_name">name</a></tt></ul>
+<tt><i>string</i> </tt><tt><a href="#argument_SetEncodedEmailHeader_name">name</a></tt><tt>,</tt><br />
+<tt><i>string</i> </tt><tt><a href="#argument_SetEncodedEmailHeader_encoding_charset">encoding_charset</a></tt> [default '']</ul>
 <tt>)</tt></p>
 <h3>Purpose</h3>
 <p>Set the value of an header that is meant to represent the e-mail address of a person or entity with a known name. This is meant mostly to set the <tt>From</tt>, <tt>To</tt>, <tt>Cc</tt> and <tt>Bcc</tt> headers.</p>
@@ -479,6 +483,7 @@
 <p><tt><b><a name="argument_SetEncodedEmailHeader_header">header</a></b></tt> - Name of the header.</p>
 <p><tt><b><a name="argument_SetEncodedEmailHeader_address">address</a></b></tt> - E-mail address value.</p>
 <p><tt><b><a name="argument_SetEncodedEmailHeader_name">name</a></b></tt> - Person or entity name associated with the specified e-mail address.</p>
+<p><tt><b><a name="argument_SetEncodedEmailHeader_encoding_charset">encoding_charset</a></b></tt> - Character set used in the header value. If it is set to an empty string, it is assumed the character set defined by the <tt><a href="#variable_default_charset">default_charset</a></tt> variable.</p>
 </ul>
 <h3>Return value</h3>
 <p>An error message in case there was an error or an empty string otherwise. This return value may be safely ignored if the function parameters are set correctly.</p>
@@ -487,7 +492,8 @@
 <h3>Synopsis</h3>
 <p><tt><i>string</i> SetMultipleEncodedEmailHeader(</tt><ul>
 <tt><i>string</i> </tt><tt><a href="#argument_SetMultipleEncodedEmailHeader_header">header</a></tt><tt>,</tt><br />
-<tt>(input and output) <i>array</i> </tt><tt><a href="#argument_SetMultipleEncodedEmailHeader_addresses">addresses</a></tt></ul>
+<tt>(input and output) <i>array</i> </tt><tt><a href="#argument_SetMultipleEncodedEmailHeader_addresses">addresses</a></tt><tt>,</tt><br />
+<tt><i>string</i> </tt><tt><a href="#argument_SetMultipleEncodedEmailHeader_encoding_charset">encoding_charset</a></tt> [default '']</ul>
 <tt>)</tt></p>
 <h3>Purpose</h3>
 <p>Set the value of an header that is meant to represent a list of e-mail addresses of names of people or entities. This is meant mostly to set the <tt>To</tt>, <tt>Cc</tt> and <tt>Bcc</tt> headers.</p>
@@ -497,6 +503,7 @@
 <ul>
 <p><tt><b><a name="argument_SetMultipleEncodedEmailHeader_header">header</a></b></tt> - Name of the header.</p>
 <p><tt><b><a name="argument_SetMultipleEncodedEmailHeader_addresses">addresses</a></b></tt> - List of all email addresses and associated person or entity names.</p>
+<p><tt><b><a name="argument_SetMultipleEncodedEmailHeader_encoding_charset">encoding_charset</a></b></tt> - Character set used in the header value. If it is set to an empty string, it is assumed the character set defined by the <tt><a href="#variable_default_charset">default_charset</a></tt> variable.</p>
 </ul>
 <h3>Return value</h3>
 <p>An error message in case there was an error or an empty string otherwise. This return value may be safely ignored if the function parameters are set correctly.</p>
@@ -727,6 +734,9 @@
 <p> There is one special type named <tt>automatic/name</tt> that may be used to tell the class to try to guess the content type from the file name. Many file types are recognized from the file name extension. If the file name extension is not recognized, the default for binary data <tt>application/octet-stream</tt> is assumed.</p>
 <p> <tt>Disposition</tt></p>
 <p> Information to whether this file part is meant to be used as a file <tt>attachment</tt> or as a part meant to be displayed <tt>inline</tt>, eventually integrated with another related part.</p>
+<p> <tt>Cache</tt></p>
+<p> Boolean flag that indicates that this message part should be cached when generating the message body. Use only when sending many messages to multiple recipients, but this part does not change between each of the messages that are sent.</p>
+<p> Note that it is also not worth using this option when setting the <tt><a href="#variable_cache_body">cache_body</a></tt>, as that variable makes the class cache the whole message body and the internal message parts will not be rebuilt.</p>
 <p><tt><b><a name="argument_CreateFilePart_part">part</a></b></tt> - Number of the created part that is returned by reference.</p>
 </ul>
 <h3>Return value</h3>

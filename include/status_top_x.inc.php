@@ -21,13 +21,13 @@ $ADDRESS=new tm_ADR();
 $QUEUE=new tm_Q();
 $FORMULAR=new tm_FRM();
 
-$shownlURLPara=$mSTDURL;
+$shownlURLPara=tmObjCopy($mSTDURL);
 $shownlURLPara->addParam("s","s_menu_nl,s_menu_st");
 
-$showformURLPara=$mSTDURL;
+$showformURLPara=tmObjCopy($mSTDURL);
 $showformURLPara->addParam("s","s_menu_frm,s_menu_st");
 
-$showadrURLPara=$mSTDURL;
+$showadrURLPara=tmObjCopy($mSTDURL);
 $showadrURLPara->addParam("act","statistic");
 $showadrURLPara->addParam("s","s_menu_adr,s_menu_st");
 $showadrURLPara->addParam("set","adr");
@@ -40,6 +40,7 @@ if (empty($show_top_x)) {
 
 ////////////////////////////////////////////////////////////////////////////////////////
 require_once (TM_INCLUDEPATH."/status_top_x_form.inc.php");
+require_once (TM_INCLUDEPATH."/status_top_x_form_show.inc.php");
 ////////////////////////////////////////////////////////////////////////////////////////
 
 $_MAIN_OUTPUT.="<center>";

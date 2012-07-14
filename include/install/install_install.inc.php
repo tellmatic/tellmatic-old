@@ -55,7 +55,8 @@ if ($check && $checkDB) {
 					"admin"=>1,
 					"manager" =>1,
 					"style"=>"default",
-					"lang"=>"en",
+					"lang"=>$lang,
+					"startpage"=>"Welcome",
 					"expert"=>0
 					));
 	}//demo
@@ -69,6 +70,8 @@ if ($check && $checkDB) {
 		$CONFIG->addCFG(Array(
 				"siteid"=>TM_SITEID,
 				"name"=>"Tellmatic_0",
+				"lang"=>$lang,
+				"style"=>"default",
 				"notify_mail"=>$email,
 				"notify_subscribe"=>0,
 				"notify_unsubscribe"=>0,
@@ -84,6 +87,7 @@ if ($check && $checkDB) {
 				"unsubscribe_digits_captcha"=>4,
 				"unsubscribe_sendmail"=>1,
 				"unsubscribe_action"=>"unsubscribe",
+				"unsubscribe_host"=>1,
 				"checkit_limit"=>25,
 				"checkit_from_email"=>'',
 				"checkit_adr_reset_error"=>1,
@@ -94,6 +98,10 @@ if ($check && $checkDB) {
 				"bounceit_search"=>'header',
 				"bounceit_filter_to"=>0,
 				"bounceit_filter_to_email"=>'',
+				"proof"=>1,
+				"proof_url"=>'http://proof.tellmatic.org',
+				"proof_trigger"=>10,
+				"proof_pc"=>10,
 				));
 		//add mailservers, use default settings for config and create smtp/pop3 host entries...
 				$HOSTS=new tm_HOST();
@@ -113,11 +121,12 @@ if ($check && $checkDB) {
 							"user"=>$smtp_user,
 							"pass"=>$smtp_pass,
 							"max_mails_atonce"=>25,
-							"max_mails_bcc"=>50,
+							"max_mails_bcc"=>1,
 							"sender_name"=>"Tellmatic",
 							"sender_email"=>$email,
 							"return_mail"=>$email,
-							"reply_to"=>$email
+							"reply_to"=>$email,
+							"delay"=>100000,
 					));
 				//make default smtp host!
 				$HOSTS->setHostStd($Add_Host[1]);
@@ -137,11 +146,12 @@ if ($check && $checkDB) {
 							"user"=>$smtp_user,
 							"pass"=>$smtp_pass,
 							"max_mails_atonce"=>25,
-							"max_mails_bcc"=>50,
+							"max_mails_bcc"=>1,
 							"sender_name"=>"Tellmatic",
 							"sender_email"=>$email,
 							"return_mail"=>$email,
-							"reply_to"=>$email
+							"reply_to"=>$email,
+							"delay"=>100000,
 							));
 	}
 	$MESSAGE.="<br>".___("Einstellungen wurden gespeichert.");
@@ -151,45 +161,39 @@ if ($check && $checkDB) {
 /***********************************************************/
 //create configfile
 /***********************************************************/
-	$tm_config='<?php
-//domain
-
-if (isset($_SERVER[\'HTTPS\'])) {
-	$protocol = $_SERVER[\'HTTPS\'] ? "https://" : "http://";
-} else {
-	$protocol = "http://";
-}
-define("TM_DOMAIN",$protocol.\''.TM_DOMAINNAME.'\');
-
-//absoluter pfad , docroot
-define("TM_DOCROOT",\''.TM_DOCROOT.'\');
-//script verzeichnis
-define("TM_DIR",\''.TM_DIR.'\');
-
-//table prefix
-$tm_tablePrefix=\''.$tm_tablePrefix_cfg.'\';
-//database
-$tm["DB"]["Name"]=\''.$db_name.'\';
-$tm["DB"]["Host"]=\''.$db_host.'\';
-$tm["DB"]["Port"]=\''.$db_port.'\';
-$tm["DB"]["Socket"]=\''.$db_socket.'\';
-$tm["DB"]["User"]=\''.$db_user.'\';
-$tm["DB"]["Pass"]=\''.$db_pass.'\';
-
-/////////////////////////////////
-include (TM_DOCROOT."/".TM_DIR."/include/tm_lib.inc.php");
-/////////////////////////////////
-?>';
+	$tm_config='<?php'."\n".
+						'//domain'."\n".
+						'if (isset($_SERVER[\'HTTPS\'])) {'."\n".
+							'$protocol = $_SERVER[\'HTTPS\'] ? "https://" : "http://";'."\n".
+						'} else {'."\n".
+							'$protocol = "http://";'."\n".
+						'}'."\n".
+						'define("TM_DOMAIN",$protocol.\''.TM_DOMAINNAME.'\');'."\n".
+						'//absoluter pfad , docroot'."\n".
+						'define("TM_DOCROOT",\''.TM_DOCROOT.'\');'."\n".
+						'//script verzeichnis'."\n".
+						'define("TM_DIR",\''.TM_DIR.'\');'."\n".
+						'//table prefix'."\n".
+						'$tm_tablePrefix=\''.$tm_tablePrefix_cfg.'\';'."\n".
+						'//database'."\n".
+						'$tm["DB"]["Name"]=\''.$db_name.'\';'."\n".
+						'$tm["DB"]["Host"]=\''.$db_host.'\';'."\n".
+						'$tm["DB"]["Port"]=\''.$db_port.'\';'."\n".
+						'$tm["DB"]["Socket"]=\''.$db_socket.'\';'."\n".
+						'$tm["DB"]["User"]=\''.$db_user.'\';'."\n".
+						'$tm["DB"]["Pass"]=\''.$db_pass.'\';'."\n".
+						'/////////////////////////////////'."\n".
+						'include (TM_DOCROOT."/".TM_DIR."/include/tm_lib.inc.php");'."\n".
+						'/////////////////////////////////'."\n".
+						'?>';
 
 /***********************************************************/
 //create htaccess files
 /***********************************************************/
-$tm_htaccess='
-AuthType Basic
-AuthName "Tellmatic"
-AuthUserFile '.TM_INCLUDEPATH.'/.htpasswd
-require valid-user
-';
+$tm_htaccess='AuthType Basic'."\n".
+		'AuthName "Tellmatic"'."\n".
+		'AuthUserFile '.TM_INCLUDEPATH.'/.htpasswd'."\n".
+		'require valid-user'."\n";
 
 /***********************************************************/
 //create initial .htpasswd files

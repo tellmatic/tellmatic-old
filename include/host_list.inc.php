@@ -44,21 +44,21 @@ if ($set=="test") {
 }
 
 $mSTDURL->addParam("act","host_list");
-$editURLPara=$mSTDURL;
+$editURLPara=tmObjCopy($mSTDURL);
 $editURLPara->addParam("act","host_edit");
 
-$testURLPara=$mSTDURL;
+$testURLPara=tmObjCopy($mSTDURL);
 $testURLPara->addParam("set","test");
 
-$aktivURLPara=$mSTDURL;
+$aktivURLPara=tmObjCopy($mSTDURL);
 $aktivURLPara->addParam("set","aktiv");
-$stdURLPara=$mSTDURL;
+$stdURLPara=tmObjCopy($mSTDURL);
 $stdURLPara->addParam("set","standard");
 
-$delURLPara=$mSTDURL;
+$delURLPara=tmObjCopy($mSTDURL);
 $delURLPara->addParam("set","delete");
 
-$statURLPara=$mSTDURL;
+$statURLPara=tmObjCopy($mSTDURL);
 $statURLPara->addParam("act","statistic");
 $statURLPara->addParam("set","user");
 
@@ -117,7 +117,6 @@ for ($hcc=0;$hcc<$hc;$hcc++) {
 	
 	$delURLPara->addParam("h_id",$HOST[$hcc]['id']);
 	$delURLPara_=$delURLPara->getAllParams();
-
 
 	$_MAIN_OUTPUT.= "<tr id=\"row_".$hcc."\"  bgcolor=\"".$bgcolor."\" onmouseover=\"setBGColor('row_".$hcc."','".$row_bgcolor_hilite."');\" onmouseout=\"setBGColor('row_".$hcc."','".$bgcolor."');\">";
 	$_MAIN_OUTPUT.= "<td onmousemove=\"showToolTip('tt_host_list_".$HOST[$hcc]['id']."')\" onmouseout=\"hideToolTip();\">";
@@ -203,6 +202,7 @@ for ($hcc=0;$hcc<$hc;$hcc++) {
 		} else {
 			$_MAIN_OUTPUT.= "<br>".___("Return-Path").": bounce@my-domain.tld";
 		}
+		$_MAIN_OUTPUT.= "<br>".___("Pause").": ".$HOST[$hcc]['delay']." ".___("Sekunden");
 	}//smtp
 
 	$_MAIN_OUTPUT.= "</div>";
@@ -258,6 +258,7 @@ for ($hcc=0;$hcc<$hc;$hcc++) {
 	
 	$_MAIN_OUTPUT.= "&nbsp;<a href=\"".$tm_URL."/".$testURLPara_."\" title=\"".___("Server testen")."\">".tm_icon("server_connect.png",___("Server testen"))."</a>";
 	$_MAIN_OUTPUT.= "&nbsp;<a href=\"".$tm_URL."/".$editURLPara_."\" title=\"".___("Server bearbeiten")."\">".tm_icon("pencil.png",___("Server bearbeiten"))."</a>";
+	#$_MAIN_OUTPUT.=  "&nbsp;<a href=\"".$tm_URL."/".$statURLPara_."\" title=\"".___("Statistik anzeigen")."\">".tm_icon("chart_pie.png",___("Statistik anzeigen"))."</a>";
 	//loeschen
 	$_MAIN_OUTPUT.= "&nbsp;<a href=\"".$tm_URL."/".$delURLPara_."\" onclick=\"return confirmLink(this, '".sprintf(___("Server %s löschen?"),display($HOST[$hcc]['name']))."')\" title=\"".___("Server löschen")."\">".tm_icon("cross.png",___("Server löschen"))."</a>";
 

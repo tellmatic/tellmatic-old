@@ -3,7 +3,7 @@
 /* this file is part of: / diese Datei ist ein Teil von:                        */
 /* tellmatic, the newslettermachine                                             */
 /* tellmatic, die Newslettermaschine                                            */
-/* 2006/7 by Volker Augustin, multi.art.studio Hanau                            */
+/* 2006/11 by Volker Augustin, multi.art.studio Hanau                            */
 /* Contact/Kontakt: info@tellmatic.org                                      */
 /* Homepage: www.tellmatic.org                                                   */
 /* leave this header in file!                                                   */
@@ -60,6 +60,7 @@ if (!DEMO) {
 } else {
 	$_MAIN_OUTPUT .= "<br>".sprintf(___("Verbindung zum Server %s wird aufgebaut..."),$HOST_T[0]['name']." (mail.my-domain.tld:".$HOST_T[0]['port']."/".$HOST_T[0]['type'].")");
 }
+
 //POP3 IMAP testen
 if ($HOST_T[0]['type']=="imap" || $HOST_T[0]['type']=="pop3")	{
 	if (!DEMO) {
@@ -80,9 +81,9 @@ if ($HOST_T[0]['type']=="smtp")	{
 	if (!DEMO) {
 
 		$TestMessage="Hello,\n\n";
-		$TestMessage.="This is ".$ApplicationText.".\n\n";
-		$TestMessage.="If you can read this message, testing SMTP-Server '".$HOST_T[0]['name']."' was successfull.\n\n";
-		$TestMessage.="Thank you for using ".$ApplicationText.".\nv.";
+		$TestMessage.="This is ".TM_APPTEXT.".\n\n";
+		$TestMessage.="If you can read this message, testing the SMTP-Server '".$HOST_T[0]['name']."' was successfull.\n\n";
+		$TestMessage.="Thank you for using ".TM_APPTEXT.".\nv.";
 
 		//new: !!!use sendmail_smtp!!! see Functions.inc
 		#function SendMail_smtp($from_address,$from_name,$to_address,$to_name,$subject,$text,$html,$AttmFiles=Array(),$HOST=Array()) {}

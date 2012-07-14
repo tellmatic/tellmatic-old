@@ -1,3 +1,477 @@
+2011-03-09 Wednesday 14:43  mcms09
+
+	Changed:
+		include/install/install_examples_conf.inc.php (1.2), "Exp", lines: +1 -1
+
+	[no log message]
+
+2011-03-09 Wednesday 14:32  mcms09
+
+	Added:
+		include/install/install.inc.php (1.1)
+
+	[no log message]
+
+2011-03-09 Wednesday 14:24  mcms09
+
+	Changed:
+		ChangeLog (1.17), "Exp", lines: +350 -81
+
+	[no log message]
+
+2011-03-09 Wednesday 14:18  tag r-1-0-9-0-rc1-20110309-1
+
+2011-03-09 Wednesday 14:18  mcms09
+
+	Added:
+		include/Login_form_show.inc.php (1.1)
+		include/adm_set_form_show.inc.php (1.1)
+		include/adm_user_form_show.inc.php (1.1)
+		include/adr_clean_form_show.inc.php (1.1)
+		include/adr_export_form_show.inc.php (1.1)
+		include/adr_form_show.inc.php (1.1)
+		include/adr_grp_form_show.inc.php (1.1)
+		include/adr_import_form_show.inc.php (1.1)
+		include/adr_list_form_show.inc.php (1.1)
+		include/adr_search_form_show.inc.php (1.1)
+		include/bl_form_show.inc.php (1.1)
+		include/bl_list_form_show.inc.php (1.1)
+		include/bounce_filter_form_show.inc.php (1.1)
+		include/bounce_host_form_show.inc.php (1.1)
+		include/bounce_mail_form_show.inc.php (1.1)
+		include/file_edit.inc.php (1.1)
+		include/file_edit_form.inc.php (1.1)
+		include/file_edit_form_show.inc.php (1.1)
+		include/form_form_show.inc.php (1.1)
+		include/host_form_show.inc.php (1.1)
+		include/link_form_show.inc.php (1.1)
+		include/link_grp_form_show.inc.php (1.1)
+		include/link_search_form_show.inc.php (1.1)
+		include/log_search_form_show.inc.php (1.1)
+		include/nl_form_show.inc.php (1.1)
+		include/nl_grp_form_show.inc.php (1.1)
+		include/queue_form_show.inc.php (1.1)
+		include/status_map_form_show.inc.php (1.1)
+		include/status_top_x_form_show.inc.php (1.1)
+		include/subscribe_form_show.inc.php (1.1)
+		include/unsubscribe_form_show.inc.php (1.1)
+		include/user_form_show.inc.php (1.1)
+		include/install/install_examples_conf.inc.php (1.1)
+		include/install/install_form_show.inc.php (1.1)
+		include/phpids/lib/IDS/Caching/Database.php (1.1)
+		include/phpids/lib/IDS/Caching/Factory.php (1.1)
+		include/phpids/lib/IDS/Caching/File.php (1.1)
+		include/phpids/lib/IDS/Caching/Interface.php (1.1)
+		include/phpids/lib/IDS/Caching/Memcached.php (1.1)
+		include/phpids/lib/IDS/Caching/Session.php (1.1)
+		include/phpids/lib/IDS/Config/Config.ini.php (1.1)
+		include/phpids/lib/IDS/Filter/Storage.php (1.1)
+		include/phpids/lib/IDS/Log/Composite.php (1.1)
+		include/phpids/lib/IDS/Log/Database.php (1.1)
+		include/phpids/lib/IDS/Log/Email.php (1.1)
+		include/phpids/lib/IDS/Log/File.php (1.1)
+		include/phpids/lib/IDS/Log/Interface.php (1.1)
+		include/phpids/lib/IDS/tmp/phpids_log.txt (1.1)
+
+	[no log message]
+
+2011-03-09 Wednesday 14:13  mcms09
+
+	Changed:
+		CHANGES (1.26), "Exp", lines: +168 -6
+		INSTALL.DE (1.12), "Exp", lines: +6 -0
+		UPDATE (1.23), "Exp", lines: +59 -6
+		install.php (1.10), "Exp", lines: +2 -183
+		css/cadillac/tellmatic_menu.css (1.3), "Exp", lines: +1 -1
+		css/default/tellmatic.css (1.4), "Exp", lines: +1 -1
+		css/default/tellmatic_form.css (1.4), "Exp", lines: +29 -25
+		css/default/tellmatic_head.css (1.2), "Exp", lines: +0 -1
+		css/default/tellmatic_main.css (1.3), "Exp", lines: +3 -6
+		css/default/tellmatic_menu.css (1.3), "Exp", lines: +10 -11
+		include/Class_Adr.inc.php (1.12), "Exp", lines: +1 -1
+		include/Class_NL.inc.php (1.12), "Exp", lines: +5 -3
+		include/Functions.inc.php (1.26), "Exp", lines: +14 -4
+		include/Login.inc.php (1.5), "Exp", lines: +1 -0
+		include/Login_form.inc.php (1.2), "Exp", lines: +0 -37
+		include/adm_set.inc.php (1.12), "Exp", lines: +3 -2
+		include/adm_set_form.inc.php (1.9), "Exp", lines: +1 -365
+		include/adm_user_edit.inc.php (1.4), "Exp", lines: +5 -3
+		include/adm_user_form.inc.php (1.8), "Exp", lines: +1 -124
+		include/adm_user_list.inc.php (1.6), "Exp", lines: +1 -1
+		include/adm_user_new.inc.php (1.5), "Exp", lines: +4 -2
+		include/adr_clean.inc.php (1.8), "Exp", lines: +6 -5
+		include/adr_clean_form.inc.php (1.8), "Exp", lines: +1 -73
+		include/adr_edit.inc.php (1.5), "Exp", lines: +6 -4
+		include/adr_export.inc.php (1.9), "Exp", lines: +3 -2
+		include/adr_export_form.inc.php (1.5), "Exp", lines: +1 -80
+		include/adr_form.inc.php (1.9), "Exp", lines: +1 -115
+		include/adr_grp_edit.inc.php (1.7), "Exp", lines: +5 -3
+		include/adr_grp_form.inc.php (1.6), "Exp", lines: +1 -80
+		include/adr_grp_new.inc.php (1.6), "Exp", lines: +3 -1
+		include/adr_import.inc.php (1.12), "Exp", lines: +35 -2
+		include/adr_import_form.inc.php (1.8), "Exp", lines: +25 -158
+		include/adr_list.inc.php (1.13), "Exp", lines: +2 -2
+		include/adr_list_form.inc.php (1.2), "Exp", lines: +172 -25
+		include/adr_new.inc.php (1.8), "Exp", lines: +5 -3
+		include/adr_search.inc.php (1.7), "Exp", lines: +9 -7
+		include/adr_search_form.inc.php (1.8), "Exp", lines: +9 -46
+		include/adr_testadressen.inc.php (1.3), "Exp", lines: +16 -9
+		include/bl_edit.inc.php (1.2), "Exp", lines: +4 -2
+		include/bl_form.inc.php (1.3), "Exp", lines: +0 -49
+		include/bl_list.inc.php (1.5), "Exp", lines: +1 -0
+		include/bl_list_form.inc.php (1.2), "Exp", lines: +1 -26
+		include/bl_new.inc.php (1.2), "Exp", lines: +4 -2
+		include/bounce.inc.php (1.10), "Exp", lines: +8 -7
+		include/bounce_filter_adr_list.inc.php (1.4), "Exp", lines: +2 -2
+		include/bounce_filter_form.inc.php (1.3), "Exp", lines: +129 -17
+		include/bounce_host_form.inc.php (1.5), "Exp", lines: +12 -51
+		include/bounce_mail_form.inc.php (1.3), "Exp", lines: +90 -16
+		include/form_edit.inc.php (1.8), "Exp", lines: +4 -2
+		include/form_form.inc.php (1.9), "Exp", lines: +1 -261
+		include/form_new.inc.php (1.8), "Exp", lines: +5 -3
+		include/host_edit.inc.php (1.5), "Exp", lines: +5 -3
+		include/host_form.inc.php (1.8), "Exp", lines: +2 -225
+		include/host_list_legende.inc.php (1.6), "Exp", lines: +1 -1
+		include/host_new.inc.php (1.5), "Exp", lines: +6 -4
+		include/host_test.inc.php (1.7), "Exp", lines: +2 -1
+		include/link_edit.inc.php (1.2), "Exp", lines: +6 -4
+		include/link_form.inc.php (1.2), "Exp", lines: +1 -95
+		include/link_grp_edit.inc.php (1.2), "Exp", lines: +6 -4
+		include/link_grp_form.inc.php (1.2), "Exp", lines: +1 -63
+		include/link_grp_new.inc.php (1.2), "Exp", lines: +3 -1
+		include/link_new.inc.php (1.2), "Exp", lines: +4 -2
+		include/link_search.inc.php (1.2), "Exp", lines: +3 -2
+		include/link_search_form.inc.php (1.2), "Exp", lines: +1 -40
+		include/log_search.inc.php (1.2), "Exp", lines: +1 -0
+		include/log_search_form.inc.php (1.2), "Exp", lines: +1 -40
+		include/nl_edit.inc.php (1.11), "Exp", lines: +5 -3
+		include/nl_form.inc.php (1.16), "Exp", lines: +0 -255
+		include/nl_form_legende.inc.php (1.2), "Exp", lines: +1 -0
+		include/nl_grp_edit.inc.php (1.5), "Exp", lines: +5 -3
+		include/nl_grp_form.inc.php (1.5), "Exp", lines: +6 -45
+		include/nl_grp_new.inc.php (1.5), "Exp", lines: +5 -3
+		include/nl_new.inc.php (1.13), "Exp", lines: +5 -3
+		include/queue_form.inc.php (1.9), "Exp", lines: +11 -90
+		include/queue_new.inc.php (1.10), "Exp", lines: +5 -0
+		include/queue_vars.inc.php (1.6), "Exp", lines: +1 -0
+		include/send_it.php (1.27), "Exp", lines: +3 -3
+		include/status_map.inc.php (1.5), "Exp", lines: +1 -0
+		include/status_map_form.inc.php (1.2), "Exp", lines: +0 -20
+		include/status_top_x.inc.php (1.4), "Exp", lines: +1 -0
+		include/status_top_x_form.inc.php (1.2), "Exp", lines: +0 -20
+		include/subscribe.inc.php (1.13), "Exp", lines: +2 -2
+		include/tm_lib_admin.inc.php (1.8), "Exp", lines: +1 -1
+		include/tm_version.inc.php (1.15), "Exp", lines: +1 -1
+		include/unsubscribe.inc.php (1.10), "Exp", lines: +1 -0
+		include/unsubscribe_form.inc.php (1.5), "Exp", lines: +0 -19
+		include/user.inc.php (1.5), "Exp", lines: +1 -0
+		include/user_form.inc.php (1.4), "Exp", lines: +0 -85
+		include/install/install_conf_sql.inc.php (1.26), "Exp", lines: +0 -1
+		include/install/install_examples.inc.php (1.14), "Exp", lines: +117 -115
+		include/install/install_form.inc.php (1.8), "Exp", lines: +151 -390
+		include/install/install_install.inc.php (1.16), "Exp", lines: +2 -2
+		include/phpids/lib/IDS/Converter.php (1.2), "Exp", lines: +0 -0
+		include/phpids/lib/IDS/Event.php (1.2), "Exp", lines: +0 -0
+		include/phpids/lib/IDS/Filter.php (1.2), "Exp", lines: +0 -0
+		include/phpids/lib/IDS/Init.php (1.2), "Exp", lines: +0 -0
+		include/phpids/lib/IDS/Monitor.php (1.2), "Exp", lines: +0 -0
+		include/phpids/lib/IDS/Report.php (1.2), "Exp", lines: +0 -0
+		include/phpids/lib/IDS/Version.php (1.2), "Exp", lines: +0 -0
+		include/sasl/basic_sasl_client.php (1.2), "Exp", lines: +0 -0
+		include/sasl/cram_md5_sasl_client.php (1.2), "Exp", lines: +0 -0
+		include/sasl/digest_sasl_client.php (1.2), "Exp", lines: +0 -0
+		include/sasl/login_sasl_client.php (1.2), "Exp", lines: +0 -0
+		include/sasl/ntlm_sasl_client.php (1.2), "Exp", lines: +0 -0
+		include/sasl/plain_sasl_client.php (1.2), "Exp", lines: +0 -0
+		include/sasl/sasl.php (1.2), "Exp", lines: +0 -0
+		include/smtp/smtp_class.html (1.2), "Exp", lines: +0 -0
+
+	[no log message]
+
+2011-02-27 Sunday 15:52  mcms09
+
+	Added:
+		include/smtp/smtp_class.html (1.1)
+
+
+		include/queue_send.inc.php
+
+2011-02-27 Sunday 15:50  mcms09
+
+	Added:
+		include/subscribe_adr_check.inc.php (1.1)
+		include/subscribe_doptin_confirm.inc.php (1.1)
+		include/subscribe_form_check.inc.php (1.1)
+		include/subscribe_mail.inc.php (1.1)
+		include/subscribe_new.inc.php (1.1)
+		include/subscribe_showform.inc.php (1.1)
+		include/subscribe_success.inc.php (1.1)
+		include/subscribe_update.inc.php (1.1)
+		locale/tellmatic-fr.po (1.1)
+		tpl/Form_success.html (1.1)
+
+	[no log message]
+
+2011-02-27 Sunday 15:46  mcms09
+
+	Added:
+		include/phpids/lib/IDS/Converter.php (1.1)
+		include/phpids/lib/IDS/Event.php (1.1)
+		include/phpids/lib/IDS/Filter.php (1.1)
+		include/phpids/lib/IDS/Init.php (1.1)
+		include/phpids/lib/IDS/Monitor.php (1.1)
+		include/phpids/lib/IDS/Report.php (1.1)
+		include/phpids/lib/IDS/Version.php (1.1)
+		include/phpids/lib/IDS/default_filter.json (1.1)
+		include/phpids/lib/IDS/default_filter.xml (1.1)
+
+	[no log message]
+
+2011-02-27 Sunday 15:42  mcms09
+
+	Added:
+		License_AGPL_V3.txt (1.1)
+		License_GPL_V3.txt (1.1)
+		include/PHPIDS.inc.php (1.1)
+		include/nl_form_legende.inc.php (1.1)
+		include/phpids/LICENSE (1.1)
+		include/phpids/build.xml (1.1)
+		include/phpids/version (1.1)
+	Changed:
+		CHANGES (1.25), "Exp", lines: +18 -2
+		ChangeLog (1.16), "Exp", lines: +336 -0
+		INSTALL.DE (1.11), "Exp", lines: +1 -1
+		INSTALL.EN (1.10), "Exp", lines: +1 -1
+		README (1.7), "Exp", lines: +15 -10
+		UPDATE (1.22), "Exp", lines: +65 -0
+		api_example_dev_04.php (1.2), "Exp", lines: +14 -17
+		install.php (1.9), "Exp", lines: +2 -3
+		css/form.css (1.2), "Exp", lines: +5 -0
+		css/tellmatic.css (1.5), "Exp", lines: +7 -0
+		css/tinymce.css (1.3), "Exp", lines: +21 -2
+		css/default/tellmatic.css (1.3), "Exp", lines: +1 -1
+		css/default/tellmatic_form.css (1.3), "Exp", lines: +10 -10
+		include/Class_Adr.inc.php (1.11), "Exp", lines: +111 -64
+		include/Class_CFG.inc.php (1.7), "Exp", lines: +75 -13
+		include/Class_Form.inc.php (1.9), "Exp", lines: +220 -53
+		include/Class_Host.inc.php (1.5), "Exp", lines: +5 -0
+		include/Class_Mail.inc.php (1.7), "Exp", lines: +21 -5
+		include/Class_NL.inc.php (1.11), "Exp", lines: +107 -33
+		include/Class_Q.inc.php (1.13), "Exp", lines: +36 -11
+		include/Errorhandling.inc.php (1.5), "Exp", lines: +7 -3
+		include/Foot.inc.php (1.6), "Exp", lines: +1 -1
+		include/Functions.inc.php (1.25), "Exp", lines: +168 -38
+		include/GetText.inc.php (1.3), "Exp", lines: +6 -3
+		include/Header.inc.php (1.8), "Exp", lines: +2 -1
+		include/Index.inc.php (1.8), "Exp", lines: +12 -10
+		include/Login.inc.php (1.4), "Exp", lines: +8 -6
+		include/Login_guard_ret.inc.php (1.4), "Exp", lines: +1 -5
+		include/Main.inc.php (1.11), "Exp", lines: +23 -8
+		include/Menu.inc.php (1.12), "Exp", lines: +43 -10
+		include/Messages.inc.php (1.4), "Exp", lines: +5 -41
+		include/Stats.inc.php (1.6), "Exp", lines: +59 -58
+		include/adm_set.inc.php (1.11), "Exp", lines: +56 -1
+		include/adm_set_form.inc.php (1.8), "Exp", lines: +229 -8
+		include/adm_user_edit.inc.php (1.3), "Exp", lines: +5 -0
+		include/adm_user_form.inc.php (1.7), "Exp", lines: +46 -3
+		include/adm_user_list.inc.php (1.5), "Exp", lines: +12 -6
+		include/adm_user_list_legende.inc.php (1.7), "Exp", lines: +20 -23
+		include/adm_user_new.inc.php (1.4), "Exp", lines: +4 -0
+		include/adr_clean.inc.php (1.7), "Exp", lines: +10 -8
+		include/adr_clean_form.inc.php (1.7), "Exp", lines: +2 -2
+		include/adr_export.inc.php (1.8), "Exp", lines: +2 -2
+		include/adr_export_form.inc.php (1.4), "Exp", lines: +11 -3
+		include/adr_form.inc.php (1.8), "Exp", lines: +90 -80
+		include/adr_grp_edit.inc.php (1.6), "Exp", lines: +7 -0
+		include/adr_grp_form.inc.php (1.5), "Exp", lines: +29 -1
+		include/adr_grp_list.inc.php (1.6), "Exp", lines: +77 -15
+		include/adr_grp_list_legende.inc.php (1.6), "Exp", lines: +32 -28
+		include/adr_grp_new.inc.php (1.5), "Exp", lines: +5 -1
+		include/adr_import.inc.php (1.11), "Exp", lines: +35 -4
+		include/adr_import_form.inc.php (1.7), "Exp", lines: +33 -6
+		include/adr_list.inc.php (1.12), "Exp", lines: +28 -23
+		include/adr_list_form_head.inc.php (1.3), "Exp", lines: +1 -1
+		include/adr_list_legende.inc.php (1.7), "Exp", lines: +30 -34
+		include/adr_new.inc.php (1.7), "Exp", lines: +4 -1
+		include/adr_search.inc.php (1.6), "Exp", lines: +12 -2
+		include/adr_search_form.inc.php (1.7), "Exp", lines: +4 -3
+		include/bl_list.inc.php (1.4), "Exp", lines: +10 -10
+		include/bl_list_legende.inc.php (1.5), "Exp", lines: +16 -20
+		include/bounce_filter_adr_list.inc.php (1.3), "Exp", lines: +12 -13
+		include/bounce_mail_form.inc.php (1.2), "Exp", lines: +1 -0
+		include/form_edit.inc.php (1.7), "Exp", lines: +93 -40
+		include/form_form.inc.php (1.8), "Exp", lines: +243 -2
+		include/form_list.inc.php (1.8), "Exp", lines: +130 -30
+		include/form_list_legende.inc.php (1.7), "Exp", lines: +28 -34
+		include/form_new.inc.php (1.7), "Exp", lines: +44 -0
+		include/host_edit.inc.php (1.4), "Exp", lines: +6 -1
+		include/host_form.inc.php (1.7), "Exp", lines: +55 -10
+		include/host_list.inc.php (1.4), "Exp", lines: +8 -7
+		include/host_list_legende.inc.php (1.5), "Exp", lines: +21 -25
+		include/host_new.inc.php (1.4), "Exp", lines: +7 -1
+		include/link_grp_list.inc.php (1.2), "Exp", lines: +8 -8
+		include/link_grp_list_legende.inc.php (1.2), "Exp", lines: +20 -26
+		include/link_list.inc.php (1.2), "Exp", lines: +9 -9
+		include/link_list_legende.inc.php (1.2), "Exp", lines: +16 -22
+		include/log_list.inc.php (1.2), "Exp", lines: +9 -9
+		include/log_list_legende.inc.php (1.2), "Exp", lines: +6 -11
+		include/log_summary_section.inc.php (1.2), "Exp", lines: +8 -1
+		include/log_summary_section_entry.inc.php (1.2), "Exp", lines: +1 -1
+		include/news_blank.png.inc.php (1.4), "Exp", lines: +22 -18
+		include/nl_form.inc.php (1.15), "Exp", lines: +3 -21
+		include/nl_grp_list.inc.php (1.6), "Exp", lines: +10 -7
+		include/nl_grp_list_legende.inc.php (1.5), "Exp", lines: +20 -23
+		include/nl_list.inc.php (1.11), "Exp", lines: +2 -3
+		include/nl_list_legende.inc.php (1.9), "Exp", lines: +39 -45
+		include/nl_upload.inc.php (1.9), "Exp", lines: +9 -1
+		include/queue_form.inc.php (1.8), "Exp", lines: +22 -2
+		include/queue_list.inc.php (1.13), "Exp", lines: +64 -13
+		include/queue_list_legende.inc.php (1.7), "Exp", lines: +27 -31
+		include/queue_new.inc.php (1.9), "Exp", lines: +77 -66
+		include/send_it.php (1.26), "Exp", lines: +208 -124
+		include/statistic_adr.inc.php (1.4), "Exp", lines: +11 -11
+		include/statistic_adrgrp.inc.php (1.4), "Exp", lines: +15 -15
+		include/statistic_nl.inc.php (1.4), "Exp", lines: +17 -17
+		include/status.inc.php (1.7), "Exp", lines: +16 -19
+		include/status_map.inc.php (1.4), "Exp", lines: +15 -6
+		include/status_top_x.inc.php (1.3), "Exp", lines: +3 -3
+		include/subscribe.inc.php (1.12), "Exp", lines: +273 -460
+		include/subscribe_form.inc.php (1.6), "Exp", lines: +15 -7
+		include/tellmatic.sql (1.8), "Exp", lines: +22 -11
+		include/tm_lib.inc.php (1.23), "Exp", lines: +58 -21
+		include/tm_lib_admin.inc.php (1.7), "Exp", lines: +30 -1
+		include/tm_version.inc.php (1.14), "Exp", lines: +1 -1
+		include/unsubscribe.inc.php (1.9), "Exp", lines: +49 -19
+		include/unsubscribe_form.inc.php (1.4), "Exp", lines: +1 -0
+		include/user.inc.php (1.4), "Exp", lines: +6 -1
+		include/user_form.inc.php (1.3), "Exp", lines: +43 -0
+		include/view.inc.php (1.2), "Exp", lines: +1 -1
+		include/wysiwyg.inc.php (1.13), "Exp", lines: +171 -6
+		include/install/install_check_db.inc.php (1.6), "Exp", lines: +4 -4
+		include/install/install_check_pre.inc.php (1.8), "Exp", lines: +33 -13
+		include/install/install_conf.inc.php (1.14), "Exp", lines: +13 -1
+		include/install/install_conf_sql.inc.php (1.25), "Exp", lines: +46 -10
+		include/install/install_examples.inc.php (1.13), "Exp", lines: +25 -4
+		include/install/install_form.inc.php (1.7), "Exp", lines: +15 -14
+		include/install/install_install.inc.php (1.15), "Exp", lines: +42 -38
+		include/install/install_language.inc.php (1.2), "Exp", lines: +33 -30
+		include/install/install_license.inc.php (1.3), "Exp", lines: +37 -664
+		js/tellmatic.js (1.10), "Exp", lines: +2 -0
+		js/tinymce/jscripts/tiny_mce/plugins/fullpage/js/fullpage.js (1.2), "Exp", lines: +1 -0
+		locale/mkpo.sh (1.7), "Exp", lines: +2 -1
+		locale/tellmatic-de.po (1.8), "Exp", lines: +327 -1
+		locale/tellmatic-en.po (1.10), "Exp", lines: +328 -2
+		locale/tellmatic-es.po (1.8), "Exp", lines: +327 -1
+		locale/tellmatic-it.po (1.8), "Exp", lines: +327 -1
+		locale/tellmatic-nl.po (1.6), "Exp", lines: +327 -1
+		locale/tellmatic-pt.po (1.6), "Exp", lines: +327 -1
+		tpl/Form.html (1.3), "Exp", lines: +13 -8
+		tpl/Unsubscribe.html (1.4), "Exp", lines: +2 -2
+		tpl/Welcome.html (1.2), "Exp", lines: +0 -2
+
+	[no log message]
+
+2010-09-29 Wednesday 12:01  mcms09
+
+	Changed:
+		locale/tellmatic-de.po (1.7), "Exp", lines: +46 -1
+		locale/tellmatic-en.po (1.9), "Exp", lines: +47 -2
+		locale/tellmatic-es.po (1.7), "Exp", lines: +49 -3
+		locale/tellmatic-it.po (1.7), "Exp", lines: +49 -3
+		locale/tellmatic-nl.po (1.5), "Exp", lines: +49 -3
+		locale/tellmatic-pt.po (1.5), "Exp", lines: +46 -1
+
+	new locales, de 100% en 100%, es,it,n,pt ~60-80%
+
+2010-09-29 Wednesday 12:00  mcms09
+
+	Changed:
+		include/install/install_finish.inc.php (1.5), "Exp", lines: +1 -1
+
+	use TM constants
+
+2010-09-29 Wednesday 11:59  mcms09
+
+	Changed:
+		include/tm_version.inc.php (1.13), "Exp", lines: +1 -10
+
+	use constants
+
+2010-09-29 Wednesday 11:59  mcms09
+
+	Changed:
+		include/tm_lib_admin.inc.php (1.6), "Exp", lines: +1 -0
+
+	rowcolor for failed/unsubscribed records
+
+2010-09-29 Wednesday 11:58  mcms09
+
+	Changed:
+		include/tm_lib.inc.php (1.22), "Exp", lines: +3 -3
+
+	typo
+
+2010-09-29 Wednesday 11:58  mcms09
+
+	Changed:
+		include/send_it.php (1.25), "Exp", lines: +17 -14
+
+	use TM constants for appname and version etc, finally fixed bug
+	where records where marked as errorness and failed when blacklisted.
+	should not be. instead they are skipped now.
+
+2010-09-29 Wednesday 11:57  mcms09
+
+	Changed:
+		include/queue_list.inc.php (1.12), "Exp", lines: +33 -23
+
+	status
+
+2010-09-29 Wednesday 11:55  mcms09
+
+	Changed:
+		include/nl_list.inc.php (1.10), "Exp", lines: +25 -21
+
+	use new object model ... for php5, tmObjCopy() should return an
+	Object Copy depending on PHP Version
+
+2010-09-29 Wednesday 11:54  mcms09
+
+	Changed:
+		include/nl_form.inc.php (1.14), "Exp", lines: +1 -1
+
+	first attempt to show new link syntax with optional parameter in
+	nl-variable legend
+
+2010-09-29 Wednesday 11:53  mcms09
+
+	Changed:
+		include/adr_list.inc.php (1.11), "Exp", lines: +8 -4
+
+	rowcolor for failed/unsubscribed records
+
+2010-09-29 Wednesday 11:50  mcms09
+
+	Changed:
+		install.php (1.8), "Exp", lines: +3 -3
+		include/Functions.inc.php (1.24), "Exp", lines: +3 -6
+		include/Header.inc.php (1.7), "Exp", lines: +4 -4
+		include/Main.inc.php (1.10), "Exp", lines: +1 -1
+		include/Menu.inc.php (1.11), "Exp", lines: +6 -6
+		include/Welcome.inc.php (1.3), "Exp", lines: +1 -1
+		include/host_test.inc.php (1.6), "Exp", lines: +3 -3
+
+	use TM_ constants for version and appname etc
+
+2010-09-27 Monday 13:42  tag r-1-0-8-9
+
+2010-09-27 Monday 13:42  mcms09
+
+	Changed:
+		CHANGES (1.24), "Exp", lines: +1 -0
+
+	CHANGES for 1089
+
 2010-09-27 Monday 12:01  mcms09
 
 	Changed:
@@ -4763,7 +5237,6 @@ https://sourceforge.net/tracker/?func=detail&atid=933192&aid=2969009&group_id=19
 2008-07-03 Thursday 12:18  mcms09
 
 	Changed:
-		include/myftphp/myftphp_4.php (1.4), "Exp", lines: +16 -16
 		include/phphtmlparser/ex_dumptags.php (1.2), "Exp", lines: +1 -1
 		include/phphtmlparser/ex_dumpurl.php (1.2), "Exp", lines: +1 -1
 		include/phphtmlparser/html2text.inc (1.3), "Exp", lines: +1 -1
@@ -4776,8 +5249,6 @@ https://sourceforge.net/tracker/?func=detail&atid=933192&aid=2969009&group_id=19
 	Changed:
 		include/libchart-1.1/libchart.php (1.3), "Exp", lines: +1 -1
 		include/mimemessage/test_multibyte_message.php (1.2), "Exp", lines: +2 -2
-		include/myftphp/myftphp_themes/light.ini.php (1.2), "Exp", lines: +1 -1
-		include/myftphp/myftphp_themes/negative.ini.php (1.2), "Exp", lines: +1 -1
 
 	no more php shorttag
 
@@ -4865,13 +5336,6 @@ https://sourceforge.net/tracker/?func=detail&atid=933192&aid=2969009&group_id=19
 		UPDATE (1.6), "Exp", lines: +10 -0
 
 	V1.0.7.4
-
-2008-06-24 Tuesday 13:26  mcms09
-
-	Changed:
-		include/myftphp/myftphp_4.php (1.3), "Exp", lines: +1 -1
-
-	fixed Path to use Constants
 
 2008-06-24 Tuesday 12:29  mcms09
 
@@ -5131,7 +5595,6 @@ https://sourceforge.net/tracker/?func=detail&atid=933192&aid=2969009&group_id=19
 		include/install/install_finish.inc.php (1.2), "Exp", lines: +4 -4
 		include/install/install_install.inc.php (1.2), "Exp", lines: +11 -10
 		include/libchart-1.1/libchart.php (1.2), "Exp", lines: +11 -11
-		include/myftphp/myftphp_4.php (1.2), "Exp", lines: +11 -12
 		include/phphtmlparser/html2text.inc (1.2), "Exp", lines: +1 -1
 
 	make file and dir vars a constant
@@ -5588,8 +6051,6 @@ https://sourceforge.net/tracker/?func=detail&atid=933192&aid=2969009&group_id=19
 		include/install/index.php (1.1)
 		include/libchart-1.1/index.html (1.1)
 		include/libchart-1.1/index.php (1.1)
-		include/myftphp/index.html (1.1)
-		include/myftphp/index.php (1.1)
 		include/phphtmlparser/index.html (1.1)
 		include/phphtmlparser/index.php (1.1)
 		js/index.html (1.1)
@@ -7383,7 +7844,6 @@ https://sourceforge.net/tracker/?func=detail&atid=933192&aid=2969009&group_id=19
 		include/install/install_conf.inc.php (1.1)
 		include/install/install_head.inc.php (1.1)
 		include/install/install_language.inc.php (1.1)
-		include/myftphp/favicon.ico (1.1)
 		include/phphtmlparser/LICENSE (1.1)
 		include/phphtmlparser/README (1.1)
 		include/phphtmlparser/ex_dumptags.php (1.1)
@@ -7391,77 +7851,10 @@ https://sourceforge.net/tracker/?func=detail&atid=933192&aid=2969009&group_id=19
 		include/phphtmlparser/ex_html2text.php (1.1)
 		include/phphtmlparser/html2text.inc (1.1)
 		include/phphtmlparser/htmlparser.inc (1.1)
-		include/myftphp/myftphp_4.php (1.1)
-		include/myftphp/myftphp_img/water.gif (1.1)
-		include/myftphp/myftphp_img/silk/accept.png (1.1)
-		include/myftphp/myftphp_img/silk/application_view_tile.png (1.1)
-		include/myftphp/myftphp_img/silk/arrow_down.png (1.1)
-		include/myftphp/myftphp_img/silk/arrow_refresh_small.png (1.1)
-		include/myftphp/myftphp_img/silk/arrow_up.png (1.1)
-		include/myftphp/myftphp_img/silk/attach.png (1.1)
-		include/myftphp/myftphp_img/silk/bullet_arrow_down.png (1.1)
-		include/myftphp/myftphp_img/silk/bullet_arrow_up.png (1.1)
-		include/myftphp/myftphp_img/silk/compress.png (1.1)
-		include/myftphp/myftphp_img/silk/door_in.png (1.1)
-		include/myftphp/myftphp_img/silk/door_out.png (1.1)
-		include/myftphp/myftphp_img/silk/drive_web.png (1.1)
-		include/myftphp/myftphp_img/silk/error.png (1.1)
-		include/myftphp/myftphp_img/silk/find.png (1.1)
-		include/myftphp/myftphp_img/silk/folder.png (1.1)
-		include/myftphp/myftphp_img/silk/folder_add.png (1.1)
-		include/myftphp/myftphp_img/silk/folder_delete.png (1.1)
-		include/myftphp/myftphp_img/silk/folder_explore.png (1.1)
-		include/myftphp/myftphp_img/silk/folder_go.png (1.1)
-		include/myftphp/myftphp_img/silk/folder_magnify.png (1.1)
-		include/myftphp/myftphp_img/silk/folder_user.png (1.1)
-		include/myftphp/myftphp_img/silk/group.png (1.1)
-		include/myftphp/myftphp_img/silk/help.png (1.1)
-		include/myftphp/myftphp_img/silk/house.png (1.1)
-		include/myftphp/myftphp_img/silk/images.png (1.1)
-		include/myftphp/myftphp_img/silk/information.png (1.1)
-		include/myftphp/myftphp_img/silk/key.png (1.1)
-		include/myftphp/myftphp_img/silk/keyboard.png (1.1)
-		include/myftphp/myftphp_img/silk/link_edit.png (1.1)
-		include/myftphp/myftphp_img/silk/magnifier.png (1.1)
-		include/myftphp/myftphp_img/silk/page_add.png (1.1)
-		include/myftphp/myftphp_img/silk/page_code.png (1.1)
-		include/myftphp/myftphp_img/silk/page_delete.png (1.1)
-		include/myftphp/myftphp_img/silk/page_edit.png (1.1)
-		include/myftphp/myftphp_img/silk/page_white_add.png (1.1)
-		include/myftphp/myftphp_img/silk/icons/page_white.png (1.1)
-		include/myftphp/myftphp_img/silk/icons/page_white_acrobat.png (1.1)
-		include/myftphp/myftphp_img/silk/icons/page_white_actionscript.png (1.1)
-		include/myftphp/myftphp_img/silk/icons/page_white_c.png (1.1)
-		include/myftphp/myftphp_img/silk/icons/page_white_code.png (1.1)
-		include/myftphp/myftphp_img/silk/icons/page_white_coldfusion.png (1.1)
-		include/myftphp/myftphp_img/silk/icons/page_white_compressed.png (1.1)
-		include/myftphp/myftphp_img/silk/icons/page_white_cplusplus.png (1.1)
-		include/myftphp/myftphp_img/silk/icons/page_white_csharp.png (1.1)
-		include/myftphp/myftphp_img/silk/icons/page_white_cup.png (1.1)
-		include/myftphp/myftphp_img/silk/icons/page_white_database.png (1.1)
-		include/myftphp/myftphp_img/silk/icons/page_white_excel.png (1.1)
-		include/myftphp/myftphp_img/silk/icons/page_white_freehand.png (1.1)
-		include/myftphp/myftphp_img/silk/icons/page_white_h.png (1.1)
 		include/geoip/ChangeLog (1.1)
 		include/geoip/README (1.1)
 		include/geoip/geoip.inc (1.1)
 		include/geoip/geoipcity.inc (1.1)
-		include/myftphp/myftphp_img/silk/icons/page_white_link.png (1.1)
-		include/myftphp/myftphp_img/silk/icons/page_white_office.png (1.1)
-		include/myftphp/myftphp_img/silk/icons/page_white_paint.png (1.1)
-		include/myftphp/myftphp_img/silk/icons/page_white_php.png (1.1)
-		include/myftphp/myftphp_img/silk/icons/page_white_powerpoint.png (1.1)
-		include/myftphp/myftphp_img/silk/icons/page_white_ruby.png (1.1)
-		include/myftphp/myftphp_img/silk/icons/page_white_text.png (1.1)
-		include/myftphp/myftphp_img/silk/icons/page_white_vector.png (1.1)
-		include/myftphp/myftphp_img/silk/icons/page_white_visualstudio.png (1.1)
-		include/myftphp/myftphp_img/silk/icons/page_white_word.png (1.1)
-		include/myftphp/myftphp_img/silk/icons/page_white_world.png (1.1)
-		include/myftphp/myftphp_img/silk/icons/page_white_zip.png (1.1)
-		include/myftphp/myftphp_lang/english.ini.php (1.1)
-		include/myftphp/myftphp_lang/german.ini.php (1.1)
-		include/myftphp/myftphp_themes/light.ini.php (1.1)
-		include/myftphp/myftphp_themes/negative.ini.php (1.1)
 		include/geoip/geoipregionvars.php (1.1)
 		include/geoip/sample.php (1.1)
 		include/geoip/sample_city.php (1.1)

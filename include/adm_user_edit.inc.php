@@ -3,7 +3,7 @@
 /* this file is part of: / diese Datei ist ein Teil von:                        */
 /* tellmatic, the newslettermachine                                             */
 /* tellmatic, die Newslettermaschine                                            */
-/* 2006/7 by Volker Augustin, multi.art.studio Hanau                            */
+/* 2006/11 by Volker Augustin, multi.art.studio Hanau                            */
 /* Contact/Kontakt: info@tellmatic.org                                      */
 /* Homepage: www.tellmatic.org                                                   */
 /* leave this header in file!                                                   */
@@ -38,6 +38,9 @@ $$InputName_Admin=getVar($InputName_Admin);
 $InputName_Manager="manager";
 $$InputName_Manager=getVar($InputName_Manager);
 
+$InputName_Startpage="startpage";
+$$InputName_Startpage=getVar($InputName_Startpage);
+
 $InputName_Style="style";
 $$InputName_Style=getVar($InputName_Style);
 
@@ -71,6 +74,7 @@ if ($set=="save") {
 				"admin"=>$admin,
 				"manager"=>$manager,
 				"name"=>$name,
+				"startpage"=>$startpage,
 				"style"=>$style,
 				"lang"=>$lang
 				));
@@ -102,7 +106,8 @@ if ($set=="save") {
 		$action="adm_user_list";
 		include_once ("adm_user_list.inc.php");
 	} else {//check
-		include_once (TM_INCLUDEPATH."/adm_user_form.inc.php");
+		require_once (TM_INCLUDEPATH."/adm_user_form.inc.php");
+		require_once (TM_INCLUDEPATH."/adm_user_form_show.inc.php");
 	}//check
 } else {//save
 	$name=$USER[0]['name'];
@@ -113,6 +118,8 @@ if ($set=="save") {
 	$style=$USER[0]['style'];
 	$expert=$USER[0]['expert'];
 	$lang=$USER[0]['lang'];
-	include_once (TM_INCLUDEPATH."/adm_user_form.inc.php");
+	$startpage=$USER[0]['startpage'];
+	require_once (TM_INCLUDEPATH."/adm_user_form.inc.php");
+	require_once (TM_INCLUDEPATH."/adm_user_form_show.inc.php");
 }
 ?>

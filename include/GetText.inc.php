@@ -27,7 +27,7 @@
  *   $sm_language, I think
  *
  * @link http://www.php.net/gettext Original php gettext manual
- * @version $Id: GetText.inc.php,v 1.2 2007/12/11 22:36:46 mcms09 Exp $
+ * @version $Id: GetText.inc.php,v 1.3 2011/02/27 14:42:36 mcms09 Exp $
  * @package squirrelmail
  * @subpackage i18n
  */
@@ -85,8 +85,7 @@ function load_translateStrings($locale) {
                 /* msgstr "string string" */
                 $translateStrings[$key] = $match[1];
             }
-            $translateStrings[$key] =
-                stripslashes($translateStrings[$key]);
+            #$translateStrings[$key] =stripslashes($translateStrings[$key]);
             /* If there is no translation, just use the untranslated string */
             if ($translateStrings[$key] == '') {
                 $translateStrings[$key] = $key;
@@ -110,6 +109,10 @@ function translate($str) {
 			$translated[1]=1;//1=match
 		}
     } else {
+    	//guess?
+       	#$translated[0]=guess($str);
+		#$translated[1]=3;//3=guess
+       	//return input 1:1
 		$translated[0]=$str;
 		$translated[1]=0;//0=no match
 

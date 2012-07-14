@@ -147,13 +147,15 @@ if ($set=="save") {
 				___("Text:")." <a href=\"".$tm_URL_FE."/".$tm_nldir."/".$NL_Filename_T."\" target=\"_preview\">".$tm_nldir."/".$NL_Filename_T."</a>".
 				"</ul>";
 		$action="nl_list";
-		include_once (TM_INCLUDEPATH."/nl_list.inc.php");
+		require_once (TM_INCLUDEPATH."/nl_list.inc.php");
 	} else {
 		$body=stripslashes(strtr($body, $trans));
-		include_once (TM_INCLUDEPATH."/nl_form.inc.php");
+		require_once (TM_INCLUDEPATH."/nl_form.inc.php");
+		require_once (TM_INCLUDEPATH."/nl_form_show.inc.php");
 	}
 } else {
 	$$InputName_Aktiv=1;
-	include_once (TM_INCLUDEPATH."/nl_form.inc.php");
+	require_once (TM_INCLUDEPATH."/nl_form.inc.php");
+	require_once (TM_INCLUDEPATH."/nl_form_show.inc.php");
 }
 ?>

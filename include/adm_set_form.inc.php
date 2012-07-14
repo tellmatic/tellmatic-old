@@ -3,7 +3,7 @@
 /* this file is part of: / diese Datei ist ein Teil von:                        */
 /* tellmatic, the newslettermachine                                             */
 /* tellmatic, die Newslettermaschine                                            */
-/* 2006/7 by Volker Augustin, multi.art.studio Hanau                            */
+/* 2006/11 by Volker Augustin, multi.art.studio Hanau                            */
 /* Contact/Kontakt: info@tellmatic.org                                      */
 /* Homepage: www.tellmatic.org                                                   */
 /* leave this header in file!                                                   */
@@ -29,6 +29,40 @@ $Form->new_Input($FormularName,"set", "hidden", "save");
 //////////////////
 //add inputfields and buttons....
 //////////////////
+
+//Style
+$Form->new_Input($FormularName,$InputName_Style,"select", "");
+$Form->set_InputJS($FormularName,$InputName_Style," onChange=\"flash('submit','#ff0000');\" ");
+$Form->set_InputDefault($FormularName,$InputName_Style,$$InputName_Style);
+$Form->set_InputStyleClass($FormularName,$InputName_Style,"mFormSelect","mFormSelectFocus");
+$Form->set_InputDesc($FormularName,$InputName_Style,___("Layout / Style"));
+$Form->set_InputReadonly($FormularName,$InputName_Style,false);
+$Form->set_InputOrder($FormularName,$InputName_Style,3);
+$Form->set_InputLabel($FormularName,$InputName_Style,"");
+$Form->set_InputSize($FormularName,$InputName_Style,0,1);
+$Form->set_InputMultiple($FormularName,$InputName_Style,false);
+//add Data
+$css_c=count($CSSDirs);
+for ($css_cc=0; $css_cc < $css_c; $css_cc++) {
+	$Form->add_InputOption($FormularName,$InputName_Style,$CSSDirs[$css_cc]['dir'],$CSSDirs[$css_cc]['name']);
+}
+
+//lang
+$Form->new_Input($FormularName,$InputName_Lang,"select", "");
+$Form->set_InputJS($FormularName,$InputName_Lang," onChange=\"flash('submit','#ff0000');\" ");
+$Form->set_InputDefault($FormularName,$InputName_Lang,$$InputName_Lang);
+$Form->set_InputStyleClass($FormularName,$InputName_Lang,"mFormSelect","mFormSelectFocus");
+$Form->set_InputDesc($FormularName,$InputName_Lang,___("Sprache"));
+$Form->set_InputReadonly($FormularName,$InputName_Lang,false);
+$Form->set_InputOrder($FormularName,$InputName_Lang,2);
+$Form->set_InputLabel($FormularName,$InputName_Lang,"");
+$Form->set_InputSize($FormularName,$InputName_Lang,0,1);
+$Form->set_InputMultiple($FormularName,$InputName_Lang,false);
+//add Data
+$lc=count($LANGUAGES['lang']);
+for ($lcc=0;$lcc<$lc;$lcc++) {
+	$Form->add_InputOption($FormularName,$InputName_Lang,$LANGUAGES['lang'][$lcc],$LANGUAGES['text'][$lcc]);
+}
 
 //emailcheck...intern
 $Form->new_Input($FormularName,$InputName_ECheckIntern,"select", "");
@@ -98,7 +132,7 @@ $Form->set_InputMultiple($FormularName,$InputName_ECheckCheckit,false);
 $sc=count($EMAILCHECK['checkit']);
 for ($scc=1; $scc<=$sc; $scc++)//0
 {
-	if ($scc==3) $Form->add_InputOption($FormularName,$InputName_ECheckCheckit,$scc,$EMAILCHECK['checkit'][$scc]);
+	$Form->add_InputOption($FormularName,$InputName_ECheckCheckit,$scc,$EMAILCHECK['checkit'][$scc]);
 }
 
 
@@ -263,7 +297,30 @@ $Form->set_InputSize($FormularName,$InputName_UnsubAction,0,1);
 $Form->set_InputMultiple($FormularName,$InputName_UnsubAction,false);
 //add Data
 $Form->add_InputOption($FormularName,$InputName_UnsubAction,"unsubscribe",___("Abmelden"));
+$Form->add_InputOption($FormularName,$InputName_UnsubAction,"blacklist",___("Blacklist/Robinsonliste"));
 $Form->add_InputOption($FormularName,$InputName_UnsubAction,"delete",___("Löschen"));
+$Form->add_InputOption($FormularName,$InputName_UnsubAction,"blacklist_delete",___("Blacklist/Robinsonliste & Löschen"));
+
+//unsub hosts
+$Form->new_Input($FormularName,$InputName_UnsubHost,"select", "");
+$Form->set_InputJS($FormularName,$InputName_UnsubHost," onChange=\"flash('submit','#ff0000');\" ");
+$Form->set_InputDefault($FormularName,$InputName_UnsubHost,$$InputName_UnsubHost);
+$Form->set_InputStyleClass($FormularName,$InputName_UnsubHost,"mFormSelect","mFormSelectFocus");
+$Form->set_InputSize($FormularName,$InputName_UnsubHost,1,1);
+$Form->set_InputDesc($FormularName,$InputName_UnsubHost,___("SMTP Server auswählen"));
+$Form->set_InputReadonly($FormularName,$InputName_UnsubHost,false);
+$Form->set_InputOrder($FormularName,$InputName_UnsubHost,13);
+$Form->set_InputLabel($FormularName,$InputName_UnsubHost,"");
+$Form->set_InputMultiple($FormularName,$InputName_UnsubHost,false);
+#Hostliste....
+//smtp hosts
+$HOSTS=new tm_Host();
+$HOST_=$HOSTS->getHost(0,Array("aktiv"=>1, "type"=>"smtp"));//id,filter
+$hcg=count($HOST_);
+for ($hccg=0; $hccg<$hcg; $hccg++)
+{
+		$Form->add_InputOption($FormularName,$InputName_UnsubHost,$HOST_[$hccg]['id'],display($HOST_[$hccg]['name']));
+}
 
 
 //CheckitLimit
@@ -420,6 +477,85 @@ $Form->add_InputOption($FormularName,$InputName_BounceitSearch,"header",___("nur
 $Form->add_InputOption($FormularName,$InputName_BounceitSearch,"body",___("nur E-Mail-Body"));
 $Form->add_InputOption($FormularName,$InputName_BounceitSearch,"headerbody","E-Mail-Header und -Body");
 
+################
+# proof
+################
+
+//proof enable
+$Form->new_Input($FormularName,$InputName_Proof,"checkbox", 1);
+$Form->set_InputJS($FormularName,$InputName_Proof," onChange=\"flash('submit','#ff0000');\" ");
+$Form->set_InputDefault($FormularName,$InputName_Proof,$$InputName_Proof);
+$Form->set_InputStyleClass($FormularName,$InputName_Proof,"mFormText","mFormTextFocus");
+$Form->set_InputSize($FormularName,$InputName_Proof,48,256);
+$Form->set_InputDesc($FormularName,$InputName_Proof,___("Proofing aktiviert"));
+$Form->set_InputReadonly($FormularName,$InputName_Proof,false);
+$Form->set_InputOrder($FormularName,$InputName_Proof,40);
+$Form->set_InputLabel($FormularName,$InputName_Proof,"");
+
+//proof url
+$Form->new_Input($FormularName,$InputName_ProofURL,"text", $$InputName_ProofURL);
+$Form->set_InputJS($FormularName,$InputName_ProofURL," onChange=\"flash('submit','#ff0000');\"");
+$Form->set_InputStyleClass($FormularName,$InputName_ProofURL,"mFormText","mFormTextFocus");
+$Form->set_InputSize($FormularName,$InputName_ProofURL,48,255);
+$Form->set_InputDesc($FormularName,$InputName_ProofURL,___("Proofing URL"));
+$Form->set_InputReadonly($FormularName,$InputName_ProofURL,false);
+$Form->set_InputOrder($FormularName,$InputName_ProofURL,41);
+$Form->set_InputLabel($FormularName,$InputName_ProofURL,"");
+
+//Proof triger
+$Form->new_Input($FormularName,$InputName_ProofTrigger,"select", "");
+$Form->set_InputJS($FormularName,$InputName_ProofTrigger," onChange=\"flash('submit','#ff0000');\" ");
+$Form->set_InputDefault($FormularName,$InputName_ProofTrigger,$$InputName_ProofTrigger);
+$Form->set_InputStyleClass($FormularName,$InputName_ProofTrigger,"mFormSelect","mFormSelectFocus");
+$Form->set_InputDesc($FormularName,$InputName_ProofTrigger,___("Proofing Trigger"));
+$Form->set_InputReadonly($FormularName,$InputName_ProofTrigger,false);
+$Form->set_InputOrder($FormularName,$InputName_ProofTrigger,42);
+$Form->set_InputLabel($FormularName,$InputName_ProofTrigger,"");
+$Form->set_InputSize($FormularName,$InputName_ProofTrigger,0,1);
+$Form->set_InputMultiple($FormularName,$InputName_ProofTrigger,false);
+
+$Form->add_InputOption($FormularName,$InputName_ProofTrigger,1,"1");
+$Form->add_InputOption($FormularName,$InputName_ProofTrigger,10,"10");
+$Form->add_InputOption($FormularName,$InputName_ProofTrigger,50,"50");
+$Form->add_InputOption($FormularName,$InputName_ProofTrigger,100,"100");
+$Form->add_InputOption($FormularName,$InputName_ProofTrigger,250,"250");
+$Form->add_InputOption($FormularName,$InputName_ProofTrigger,500,"500");
+$Form->add_InputOption($FormularName,$InputName_ProofTrigger,1000,"1000");
+$Form->add_InputOption($FormularName,$InputName_ProofTrigger,2500,"2500");
+$Form->add_InputOption($FormularName,$InputName_ProofTrigger,5000,"5000");
+$Form->add_InputOption($FormularName,$InputName_ProofTrigger,7500,"7500");
+$Form->add_InputOption($FormularName,$InputName_ProofTrigger,10000,"10000");
+$Form->add_InputOption($FormularName,$InputName_ProofTrigger,20000,"20000");
+$Form->add_InputOption($FormularName,$InputName_ProofTrigger,25000,"25000");
+
+//Proof percent
+$Form->new_Input($FormularName,$InputName_ProofPc,"select", "");
+$Form->set_InputJS($FormularName,$InputName_ProofPc," onChange=\"flash('submit','#ff0000');\" ");
+$Form->set_InputDefault($FormularName,$InputName_ProofPc,$$InputName_ProofPc);
+$Form->set_InputStyleClass($FormularName,$InputName_ProofPc,"mFormSelect","mFormSelectFocus");
+$Form->set_InputDesc($FormularName,$InputName_ProofPc,___("Proofing Anteil"));
+$Form->set_InputReadonly($FormularName,$InputName_ProofPc,false);
+$Form->set_InputOrder($FormularName,$InputName_ProofPc,43);
+$Form->set_InputLabel($FormularName,$InputName_ProofPc,"");
+$Form->set_InputSize($FormularName,$InputName_ProofPc,0,1);
+$Form->set_InputMultiple($FormularName,$InputName_ProofPc,false);
+
+$Form->add_InputOption($FormularName,$InputName_ProofPc,1,"1");
+$Form->add_InputOption($FormularName,$InputName_ProofPc,5,"5");
+$Form->add_InputOption($FormularName,$InputName_ProofPc,10,"10");
+$Form->add_InputOption($FormularName,$InputName_ProofPc,20,"20");
+$Form->add_InputOption($FormularName,$InputName_ProofPc,25,"25");
+$Form->add_InputOption($FormularName,$InputName_ProofPc,30,"30");
+$Form->add_InputOption($FormularName,$InputName_ProofPc,40,"40");
+$Form->add_InputOption($FormularName,$InputName_ProofPc,50,"50");
+$Form->add_InputOption($FormularName,$InputName_ProofPc,75,"75");
+$Form->add_InputOption($FormularName,$InputName_ProofPc,100,"100 (alle)");
+
+################
+# submit / reset
+################
+
+
 //submit button
 $Form->new_Input($FormularName,$InputName_Submit,"submit",___("Speichern"));
 $Form->set_InputStyleClass($FormularName,$InputName_Submit,"mFormSubmit","mFormSubmitFocus");
@@ -435,283 +571,4 @@ $Form->set_InputDesc($FormularName,$InputName_Reset,___("Reset"));
 $Form->set_InputReadonly($FormularName,$InputName_Reset,false);
 $Form->set_InputOrder($FormularName,$InputName_Reset,999);
 $Form->set_InputLabel($FormularName,$InputName_Reset,"");
-
-/*RENDER FORM*/
-
-$Form->render_Form($FormularName);
-//then you dont have to render the head and foot .....
-
-/*DISPLAY*/
-$_MAIN_OUTPUT.= $Form->FORM[$FormularName]['head'];
-//hidden fieldsnicht vergessen!
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName]['act']['html'];
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName]['set']['html'];
-$_MAIN_OUTPUT.= "<table>";
-
-/* send / newsletter */
-
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td style=\"border-top:2px solid grey; font-weight:bold;\" valign=\"top\" colspan=2>";
-$_MAIN_OUTPUT.= ___("Allgemein / Sonstiges");
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=\"top\">";
-$_MAIN_OUTPUT.= tm_icon("information.png",___("Versionsabfrage und News"))."&nbsp;".___("Versionsabfrage und News auf der Startseite");
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "<td valign=top>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_CheckVersion]['html'];
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td style=\"border-top:2px solid grey; font-weight:bold;\" valign=\"top\" colspan=2>";
-$_MAIN_OUTPUT.= ___("Newsletter")." &amp; ".___("Versand");
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top>";
-$_MAIN_OUTPUT.= tm_icon("user_comment.png",___("Name"))."&nbsp;".___("Empfänger-Name");
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "<td valign=top>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_RCPTName]['html'];
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top>";
-$_MAIN_OUTPUT.= tm_icon("spellcheck.png",___("E-Mail-Prüfung"))."&nbsp;".___("Prüfung der E-Mail-Adressen, Intern");
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "<td valign=top>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_ECheckIntern]['html'];
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top>";
-$_MAIN_OUTPUT.= tm_icon("spellcheck.png",___("E-Mail-Prüfung"))."&nbsp;".___("Prüfung der E-Mail-Adressen beim Versand");
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "<td valign=top>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_ECheckSendit]['html'];
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=\"top\">";
-$_MAIN_OUTPUT.= tm_icon("cog_error.png",___("Sendeversuche per E-Mail"))."&nbsp;".___("Maximale Versuche pro E-Mail (Gesamt)");
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "<td valign=top>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_MaxRetry]['html'];
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=\"top\">";
-$_MAIN_OUTPUT.= tm_icon("picture.png",___("Tracking Bild"))."&nbsp;".___("Blind- bzw. Tracking Bild auswählen oder neues Bild hochladen");
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "<td valign=top>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_TrackImageExisting]['html']."&nbsp; oder<br>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_TrackImageNew]['html'];
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-
-/* Subscribe / Unsubscribe */
-
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td style=\"border-top:2px solid grey; font-weight:bold;\" valign=\"top\" colspan=2>";
-$_MAIN_OUTPUT.= ___("Anmelden / Abmelden");
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top>";
-$_MAIN_OUTPUT.= tm_icon("spellcheck.png",___("E-Mail-Prüfung"))."&nbsp;".___("Prüfung der E-Mail-Adressen bei Anmeldung");
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "<td valign=top>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_ECheckSubscribe]['html'];
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=\"top\">";
-$_MAIN_OUTPUT.=  tm_icon("note_go.png",___("Benachrichtigung"))."&nbsp;".___("Benachrichtigung bei Neuanmeldung (subscribe)");
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "<td valign=top>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_NotifySubscribe]['html'];
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top>";
-$_MAIN_OUTPUT.=  tm_icon("note_go.png",___("Benachrichtigung"))."&nbsp;".___("Benachrichtigung bei Abmeldung (unsubscribe)");
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "<td valign=top>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_NotifyUnsubscribe]['html'];
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top>";
-$_MAIN_OUTPUT.=  tm_icon("email_go.png",___("E-Mail"))."&nbsp;".___("Benachrichtigungen gehen an (name@domain.tld)");
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "<td valign=top>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_NotifyMail]['html'];
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=\"top\">";
-$_MAIN_OUTPUT.= tm_icon("sport_8ball.png",___("Bestätigungsmail"))."&nbsp;".___("Bestätigungsmail senden");
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "<td valign=top colspan=1>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_UnsubSendMail]['html'];
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=\"top\">";
-$_MAIN_OUTPUT.= tm_icon("sport_8ball.png",___("Aktion"))."&nbsp;".___("Aktion beim Abmelden");
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "<td valign=top colspan=1>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_UnsubAction]['html'];
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=\"top\">";
-$_MAIN_OUTPUT.= tm_icon("sport_8ball.png",___("Captcha"))."&nbsp;".___("Captcha/Spamcode im Abmeldeformular prüfen");
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "<td valign=top colspan=1>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_UnsubUseCaptcha]['html'];
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_UnsubDigitsCaptcha]['html'];
-$_MAIN_OUTPUT.= ___("Ziffern");
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-
-/* Checkit */
-
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td style=\"border-top:2px solid grey; font-weight:bold;\" valign=\"top\" colspan=2>";
-$_MAIN_OUTPUT.= ___("Automatische Prüfung via check_it.php");
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top>";
-$_MAIN_OUTPUT.= tm_icon("control_end.png",___("Limit"))."&nbsp;".___("Anzahl zu prüfender Adressen in einem Durchlauf");
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "<td valign=top>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_CheckitLimit]['html']."&nbsp;".___("Adressen");
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top>";
-$_MAIN_OUTPUT.= tm_icon("spellcheck.png",___("E-Mail-Prüfung"))."&nbsp;".___("Prüfung der E-Mail-Adressen bei automatischer Prüfung");
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "<td valign=top>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_ECheckCheckit]['html'];
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=\"top\">";
-$_MAIN_OUTPUT.= tm_icon("email_go.png",___("Checkit MAIL FROM:"))."&nbsp;".___("Absender für Prüfung der E-Mail-Adressen bei automatischer Prüfung");
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "<td valign=top colspan=1>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_CheckitFromEmail]['html'];
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=\"top\">";
-$_MAIN_OUTPUT.= tm_icon("cog_error.png",___("Fehler zurücksetzen"))."&nbsp;".___("Wenn Prüfung, Fehler zurücksetzen");
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "<td valign=top colspan=1>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_CheckitAdrResetError]['html'];
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=\"top\">";
-$_MAIN_OUTPUT.= tm_icon("bullet_black.png",___("Status zurücksetzen"))."&nbsp;".___("Wenn Prüfung OK, Status zurücksetzen");
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "<td valign=top colspan=1>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_CheckitAdrResetStatus]['html'];
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-
-/* AutoBounce */
-
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td style=\"border-top:2px solid grey; font-weight:bold;\" valign=\"top\" colspan=2>";
-$_MAIN_OUTPUT.= ___("Automatisches Bouncemanagement via bounce_it.php");
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top>";
-$_MAIN_OUTPUT.= tm_icon("control_end.png",___("Limit"))."&nbsp;".___("Anzahl zu prüfender Mails in einem Durchlauf");
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "<td valign=top>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_BounceitLimit]['html']."&nbsp;".___("Mails");
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=\"top\">";
-$_MAIN_OUTPUT.= tm_icon("server.png",___("Host für Bouncemanagement"))."&nbsp;".___("Host für automatisches Bouncemanagement");
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "<td valign=top colspan=1>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_BounceitHost]['html'];
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=\"top\">";
-$_MAIN_OUTPUT.= tm_icon("sport_soccer.png",___("Aktion für Bouncemanagement"))."&nbsp;".___("Aktion für automatisches Bouncemanagement");
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "<td valign=top colspan=1>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_BounceitAction]['html'];
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=\"top\">";
-$_MAIN_OUTPUT.= tm_icon("sport_soccer.png",___("Bounce: suche nach Adressen"))."&nbsp;".___("Suche nach Adressen");
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "<td valign=top colspan=1>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_BounceitSearch]['html'];
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=\"top\">";
-$_MAIN_OUTPUT.= tm_icon("email.png",___("E-Mail-Adresse (TO:) für Bouncemanagement"))."&nbsp;".___("Filtern nach E-Mail-Adrese (TO:)");
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "<td valign=top colspan=1>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_BounceitFilterTo]['html'];
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=\"top\">";
-$_MAIN_OUTPUT.= tm_icon("email_go.png",___("E-Mail-Adresse (TO:) für Bouncemanagement"))."&nbsp;".___("Filter  E-Mail-Adrese (TO:)");
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "<td valign=top colspan=1>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_BounceitFilterToEmail]['html'];
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-
-
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Submit]['html'];
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Reset]['html'];
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-$_MAIN_OUTPUT.= "</table>";
-$_MAIN_OUTPUT.= $Form->FORM[$FormularName]['foot'];
 ?>

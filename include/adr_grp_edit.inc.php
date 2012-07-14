@@ -37,6 +37,11 @@ $$InputName_Public=getVar($InputName_Public);
 $InputName_PublicName="public_name";//range from
 $$InputName_PublicName=getVar($InputName_PublicName);
 //wenn sich public aender loeschen wir dennoch keine referenzen von public groups zu den formularen, das wird in subscribe eh ueberprueft und beim naechsten bearbeiten des formulares bereinigt! (da edit methode alte refs loescht und komplett neu anlegt!)
+
+$InputName_Prod="prod";//range from
+$$InputName_Prod=getVar($InputName_Prod);
+
+
 $ADDRESS=new tm_ADR();
 $GRP=$ADDRESS->getGroup($adr_grp_id,0,0,0);
 $standard=$GRP[0]['standard'];
@@ -53,14 +58,16 @@ if ($set=="save") {
 					"public_name"=>$public_name,
 					"descr"=>$descr,
 					"aktiv"=>$aktiv,
+					"prod"=>$prod,
 					"created"=>$created,
 					"author"=>$author
 					));
 		$_MAIN_MESSAGE.="<br>".sprintf(___("Adressgruppe %s wurde aktualisiert."),"'<b>".display($name)."</b>'");
 		$action="adr_grp_list";
-		include_once (TM_INCLUDEPATH."/adr_grp_list.inc.php");
+		require_once (TM_INCLUDEPATH."/adr_grp_list.inc.php");
 	} else {
-		include_once (TM_INCLUDEPATH."/adr_grp_form.inc.php");
+		require_once (TM_INCLUDEPATH."/adr_grp_form.inc.php");
+		require_once (TM_INCLUDEPATH."/adr_grp_form_show.inc.php");
 	}
 } else {
 	$name=$GRP[0]['name'];
@@ -68,6 +75,8 @@ if ($set=="save") {
 	$public_name=$GRP[0]['public_name'];
 	$descr=$GRP[0]['descr'];
 	$aktiv=$GRP[0]['aktiv'];
-	include_once (TM_INCLUDEPATH."/adr_grp_form.inc.php");
+	$prod=$GRP[0]['prod'];
+	require_once (TM_INCLUDEPATH."/adr_grp_form.inc.php");
+	require_once (TM_INCLUDEPATH."/adr_grp_form_show.inc.php");
 }
 ?>

@@ -3,7 +3,7 @@
 /* this file is part of: / diese Datei ist ein Teil von:                        */
 /* tellmatic, the newslettermachine                                             */
 /* tellmatic, die Newslettermaschine                                            */
-/* 2006-2010 by Volker Augustin, multi.art.studio Hanau                            */
+/* 2006-2011 by Volker Augustin, multi.art.studio Hanau                            */
 /* Contact/Kontakt: info@tellmatic.org                                      */
 /* Homepage: www.tellmatic.org                                                   */
 /* leave this header in file!                                                   */
@@ -89,6 +89,7 @@ if ($set=="save") {
 		require_once (TM_INCLUDEPATH."/link_list.inc.php");
 	} else {
 		require_once (TM_INCLUDEPATH."/link_form.inc.php");
+		require_once (TM_INCLUDEPATH."/link_form_show.inc.php");
 	}
 } else {
 	srand((double)microtime()*1000000);
@@ -99,6 +100,7 @@ if ($set=="save") {
 	$$InputName_Name=___("Neuer Link");
 	$$InputName_URL=___("http://");
 	$$InputName_Descr=___("Beschreibung/Title");
-	include_once (TM_INCLUDEPATH."/link_form.inc.php");
+	require_once (TM_INCLUDEPATH."/link_form.inc.php");
+	require_once (TM_INCLUDEPATH."/link_form_show.inc.php");
 }
 ?>

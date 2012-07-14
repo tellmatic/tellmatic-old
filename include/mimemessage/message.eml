@@ -4,7 +4,7 @@ Subject: Testing Manuel Lemos' MIME E-mail composing and sending PHP class: HTML
 From: mlemos@acm.org (mlemos)
 Reply-To: mlemos@acm.org (mlemos)
 Sender: mlemos@acm.org
-X-Mailer: http://www.phpclasses.org/mimemessage $Revision: 1.1 $ (mail)
+X-Mailer: http://www.phpclasses.org/mimemessage $Revision: 1.40 $ (mail)
 MIME-Version: 1.0
 Content-Type: multipart/mixed; boundary="8df03daa632c7fcfd84eae7cbc250d21"
 Message-ID: <20040624030359.2172.mlemos@acm.org>

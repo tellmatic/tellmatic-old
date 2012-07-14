@@ -17,7 +17,8 @@ define("DEBUG_SMTP",FALSE);
 define("DEBUG_SQL",FALSE);
 define("DEMO",FALSE);
 define ("TM_LOG",FALSE);
-
+define ("DEBUG_LANG", FALSE);//printout useful infos
+define ("DEBUG_LANG_LEVEL", 2);// 1: mark only words, 2: only list 3: both
 /***********************************************************/
 //guess path
 /***********************************************************/
@@ -37,6 +38,7 @@ if (empty($tm_dir_tmp)) {
 	$tm_dir_tmp=".";
 }
 define("TM_DIR",$tm_dir_tmp);
+
 /***********************************************************/
 //directories
 /***********************************************************/
@@ -103,6 +105,16 @@ require_once ("./include/tm_version.inc.php");
 //default siteid
 /***********************************************************/
 define("TM_SITEID","tellmatic");
+
+/***********************************************************/
+//array mit verfuegbaren sprachen
+/***********************************************************/
+
+	$LANGUAGES=Array(	'lang' => Array('de','en','es','fr','it','nl','pt'),
+										'text' => Array('Deutsch','English','Espana','France','Italiano','Dutch','Portuguese (BR)'),
+									);
+	$supported_locales = $LANGUAGES['lang'];//array('en', 'de');
+	//^^^ lang array aus tm_lib kopiert, hardcoded!
 
 /***********************************************************/
 

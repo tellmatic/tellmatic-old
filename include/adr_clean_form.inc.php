@@ -3,7 +3,7 @@
 /* this file is part of: / diese Datei ist ein Teil von:                        */
 /* tellmatic, the newslettermachine                                             */
 /* tellmatic, die Newslettermaschine                                            */
-/* 2006/7 by Volker Augustin, multi.art.studio Hanau                            */
+/* 2006/11 by Volker Augustin, multi.art.studio Hanau                            */
 /* Contact/Kontakt: info@tellmatic.org                                      */
 /* Homepage: www.tellmatic.org                                                   */
 /* leave this header in file!                                                   */
@@ -76,7 +76,7 @@ $Form->add_InputOption($FormularName,$InputName_Status,0,___(" -- Alle -- "));
 #$Form->add_InputOption($FormularName,$InputName_Status,"delete_all",___(" -- Alle fehlerhaften Adressen -- "));
 for ($scc=$sc; $scc>0; $scc--)//>0 , array beginnt bei 1! //5 und 6 undefiniert //5
 {
-	$Form->add_InputOption($FormularName,$InputName_Status,$scc,$STATUS['adr']['status'][$scc]." (".$STATUS['adr']['descr'][$scc].")");
+	$Form->add_InputOption($FormularName,$InputName_Status,$scc,display($STATUS['adr']['status'][$scc])." (".display($STATUS['adr']['descr'][$scc]).")");
 }
 
 //Gruppe dst, ziel
@@ -113,7 +113,7 @@ $Form->set_InputMultiple($FormularName,$InputName_StatusDst,false);
 $sc=count($STATUS['adr']['status']);
 for ($scc=1; $scc<=$sc; $scc++)//0
 {
-	$Form->add_InputOption($FormularName,$InputName_StatusDst,$scc,$STATUS['adr']['status'][$scc]);
+	$Form->add_InputOption($FormularName,$InputName_StatusDst,$scc,display($STATUS['adr']['status'][$scc])." (".display($STATUS['adr']['descr'][$scc]).")");
 }
 
 //set! auszufuehrende aktion!
@@ -231,76 +231,4 @@ $Form->set_InputDesc($FormularName,$InputName_Reset,"Reset");
 $Form->set_InputReadonly($FormularName,$InputName_Reset,false);
 $Form->set_InputOrder($FormularName,$InputName_Reset,999);
 $Form->set_InputLabel($FormularName,$InputName_Reset,"");
-
-/*RENDER FORM*/
-
-$Form->render_Form($FormularName);
-
-/*DISPLAY*/
-$_MAIN_OUTPUT.= $Form->FORM[$FormularName]['head'];
-//hidden fieldsnicht vergessen!
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName]['act']['html'];
-$_MAIN_OUTPUT.= "<table border=0>";
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=\"top\">".tm_icon("email.png",___("E-Mail"))."&nbsp;".___("E-Mail (leer = alle! ; wildcard = '*' oder '%'")."<br>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Name]['html'];
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=\"top\">".tm_icon("group.png",___("Gruppe"))."&nbsp;".___("aus der Gruppe:")."<br>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Group]['html'];
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=\"top\" colspan=2>".tm_icon("lightbulb.png",___("Status"))."&nbsp;".___("mit dem Status:")."<br>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Status]['html'];
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=\"top\" colspan=2>".tm_icon("exclamation.png",___("Aktion"))."&nbsp;".___("Aktion:")."<br>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Set]['html'];
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=\"top\">".tm_icon("lightbulb.png",___("Status"))."&nbsp;".___("neuer Status:")."<br>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_StatusDst]['html'];
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=\"top\" colspan=1>".tm_icon("group.png",___("Gruppen"))."&nbsp;".___("gewählte Gruppen:")."<br>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_GroupDst]['html'];
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=\"top\" colspan=1>".tm_icon("ruby.png",___("Blacklist"))."&nbsp;".___("Adressen zur Blacklist hinzufügen:")."";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Blacklist]['html'];
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=\"top\" colspan=1>".tm_icon("text_columns.png",___("Dubletten entfernen"))."&nbsp;".___("Dubletten suchen und entfernen:")."";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_RemoveDups]['html'];
-$_MAIN_OUTPUT.= "&nbsp;".$Form->INPUT[$FormularName][$InputName_RemoveDupsMethod]['html'];
-$_MAIN_OUTPUT.= "&nbsp;".___("Limit")."&nbsp;".$Form->INPUT[$FormularName][$InputName_RemoveDupsLimit]['html'];
-$_MAIN_OUTPUT.= "&nbsp;".___("Details")."&nbsp;".$Form->INPUT[$FormularName][$InputName_RemoveDupsDetails]['html'];
-$_MAIN_OUTPUT.= "&nbsp;".___("Export")."&nbsp;".$Form->INPUT[$FormularName][$InputName_RemoveDupsExport]['html'];
-
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=\"bottom\" colspan=2 align=left>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Submit]['html'];
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Reset]['html'];
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-
-$_MAIN_OUTPUT.= "</table>";
-$_MAIN_OUTPUT.= $Form->FORM[$FormularName]['foot'];
 ?>

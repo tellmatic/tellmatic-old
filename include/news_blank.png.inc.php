@@ -49,28 +49,32 @@ if (checkid($nl_id)) {
 		$QUEUE=new tm_Q();
 		//nur der erste aufruf wird mit der ip versehen! ansonsten wuerde diese jedesmal ueberschrieben wenn der leser oder ein anderer das nl anschaut.
 		$H=$QUEUE->getH($h_id);
-		if (empty($H[0]['ip']) || $H[0]['ip']=='0.0.0.0') {
-			$QUEUE->setHIP($H[0]['id'], getIP());	//save ip
-		}
-		if ($H[0]['status']!=7) { //7:unsubscribed
-			$QUEUE->setHStatus($h_id,3);	//view
-		}
-	}
+		if (isset($H[0])) {//https://sourceforge.net/tracker/?func=detail&aid=3114571&group_id=190396&atid=933192
+			if (empty($H[0]['ip']) || $H[0]['ip']=='0.0.0.0') {
+				$QUEUE->setHIP($H[0]['id'], getIP());	//save ip
+			}
+			if ($H[0]['status']!=7) { //7:unsubscribed
+				$QUEUE->setHStatus($h_id,3);	//view
+			}
+		}//isset H[0]
+	}//checkid h_id
 	//adressid? wenn ja status aendern und view zaehlen
 	if (checkid($a_id)) {
 		$ADDRESS=new tm_ADR();
 		$ADR=$ADDRESS->getAdr($a_id);
-		//only set view status if not waiting status or unsubscribed // !5 && !11
-		if ($ADR[0]['status']!=5 && $ADR[0]['status']!=11) {
-			$ADDRESS->setStatus($a_id,4);	//view
-		}
-		//adr view counter ++
-		$ADDRESS->addView($a_id);	//view
-		//save memo
-		$created=date("Y-m-d H:i:s");
-		$memo="viewed (".$NL[0]['subject'].")";
-		$ADDRESS->addMemo($a_id,$memo);
-	}
+		if (isset($ADR[0])) {//https://sourceforge.net/tracker/?func=detail&aid=3114571&group_id=190396&atid=933192
+			//only set view status if not waiting status or unsubscribed // !5 && !11
+			if ($ADR[0]['status']!=5 && $ADR[0]['status']!=11) {
+				$ADDRESS->setStatus($a_id,4);	//view
+			}
+			//adr view counter ++
+			$ADDRESS->addView($a_id);	//view
+			//save memo
+			$created=date("Y-m-d H:i:s");
+			$memo="viewed (".$NL[0]['subject'].")";
+			$ADDRESS->addMemo($a_id,$memo);
+		}//isset ADR[0]
+	}//checkid($a_id)
 }
 
 //wenn kein trackimage erzeugt werden soll, also kein newsletter gefunden wurde, blank erzeugen

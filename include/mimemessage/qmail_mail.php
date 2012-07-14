@@ -2,7 +2,7 @@
 /*
  * qmail_mail.php
  *
- * @(#) $Header: /cvsroot/tellmatic/tellmatic/include/mimemessage/qmail_mail.php,v 1.1 2007/11/29 23:50:53 mcms09 Exp $
+ * @(#) $Header: /home/mlemos/cvsroot/PHPlibrary/mimemessage/qmail_mail.php,v 1.1 2002/09/30 04:37:26 mlemos Exp $
  *
  *
  */

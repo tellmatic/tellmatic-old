@@ -20,7 +20,7 @@ $ERR_MESSAGE="";
 /***********************************************************/
 //php v5/6?
 /***********************************************************/
-if (version_compare(phpversion(), "5.0", ">=")) {
+if (version_compare(phpversion(), "5.2", ">=")) {
 	$usePhp5=true;
 } else {
 	$usePhp5=false;
@@ -31,6 +31,14 @@ define("PHP5",$usePhp5);
 /***********************************************************/
 //check
 /***********************************************************/
+/***********************************************************/
+//check if tm_config already exists!
+/***********************************************************/
+if (file_exists(TM_PATH."/include/tm_config.inc.php")) {
+	$ERR_MESSAGE.="<br>".sprintf(___("%s exisitert bereits."),TM_PATH."/include/tm_config.inc.php");
+	$check=false;
+}
+
 //check for available memory
 if ($mem==0) {
 	//woot, unlimited memory...
@@ -38,6 +46,11 @@ if ($mem==0) {
 }
 if ($exec_time==0) {
 	//yeah, unlimited time to execute php...
+}
+
+if (!PHP5) {
+	$ERR_MESSAGE.="<br><font color=\"red\">".___("FEHLER! Tellmatic benoetigt mindestens PHP Version 5.2")."</font>";
+	$check=false;
 }
 
 if (ini_get("register_globals")=='on') {
@@ -55,15 +68,32 @@ if (ini_get("magic_quotes_gpc")=='on') {
 } else {
 	#$ERR_MESSAGE.="<br>".sprintf(___("Magic Quotes ist %s."),"<font color=\"green\">OFF</font>");
 }
+if(!function_exists('file_get_contents')) {
+	$ERR_MESSAGE.="<br>".___("FEHLER!")." "."<font color=\"red\">".sprintf(___("%s ist nicht aktiviert."),"file_get_contents")."</font>";
+	$check=false;
+} else {
+	#$ERR_MESSAGE.="<br>".___("OK!")." "."<font color=\"green\">".sprintf(___("%s ist verfügbar."),"file_get_contents")."</font>";
+}
 
+#$ERR_MESSAGE.="<br>url_fopen:".ini_get("allow_url_fopen");
+if (ini_get("allow_url_fopen")=='0' || ini_get("allow_url_fopen")=='off') {
+	$ERR_MESSAGE.="<br>".___("FEHLER!")." "."<font color=\"red\">".sprintf(___("%s ist nicht aktiviert."),"allow_url_fopen")."</font>";
+	$check=false;
+} else {
+	#$ERR_MESSAGE.="<br>".___("OK!")." "."<font color=\"green\">".sprintf(___("%s ist aktiviert."),"allow_url_fopen")."</font>";
+}
 
 if ($mem>0 && $mem<8*1024*1024) {
 	$ERR_MESSAGE.="<br><font color=\"red\">".sprintf(___("FEHLER! Für Tellmatic sollten mindestens %s Speicher für PHP zur Verfügung stehen, besser mehr"),"8MB")."</font>";
 	$check=false;
+} else {
+	#$ERR_MESSAGE.="<br>".___("OK!")." "."<font color=\"green\">".sprintf(___("Speicher für PHP: %s."),$mem)."</font>";
 }
 if ($exec_time> 0 && $exec_time<15) {
 	$ERR_MESSAGE.="<br><font color=\"red\">".sprintf(___("FEHLER! Für Tellmatic sollten mindestens %s Sekunden Ausführungszeit für PHP zur Verfügung stehen, besser mehr"),"15")."</font>";
 	$check=false;
+} else {
+	#$ERR_MESSAGE.="<br>".___("OK!")." "."<font color=\"green\">".sprintf(___("Ausführungszeit für PHP: %s."),$exec_time)."</font>";
 }
 
 if ($mem<16*1024*1024) {
@@ -71,17 +101,6 @@ if ($mem<16*1024*1024) {
 if ($exec_time<30) {
 }
 
-//check for php version
-if (version_compare(phpversion(), "4.4", "<")) {
-	$ERR_MESSAGE.="<br><font color=\"red\">".___("FEHLER! Sie verwenden PHP Version < 4.4. Tellmatic benötigt mindestens Version 4.4.")."</font>";
-	$check=false;
-}
-if (version_compare(phpversion(), "5.3", ">=")) {
-	$ERR_MESSAGE.="<br><font color=\"red\">".___("FEHLER!")." ".___("Sie verwenden PHP >=5.3.")."</font>";
-	$check=false;
-}
-
-if (PHP5 && $check) ini_set('zend.ze1_compatibility_mode', '1');
 
 //if check is true (enough memory, exec time and php version)
 if ($check) {
@@ -89,7 +108,8 @@ if ($check) {
 	//check for windows
 /***********************************************************/
 	if (PHPWIN) {
-		$ERR_MESSAGE.="<br>".___("PHP läuft unter Windows. Weitere Details finden Sie den den Dateien README und INSTALL oder der FAQ.")."";
+		$ERR_MESSAGE.="<br><font color=\"red\">".___("FEHLER!")." ".___("Sie verwenden Windows.")."</font>";
+		$check=false;
 	}
 /***********************************************************/
 //check for imap_open

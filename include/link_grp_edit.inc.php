@@ -3,7 +3,7 @@
 /* this file is part of: / diese Datei ist ein Teil von:                        */
 /* tellmatic, the newslettermachine                                             */
 /* tellmatic, die Newslettermaschine                                            */
-/* 2006/7 by Volker Augustin, multi.art.studio Hanau                            */
+/* 2006/11 by Volker Augustin, multi.art.studio Hanau                            */
 /* Contact/Kontakt: info@tellmatic.org                                      */
 /* Homepage: www.tellmatic.org                                                   */
 /* leave this header in file!                                                   */
@@ -61,15 +61,17 @@ if ($set=="save") {
 					));
 		$_MAIN_MESSAGE.="<br>".sprintf(___("Gruppe %s (%s) wurde aktualisiert."),"'<b>".display($name)."</b>'","<em>".display($short)."</em>");
 		$action="link_grp_list";
-		include_once (TM_INCLUDEPATH."/link_grp_list.inc.php");
+		require_once (TM_INCLUDEPATH."/link_grp_list.inc.php");
 	} else {
-		include_once (TM_INCLUDEPATH."/link_grp_form.inc.php");
+		require_once (TM_INCLUDEPATH."/link_grp_form.inc.php");
+		require_once (TM_INCLUDEPATH."/link_grp_form_show.inc.php");
 	}
 } else {
 	$short=$GRP[0]['short'];
 	$name=$GRP[0]['name'];
 	$descr=$GRP[0]['descr'];
 	$aktiv=$GRP[0]['aktiv'];
-	include_once (TM_INCLUDEPATH."/link_grp_form.inc.php");
+	require_once (TM_INCLUDEPATH."/link_grp_form.inc.php");
+	require_once (TM_INCLUDEPATH."/link_grp_form_show.inc.php");
 }
 ?>

@@ -3,7 +3,7 @@
 /* this file is part of: / diese Datei ist ein Teil von:                        */
 /* tellmatic, the newslettermachine                                             */
 /* tellmatic, die Newslettermaschine                                            */
-/* 2006/7 by Volker Augustin, multi.art.studio Hanau                            */
+/* 2006/11 by Volker Augustin, multi.art.studio Hanau                            */
 /* Contact/Kontakt: info@tellmatic.org                                      */
 /* Homepage: www.tellmatic.org                                                   */
 /* leave this header in file!                                                   */
@@ -55,8 +55,8 @@ $$InputName_RemoveDupsLimit=getVar($InputName_RemoveDupsLimit);//limit, remove x
 $InputName_RemoveDupsExport="remove_duplicates_export";//export dups?
 $$InputName_RemoveDupsExport=getVar($InputName_RemoveDupsExport);//export dups?
 
-$showGroupUrlPara=$mSTDURL;
-$showGroupStatusUrlPara=$mSTDURL;
+$showGroupUrlPara=tmObjCopy($mSTDURL);
+$showGroupStatusUrlPara=tmObjCopy($mSTDURL);
 
 $showGroupUrlPara->addParam("act","adr_list");
 $showGroupStatusUrlPara->addParam("act","adr_list");
@@ -79,7 +79,7 @@ if (((!empty($set) && $set!="delete") || $blacklist==1) && $ac>0 && $remove_dupl
 		$_MAIN_MESSAGE.="<br>".___("Ausgewählte Adressen werden deaktiviert.");
 	}
 	if ($set=="set_status") {
-		$_MAIN_MESSAGE.="<br>".sprintf(___("Setze neuen Status für ausgewählte Adressen auf %s"),tm_icon($STATUS['adr']['statimg'][$status_multi],$STATUS['adr']['status'][$status_multi])."&nbsp;\"<b>".$STATUS['adr']['status'][$status_multi])."</b>\"";
+		$_MAIN_MESSAGE.="<br>".sprintf(___("Setze neuen Status für ausgewählte Adressen auf %s"),tm_icon($STATUS['adr']['statimg'][$status_multi],display($STATUS['adr']['status'][$status_multi]))."&nbsp;\"<b>".display($STATUS['adr']['status'][$status_multi]))."</b>\"";
 	}
 	if ($set=="copy_grp") {
 		$_MAIN_MESSAGE.="<br>".___("Ausgewählte Adressen werden in die gewählten Gruppen kopiert.");
@@ -102,7 +102,9 @@ if (((!empty($set) && $set!="delete") || $blacklist==1) && $ac>0 && $remove_dupl
 		$_MAIN_MESSAGE.="<br>".___("Ausgewählte Adressen werden zur automatischen Prüfung vorgemerkt.");
 	}
 //adressids holen ud in adr_id_arr speichern
+	//function getAdrID($group_id=0,$search=Array())
 	$adr_id_arr=$ADDRESS->getAdrID(0,$search);
+
 	//adrarray durchwandern
 	for ($acc_m=0;$acc_m<$ac;$acc_m++) {
 		//blacklist? MUSS vor anderen aktionen stehen wegen getAdr!!
@@ -165,13 +167,13 @@ if (((!empty($set) && $set!="delete") || $blacklist==1) && $ac>0 && $remove_dupl
 if ($set=="delete") {// && $status!="delete_all"
 	if (!DEMO) $ADDRESS->cleanAdr($search);
 	if ($status==0) $_MAIN_MESSAGE.="<br>".sprintf(___("%s Einträge aus der Gruppe %s wurden gelöscht."),"<b>".$ac."</b>","<b>".$GRP[0]['name']."</b>");
-	if ($status>0) $_MAIN_MESSAGE.="<br>".sprintf(___("%s Einträge aus der Gruppe %s mit dem Status %s wurden gelöscht."),"<b>".$ac."</b>","<b>".$GRP[0]['name']."</b>","<b>".$STATUS['adr']['status'][$search['status']]."</b>");
+	if ($status>0) $_MAIN_MESSAGE.="<br>".sprintf(___("%s Einträge aus der Gruppe %s mit dem Status %s wurden gelöscht."),"<b>".$ac."</b>","<b>".$GRP[0]['name']."</b>","<b>".display($STATUS['adr']['status'][$search['status']])."</b>");
 }
 
 if ($set=="check") {
 	$ADDRESS->markRecheck(0,1,$search);
 	if ($status==0) $_MAIN_MESSAGE.="<br>".sprintf(___("%s Einträge aus der Gruppe %s wurden zur Prüfung vorgemerkt."),"<b>".$ac."</b>","<b>".$GRP[0]['name']."</b>");
-	if ($status>0) $_MAIN_MESSAGE.="<br>".sprintf(___("%s Einträge aus der Gruppe %s mit dem Status %s wurden zur Prüfung vorgemerkt."),"<b>".$ac."</b>","<b>".$GRP[0]['name']."</b>","<b>".$STATUS['adr']['status'][$search['status']]."</b>");
+	if ($status>0) $_MAIN_MESSAGE.="<br>".sprintf(___("%s Einträge aus der Gruppe %s mit dem Status %s wurden zur Prüfung vorgemerkt."),"<b>".$ac."</b>","<b>".$GRP[0]['name']."</b>","<b>".display($STATUS['adr']['status'][$search['status']])."</b>");
 }
 
 if ($remove_duplicates==1) {
@@ -272,14 +274,14 @@ $_MAIN_OUTPUT.="<br><br></div><br>";
 		$showGroupStatusUrlPara->addParam("adr_grp_id",$AG[$agcc]['id']);
 		$showGroupUrlPara_=$showGroupUrlPara->getAllParams();
 		
-		$_MAIN_OUTPUT.= "<a  href=\"javascript:switchSection('g_".$AG[$agcc]['id']."')\" title=\"".___("Details")."\">";
-		$_MAIN_OUTPUT.=tm_icon("add.png",___("Details"));
+		$_MAIN_OUTPUT.= "<a  href=\"javascript:switchSection('g_".$AG[$agcc]['id']."')\" title=\"".___("Details einblenden")."\">";
+		$_MAIN_OUTPUT.=tm_icon("add.png",___("Details einblenden"));
 		$_MAIN_OUTPUT.="&nbsp;'<b>".$AG[$agcc]['name']."</b>'</a>&nbsp;&nbsp;";
 		//Gesamtstatus, anzahl per adr-status
 		$ac=$ADDRESS->countADR($AG[$agcc]['id']);
 		$_MAIN_OUTPUT.=sprintf(___("%s Adressen"),"<b>".$ac."</b>");
 		$_MAIN_OUTPUT.= "<a href=\"".$tm_URL."/".$showGroupUrlPara_."\" title=\"".___("Adressen anzeigen")."\">".tm_icon("eye.png",___("Adressen anzeigen"))."</a>";
-		$_MAIN_OUTPUT.="<div id=\"g_".$AG[$agcc]['id']."\" style=\"border:1px dashed #eeeeee; -moz-border-radius:2em 2em 2em 2em; padding:8px;\">";
+		$_MAIN_OUTPUT.="<div id=\"g_".$AG[$agcc]['id']."\" style=\"border:1px dashed #cccccc; background-color:#dddddd; -moz-border-radius:0em 0em 2em 2em; padding:8px;\">";
 		$search_recheck_group=Array();
 		$search_recheck_group['recheck']=1;
 		$entrys_recheck_group=$ADDRESS->countADR($AG[$agcc]['id'],$search_recheck_group);//anzahl eintraege die zur pruefung markiert sind
@@ -303,9 +305,9 @@ $_MAIN_OUTPUT.="<br><br></div><br>";
 			$ac=$ADDRESS->countADR($AG[$agcc]['id'],$search);
 			if ($ac>0) {
 				$_MAIN_OUTPUT.="<br><b>".$ac."</b>".
-								"&nbsp;".tm_icon($STATUS['adr']['statimg'][$ascc],$STATUS['adr']['status'][$ascc]).
-								"&nbsp;".$STATUS['adr']['status'][$ascc].
-								"&nbsp;(".$STATUS['adr']['descr'][$ascc].")";
+								"&nbsp;".tm_icon($STATUS['adr']['statimg'][$ascc],display($STATUS['adr']['status'][$ascc])).
+								"&nbsp;".display($STATUS['adr']['status'][$ascc]).
+								"&nbsp;(".display($STATUS['adr']['descr'][$ascc]).")";
 				$_MAIN_OUTPUT.= "<a href=\"".$tm_URL."/".$showGroupStatusUrlPara_."\" title=\"".___("Adressen anzeigen")."\">".tm_icon("eye.png",___("Adressen anzeigen"))."</a>";
 			}
 		}
@@ -315,5 +317,6 @@ $_MAIN_OUTPUT.="<br><br></div><br>";
 
 	}
 $_MAIN_OUTPUT.="<br>";
-include_once (TM_INCLUDEPATH."/adr_clean_form.inc.php");
+require_once (TM_INCLUDEPATH."/adr_clean_form.inc.php");
+require_once (TM_INCLUDEPATH."/adr_clean_form_show.inc.php");
 ?>
