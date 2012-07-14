@@ -86,11 +86,12 @@ if ($check && $checkDB) {
 /***********************************************************/
 	$tm_config='<?php
 //domain
-$tm_Domain=\''.$tm_Domain.'\';
+define("TM_DOMAIN",\''.TM_DOMAIN.'\');
 //absoluter pfad , docroot
-$tm_docroot=\''.$tm_docroot.'\';
+define("TM_DOCROOT",\''.TM_DOCROOT.'\');
 //script verzeichnis
-$tm_dir=\''.$tm_dir.'\';
+define("TM_DIR",\''.TM_DIR.'\');
+
 //table prefix
 $tm_tablePrefix=\''.$tm_tablePrefix_cfg.'\';
 //database
@@ -101,7 +102,7 @@ $tm["DB"]["User"]=\''.$db_user.'\';
 $tm["DB"]["Pass"]=\''.$db_pass.'\';
 
 /////////////////////////////////
-include ($tm_docroot."/".$tm_dir."/include/tm_lib.inc.php");
+include (TM_DOCROOT."/".TM_DIR."/include/tm_lib.inc.php");
 /////////////////////////////////
 ?>';
 
@@ -111,7 +112,7 @@ include ($tm_docroot."/".$tm_dir."/include/tm_lib.inc.php");
 $tm_htaccess='
 AuthType Basic
 AuthName "Tellmatic"
-AuthUserFile '.$tm_includepath.'/.htpasswd
+AuthUserFile '.TM_INCLUDEPATH.'/.htpasswd
 require valid-user
 ';
 
@@ -123,17 +124,17 @@ require valid-user
 /***********************************************************/
 //write config & htaccess & htpasswd
 /***********************************************************/
-	if (!DEMO) write_file($tm_includepath,"tm_config.inc.php",$tm_config);
+	if (!DEMO) write_file(TM_INCLUDEPATH,"tm_config.inc.php",$tm_config);
 	$MESSAGE.="<br>".___("Konfigurationsdatei wurde gespeichert.");
 	if (DEBUG) $MESSAGE.="<pre>".htmlentities($tm_config)."</pre>";
-	if (!DEMO) write_file($tm_includepath,".htpasswd",$tm_htpasswd);
+	if (!DEMO) write_file(TM_INCLUDEPATH,".htpasswd",$tm_htpasswd);
 	$MESSAGE.="<br>".___(".htpasswd Datei wurden erstellt.");
 	if (DEBUG) $MESSAGE.="<pre>".htmlentities($tm_htpasswd)."</pre>";
-	if (!DEMO) write_file($tm_path."/admin/tmp/",".htaccess",$tm_htaccess);
-	if (!DEMO) write_file($tm_includepath,".htaccess",$tm_htaccess);
+	if (!DEMO) write_file(TM_PATH."/admin/tmp/",".htaccess",$tm_htaccess);
+	if (!DEMO) write_file(TM_INCLUDEPATH,".htaccess",$tm_htaccess);
 	if (!DEMO) write_file($tm_datapath,".htaccess",$tm_htaccess);
 	if (!DEMO) write_file($tm_nlattachpath,".htaccess",$tm_htaccess);
-	if (!DEMO) write_file($tm_tplpath,".htaccess",$tm_htaccess);
+	if (!DEMO) write_file(TM_TPLPATH,".htaccess",$tm_htaccess);
 	if (!DEMO) write_file($tm_formpath,".htaccess",$tm_htaccess);
 	if (!DEMO) write_file($tm_logpath,".htaccess",$tm_htaccess);
 	if (!DEMO) write_file($tm_tmppath,".htaccess",$tm_htaccess);

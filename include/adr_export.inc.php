@@ -144,7 +144,7 @@ if ($set=="export" && $adr_grp_id>0) {
 		} else {
 			if ($append!=1) {
 				//CSV Headline
-				$CSV="\"email\"$delimiter\"f0\"$delimiter\"f1\"$delimiter\"f2\"$delimiter\"f3\"$delimiter\"f4\"$delimiter\"f5\"$delimiter\"f6\"$delimiter\"f7\"$delimiter\"f8\"$delimiter\"f9\"$delimiter\"memo\"$delimiter\"created\"$delimiter\"aktiv\"$delimiter\"status\"$delimiter\"code\"$delimiter\"id\"\n";
+				$CSV="\"email\"$delimiter\"f0\"$delimiter\"f1\"$delimiter\"f2\"$delimiter\"f3\"$delimiter\"f4\"$delimiter\"f5\"$delimiter\"f6\"$delimiter\"f7\"$delimiter\"f8\"$delimiter\"f9\"$delimiter\"id\"$delimiter\"created\"$delimiter\"author\"$delimiter\"updated\"$delimiter\"editor\"$delimiter\"aktiv\"$delimiter\"status\"$delimiter\"code\"$delimiter\"errors\"$delimiter\"clicks\"$delimiter\"views\"$delimiter\"newsletter\"\n";
 				//write header
 				if (DEBUG) $_MAIN_MESSAGE.="<br>Schreibe CSV-Header";
 				fputs($fp,$CSV,strlen($CSV));
@@ -195,12 +195,19 @@ if ($set=="export" && $adr_grp_id>0) {
 							$CSV.="\"".$ADR[$acc]['f7']."\"$delimiter";
 							$CSV.="\"".$ADR[$acc]['f8']."\"$delimiter";
 							$CSV.="\"".$ADR[$acc]['f9']."\"$delimiter";
-							$CSV.="\"".$memo."\"$delimiter";
+							$CSV.="\"".$ADR[$acc]['id']."\"$delimiter";
 							$CSV.="\"".$ADR[$acc]['created']."\"$delimiter";
+							$CSV.="\"".$ADR[$acc]['author']."\"$delimiter";
+							$CSV.="\"".$ADR[$acc]['updated']."\"$delimiter";
+							$CSV.="\"".$ADR[$acc]['editor']."\"$delimiter";
 							$CSV.="\"".$ADR[$acc]['aktiv']."\"$delimiter";
 							$CSV.="\"".$ADR[$acc]['status']."\"$delimiter";
 							$CSV.="\"".$ADR[$acc]['code']."\"$delimiter";
-							$CSV.="\"".$ADR[$acc]['id']."\"";
+							$CSV.="\"".$ADR[$acc]['errors']."\"$delimiter";
+							$CSV.="\"".$ADR[$acc]['clicks']."\"$delimiter";
+							$CSV.="\"".$ADR[$acc]['views']."\"$delimiter";
+							$CSV.="\"".$ADR[$acc]['newsletter']."\"$delimiter";
+							$CSV.="\"".$memo;
 							$CSV.="\n";
 							//free some memory ;-)
 							unset($ADR[$acc]);
@@ -229,5 +236,5 @@ if ($set=="export" && $adr_grp_id>0) {
 		$_MAIN_MESSAGE.= "<br>".sprintf(___("Datei gespeichert unter: %s"),"<a href=\"".$tm_URL_FE."/".$tm_datadir."/".$CSV_Filename."\" target=\"_preview\">".$tm_datadir."/".$CSV_Filename."</a>");
 	}//adc>0
 }//export
-include ($tm_includepath."/adr_export_form.inc.php");
+include (TM_INCLUDEPATH."/adr_export_form.inc.php");
 ?>

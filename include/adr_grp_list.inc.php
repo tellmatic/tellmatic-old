@@ -201,5 +201,5 @@ for ($accg=0;$accg<$acg;$accg++) {
 
 $_MAIN_OUTPUT.= "</tbody></table>";
 
-include($tm_includepath."/adr_grp_list_legende.inc.php");
+include(TM_INCLUDEPATH."/adr_grp_list_legende.inc.php");
 ?>

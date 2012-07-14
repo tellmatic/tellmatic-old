@@ -19,7 +19,7 @@ if ($logged_in) $_USER=$LOGIN->USER['name'];
 
 //new Template
 $_Tpl_Head=new tm_Template();
-$_Tpl_Head->setTemplatePath($tm_tplpath."/".$Style);
+$_Tpl_Head->setTemplatePath(TM_TPLPATH."/".$Style);
 $_Tpl_Head->setParseValue("_SITEID", $_SITEID);
 $_Tpl_Head->setParseValue("_USER", $_USER);
 $_HEAD=$_Tpl_Head->renderTemplate("Head.html");

@@ -40,6 +40,23 @@ if ($exec_time==0) {
 	//yeah, unlimited time to execute php...
 }
 
+if (ini_get("register_globals")=='on') {
+	$ERR_MESSAGE.="<br>".___("WARNUNG!")." ".sprintf(___("Register Globals ist %s."),"<font color=\"red\">ON</font>");
+} else {
+	#$ERR_MESSAGE.="<br>".sprintf(___("Register Globals ist %s."),"<font color=\"green\">OFF</font>");
+}
+if (!ini_get("safe_mode")=='off') {
+	$ERR_MESSAGE.="<br>".___("WARNUNG!")." ".sprintf(___("Safe Mode ist %s."),"<font color=\"red\">OFF</font>");
+} else {
+	#$ERR_MESSAGE.="<br>".sprintf(___("Safe Mode ist %s."),"<font color=\"green\">ON</font>");
+}
+if (ini_get("magic_quotes_gpc")=='on') {
+	$ERR_MESSAGE.="<br>".___("WARNUNG!")." ".sprintf(___("Magic Quotes ist %s."),"<font color=\"red\">ON</font>");
+} else {
+	#$ERR_MESSAGE.="<br>".sprintf(___("Magic Quotes ist %s."),"<font color=\"green\">OFF</font>");
+}
+
+
 if ($mem>0 && $mem<8*1024*1024) {
 	$ERR_MESSAGE.="<br>".sprintf(___("FEHLER! Für Tellmatic sollten mindestens %s Speicher für PHP zur Verfügung stehen, besser mehr"),"8MB")."";
 	$check=false;
@@ -77,16 +94,12 @@ if ($check) {
 /***********************************************************/
 //check dir permissions
 /***********************************************************/
-	if (!is_writeable($tm_path."/admin/tmp")) {
-		$ERR_MESSAGE.="<br>".sprintf(___("%s ist Schreibgeschützt. Weitere Details finden Sie den den Dateien README und INSTALL"),$tm_path."/admin/tmp")."";
+	if (!is_writeable(TM_TPLPATH)) {
+		$ERR_MESSAGE.="<br>".sprintf(___("%s ist Schreibgeschützt. Weitere Details finden Sie den den Dateien README und INSTALL"),TM_TPLPATH)."";
 		$check=false;
 	}
-	if (!is_writeable($tm_tplpath)) {
-		$ERR_MESSAGE.="<br>".sprintf(___("%s ist Schreibgeschützt. Weitere Details finden Sie den den Dateien README und INSTALL"),$tm_tplpath)."";
-		$check=false;
-	}
-	if (!is_writeable($tm_includepath)) {
-		$ERR_MESSAGE.="<br>".sprintf(___("%s ist Schreibgeschützt. Weitere Details finden Sie den den Dateien README und INSTALL"),$tm_includepath)."";
+	if (!is_writeable(TM_INCLUDEPATH)) {
+		$ERR_MESSAGE.="<br>".sprintf(___("%s ist Schreibgeschützt. Weitere Details finden Sie den den Dateien README und INSTALL"),TM_INCLUDEPATH)."";
 		$check=false;
 	}
 	if (!is_writeable($tm_datapath)) {
@@ -132,12 +145,13 @@ if ($check) {
 if (!$check) {
 	$ERR_MESSAGE="<p><font color=red><b>".___("Fehler")."</b>".
 								$ERR_MESSAGE.
-								"<br><br>There were Errors!<br>Es sind Fehler aufgetreten<br>".
+								"<br><br>".___("Es sind Fehler aufgetreten.")."<br>".
 								"<a href=\"".$_SERVER['PHP_SELF']."?lang=".$lang."&amp;accept=".$accept."\" target=\"_self\">".
-								"Reload / Neu laden</a>".
+								___("Neu laden")."</a>".
 								"</font></p>";
-	$MESSAGE.=$ERR_MESSAGE;
-	$ERR_MESSAGE="";
 }
+$MESSAGE.=$ERR_MESSAGE;
+$ERR_MESSAGE="";
+
 
 ?>

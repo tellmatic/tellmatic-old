@@ -175,7 +175,6 @@ class tm_NL {
 	function setAktiv($id=0,$aktiv=1) {
 		$Return=false;
 		if (check_dbid($id)) {
-			
 			$Query ="UPDATE ".TM_TABLE_NL."
 						SET aktiv='".dbesc($aktiv)."'
 						WHERE id='".$id."'
@@ -190,7 +189,6 @@ class tm_NL {
 	function setStatus($id,$status) {
 		$Return=false;
 		if (check_dbid($id)) {
-			
 			$Query ="UPDATE ".TM_TABLE_NL." SET status='".dbesc($status)."'
 						 WHERE siteid='".TM_SITEID."' AND id='".$id."'";
 			if ($this->DB->Query($Query)) {
@@ -210,7 +208,6 @@ class tm_NL {
 			$clicks=$NL[0]['clicks'];
 			$clicks++;
 
-			
 			$Query ="UPDATE ".TM_TABLE_NL."
 						SET clicks='".$clicks."'
 						WHERE siteid='".TM_SITEID."'
@@ -229,7 +226,6 @@ class tm_NL {
 			$views=$NL[0]['views'];
 			$views++;
 
-			
 			$Query ="UPDATE ".TM_TABLE_NL."
 						SET views='".$views."'
 						WHERE siteid='".TM_SITEID."'
@@ -245,7 +241,6 @@ class tm_NL {
 	function countNL($group_id=0) {
 		$count=0;
 		$this->NL=Array();
-		
 		//use this->DB2 !!!!!
 		$Query ="
 						SELECT count(id) as c
@@ -264,7 +259,6 @@ class tm_NL {
 
 	function getNLID($group_id=0) {
 		$this->NL=Array();
-		
 		$Query ="
 							SELECT id
 							FROM ".TM_TABLE_NL."
@@ -494,7 +488,6 @@ class tm_NL {
 	function delGrp($id) {
 		$Return=false;
 		if (check_dbid($id)) {
-			
 			//standard gruppe suchen
 			$Query ="SELECT id
 					FROM ".TM_TABLE_NL_GRP."
@@ -537,6 +530,7 @@ class tm_NL {
 	}//delGrp
 
 function convertNL2Text($html,$type) {
+	global $encoding;
 	$text=$html;
 	if ($type=="html" || $type=="text/html") {
 		$htmlToText=new Html2Text($html, 80);//class has apache license, may be in conflict with gpl???

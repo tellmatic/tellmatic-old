@@ -48,12 +48,12 @@ if ($set=="save") {
 					));
 		$_MAIN_MESSAGE.="<br>".sprintf(___("Neue Addressgruppe %s wurde erstellt."),"'<b>".display($name)."</b>'");
 		$action="adr_grp_list";
-		require_once ($tm_includepath."/adr_grp_list.inc.php");
+		require_once (TM_INCLUDEPATH."/adr_grp_list.inc.php");
 	} else {
-		require_once ($tm_includepath."/adr_grp_form.inc.php");
+		require_once (TM_INCLUDEPATH."/adr_grp_form.inc.php");
 	}
 
 } else {
-	require_once ($tm_includepath."/adr_grp_form.inc.php");
+	require_once (TM_INCLUDEPATH."/adr_grp_form.inc.php");
 }
 ?>

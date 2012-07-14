@@ -181,5 +181,5 @@ for ($ucc=0;$ucc<$uc;$ucc++) {
 
 $_MAIN_OUTPUT.= "</tbody></table>";
 
-include($tm_includepath."/adm_user_list_legende.inc.php");
+include(TM_INCLUDEPATH."/adm_user_list_legende.inc.php");
 ?>

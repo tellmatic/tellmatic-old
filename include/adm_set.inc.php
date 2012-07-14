@@ -172,7 +172,7 @@ if ($user_is_admin) {
 			$_MAIN_MESSAGE.="<br>".___("Die Einstellungen wurden gespeichert und sind ab sofort gültig")."!";
 			$action="adm_set";
 		} else {
-			include_once ($tm_includepath."/adm_set_form.inc.php");
+			include_once (TM_INCLUDEPATH."/adm_set_form.inc.php");
 		}
 	} else {
 		$C=$CONFIG->getCFG(TM_SITEID);
@@ -201,7 +201,7 @@ if ($user_is_admin) {
 		$$InputName_ECheckSubscribe=$C[0]['emailcheck_subscribe'];//
 		$$InputName_CheckVersion=$C[0]['check_version'];//
 		$$InputName_TrackImageExisting=$C[0]['track_image'];
-		require_once ($tm_includepath."/adm_set_form.inc.php");
+		require_once (TM_INCLUDEPATH."/adm_set_form.inc.php");
 		$_MAIN_OUTPUT.="<br><br><a href=\"javascript:switchSection('div_debug');\">".tm_icon("information.png",___("Serverinfo"))."&nbsp;".___("Serverinfo")."</a>";
 	}
 }//user_is_admin

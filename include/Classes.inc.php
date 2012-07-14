@@ -12,16 +12,16 @@
 /* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
 /********************************************************************************/
 
-require_once ($tm_includepath."/Class_DB.inc.php");
-require_once ($tm_includepath."/Class_Misc.inc.php");
-require_once ($tm_includepath."/Class_URL.inc.php");
-require_once ($tm_includepath."/Class_Tpl.inc.php");
-require_once ($tm_includepath."/Class_CFG.inc.php");
-require_once ($tm_includepath."/Class_NL.inc.php");
-require_once ($tm_includepath."/Class_Q.inc.php");
-require_once ($tm_includepath."/Class_Adr.inc.php");
-require_once ($tm_includepath."/Class_Form.inc.php");
-require_once ($tm_includepath."/Class_Mail.inc.php");
-require_once ($tm_includepath."/Class_Bounce.inc.php");
-require_once ($tm_includepath."/Class_mSimpleForm.inc.php");
+require_once (TM_INCLUDEPATH."/Class_DB.inc.php");
+require_once (TM_INCLUDEPATH."/Class_Misc.inc.php");
+require_once (TM_INCLUDEPATH."/Class_URL.inc.php");
+require_once (TM_INCLUDEPATH."/Class_Tpl.inc.php");
+require_once (TM_INCLUDEPATH."/Class_CFG.inc.php");
+require_once (TM_INCLUDEPATH."/Class_NL.inc.php");
+require_once (TM_INCLUDEPATH."/Class_Q.inc.php");
+require_once (TM_INCLUDEPATH."/Class_Adr.inc.php");
+require_once (TM_INCLUDEPATH."/Class_Form.inc.php");
+require_once (TM_INCLUDEPATH."/Class_Mail.inc.php");
+require_once (TM_INCLUDEPATH."/Class_Bounce.inc.php");
+require_once (TM_INCLUDEPATH."/Class_mSimpleForm.inc.php");
 ?>

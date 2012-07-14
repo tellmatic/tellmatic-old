@@ -86,17 +86,17 @@ if ($set=="save") {
 					$tm_htpasswd.=$ALL_USERS[$ucc]['name'].":".$ALL_USERS[$ucc]['crypt']."\n";
 				}//for
 				//neue .htpasswd schreiben!
-				write_file($tm_includepath,".htpasswd",$tm_htpasswd);
+				write_file(TM_INCLUDEPATH,".htpasswd",$tm_htpasswd);
 				unset($ALL_USERS);						
 			}//demo
 		$_MAIN_MESSAGE.="<br>".sprintf(___("Neuer Benutzer %s wurde angelegt."),"'<b>".display($name)."</b>'");
 		$_MAIN_MESSAGE.="<br>".___("Eine neue .htpasswd Datei wurde erzeugt.")."<br>";
 		$action="adm_user_list";
-		include_once ($tm_includepath."/adm_user_list.inc.php");
+		include_once (TM_INCLUDEPATH."/adm_user_list.inc.php");
 	} else {//check
-		include_once ($tm_includepath."/adm_user_form.inc.php");
+		include_once (TM_INCLUDEPATH."/adm_user_form.inc.php");
 	}//check
 } else {//set==save
-	include_once ($tm_includepath."/adm_user_form.inc.php");
+	include_once (TM_INCLUDEPATH."/adm_user_form.inc.php");
 }//set==save
 ?>

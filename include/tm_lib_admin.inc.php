@@ -80,7 +80,7 @@ if (!$tm_config_admin) {
 //sessions
 /***********************************************************/
 	//sessions
-	define ("TM_SESSION_TIMEOUT", 180*60);//180 * 60 sek = 3h
+	define ("TM_SESSION_TIMEOUT", 360*60);//360 * 60 sek = 6h
 	@ini_set("session.cookie_lifetime",TM_SESSION_TIMEOUT*10);
 	@ini_set("session.use_cookies","1");
 	@ini_set("session.use_only_cookies","1");

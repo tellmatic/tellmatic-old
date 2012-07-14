@@ -109,7 +109,7 @@ if ($set=="save") {
 		$action="adr_list";
 		include_once ("adr_list.inc.php");
 	} else {//check
-		include_once ($tm_includepath."/adr_form.inc.php");
+		include_once (TM_INCLUDEPATH."/adr_form.inc.php");
 	}//check
 
 } else {
@@ -128,6 +128,6 @@ if ($set=="save") {
 	$f8=$ADR[0]['f8'];
 	$f9=$ADR[0]['f9'];
 	$memo=$ADR[0]['memo'];
-	include_once ($tm_includepath."/adr_form.inc.php");
+	include_once (TM_INCLUDEPATH."/adr_form.inc.php");
 }
 ?>

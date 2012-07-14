@@ -11,6 +11,26 @@
 /* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
 /********************************************************************************/
 
+*+*+*+*+*+*+*+*+*+*+*+ CHANGES V1.0.7.3  +*+*+*+*+*+*+*+*+*+*+*+*
+	12.12.2007
+		- changed $tm_ vars for internal dirs and paths to constants. 
+			fixed for: http://secunia.com/advisories/27895/?answer=62 
+			- this exploit takes only effect in a very special setup: 
+				1) register_globals is on 
+				2) allow_url_fopen is enabled
+				3) .htaccess in include directory is not working
+		- unsubscribe, subscribe, click, view saves a memo in the address record ->addMemo(adr_id,memo)
+		- queue_list: added refresh link
+		- create new queue now shows q-list after submit instead of nl list
+		- session lifetime changed to 360min ^=6h
+		- install: check for register globals, safe_mode, magic_quotes
+		- status: icons for links to lists and statistics
+		- csv export: changed format to:	email, f0-,,,,,,,-f9, id, created, author, updated, editor, aktiv, status, code, errors, clicks, views, newsletter
+		- set status 5:running in send_it.php just before validate email address 
+			prevent sending double mails. this happened when multiple jobs were running. now setting status 5:running just before checking email
+
+		Details: see ChangeLog file.
+		
 *+*+*+*+*+*+*+*+*+*+*+ CHANGES V1.0.7.2  +*+*+*+*+*+*+*+*+*+*+*+*
 	06.12.2007
 		- removed some php warnings and some small fixes

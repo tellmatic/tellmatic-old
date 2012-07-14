@@ -443,7 +443,7 @@ $MENU=Array(
 										),
 									4 => Array(
 										'js' => 1,
-										'link' => $tm_URL_FE."/".$tm_includedir."/phpinfo.php",
+										'link' => $tm_URL_FE."/".TM_INCLUDEDIR."/phpinfo.php",
 										'name' => ___("PHP Info"),
 										'description' => ___("PHP Info"),
 										'text' => ___("PHP Info"),
@@ -477,11 +477,11 @@ $_SESSION["s"]=$sections;
 
 //new Template
 $_Tpl_Menu_Head=new tm_Template();
-$_Tpl_Menu_Head->setTemplatePath($tm_tplpath."/".$LOGIN->USER['style']);
+$_Tpl_Menu_Head->setTemplatePath(TM_TPLPATH."/".$LOGIN->USER['style']);
 $_Tpl_Menu_Entry=new tm_Template();
-$_Tpl_Menu_Entry->setTemplatePath($tm_tplpath."/".$LOGIN->USER['style']);
+$_Tpl_Menu_Entry->setTemplatePath(TM_TPLPATH."/".$LOGIN->USER['style']);
 $_Tpl_Menu_Foot=new tm_Template();
-$_Tpl_Menu_Foot->setTemplatePath($tm_tplpath."/".$LOGIN->USER['style']);
+$_Tpl_Menu_Foot->setTemplatePath(TM_TPLPATH."/".$LOGIN->USER['style']);
 
 //for topics
 $_MENU="";

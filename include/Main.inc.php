@@ -12,22 +12,19 @@
 /* Besuchen Sie die Homepage für Updates und weitere Infos                     */
 /********************************************************************************/
 
-if (file_exists($tm_path."/install.php")) {
+if (file_exists(TM_PATH."/install.php")) {
 	$_MAIN_MESSAGE.="<br><font size=2 color=red><b>".___("ACHTUNG! /install.php existiert! Die Datei install.php bitte nach erfolgreicher Installation verschieben oder löschen!")."</b></font>";
 }
 
-if (is_writeable($tm_includepath."/tm_config.inc.php")) {
+if (is_writeable(TM_INCLUDEPATH."/tm_config.inc.php")) {
 	$_MAIN_MESSAGE.="<br><font size=2 color=red><b>".___("tm_config.inc ist nicht schreibgeschützt!")." </b></font>";
-	if (@chmod ($tm_includepath."/tm_config.inc.php", 0755)) {
+	if (@chmod (TM_INCLUDEPATH."/tm_config.inc.php", 0444)) {
 		$_MAIN_MESSAGE.="<br><font size=2 color=green>".___("Rechte für tm_config.inc wurden geändert!")."</font>";
 	} else {
 		$_MAIN_MESSAGE.="<br><font size=2 color=red>".___("Rechte für tm_config.inc konnten nicht geändert werden! Bitte ändern Sie diese manuell.")."</font>";
 	}
 }
 
-if (!is_writeable($tm_path."/admin/tmp")) {
-	$_MAIN_MESSAGE.="<br><font size=2 color=red><b>".sprintf(___("Keine Schreibrechte für %s"),$tm_path."/admin/tmp")."</b></font>";
-}
 if (!is_writeable($tm_datapath)) {
 	$_MAIN_MESSAGE.="<br><font size=2 color=red><b>".sprintf(___("Keine Schreibrechte für %s"),$tm_datapath)."</b></font>";
 }
@@ -53,11 +50,11 @@ if (!is_writeable($tm_reportpath)) {
 	$_MAIN_MESSAGE.="<br><font size=2 color=red><b>".sprintf(___("Keine Schreibrechte für %s"),$tm_reportpath)."</b></font>";
 }
 
-if (!file_exists($tm_path."/admin/tmp/.htaccess")) {
-	$_MAIN_MESSAGE.="<br><font size=2 color=red><b>".sprintf(___("ACHTUNG! %s ist nicht Passwortgeschützt"),$tm_path."/admin/tmp/")."</b></font>";
+if (!file_exists(TM_PATH."/admin/tmp/.htaccess")) {
+	$_MAIN_MESSAGE.="<br><font size=2 color=red><b>".sprintf(___("ACHTUNG! %s ist nicht Passwortgeschützt"),TM_PATH."/admin/tmp/")."</b></font>";
 }
-if (!file_exists($tm_includepath."/.htaccess")) {
-	$_MAIN_MESSAGE.="<br><font size=2 color=red><b>".sprintf(___("ACHTUNG! %s ist nicht Passwortgeschützt"),$tm_includepath)."</b></font>";
+if (!file_exists(TM_INCLUDEPATH."/.htaccess")) {
+	$_MAIN_MESSAGE.="<br><font size=2 color=red><b>".sprintf(___("ACHTUNG! %s ist nicht Passwortgeschützt"),TM_INCLUDEPATH)."</b></font>";
 }
 if (!file_exists($tm_datapath."/.htaccess")) {
 	$_MAIN_MESSAGE.="<br><font size=2 color=red><b>".sprintf(___("ACHTUNG! %s ist nicht Passwortgeschützt"),$tm_datapath)."</b></font>";
@@ -74,52 +71,52 @@ if (!file_exists($tm_reportpath."/.htaccess")) {
 
 if ($logged_in) {
 	$_MAIN_DESCR=___("Bitte aus dem Menü wählen.");
-	require_once ($tm_includepath."/help_section.inc.php");
+	require_once (TM_INCLUDEPATH."/help_section.inc.php");
 
 	switch ($action) {
 		//default:
-		default : require_once ($tm_includepath."/Welcome.inc.php"); break;
-		case 'Welcome' : require_once ($tm_includepath."/Welcome.inc.php"); break;
+		default : require_once (TM_INCLUDEPATH."/Welcome.inc.php"); break;
+		case 'Welcome' : require_once (TM_INCLUDEPATH."/Welcome.inc.php"); break;
 		//admin
-		case 'adm_set' : if ($user_is_admin) require_once ($tm_includepath."/adm_set.inc.php"); break;
-		case 'adm_user_list' :  if ($user_is_admin) require_once ($tm_includepath."/adm_user_list.inc.php"); break;
-		case 'adm_user_edit' :  if ($user_is_admin) require_once ($tm_includepath."/adm_user_edit.inc.php"); break;
-		case 'adm_user_new' :  if ($user_is_admin) require_once ($tm_includepath."/adm_user_new.inc.php"); break;
+		case 'adm_set' : if ($user_is_admin) require_once (TM_INCLUDEPATH."/adm_set.inc.php"); break;
+		case 'adm_user_list' :  if ($user_is_admin) require_once (TM_INCLUDEPATH."/adm_user_list.inc.php"); break;
+		case 'adm_user_edit' :  if ($user_is_admin) require_once (TM_INCLUDEPATH."/adm_user_edit.inc.php"); break;
+		case 'adm_user_new' :  if ($user_is_admin) require_once (TM_INCLUDEPATH."/adm_user_new.inc.php"); break;
 		//user
-		case 'user' : require_once ($tm_includepath."/user.inc.php"); break;
+		case 'user' : require_once (TM_INCLUDEPATH."/user.inc.php"); break;
 		//verwaltung
-		case 'bounce' : if ($user_is_manager) require_once ($tm_includepath."/bounce.inc.php"); break;
-		case 'adr_clean' : if ($user_is_manager) require_once ($tm_includepath."/adr_clean.inc.php"); break;
+		case 'bounce' : if ($user_is_manager) require_once (TM_INCLUDEPATH."/bounce.inc.php"); break;
+		case 'adr_clean' : if ($user_is_manager) require_once (TM_INCLUDEPATH."/adr_clean.inc.php"); break;
 		//newsletter
-		case 'nl_grp_list' : require_once ($tm_includepath."/nl_grp_list.inc.php"); break;
-		case 'nl_grp_new' : require_once ($tm_includepath."/nl_grp_new.inc.php"); break;
-		case 'nl_grp_edit' : require_once ($tm_includepath."/nl_grp_edit.inc.php"); break;
-		case 'nl_list' : require_once ($tm_includepath."/nl_list.inc.php"); break;
-		case 'nl_new' : require_once ($tm_includepath."/nl_new.inc.php"); break;
-		case 'nl_edit' : require_once ($tm_includepath."/nl_edit.inc.php"); break;
-		case 'queue_new' : require_once ($tm_includepath."/queue_new.inc.php"); break;
-		case 'queue_list' : require_once ($tm_includepath."/queue_list.inc.php"); break;
-		case 'queue_send' : require_once ($tm_includepath."/queue_send.inc.php"); break;
+		case 'nl_grp_list' : require_once (TM_INCLUDEPATH."/nl_grp_list.inc.php"); break;
+		case 'nl_grp_new' : require_once (TM_INCLUDEPATH."/nl_grp_new.inc.php"); break;
+		case 'nl_grp_edit' : require_once (TM_INCLUDEPATH."/nl_grp_edit.inc.php"); break;
+		case 'nl_list' : require_once (TM_INCLUDEPATH."/nl_list.inc.php"); break;
+		case 'nl_new' : require_once (TM_INCLUDEPATH."/nl_new.inc.php"); break;
+		case 'nl_edit' : require_once (TM_INCLUDEPATH."/nl_edit.inc.php"); break;
+		case 'queue_new' : require_once (TM_INCLUDEPATH."/queue_new.inc.php"); break;
+		case 'queue_list' : require_once (TM_INCLUDEPATH."/queue_list.inc.php"); break;
+		case 'queue_send' : require_once (TM_INCLUDEPATH."/queue_send.inc.php"); break;
 		//adressen
-		case 'adr_grp_list' : require_once ($tm_includepath."/adr_grp_list.inc.php"); break;
-		case 'adr_grp_new' : require_once ($tm_includepath."/adr_grp_new.inc.php"); break;
-		case 'adr_grp_edit' : require_once ($tm_includepath."/adr_grp_edit.inc.php"); break;
-		case 'adr_list' : require_once ($tm_includepath."/adr_list.inc.php"); break;
-		case 'adr_new' : require_once ($tm_includepath."/adr_new.inc.php"); break;
-		case 'adr_edit' : require_once ($tm_includepath."/adr_edit.inc.php"); break;
-		case 'adr_import' : if ($user_is_manager) require_once ($tm_includepath."/adr_import.inc.php"); break;
-		case 'adr_export' : if ($user_is_manager) require_once ($tm_includepath."/adr_export.inc.php"); break;
+		case 'adr_grp_list' : require_once (TM_INCLUDEPATH."/adr_grp_list.inc.php"); break;
+		case 'adr_grp_new' : require_once (TM_INCLUDEPATH."/adr_grp_new.inc.php"); break;
+		case 'adr_grp_edit' : require_once (TM_INCLUDEPATH."/adr_grp_edit.inc.php"); break;
+		case 'adr_list' : require_once (TM_INCLUDEPATH."/adr_list.inc.php"); break;
+		case 'adr_new' : require_once (TM_INCLUDEPATH."/adr_new.inc.php"); break;
+		case 'adr_edit' : require_once (TM_INCLUDEPATH."/adr_edit.inc.php"); break;
+		case 'adr_import' : if ($user_is_manager) require_once (TM_INCLUDEPATH."/adr_import.inc.php"); break;
+		case 'adr_export' : if ($user_is_manager) require_once (TM_INCLUDEPATH."/adr_export.inc.php"); break;
 		//formulare
-		case 'form_list' : require_once ($tm_includepath."/form_list.inc.php"); break;
-		case 'form_new' : require_once ($tm_includepath."/form_new.inc.php"); break;
-		case 'form_edit' : require_once ($tm_includepath."/form_edit.inc.php"); break;
+		case 'form_list' : require_once (TM_INCLUDEPATH."/form_list.inc.php"); break;
+		case 'form_new' : require_once (TM_INCLUDEPATH."/form_new.inc.php"); break;
+		case 'form_edit' : require_once (TM_INCLUDEPATH."/form_edit.inc.php"); break;
 		//tools
-		case 'filemanager' : require_once ($tm_includepath."/filemanager.inc.php"); break;
+		case 'filemanager' : require_once (TM_INCLUDEPATH."/filemanager.inc.php"); break;
 		//status + statistik
-		case 'status' : require_once ($tm_includepath."/status.inc.php"); break;
-		case 'status_top_x' : require_once ($tm_includepath."/status_top_x.inc.php"); break;
-		case 'status_map' : require_once ($tm_includepath."/status_map.inc.php"); break;
-		case 'statistic' : require_once ($tm_includepath."/statistic.inc.php"); break;
+		case 'status' : require_once (TM_INCLUDEPATH."/status.inc.php"); break;
+		case 'status_top_x' : require_once (TM_INCLUDEPATH."/status_top_x.inc.php"); break;
+		case 'status_map' : require_once (TM_INCLUDEPATH."/status_map.inc.php"); break;
+		case 'statistic' : require_once (TM_INCLUDEPATH."/statistic.inc.php"); break;
 	}//switch act
 
 	$_MAIN_DESCR.=" (".TM_SITEID.")";
@@ -172,7 +169,7 @@ $_MAIN_OUTPUT.= '
 
 //new Template
 $_Tpl_Main=new tm_Template();
-$_Tpl_Main->setTemplatePath($tm_tplpath."/".$Style);
+$_Tpl_Main->setTemplatePath(TM_TPLPATH."/".$Style);
 $_Tpl_Main->setParseValue("_MAIN_DESCR", $_MAIN_DESCR);
 $_Tpl_Main->setParseValue("_MAIN_MESSAGE", $_MAIN_MESSAGE);
 $_Tpl_Main->setParseValue("_MAIN_HELP", $_MAIN_HELP);

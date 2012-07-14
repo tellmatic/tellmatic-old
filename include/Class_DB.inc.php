@@ -12,7 +12,6 @@
 /* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
 /********************************************************************************/
 
-#require_once ($tm_includepath."/db_mysql.inc.php");
 
 /*DB*/
 define ("DBDB",$tm["DB"]["Name"]);
@@ -47,7 +46,7 @@ class tm_DB extends DB_Sql
  * Copyright (c) 1998-2000 NetUSE AG
  *                    Boris Erdmann, Kristian Koehntopp
  *
- * $Id: Class_DB.inc.php,v 1.1.1.1 2007/11/21 22:58:43 mcms09 Exp $
+ * $Id: Class_DB.inc.php,v 1.2 2007/12/11 22:36:46 mcms09 Exp $
  *
  */ 
 

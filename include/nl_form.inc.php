@@ -350,5 +350,5 @@ $_MAIN_OUTPUT.= sprintf(___("%s enthält das hochgeladene Bild 'img src' | %s en
 						sprintf(___("%s enthält den kompletten Link 'a href' zum Aktivierungslink ('(1st)-Touch-Opt-In) | %s enthält nur die URL"),"<b>{SUBSCRIBE}</b>","<b>{SUBSCRIBE_URL}</b>")."<br>".
 						"";
 
-include_once ($tm_includepath."/wysiwyg.inc.php");
+include_once (TM_INCLUDEPATH."/wysiwyg.inc.php");
 ?>

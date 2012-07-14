@@ -274,9 +274,9 @@ if ($set=="save") {
 				$adr_grp);
 		$_MAIN_MESSAGE.="<br>".sprintf(___("Formular %s wurde bearbeitet."),"'<b>".display($name)."</b>'");
 		$action="form_list";
-		include_once ($tm_includepath."/form_list.inc.php");
+		include_once (TM_INCLUDEPATH."/form_list.inc.php");
 	} else {
-		include_once ($tm_includepath."/form_form.inc.php");
+		include_once (TM_INCLUDEPATH."/form_form.inc.php");
 	}
 
 } else {
@@ -358,6 +358,6 @@ if ($set=="save") {
 	$f7_expr=$FRM[0]['f7_expr'];
 	$f8_expr=$FRM[0]['f8_expr'];
 	$f9_expr=$FRM[0]['f9_expr'];
-	include_once ($tm_includepath."/form_form.inc.php");
+	include_once (TM_INCLUDEPATH."/form_form.inc.php");
 }
 ?>

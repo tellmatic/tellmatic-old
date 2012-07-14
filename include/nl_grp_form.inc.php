@@ -134,12 +134,6 @@ $_MAIN_OUTPUT.= "<tr>";
 $_MAIN_OUTPUT.= "<td valign=top colspan=2>";
 $_MAIN_OUTPUT.=  tm_icon("layout.png",___("Beschreibung"))."&nbsp;".___("Beschreibung")."<br>";
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Descr]['html'];
-/*
-$_MAIN_OUTPUT.= "<br>";
-include ($tm_includepath."/colors.inc.php");
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_ColorView]['html'];
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Color]['html'];
-*/
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "</tr>";
 $_MAIN_OUTPUT.= "<tr>";

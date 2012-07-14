@@ -23,13 +23,11 @@ $tm["DB"]["Host"]=$db_host;
 $tm["DB"]["Port"]=$db_port;
 $tm["DB"]["User"]=$db_user;
 $tm["DB"]["Pass"]=$db_pass;
-//include_once ($tm_includepath."/Classes.inc.php");
 require_once ("./include/Classes.inc.php");
 
 /***********************************************************/
 //sqls
 /***********************************************************/
-//$sql=stripslashes(file_get_contents($tm_includepath."/tellmatic.sql"));
 $sql[0]['name']=___("Tabelle")." '".$tm_tablePrefix."adr' ".___("Adressen");
 $sql[0]['sql']="
 CREATE TABLE ".$tm_tablePrefix."adr (

@@ -70,7 +70,7 @@ if (empty($sortType)) {
 	$sortType="0";//asc
 }
 
-include_once ($tm_includepath."/adr_search_form.inc.php");
+include_once (TM_INCLUDEPATH."/adr_search_form.inc.php");
 
 	$search['email']=str_replace("*","%",$s_email);
 	$search['status']=$s_status;

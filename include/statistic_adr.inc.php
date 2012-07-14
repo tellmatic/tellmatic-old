@@ -77,7 +77,7 @@ if ($set=="adr" && check_dbid($adr_id)) {
 	////////////////////////////////////////////////////////////////////////////////////////
 	//prepare graph
 	$chart = new HorizontalChart(640,200);
-	$chart->setLogo($tm_imgpath."/blank.png");//tellmatic_logo_256.png
+	$chart->setLogo(TM_IMGPATH."/blank.png");//tellmatic_logo_256.png
 	//	function countH($q_id=0,$nl_id=0,$grp_id=0,$adr_id=0,$status=0) {	//countH($nl_id=0,$grp_id=0,$status=0)
 	$hc=$QUEUE->countH(0,0,0,$adr_id,0);
 	//add total value to graph
@@ -138,8 +138,8 @@ if ($set=="adr" && check_dbid($adr_id)) {
 		if (!isset($G[0])){
 			$G[0]['name']=___("k.A. - Gruppe gelöscht!");
 		}
-			$_MAIN_OUTPUT.="<br><br><a href=\"".$tm_URL."/".$shownlURLPara_."\"><b>".display($NL[0]['subject'])."</b></a>";
-			$_MAIN_OUTPUT.=	"<br>".___("an Adressgruppe")." <a href=\"".$tm_URL."/".$showadrgURLPara_."\"><b>".display($G[0]['name'])."</b></a>:";
+			$_MAIN_OUTPUT.="<br><br><a href=\"".$tm_URL."/".$shownlURLPara_."\"><b>".display($NL[0]['subject'])."</b> (".tm_icon("chart_pie.png",___("Statistik anzeigen")).")</a>";
+			$_MAIN_OUTPUT.=	"<br>".___("an Adressgruppe")." <a href=\"".$tm_URL."/".$showadrgURLPara_."\"><b>".display($G[0]['name'])."</b> (".tm_icon("chart_pie.png",___("Statistik anzeigen")).")</a>:";
 
 			$_MAIN_OUTPUT.="<br>&nbsp;".tm_icon($STATUS['h']['statimg'][$H[$hcc]['status']],$STATUS['h']['status'][$H[$hcc]['status']]).
 									"&nbsp;".$STATUS['h']['status'][$H[$hcc]['status']].

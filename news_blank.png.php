@@ -25,6 +25,12 @@ $create_track_image=false;
 
 if (checkid($nl_id)) {
 	$NEWSLETTER=new tm_NL();
+	//nl holen
+	$NL=$NEWSLETTER->getNL($nl_id);
+	//wenn newsletter gefunden, ok
+	if (count($NL)>0) {
+		$create_track_image=true;
+	}
 	//nl view counter ++
 	$NEWSLETTER->addView($nl_id);
 	//history id? dann in der historie auf view setzen!
@@ -42,19 +48,17 @@ if (checkid($nl_id)) {
 	//adressid? wenn ja status aendern und view zaehlen
 	if (checkid($a_id)) {
 		$ADDRESS=new tm_ADR();
-		$ADR=getAdr($a_id);
+		$ADR=$ADDRESS->getAdr($a_id);
 		//only set view status if not waiting status or unsubscribed // !5 && !11
 		if ($ADR[0]['status']!=5 && $ADR[0]['status']!=11) {
 			$ADDRESS->setStatus($a_id,4);	//view
 		}
 		//adr view counter ++
 		$ADDRESS->addView($a_id);	//view
-	}
-	//nl holen
-	$NL=$NEWSLETTER->getNL($nl_id);
-	//wenn newsletter gefunden, ok
-	if (count($NL)>0) {
-		$create_track_image=true;
+		//save memo
+		$created=date("Y-m-d H:i:s");
+		$memo="\n".$created.": viewed (".$NL[0]['subject'].")";
+		$ADDRESS->addMemo($a_id,$memo);
 	}
 }
 //wenn kein trackimage erzeugt werden soll, also kein newsletter gefunden wurde, blank erzeugen

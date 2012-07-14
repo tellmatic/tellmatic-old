@@ -274,12 +274,12 @@ if ($set=="save") {
 				$adr_grp);
 		$_MAIN_MESSAGE.="<br>".sprintf(___("Neues Formular %s wurde erstellt."),"'<b>".display($name)."</b>'");
 		$action="form_list";
-		include_once ($tm_includepath."/form_list.inc.php");
+		include_once (TM_INCLUDEPATH."/form_list.inc.php");
 	} else {
-		include_once ($tm_includepath."/form_form.inc.php");
+		include_once (TM_INCLUDEPATH."/form_form.inc.php");
 	}
 
 } else {
-	include_once ($tm_includepath."/form_form.inc.php");
+	include_once (TM_INCLUDEPATH."/form_form.inc.php");
 }
 ?>

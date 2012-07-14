@@ -16,6 +16,6 @@ $_MAIN_DESCR=___("Hilfe / Dokumentation");
 $_MAIN_MESSAGE.="";
 //new Template
 $_Tpl_Help=new tm_Template();
-$_Tpl_Help->setTemplatePath($tm_tplpath);
+$_Tpl_Help->setTemplatePath(TM_TPLPATH);
 $_MAIN_OUTPUT.=$_Tpl_Help->renderTemplate("Help.html");
 ?>

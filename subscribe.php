@@ -70,7 +70,7 @@ if ($doptin==1 && !empty($c) && !empty($email)) { // && checkEmailAdr($email,$EM
 
 		if ($touch==1) { //not via form, touch optin! always calls Form_0_os.html in the tpldirectory!
 			$frm_id=0;
-			$_Tpl_FRM->setTemplatePath($tm_tplpath);//set path for new template Form_0_os.html!
+			$_Tpl_FRM->setTemplatePath(TM_TPLPATH);//set path for new template Form_0_os.html!
 		}
 	} else {
 		#$MESSAGE.="Sie haben eine ungültige E-Mail-Adresse eingegeben.";
@@ -343,7 +343,7 @@ if ($frm_id>0 && $doptin!=1) {
 			$captcha_text = new Number( $captcha_code );
 			$FCAPTCHAIMG=$captcha_text->printNumber();
 
-			include_once($tm_includepath."/subscribe_form.inc.php");
+			include_once(TM_INCLUDEPATH."/subscribe_form.inc.php");
 
 			$_Tpl_FRM->setParseValue("FMESSAGE", $MESSAGE);
 			$_Tpl_FRM->setParseValue("FNAME", display($FRM[0]['name']));

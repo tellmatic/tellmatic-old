@@ -6,7 +6,7 @@
  */
 
 #include ("htmlparser.inc");
-require_once ($tm_includepath."/phphtmlparser/htmlparser.inc");
+require_once (TM_INCLUDEPATH."/phphtmlparser/htmlparser.inc");
 
 /**
  * Class Html2Text. (HtmlParser example.)

@@ -17,7 +17,7 @@ $T=new Timer();
 $action=getVar("act");
 
 //Sprache festlegen! wird unten erneut aufgerufen!! wenn eingeloggt.
-require ($tm_includepath."/Lang.inc.php");
+require (TM_INCLUDEPATH."/Lang.inc.php");
 
 $_MAIN_MESSAGE="";
 if (DEMO) $_MAIN_MESSAGE.="<h2><font color=\"red\">Demo</font></h2>";
@@ -33,31 +33,31 @@ if (!isset($action) || empty($action)) {
 $mSTDURL=new tm_URL();
 
 //Handle Login / Logout
-require_once ($tm_includepath."/Login.inc.php");
+require_once (TM_INCLUDEPATH."/Login.inc.php");
 
 //Sprache festlegen! wird oben bereits  aufgerufen!! wenn noch nicht eingeloggt.
-require ($tm_includepath."/Lang.inc.php");
+require (TM_INCLUDEPATH."/Lang.inc.php");
 
 if (!empty($LOGIN->USER['style'])) {
 	$Style=$LOGIN->USER['style'];
 }
 
 //HTML-head
-require_once ($tm_includepath."/Header.inc.php"); // = $_HEAD_HTML
-require_once ($tm_includepath."/Head.inc.php");
+require_once (TM_INCLUDEPATH."/Header.inc.php"); // = $_HEAD_HTML
+require_once (TM_INCLUDEPATH."/Head.inc.php");
 //Status definitionen einbinden..... war vorher tm_lib, jetzt hier da abhaengig von der sprache :) sonst wirds nicht uebersetzt
-require_once ($tm_includepath."/Stats.inc.php");
+require_once (TM_INCLUDEPATH."/Stats.inc.php");
 if ($logged_in) {
 	//erst hier, da vorher nicht uebersetzt wuerde...
 	$img_arrowup=tm_icon("bullet_arrow_up.png",___("Sortierung aufsteigend"));
 	$img_arrowdown=tm_icon("bullet_arrow_down.png",___("Sortierung absteigend"));
 	
 	$mSTDURL->addParam("act",$action);
-	require_once ($tm_includepath."/Menu.inc.php");
+	require_once (TM_INCLUDEPATH."/Menu.inc.php");
 }
-require_once ($tm_includepath."/Main.inc.php");
-require_once ($tm_includepath."/Foot.inc.php");
-require_once ($tm_includepath."/Footer.inc.php");// = $_FOOTER
+require_once (TM_INCLUDEPATH."/Main.inc.php");
+require_once (TM_INCLUDEPATH."/Foot.inc.php");
+require_once (TM_INCLUDEPATH."/Footer.inc.php");// = $_FOOTER
 //new Template
 $_Tpl=new tm_Template();
 
@@ -87,7 +87,7 @@ if (DEBUG) {
 	unset($debug_translated);
 }
 
-$_Tpl->setTemplatePath($tm_tplpath."/".$Style);
+$_Tpl->setTemplatePath(TM_TPLPATH."/".$Style);
 $_Tpl->setParseValue("_HEAD_HTML", $_HEAD_HTML);
 $_Tpl->setParseValue("_HEAD", $_HEAD);
 $_Tpl->setParseValue("_MAIN", $_MAIN);
@@ -109,7 +109,7 @@ if (!$logged_in) {
 //RENDER PAGE
 $_PAGE=$_Tpl->renderTemplate("Index.html");
 //write to file and redirect?
-#write_file($tm_path."/admin/tmp/",$adm_file_name,$_PAGE);
+#write_file(TM_PATH."/admin/tmp/",$adm_file_name,$_PAGE);
 #header('Location: '.$tm_URL."/tmp/".$adm_file_name);
 //or output page and exit :)
 echo $_PAGE;

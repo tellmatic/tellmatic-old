@@ -68,7 +68,7 @@ if ($set=="save") {
 	if (empty($subject)) {$check=false;$_MAIN_MESSAGE.=___("Betreff sollte nicht leer sein.");}
 
 	//upload ?!
-	include_once ($tm_includepath."/nl_upload.inc.php");
+	include_once (TM_INCLUDEPATH."/nl_upload.inc.php");
 
 	$track_image="";
 	if ($uploaded_track_image_new) {
@@ -109,10 +109,10 @@ if ($set=="save") {
 				"</ul>";
 
 		$action="nl_list";
-		include_once ($tm_includepath."/nl_list.inc.php");
+		include_once (TM_INCLUDEPATH."/nl_list.inc.php");
 	} else {
 		$body=stripslashes(strtr($body, $trans));
-		include_once ($tm_includepath."/nl_form.inc.php");
+		include_once (TM_INCLUDEPATH."/nl_form.inc.php");
 	}
 
 } else {
@@ -125,6 +125,6 @@ if ($set=="save") {
 	$nl_grp_id=$NL[0]['grp_id'];
 	$content_type=$NL[0]['content_type'];
 	$$InputName_TrackImageExisting=$NL[0]['track_image'];
-	include_once ($tm_includepath."/nl_form.inc.php");
+	include_once (TM_INCLUDEPATH."/nl_form.inc.php");
 }
 ?>

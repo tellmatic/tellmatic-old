@@ -77,9 +77,9 @@ class tm_ADR {
 
 		if (isset($search['email']) && !empty($search['email'])) {
 			if (isset($search['email_exact_match']) && $search['email_exact_match']===true) {
-				$Query .= " AND ".TM_TABLE_ADR.".email = lcase('".dbesc($search['email'])."')";
+				$Query .= " AND lcase(".TM_TABLE_ADR.".email) = lcase('".dbesc($search['email'])."')";
 			} else {
-				$Query .= " AND ".TM_TABLE_ADR.".email like lcase('".dbesc($search['email'])."')";
+				$Query .= " AND lcase(".TM_TABLE_ADR.".email) like lcase('".dbesc($search['email'])."')";
 			}
 		}
 		if (isset($search['author']) && !empty($search['author'])) {
@@ -185,7 +185,7 @@ class tm_ADR {
 						";
 		}
 		if (isset($search['email']) && !empty($search['email'])) {
-			$Query .= " AND ".TM_TABLE_ADR.".email like lcase('".dbesc($search['email'])."')";
+			$Query .= " AND lcase(".TM_TABLE_ADR.".email) like lcase('".dbesc($search['email'])."')";
 		}
 		if (isset($search['status']) && !empty($search['status'])) {
 			$Query .= " AND ".TM_TABLE_ADR.".status = '".dbesc($search['status'])."'";
@@ -221,7 +221,7 @@ class tm_ADR {
 						";
 		}
 		if (isset($search['email']) && !empty($search['email'])) {
-			$Query .= " AND ".TM_TABLE_ADR.".email like lcase('".dbesc($search['email'])."')";
+			$Query .= " AND lcase(".TM_TABLE_ADR.".email) like lcase('".dbesc($search['email'])."')";
 		}
 		if (isset($search['status']) && !empty($search['status'])) {
 			$Query .= " AND ".TM_TABLE_ADR.".status = '".dbesc($search['status'])."'";
@@ -902,8 +902,20 @@ class tm_ADR {
 			}
 		}
 		return $Return;
-	}//addView
+	}//addNL
 
+	function addMemo($adr_id,$memo) {
+		$Return=false;
+		if (check_dbid($adr_id)) {
+			$ADR=$this->getADR($adr_id);
+			$memo=$ADR[0]['memo'].$memo;
+			$Query ="UPDATE ".TM_TABLE_ADR_DETAILS." SET memo='".dbesc($memo)."' WHERE siteid='".TM_SITEID."' AND adr_id='".$adr_id."'";
+			if ($this->DB->Query($Query)) {
+				$Return=true;
+			}
+		}
+		return $Return;
+	}//addMemo
 
 }  //class
 ?>

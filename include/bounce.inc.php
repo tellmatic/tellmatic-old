@@ -66,7 +66,7 @@ if (empty($val)) {
 $InputName_ActionAdr="val2";
 $$InputName_ActionAdr=getVar($InputName_ActionAdr);
 
-require_once ($tm_includepath."/bounce_host_form.inc.php");
+	require_once (TM_INCLUDEPATH."/bounce_host_form.inc.php");
 
 //server ausgewaehlt, wir connecten
 if ($set=="connect") {
@@ -94,9 +94,9 @@ if ($set=="connect") {
 	if ($val=="filter" || $val=="filter_delete") {
 		$mc=count($mailno);
 		if ($mc>0) {
-			require_once ($tm_includepath."/bounce_filter_form_head.inc.php");//formularokpf und felder
-			require_once ($tm_includepath."/bounce_filter_adr_list.inc.php");//liste der aressen mit checkboxen
-			require_once ($tm_includepath."/bounce_filter_form.inc.php");//render formular! aktion waehlen etc
+			require_once (TM_INCLUDEPATH."/bounce_filter_form_head.inc.php");//formularokpf und felder
+			require_once (TM_INCLUDEPATH."/bounce_filter_adr_list.inc.php");//liste der aressen mit checkboxen
+			require_once (TM_INCLUDEPATH."/bounce_filter_form.inc.php");//render formular! aktion waehlen etc
 		} else {
 			$_MAIN_MESSAGE.= "<br>".___("Es wurden keine Mails zum Bearbeiten ausgewählt.");
 			$val="list";
@@ -203,9 +203,9 @@ if ($set=="connect") {
 
 	//Liste der Mails anzeigen
 	if ($val=="list") {
-		require_once ($tm_includepath."/bounce_mail_form_head.inc.php");
-		require_once ($tm_includepath."/bounce_mail_list.inc.php");
-		require_once ($tm_includepath."/bounce_mail_form.inc.php");
+		require_once (TM_INCLUDEPATH."/bounce_mail_form_head.inc.php");
+		require_once (TM_INCLUDEPATH."/bounce_mail_list.inc.php");
+		require_once (TM_INCLUDEPATH."/bounce_mail_form.inc.php");
 	}
 	//verbindung schliessen
 	$Mailer->disconnect();

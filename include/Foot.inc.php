@@ -35,14 +35,14 @@ $pathinfo=pathinfo($self);
 $_FOOT.= "<br>Domain=: ".$host;
 $_FOOT.= "<br>Docroot=: ".$doc_root;
 $_FOOT.= "<br>Dir=: ".$pathinfo['dirname'];
-$_FOOT.= "<br><br><a href=\"".$tm_URL_FE."/".$tm_includedir."/phpinfo.php\" target=\"_blank\">".___("PHP Info")."</a><br><br>";
+$_FOOT.= "<br><br><a href=\"".$tm_URL_FE."/".TM_INCLUDEDIR."/phpinfo.php\" target=\"_blank\">".___("PHP Info")."</a><br><br>";
 $_FOOT.= "<br><br><a href=\"javascript:switchSection('div_debug');\">(X) ".___("Fenster schliessen")."</a><br><br>";
 $_FOOT.= $ApplicationText."&nbsp;<br>&copy;&nbsp;2006/2007&nbsp;-&nbsp;Volker Augustin&nbsp;";
 $_FOOT.= "</div>";
 
 //new Template
 $_Tpl_Foot=new tm_Template();
-$_Tpl_Foot->setTemplatePath($tm_tplpath."/".$Style);
+$_Tpl_Foot->setTemplatePath(TM_TPLPATH."/".$Style);
 $_Tpl_Foot->setParseValue("_FOOT", $_FOOT);
 
 $_FOOT=$_Tpl_Foot->renderTemplate("Foot.html");

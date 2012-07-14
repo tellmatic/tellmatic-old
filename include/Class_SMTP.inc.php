@@ -28,25 +28,25 @@ sasl/ntlm_sasl_client.php
 sasl/plain_sasl_client.php
 sasl/sasl.php
 */
-require_once($tm_includepath."/sasl/basic_sasl_client.php");
-require_once($tm_includepath."/sasl/cram_md5_sasl_client.php");
-require_once($tm_includepath."/sasl/digest_sasl_client.php");
-require_once($tm_includepath."/sasl/login_sasl_client.php");
-require_once($tm_includepath."/sasl/ntlm_sasl_client.php");
-require_once($tm_includepath."/sasl/plain_sasl_client.php");
-require_once($tm_includepath."/sasl/sasl.php");
+require_once(TM_INCLUDEPATH."/sasl/basic_sasl_client.php");
+require_once(TM_INCLUDEPATH."/sasl/cram_md5_sasl_client.php");
+require_once(TM_INCLUDEPATH."/sasl/digest_sasl_client.php");
+require_once(TM_INCLUDEPATH."/sasl/login_sasl_client.php");
+require_once(TM_INCLUDEPATH."/sasl/ntlm_sasl_client.php");
+require_once(TM_INCLUDEPATH."/sasl/plain_sasl_client.php");
+require_once(TM_INCLUDEPATH."/sasl/sasl.php");
 
 //mime message class
 /*
 mimemessage/email_message.php
 mimemessage/smtp_message.php
 */
-require_once($tm_includepath."/mimemessage/email_message.php");
-require_once($tm_includepath."/mimemessage/smtp_message.php");
+require_once(TM_INCLUDEPATH."/mimemessage/email_message.php");
+require_once(TM_INCLUDEPATH."/mimemessage/smtp_message.php");
 
 //smtp class
 /*
 smtp/smtp.php
 */
-require_once($tm_includepath."/smtp/smtp.php");
+require_once(TM_INCLUDEPATH."/smtp/smtp.php");
 ?>

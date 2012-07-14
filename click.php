@@ -40,20 +40,24 @@ if (checkid($nl_id)) {
 		}
 		if (checkid($a_id)) {
 			$ADDRESS=new tm_ADR();
-			$ADR=getAdr($a_id);
+			$ADR=$ADDRESS->getAdr($a_id);
 			//only set view status if not waiting status or unsubscribed // !5 && !11
 			if ($ADR[0]['status']!=5 && $ADR[0]['status']!=11) {
 				$ADDRESS->setStatus($a_id,4);	//view
 			}
 			//adr click counter ++
 			$ADDRESS->addClick($a_id);	//click
+			//save memo
+			$created=date("Y-m-d H:i:s");
+			$memo="\n".$created.": clicked (".$NL[0]['subject'].") ".$NL[0]['link'];
+			$ADDRESS->addMemo($a_id,$memo);
 		}
 		//header...
 		header("Location: ".$NL[0]['link'].""); /* Browser umleiten */
 		exit;
 	} else {
 		//wenn inaktiv!
-		//header("Location: ".$tm_Domain.""); /* Browser umleiten */
+		//header("Location: ".TM_DOMAIN.""); /* Browser umleiten */
 		//oder: ;)
 		header("HTTP/1.0 404 Not Found");
 		exit;

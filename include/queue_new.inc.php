@@ -15,7 +15,8 @@
 $_MAIN_DESCR=___("Newsletter zur Warteschlange (Q) hinzufügen");
 $_MAIN_MESSAGE.="";
 
-$set=getVar("set");
+require_once (TM_INCLUDEPATH."/queue_vars.inc.php");
+
 $q_id=0;
 $nl_id=getVar("nl_id");
 $created=date("Y-m-d H:i:s");
@@ -51,16 +52,7 @@ if (!isset($adr_grp)) {
 $InputName_Send="send_now";//range from
 $$InputName_Send=getVar($InputName_Send);
 
-//so viele sendeeintraege in nl_h werden maximal gemacht! (wenn exectime==0 dann unlimited, eigenes limit ca 3600 --> 3600/30*20000=2,4mio)
-$default_h_limit=round($max_execution_time/30*20000);//max 20k per 30 sec
-//wenn versandauftrag gleich angelegt wird...:
-//user offset und limit
-//offset
-$InputName_Offset="usr_offset";//range from
-$$InputName_Offset=getVar($InputName_Offset,0,0);//default 0
-//limit
-$InputName_Limit="usr_limit";//range from
-$$InputName_Limit=getVar($InputName_Limit,0,$default_h_limit);//default ^^
+
 
 $check=true;
 //abgeschickt?
@@ -148,18 +140,19 @@ if ($set=="save") {
 			$_MAIN_MESSAGE.="<br>".___("Neuer Eintrag wurde erstellt.");
 			$action="queue_list";
 			if ($send_now==1) {
-				include_once ($tm_includepath."/queue_send.inc.php");
+				require_once (TM_INCLUDEPATH."/queue_send.inc.php");
 			}
-			include_once ($tm_includepath."/nl_list.inc.php");
+			#require_once (TM_INCLUDEPATH."/nl_list.inc.php");
+			//show q list instead
+			require_once (TM_INCLUDEPATH."/queue_list.inc.php");
 		} else {// $gc>0
 			$_MAIN_MESSAGE.="<br>".___("Keine Gruppe(n) gewählt. Nichts hinzugefügt");
-			include_once ($tm_includepath."/queue_form.inc.php");
+			require_once (TM_INCLUDEPATH."/queue_form.inc.php");
 		}
 	} else {
-		include_once ($tm_includepath."/queue_form.inc.php");
+		require_once (TM_INCLUDEPATH."/queue_form.inc.php");
 	}//$gc>0
 } else {
-	include_once ($tm_includepath."/queue_form.inc.php");
+	require_once (TM_INCLUDEPATH."/queue_form.inc.php");
 }
-			#$_MAIN_MESSAGE.="<br>send_now: ".$send_now;
 ?>

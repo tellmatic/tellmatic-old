@@ -23,6 +23,7 @@ $_MAIN_OUTPUT.= tm_icon("email_go.png",___("Diesen Eintrag versenden"))."&nbsp;"
 $_MAIN_OUTPUT.= tm_icon("control_stop.png",___("Anhalten"))."&nbsp;".___("Anhalten")."<br>";
 $_MAIN_OUTPUT.= tm_icon("control_play.png",___("Fortfahren"))."&nbsp;".___("Fortfahren")."<br>";
 $_MAIN_OUTPUT.= tm_icon("cross.png",___("Löschen"))."&nbsp;".___("Q löschen")."<br>";
+$_MAIN_OUTPUT.= tm_icon("arrow_refresh.png",___("Ansicht aktualisieren"))."&nbsp;".___("Ansicht aktualisieren")."<br>";
 
 $_MAIN_OUTPUT.= "<h3>".___("Status")."</h3>";
 
@@ -38,6 +39,4 @@ if ($user_is_expert) $_MAIN_OUTPUT.= "
 <script type=\"text/javascript\">
 	switchSection('legende');
 </script>";
-
-
 ?>

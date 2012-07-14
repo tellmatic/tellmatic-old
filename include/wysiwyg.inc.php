@@ -27,7 +27,7 @@ tinyMCE.init({
 	mode : "textareas",
 	//prevent special charcter encoding: 
 	//important!
-	entities : "",
+	//entities : "",
 	theme : "advanced",
 	remove_linebreaks : false,
 	relative_urls : false,
@@ -52,7 +52,7 @@ tinyMCE.init({
 	plugin_insertdate_timeFormat : "%H:%M:%S",
 	//extended_valid_elements : "a[name|href|target|title|onclick],img[class|src|border=0|alt|title|hspace|vspace|width|height|align|onmouseover|onmouseout|name],hr[class|width|size|noshade],font[face|size|color|style],span[class|align|style],form[action|name|type|method],input[name|type|size|maxlength],select[name],option[value],textarea[name|cols|rows],radio[name|value]",
 	extended_valid_elements : "*[*]",
-	external_image_list_url : "'.$tm_URL_FE.'/'.$tm_includedir.'/tinymce_il.php",
+	external_image_list_url : "'.$tm_URL_FE.'/'.TM_INCLUDEDIR.'/tinymce_il.php",
 	theme_advanced_resize_horizontal : false,
 	theme_advanced_resizing : true,
 	fullpage_default_langcode : "'.$LOGIN->USER['lang'].'",

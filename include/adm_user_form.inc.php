@@ -17,12 +17,12 @@ $InputName_Reset="reset";
 
 //read css directories and check for stylesheets and template directories
 $CSSDirs=Array();
-$CSSDirsTmp=getCSSDirectories($tm_path."/css");
+$CSSDirsTmp=getCSSDirectories(TM_PATH."/css");
 $css_c=count($CSSDirsTmp);
 $css_i=0;
 for ($css_cc=0; $css_cc < $css_c; $css_cc++) {
-	$css_file=$tm_path."/css/".$CSSDirsTmp[$css_cc]."/tellmatic.css";
-	$tpl_dir=$tm_tplpath."/".$CSSDirsTmp[$css_cc];
+	$css_file=TM_PATH."/css/".$CSSDirsTmp[$css_cc]."/tellmatic.css";
+	$tpl_dir=TM_TPLPATH."/".$CSSDirsTmp[$css_cc];
 	if (file_exists($css_file)) {
 		if (is_dir($tpl_dir)) {
 			$CSSDirs[$css_i]["dir"]=$CSSDirsTmp[$css_cc];

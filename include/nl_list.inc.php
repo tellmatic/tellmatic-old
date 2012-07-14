@@ -208,7 +208,7 @@ $statURLPara->addParam("set","nl");
 
 $_MAIN_OUTPUT="";
 
-include($tm_includepath."/pager.inc.php");
+include(TM_INCLUDEPATH."/pager.inc.php");
 
 $_MAIN_OUTPUT.="<table border=\"0\" cellpadding=\"1\" cellspacing=\"1\" width=\"100%\">\n";
 $_MAIN_OUTPUT.= "<thead>\n".
@@ -536,6 +536,6 @@ for ($ncc=0;$ncc<$nc;$ncc++) {
 }//for
 $_MAIN_OUTPUT.= "<tr><td colspan=5>&nbsp;</td></tr>\n";
 $_MAIN_OUTPUT.= "</tbody></table>\n";
-include($tm_includepath."/pager.inc.php");
-include($tm_includepath."/nl_list_legende.inc.php");
+include(TM_INCLUDEPATH."/pager.inc.php");
+include(TM_INCLUDEPATH."/nl_list_legende.inc.php");
 ?>

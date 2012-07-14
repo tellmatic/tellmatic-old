@@ -11,25 +11,19 @@
 /* check Homepage for Updates and more Infos                                    */
 /* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
 /********************************************************************************/
-include_once (TM_INCLUDEPATH."/libchart-1.1/libchart.php");
-
-$_MAIN_DESCR=___("Statistik");
 
 $set=getVar("set");
-$nl_id=getVar("nl_id");
-$adr_grp_id=getVar("adr_grp_id");
-$adr_id=getVar("adr_id");
-$frm_id=getVar("frm_id");
+$val=getVar("val");
+$doit=getVar("doit");//wird per js an url angefuegt!!! confirm()
 
-$FORMULAR=new tm_FRM();
-$QUEUE=new tm_Q();
-$ADDRESS=new tm_ADR();
-$NEWSLETTER=new tm_NL();
-
-$_MAIN_MESSAGE.="";
-include_once (TM_INCLUDEPATH."/statistic_nl.inc.php");
-include_once (TM_INCLUDEPATH."/statistic_adr.inc.php");
-include_once (TM_INCLUDEPATH."/statistic_adrgrp.inc.php");
-include_once (TM_INCLUDEPATH."/statistic_frm.inc.php");
-$_MAIN_OUTPUT.= "<br><br>";
+//so viele sendeeintraege in nl_h werden maximal gemacht! (wenn exectime==0 dann unlimited, eigenes limit ca 3600 --> 3600/30*20000=2,4mio)
+$default_h_limit=round($max_execution_time/30*20000);//max 20k per 30 sec
+//wenn versandauftrag angelegt wird...:
+//user offset und limit
+//offset
+$InputName_Offset="usr_offset";//range from
+$$InputName_Offset=getVar($InputName_Offset,0,0);//default 0
+//limit
+$InputName_Limit="usr_limit";//range from
+$$InputName_Limit=getVar($InputName_Limit,0,$default_h_limit);//default ^^
 ?>

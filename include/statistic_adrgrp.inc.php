@@ -24,7 +24,7 @@ if ($set=="adrg" && check_dbid($adr_grp_id)) {
 
 	//prepare graph
 	$chart = new HorizontalChart(640,200);
-	$chart->setLogo($tm_imgpath."/blank.png");//tellmatic_logo_256.png
+	$chart->setLogo(TM_IMGPATH."/blank.png");//tellmatic_logo_256.png
 	//adr_grp_id
 	$AG=$ADDRESS->getGroup($adr_grp_id);
 
@@ -80,12 +80,12 @@ if ($set=="adrg" && check_dbid($adr_grp_id)) {
 		$NL=$NEWSLETTER->getNL($Q[$qcc]['nl_id']);
 		//prepare graph
 		$chart = new HorizontalChart(640,200);
-		$chart->setLogo($tm_imgpath."/blank.png");//tellmatic_logo_256.png
+		$chart->setLogo(TM_IMGPATH."/blank.png");//tellmatic_logo_256.png
 
 		$shownlURLPara->addParam("nl_id",$NL[0]['id']);
 		$shownlURLPara_=$shownlURLPara->getAllParams();
 
-		$_MAIN_OUTPUT.="<br>".sprintf(___("Versand von %s"),"<a href=\"".$tm_URL."/".$shownlURLPara_."\"><b>".display($NL[0]['subject'])."</b></a>");
+		$_MAIN_OUTPUT.="<br>".sprintf(___("Versand von %s"),"<a href=\"".$tm_URL."/".$shownlURLPara_."\"><b>".display($NL[0]['subject'])."</b> (".tm_icon("chart_pie.png",___("Statistik anzeigen")).")</a>");
 		$_MAIN_OUTPUT.=":&nbsp;".tm_icon($STATUS['q']['statimg'][$Q[$qcc]['status']],$STATUS['q']['status'][$Q[$qcc]['status']]).
 							"&nbsp;".$STATUS['q']['status'][$Q[$qcc]['status']].
 							"&nbsp;(".$STATUS['q']['descr'][$Q[$qcc]['status']].")";

@@ -117,5 +117,5 @@ if ($set=="delete" && $status=="delete_all") { // && $doit==1
 
 	}
 $_MAIN_OUTPUT.="<br>";
-include_once ($tm_includepath."/adr_clean_form.inc.php");
+include_once (TM_INCLUDEPATH."/adr_clean_form.inc.php");
 ?>

@@ -92,7 +92,7 @@ if (!$tm_config) {
 
 	function getObjInstance($O) {
 		if (PHP5) {
-			include ($tm_includepath."/PHP5_clone.inc.php");//$obj=clone $O;
+			include (TM_INCLUDEPATH."/PHP5_clone.inc.php");//$obj=clone $O;
 			return $obj;
 		} else {
 			return $O;
@@ -115,15 +115,30 @@ if (!$tm_config) {
 //verzeichnisse
 /***********************************************************/
 	//includefiles
-	$tm_includedir="include";
+	define("TM_INCLUDEDIR","include");
 	//verzeichnis templates
-	$tm_tpldir="tpl";
+	define("TM_TPLDIR","tpl");
 	//verzeichnis fuer bilder:
-	$tm_imgdir="img";
+	define("TM_IMGDIR","img");
 	//verzeichnis fuer icons
-	$tm_icondir="img/icons";
+	define("TM_ICONDIR","img/icons");
 	//verzeichnis fuer docs
-	$tm_docdir="doc";
+	define("TM_DOCDIR","doc");
+/***********************************************************/
+//pfade
+/***********************************************************/
+	//tmpath
+	define("TM_PATH",TM_DOCROOT."/".TM_DIR);
+	//includes
+	define("TM_INCLUDEPATH",TM_PATH."/".TM_INCLUDEDIR);
+	//pfad zur docu
+	define("TM_DOCPATH",TM_PATH."/".TM_DOCDIR);
+	//pfad zu bildern, interne
+	define("TM_IMGPATH",TM_PATH."/".TM_IMGDIR);
+	//icons intern
+	define("TM_ICONPATH",TM_PATH."/".TM_ICONDIR);
+	//templates intern
+	define("TM_TPLPATH",TM_PATH."/".TM_TPLDIR);
 
 /***********************************************************/
 //sitespezifische dirs....! fuer multicustomer
@@ -148,43 +163,30 @@ if (!$tm_config) {
 /***********************************************************/
 //pfade
 /***********************************************************/
-	//filedir, filepath!
-	$tm_path=$tm_docroot."/".$tm_dir;
-	//includes
-	$tm_includepath=$tm_path."/".$tm_includedir;
 	//newsletter html files
-	$tm_nlpath=$tm_path."/".$tm_nldir;
+	$tm_nlpath=TM_PATH."/".$tm_nldir;
 	//pfad verzeichnis fuer gespeicherte newsletter-bilder unterhalb von $tm_nldir:
-	$tm_nlimgpath=$tm_path."/".$tm_nlimgdir;
+	$tm_nlimgpath=TM_PATH."/".$tm_nlimgdir;
 	//attachements
-	$tm_nlattachpath=$tm_path."/".$tm_nlattachdir;
+	$tm_nlattachpath=TM_PATH."/".$tm_nlattachdir;
 	//pfad verzeichnis fuer formular-templates
-	$tm_formpath=$tm_path."/".$tm_formdir;
+	$tm_formpath=TM_PATH."/".$tm_formdir;
 	//pfad verzeichnis fuer import/export dateien
-	$tm_datapath=$tm_path."/".$tm_datadir;
+	$tm_datapath=TM_PATH."/".$tm_datadir;
 	//pfad f. logfiles
-	$tm_logpath=$tm_path."/".$tm_logdir;
-	//pfad zur docu
-	$tm_docpath=$tm_path."/".$tm_docdir;
-	//pfad zu bildern, interne
-	$tm_imgpath=$tm_path."/".$tm_imgdir;
+	$tm_logpath=TM_PATH."/".$tm_logdir;
 	//pfad zu reports
-	$tm_reportpath=$tm_path."/".$tm_reportdir;
+	$tm_reportpath=TM_PATH."/".$tm_reportdir;
 	//temp, sessions etc
-	$tm_tmppath=$tm_path."/".$tm_tmpdir;
-	//images
-	$tm_imgpath=$tm_path."/".$tm_imgdir;
-	//templates
-	$tm_tplpath=$tm_path."/".$tm_tpldir;
-	$tm_iconpath=$tm_path."/".$tm_icondir;
+	$tm_tmppath=TM_PATH."/".$tm_tmpdir;
 
 /***********************************************************/
 //URLs
 /***********************************************************/
-	$tm_URL=$tm_Domain."/".$tm_dir."/admin";//backend, admin
-	$tm_URL_FE=$tm_Domain."/".$tm_dir;//frontend!
-	$tm_imgURL=$tm_URL_FE."/".$tm_imgdir;
-	$tm_iconURL=$tm_URL_FE."/".$tm_icondir;
+	$tm_URL=TM_DOMAIN."/".TM_DIR."/admin";//backend, admin
+	$tm_URL_FE=TM_DOMAIN."/".TM_DIR;//frontend!
+	$tm_imgURL=$tm_URL_FE."/".TM_IMGDIR;
+	$tm_iconURL=$tm_URL_FE."/".TM_ICONDIR;
 
 /***********************************************************/
 //Today
@@ -220,7 +222,7 @@ if (!$tm_config) {
 /***********************************************************/
 //funktionen
 /***********************************************************/
-	require_once ($tm_includepath."/Functions.inc.php");
+	require_once (TM_INCLUDEPATH."/Functions.inc.php");
 	
 /***********************************************************/
 //handle magic quotes
@@ -243,7 +245,7 @@ if (!$tm_config) {
 /***********************************************************/
 //Errorhandler:
 /***********************************************************/
-	require_once ($tm_includepath."/Errorhandling.inc.php");
+	require_once (TM_INCLUDEPATH."/Errorhandling.inc.php");
 	//eigene errorhandler funktion
 	set_error_handler("userErrorHandler");
 
@@ -251,12 +253,12 @@ if (!$tm_config) {
 //eigene gettext emulation:
 /***********************************************************/
 	define("DEFAULT_LOCALE", 'de');
-	require_once($tm_includepath."/GetText.inc.php");
+	require_once(TM_INCLUDEPATH."/GetText.inc.php");
 
 /***********************************************************/
 //htmlparser, convert html to text
 /***********************************************************/
-	require_once ($tm_includepath."/phphtmlparser/html2text.inc");
+	require_once (TM_INCLUDEPATH."/phphtmlparser/html2text.inc");
 
 /***********************************************************/
 //array mit verfuegbaren sprachen
@@ -271,8 +273,8 @@ if (!$tm_config) {
 //klassen
 /***********************************************************/
 
-	require_once ($tm_includepath."/Classes.inc.php");
-	#require_once ($tm_includepath."/phphtmlparser/html2text.inc");
+	require_once (TM_INCLUDEPATH."/Classes.inc.php");
+	#require_once (TM_INCLUDEPATH."/phphtmlparser/html2text.inc");
 	//wird bisher nur beim versenden in send_it.php benoetigt, und deshalb auch nur dort eingebunden!
 
 /***********************************************************/
@@ -333,7 +335,7 @@ if (!$tm_config) {
 //Tellmatic Name
 /***********************************************************/
 	$ApplicationName="tellmatic";
-	$ApplicationVersion="1.0.7.2 Tellmatic";
+	$ApplicationVersion="1.0.7.3 Tellmatic";
 	$ApplicationDescr=___("Die Newsletter Maschine");
 	$ApplicationUrl="www.tellmatic.org";
 	$ApplicationText=$ApplicationName." v".$ApplicationVersion." - ".$ApplicationDescr." (".$ApplicationUrl.")";

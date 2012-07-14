@@ -43,7 +43,7 @@ if ($C[0]['check_version']==1) {
 
 //new Template
 $_Tpl_Welcome=new tm_Template();
-$_Tpl_Welcome->setTemplatePath($tm_tplpath);
+$_Tpl_Welcome->setTemplatePath(TM_TPLPATH);
 
 //set parse values
 $_Tpl_Welcome->setParseValue("_URL", $tm_URL);

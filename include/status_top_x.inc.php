@@ -11,7 +11,7 @@
 /* check Homepage for Updates and more Infos                                    */
 /* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
 /********************************************************************************/
-include_once ($tm_includepath."/libchart-1.1/libchart.php");
+include_once (TM_INCLUDEPATH."/libchart-1.1/libchart.php");
 
 $_MAIN_DESCR=___("Top X");
 $_MAIN_MESSAGE.="";
@@ -39,7 +39,7 @@ if (empty($show_top_x)) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////
-require_once ($tm_includepath."/status_top_x_form.inc.php");
+require_once (TM_INCLUDEPATH."/status_top_x_form.inc.php");
 ////////////////////////////////////////////////////////////////////////////////////////
 
 $_MAIN_OUTPUT.="<center>";

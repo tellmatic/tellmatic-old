@@ -24,15 +24,15 @@ $$InputName_CreateMap=getVar($InputName_CreateMap);
 $create=getVar("create");
 
 ////////////////////////////////////////////////////////////////////////////////////////
-require_once ($tm_includepath."/status_map_form.inc.php");
+require_once (TM_INCLUDEPATH."/status_map_form.inc.php");
 ////////////////////////////////////////////////////////////////////////////////////////
 
 if ($create==1) {
 
-	require_once ($tm_includepath."/geoip/geoip.inc");
-	require_once ($tm_includepath."/geoip/geoipcity.inc");
-	require_once ($tm_includepath."/geoip/geoipregionvars.php");
-	$gi = geoip_open($tm_includepath."/geoip/GeoLiteCity.dat",GEOIP_STANDARD);
+	require_once (TM_INCLUDEPATH."/geoip/geoip.inc");
+	require_once (TM_INCLUDEPATH."/geoip/geoipcity.inc");
+	require_once (TM_INCLUDEPATH."/geoip/geoipregionvars.php");
+	$gi = geoip_open(TM_INCLUDEPATH."/geoip/GeoLiteCity.dat",GEOIP_STANDARD);
 
 	//map oeffnen
 	//usermap: neues bild erstellen, so gross wie map, png transparent!
@@ -43,11 +43,11 @@ if ($create==1) {
 	//neue earthmap, jpg
 	//usermap ueber orig map legen und speichern
 	//earthmap anzeigen
-	$im_earthmap = ImageCreateFromJPEG($tm_imgpath."/earthmap_800.jpg");
+	$im_earthmap = ImageCreateFromJPEG(TM_IMGPATH."/earthmap_800.jpg");
 	$im_size_x = imagesx($im_earthmap);
 	$im_size_y = imagesy($im_earthmap);
 	
-	$im_flag = ImageCreateFromPNG($tm_iconpath."/house.png");
+	$im_flag = ImageCreateFromPNG(TM_ICONPATH."/house.png");
 	$im_size_flag_x = imagesx($im_flag);
 	$im_size_flag_y = imagesy($im_flag);
 	
@@ -117,8 +117,8 @@ if ($create==1) {
 	#ImageCopy($im_map_user, $im_flag,$pt["x"]-round($im_size_flag_x/2) ,$pt["y"]-$im_size_flag_x , 0, 0, $im_size_flag_x, $im_size_flag_y);
 	//datum und beschreibung in usermap einfuegen
 	#imagefilledrectangle($im_map_user, 0, $im_size_y-26, $im_size_x, $im_size_y-10, $White);
-	#imagettftext ($im_map_user, 10, 0, 12, ($im_size_y-12), $Blue, $tm_imgpath."/arial.ttf", $map_text );
-	imagettftext ($im_earthmap, 10, 0, 12, ($im_size_y-12), $Blue, $tm_imgpath."/arial.ttf", $map_text );
+	#imagettftext ($im_map_user, 10, 0, 12, ($im_size_y-12), $Blue, TM_IMGPATH."/arial.ttf", $map_text );
+	imagettftext ($im_earthmap, 10, 0, 12, ($im_size_y-12), $Blue, TM_IMGPATH."/arial.ttf", $map_text );
 	//earthmap in earthmap_user kopieren
 	#ImageCopy($im_earthmap_user, $im_earthmap,0, 0, 0, 0, $im_size_x, $im_size_y);
 	//user_map in earthmap_user kopieren (markierungen)

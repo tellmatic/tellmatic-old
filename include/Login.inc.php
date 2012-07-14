@@ -36,7 +36,7 @@ $user_is_manager=FALSE;
 //log_in[0]: bool: true | false
 //log_in[1]: message
 /***********************************************************/
-$log_in = include($tm_includepath."/Login_guard_ret.inc.php");
+$log_in = include(TM_INCLUDEPATH."/Login_guard_ret.inc.php");
 $logged_in=$log_in[0];
 $_MAIN_MESSAGE.=$log_in[1];
 
@@ -53,7 +53,7 @@ if (DEBUG) $_MAIN_OUTPUT.="<!--\n new session id: ".session_id()."-->\n";
 /***********************************************************/
 //set cookie
 /***********************************************************/
-setcookie(session_name(), session_id(), time()+(TM_SESSION_TIMEOUT*10), $tm_dir."/admin", str_replace("https://","",str_replace("http://","",$tm_Domain)) );
+setcookie(session_name(), session_id(), time()+(TM_SESSION_TIMEOUT*10), TM_DIR."/admin", str_replace("https://","",str_replace("http://","",TM_DOMAIN)) );
 
 /***********************************************************/
 //expert & admin
@@ -75,6 +75,6 @@ if ($logged_in) {
 /***********************************************************/
 if (!$logged_in && $action!="logout") {
 	$_MAIN_DESCR=___("Bitte melden Sie sich mit Ihrem Benutzernamen und Passwort an.")."<br>";
-	require_once ($tm_includepath."/Login_form.inc.php");
+	require_once (TM_INCLUDEPATH."/Login_form.inc.php");
 }
 ?>

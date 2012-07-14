@@ -14,60 +14,65 @@
 /***********************************************************/
 //guess path
 /***********************************************************/
-$tm_docroot=realpath(dirname(realpath(__FILE__))."/../../../");
-$tm_Domain="http://".$_SERVER["HTTP_HOST"];
+define(TM_DOCROOT,realpath(dirname(realpath(__FILE__))."/../../../"));
+define("TM_DOMAIN","http://".$_SERVER["HTTP_HOST"]);
 $self=$_SERVER["PHP_SELF"];
 $pathinfo=pathinfo($self);
-$tm_dir=$pathinfo['dirname'];
+$tm_dir_tmp=$pathinfo['dirname'];
 //ersten slash killen!!! sonst klappt das nich mit php_self, da doppelslash und das raffen manche browser nich!
-if (substr($tm_dir, 0,1)=="/") {
-	$tm_dir=substr($tm_dir, 1,strlen($tm_dir));
+if (substr($tm_dir_tmp, 0,1)=="/") {
+	$tm_dir_tmp=substr($tm_dir_tmp, 1,strlen($tm_dir_tmp));
 }
-if (empty($tm_dir)) {
-	$tm_dir=".";
+if (empty($tm_dir_tmp)) {
+	$tm_dir_tmp=".";
 }
+define("TM_DIR",$tm_dir_tmp);
 /***********************************************************/
 //directories
 /***********************************************************/
-$tm_includedir="include";
+define("TM_INCLUDEDIR","include");
+define("TM_TPLDIR","tpl");
+define("TM_IMGDIR","img");
+define("TM_ICONDIR",TM_IMGDIR."/icons");
+define("TM_DOCDIR","doc");
+
 $tm_tmpdir="files/tmp";
 $tm_logdir="files/log";
-$tm_tpldir="tpl";
-$tm_imgdir="img";
-$tm_icondir="img/icons";
 $tm_nldir="files/newsletter";
 $tm_nlimgdir="files/newsletter/images";
 $tm_nlattachdir="files/attachements";
 $tm_formdir="files/forms";
 $tm_datadir="files/import_export";
 $tm_logdir="files/log";
-$tm_docdir="doc";
+
 $tm_reportdir="files/reports";
 
 /***********************************************************/
 //Paths
 /***********************************************************/
-$tm_path=$tm_docroot."/".$tm_dir;
-$tm_includepath=$tm_path."/".$tm_includedir;
-$tm_tmppath=$tm_path."/".$tm_tmpdir;
-$tm_logpath=$tm_path."/".$tm_logdir;
-$tm_tplpath=$tm_path."/".$tm_tpldir;
-$tm_imgpath=$tm_path."/".$tm_imgdir;
-$tm_iconpath=$tm_path."/".$tm_icondir;
-$tm_nlpath=$tm_path."/".$tm_nldir;
-$tm_nlimgpath=$tm_path."/".$tm_nlimgdir;
-$tm_nlattachpath=$tm_path."/".$tm_nlattachdir;
-$tm_formpath=$tm_path."/".$tm_formdir;
-$tm_datapath=$tm_path."/".$tm_datadir;
-$tm_docpath=$tm_path."/".$tm_docdir;
-$tm_reportpath=$tm_path."/".$tm_reportdir;
+define("TM_PATH",TM_DOCROOT."/".TM_DIR);
+define("TM_INCLUDEPATH",TM_PATH."/".TM_INCLUDEDIR);
+define("TM_TPLPATH",TM_PATH."/".TM_TPLDIR);
+define("TM_IMGPATH",TM_PATH."/".TM_IMGDIR);
+define("TM_ICONPATH",TM_PATH."/".TM_ICONDIR);
+define("TM_DOCPATH",TM_PATH."/".TM_DOCDIR);
+
+$tm_tmppath=TM_PATH."/".$tm_tmpdir;
+$tm_logpath=TM_PATH."/".$tm_logdir;
+$tm_nlpath=TM_PATH."/".$tm_nldir;
+$tm_nlimgpath=TM_PATH."/".$tm_nlimgdir;
+$tm_nlattachpath=TM_PATH."/".$tm_nlattachdir;
+$tm_formpath=TM_PATH."/".$tm_formdir;
+$tm_datapath=TM_PATH."/".$tm_datadir;
+$tm_reportpath=TM_PATH."/".$tm_reportdir;
 
 /***********************************************************/
 //URLs
 /***********************************************************/
-$tm_URL=$tm_Domain."/".$tm_dir;
-$tm_imgURL=$tm_URL."/".$tm_imgdir;
-$tm_iconURL=$tm_URL."/".$tm_icondir;
+$tm_URL=TM_DOMAIN."/".TM_DIR;
+$tm_imgURL=$tm_URL."/".TM_IMGDIR;
+$tm_iconURL=$tm_URL."/".TM_ICONDIR;
+
 
 /***********************************************************/
 //check if php runs on windows!

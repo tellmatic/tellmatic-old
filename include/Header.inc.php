@@ -26,7 +26,7 @@ $_HEAD_HTML='<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "htt
 <meta name="Robots" content="NOINDEX,NOFOLLOW">
 <meta name="Keywords" content="news, newsletter, massmail, personalized mail, mailing, emailmarketing">
 <meta name="OBGZip" content="true">
-<link rel="shortcut icon" href="'.$tm_URL_FE.'/'.$tm_imgdir.'/favicon.ico">
+<link rel="shortcut icon" href="'.$tm_URL_FE.'/'.TM_IMGDIR.'/favicon.ico">
 
 <title>'.$ApplicationText.'</title>
 
@@ -68,7 +68,7 @@ $_HEAD_HTML='<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "htt
 	___("Seite wird geladen").'
 	</b>
 	<br>
-	<img src="'.$tm_URL_FE.'/'.$tm_imgdir.'/counter.gif" border=0 alt="counter.gif">
+	<img src="'.$tm_URL_FE.'/'.TM_IMGDIR.'/counter.gif" border=0 alt="counter.gif">
 	<br>
 	<font size=-1>'.
  ___("Achtung! Ein Abbruch des Ladevorgangs kann zu Datenverlust und ungewünschten Nebeneffekten führen. Bitte tun Sie dies auf Ihr eigenes Risiko.").

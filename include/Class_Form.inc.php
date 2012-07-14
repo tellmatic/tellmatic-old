@@ -215,9 +215,8 @@ class tm_FRM {
 	}//delForm
 
 	function addForm($frm,$grp) {
-		global $tm_formpath, $tm_tplpath, $tm_URL;//, $TM_SITEID
+		global $tm_formpath,$tm_URL;
 		$Return=false;
-		#$DB=new tm_DB();
 		//neues Formular speichern
 		$Query ="INSERT INTO
 					".TM_TABLE_FRM."
@@ -354,7 +353,7 @@ class tm_FRM {
 		$Form_Filename_OS="/Form_".$new_frm_id."_os.html";
 
 		$_Tpl_FRM=new tm_Template();
-		$_Tpl_FRM->setTemplatePath($tm_tplpath);
+		$_Tpl_FRM->setTemplatePath(TM_TPLPATH);
 
 		//Formular Template erzeugen
 		$Form_Html=$_Tpl_FRM->renderTemplate($Form_Filename_TPL);
@@ -374,7 +373,7 @@ class tm_FRM {
 	}//addForm
 
 	function updateForm($frm,$grp) {
-		global $tm_formpath, $tm_URL;//, $TM_SITEID
+		global $tm_formpath, $tm_URL;
 		$Return=false;
 		if (check_dbid($frm['id'])) {
 			#$DB=new tm_DB();
@@ -489,7 +488,6 @@ class tm_FRM {
 			$subs=$F[0]['subscriptions'];
 			$subs++;
 
-			#$DB=new tm_DB();
 			$Query ="UPDATE ".TM_TABLE_FRM."
 						SET subscriptions='".$subs."'
 						WHERE siteid='".TM_SITEID."'

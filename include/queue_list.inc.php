@@ -82,6 +82,10 @@ if ($nl_id>0) {
 }
 $qc=count($Q);
 
+$reloadURLPara=$mSTDURL;
+$reloadURLPara->addParam("act","queue_list");
+$reloadURLPara->addParam("nl_id",$nl_id);
+
 $showhistURLPara=$mSTDURL;
 $showhistURLPara->addParam("act","queue_list");
 
@@ -113,7 +117,10 @@ $statURLPara=$mSTDURL;
 $statURLPara->addParam("act","statistic");
 $statURLPara->addParam("set","queue");
 
-$_MAIN_OUTPUT="<table border=\"0\" cellpadding=\"1\" cellspacing=\"1\" width=\"100%\">";
+$reloadURLPara_=$reloadURLPara->getAllParams();
+$_MAIN_OUTPUT.= "<a href=\"".$tm_URL."/".$reloadURLPara_."\" title=\"".___("Anzeige aktualisieren")."\">".tm_icon("arrow_refresh.png",___("Anzeige aktualisieren"))."&nbsp;".___("Anzeige aktualisieren")."</a><br><br>";
+
+$_MAIN_OUTPUT.="<table border=\"0\" cellpadding=\"1\" cellspacing=\"1\" width=\"100%\">";
 $_MAIN_OUTPUT.= "<thead>".
 						"<tr>".
 						"<td><b>".___("Datum")."</b>".
@@ -190,10 +197,6 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 	if ($Q[$qcc]['status']>1) {
 	}
 
-	//wenn status q ok, =1 , neu, und newsletter aktiv, dann einzelnen sendebutton anzeigen!
-	if ($Q[$qcc]['status']==1 && $NL[0]['aktiv']==1) {
-		$_MAIN_OUTPUT.= "&nbsp;<a href=\"".$tm_URL."/".$sendURLPara_."\" title=\"".___("Newsletter an gewählte Gruppe versenden")."\">".tm_icon("email_go.png",___("Senden"))."</a>";
-	}
 
 	$_MAIN_OUTPUT.=sprintf(___("Versand startet: %s"),"<b>".$send_at."</b>");
 	//wenn versendet
@@ -244,6 +247,11 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 
 	$_MAIN_OUTPUT.= "</td>";
 	$_MAIN_OUTPUT.= "<td>";
+	//wenn status q ok, =1 , neu, und newsletter aktiv, dann einzelnen sendebutton anzeigen!
+	if ($Q[$qcc]['status']==1 && $NL[0]['aktiv']==1) {
+		$_MAIN_OUTPUT.= "&nbsp;<a href=\"".$tm_URL."/".$sendURLPara_."\" title=\"".___("Newsletter an gewählte Gruppe versenden")."\">".tm_icon("email_go.png",___("Senden"))."</a>";
+	}
+
 	if ($Q[$qcc]['status']==4) {
 	}
 
@@ -276,5 +284,5 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 
 $_MAIN_OUTPUT.= "</tbody></table>";
 
-include_once($tm_includepath."/queue_list_legende.inc.php")
+include_once(TM_INCLUDEPATH."/queue_list_legende.inc.php")
 ?>

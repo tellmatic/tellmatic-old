@@ -8,23 +8,24 @@ setting $accounts = array();
 
 line 765:
 //Tellmatic!
-$home = $tm_path."/files";
+$home = TM_PATH."/files";
 
 */
 //tellmatic
-$tm_docroot=$_SERVER["DOCUMENT_ROOT"];
+define("TM_DOCROOT",$_SERVER["DOCUMENT_ROOT"]);
 $self=$_SERVER["PHP_SELF"];
 $pathinfo=pathinfo($self);
-$tm_dir=str_replace("/include/myftphp","",$pathinfo['dirname']);
+$tm_dir_tmp=str_replace("/include/myftphp","",$pathinfo['dirname']);
 //ersten slash killen!!! sonst klappt das nich mit php_self, da doppelslash und das raffen manche browser nich!
-if (substr($tm_dir, 0,1)=="/") {
-	$tm_dir=substr($tm_dir, 1,strlen($tm_dir));
+if (substr($tm_dir_tmp, 0,1)=="/") {
+	$tm_dir_tmp=substr($tm_dir_tmp, 1,strlen($tm_dir_tmp));
 }
-$tm_includedir="include";
-$tm_path=$tm_docroot."/".$tm_dir;
-$tm_includepath=$tm_path."/".$tm_includedir;
+define ("TM_DIR",$tm_dir_tmp);
 
-include($tm_includepath."/Functions.inc.php");
+define("TM_INCLUDEDIR","include");
+define("TM_PATH",TM_DOCROOT."/".TM_DIR);
+define("TM_INCLUDEPATH",TM_PATH."/".TM_INCLUDEDIR);
+include(TM_INCLUDEPATH."/Functions.inc.php");
 
 /********_________________some_note____________________********/
 /*****////////////////////////////////////////////////////*****/
@@ -382,8 +383,6 @@ class mfp_files extends mfp_list {
 		//print files and alternate lines
 		global $l;
 		global $session;
-		//Tellmatic!
-		global $tm_dir;
 		$oe = 0;
 		foreach($this->list as $file) {
 			$oe++;
@@ -404,7 +403,7 @@ class mfp_files extends mfp_list {
 
 			//Tellmatic!
 			$directlink = relativePath($directlink);
-			$directlink = $tm_dir."/files".$directlink;
+			$directlink = TM_DIR."/files".$directlink;
 			//ouch!
 			$directlink="http://".$_SERVER["HTTP_HOST"]."/".str_replace("include/myftphp","",$directlink);
 			//echo $directlink."<br>";

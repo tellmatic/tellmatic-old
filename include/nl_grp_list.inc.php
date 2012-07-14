@@ -187,5 +187,5 @@ for ($nccg=0;$nccg<$ncg;$nccg++) {
 
 $_MAIN_OUTPUT.= "</tbody></table>";
 
-include($tm_includepath."/nl_grp_list_legende.inc.php");
+include(TM_INCLUDEPATH."/nl_grp_list_legende.inc.php");
 ?>

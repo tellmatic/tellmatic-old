@@ -93,7 +93,7 @@ if ($set=="save") {
 					$tm_htpasswd.=$ALL_USERS[$ucc]['name'].":".$ALL_USERS[$ucc]['crypt']."\n";
 				}//for
 				//neue .htpasswd schreiben!
-				write_file($tm_includepath,".htpasswd",$tm_htpasswd);
+				write_file(TM_INCLUDEPATH,".htpasswd",$tm_htpasswd);
 				unset($ALL_USERS);
 			}//demo
 			$_MAIN_MESSAGE.="<br>".___("Passwort wurde geändert.");
@@ -102,7 +102,7 @@ if ($set=="save") {
 		$action="adm_user_list";
 		include_once ("adm_user_list.inc.php");
 	} else {//check
-		include_once ($tm_includepath."/adm_user_form.inc.php");
+		include_once (TM_INCLUDEPATH."/adm_user_form.inc.php");
 	}//check
 } else {//save
 	$name=$USER[0]['name'];
@@ -113,6 +113,6 @@ if ($set=="save") {
 	$style=$USER[0]['style'];
 	$expert=$USER[0]['expert'];
 	$lang=$USER[0]['lang'];
-	include_once ($tm_includepath."/adm_user_form.inc.php");
+	include_once (TM_INCLUDEPATH."/adm_user_form.inc.php");
 }
 ?>

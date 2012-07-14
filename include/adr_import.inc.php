@@ -546,5 +546,5 @@ if ($set=="import") {
 } else {
 }
 $_MAIN_MESSAGE.=$IMPORT_MESSAGE;
-require_once ($tm_includepath."/adr_import_form.inc.php");
+require_once (TM_INCLUDEPATH."/adr_import_form.inc.php");
 ?>

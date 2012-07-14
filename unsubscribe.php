@@ -55,24 +55,25 @@ if ($check_mail[0] && $set=="unsubscribe") {
 					$QUEUE=new tm_Q();
 					$QUEUE->setHStatus($h_id,7);	//unsubscribe!
 				}	
-				//im author speichern wir den namen des newsletter etc.
-				$author="unsubscribed";
+				$created=date("Y-m-d H:i:s");
+				//im memo speichern wir den namen des newsletter etc.
+				$memo="\n".$created.": unsubscribed";
 				$NEWSLETTER=new tm_NL();
 				$NL=$NEWSLETTER->getNL($nl_id);
 				if (count($NL)>0) {
-					$author.=" (".$NL[0]['subject'].")";
+					$memo.=" (".$NL[0]['subject'].")";
 				}
 				//set status adresse, set editor...
 				if ($ADDRESS->unsubscribe($ADR[0]['id'],$author)) {
 					$ADDRESS->setAktiv($ADR[0]['id'],0);
+					$ADDRESS->addMemo($ADR[0]['id'],$memo);
 					//unsubscribed
 					if ($send_notification_unsubscribe==1) {
-						$created=date("Y-m-d H:i:s");
 						//email bei subscrption an admin....
 						$SubscriptionMail_Subject="mNL: Abmeldung";
 						$SubscriptionMail_HTML="";
 						$SubscriptionMail_HTML.="<br><b>".$created."</b>\n".
-														"<br>'<b>".$author."</b>'\n".
+														"<br>'<b>".$memo."</b>'\n".
 														"<br>AID: <b>".$ADR[0]['id']."</b>\n".
 														"<br>\n".
 														"<br>Folgender Benutzer hat sich aus der Verteilerliste ausgetragen und moechte kein Newsletter mehr erhalten:\n".
@@ -116,10 +117,10 @@ if ($check_mail[0] && $set=="unsubscribe") {
  $FMESSAGE.= "";
 }
 $email="";// !
-include_once($tm_includepath."/unsubscribe_form.inc.php");
+include_once(TM_INCLUDEPATH."/unsubscribe_form.inc.php");
 //new Template
 $_Tpl_FRM=new tm_Template();
-$_Tpl_FRM->setTemplatePath($tm_tplpath);
+$_Tpl_FRM->setTemplatePath(TM_TPLPATH);
 $_Tpl_FRM->setParseValue("FMESSAGE", $FMESSAGE);
 $_Tpl_FRM->setParseValue("FHEAD", $FHEAD);
 $_Tpl_FRM->setParseValue("FFOOT", $FFOOT);

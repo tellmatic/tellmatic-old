@@ -11,7 +11,7 @@
 /* check Homepage for Updates and more Infos                                    */
 /* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
 /********************************************************************************/
-include_once ($tm_includepath."/libchart-1.1/libchart.php");
+include_once (TM_INCLUDEPATH."/libchart-1.1/libchart.php");
 
 $_MAIN_DESCR=___("Status");
 $_MAIN_MESSAGE.="";
@@ -62,7 +62,7 @@ $_MAIN_OUTPUT.="<br><center><table border=0><tr><td valign=top align=left>";// w
 ////////////////////////////////////////////////////////////////////////////////////////
 //prepare chart
 	$chart = new HorizontalChart(640,360);
-	$chart->setLogo($tm_imgpath."/blank.png");//tellmatic_logo_256.png
+	$chart->setLogo(TM_IMGPATH."/blank.png");//tellmatic_logo_256.png
 	$_MAIN_OUTPUT.= "<br><img alt=\"Chart\"  src=\"".$tm_URL_FE."/".$tm_reportdir."/status_adrg_total_".TM_TODAY.".png\"><br>";
 
 //	function getGroup($id=0,$adr_id=0,$frm_id=0,$count=0) {
@@ -73,13 +73,13 @@ $showadrURLPara->delParam("email");
 $showadrURLPara->delParam("adr_id");
 $showadrURLPara->addParam("act","adr_list");
 $showadrURLPara_=$showadrURLPara->getAllParams();
-$_MAIN_OUTPUT.="<a href=\"".$tm_URL."/".$showadrURLPara_."\">".sprintf(___("%s Adressen"),$ac)."</a> ::: <a href=\"".$tm_URL."/".$showgrpURLPara_."\">".sprintf(___("%s Gruppen"),$agc)."</a><br>";
+$_MAIN_OUTPUT.="<a href=\"".$tm_URL."/".$showadrURLPara_."\"> ".sprintf(___("%s Adressen"),$ac)." (".tm_icon("folder_go.png",___("Liste anzeigen")).")</a> ::: <a href=\"".$tm_URL."/".$showgrpURLPara_."\">".sprintf(___("%s Gruppen"),$agc)." (".tm_icon("folder_go.png",___("Liste anzeigen")).")</a><br>";
 
 for ($agcc=0; $agcc<$agc; $agcc++) {
 
 	$showadrgURLPara->addParam("adr_grp_id",$AG[$agcc]['id']);
 	$showadrgURLPara_=$showadrgURLPara->getAllParams();
-	$_MAIN_OUTPUT.="<a href=\"".$tm_URL."/".$showadrgURLPara_."\">".$AG[$agcc]['name']."</a> :".$AG[$agcc]['adr_count']." ".___("Adressen")."<br>";
+	$_MAIN_OUTPUT.="<a href=\"".$tm_URL."/".$showadrgURLPara_."\">".$AG[$agcc]['name']." (".tm_icon("chart_pie.png",___("Statistik anzeigen")).")</a> :".$AG[$agcc]['adr_count']." ".___("Adressen")."<br>";
 //add values to chart
 	$adc_pc=$AG[$agcc]['adr_count']/($ac/100);//anteil in prozent
 	$chart->addPoint(new Point($AG[$agcc]['name']." (".number_format($adc_pc, 2, ',', '')."%)", $AG[$agcc]['adr_count']));
@@ -97,7 +97,7 @@ $_MAIN_OUTPUT.="</td></tr><tr><td valign=top align=left>";// width=50%
 //prepare chart
 	#$chart = new PieChart(640,480);
 	$chart = new HorizontalChart(640,360);
-	$chart->setLogo($tm_imgpath."/blank.png");//tellmatic_logo_256.png
+	$chart->setLogo(TM_IMGPATH."/blank.png");//tellmatic_logo_256.png
 	$_MAIN_OUTPUT.= "<br><img alt=\"Chart\"  src=\"".$tm_URL_FE."/".$tm_reportdir."/status_adr_total_".TM_TODAY.".png\"><br>";
 //
 $AG=$ADDRESS->getGroup();
@@ -137,7 +137,7 @@ $_MAIN_OUTPUT.="</td></tr><tr><td valign=top align=left>";// width=50%
 ////////////////////////////////////////////////////////////////////////////////////////
 //prepare chart
 	$chart = new HorizontalChart(640,360);
-	$chart->setLogo($tm_imgpath."/blank.png");//tellmatic_logo_256.png
+	$chart->setLogo(TM_IMGPATH."/blank.png");//tellmatic_logo_256.png
 	$_MAIN_OUTPUT.= "<br><img alt=\"Chart\"  src=\"".$tm_URL_FE."/".$tm_reportdir."/status_q_total_".TM_TODAY.".png\"><br>";
 $NG=$NEWSLETTER->getGroup();
 $nlgc=count($NG);
@@ -150,7 +150,7 @@ $shownlURLPara->addParam("act","nl_list");
 $shownlURLPara->addParam("set","");
 $shownlURLPara->delParam("nl_id","");
 $shownlURLPara_=$shownlURLPara->getAllParams();
-$_MAIN_OUTPUT.="<a href=\"".$tm_URL."/".$shownlURLPara_."\">".sprintf(___("%s Newsletter"),$nlc)."</a> ::: <a href=\"".$tm_URL."/".$shownlgURLPara_."\">".sprintf(___("%s Gruppen"),$nlgc)."</a>";
+$_MAIN_OUTPUT.="<a href=\"".$tm_URL."/".$shownlURLPara_."\">".sprintf(___("%s Newsletter"),$nlc)." (".tm_icon("folder_go.png",___("Liste anzeigen")).")</a> ::: <a href=\"".$tm_URL."/".$shownlgURLPara_."\">".sprintf(___("%s Gruppen"),$nlgc)." (".tm_icon("folder_go.png",___("Liste anzeigen")).")</a>";
 $_MAIN_OUTPUT.="<br><br><b>".sprintf(___("Insgesamt %s Mails im Versand:"),$hc)."</b>";
 $hsc=count($STATUS['h']['status']);
 for ($hscc=1; $hscc<=$hsc; $hscc++)//0

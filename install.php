@@ -20,7 +20,7 @@ require_once(dirname(__FILE__)."/include/install/install_conf.inc.php");
 /***********************************************************/
 //load header
 /***********************************************************/
-require_once($tm_includepath."/install/install_head.inc.php");
+require_once(TM_INCLUDEPATH."/install/install_head.inc.php");
 
 /***********************************************************/
 //Message
@@ -42,7 +42,7 @@ $MESSAGE.="<a href=\"http://www.tellmatic.org\" target=\"_blank\">HOME</a>&nbsp;
 //check if language is selected
 if (!isset($lang) || empty($lang)) {
 	//if not, include form
-	require_once($tm_includepath."/install/install_language.inc.php");
+	require_once(TM_INCLUDEPATH."/install/install_language.inc.php");
 	$MESSAGE.=$FORM_LANG;
 }
 
@@ -55,26 +55,29 @@ if (isset($lang) && !empty($lang)) {
 	//precheck
 	/***********************************************************/
 	//check for memory, permissions etc
-	require_once($tm_includepath."/install/install_check_pre.inc.php");
+	require_once(TM_INCLUDEPATH."/install/install_check_pre.inc.php");
 	//prepare registration message
 	$MESSAGE_REG="Tellmatic v1.0.7\n".
 							"Date: ".$created."\n".
 							"PHPVersion: ".phpversion()."\n".
 							"PHP Sapi: ".$php_sapi."\n".
 							"OS: ".$php_os.": ".PHP_OS."\n".
-							"DocRoot: ".$tm_docroot."\n".
-							"Domain: ".$tm_Domain."\n".
-							"Dir: ".$tm_dir."\n".
-							"Path: ".$tm_path."\n".
+							"DocRoot: ".TM_DOCROOT."\n".
+							"Domain: ".TM_DOMAIN."\n".
+							"Dir: ".TM_DIR."\n".
+							"Path: ".TM_PATH."\n".
 							"mem: ".$mem."\n".
 							"exec_time: ".$exec_time."\n".
+							"register_globals: ".ini_get("register_globals")."\n".
+							"safe_mode: ".ini_get("safe_mode")."\n".
+							"magic_quotes: ".ini_get("magic_quotes_gpc")."\n".
 							"lang: ".$lang."\n";
 	//if pre check is ok
 	if ($check) {
 		//check if license was accepted
 		if ($accept!=1) {
 			//if not, include the license form
-			require_once($tm_includepath."/install/install_license.inc.php");
+			require_once(TM_INCLUDEPATH."/install/install_license.inc.php");
 			//add rendered form to output
 			$MESSAGE.=$FORM_LICENSE;
 		}
@@ -85,23 +88,23 @@ if (isset($lang) && !empty($lang)) {
 				/***********************************************************/
 				//check form input
 				/***********************************************************/
-				if ($check) require_once($tm_includepath."/install/install_check_input.inc.php");
+				if ($check) require_once(TM_INCLUDEPATH."/install/install_check_input.inc.php");
 				/***********************************************************/
 				//check db connection
 				/***********************************************************/
-				if ($check) require_once($tm_includepath."/install/install_check_db.inc.php");
+				if ($check) require_once(TM_INCLUDEPATH."/install/install_check_db.inc.php");
 				//do install routines
-				if ($check && $checkDB) require_once($tm_includepath."/install/install_conf_sql.inc.php");
-				if ($check && $checkDB) require_once($tm_includepath."/install/install_install.inc.php");
-				if ($check && $checkDB) require_once($tm_includepath."/install/install_examples.inc.php");
-				if ($check && $checkDB) require_once($tm_includepath."/install/install_finish.inc.php");
+				if ($check && $checkDB) require_once(TM_INCLUDEPATH."/install/install_conf_sql.inc.php");
+				if ($check && $checkDB) require_once(TM_INCLUDEPATH."/install/install_install.inc.php");
+				if ($check && $checkDB) require_once(TM_INCLUDEPATH."/install/install_examples.inc.php");
+				if ($check && $checkDB) require_once(TM_INCLUDEPATH."/install/install_finish.inc.php");
 				/***********************************************************/
 				//formular anzeigen, show form
 				/***********************************************************/
 				//Daten ermitteln
 				if (!$check) {
 					//if input check and db check is not ok and form was sent
-					require_once($tm_includepath."/install/install_form.inc.php");
+					require_once(TM_INCLUDEPATH."/install/install_form.inc.php");
 					//add rendered form to outpur
 					$MESSAGE.=$FORM;
 				}
@@ -113,7 +116,7 @@ if (isset($lang) && !empty($lang)) {
 			/***********************************************************/
 			if ($set!="save" && $check) {
 				//show installation form
-				require_once($tm_includepath."/install/install_form.inc.php");
+				require_once(TM_INCLUDEPATH."/install/install_form.inc.php");
 				//add rendered form to output
 				$MESSAGE.=$FORM;
 			}//!save && check
@@ -123,10 +126,10 @@ if (isset($lang) && !empty($lang)) {
 	$MESSAGE_INFO="<hr><b>".___("Informationen")."</b><br>".___("PHP Version:")." <em>".phpversion()."</em>".
 							"<br>PHP Sapi: <em>".$php_sapi."</em>".
 							"<br>OS: <em>".$php_os.": ".PHP_OS."</em>".
-							"<br>DocRoot: <em>".$tm_docroot."</em>".
-							"<br>".___("Domain").": <em>".$tm_Domain."</em>".
-							"<br>".___("Verzeichnis").": <em>".$tm_dir."</em>".
-							"<br>".___("Installationspfad").": <em>".$tm_path."</em>".
+							"<br>DocRoot: <em>".TM_DOCROOT."</em>".
+							"<br>".___("Domain").": <em>".TM_DOMAIN."</em>".
+							"<br>".___("Verzeichnis").": <em>".TM_DIR."</em>".
+							"<br>".___("Installationspfad").": <em>".TM_PATH."</em>".
 							"<br>".___("zugewiesener Speicher für PHP").": <em>".$mem." Byte</em>".
 							"<br>".___("zugewiesene Ausführungszeit für PHP").": <em>".$exec_time." Sekunden</em>";
 	//add info message to output
@@ -170,5 +173,5 @@ echo '<div id="main" class="main">'.$MESSAGE;
 echo '<br><br>&copy;-left 2007 <a href="http://www.tellmatic.org" target="blank">Tellmatic - die Newsletter Maschine - www.tellmatic.org</a>';
 echo '</div>';
 //add footer
-require_once($tm_includepath."/install/install_foot.inc.php")
+require_once(TM_INCLUDEPATH."/install/install_foot.inc.php")
 ?>

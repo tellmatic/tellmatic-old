@@ -76,7 +76,7 @@ if ($set=="nl" && check_dbid($nl_id)) {
 	////////////////////////////////////////////////////////////////////////////////////////
 	//prepare graph
 	$chart = new HorizontalChart(640,200);
-	$chart->setLogo($tm_imgpath."/blank.png");//tellmatic_logo_256.png
+	$chart->setLogo(TM_IMGPATH."/blank.png");//tellmatic_logo_256.png
 	$hc=$QUEUE->countH(0,$nl_id);
 	//add total value to graph
 	$chart->addPoint(new Point(___("Summe")." (100%)", $hc));
@@ -126,7 +126,7 @@ if ($set=="nl" && check_dbid($nl_id)) {
 		$showadrgURLPara_=$showadrgURLPara->getAllParams();
 		$_MAIN_OUTPUT.="<br>".
 							"<br>&nbsp;&nbsp;".
-							sprintf(___("Versand an Gruppe %s"),"<a href=\"".$tm_URL."/".$showadrgURLPara_."\"><b>".display($AG[0]['name'])."</b></a>");
+							sprintf(___("Versand an Gruppe %s"),"<a href=\"".$tm_URL."/".$showadrgURLPara_."\"><b>".display($AG[0]['name'])."</b> (".tm_icon("chart_pie.png",___("Statistik anzeigen")).")</a>");
 		$_MAIN_OUTPUT.=":&nbsp;".tm_icon($STATUS['q']['statimg'][$Q[$qcc]['status']],$STATUS['q']['status'][$Q[$qcc]['status']]).
 							"&nbsp;".$STATUS['q']['status'][$Q[$qcc]['status']].
 							"&nbsp;(".$STATUS['q']['descr'][$Q[$qcc]['status']].")";
@@ -138,7 +138,7 @@ if ($set=="nl" && check_dbid($nl_id)) {
 		$hsc=count($STATUS['h']['status']);
 		//prepare graph
 		$chart = new HorizontalChart(640,200);
-		$chart->setLogo($tm_imgpath."/blank.png");//tellmatic_logo_256.png
+		$chart->setLogo(TM_IMGPATH."/blank.png");//tellmatic_logo_256.png
 		$hc=$QUEUE->countH($Q[$qcc]['id'],$Q[$qcc]['nl_id'],$AG[0]['id']);
 		//add total value to graph
 		$chart->addPoint(new Point(___("Summe")." (100%)", $hc));

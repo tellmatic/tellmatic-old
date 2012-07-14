@@ -27,14 +27,14 @@
  *   $sm_language, I think
  *
  * @link http://www.php.net/gettext Original php gettext manual
- * @version $Id: GetText.inc.php,v 1.1.1.1 2007/11/21 22:58:27 mcms09 Exp $
+ * @version $Id: GetText.inc.php,v 1.2 2007/12/11 22:36:46 mcms09 Exp $
  * @package squirrelmail
  * @subpackage i18n
  */
 
 function load_translateStrings($locale) {
-	global $translateStrings,$tm_path;
-	$filename=$tm_path."/locale/tellmatic-".$locale.".po";
+	global $translateStrings;
+	$filename=TM_PATH."/locale/tellmatic-".$locale.".po";
     $file = @fopen($filename, 'r');
     if ($file == false) {
     	exit;

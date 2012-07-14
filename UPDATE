@@ -12,14 +12,76 @@
 /********************************************************************************/
 
 UPDATE
+*+*+*+*+*+*+*+*+*+*+*+ 1.0.7.3
+--en
+	copy newer files and don't forget to set path in send_it.php after updating if you plan to use cronjobs!
+	To update earlier Versions than 1.0.7.2 please follow instructions for update to 1.0.7.2
+	
+	edit tm_config.inc.php:
+		//domain
+		$tm_Domain="http://domain.tld";
+		//absoluter pfad , docroot
+		$tm_docroot="/home/user/htdocs";
+		//script verzeichnis
+		$tm_dir="tellmatic";
+		
+		becomes:
+		
+		//domain
+		define("TM_DOMAIN","http://domain.tld");
+		//absoluter pfad , docroot
+		define("TM_DOCROOT","/home/user/htdocs");
+		//script verzeichnis
+		define("TM_DIR","tellmatic");
+	
+		and
+		
+		include ($tm_docroot."/".$tm_dir."/include/tm_lib.inc");
+		
+		becomes:
+		
+		include (TM_DOCROOT."/".TM_DIR."/include/tm_lib.inc.php");
+	
+--de
+	Kopieren Sie die neuen Dateien auf Ihren Server. Vergessen Sie nicht den Pfad in send_it.php anzupassen wenn Cronjobs genutzt werden sollen-
+	Zum Update auf 1.0.7.3 von einer frueheren Verison als 1.0.7.2 befolgen Sie bitte die Anweisungen fuer 1.0.7.2
+
+	editieren Sie anschliessend die Datei include/tm_config.inc.php:
+
+		//domain
+		$tm_Domain="http://domain.tld";
+		//absoluter pfad , docroot
+		$tm_docroot="/home/user/htdocs";
+		//script verzeichnis
+		$tm_dir="tellmatic";
+		
+		wird zu:
+		
+		//domain
+		define("TM_DOMAIN","http://domain.tld");
+		//absoluter pfad , docroot
+		define("TM_DOCROOT","/home/user/htdocs");
+		//script verzeichnis
+		define("TM_DIR","tellmatic");
+	
+		und
+		
+		include ($tm_docroot."/".$tm_dir."/include/tm_lib.inc");
+		
+		wird zu:
+		
+		include (TM_DOCROOT."/".TM_DIR."/include/tm_lib.inc.php");
+
+
+
 *+*+*+*+*+*+*+*+*+*+*+ 1.0.7.2
 --en
 	copy newer files and don't forget to set path in send_it.php after updating if you plan to use cronjobs!
-	To update earlier Versions than 1.0.7 please follow instructions for update to 1.0.7
+	To update earlier Versions than 1.0.7.1 please follow instructions for update to 1.0.7.1
 	
 --de
-	Kopieren Sie die neuen Dateien auf Ihren Server. Vergessen Sie nihct den Pfad in send_it.php anzupassen wenn Cronjobs genutzt werden sollen-
-	Zum Update auf 1.0.7.2 von einer frueheren Verison als 1.0.7 befolgen Sie bitte die Anweisungen fuer 1.0.7
+	Kopieren Sie die neuen Dateien auf Ihren Server. Vergessen Sie nicht den Pfad in send_it.php anzupassen wenn Cronjobs genutzt werden sollen-
+	Zum Update auf 1.0.7.2 von einer frueheren Version als 1.0.7.1 befolgen Sie bitte die Anweisungen fuer 1.0.7.1
 
 *+*+*+*+*+*+*+*+*+*+*+ 1.0.7.1
 --en
@@ -27,7 +89,7 @@ UPDATE
 	To update earlier Versions than 1.0.7 please follow instructions for update to 1.0.7
 	
 --de
-	Kopieren Sie die neuen Dateien auf Ihren Server. Vergessen Sie nihct den Pfad in send_it.php anzupassen wenn Cronjobs genutzt werden sollen-
+	Kopieren Sie die neuen Dateien auf Ihren Server. Vergessen Sie nicht den Pfad in send_it.php anzupassen wenn Cronjobs genutzt werden sollen-
 	Zum Update auf 1.0.7.1 von einer frueheren Verison als 1.0.7 befolgen Sie bitte die Anweisungen fuer 1.0.7
 
 UPDATE

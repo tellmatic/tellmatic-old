@@ -61,7 +61,7 @@ if ($set=="save") {
 				$tm_htpasswd.=$USERS[$ucc]['name'].":".$USERS[$ucc]['crypt']."\n";
 			}
 			//neue .htpasswd schreiben!
-			write_file($tm_includepath,".htpasswd",$tm_htpasswd);
+			write_file(TM_INCLUDEPATH,".htpasswd",$tm_htpasswd);
 			$usr_message.="<br>".___("Eine neue .htpasswd Datei wurde erzeugt.")."<br>";
 			$pwchanged=1;
 		}
@@ -80,12 +80,12 @@ if ($set=="save") {
 
 //read css directories and check for stylesheets and template directories
 $CSSDirs=Array();
-$CSSDirsTmp=getCSSDirectories($tm_path."/css");
+$CSSDirsTmp=getCSSDirectories(TM_PATH."/css");
 $css_c=count($CSSDirsTmp);
 $css_i=0;
 for ($css_cc=0; $css_cc < $css_c; $css_cc++) {
-	$css_file=$tm_path."/css/".$CSSDirsTmp[$css_cc]."/tellmatic.css";
-	$tpl_dir=$tm_tplpath."/".$CSSDirsTmp[$css_cc];
+	$css_file=TM_PATH."/css/".$CSSDirsTmp[$css_cc]."/tellmatic.css";
+	$tpl_dir=TM_TPLPATH."/".$CSSDirsTmp[$css_cc];
 	if (file_exists($css_file)) {
 		if (is_dir($tpl_dir)) {
 			$CSSDirs[$css_i]["dir"]=$CSSDirsTmp[$css_cc];
@@ -99,5 +99,5 @@ unset($CSSDirsTmp);
 $$InputName_Style=$LOGIN->USER['style'];
 $$InputName_Lang=$LOGIN->USER['lang'];
 $$InputName_Expert=$LOGIN->USER['expert'];
-require_once ($tm_includepath."/user_form.inc.php");
+require_once (TM_INCLUDEPATH."/user_form.inc.php");
 ?>

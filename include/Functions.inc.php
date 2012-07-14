@@ -63,8 +63,7 @@ function undoMagicQuotes($array, $topLevel=true) {
 }
 
 function remove_old_admin_files() {
-	global $tm_path;
-	$path=$tm_path."/admin/tmp";
+	$path=TM_PATH."/admin/tmp";
 	$Return="";
 	$F=Array();
 	$dc=0;

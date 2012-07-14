@@ -48,9 +48,9 @@ if ($set=="save") {
 					));
 		$_MAIN_MESSAGE.="<br>".sprintf(___("Adressgruppe %s wurde aktualisiert."),"'<b>".display($name)."</b>'");
 		$action="adr_grp_list";
-		include_once ($tm_includepath."/adr_grp_list.inc.php");
+		include_once (TM_INCLUDEPATH."/adr_grp_list.inc.php");
 	} else {
-		include_once ($tm_includepath."/adr_grp_form.inc.php");
+		include_once (TM_INCLUDEPATH."/adr_grp_form.inc.php");
 	}
 
 } else {
@@ -60,6 +60,6 @@ if ($set=="save") {
 	$descr=$GRP[0]['descr'];
 	$aktiv=$GRP[0]['aktiv'];
 	$standard=$GRP[0]['standard'];
-	include_once ($tm_includepath."/adr_grp_form.inc.php");
+	include_once (TM_INCLUDEPATH."/adr_grp_form.inc.php");
 }
 ?>

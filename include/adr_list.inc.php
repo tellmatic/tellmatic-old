@@ -43,7 +43,7 @@ if (!isset($search)) {
 	$search=Array();
 }
 
-require_once ($tm_includepath."/adr_search.inc.php");
+require_once (TM_INCLUDEPATH."/adr_search.inc.php");
 
 
 
@@ -148,7 +148,7 @@ $statURLPara=$mSTDURL;
 $statURLPara->addParam("act","statistic");
 $statURLPara->addParam("set","adr");
 
-include($tm_includepath."/pager.inc.php");
+include(TM_INCLUDEPATH."/pager.inc.php");
 
 $_MAIN_OUTPUT.="<table border=\"0\" cellpadding=\"1\" cellspacing=\"1\" width=\"100%\">";
 $_MAIN_OUTPUT.= "<thead>".
@@ -286,6 +286,6 @@ for ($acc=0;$acc<$ac;$acc++) {
 
 $_MAIN_OUTPUT.= "</tbody></table>";
 
-include($tm_includepath."/pager.inc.php");
-require_once($tm_includepath."/adr_list_legende.inc.php");
+include(TM_INCLUDEPATH."/pager.inc.php");
+require_once(TM_INCLUDEPATH."/adr_list_legende.inc.php");
 ?>

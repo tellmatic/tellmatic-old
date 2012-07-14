@@ -255,5 +255,5 @@ for ($acc=0;$acc<$ac;$acc++) {
 
 $_MAIN_OUTPUT.= "</tbody></table>";
 
-include($tm_includepath."/form_list_legende.inc.php");
+include(TM_INCLUDEPATH."/form_list_legende.inc.php");
 ?>

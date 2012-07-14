@@ -19,15 +19,15 @@
 	*
 	*/
 
-	require_once $tm_includepath."/libchart-1.1/classes/Point.php";
-	require_once $tm_includepath."/libchart-1.1/classes/Axis.php";
-	require_once $tm_includepath."/libchart-1.1/classes/Color.php";
-	require_once $tm_includepath."/libchart-1.1/classes/Primitive.php";
-	require_once $tm_includepath."/libchart-1.1/classes/Text.php";
-	require_once $tm_includepath."/libchart-1.1/classes/Chart.php";
-	require_once $tm_includepath."/libchart-1.1/classes/PieChart.php";
-	require_once $tm_includepath."/libchart-1.1/classes/BarChart.php";
-	require_once $tm_includepath."/libchart-1.1/classes/LineChart.php";
-	require_once $tm_includepath."/libchart-1.1/classes/VerticalChart.php";
-	require_once $tm_includepath."/libchart-1.1/classes/HorizontalChart.php";
+	require_once TM_INCLUDEPATH."/libchart-1.1/classes/Point.php";
+	require_once TM_INCLUDEPATH."/libchart-1.1/classes/Axis.php";
+	require_once TM_INCLUDEPATH."/libchart-1.1/classes/Color.php";
+	require_once TM_INCLUDEPATH."/libchart-1.1/classes/Primitive.php";
+	require_once TM_INCLUDEPATH."/libchart-1.1/classes/Text.php";
+	require_once TM_INCLUDEPATH."/libchart-1.1/classes/Chart.php";
+	require_once TM_INCLUDEPATH."/libchart-1.1/classes/PieChart.php";
+	require_once TM_INCLUDEPATH."/libchart-1.1/classes/BarChart.php";
+	require_once TM_INCLUDEPATH."/libchart-1.1/classes/LineChart.php";
+	require_once TM_INCLUDEPATH."/libchart-1.1/classes/VerticalChart.php";
+	require_once TM_INCLUDEPATH."/libchart-1.1/classes/HorizontalChart.php";
 ?>

@@ -18,13 +18,13 @@ if ($check) {
 
 /***********************************************************/
 			$MESSAGE.= "Herzlichen Glückwunsch,<br>\n".
-					"<br>Die Installation der Tellmatic Newslettermaschine auf ".$tm_Domain."/".$tm_dir." war erfolgreich.<br>\n".
-					"<br>Besuchen Sie <br><a href=\"".$tm_Domain."/".$tm_dir."/admin/index.php\">".$tm_Domain."/".$tm_dir."/admin/index.php</a><br>\n".
+					"<br>Die Installation der Tellmatic Newslettermaschine auf ".TM_DOMAIN."/".TM_DIR." war erfolgreich.<br>\n".
+					"<br>Besuchen Sie <br><a href=\"".TM_DOMAIN."/".TM_DIR."/admin/index.php\">".TM_DOMAIN."/".TM_DIR."/admin/index.php</a><br>\n".
 					"und melden sich mit Ihrem Benutzernamen und Passwort an.<br>";
 
 			$MESSAGE.= "<br><br>Congratulations,<br>\n".
-					"<br>Installation of Tellmatic Newslettermaschine on ".$tm_Domain."/".$tm_dir." was successful.<br>\n".
-					"<br>Visit <br><a href=\"".$tm_Domain."/".$tm_dir."/admin/index.php\">".$tm_Domain."/".$tm_dir."/admin/index.php</a><br>\n".
+					"<br>Installation of Tellmatic Newslettermaschine on ".TM_DOMAIN."/".TM_DIR." was successful.<br>\n".
+					"<br>Visit <br><a href=\"".TM_DOMAIN."/".TM_DIR."/admin/index.php\">".TM_DOMAIN."/".TM_DIR."/admin/index.php</a><br>\n".
 					"and log in with your username and password.<br>";
 
 

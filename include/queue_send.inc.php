@@ -15,9 +15,7 @@
 $_MAIN_DESCR=___("Newsletter versenden");
 $_MAIN_MESSAGE.="";
 
-$set=getVar("set");
-$val=getVar("val");
-$doit=getVar("doit");//wird per js an url angefuegt!!! confirm()
+require_once (TM_INCLUDEPATH."/queue_vars.inc.php");
 
 $QUEUE=new tm_Q();
 $NEWSLETTER=new tm_NL();
@@ -153,5 +151,8 @@ $_MAIN_MESSAGE.="<br>".sprintf(___("Es wurden %s gültige Adressen für den Vers
 
 $_MAIN_MESSAGE.="<br><br>".___("Der Versand wurde gestartet!");
 $action="nl_list";
-include_once ($tm_includepath."/nl_list.inc.php");
+#require_once (TM_INCLUDEPATH."/nl_list.inc.php");
+//show q list instead
+require_once (TM_INCLUDEPATH."/queue_list.inc.php");
+
 ?>

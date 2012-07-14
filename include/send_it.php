@@ -15,8 +15,7 @@
 //send_it.php version 3, smtp direkt + massenmailing!
 
 require_once ("./tm_config.inc.php");
-require_once($tm_includepath."/Class_SMTP.inc.php");
-#require_once ($tm_includepath."/phphtmlparser/html2text.inc");
+require_once(TM_INCLUDEPATH."/Class_SMTP.inc.php");
 
 $QUEUE=new tm_Q();
 $NEWSLETTER=new tm_NL();
@@ -41,31 +40,30 @@ $qc=count($Q);//wieviel zu sendende q eintraege gibt es?
 for ($qcc=0;$qcc<$qc;$qcc++) {
 	$logfilename="q_".$Q[$qcc]['id']."_".$Q[$qcc]['grp_id']."_".date_convert_to_string($Q[$qcc]['created']).".log.html";
 
-	send_log("<pre>\n".($qcc+1)." of $qc Qs\nbegin\n");
+	send_log("<pre>\n".date("Y-m-d H:i:s").": ".($qcc+1)." of $qc Qs\nbegin\n");
 	//wenn Q status gestartet oder running // 2 oder 3
-		send_log("\n\n".date("Y-m-d H:i:s")."\n");
-		send_log( "\n QID=".$Q[$qcc]['id']);
-		send_log(  "\n Status=".$Q[$qcc]['status']);
-		send_log(  "\n nl_id=".$Q[$qcc]['nl_id']);
-		send_log(  "\n grp_id=".$Q[$qcc]['grp_id']);
+		send_log( "\n".date("Y-m-d H:i:s").": QID=".$Q[$qcc]['id']);
+		send_log(  "\n".date("Y-m-d H:i:s").": Status=".$Q[$qcc]['status']);
+		send_log(  "\n".date("Y-m-d H:i:s").": nl_id=".$Q[$qcc]['nl_id']);
+		send_log(  "\n".date("Y-m-d H:i:s").": grp_id=".$Q[$qcc]['grp_id']);
 
 		//set status = running =3
-		send_log(  "\n set q status=3");
+		send_log(  "\n".date("Y-m-d H:i:s").": set q status=3");
 		$QUEUE->setStatus($Q[$qcc]['id'],3);//running
 
 		//Newsletter holen
-		send_log(  "\n get nl");
+		send_log(  "\n".date("Y-m-d H:i:s").": get nl");
 		$NL=$NEWSLETTER->getNL($Q[$qcc]['nl_id']);
 
 
 		//status fuer nl auf 3=running setzen
-		send_log(  "\n set nl status=3");
+		send_log(  "\n".date("Y-m-d H:i:s").": set nl status=3");
 		$NEWSLETTER->setStatus($NL[0]['id'],3);//versand gestartet
 
 
 		//wenn q status==2, neu... dann mail an admin das versenden gestartet wurde....
 		if ($Q[$qcc]['status']==2) {
-			send_log(  "\n q status =2, sending mail to admin");
+			send_log(  "\n".date("Y-m-d H:i:s").": q status =2, sending mail to admin");
 			$G=$ADDRESS->getGroup($Q[$qcc]['grp_id']);
 			//report an sender....
 			$ReportMail_Subject="Tellmatic: Start sending Newsletter (QId: ".$Q[$qcc]['id']." / ".$Q[$qcc]['created'].") ".display($NL[0]['subject'])." an ".display($G[0]['name']);
@@ -105,7 +103,7 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 
 		//Bild
 		if (file_exists($tm_nlimgpath."/".$NL_Imagename1)) {
-			send_log(  "\n  NL Image:".$tm_URL_FE."/".$tm_nlimgdir."/".$NL_Imagename1);
+			send_log(  "\n".date("Y-m-d H:i:s").":  NL Image:".$tm_URL_FE."/".$tm_nlimgdir."/".$NL_Imagename1);
 			$IMAGE1_URL=$tm_URL_FE."/".$tm_nlimgdir."/".$NL_Imagename1;
 			$IMAGE1="<img src=\"".$IMAGE1_URL."\" border=0>";
 		}
@@ -114,7 +112,7 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 		$ATTM=Array();
 		$attach_file=false;
 		if (file_exists($NL_Attachfile1)) {
-			send_log(  "\n  NL Attachement:".$tm_URL_FE."/".$tm_nlattachdir."/a".date_convert_to_string($NL[0]['created'])."_1.".$NL[0]['attm']);
+			send_log(  "\n".date("Y-m-d H:i:s").":  NL Attachement:".$tm_URL_FE."/".$tm_nlattachdir."/a".date_convert_to_string($NL[0]['created'])."_1.".$NL[0]['attm']);
 			$attach_file=true;
 			$ATTM=array(
 					"FileName"=>$NL_Attachfile1,
@@ -133,9 +131,9 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 		//unsubscribe ist auch personalisiert
 		//blindimage ist auch personalisiert
 
-		send_log(  "\n prepare e-Mailobject");
-		send_log(  "\n From $FromName ($From)");
-		send_log(  "\n Subject".display($NL[0]['subject']));
+		send_log(  "\n".date("Y-m-d H:i:s").": prepare e-Mailobject");
+		send_log(  "\n".date("Y-m-d H:i:s").": From $FromName ($From)");
+		send_log(  "\n".date("Y-m-d H:i:s").": Subject".display($NL[0]['subject']));
 
 		//emailobjekt vorbereiten, wird dann kopiert, hier globale einstellungen
 		$email_obj=new smtp_message_class;//use SMTP!
@@ -186,63 +184,62 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 		//$max_mails=$max_mails_atonce;
 		$massmail=false;
 		if ($NL[0]['massmail']==1) {
-			send_log(  "\n massmailing");
+			send_log(  "\n".date("Y-m-d H:i:s").": massmailing");
 			$massmail=true;
 		} else {
 			// hier setzen wir auf 1 damit wir nur einmal die anzal zu berechnen brauchen!
 			//personalisiertes newsletter!
-			send_log(  "\n personalized newsletter!");
+			send_log(  "\n".date("Y-m-d H:i:s").": personalized newsletter!");
 			//max bcc adressen =1
 			$max_mails_bcc=1;
 		}
 
 		$max_mails=($max_mails_atonce * $max_mails_bcc);//maximale anzahl zu bearbeitender mails/empfaenger insgesamt! faktor max_mails_bcc
 
-		send_log(  "\n creating list");
+		send_log(  "\n".date("Y-m-d H:i:s").": creating list");
 		//aktuel offene versandauftraege
 		$H=$QUEUE->getHtoSend(0,0,$max_mails,$Q[$qcc]['id']);//id , offset, limit, q_id !!!, ....
 		$hc=count($H);//wieviel sendeeintraege
 
-		send_log(  "\n  ".$hc." Entrys found\n");
+		send_log(  "\n".date("Y-m-d H:i:s").":  ".$hc." Entrys found\n");
 
 		$time=$T->MidResult();
-		send_log(  "\n time: ".$time);
+		send_log(  "\n".date("Y-m-d H:i:s").": time: ".$time);
 
-		send_log(  "\n working on total $max_mails addresses in $max_mails_atonce mails with $max_mails_bcc recipients for each mail");
+		send_log(  "\n".date("Y-m-d H:i:s").": working on total $max_mails addresses in $max_mails_atonce mails with $max_mails_bcc recipients for each mail");
 
 		//wenn massenmailing, body hier schon parsen!!!
 		if ($massmail) {
 			//to fuer massenmailing
-			send_log(  "\n prepare Massmail");
+			send_log(  "\n".date("Y-m-d H:i:s").": prepare Massmail");
 			//argh, this class forces us to add a to header which is definitely not needed if we have bcc or cc!!!
 			$To=$From;
 			$ToName="Newsletter";
 
-			#send_log(  "\n   set To: Header $ToName ($To)");
-			send_log(  "\n   TO: NOT SET, USING BCC");
+			send_log(  "\n".date("Y-m-d H:i:s").":  TO: NOT SET, USING BCC");
 			//dont add to: header in massmails, only use bcc! but:
 			#$email_obj->SetEncodedEmailHeader("To",$To,$ToName);
 
-			send_log(  "\n prepare Template Vars for Massmail");
+			send_log(  "\n".date("Y-m-d H:i:s").": prepare Template Vars for Massmail");
 			$BLINDIMAGE_URL=$tm_URL_FE."/news_blank.png.php?nl_id=".$Q[$qcc]['nl_id'];
 			$UNSUBSCRIBE_URL=$tm_URL_FE."/unsubscribe.php?nl_id=".$Q[$qcc]['nl_id'];
 
 			$SUBSCRIBE_URL=$tm_URL_FE."/subscribe.php?doptin=1&c=&email=";
 			$SUBSCRIBE="<a href=\"".$SUBSCRIBE_URL."\" target=\"_blank\">";
-			send_log(  "\n   Subscribe (touch/double optin): ".$SUBSCRIBE_URL);
+			send_log(  "\n".date("Y-m-d H:i:s").":   Subscribe (touch/double optin): ".$SUBSCRIBE_URL);
 
 			$BLINDIMAGE="<img src=\"".$BLINDIMAGE_URL."\" border=0>";
-			send_log(  "\n   Blindimage: ".$BLINDIMAGE_URL);
+			send_log(  "\n".date("Y-m-d H:i:s").":   Blindimage: ".$BLINDIMAGE_URL);
 			//link zu unsubscribe
 			$UNSUBSCRIBE="<a href=\"".$UNSUBSCRIBE_URL."\" target=\"_blank\">";
-			send_log(  "\n   Unsubscribe: ".$UNSUBSCRIBE_URL);
+			send_log(  "\n".date("Y-m-d H:i:s").":   Unsubscribe: ".$UNSUBSCRIBE_URL);
 
 			if (!empty($NL[0]['link'])) {
 				$LINK1_URL=$tm_URL_FE."/click.php?nl_id=".$Q[$qcc]['nl_id'];
 				$LINK1="<a href=\"".$LINK1_URL."\" target=\"_blank\">";
-				send_log(  "\n   Link1: ".$LINK1_URL);
+				send_log(  "\n".date("Y-m-d H:i:s").":   Link1: ".$LINK1_URL);
 			}
-			send_log(  "\n     parse Template - Massmailing");
+			send_log(  "\n".date("Y-m-d H:i:s").":     parse Template - Massmailing");
 			$_Tpl_NL=new tm_Template();
 			$_Tpl_NL->setTemplatePath($tm_nlpath);
 			$_Tpl_NL->setParseValue("IMAGE1", $IMAGE1);
@@ -273,7 +270,7 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 			$_Tpl_NL->setParseValue("F7","");
 			$_Tpl_NL->setParseValue("F8","");
 			$_Tpl_NL->setParseValue("F9","");
-			send_log(  "\n   render Template");
+			send_log(  "\n".date("Y-m-d H:i:s").":   render Template");
 			//Template rendern und body zusammenbauen
 			//render template. this will load the saved newsletter template and render it. this is useful if you edit your template with a texteditor and update via ftp etc 
 			$NLBODY=$_Tpl_NL->renderTemplate($NL_Filename_N);//$_Tpl_NL->renderTemplate($NL_Filename_N)//html
@@ -286,11 +283,11 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 		//bei massenmail..... immer um max_mails_bcc erhoehen!
 		//(max_mails_bcc) * (hcc/max_mails_bcc) ??? limit... hc
 		for ($hcc=0;$hcc<$hc;$hcc=$hcc+$max_mails_bcc) { //$hcc=$hcc+$max_mails_bcc //war : $hcc++, jetzt ist offset!
-			send_log(  "\n ----------------------------------------------------");
-			send_log(  "\n\n runnning Entry $hcc to $hcc+$max_mails_bcc");
+			send_log(  "\n".date("Y-m-d H:i:s").": ----------------------------------------------------");
+			send_log(  "\n\n".date("Y-m-d H:i:s").": runnning Entry $hcc to $hcc+$max_mails_bcc");
 
 			//NEUE EMAIL bauen
-			send_log(  "\n create New Mail");
+			send_log(  "\n".date("Y-m-d H:i:s").": create New Mail");
 			$email_message=$email_obj;
 
 			//schleife... max mails bcc
@@ -299,7 +296,7 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 			$BCC_Arr=Array();
 			for ($bcc=$hcc;$bcc<$bc;$bcc++) {
 				if (isset($H[$bcc]['id'])) {
-						send_log(  "\n   $bcc : ");
+						send_log(  "\n".date("Y-m-d H:i:s").":   $bcc : ");
 						// ok, wir muessen nun um zu vermeiden,
 						// das bei gleichzeitigen aufrufen doppelte mails verschickt werden,
 						// den status erneut abfragen auf 5=running, und wenn nichts gefunden wurde
@@ -307,7 +304,8 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 
 						//aktuellen eintrag abrufen und auf status 5 pruefen! ebenfalls ob nicht schon status fertig etc.
 						//$HRun=$QUEUE->getH($H[$bcc]['id'],0,0,0,0,0,0,5);
-						//wir drehen es um, wir pruefen nur ob dieser eintrag in der sendeliste auch noch auf status 1, warten auf versand, steht....
+						//wir drehen es um, wir pruefen nur ob dieser eintrag in der sendeliste auch noch auf status 1, warten auf versand=neu, steht....
+						//function getH($id=0,$offset=0,$limit=0,$q_id=0,$nl_id=0,$grp_id=0,$adr_id=0,$status=0) {
 						$HWait=$QUEUE->getH($H[$bcc]['id'],0,0,0,0,0,0,1);
 						//und wenn nun hc_run==1 ist, dann senden
 						//eigentlich muesste die variable nun HWait und hc_wait heissen!
@@ -322,14 +320,14 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 						//umgedreht:
 						//if ($hc_run==0) { //ok
 						//jetzt abfragen ob was gefunden fuer status wait==1
-						send_log( "\n     HID: ".$H[$bcc]['id']." adrid:".$H[$bcc]['adr_id']." ");
+						send_log( "\n".date("Y-m-d H:i:s").":     HID: ".$H[$bcc]['id']." adrid:".$H[$bcc]['adr_id']." h_status: ".$H[$bcc]['status']."==1");
 						if ($hc_wait>0) { //ok
 							
 							$send_it=true;//wird gebraucht um versenden abzufangen wenn aktuell bearbeiteter eintrag
 							
-							send_log( "\n     OK: HID: ".$H[$bcc]['id']." adrid:".$H[$bcc]['adr_id']." --- ");
+							send_log( "\n".date("Y-m-d H:i:s").":     OK: HID: ".$H[$bcc]['id']." adrid:".$H[$bcc]['adr_id']." --- ");
 							//adresse holen
-							send_log(  "  getAdr() ");
+							send_log(  "\n".date("Y-m-d H:i:s").":     getAdr() ");
 							$ADR=$ADDRESS->getAdr($H[$bcc]['adr_id']);
 
 							//nur senden wenn korrekte emailadr! und fehlerrate < max errors
@@ -338,21 +336,30 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 							$a_error=false;
 							$h_error=false;
 							$a_status=$ADR[0]['status'];
+							//vor der pruefung auf valide email status schon auf 5 setzen, 
+							//ist ggf doppelt gemobbelt, kann aber ggf. unter bestimmten Umstaenden dazu fuehren
+							// das eine validierung auf gueltigen mx etwas laenger dauert, 
+							//der job mit einem anderen konkurriert und waehrend die 
+							//pruefung und mx abfrage laeuft der konkurrierende job sich die adresse krallt, man weiss nix genaues nich ;)
+							send_log(  "\n".date("Y-m-d H:i:s").":  setHStatus 5 ");
+							$QUEUE->setHStatus($H[$bcc]['id'],5);
+							//email pruefen
 							$check_mail=checkEmailAdr($ADR[0]['email'],$EMailcheck_Intern);
 							if ($check_mail[0] && $ADR[0]['errors']<=$max_mails_retry) {
-								send_log(  "   checkemail: OK");
+								send_log(  "\n".date("Y-m-d H:i:s").":   checkemail: OK");
 								//wenn adresse auch wirklich aktiv etc.
 								if ($ADR[0]['aktiv']==1) {
-									send_log(  " Aktiv: OK");
+									send_log(  "\n".date("Y-m-d H:i:s").": Aktiv: OK");
 									//status adresse pruefen , kann sich seit eintrag in die liste geaendert haben!
 									if ($ADR[0]['status']==1 || $ADR[0]['status']==2 || $ADR[0]['status']==3 || $ADR[0]['status']==4  || $ADR[0]['status']==10 || $ADR[0]['status']==12) {
-										send_log(  " Adr-Status: OK (1|2|3|4|10|12)");
+										send_log(  "\n".date("Y-m-d H:i:s").": Adr-Status: OK (1|2|3|4|10|12)");
 										$h_status=5;
 									} else {//adr status
 										//////wenn adresse nicht richtigen status, status geaendert wurde nachdem h sendeliste erzeugt....
 										/////$a_error=true;
 										/////$a_status=8;//fehler, status changed!
 										////nein ! ^^ fehler! wir belassen den alten status!!!!
+										send_log(  "\n".date("Y-m-d H:i:s").": Adr-Status: NOT OK !=(1|2|3|4|10|12)");
 										$h_status=4;//fehler , aber hier machen wir nen fehler!
 										$h_error=true;
 									}//adr status
@@ -360,6 +367,7 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 								} else {//adr aktiv
 										//addresse nicht aktiv
 										//$a_status=8;//fehler, status changed! // adresse wurde zwischenzeitlich deaktiviert, wir belassen alten status!!!
+										send_log(  "\n".date("Y-m-d H:i:s").": Adr not active ");
 										$h_status=4;//fehler
 										$h_error=true;
 										//$a_error=true;wir belassen alten status!!!
@@ -371,19 +379,19 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 								$a_error=true;
 								$h_status=4;//fehler
 								$h_error=true;
-								send_log(  "\n 	ERROR: invalid email: ".$ADR[0]['email']." ".$check_mail[1]);
+								send_log(  "\n".date("Y-m-d H:i:s").": 	ERROR: invalid email: ".$ADR[0]['email']." ".$check_mail[1]);
 							}//wenn errors < max errors
 
 							if ($a_error) {
-								send_log(  "\n 	ERROR: set adr status=$a_status");
+								send_log(  "\n".date("Y-m-d H:i:s").": 	ERROR: set adr status=$a_status");
 								//$ADDRESS->setStatus($H[$bcc]['adr_id'],$a_status);
 								$ADDRESS->setStatus($ADR[0]['id'],$a_status);
 								$ADDRESS->setAError($ADR[0]['id'],($ADR[0]['errors']+1));//fehler um 1 erhoehen
 								//ADR Status
-								send_log(  "\n      err new: ".($ADR[0]['errors']+1));
+								send_log(  "\n".date("Y-m-d H:i:s").":      err new: ".($ADR[0]['errors']+1));
 							}
 
-							send_log(  ", set h status=$h_status");
+							send_log(  "\n".date("Y-m-d H:i:s").":   set h status=$h_status");
 							$QUEUE->setHStatus($H[$bcc]['id'],$h_status);
 							$created=date("Y-m-d H:i:s");
 							$QUEUE->setHSentDate($H[$bcc]['id'],$created);
@@ -393,14 +401,14 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 
 							if (!$a_error && !$h_error)	{
 								if (!$massmail) {
-									send_log(  "\n   prepare Template for personal Newsletter");
+									send_log(  "\n".date("Y-m-d H:i:s").":   prepare Template for personal Newsletter");
 									//tracker images und link, unsubscribe! da personalisiert kann erst hie rzusammengesetzt werden
 									//bild fuer anzeigecheck! funktioniert nur bei html anzeige
 									//als parameter dienen h_id nl_id und adr_id
 									//nur nl_id bei massenmails! evtl qid wenn man unbedingt noch was auswerten will welche gruppe wieviel bekommen hat etc, geldesen... bla, views + clicks in q
 									$BLINDIMAGE_URL=$tm_URL_FE."/news_blank.png.php?h_id=".$H[$hcc]['id']."&nl_id=".$H[$hcc]['nl_id']."&a_id=".$H[$hcc]['adr_id'];
 									$BLINDIMAGE="<img src=\"".$BLINDIMAGE_URL."\" border=0>";
-									send_log(  "\n   Blindimage: ".$BLINDIMAGE_URL);
+									send_log(  "\n".date("Y-m-d H:i:s").":   Blindimage: ".$BLINDIMAGE_URL);
 									//link zu unsubscribe
 									$UNSUBSCRIBE_URL=$tm_URL_FE."/unsubscribe.php?h_id=".$H[$hcc]['id']."&nl_id=".$H[$hcc]['nl_id']."&a_id=".$H[$hcc]['adr_id']."&c=".$ADR[0]['code'];
 									$UNSUBSCRIBE="<a href=\"".$UNSUBSCRIBE_URL."\" target=\"_blank\">";
@@ -409,18 +417,18 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 									$SUBSCRIBE="<a href=\"".$SUBSCRIBE_URL."\" target=\"_blank\">";
 
 
-									send_log(  "\n   Unsubscribe: ".$UNSUBSCRIBE_URL);
-									send_log(  "\n   Subscribe (touch/double optin): ".$SUBSCRIBE_URL);
+									send_log(  "\n".date("Y-m-d H:i:s").":   Unsubscribe: ".$UNSUBSCRIBE_URL);
+									send_log(  "\n".date("Y-m-d H:i:s").":   Subscribe (touch/double optin): ".$SUBSCRIBE_URL);
 
 									if (!empty($NL[0]['link'])) {
 										$LINK1_URL=$tm_URL_FE."/click.php?h_id=".$H[$hcc]['id']."&nl_id=".$H[$hcc]['nl_id']."&a_id=".$H[$hcc]['adr_id'];
 									}
 									$LINK1="<a href=\"".$LINK1_URL."\" target=\"_blank\">";
-									send_log(  "\n   Link1: ".$LINK1_URL);
+									send_log(  "\n".date("Y-m-d H:i:s").":   Link1: ".$LINK1_URL);
 
 								//Template parsen!
 
-									send_log(  "\n     parse Template - personal Mailing");
+									send_log(  "\n".date("Y-m-d H:i:s").":     parse Template - personal Mailing");
 									$_Tpl_NL=new tm_Template();
 									$_Tpl_NL->setTemplatePath($tm_nlpath);
 									$_Tpl_NL->setParseValue("IMAGE1", $IMAGE1);
@@ -452,24 +460,24 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 									$_Tpl_NL->setParseValue("F7", $ADR[0]['f7']);
 									$_Tpl_NL->setParseValue("F8", $ADR[0]['f8']);
 									$_Tpl_NL->setParseValue("F9", $ADR[0]['f9']);
-									send_log(  "\n   render Template");
+									send_log(  "\n".date("Y-m-d H:i:s").":   render Template");
 									//Template rendern und body zusammenbauen
 									$NLBODY=$_Tpl_NL->renderTemplate($NL_Filename_N);//html
 									$NLBODY_TEXT=$NEWSLETTER->convertNL2Text($NLBODY,$NL[0]['content_type']);
 								}
 
-								send_log(  "\n    create Mail, set To/From");
+								send_log(  "\n".date("Y-m-d H:i:s").":    create Mail, set To/From");
 								//Name darf nicht = email sein und auch kein komma enthalten, plaintext!
-								send_log(  "\n      prepare Header for");
+								send_log(  "\n".date("Y-m-d H:i:s").":      prepare Header for");
 								//to etc fuer personalisiertes nl:
 								if (!$massmail) {
-									send_log(  " personal Mailing, add TO: ");
+									send_log(  "\n".date("Y-m-d H:i:s").": personal Mailing, add TO: ");
 									$To=$ADR[0]['email'];
 									$ToName="Newsletter";
 									$email_message->SetEncodedEmailHeader("To",$To,$ToName);//bei massenmailing tun wir das schon oben
 								}
 								if ($massmail) {
-									send_log(  " Massmailing, add BCC: ");
+									send_log(  "\n".date("Y-m-d H:i:s").": Massmailing, add BCC: ");
 									$BCC.=$ADR[0]['email'];
 									$BCC_Arr[$ADR[0]['email']]=$ADR[0]['email'];//create array required by message class.... grml
 									if ($bcc<($bc-1) && isset($H[($bcc+1)]['adr_id'])) {
@@ -477,28 +485,28 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 									}
 								}//massenmail
 
-								send_log(  $ADR[0]['email']);
+								send_log("\n".date("Y-m-d H:i:s").":  ".$ADR[0]['email']);
 								//send_log(  "\n      count NL");
 								$ADDRESS->addNL($ADR[0]['id']);//newsletter counter hochzaehlen!
-								send_log(  "\n      no.: ".$bcc." | email: ".$ADR[0]['email']." | id:".$ADR[0]['id']." | status_A: ".$ADR[0]['status']."/".$a_status." | status_H: ".$H[$bcc]['status']."/".$h_status." err : ".$ADR[0]['errors']);
+								send_log(  "\n".date("Y-m-d H:i:s").":      no.: ".$bcc." | email: ".$ADR[0]['email']." | id:".$ADR[0]['id']." | status_A: ".$ADR[0]['status']."/".$a_status." | status_H: ".$H[$bcc]['status']."/".$h_status." err : ".$ADR[0]['errors']);
 							} else {// !$a_error && !$h_error
-								send_log(  "\n *** Address: Error");
+								send_log(  "\n".date("Y-m-d H:i:s").": *** Address: Error");
 							}
 						} else {//hc_run==0 bzw $hc_wait>0
 							//nix machen
 							//send_log(  "\n *** Eintrag wird gerade versendet und wird uebersprungen");
-							send_log(  "\n *** Entry was already processed");
+							send_log(  "\n".date("Y-m-d H:i:s").": *** Entry was already processed");
 							if (!$massmail) {
 								$send_it=false;
 							}
 						}
 					} else {//if isset h[bcc][id]
-						send_log(  "\n *** h[][id] not set");
+						send_log(  "\n".date("Y-m-d H:i:s").": *** h[][id] not set");
 					}
 				}//for bcc
 
 				if ($massmail) {
-					send_log(  "\n\n BCC=".$BCC."\n\n");
+					send_log(  "\n\n".date("Y-m-d H:i:s").": BCC=".$BCC."\n\n");
 					##$email_message->SetEncodedEmailHeader("Bcc",$BCC,"");
 					#$email_message->SetHeader("Bcc",$BCC);
 					$email_message->SetMultipleEncodedEmailHeader('BCC', $BCC_Arr);
@@ -509,20 +517,20 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 			$send_ok=false;
 
 			if (!$a_error && !$h_error && $send_it)	{
-				send_log(  "\n add Mail Body");
+				send_log(  "\n".date("Y-m-d H:i:s").": add Mail Body");
 				//text/html part anfuegen:
-				send_log(  "\n    Newsletter is from type: '".$NL[0]['content_type']."'");
+				send_log(  "\n".date("Y-m-d H:i:s").":    Newsletter is from type: '".$NL[0]['content_type']."'");
 				$parts=array();//array of partnumbers, returned by reference from createpart etc
 				//we want mixed multipart, with alternative text/html and attachements, inlineimages and all that
 				//text part must be the first one!!!
 				if ($NL[0]['content_type']=="text" || $NL[0]['content_type']=="text/html") {
-					send_log(  "\n    add TEXT Part");
+					send_log(  "\n".date("Y-m-d H:i:s").":    add TEXT Part");
 					//only add part
 					$email_message->CreateQuotedPrintableTextPart($NLBODY_TEXT,"",$partids[]);
 					#$email_message->AddQuotedPrintableTextPart($NLBODY_TEXT);
 				}
 				if ($NL[0]['content_type']=="html" || $NL[0]['content_type']=="text/html") {
-					send_log(  "\n    add HTML Part");
+					send_log(  "\n".date("Y-m-d H:i:s").":    add HTML Part");
 					$email_message->CreateQuotedPrintableHtmlPart($NLBODY,"",$partids[]);
 					#$email_message->AddQuotedPrintableHtmlPart($NLBODY);
 				}
@@ -533,20 +541,20 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 	
 				//erst jetzt darf der part f.d. attachement hinzugefuegt werden!
 				if ($attach_file) {
-					send_log(  "\n add Mail Attachement");
+					send_log(  "\n".date("Y-m-d H:i:s").": add Mail Attachement");
 					$email_message->AddFilePart($ATTM);
 				}
 
 				//Versenden
-				send_log(  "\n\n SEND Mail\n");
+				send_log(  "\n\n".date("Y-m-d H:i:s").": SEND Mail\n");
 				if (!DEMO) $error=$email_message->Send();
 
 				if (empty($error)) {
 					$send_ok=true;
-					send_log(  "   OK");
+					send_log(  "\n".date("Y-m-d H:i:s").":   OK");
 				} else {
 					$send_ok=false;
-					send_log(  "   ERROR!!!\n $error \n");
+					send_log(  "\n".date("Y-m-d H:i:s").":   ERROR!!!\n $error \n");
 				}
 			}//							if (!$a_error && !$h_error)	{
 				//wenn senden ok....fein!
@@ -559,7 +567,7 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 					$a_error=true;
 				}//send ok
 
-			send_log(  "\n set h status=$h_status for entry $hcc to $bc -1");
+			send_log(  "\n".date("Y-m-d H:i:s").": set h status=$h_status for entry $hcc to $bc -1");
 			$created=date("Y-m-d H:i:s");
 			for ($bcc=$hcc;$bcc<$bc;$bcc++) {
 				if (isset($H[$bcc]['id'])) {
@@ -578,20 +586,20 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 						$ADDRESS->setAError($ADR[0]['id'],0);//fehler auf 0
 						//ADR Status
 						if ($ADR[0]['status']!=4) {
-							send_log(  "\n     set Adr status: $a_status");
+							send_log(  "\n".date("Y-m-d H:i:s").":     set Adr status: $a_status");
 							$ADDRESS->setStatus($ADR[0]['id'],$a_status);
 						}
-						send_log(  "\n     set Adr err changhed from ".$ADR[0]['errors']." to: 0");
+						send_log(  "\n".date("Y-m-d H:i:s").":     set Adr err changhed from ".$ADR[0]['errors']." to: 0");
 				}//massmail && no error
 
 			$time=$T->MidResult();
-			send_log(  "\n time: ".$time);
+			send_log(  "\n".date("Y-m-d H:i:s").": time: ".$time);
 
 		}//hcc
 
-		send_log(  "\n\n $hc Entrys have been processed");
+		send_log(  "\n\n".date("Y-m-d H:i:s").": $hc Entrys have been processed");
 		$time_total=$T->Result();
-		send_log(  "\n time: ".$time_total);
+		send_log(  "\n".date("Y-m-d H:i:s").": time total: ".$time_total);
 
 		///////////////////////////////////////////////////////////////////////////////////
 
@@ -599,7 +607,7 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 		if ($hc==0) {
 			$created=date("Y-m-d H:i:s");
 			//set Q status = finished =4
-			send_log(  "\n Q ".$Q[$qcc]['id']." finished!");
+			send_log(  "\n".date("Y-m-d H:i:s").": Q ".$Q[$qcc]['id']." finished!");
 			$QUEUE->setStatus($Q[$qcc]['id'],4);//fertig
 			$QUEUE->setSentDate($Q[$qcc]['id'],$created);//fertig
 			$NEWSLETTER->setStatus($Q[$qcc]['nl_id'],4);
@@ -647,22 +655,22 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 		}
 //	}//q status 2 o 3
 
-	send_log(  "\n\n".($qcc+1)." of $qc Qs \nend\n");
+	send_log(  "\n\n".date("Y-m-d H:i:s").": ".($qcc+1)." of $qc Qs \nend\n");
 	send_log(  "</pre>\n");
-	send_log( "\n\n\n\nwrite Log to ".$tm_URL_FE."/".$tm_logdir."/".$logfilename);
+	send_log( "\n\n\n\n".date("Y-m-d H:i:s").": write Log to ".$tm_URL_FE."/".$tm_logdir."/".$logfilename);
 
 	update_file($tm_logpath,$logfilename,$LOG);
 
 	//a http refresh may work
 	echo "<html>\n".
 			"<head>\n".
-			"<meta http-equiv=\"refresh\" content=\"66; URL=".$tm_Domain.$_SERVER["PHP_SELF"]."\">\n".
+			"<meta http-equiv=\"refresh\" content=\"66; URL=".TM_DOMAIN.$_SERVER["PHP_SELF"]."\">\n".
 			"</head>\n".
 			"<body bgcolor=\"#ffffff\">\n".
 			sprintf(___("Die Seite wird in %s Sekunden automatisch neu geladen."),"66").
 			"<br>\n".
 			___("Klicken Sie auf 'Neu laden' wenn Sie diese Seite erneut aufrufen wollen.").
-			"<a href=\"".$tm_Domain.$_SERVER["PHP_SELF"]."\"><br>".
+			"<a href=\"".TM_DOMAIN.$_SERVER["PHP_SELF"]."\"><br>".
 			___("Neu laden").
 			"</a>";
 	echo $LOG;
@@ -670,7 +678,7 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 if ($qc==0) {
 	echo "<html>\n".
 			"<head>\n".
-			"<meta http-equiv=\"refresh\" content=\"66; URL=".$tm_Domain.$_SERVER["PHP_SELF"]."\">\n".
+			"<meta http-equiv=\"refresh\" content=\"66; URL=".TM_DOMAIN.$_SERVER["PHP_SELF"]."\">\n".
 			"</head>\n".
 			"<body bgcolor=\"#ffffff\">\n".
 			___("Zur Zeit gibt es keine zu verarbeitenden Versandauftraege.").
@@ -678,7 +686,7 @@ if ($qc==0) {
 			sprintf(___("Die Seite wird in %s Sekunden automatisch neu geladen."),"66").
 			"<br>\n".
 			___("Klicken Sie auf 'Neu laden' wenn Sie diese Seite erneut aufrufen wollen.").
-			"<a href=\"".$tm_Domain.$_SERVER["PHP_SELF"]."\"><br>".
+			"<a href=\"".TM_DOMAIN.$_SERVER["PHP_SELF"]."\"><br>".
 			___("Neu laden").
 			"</a>";
 }

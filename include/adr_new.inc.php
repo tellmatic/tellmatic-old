@@ -158,11 +158,11 @@ if ($set=="save") {
 			$_MAIN_MESSAGE.="<br>".sprintf(___("Neue Adresse %s wurde angelegt."),"'<b>".display($email)."</b>'");
 		}
 		$action="adr_list";
-		include_once ($tm_includepath."/adr_list.inc.php");
+		include_once (TM_INCLUDEPATH."/adr_list.inc.php");
 	} else {
-		include_once ($tm_includepath."/adr_form.inc.php");
+		include_once (TM_INCLUDEPATH."/adr_form.inc.php");
 	}
 } else {
-	include_once ($tm_includepath."/adr_form.inc.php");
+	include_once (TM_INCLUDEPATH."/adr_form.inc.php");
 }
 ?>

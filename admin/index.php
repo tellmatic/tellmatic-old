@@ -16,6 +16,6 @@ if (!file_exists("../include/tm_config.inc.php")) {
 	exit;
 }
 require_once ("../include/tm_config.inc.php");
-require_once ($tm_docroot."/".$tm_dir."/include/tm_lib_admin.inc.php");
-require_once ($tm_includepath."/Index.inc.php");
+require_once (TM_DOCROOT."/".TM_DIR."/include/tm_lib_admin.inc.php");
+require_once (TM_INCLUDEPATH."/Index.inc.php");
 ?>

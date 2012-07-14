@@ -1,3 +1,206 @@
+2007-12-12 Wednesday 23:04  tag r-1-0-7-3
+
+2007-12-12 Wednesday 23:04  mcms09
+
+	Changed:
+		CHANGES (1.4), "Exp", lines: +20 -0
+
+	CHANGES for 1.0.7.3
+
+2007-12-12 Wednesday 21:02  mcms09
+
+	Changed:
+		UPDATE (1.5), "Exp", lines: +66 -4
+
+	UPDATE for 1.0.7.3
+
+2007-12-12 Wednesday 20:30  mcms09
+
+	Added:
+		include/queue_vars.inc.php (1.1)
+
+	add queue_vars.inc.php
+
+2007-12-12 Wednesday 20:28  mcms09
+
+	Changed:
+		click.php (1.4), "Exp", lines: +5 -1
+		news_blank.png.php (1.4), "Exp", lines: +11 -7
+		unsubscribe.php (1.5), "Exp", lines: +6 -5
+
+	save memo
+
+2007-12-12 Wednesday 20:26  mcms09
+
+	Changed:
+		install.php (1.4), "Exp", lines: +3 -0
+		include/install/install_check_pre.inc.php (1.5), "Exp", lines: +24 -6
+
+	check for register_globals, safe_mode, magic quotes
+
+2007-12-12 Wednesday 20:25  mcms09
+
+	Changed:
+		include/adr_export.inc.php (1.3), "Exp", lines: +10 -3
+
+	changed order to: email, f0-,,,,,,,-f9, id, created, author,
+	updated, editor, aktiv, status, code, errors, clicks, views,
+	newsletter
+
+	save created, author, editor, stats data views,clicks,nl
+
+2007-12-12 Wednesday 20:21  mcms09
+
+	Changed:
+		include/Class_Adr.inc.php (1.3), "Exp", lines: +17 -5
+
+	add method addMemo()
+
+2007-12-12 Wednesday 20:20  mcms09
+
+	Changed:
+		include/queue_list.inc.php (1.3), "Exp", lines: +13 -5
+		include/queue_list_legende.inc.php (1.2), "Exp", lines: +1 -2
+
+	add refresh link
+
+2007-12-12 Wednesday 20:20  mcms09
+
+	Changed:
+		include/queue_new.inc.php (1.5), "Exp", lines: +10 -16
+		include/queue_send.inc.php (1.4), "Exp", lines: +5 -4
+
+	add queue_vars.inc.php, show q list instead nl list after submit
+
+2007-12-12 Wednesday 20:17  mcms09
+
+	Changed:
+		include/statistic_adr.inc.php (1.3), "Exp", lines: +2 -2
+		include/statistic_adrgrp.inc.php (1.3), "Exp", lines: +1 -1
+		include/statistic_nl.inc.php (1.3), "Exp", lines: +1 -1
+
+	add stat icons
+
+2007-12-12 Wednesday 20:16  mcms09
+
+	Changed:
+		include/status.inc.php (1.3), "Exp", lines: +3 -3
+
+	add list and stat icons
+
+2007-12-12 Wednesday 20:16  mcms09
+
+	Changed:
+		include/tm_lib_admin.inc.php (1.4), "Exp", lines: +1 -1
+
+	set max session lifetime to 360 min
+
+2007-12-12 Wednesday 20:15  mcms09
+
+	Changed:
+		include/wysiwyg.inc.php (1.5), "Exp", lines: +1 -1
+
+	use entities again, without it would lead into weird html code... :P
+
+2007-12-11 Tuesday 23:39  mcms09
+
+	Changed:
+		include/send_it.php (1.10), "Exp", lines: +80 -82
+
+	add datetime before each line in logfile
+
+2007-12-11 Tuesday 23:07  mcms09
+
+	Changed:
+		include/send_it.php (1.9), "Exp", lines: +1 -1
+
+	set h_status to 5 just before validating email
+
+2007-12-11 Tuesday 23:04  mcms09
+
+	Changed:
+		include/send_it.php (1.8), "Exp", lines: +10 -0
+
+	set h_status to 5 just before validating email
+
+2007-12-11 Tuesday 22:36  mcms09
+
+	Changed:
+		click.php (1.3), "Exp", lines: +1 -1
+		install.php (1.3), "Exp", lines: +21 -21
+		subscribe.php (1.4), "Exp", lines: +2 -2
+		unsubscribe.php (1.4), "Exp", lines: +2 -2
+		admin/index.php (1.2), "Exp", lines: +2 -2
+		include/Class_DB.inc.php (1.2), "Exp", lines: +1 -2
+		include/Class_Form.inc.php (1.2), "Exp", lines: +3 -5
+		include/Class_NL.inc.php (1.3), "Exp", lines: +1 -7
+		include/Class_SMTP.inc.php (1.3), "Exp", lines: +10 -10
+		include/Classes.inc.php (1.2), "Exp", lines: +12 -12
+		include/Foot.inc.php (1.2), "Exp", lines: +2 -2
+		include/Functions.inc.php (1.4), "Exp", lines: +1 -2
+		include/GetText.inc.php (1.2), "Exp", lines: +3 -3
+		include/Head.inc.php (1.2), "Exp", lines: +1 -1
+		include/Header.inc.php (1.2), "Exp", lines: +2 -2
+		include/Index.inc.php (1.3), "Exp", lines: +12 -12
+		include/Login.inc.php (1.2), "Exp", lines: +3 -3
+		include/Main.inc.php (1.2), "Exp", lines: +43 -46
+		include/Menu.inc.php (1.2), "Exp", lines: +4 -4
+		include/Welcome.inc.php (1.2), "Exp", lines: +1 -1
+		include/adm_set.inc.php (1.2), "Exp", lines: +2 -2
+		include/adm_user_edit.inc.php (1.2), "Exp", lines: +3 -3
+		include/adm_user_form.inc.php (1.2), "Exp", lines: +3 -3
+		include/adm_user_list.inc.php (1.2), "Exp", lines: +1 -1
+		include/adm_user_new.inc.php (1.2), "Exp", lines: +4 -4
+		include/adr_clean.inc.php (1.2), "Exp", lines: +1 -1
+		include/adr_edit.inc.php (1.2), "Exp", lines: +2 -2
+		include/adr_export.inc.php (1.2), "Exp", lines: +1 -1
+		include/adr_grp_edit.inc.php (1.2), "Exp", lines: +3 -3
+		include/adr_grp_list.inc.php (1.2), "Exp", lines: +1 -1
+		include/adr_grp_new.inc.php (1.2), "Exp", lines: +3 -3
+		include/adr_import.inc.php (1.3), "Exp", lines: +1 -1
+		include/adr_list.inc.php (1.2), "Exp", lines: +4 -4
+		include/adr_new.inc.php (1.2), "Exp", lines: +3 -3
+		include/adr_search.inc.php (1.2), "Exp", lines: +1 -1
+		include/bounce.inc.php (1.2), "Exp", lines: +7 -7
+		include/docu.inc.php (1.2), "Exp", lines: +1 -1
+		include/filemanager.inc.php (1.2), "Exp", lines: +2 -1
+		include/form_edit.inc.php (1.2), "Exp", lines: +3 -3
+		include/form_list.inc.php (1.2), "Exp", lines: +1 -1
+		include/form_new.inc.php (1.2), "Exp", lines: +3 -3
+		include/help_section.inc.php (1.2), "Exp", lines: +2 -2
+		include/nl_edit.inc.php (1.2), "Exp", lines: +4 -4
+		include/nl_form.inc.php (1.3), "Exp", lines: +1 -1
+		include/nl_grp_edit.inc.php (1.2), "Exp", lines: +3 -3
+		include/nl_grp_form.inc.php (1.2), "Exp", lines: +0 -6
+		include/nl_grp_list.inc.php (1.2), "Exp", lines: +1 -1
+		include/nl_grp_new.inc.php (1.2), "Exp", lines: +3 -3
+		include/nl_list.inc.php (1.3), "Exp", lines: +3 -3
+		include/nl_new.inc.php (1.2), "Exp", lines: +4 -4
+		include/queue_list.inc.php (1.2), "Exp", lines: +1 -1
+		include/queue_new.inc.php (1.4), "Exp", lines: +5 -6
+		include/queue_send.inc.php (1.3), "Exp", lines: +1 -1
+		include/send_it.php (1.7), "Exp", lines: +9 -9
+		include/statistic.inc.php (1.2), "Exp", lines: +5 -5
+		include/statistic_adr.inc.php (1.2), "Exp", lines: +1 -1
+		include/statistic_adrgrp.inc.php (1.2), "Exp", lines: +2 -2
+		include/statistic_nl.inc.php (1.2), "Exp", lines: +2 -2
+		include/status.inc.php (1.2), "Exp", lines: +4 -4
+		include/status_map.inc.php (1.3), "Exp", lines: +9 -9
+		include/status_top_x.inc.php (1.2), "Exp", lines: +2 -2
+		include/tm_lib.inc.php (1.7), "Exp", lines: +40 -38
+		include/user.inc.php (1.2), "Exp", lines: +5 -5
+		include/wysiwyg.inc.php (1.4), "Exp", lines: +1 -1
+		include/install/install_check_pre.inc.php (1.4), "Exp", lines: +2 -6
+		include/install/install_conf.inc.php (1.3), "Exp", lines: +34 -29
+		include/install/install_conf_sql.inc.php (1.4), "Exp", lines: +0 -2
+		include/install/install_finish.inc.php (1.2), "Exp", lines: +4 -4
+		include/install/install_install.inc.php (1.2), "Exp", lines: +11 -10
+		include/libchart-1.1/libchart.php (1.2), "Exp", lines: +11 -11
+		include/myftphp/myftphp_4.php (1.2), "Exp", lines: +11 -12
+		include/phphtmlparser/html2text.inc (1.2), "Exp", lines: +1 -1
+
+	make file and dir vars a constant
+
 2007-12-05 Wednesday 21:16  mcms09
 
 	Changed:
