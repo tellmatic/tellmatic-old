@@ -1,0 +1,125 @@
+/********************************************************************************/
+/* this file is part of: / diese Datei ist ein Teil von:                        */
+/* tellmatic, the newslettermachine                                             */
+/* tellmatic, die Newslettermaschine                                            */
+/* 2006/7 by Volker Augustin, multi.art.studio Hanau                            */
+/* Contact/Kontakt: mnl@multiartstudio.com                                      */
+/* Homepage: www.tellmatic.de                                                   */
+/* leave this header in file!                                                   */
+/* diesen Header nicht loeschen!                                                */
+/* check Homepage for Updates and more Infos                                    */
+/* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
+/********************************************************************************/
+
+*+*+*+*+*+*+*+*+*+*+*+ README +*+*+*+*+*+*+*+*+*+*+*+*
+tellmatic - the newslettermachine, die Newslettermaschine
+2006/7 by Volker Augustin, multi.art.studio Hanau
+Contact/Kontakt: mnl@multiartstudio.com
+Homepage: www.tellmatic.de
+check Homepage for Updates and more Infos
+Besuchen Sie die Homepage fuer Updates und weitere Infos
+
+*+*+*+*+*+*+*+*+*+*+ LICENSE +*+*+*+*+*+*+*+*+*+*+*
+
+GPL V2.1 ++
+http://www.gnu.org/licenses/gpl.html
+
+*+*+*+*+*+*+*+*+*+*+ INSTALLATION +*+*+*+*+*+*+*+*+*+*+*
+
+	Bitte INSTALL lesen
+	Please read INSTALL
+
+Bitte beachten:
+
+	dies ist version 1.0 von tellmatic! Die Software ist auf verschiedenen Servern unter Linux und PHP4 getestet worden und es hat keine Auffaelligkeiten gegeben.
+	Dennoch betrachte ich es als erste offizielle Testrelease die aber durchaus fuer den produktiven Einsatz taugt.
+	Einige Funktionen , z.Bsp den Filemanager habe ich vorerst deaktivert, da ich mir nicht einig geworden bin welcher der richtige ist und die Zeit zum testen knapp ist.
+	Leider erliege ich gerade einem Lizenzchaos, sprich ich blick eigentlich nun gar nicht durch welche Lizenz nun die richtige ist, durch das viele Lesen bin ich nur noch mehr verwirrt.
+	Ich hoffe jedoch stark das die Lizenzen der einzelnen Komponenten irgendwie zueinander passen (GPL+LGPL+BSD+AL). Ggf. werden einzelne Pakete bereitgestellt um ein vollstaendiges tellmatic zu erhalten.
+	
+	Version 1.1 wird auf jedenfall viele neue und sehr nuetzliche Features bekommen:
+		- Hosts, Versand ueber mehrere Hosts fuer Versand per SMTP oder Bounce (POP3)
+		- Multiuser
+		- ausfuehrlichere und evtl. grafische Statistiken (Vorschlaege fuer freie Grafik-Libraries sind willkommen!, jpgraph???)
+		- automatisches Bouncemanagement per Cronjob
+		- Styles, sind zwar bereits eingebaut , es gibt jedoch derzeit nur ein default-css
+		- ausgefeiltere Bereinigung/Verwaltung der Adressen, Adressen in Gruppen verschieben etc.
+		- 'multi-language',  mehrere Sprachen
+		- ...und viele viele Dinge mehr, die Liste fuer 1.1 ist sehr lang.
+		
+		
+*+*+*+*+*+*+*+*+*+*+*+*+ TELLMATIC +*+*+*+*+*+*+*+*+*+*+*+*
+
+Was ist Tellmatic?
+
+tellmatic, die Newslettermaschine ist eine PHP 'Applikation' (PHP4) zum Versand von Newslettern.
+Ueber eine komfortable Oberflaeche verwalten Sie Online mittels eines gewoehnlichen Browsers (bevorzugt Mozilla/Firefox oder andere freie Browser) ihre Newsletter, Adressen und Formulare.
+
+Die Newsletter werden Online per Wysiwyg erstellt oder ueber ein Template 'hochgeladen'. Beides zusammen ist auch moeglich. Bilder und Attachements koennen angefuegt werden.
+Der Uebersichtlichkeit halber werden Newsletter in Gruppen verwaltet werden (nach Thema oder Zielgruppe etc.).
+Newsletter koennen personalisiert oder als Massenmail an beliebig viele Empfaengergruppen verschickt werden.
+
+Terminierter Versand auf die Minute genau ist per Cronjob moeglich.
+Newsletter werden zuerst in eine Warteschleife eingeordnet und es wird eine Empfaengerliste generiert. Damit wird sichergestellt das jede Aresse ein Newsletter nur einmal bekommt,
+ auch wenn Sie zu 2 Gruppen gehoert die den gleichen Newsletter erhalten sollen, und der Versand weitestgehend optimiert wird.
+Alle Adressen werden zudem nocheinmal geprueft, somit sind Beruecksichtigungen von Aenderungen bis zum entgueltigen Zeitpunkt des Versandes garantiert.
+
+Adressen werden uebersichtlich in Gruppen verwaltet. Hierbei kann eine Adresse einer oder mehrerer Empfaengergruppen zugeordnet werden.
+Adressen koennen ueber CSV-Import eingelesen, oder manuell erfasst werden. Auch Export im CSV Format ist moeglich.
+
+Tellmatic wertet ausserdem bei personalisierten Newslettern die Anzeige im HTML Format mittels 'Blindimage' (ein 1x1 grosses Pixel in der Mail) aus, sowie Klicks auf hinterlegte Links.
+
+EMails werden per SMTP versendet, somit is sichergestellt das Ruecklaeufer und Bouncemails immer an die richtige Adresse zurueckgeschickt werden.
+Beim Versenden werden e-Mailadressen automatisch geprueft und nach einer frei waehlbaren Anzahl fehlgeschlagener Senderversuche markiert und aus der Empfaengerliste ausgetragen.
+Das Bouncemanagement und die Datenbankbereinigung runden die Fehlerpruefung ab und gestatten die fast vollautomatische Pruefung von e-Mailruecklaeufern und fehlerhaften Adressen.
+
+Mit dem integrierten Formulareditor koennen einfach und schnell neue Formulare erzeugt werden, die nach belieben ueber Templates angepasst werden koennen.
+Die Formulare koennen als einzelnes Formular aufgerufen oder leicht in bestehende Seiten eingebunden werden.
+Anmeldungen werden gezaehlt und koennen spaeter ausgewertet werden.
+
+Ueber einen waehlbaren Pruef-Level koennen e-Mailadressen schon bei der Anmeldung in 3 Stufen geprueft werden (Syntax, MX, komplette Validierung). 
+
+Die Top5 Liste, eine zusammgefasste und weitere detailierte Statistiken geben Auskunft ueber den aktuellen Bestand, Versandstatus und andere Wissenswerte Informationen.
+
+*+*+*+*+*+*+*+*+*+*+*+*+ CREDITS +*+*+*+*+*+*+*+*+*+*+*+*
+
+	Silk icon set 1.3
+		by Mark James <mjames@gmail.com>
+		http://www.famfamfam.com/lab/icons/silk/
+		uses Creative Commons Attribution 2.5 License http://creativecommons.org/licenses/by/2.5/
+
+	Class: MIME E-mail message composing and sending
+		thx to Manuel Lemos <mlemos at acm dot org>
+		using http://www.phpclasses.org/trackback/browse/package/9.html http://www.phpclasses.org/browse/package/14.html http://www.phpclasses.org/trackback/browse/package/14.html
+		look at: http://freshmeat.net/projects/mimemessageclass/
+		uses BSD License http://www.opensource.org/licenses/bsd-license.html
+
+	TinyMCE is a powerful WYSIWYG editor control for web browsers such as MSIE or Mozilla that enables the user to edit HTML contents in a more user friendly way. The editor control is very flexible and it's built for integration purposes for example usage within systems like Intranets, CMS, LMS and so forth.
+		TinyMCE is developed by Moxiecode Systems AB, www.moxiecode.com
+		uses LGPL License Version 2.0/2.1 or above http://www.gnu.org/licenses/lgpl.html
+
+	The DHTML Calendar
+		Author: Mihai Bazon, <mihai_bazon@yahoo.com>
+		http://dynarch.com/mishoo/
+		For details and latest versions please refer to calendar homepage, located on my website:   http://dynarch.com/mishoo/calendar.epl
+		GNU Lesser General Public License version 2.1 or above http://www.gnu.org/licenses/lgpl.html
+		
+		
+	Thx to all the Authors of the PHP and Javascript Code Snippets and Hints i found in the Internet.
+			
+	Besonderer Dank geht ausserdem an:
+	Special Thx goes to: 
+	
+		- lili
+		- edy : www.edy-b.de
+		- knittl
+		- charolastra
+		- kraehe
+		- leolein : www.leolein.de
+	
+	for testing all the stuff and comments on workflow
+	
+
+	thx to knittl for myftphp, my last minute but favorite choice for an included filemanager utility , maybe comes in v1.1, still debugging and testing
+
+EOF

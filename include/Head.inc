@@ -1,0 +1,24 @@
+<?php
+/********************************************************************************/
+/* this file is part of: / diese Datei ist ein Teil von:                        */
+/* tellmatic, the newslettermachine                                             */
+/* tellmatic, die Newslettermaschine                                            */
+/* 2006/7 by Volker Augustin, multi.art.studio Hanau                            */
+/* Contact/Kontakt: mnl@multiartstudio.com                                      */
+/* Homepage: www.tellmatic.de                                                   */
+/* leave this header in file!                                                   */
+/* diesen Header nicht loeschen!                                                */
+/* check Homepage for Updates and more Infos                                    */
+/* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
+/********************************************************************************/
+
+$_SITEID=$mnl_siteid;
+$_USER=$_SERVER["PHP_AUTH_USER"];
+
+//new Template
+$_Tpl_Head=new mTemplate();
+$_Tpl_Head->setTemplatePath($mnl_tplpath);
+$_Tpl_Head->setParseValue("_SITEID", $_SITEID);
+$_Tpl_Head->setParseValue("_USER", $_USER);
+$_HEAD=$_Tpl_Head->renderTemplate("Head.html");
+?>

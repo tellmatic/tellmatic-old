@@ -1,0 +1,119 @@
+<?php
+/********************************************************************************/
+/* this file is part of: / diese Datei ist ein Teil von:                        */
+/* tellmatic, the newslettermachine                                             */
+/* tellmatic, die Newslettermaschine                                            */
+/* 2006/7 by Volker Augustin, multi.art.studio Hanau                            */
+/* Contact/Kontakt: mnl@multiartstudio.com                                      */
+/* Homepage: www.tellmatic.de                                                   */
+/* leave this header in file!                                                   */
+/* diesen Header nicht loeschen!                                                */
+/* check Homepage for Updates and more Infos                                    */
+/* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
+/********************************************************************************/
+
+$_MAIN_DESCR="Newsletter bearbeiten";
+$_MAIN_MESSAGE.="";
+
+$set=getVar("set");
+$nl_id=getVar("nl_id");
+
+//field names for query
+$InputName_File="file";//datei
+pt_register("POST","file");
+
+$InputName_Image1="image1";//bild1
+pt_register("POST","image1");
+
+$InputName_Attach1="attach1";//bild1
+pt_register("POST","attach1");
+
+$InputName_Name="subject";//betreff
+$$InputName_Name=getVar($InputName_Name);
+
+$InputName_Massmail="massmail";//betreff
+$$InputName_Massmail=getVar($InputName_Massmail);
+
+$InputName_Descr="body";//range from
+$$InputName_Descr=getVar($InputName_Descr,0);//varname,slashes? 0=no add slashes
+//$$InputName_Descr=strtr($$InputName_Descr, $trans); 
+
+$InputName_Aktiv="aktiv";//range from
+$$InputName_Aktiv=getVar($InputName_Aktiv);
+
+$InputName_Link="link";//link
+$$InputName_Link=getVar($InputName_Link);
+
+$InputName_Group="nl_grp_id";//range from
+$$InputName_Group=getVar($InputName_Group);
+
+$NEWSLETTER=new mnlNL();
+$NL=$NEWSLETTER->getNL($nl_id);
+
+$created=$NL[0]['created'];
+$updated=date("Y-m-d H:i:s");
+$author=$_SERVER['PHP_AUTH_USER'];
+
+$check=true;
+if ($set=="save") {
+	//checkinput
+	if (empty($subject)) {$check=false;$_MAIN_MESSAGE.="Betreff sollte nicht leer sein.";}
+
+	//upload ?!
+	include_once ($mnl_includepath."/nl_upload.inc");
+
+	if ($check) {
+		/* machen wir schon oben da wir $created benoetigen!!!
+		$NEWSLETTER=new mnlNL();
+		*/
+		//da wir das attachement anhand seiner endung identifizieren muessen, attm nur aktualisieren wenn auch was hochgeladen wurde, 					
+		//$uploaded_attach1=true;
+		if (!$uploaded_attach1) {
+			//also wenn kein upload... dann endung beibehalten
+			$NL=$NEWSLETTER->getNL($nl_id);
+			$attach_ext=$NL[0]['attm'];
+		}
+		$NEWSLETTER->updateNL(
+							Array(
+									"id"=>$nl_id, 
+									"subject"=>$subject, 
+									"body"=>$body, 
+									"aktiv"=>$aktiv, 
+									"massmail"=>$massmail, 
+									"link"=>$link, 
+									"created"=>$updated, 
+									"author"=>$author, 
+									"grp_id"=>$nl_grp_id,
+									"attm"=>$attach_ext
+									)
+									);
+		$_MAIN_MESSAGE.="<br>Newsletter '<b>".$subject."</b>' wurde aktualisiert.";
+		$_MAIN_MESSAGE.= "<br>Der Newsletter wurde gespeichert unter:
+				<ul>
+				Template: <a href=\"".$mnl_nldir."/".$NL_Filename_N."\" target=\"_preview\">".$mnl_nldir."/".$NL_Filename_N."</a>
+				<br>
+				Online: <a href=\"".$mnl_nldir."/".$NL_Filename_P."\" target=\"_preview\">".$mnl_nldir."/".$NL_Filename_P."</a>
+				</ul>
+				";
+
+		$action="nl_list";
+		include_once ($mnl_includepath."/nl_list.inc");
+	} else {
+		$body=stripslashes(strtr($body, $trans));
+		include_once ($mnl_includepath."/nl_form.inc");
+	}
+	
+} else {	
+/* machen wir schon oben da wir $created benoetigen!!!
+	$NEWSLETTER=new mnlNL();
+*/
+	$NL=$NEWSLETTER->getNL($nl_id,0,0,0,1);
+	$subject=$NL[0]['subject'];
+	$body=strtr($NL[0]['body'], $trans);
+	$aktiv=$NL[0]['aktiv'];
+	$massmail=$NL[0]['massmail'];
+	$link=$NL[0]['link'];
+	$nl_grp_id=$NL[0]['grp_id'];
+	include_once ($mnl_includepath."/nl_form.inc");
+}
+?>

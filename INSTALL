@@ -1,0 +1,63 @@
+/********************************************************************************/
+/* this file is part of: / diese Datei ist ein Teil von:                        */
+/* tellmatic, the newslettermachine                                             */
+/* tellmatic, die Newslettermaschine                                            */
+/* 2006/7 by Volker Augustin, multi.art.studio Hanau                            */
+/* Contact/Kontakt: mnl@multiartstudio.com                                      */
+/* Homepage: www.tellmatic.de                                                   */
+/* leave this header in file!                                                   */
+/* diesen Header nicht loeschen!                                                */
+/* check Homepage for Updates and more Infos                                    */
+/* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
+/********************************************************************************/
+
+INSTALL
+
+ZIP auf lokale Festplatte auspacken.
+
+Das verzeichnis tellmatic-[xxx] oder den Inhalt des Verzeiochnisses in ein Verzeichnis Ihrer Wahl
+ komplett per Ftp auf den Server kopieren
+
+Die Verzeichnisse:
+
+	include
+	files/
+	files/forms
+	files/logs
+	files/import_export
+	files/newsletter
+	files/newsletter/images
+	files/attachements
+	
+muessen fuer den Webserver beschreibbar sein! ftp-> chmod --> user/group/others -> read/write/execute
+
+Nun mit dem Browser die Datei
+
+install.php 
+
+aufrufen und Daten eingeben und bestaetigen.
+Alle Felder sind Pflichtangaben.
+Die Einstellungen fuer SMTP/POP3 werden nicht auf Gueltigkeit ueberprueft!
+
+Das Newsletter wird nun installiert.
+Wird eine Fehlermeldung ausgegeben, befolgen Sie bitte die Anweisungen.
+
+Nach erfolgreicher Installation die Datei
+
+install.php 
+
+loeschen oder umbenennen bzw an einen sicheren Ort verschieben.
+
+Die Schreibrechte fuer das Verzeichnis include koennen wieder entfernt werden.
+
+In include/send_it.php den Pfad anpassen zu mnl_confg.inc!
+ebenfalls in subscribe.php / unsubscribe.php
+
+Zum Versenden Cronjob erstellen: Aufruf von include/send_it.php per wget (user/pw muss angegeben werden), 
+	oder per php direkt:
+	*/1 * * * * /pfad/zu/php /pfad/zu/include/send_it.php
+
+index.php aufrufen, Name und Passwort eingeben , Fertig, viel Spass!
+
+Bei Fragen besuchen Sie bitte die Homepage www.tellmatic.de
+
