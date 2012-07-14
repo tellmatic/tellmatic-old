@@ -86,6 +86,7 @@ if ($check && $checkDB) {
 				"bounceit_limit"=>10,
 				"bounceit_host"=>0,
 				"bounceit_action"=>'auto',
+				"bounceit_search"=>'header',
 				"bounceit_filter_to"=>0,
 				"bounceit_filter_to_email"=>'',
 				));

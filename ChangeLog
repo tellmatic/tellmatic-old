@@ -1,3 +1,31 @@
+2010-02-26 Friday 13:07  mcms09
+
+	Changed:
+		include/install/install_install.inc.php (1.13), "Exp", lines: +1 -0
+
+	fixed missing parameter
+
+2010-02-26 Friday 13:07  mcms09
+
+	Changed:
+		include/install/install_conf_sql.inc.php (1.22), "Exp", lines: +1 -0
+
+	fixed missing db field
+
+2010-02-26 Friday 12:48  mcms09
+
+	Changed:
+		include/install/install_conf_sql.inc.php (1.21), "Exp", lines: +1 -0
+
+	add missing field unsubscribe_sendmail
+
+2010-02-26 Friday 12:15  mcms09
+
+	Changed:
+		include/install/install_conf_sql.inc.php (1.20), "Exp", lines: +1 -1
+
+	fixed typo
+
 2010-02-25 Thursday 16:07  mcms09
 
 	Changed:

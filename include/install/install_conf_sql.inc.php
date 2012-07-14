@@ -144,6 +144,8 @@ CREATE TABLE ".$tm_tablePrefix."config (
   rcpt_name varchar( 255 ) NOT NULL default 'Newsletter',
   unsubscribe_use_captcha tinyint NOT NULL default '1',
   unsubscribe_digits_captcha tinyint NOT NULL default '4',
+  unsubscribe_sendmail tinyint NOT NULL default '1',
+  unsubscribe_action enum('unsubscribe','delete') collate utf8_bin NOT NULL,
   checkit_limit smallint NOT NULL default '25',
   checkit_from_email varchar( 255 ) NOT NULL default '',
   checkit_adr_reset_error tinyint NOT NULL default '1',
@@ -153,7 +155,7 @@ CREATE TABLE ".$tm_tablePrefix."config (
   bounceit_action enum('auto','error','unsubscribe','aktiv','delete') collate utf8_bin NOT NULL default 'auto',
   bounceit_search enum('header','body','headerbody') collate utf8_bin NOT NULL default 'headerbody',
   bounceit_filter_to tinyint NOT NULL default '0',
-  bounceit_filter_to_email varchar( 255 ) NOT NULL default ''
+  bounceit_filter_to_email varchar( 255 ) NOT NULL default '',
   PRIMARY KEY  (id),
   KEY siteid (siteid)
 ) ENGINE=".$db_type."  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
