@@ -119,6 +119,19 @@ $MENU=Array(
 										'admin' => '0',
 										'manager' => '0',
 										),
+									4 => Array(
+										'aktiv'=>1,
+										'js' => 0,
+										'link' => $_SERVER["PHP_SELF"]."?act=nl_list&amp;s_nl_istemplate=1",
+										'name' => ___("Vorlagen"),
+										'description' => ___("Newsletter Vorlagen verwalten"),
+										'text' => ___("Hier erstellen Sie neue Vorlagen oder kopieren einen neuen Newsletter aus einer Vorlage"),
+										'icon' => 'textfield_rename.png',
+										'target' => '_self',
+										'indent' => '16',
+										'admin' => '0',
+										'manager' => '0',
+										),
 									),
 						),
 
@@ -156,6 +169,19 @@ $MENU=Array(
 									2 => Array(
 										'aktiv'=>1,
 										'js' => 0,
+										'link' => $_SERVER["PHP_SELF"]."?act=adr_list&no_list=1",
+										'name' => ___("Suchen"),
+										'description' => ___("Adressen suchen"),
+										'text' => ___("Hier können Sie Ihre Adressen suchen, anzeigen und bearbeiten"),
+										'icon' => 'vcard.png',
+										'target' => '_self',
+										'indent' => '0',
+										'admin' => '0',
+										'manager' => '0',
+										),
+									3 => Array(
+										'aktiv'=>1,
+										'js' => 0,
 										'link' => $_SERVER["PHP_SELF"]."?act=adr_list",
 										'name' => ___("Adressen"),
 										'description' => ___("Adressen anzeigen"),
@@ -166,7 +192,7 @@ $MENU=Array(
 										'admin' => '0',
 										'manager' => '0',
 										),
-									3 => Array(
+									4 => Array(
 										'aktiv'=>1,
 										'js' => 0,
 										'link' => $_SERVER["PHP_SELF"]."?act=adr_new",
@@ -179,7 +205,7 @@ $MENU=Array(
 										'admin' => '0',
 										'manager' => '0',
 										),
-									4 => Array(
+									5 => Array(
 										'aktiv'=>1,
 										'js' => 0,
 										'link' => $_SERVER["PHP_SELF"]."?act=adr_import",
@@ -192,7 +218,7 @@ $MENU=Array(
 										'admin' => '0',
 										'manager' => '1',
 										),
-									5 => Array(
+									6 => Array(
 										'aktiv'=>1,
 										'js' => 0,
 										'link' => $_SERVER["PHP_SELF"]."?act=adr_export",

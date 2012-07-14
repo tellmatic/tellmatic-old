@@ -24,15 +24,16 @@ class tm_NL {
 		$this->DB2=new tm_DB();
   }
 
-	function getNL($id=0,$offset=0,$limit=0,$group_id=0,$return_content=0,$sortIndex="",$sortType=0) {
+	function getNL($id=0,$offset=0,$limit=0,$group_id=0,$return_content=0,$sortIndex="",$sortType=0,$search=Array()) {
 		$this->NL=Array();
 		$Query ="
 						SELECT
-						id, subject, body,body_text,
+						id, subject, title, title_sub, body,body_text, summary, 
 						created, author, updated, editor,
 						link, status, massmail, clicks, views, track_image,
 						grp_id, aktiv,
-						content_type, rcpt_name
+						content_type, rcpt_name,
+						is_template
 						FROM ".TM_TABLE_NL."
 						WHERE ".TM_TABLE_NL.".siteid='".TM_SITEID."'
 					";
@@ -42,6 +43,33 @@ class tm_NL {
 		}
 		if (check_dbid($id)) {
 			$Query .= " AND id=".checkset_int($id)." ";
+		}
+
+		if (isset($search['aktiv'])) {
+			$Query .= " AND aktiv=".checkset_int($search['aktiv'])." ";
+		}
+		//check for status, OR
+		if (isset($search['status'])) {
+			//if is no array, let first array entry be the string, so we always have an array
+			if (!is_array($search['status'])) {
+				$search_status=$search['status'];				
+				$search['status']=Array();
+				$search['status'][0]=$search_status;			
+			}
+			//create query
+			$ssc=count($search['status']);
+			$Query .= " AND (";
+			for ($sscc=0;$sscc<$ssc;$sscc++) {
+				if ($search['status'][$sscc]>0) {
+					$Query .= " status=".checkset_int($search['status'][$sscc]);
+					if (($sscc+1)<$ssc) $Query.=" OR";
+				}
+			}
+			$Query .= " )";
+		}		
+		
+		if (isset($search['is_template'])) {
+			$Query .= " AND is_template=".checkset_int($search['is_template'])." ";
 		}
 
 		if (!empty($sortIndex)) {
@@ -69,10 +97,15 @@ class tm_NL {
 			$this->NL[$ac]['author']=$this->DB->Record['author'];
 			$this->NL[$ac]['editor']=$this->DB->Record['editor'];
 			$this->NL[$ac]['subject']=$this->DB->Record['subject'];
+			$this->NL[$ac]['title']=$this->DB->Record['title'];
+			$this->NL[$ac]['title_sub']=$this->DB->Record['title_sub'];
 			if ($return_content==1) {
 				$this->NL[$ac]['body']=$this->DB->Record['body'];
 				$this->NL[$ac]['body_text']=$this->DB->Record['body_text'];
+				$this->NL[$ac]['summary']=$this->DB->Record['summary'];
 			}
+
+			$this->NL[$ac]['is_template']=$this->DB->Record['is_template'];
 			$this->NL[$ac]['status']=$this->DB->Record['status'];
 			$this->NL[$ac]['massmail']=$this->DB->Record['massmail'];
 			$this->NL[$ac]['grp_id']=$this->DB->Record['grp_id'];
@@ -92,20 +125,30 @@ class tm_NL {
 		$Return=false;
 		$Query ="INSERT INTO ".TM_TABLE_NL."
 						(
-						subject,body,body_text,aktiv,
+						subject,
+						title, title_sub,
+						body,body_text,
+						summary,						
+						aktiv,
 						created,author,updated,editor,
 						link,grp_id,status,track_image,
 						massmail,clicks,views,
 						content_type, rcpt_name,
+						is_template,
 						siteid
 						)
 						VALUES
 						(
-						'".dbesc($nl["subject"])."', '".dbesc($nl["body"])."', '".dbesc($nl["body_text"])."', ".checkset_int($nl["aktiv"]).",
+						'".dbesc($nl["subject"])."',
+						'".dbesc($nl["title"])."', '".dbesc($nl["title_sub"])."',
+						'".dbesc($nl["body"])."', '".dbesc($nl["body_text"])."',
+						'".dbesc($nl["summary"])."',
+						".checkset_int($nl["aktiv"]).",
 						'".dbesc($nl["created"])."', '".dbesc($nl["author"])."', '".dbesc($nl["created"])."', '".dbesc($nl["author"])."',
 						'".dbesc($nl["link"])."',".checkset_int($nl["grp_id"]).",".checkset_int($nl["status"]).", '".dbesc($nl["track_image"])."',
 						".checkset_int($nl["massmail"]).", 0, 0,
 						'".dbesc($nl["content_type"])."',	'".dbesc($nl["rcpt_name"])."',
+						".checkset_int($nl["is_template"]).",
 						'".TM_SITEID."'
 						)";
 		if ($this->DB->Query($Query)) {
@@ -184,18 +227,23 @@ class tm_NL {
 		$Return=false;
 		if (check_dbid($nl['id'])) {
 			$Query ="UPDATE ".TM_TABLE_NL."
-						SET subject='".dbesc($nl["subject"])."',
+						SET 
+						subject='".dbesc($nl["subject"])."',
+						title='".dbesc($nl["title"])."',
+						title_sub='".dbesc($nl["title_sub"])."',
 						updated='".dbesc($nl["created"])."',
 						editor='".dbesc($nl["author"])."',
 						body='".dbesc($nl["body"])."',
 						body_text='".dbesc($nl["body_text"])."',
+						summary='".dbesc($nl["summary"])."',
 						aktiv=".checkset_int($nl["aktiv"]).",
 						track_image='".dbesc($nl["track_image"])."',
 						massmail=".checkset_int($nl["massmail"]).",
 						link='".dbesc($nl["link"])."',
 						content_type='".dbesc($nl["content_type"])."',
 						grp_id=".checkset_int($nl["grp_id"]).",
-						rcpt_name='".dbesc($nl["rcpt_name"])."'
+						rcpt_name='".dbesc($nl["rcpt_name"])."',
+						is_template=".checkset_int($nl["is_template"])."
 						WHERE siteid='".TM_SITEID."'
 						AND id=".checkset_int($nl["id"]);
 			if ($this->DB->Query($Query)) {
@@ -275,6 +323,24 @@ class tm_NL {
 		return $Return;
 	}//setAktiv
 
+	function setAsTemplate($id=0,$is_template=1) {
+		$Return=false;
+		if (check_dbid($id)) {
+			$Query ="UPDATE ".TM_TABLE_NL."
+						SET is_template=".checkset_int($is_template)."
+						WHERE id=".checkset_int($id)."
+						AND siteid='".TM_SITEID."'";
+			if ($this->DB->Query($Query)) {
+				$Return=true;
+			} else {
+				$Return=false;
+				return $Return;
+			}//if query
+		}
+		return $Return;
+	}//setAktiv
+
+
 	function setStatus($id,$status) {
 		$Return=false;
 		if (check_dbid($id)) {
@@ -333,7 +399,7 @@ class tm_NL {
 	}//addView
 
 
-	function countNL($group_id=0) {
+	function countNL($group_id=0,$search=Array()) {
 		$count=0;
 		$this->NL=Array();
 		//use this->DB2 !!!!!
@@ -344,6 +410,29 @@ class tm_NL {
 					";
 		if (check_dbid($group_id)) {
 			$Query .=" AND grp_id=".checkset_int($group_id)." ";
+		}
+		if (isset($search['aktiv'])) {
+			$Query .= " AND aktiv=".checkset_int($search['aktiv'])." ";
+		}
+		//check for status, OR
+		if (isset($search['status'])) {
+			//if is no array, let first array entry be the string, so we always have an array
+			if (!is_array($search['status'])) {
+				$search_status=$search['status'];				
+				$search['status']=Array();
+				$search['status'][0]=$search_status;			
+			}
+			//create query
+			$ssc=count($search['status']);
+			$Query .= " AND (";
+			for ($sscc=0;$sscc<$ssc;$sscc++) {
+				$Query .= " status=".checkset_int($search['status'][$sscc]);
+				if (($sscc+1)<$ssc) $Query.=" OR";
+			}
+			$Query .= " )";
+		}		
+		if (isset($search['is_template'])) {
+			$Query .= " AND is_template=".checkset_int($search['is_template'])." ";
 		}
 		$this->DB2->Query($Query);
 		if ($this->DB2->next_record()) {
@@ -386,6 +475,8 @@ class tm_NL {
 			$NL_copy['created']=$created;
 			$NL_copy['author']=$author;
 			$NL_copy['status']=$status;
+			//explizit kein template!			
+			$NL_copy['is_template']=0;
 			//copy attachement references
 			//array umwandeln, der array aus get sieht anders aus als der fuer update und new!!!
 			$atc=0;

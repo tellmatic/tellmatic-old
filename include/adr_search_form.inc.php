@@ -137,6 +137,16 @@ $Form->add_InputOption($FormularName,$InputName_Limit,50,"50 ".___("Adressen"));
 $Form->add_InputOption($FormularName,$InputName_Limit,100,"100 ".___("Adressen"));
 
 
+//SaveSearch
+$Form->new_Input($FormularName,$InputName_SaveSearch,"checkbox", 1);
+$Form->set_InputDefault($FormularName,$InputName_SaveSearch,$$InputName_SaveSearch);
+$Form->set_InputJS($FormularName,$InputName_SaveSearch," onChange=\"flash('submit','#ff0000');\" ");
+$Form->set_InputStyleClass($FormularName,$InputName_SaveSearch,"mFormText","mFormTextFocus");
+$Form->set_InputDesc($FormularName,$InputName_SaveSearch,___("Suchparameter speichern"));
+$Form->set_InputReadonly($FormularName,$InputName_SaveSearch,false);
+$Form->set_InputOrder($FormularName,$InputName_SaveSearch,1);
+$Form->set_InputLabel($FormularName,$InputName_SaveSearch,___("Suche speichern")."<br>");
+
 //Sort-multi - 0
 $Form->new_Input($FormularName,$InputName_SI0,"select", "");
 $Form->set_InputJS($FormularName,$InputName_SI0," onChange=\"flash('submit','#ff0000');\" ");
@@ -271,8 +281,15 @@ $_MAIN_OUTPUT.= "</tr>";
 
 $_MAIN_OUTPUT.= "<tr>";
 
-$_MAIN_OUTPUT.= "<td valign=bottom colspan=6>";
+$_MAIN_OUTPUT.= "<td valign=top colspan=1>";
+$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_SaveSearch]['html'];
+$_MAIN_OUTPUT.= "</td>";
+
+$_MAIN_OUTPUT.= "<td valign=bottom colspan=5>";
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Submit]['html'];
+$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Reset]['html'];
+$_MAIN_OUTPUT.= "&nbsp;";
+$_MAIN_OUTPUT.= "<a href=\"".$tm_URL."/".$resetSearchValuesURL_."\" title=\"".___("Suchparameter zurücksetzen")."\">".tm_icon("cancel.png",___("Suchparameter zurücksetzen"))."&nbsp;".___("Such-Parameter zurücksetzen")."</a>";
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "</tr>";
 $_MAIN_OUTPUT.= "</table>";

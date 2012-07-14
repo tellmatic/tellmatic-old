@@ -18,6 +18,7 @@ $_MAIN_OUTPUT.= "<div id=\"legende\" class=\"legende\">";
 
 $_MAIN_OUTPUT.= "<h3>".___("Legende")."</h3>";
 $_MAIN_OUTPUT.= "<strong>".___("Eigenschaften")."</strong><br>";
+$_MAIN_OUTPUT.= tm_icon("textfield_rename.png",___("Vorlage"))."&nbsp;".___("Dieses NL ist eine Vorlage für neue NL und kann nicht versendet werden.")."<br>";
 $_MAIN_OUTPUT.= tm_icon("lorry.png",___("Massenmailing"))."&nbsp;".___("Massenmailing (per BCC:, kein feedback)")."<br>";
 $_MAIN_OUTPUT.= tm_icon("user_suit.png",___("personalisierter Newsletter"))."&nbsp;".___("personalisierter Newsletter")."<br>";
 $_MAIN_OUTPUT.= tm_icon("page_white_office.png",___("TEXT/HTML"))."&nbsp;".___("TEXT/HTML")." | ";

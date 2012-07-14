@@ -29,6 +29,8 @@ if (empty($limit)) {
 	$limit=25;
 }
 
+$no_list=getVar("no_list");
+
 //sort und sorttype nach search verschoben
 
 $ADDRESS=new tm_ADR();
@@ -45,6 +47,8 @@ if (!isset($search)) {
 }
 
 require_once (TM_INCLUDEPATH."/adr_search.inc.php");
+
+if ($no_list!=1) {
 
 if ($set=="aktiv") {
 	$ADDRESS->setAktiv($adr_id,$val);
@@ -280,20 +284,25 @@ if (isset($f0_9)) {
 if (isset($s_status)) {
 	$mSTDURL->addParam("s_status",$s_status);
 }
-$mSTDURL->addParam("adr_grp_id",$adr_grp_id);
 if ($set=="search") {
 	$mSTDURL->addParam("set",$set);
 }
 
+$mSTDURL->addParam("adr_grp_id",$adr_grp_id);
 $mSTDURL->addParam("st",$sortType);
 $mSTDURL->addParam("si",$sortIndex);
 
 $firstURLPara=$mSTDURL;
 $firstURLPara->addParam("act","adr_list");
+$firstURLPara->addParam("offset",0);
 $firstURLPara_=$firstURLPara->getAllParams();
 
+$lastURLPara=$mSTDURL;
+$lastURLPara->addParam("act","adr_list");
+$lastURLPara->addParam("offset",($entrys_total-$limit));
+$lastURLPara_=$lastURLPara->getAllParams();
+
 $nextURLPara=$mSTDURL;
-$nextURLPara->addParam("adr_grp_id",$adr_grp_id);
 //neuer offset!
 $nextURLPara->addParam("offset",($offset+$limit));
 $nextURLPara->addParam("act","adr_list");
@@ -305,6 +314,9 @@ $prevURLPara->addParam("adr_grp_id",$adr_grp_id);
 $prevURLPara->addParam("offset",($offset-$limit));
 $prevURLPara->addParam("act","adr_list");
 $prevURLPara_=$prevURLPara->getAllParams();
+
+$pagesURLPara=$mSTDURL;
+//will be defined and use in pager.inc.php
 
 $sortURLPara=$mSTDURL;
 $sortURLPara->addParam("act","adr_list");
@@ -576,7 +588,25 @@ for ($acc=0;$acc<$ac;$acc++) {
 	$_MAIN_OUTPUT.= "</td>";
 	$_MAIN_OUTPUT.= "<td>";
 	for ($accg=0;$accg<$acg;$accg++) {
-		$_MAIN_OUTPUT.= "".$GRP[$accg]['name'].", ";
+		//pretag
+		if ($GRP[$accg]['aktiv']!=1) {
+			$_MAIN_OUTPUT.= "<span style=\"color:#ff0000;\">";
+		}
+		if ($GRP[$accg]['public']==0 && $GRP[$accg]['aktiv']==1) {
+			$_MAIN_OUTPUT.= "<strong>";
+		}
+
+		//name of group
+		$_MAIN_OUTPUT.= "".display($GRP[$accg]['name']);
+
+		//posttag
+		if ($GRP[$accg]['public']==0 && $GRP[$accg]['aktiv']==1) {
+			$_MAIN_OUTPUT.= "</strong>";
+		}
+		if ($GRP[$accg]['aktiv']!=1) {
+			$_MAIN_OUTPUT.= " (na)</span>";
+		}
+		$_MAIN_OUTPUT.= ", ";
 	}
 	$_MAIN_OUTPUT.= "</td>";
 	$_MAIN_OUTPUT.= "<td>";
@@ -622,5 +652,8 @@ $_MAIN_OUTPUT.= "</tbody></table>";
 require_once(TM_INCLUDEPATH."/adr_list_form.inc.php");
 
 include(TM_INCLUDEPATH."/pager.inc.php");
+
+}//no_list !=1
+
 require_once(TM_INCLUDEPATH."/adr_list_legende.inc.php");
 ?>

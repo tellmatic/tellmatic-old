@@ -25,6 +25,11 @@ $set=getVar("set");
 $val=getVar("val");
 $doit=getVar("doit");//wird per js an url angefuegt!!! confirm()
 
+//sucharray parameter, vorerst nur is_template!
+$search_nl=Array();
+$s_nl_istemplate=getVar("s_nl_istemplate");
+
+
 if ($set=="aktiv") {
 	$NEWSLETTER->setAktiv($nl_id,$val);
 	if ($val==1) {
@@ -73,10 +78,12 @@ if ($set=="queue_delete" && $doit==1) {
 }
 if ($set=="copy" && $doit==1) {
 	$NEWSLETTER->copyNL($nl_id,0);//,0 = without files
+	$s_nl_istemplate=0;
 	$_MAIN_MESSAGE.="<br>".___("Eintrag wurde kopiert.");
 }
 if ($set=="copyall" && $doit==1) {
 	$NEWSLETTER->copyNL($nl_id,1);//,1 = with files
+	$s_nl_istemplate=0;
 	$_MAIN_MESSAGE.="<br>".___("Eintrag und dazugehörige Dateien wurde kopiert.");
 }
 
@@ -100,18 +107,24 @@ if ($sortType!=0 && $sortType!=1) {
 	$sortType=1;
 }
 
+//suchparameter setzen, erstmal nur wegen templates
+if (isset($is_template)) {
+	$s_nl_istemplate=$is_template;
+}
+$search_nl['is_template']=$s_nl_istemplate;
+
 if ($nl_grp_id!=0)
 {
-	$NL=$NEWSLETTER->getNL(0,$offset,$limit,$nl_grp_id,0,$sortIndex,$sortType);//
+	$NL=$NEWSLETTER->getNL(0,$offset,$limit,$nl_grp_id,0,$sortIndex,$sortType,$search_nl);//
 	$nl_grp=$NEWSLETTER->getGroup($nl_grp_id);
 	$_MAIN_MESSAGE.="<br>".sprintf(___("Gewählte Gruppe: %s"),"<b>".display($nl_grp[0]['name'])."</b>");
 } else {
-	$NL=$NEWSLETTER->getNL(0,$offset,$limit,0,0,$sortIndex,$sortType);//
+	$NL=$NEWSLETTER->getNL(0,$offset,$limit,0,0,$sortIndex,$sortType,$search_nl);//
 }
 
 $nc=count($NL);
 $entrys=$nc; // fuer pager.inc!!!
-$entrys_total=$NEWSLETTER->countNL($nl_grp_id);
+$entrys_total=$NEWSLETTER->countNL($nl_grp_id,$search_nl);
 
 $NL=sort_array($NL,$sortIndex,$sortType);
 //defaults
@@ -120,11 +133,17 @@ $mSTDURL->addParam("offset",$offset);
 $mSTDURL->addParam("limit",$limit);
 $mSTDURL->addParam("st",$sortType);
 $mSTDURL->addParam("si",$sortIndex);
+$mSTDURL->addParam("s_nl_istemplate",$s_nl_istemplate);
 
 $firstURLPara=$mSTDURL;
 $firstURLPara->addParam("nl_grp_id",$nl_grp_id);
 $firstURLPara->addParam("offset",0);
 $firstURLPara_=$firstURLPara->getAllParams();
+
+$lastURLPara=$mSTDURL;
+$lastURLPara->addParam("act","nl_list");
+$lastURLPara->addParam("offset",($entrys_total-$limit));
+$lastURLPara_=$lastURLPara->getAllParams();
 
 $nextURLPara=$mSTDURL;
 $nextURLPara->addParam("nl_grp_id",$nl_grp_id);
@@ -135,6 +154,9 @@ $prevURLPara=$mSTDURL;
 $prevURLPara->addParam("nl_grp_id",$nl_grp_id);
 $prevURLPara->addParam("offset",($offset-$limit));
 $prevURLPara_=$prevURLPara->getAllParams();
+
+$pagesURLPara=$mSTDURL;
+//will be defined and use in pager.inc.php
 
 $sortURLPara=$mSTDURL;
 $sortURLPara->addParam("nl_grp_id","$nl_grp_id");
@@ -306,6 +328,9 @@ for ($ncc=0;$ncc<$nc;$ncc++) {
 	$_MAIN_OUTPUT.= "<tr id=\"row_".$ncc."\" bgcolor=\"".$bgcolor."\" onmouseover=\"setBGColor('row_".$ncc."','".$row_bgcolor_hilite."');\" onmouseout=\"setBGColor('row_".$ncc."','".$bgcolor."');\">\n";
 
 	$_MAIN_OUTPUT.= "<td onmousemove=\"showToolTip('tt_nl_list_".$NL[$ncc]['id']."')\" onmouseout=\"hideToolTip();\">\n";
+	if ($NL[$ncc]['is_template']==1) {
+		$_MAIN_OUTPUT.=  tm_icon("textfield_rename.png",___("Vorlage"));
+	}	
 	if ($NL[$ncc]['massmail']==1) {
 		$_MAIN_OUTPUT.=  tm_icon("lorry.png",___("Massenmailing"));
 	} else {
@@ -340,8 +365,17 @@ for ($ncc=0;$ncc<$nc;$ncc++) {
 	}
 
 	$_MAIN_OUTPUT.= "<div id=\"tt_nl_list_".$NL[$ncc]['id']."\" class=\"tooltip\">\n";
-	$_MAIN_OUTPUT.= "<b>".display($NL[$ncc]['subject'])."</b>\n";
-	$_MAIN_OUTPUT.= "<br>ID: ".$NL[$ncc]['id']." \n";
+
+	if ($NL[$ncc]['is_template']==1) {
+		$_MAIN_OUTPUT.= tm_icon("textfield_rename.png",___("Vorlage"))."&nbsp;".___("Dieses NL ist eine Vorlage für neue NL und kann nicht versendet werden.")."<br>";
+	}	
+
+	
+	$_MAIN_OUTPUT.= "<br>ID: ".$NL[$ncc]['id']." \n";	
+	$_MAIN_OUTPUT.= "<br><b>".display($NL[$ncc]['subject'])."</b>\n";
+	$_MAIN_OUTPUT.= "<br><em>".display($NL[$ncc]['title'])."</em>\n";
+	$_MAIN_OUTPUT.= "<br><em>".display($NL[$ncc]['title_sub'])."</em>\n";
+	
 	$_MAIN_OUTPUT.=  "<br>".tm_icon("user_comment.png",___("Empfängername"))."&nbsp;".___("Empfängername").":".display($NL[$ncc]['rcpt_name']);
 	if ($NL[$ncc]['aktiv']==1) {
 		$_MAIN_OUTPUT.=  "<br>".tm_icon("tick.png",___("Aktiv"))."&nbsp;";
@@ -399,12 +433,22 @@ for ($ncc=0;$ncc<$nc;$ncc++) {
 	$_MAIN_OUTPUT.= "</div>\n";
 	$_MAIN_OUTPUT.= "</td>\n";
 
-	$_MAIN_OUTPUT.= "<td bgcolor=\"".$STATUS['nl']['color'][$NL[$ncc]['status']]."\">&nbsp;\n";
-	$_MAIN_OUTPUT.= "</td>\n";
-
+	if ($NL[$ncc]['is_template']!=1) {
+		$_MAIN_OUTPUT.= "<td bgcolor=\"".$STATUS['nl']['color'][$NL[$ncc]['status']]."\">&nbsp;\n";
+		$_MAIN_OUTPUT.= "</td>\n";
+	}
+	if ($NL[$ncc]['is_template']==1) {
+		$_MAIN_OUTPUT.= "<td bgcolor=\"#aabbcc\">&nbsp;\n";
+		$_MAIN_OUTPUT.= "</td>\n";
+	}
 
 	$_MAIN_OUTPUT.= "<td>\n";
-	$_MAIN_OUTPUT.= tm_icon($STATUS['nl']['statimg'][$NL[$ncc]['status']],$STATUS['nl']['descr'][$NL[$ncc]['status']])."&nbsp;".$STATUS['nl']['status'][$NL[$ncc]['status']];
+	if ($NL[$ncc]['is_template']!=1) {
+		$_MAIN_OUTPUT.= tm_icon($STATUS['nl']['statimg'][$NL[$ncc]['status']],$STATUS['nl']['descr'][$NL[$ncc]['status']])."&nbsp;".$STATUS['nl']['status'][$NL[$ncc]['status']];
+	}	
+	if ($NL[$ncc]['is_template']==1) {
+		$_MAIN_OUTPUT.= tm_icon("textfield_rename.png",___("Vorlage"))."&nbsp;".___("Vorlage");
+	}
 	$_MAIN_OUTPUT.= "</td>\n";
 	$_MAIN_OUTPUT.= "<td>\n";
 	if (isset($GRP[0]['name'])) {
@@ -414,18 +458,21 @@ for ($ncc=0;$ncc<$nc;$ncc++) {
 
 	$_MAIN_OUTPUT.= "<td>\n";
 	//link fuer aktionen / bearbeiten menue:
+
+	if ($NL[$ncc]['is_template']==1) {
+		$_MAIN_OUTPUT.= "<a class=\"list_edit_entry_head\" href=\"".$tm_URL."/".$copyallURLPara_."\" onclick=\"return confirmLink(this, '".___("Newsletter und Dateien kopieren")."')\" title=\"".___("Newsletter und Dateien kopieren")."\">".tm_icon("add.png",___("Newsletter und Dateien kopieren"))."&nbsp;</a>\n";
+	}
+
 	$_MAIN_OUTPUT.= "<a  class=\"list_edit_entry_head\" id=\"toggle_nlentry_".$ncc."\" href=\"#\" title=\"".___("Bearbeiten / Aktionen anzeigen")."\">".tm_icon("wrench_orange.png",___("Aktionen anzeigen"))."...</a>\n";
 	$_MAIN_OUTPUT.= "</td>\n";
 	$_MAIN_OUTPUT.= "</tr>\n";
-
 	$_MAIN_OUTPUT.= "<tr onmouseover=\"setBGColor('row_".$ncc."','".$row_bgcolor_hilite."');\" onmouseout=\"setBGColor('row_".$ncc."','".$bgcolor."');\">\n";
 	$_MAIN_OUTPUT.= "<td colspan=6>\n";
-
 	//div fuer aktionen etc
 		$_MAIN_OUTPUT.= "<div id=\"list_edit_".$ncc."\" class=\"list_edit\">\n";//align=\"right\"
 		$_MAIN_OUTPUT.= "<font size=-1>\n";
 		//q hinzufügen
-		if ($NL[$ncc]['aktiv']==1) {
+		if ($NL[$ncc]['aktiv']==1 && $NL[$ncc]['is_template']==0) {
 			if (file_exists($tm_nlpath."/nl_".date_convert_to_string($NL[$ncc]['created'])."_n.html")) {
 				$_MAIN_OUTPUT.= "<a  class=\"list_edit_entry\" href=\"".$tm_URL."/".$addqURLPara_."\" title=\"".___("Neue Q")."\">".tm_icon("hourglass_add.png",___("Neue Q"))."&nbsp;";
 				if (!$user_is_expert) $_MAIN_OUTPUT.= ___("Versandauftrag anlegen");
@@ -433,7 +480,7 @@ for ($ncc=0;$ncc<$nc;$ncc++) {
 			}
 		}
 		//queued? queuelist button anzeigen // status >1
-		if ($qc>0 && ($NL[$ncc]['status']==2 || $NL[$ncc]['status']==3 || $NL[$ncc]['status']==4  || $NL[$ncc]['status']==6)) {
+		if ($qc>0 && $NL[$ncc]['is_template']==0 && ($NL[$ncc]['status']==2 || $NL[$ncc]['status']==3 || $NL[$ncc]['status']==4  || $NL[$ncc]['status']==6)) {
 			$_MAIN_OUTPUT.= "<a class=\"list_edit_entry\" href=\"".$tm_URL."/".$delqURLPara_."\"  onclick=\"return confirmLink(this, '".___("Alle Q-Einträge für diesen Newsletter löschen? Achtung es werden auch laufende Sendeaufträge gelöscht!")."')\" title=\"".___("Q für diesen Newsletter löschen")."\">".tm_icon("hourglass_delete.png",___("Q für diesen Newsletter löschen"))."&nbsp;";
 			if (!$user_is_expert) $_MAIN_OUTPUT.= ___("Versandaufträge löschen");
 			$_MAIN_OUTPUT.= "</a>\n";
@@ -443,7 +490,7 @@ for ($ncc=0;$ncc<$nc;$ncc++) {
 		}
 		//queued? senden button anzeigen // status =2 oder 3 oder 4
 		//	if (($NL[$ncc]['status']==2  || $NL[$ncc]['status']==3 || $NL[$ncc]['status']==4) && $NL[$ncc]['aktiv']==1) {
-		if ($qc_new>0 && $NL[$ncc]['aktiv']==1) {
+		if ($qc_new>0 && $NL[$ncc]['aktiv']==1 && $NL[$ncc]['is_template']==0) {
 			$_MAIN_OUTPUT.= "<a class=\"list_edit_entry\" href=\"".$tm_URL."/".$sendFastURLPara_."\" title=\"".___("Newsletter versenden")."\">".tm_icon("bullet_star.png",___("Newsletter versenden"),"","","","email_go.png")."&nbsp;";
 			if (!$user_is_expert) $_MAIN_OUTPUT.=___("Versand starten");
 			$_MAIN_OUTPUT.= "</a>\n";
@@ -522,7 +569,7 @@ for ($ncc=0;$ncc<$nc;$ncc++) {
 		$_MAIN_OUTPUT.= "<a class=\"list_edit_entry\" href=\"".$tm_URL."/".$copyallURLPara_."\" onclick=\"return confirmLink(this, '".___("Newsletter und Dateien kopieren")."')\" title=\"".___("Newsletter und Dateien kopieren")."\">".tm_icon("add.png",___("Newsletter und Dateien kopieren"))."&nbsp;";
 		if (!$user_is_expert) $_MAIN_OUTPUT.=___("Kopieren(+Dateien)");
 		$_MAIN_OUTPUT.= "</a>\n";
-		if ($hc>0 && $NL[$ncc]['status']!=2  && $NL[$ncc]['status']!=3) {
+		if ($hc>0 && $NL[$ncc]['status']!=2  && $NL[$ncc]['status']!=3 && $NL[$ncc]['is_template']==0) {
 			$_MAIN_OUTPUT.= "<a class=\"list_edit_entry\" href=\"".$tm_URL."/".$statURLPara_."\" title=\"".___("Statistik anzeigen")."\">".tm_icon("chart_pie.png",___("Statistik anzeigen"))."&nbsp;";
 			if (!$user_is_expert) $_MAIN_OUTPUT.=___("Statistik");
 			$_MAIN_OUTPUT.= "</a>\n";
@@ -533,7 +580,7 @@ for ($ncc=0;$ncc<$nc;$ncc++) {
 			}
 		}
 	#ok, aber nur fuer queues die noch nicht versendet wurden etc pp, und die noch nich gestartet wurden etc.
-	if (($QUEUE->countQ($NL[$ncc]['id'],0,$status=2) + $QUEUE->countQ($NL[$ncc]['id'],0,$status=5)) > 0) {
+	if ($NL[$ncc]['is_template']==0 && ($QUEUE->countQ($NL[$ncc]['id'],0,$status=2) + $QUEUE->countQ($NL[$ncc]['id'],0,$status=5)) > 0) {
 		$_MAIN_OUTPUT.= "<a class=\"list_edit_entry\" href=\"".$tm_URL."/".$refreshRCPTListURLPara_."\" title=\"".___("Adressen nachfassen / Empfängerliste aktualisieren")."\">".tm_icon("arrow_switch.png",___("Adressen nachfassen / Empfängerliste aktualisieren"),"","","","email_go.png")."&nbsp;";
 		if (!$user_is_expert) $_MAIN_OUTPUT.=___("Nachfassen");
 		$_MAIN_OUTPUT.= "</a>\n";

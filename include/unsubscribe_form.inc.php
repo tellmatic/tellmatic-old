@@ -26,7 +26,7 @@ $Form->new_Input($FormularName,"set", "hidden", "unsubscribe");
 $Form->new_Input($FormularName,"a_id", "hidden", $a_id);
 $Form->new_Input($FormularName,"h_id", "hidden", $h_id);
 $Form->new_Input($FormularName,"nl_id", "hidden", $nl_id);
-$Form->new_Input($FormularName,"c", "hidden", $code);
+$Form->new_Input($FormularName,"code", "hidden", $code);
 
 $Form->new_Input($FormularName,"cpt", "hidden", $captcha_md5);
 $Form->set_InputID($FormularName,"set", "set_u");
@@ -72,7 +72,7 @@ $FHEAD= $Form->FORM[$FormularName]['head'];
 $FHEAD.= $Form->INPUT[$FormularName]['a_id']['html'];
 $FHEAD.= $Form->INPUT[$FormularName]['h_id']['html'];
 $FHEAD.= $Form->INPUT[$FormularName]['nl_id']['html'];
-$FHEAD.= $Form->INPUT[$FormularName]['c']['html'];
+$FHEAD.= $Form->INPUT[$FormularName]['code']['html'];
 $FHEAD.= $Form->INPUT[$FormularName]['cpt']['html'];//captcha
 $FHEAD.= $Form->INPUT[$FormularName]['set']['html'];
 $FEMAIL= $Form->INPUT[$FormularName][$InputName_Name]['html'];

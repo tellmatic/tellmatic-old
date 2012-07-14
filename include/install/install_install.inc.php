@@ -133,7 +133,11 @@ if ($check && $checkDB) {
 /***********************************************************/
 	$tm_config='<?php
 //domain
-$protocol = $_SERVER[\'HTTPS\'] ? "https://" : "http://";
+if (isset($_SERVER[\'HTTPS\'])) {
+	$protocol = $_SERVER[\'HTTPS\'] ? "https://" : "http://";
+} else {
+	$protocol = "http://";
+}
 define("TM_DOMAIN",$protocol.\''.TM_DOMAINNAME.'\');
 
 //absoluter pfad , docroot

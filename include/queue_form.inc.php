@@ -47,7 +47,7 @@ $NL=$NEWSLETTER->getNL();
 $nc=count($NL);
 for ($ncc=0; $ncc<$nc; $ncc++)
 {
-	if ($NL[$ncc]['aktiv']==1) {
+	if ($NL[$ncc]['aktiv']==1 && $NL[$ncc]['is_template']==0) {
 		$NLOpt=display($NL[$ncc]['subject']);
 		if ($NL[$ncc]['massmail']==1) {
 			$NLOpt .="   ".___("(Massenmailing)");

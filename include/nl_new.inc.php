@@ -38,17 +38,29 @@ pt_register("POST",$InputName_AttachExisting);
 $InputName_Name="subject";//betreff
 $$InputName_Name=getVar($InputName_Name);
 
-$InputName_Massmail="massmail";//betreff
+$InputName_Title="title";//titel f. webseite
+$$InputName_Title=getVar($InputName_Title);
+
+$InputName_TitleSub="title_sub";//subtitel2 f. webseite
+$$InputName_TitleSub=getVar($InputName_TitleSub);
+
+$InputName_Massmail="massmail";//massenmail?
 $$InputName_Massmail=getVar($InputName_Massmail);
 
-$InputName_Descr="body";//range from
+$InputName_Descr="body";//body html version
 $$InputName_Descr=getVar($InputName_Descr,0);//varname,slashes? 0=dont add slashes
 
-$InputName_DescrText="body_text";//range from
+$InputName_DescrText="body_text";//bidy text, text version
 $$InputName_DescrText=getVar($InputName_DescrText,0);//varname,slashes? 0=dont add slashes
 
-$InputName_Aktiv="aktiv";//range from
+$InputName_Summary="summary";//summary html version f. webseite
+$$InputName_Summary=getVar($InputName_Summary,0);//varname,slashes? 0=dont add slashes
+
+$InputName_Aktiv="aktiv";//altiv?
 $$InputName_Aktiv=getVar($InputName_Aktiv);
+
+$InputName_Template="is_template";//template?
+$$InputName_Template=getVar($InputName_Template);
 
 $InputName_Link="link";//link
 $$InputName_Link=getVar($InputName_Link);
@@ -68,6 +80,19 @@ $$InputName_TrackImageExisting=getVar($InputName_TrackImageExisting);
 $InputName_RCPTName="rcpt_name";//name
 $$InputName_RCPTName=getVar($InputName_RCPTName,0,$C[0]['rcpt_name']);
 
+//watermark?
+$InputName_ImageWatermark="image_watermark";//add watermark to image
+$$InputName_ImageWatermark=getVar($InputName_ImageWatermark,0,0);
+
+$InputName_ImageWatermarkImage="image_watermark_image";//what image to use as watermark
+$$InputName_ImageWatermarkImage=getVar($InputName_ImageWatermarkImage);
+//resize?
+$InputName_ImageResize="image_resize";//resize image?
+$$InputName_ImageResize=getVar($InputName_ImageResize,0,0);
+
+$InputName_ImageResizeSize="image_resize_size";//what size?
+$$InputName_ImageResizeSize=getVar($InputName_ImageResizeSize,0,180);
+	
 $check=true;
 if ($set=="save") {
 	//checkinput
@@ -89,9 +114,13 @@ if ($set=="save") {
 		$NEWSLETTER->addNL(
 								Array(
 									"subject"=>$subject,
+									"title"=>$title,
+									"title_sub"=>$title_sub,
 									"body"=>$body,
 									"body_text"=>$body_text,
+									"summary"=>$summary,
 									"aktiv"=>$aktiv,
+									"is_template"=>$is_template,
 									"status"=>$status,
 									"massmail"=>$massmail,
 									"link"=>$link,

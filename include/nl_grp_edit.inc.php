@@ -26,8 +26,7 @@ $InputName_Name="name";//range from
 $$InputName_Name=getVar($InputName_Name);
 
 $InputName_Descr="descr";//range from
-$$InputName_Descr=getVar($InputName_Descr);
-$$InputName_Descr = strtr($$InputName_Descr, $trans);
+$$InputName_Descr=getVar($InputName_Descr,0);
 
 $InputName_Aktiv="aktiv";//range from
 $$InputName_Aktiv=getVar($InputName_Aktiv);

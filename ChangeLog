@@ -1,3 +1,245 @@
+2010-01-12 Tuesday 05:49  mcms09
+
+	Changed:
+		CHANGES (1.19), "Exp", lines: +152 -0
+
+	CHANGES, read carefully
+
+2010-01-12 Tuesday 05:36  mcms09
+
+	Changed:
+		include/Index.inc.php (1.6), "Exp", lines: +2 -3
+		include/adr_grp_edit.inc.php (1.5), "Exp", lines: +0 -2
+
+	beautified....
+
+2010-01-12 Tuesday 05:33  mcms09
+
+	Changed:
+		include/install/install_conf_sql.inc.php (1.18), "Exp", lines: +4 -0
+		include/install/install_examples.inc.php (1.8), "Exp", lines: +13 -2
+
+	nl: template,title,title_sub,summary
+
+2010-01-12 Tuesday 05:32  mcms09
+
+	Changed:
+		include/install/install_conf.inc.php (1.11), "Exp", lines: +1 -1
+		include/install/install_install.inc.php (1.11), "Exp", lines: +5 -1
+
+	check for server[https]
+
+2010-01-12 Tuesday 05:32  mcms09
+
+	Changed:
+		include/wysiwyg.inc.php (1.11), "Exp", lines: +6 -9
+
+	fixed language problem, silly typo
+
+2010-01-12 Tuesday 05:30  mcms09
+
+	Changed:
+		include/tm_version.inc.php (1.8), "Exp", lines: +1 -1
+
+	1.0.8.6
+
+2010-01-12 Tuesday 05:30  mcms09
+
+	Changed:
+		include/subscribe.inc.php (1.8), "Exp", lines: +1 -1
+		include/unsubscribe.inc.php (1.6), "Exp", lines: +3 -2
+		include/unsubscribe_form.inc.php (1.3), "Exp", lines: +2 -2
+
+	Changed c to code for unsubscribe and subscribe links
+
+2010-01-12 Tuesday 05:29  mcms09
+
+	Changed:
+		include/send_it.php (1.20), "Exp", lines: +36 -17
+
+	parse title, title_sub, summary. Changed c to code for unsubscribe
+	and subscribe links
+
+2010-01-12 Tuesday 05:28  mcms09
+
+	Changed:
+		include/queue_send.inc.php (1.9), "Exp", lines: +19 -14
+
+	debug outputs
+
+2010-01-12 Tuesday 05:27  mcms09
+
+	Changed:
+		include/queue_form.inc.php (1.6), "Exp", lines: +1 -1
+
+	do not show nl templates
+
+2010-01-12 Tuesday 05:26  mcms09
+
+	Changed:
+		include/pager.inc.php (1.4), "Exp", lines: +51 -4
+
+	show pages, jump to page xy
+
+2010-01-12 Tuesday 05:26  mcms09
+
+	Changed:
+		include/nl_new.inc.php (1.10), "Exp", lines: +33 -4
+
+	new features,flags: template,title,title_sub,summary.
+	watermark/resize uploaded image
+
+2010-01-12 Tuesday 05:25  mcms09
+
+	Changed:
+		include/nl_list_legende.inc.php (1.7), "Exp", lines: +1 -0
+
+	new features,flags: template
+
+2010-01-12 Tuesday 05:25  mcms09
+
+	Changed:
+		include/nl_list.inc.php (1.8), "Exp", lines: +63 -16
+
+	new features,flags: template,title,title_sub,summary.
+
+2010-01-12 Tuesday 05:24  mcms09
+
+	Changed:
+		include/nl_grp_edit.inc.php (1.4), "Exp", lines: +1 -2
+		include/nl_grp_new.inc.php (1.3), "Exp", lines: +1 -1
+
+	do not use strtr, etc.
+
+2010-01-12 Tuesday 05:22  mcms09
+
+	Changed:
+		include/nl_upload.inc.php (1.6), "Exp", lines: +73 -25
+
+	watermark/resize uploaded image
+
+2010-01-12 Tuesday 05:22  mcms09
+
+	Changed:
+		include/nl_edit.inc.php (1.9), "Exp", lines: +39 -2
+		include/nl_form.inc.php (1.11), "Exp", lines: +170 -10
+
+	new features,flags: template,title,title_sub,summary.
+	watermark/resize uploaded image
+
+2010-01-12 Tuesday 05:20  mcms09
+
+	Changed:
+		include/adr_search.inc.php (1.4), "Exp", lines: +41 -0
+		include/adr_search_form.inc.php (1.4), "Exp", lines: +18 -1
+
+	save session values, or use new values, reset saved search
+	parameters.
+
+2010-01-12 Tuesday 05:19  mcms09
+
+	Changed:
+		include/adr_new.inc.php (1.5), "Exp", lines: +13 -1
+
+	save session values, or use new values.
+
+2010-01-12 Tuesday 05:18  mcms09
+
+	Changed:
+		include/adr_list.inc.php (1.8), "Exp", lines: +36 -3
+
+	show inactive groups in red. show non public but active groups in
+	bold letters. Added changes for new pager.
+
+2010-01-12 Tuesday 05:16  mcms09
+
+	Changed:
+		include/Menu.inc.php (1.8), "Exp", lines: +29 -3
+
+	added link to search addresses. added link to newsletter templates
+
+2010-01-12 Tuesday 05:15  mcms09
+
+	Changed:
+		include/Header.inc.php (1.6), "Exp", lines: +10 -25
+
+	changed loader
+
+2010-01-12 Tuesday 05:14  mcms09
+
+	Changed:
+		include/Functions.inc.php (1.19), "Exp", lines: +84 -10
+
+	added functions to watermark and proportional resizing images.
+	watermarks can be png only for now. resulting image is only jpeg.
+	resizing only jpeg for now. Show alert if TM version info and/or
+	news can not be shown because url fopen is disabled etc. Function
+	to determine domain return error if domainname is empty: now leave
+	domainname empty
+
+2010-01-12 Tuesday 05:09  mcms09
+
+	Changed:
+		include/Class_NL.inc.php (1.8), "Exp", lines: +99 -8
+
+	added filter to search for multiple status (getADR,countADR):
+	search['status'] can be an array of status values, searching status
+	with OR. Added features/flags: template,title,title_sub,summary.
+	Newsletter now can be a template. Copy creates non-templates.
+	title,title_sub and summary is meant to be shown on a website
+
+2010-01-12 Tuesday 05:07  mcms09
+
+	Changed:
+		include/Class_Adr.inc.php (1.7), "Exp", lines: +37 -6
+
+	added filter to search for multiple status (getADR,countADR):
+	search['status'] can be an array of status values, searching status
+	with OR
+
+2010-01-12 Tuesday 05:04  mcms09
+
+	Changed:
+		css/cadillac/tellmatic.css (1.2), "Exp", lines: +6 -8
+		css/default/tellmatic.css (1.2), "Exp", lines: +7 -8
+		css/energy_safe/tellmatic.css (1.2), "Exp", lines: +7 -10
+		css/tiny_blue/tellmatic.css (1.2), "Exp", lines: +6 -8
+		css/wine/tellmatic.css (1.2), "Exp", lines: +6 -8
+
+	changed loader style
+
+2010-01-12 Tuesday 05:01  mcms09
+
+	Changed:
+		UPDATE (1.18), "Exp", lines: +32 -0
+
+	updated / added notes for updating to TM 1086
+
+2010-01-12 Tuesday 05:01  mcms09
+
+	Changed:
+		README (1.4), "Exp", lines: +7 -7
+
+	readme
+
+2010-01-12 Tuesday 05:00  mcms09
+
+	Added:
+		api_example_dev_01.php (1.1)
+		api_example_dev_02.php (1.1)
+
+	added 2 new api examples, 01: show adr with more than 1 group, 02:
+	show newsletter gallery (e.g. on website)
+
+2009-07-30 Thursday 13:16  tag r-1-0-8-5
+
+2009-07-30 Thursday 13:16  mcms09
+
+	Changed:
+		include/wysiwyg.inc.php (1.10), "Exp", lines: +25 -8
+
+	disabled gzip, makes the advanced theme available again
+
 2009-07-12 Sunday 23:29  mcms09
 
 	Changed:

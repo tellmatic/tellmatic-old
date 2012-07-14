@@ -28,7 +28,7 @@ $doptin=getVar("doptin");//opt in click, bestaetigung, aus email f. double optin
 $email=getVar("email");
 $touch=getVar("touch");//touch=1 wenn erster kontakt und benutzer prueft gegen....
 //$adr_id=getVar("adr_id");
-$c=getVar("c");//recheck code
+$c=getVar("code");//recheck code
 $check=true;
 //opt in click?
 if ($doptin==1 && !empty($c) && !empty($email)) { // && checkEmailAdr($email,$EMailcheck_Intern) //&& !empty($frm_id) rausgenommen!

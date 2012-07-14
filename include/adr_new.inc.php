@@ -43,10 +43,22 @@ $InputName_Name="email";
 $$InputName_Name=getVar($InputName_Name);
 
 $InputName_Aktiv="aktiv";
-$$InputName_Aktiv=getVar($InputName_Aktiv);
+$$InputName_Aktiv=getVar($InputName_Aktiv,0,1);
 
 $InputName_Status="status";
 $$InputName_Status=getVar($InputName_Status);
+
+##werte aus sessions uebernehmen... oder uebergebene werte
+//nur wenn nicht gespeichert wird, also nur bei neuaufruf des formulares
+if ($set!="save") { 
+ if (!empty($s_status)) {
+ 	$status=$s_status;
+ } 
+ if (!empty($s_email)) {
+ 	$email=$s_email;
+ } 
+}
+
 
 $InputName_F0="f0";
 $$InputName_F0=getVar($InputName_F0);

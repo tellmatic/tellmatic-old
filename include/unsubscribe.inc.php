@@ -31,7 +31,8 @@ $set=getVar("set");
 $h_id=getVar("h_id");
 $nl_id=getVar("nl_id");
 $a_id=getVar("a_id");
-$code=getVar("c");
+$code=getVar("code");
+
 $check=true;
 
 $InputName_Name="email";//email
@@ -161,6 +162,7 @@ if ($check && $set=="unsubscribe") {
 														"Der Datensatz wurde de-aktiviert und markiert (Unsubscribed) und wurde ab sofort aus der Empfaengerliste ausgeschlossen.\n".
 														"<br>The Address has been deactivated and marked as unsubscribed and will be excluded from recipients list.\n";
 						@SendMail($HOST[0]['sender_email'],$HOST[0]['sender_name'],$C[0]['notify_mail'],$HOST[0]['sender_name'],$SubscriptionMail_Subject,clear_text($SubscriptionMail_HTML),$SubscriptionMail_HTML,Array(),$HOST);//fixed, now uses defaulthost
+						$email="";
 					}//send notify
 					$FMESSAGE.= $MSG['unsubscribe']['unsubscribe'];
 				} else {//unsubscribe()
@@ -187,7 +189,6 @@ if ($check && $set=="unsubscribe") {
 	}
 } else {
  //keine eingabe
- $FMESSAGE.= "";
 }
 
 require_once(TM_INCLUDEPATH."/unsubscribe_form.inc.php");

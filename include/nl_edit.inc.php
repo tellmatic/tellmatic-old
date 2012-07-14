@@ -34,6 +34,12 @@ pt_register("POST",$InputName_AttachExisting);
 $InputName_Name="subject";
 $$InputName_Name=getVar($InputName_Name);
 
+$InputName_Title="title";//titel f. webseite
+$$InputName_Title=getVar($InputName_Title);
+
+$InputName_TitleSub="title_sub";//subtitel2 f. webseite
+$$InputName_TitleSub=getVar($InputName_TitleSub);
+
 $InputName_Massmail="massmail";
 $$InputName_Massmail=getVar($InputName_Massmail);
 
@@ -43,8 +49,14 @@ $$InputName_Descr=getVar($InputName_Descr,0);//varname,slashes? 0=no add slashes
 $InputName_DescrText="body_text";//range from
 $$InputName_DescrText=getVar($InputName_DescrText,0);//varname,slashes? 0=dont add slashes
 
+$InputName_Summary="summary";//summary html version f. webseite
+$$InputName_Summary=getVar($InputName_Summary,0);//varname,slashes? 0=dont add slashes
+
 $InputName_Aktiv="aktiv";
 $$InputName_Aktiv=getVar($InputName_Aktiv);
+
+$InputName_Template="is_template";//template?
+$$InputName_Template=getVar($InputName_Template);
 
 $InputName_Link="link";
 $$InputName_Link=getVar($InputName_Link);
@@ -63,7 +75,24 @@ $$InputName_TrackImageExisting=getVar($InputName_TrackImageExisting);
 
 $InputName_RCPTName="rcpt_name";//name
 $$InputName_RCPTName=getVar($InputName_RCPTName);
-	
+
+//watermark?
+$InputName_ImageWatermark="image_watermark";//add watermark to image
+$$InputName_ImageWatermark=getVar($InputName_ImageWatermark);
+
+$InputName_ImageWatermarkImage="image_watermark_image";//what image to use as watermark
+$$InputName_ImageWatermarkImage=getVar($InputName_ImageWatermarkImage);
+if ($$InputName_ImageWatermarkImage=="") {
+	$$InputName_ImageWatermarkImage="watermark.png";
+}
+
+//resize?
+$InputName_ImageResize="image_resize";//resize image?
+$$InputName_ImageResize=getVar($InputName_ImageResize);
+
+$InputName_ImageResizeSize="image_resize_size";//what size?
+$$InputName_ImageResizeSize=getVar($InputName_ImageResizeSize);
+
 $NEWSLETTER=new tm_NL();
 $NL=$NEWSLETTER->getNL($nl_id);
 
@@ -91,9 +120,13 @@ if ($set=="save") {
 							Array(
 									"id"=>$nl_id,
 									"subject"=>$subject,
+									"title"=>$title,
+									"title_sub"=>$title_sub,
 									"body"=>$body,
 									"body_text"=>$body_text,
+									"summary"=>$summary,
 									"aktiv"=>$aktiv,
+									"is_template"=>$is_template,
 									"massmail"=>$massmail,
 									"link"=>$link,
 									"created"=>$updated,
@@ -125,9 +158,14 @@ if ($set=="save") {
 } else {
 	$NL=$NEWSLETTER->getNL($nl_id,0,0,0,1);
 	$subject=$NL[0]['subject'];
+	$title=$NL[0]['title'];
+	$title_sub=$NL[0]['title_sub'];
+	#$body=strtr($NL[0]['body'], $trans);
 	$body=$NL[0]['body'];
 	$body_text=$NL[0]['body_text'];
+	$summary=$NL[0]['summary'];
 	$aktiv=$NL[0]['aktiv'];
+	$is_template=$NL[0]['is_template'];
 	$massmail=$NL[0]['massmail'];
 	$link=$NL[0]['link'];
 	$nl_grp_id=$NL[0]['grp_id'];
@@ -136,7 +174,6 @@ if ($set=="save") {
 	$$InputName_TrackImageExisting=$NL[0]['track_image'];
 	//array umwandeln, der array aus get sieht anders aus als der fuer update und new!!!
 	$atc=0;
-	$attach_existing=Array();
 	$attachements=$NL[0]['attachements'];
 	foreach ($attachements as $attachfile) {
 		$attach_existing[$atc]=$attachfile['file'];

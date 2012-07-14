@@ -385,6 +385,12 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 			$_Tpl_NL->setParseValue("F7","");
 			$_Tpl_NL->setParseValue("F8","");
 			$_Tpl_NL->setParseValue("F9","");
+			
+			$_Tpl_NL->setParseValue("TITLE",$NL[0]['title']);
+			$_Tpl_NL->setParseValue("TITLE_SUB",$NL[0]['title_sub']);
+			$_Tpl_NL->setParseValue("SUMMARY",$NL[0]['summary']);			
+			
+			
 			//add htmlpart! 
 			$NLBODY="";
 			if ($NL[0]['content_type']=="html" || $NL[0]['content_type']=="text/html") {
@@ -475,10 +481,15 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 								send_log(  "\n".date("Y-m-d H:i:s").":     checking blacklist: ");	
 								if ($BLACKLIST->isBlacklisted($ADR[0]['email'])) {
 									//wenn adr auf blacklist steht, fehler setzen und abbrechen
-									send_log(  "email $ADR[0]['email'] matches the active blacklist.");	
-									$a_error=true;
+									send_log(  "email $ADR[0]['email'] matches the active blacklist.");
+									//statt a_error setzen wir h_error!
+									#$a_error=true;
+									send_log(  "...set h status to 6 (canceled)");
+									$h_error=true;
+									$h_status=6;//cancel, abbruch (status 6), oder 4 fehler?
+									//lieber 6, abbruch, da fehlerhafte q's ggf nochmal bearbeitet werden!
 								} else {
-									send_log(  "OK, does not match the active blacklist");	
+									send_log(  "OK, does not match the active blacklist");
 								}
 							}
 
@@ -493,7 +504,10 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 							//email pruefen
 							$check_mail=checkEmailAdr($ADR[0]['email'],$EMailcheck_Intern);
 							//if !a_error auch abfragen wegen blacklist pruefung oben!
-							if (!$a_error && $check_mail[0] && $ADR[0]['errors']<=$C[0]['max_mails_retry']) {
+							//if (!$a_error && $check_mail[0] && $ADR[0]['errors']<=$C[0]['max_mails_retry']) {
+							//statt a_error nehmen wir jetzt h_error! das hat den grund das adressen in der blacklist als fehlerhaft markiert wurden mit a_error
+							//das waere aber unlogisch! stattdessen h_error und h_status=6
+							if (!$h_error && $check_mail[0] && $ADR[0]['errors']<=$C[0]['max_mails_retry']) {
 								send_log(  "\n".date("Y-m-d H:i:s").":   checkemail: OK");
 								//wenn adresse auch wirklich aktiv etc.
 								if ($ADR[0]['aktiv']==1) {
@@ -558,10 +572,10 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 									$BLINDIMAGE="<img src=\"".$BLINDIMAGE_URL."\" border=0>";
 									send_log(  "\n".date("Y-m-d H:i:s").":   Blindimage: ".$BLINDIMAGE_URL);
 									//link zu unsubscribe
-									$UNSUBSCRIBE_URL=$tm_URL_FE."/unsubscribe.php?h_id=".$H[$hcc]['id']."&nl_id=".$H[$hcc]['nl_id']."&a_id=".$H[$hcc]['adr_id']."&c=".$ADR[0]['code'];
+									$UNSUBSCRIBE_URL=$tm_URL_FE."/unsubscribe.php?h_id=".$H[$hcc]['id']."&nl_id=".$H[$hcc]['nl_id']."&a_id=".$H[$hcc]['adr_id']."&code=".$ADR[0]['code'];
 									$UNSUBSCRIBE="<a href=\"".$UNSUBSCRIBE_URL."\" target=\"_blank\">";
 
-									$SUBSCRIBE_URL=$tm_URL_FE."/subscribe.php?doptin=1&email=".$ADR[0]['email']."&c=".$ADR[0]['code']."&touch=1";
+									$SUBSCRIBE_URL=$tm_URL_FE."/subscribe.php?doptin=1&email=".$ADR[0]['email']."&code=".$ADR[0]['code']."&touch=1";
 									$SUBSCRIBE="<a href=\"".$SUBSCRIBE_URL."\" target=\"_blank\">";
 
 
@@ -614,6 +628,11 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 									$_Tpl_NL->setParseValue("F7", $ADR[0]['f7']);
 									$_Tpl_NL->setParseValue("F8", $ADR[0]['f8']);
 									$_Tpl_NL->setParseValue("F9", $ADR[0]['f9']);
+									
+									$_Tpl_NL->setParseValue("TITLE",$NL[0]['title']);
+									$_Tpl_NL->setParseValue("TITLE_SUB",$NL[0]['title_sub']);
+									$_Tpl_NL->setParseValue("SUMMARY",$NL[0]['summary']);			
+
 									//add htmlpart! 
 									$NLBODY="";
 									if ($NL[0]['content_type']=="html" || $NL[0]['content_type']=="text/html") {
@@ -639,9 +658,9 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 									}//if text text/html
 								}
 
-								send_log(  "\n".date("Y-m-d H:i:s").":    create Mail, set To/From");
+								send_log(  "\n".date("Y-m-d H:i:s").":    create Mail, set To/From ");
 								//Name darf nicht = email sein und auch kein komma enthalten, plaintext!
-								send_log(  "\n".date("Y-m-d H:i:s").":      prepare Header for");
+								send_log(  "\n".date("Y-m-d H:i:s").":      prepare Header for ");
 								//to etc fuer personalisiertes nl:
 								if (!$massmail) {
 
@@ -662,8 +681,8 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 											$RCPT_Name_TMP="Tellmatic Newsletter";
 										}
 									}
-									$RCPT_Name_search = array("{F0}","{F1}","{F2}","{F3}","{F4}","{F5}","{F6}","{F7}","{F8}","{F9}","CODE");
-									$RCPT_Name_replace = array($ADR[0]['f0'], $ADR[0]['f1'], $ADR[0]['f2'], $ADR[0]['f3'], $ADR[0]['f4'], $ADR[0]['f5'], $ADR[0]['f6'], $ADR[0]['f7'], $ADR[0]['f8'], $ADR[0]['f9'], $ADR[0]['code']);
+									$RCPT_Name_search = array("{EMAIL}","{F0}","{F1}","{F2}","{F3}","{F4}","{F5}","{F6}","{F7}","{F8}","{F9}","CODE");
+									$RCPT_Name_replace = array($ADR[0]['email'],$ADR[0]['f0'], $ADR[0]['f1'], $ADR[0]['f2'], $ADR[0]['f3'], $ADR[0]['f4'], $ADR[0]['f5'], $ADR[0]['f6'], $ADR[0]['f7'], $ADR[0]['f8'], $ADR[0]['f9'], $ADR[0]['code']);
 									$RCPT_Name = str_replace($RCPT_Name_search, $RCPT_Name_replace, $RCPT_Name_TMP);
 									send_log(  "\n".date("Y-m-d H:i:s").": rcpt_name=".$NL[0]['rcpt_name']." | tmp: ".$RCPT_Name_TMP." | parsed: ".$RCPT_Name);
 									//rcpt name darf nicht leer sein und nicht email!
@@ -741,13 +760,13 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 					send_log(  "\n".date("Y-m-d H:i:s").":    adding ".$atc." Attachements:");
 					foreach ($attachements as $attachfile) {
 						if (file_exists($tm_nlattachpath."/".$attachfile['file'])) {
-						send_log(  "\n".date("Y-m-d H:i:s").":              add Attachement ".$attachfile['file']);
-						$ATTM=array(
-							"FileName"=>$tm_nlattachpath."/".$attachfile['file'],
-							"Content-Type"=>"automatic/name",
-							"Disposition"=>"attachment"
-						);
-						$email_message->AddFilePart($ATTM);
+							send_log(  "\n".date("Y-m-d H:i:s").":              add Attachement ".$attachfile['file']);
+							$ATTM=array(
+								"FileName"=>$tm_nlattachpath."/".$attachfile['file'],
+								"Content-Type"=>"automatic/name",
+								"Disposition"=>"attachment"
+							);
+							$email_message->AddFilePart($ATTM);
 						} else {
 							send_log(  "\n".date("Y-m-d H:i:s").":              Attachement ".$attachfile['file']." does not exist.");
 						}

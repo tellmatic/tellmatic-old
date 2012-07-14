@@ -60,7 +60,7 @@ if ($logged_in) {
 	//erst hier, da vorher nicht uebersetzt wuerde...
 	$img_arrowup=tm_icon("bullet_arrow_up.png",___("Sortierung aufsteigend"));
 	$img_arrowdown=tm_icon("bullet_arrow_down.png",___("Sortierung absteigend"));
-	
+
 	$mSTDURL->addParam("act",$action);
 	require_once (TM_INCLUDEPATH."/Menu.inc.php");
 }
@@ -113,10 +113,9 @@ if (!$logged_in) {
 	$adm_file_name="login_".session_id()."-0-".time().".html";
 }
 
-
-
 //RENDER PAGE
 $_PAGE=$_Tpl->renderTemplate("Index.html");
+
 //write to file and redirect?
 if (USE_TMP_HTML_FILES) {
 	write_file(TM_PATH."/admin/tmp/",$adm_file_name,$_PAGE);

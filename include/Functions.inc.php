@@ -14,6 +14,77 @@
 
 /**functions**/
 
+//watermark an image
+function watermark($image_source, $image_new, $image_watermark, $quality=95) {
+	$Return[0]=true;
+	$Return[1]="OK";
+	if ($im_src = ImageCreateFromJPEG($image_source)) {
+		if ($wm_src = ImageCreateFromPNG($image_watermark)) {
+
+			ImageAlphaBlending($im_src, true);
+
+			$im_width = ImageSX($im_src);
+			$im_height = ImageSY($im_src);
+
+			$wm_width = ImageSX($wm_src);
+			$wm_height = ImageSY($wm_src);
+
+			$wm_offset_x =$im_width - $wm_width;
+			$wm_offset_y =$im_height - $wm_height;
+			$wm_margin_x =  round($wm_offset_x / 2);
+			$wm_margin_y =  round($wm_offset_y / 2);
+
+			//copy watermark into source image! but save as new file
+			ImageCopy($im_src, $wm_src, $wm_margin_x, $wm_margin_y, 0, 0, $wm_width, $wm_height);
+			//save new file			
+			if (ImageJPEG($im_src,$image_new, $quality)) {
+			} else {
+				$Return[0]=False;
+				$Return[1]=sprintf(___("Fehler beim schreiben von %s."),display($image_new));		
+			}//imagejpeg
+			ImageDestroy($wm_src);
+		} else {
+			$Return[0]=False;
+			$Return[1]=sprintf(___("Fehler beim öffnen von %s."),display($image_watermark));
+		}//wm_src
+		ImageDestroy($im_src);
+	} else {
+		$Return[0]=False;
+		$Return[1]=sprintf(___("Fehler beim öffnen von %s."),display($image_source));
+	}//im_src
+	return $Return;
+}
+//create thumbnail, proportional, max NNN pixels width or height, use largest side
+function createThumb($image,$outputimage,$maxsize=180,$quality=95) {
+	$Return=true;
+   if ($im = ImageCreateFromJPEG($image))
+   {
+	   if (ImageSX($im)>ImageSY($im)) {
+	   	$f = ImageSX($im)/$maxsize;
+	   	$breite_neu = $maxsize;
+	   	$hoehe_neu = ImageSY($im)/$f;
+		} else {
+	   	$f = ImageSY($im)/$maxsize;
+	   	$breite_neu = ImageSX($im)/$f;
+	   	$hoehe_neu = $maxsize;
+		}
+	  if ($im2 = ImageCreateTrueColor($breite_neu,$hoehe_neu)) {
+	   ImageCopyResampled ($im2, $im, 0, 0, 0, 0, $breite_neu, $hoehe_neu, ImageSX($im), ImageSY($im));
+	   if (ImageJPEG($im2,$outputimage,$quality)) {
+	   } else {
+	   	$Return=false;
+	   }
+	   ImageDestroy($im2);
+	  } else {
+		$Return=false;	  
+	  }//im2
+		ImageDestroy($im);
+	} else {
+		$Return=false;	  
+	}//im
+	return $Return;
+}
+
 //gettext wrapper function
 function ___($s) {
 	if (DEBUG) global $debug_translated,$debug_not_translated,$debug_same_translated;
@@ -111,7 +182,7 @@ function tm_icon($iconname,$title="",$alt="",$id="",$bgcolor="",$bgimage="") {
 function getMessages() {
   $file_source = "http://www.tellmatic.org/MESSAGES";
   if (($rh = fopen($file_source, 'rb')) === FALSE) {
-  	return false;
+  	return "<br><font color=red>".___("Kann Tellmatic News nicht öffnen.").": <a href=\"http://www.tellmatic.org/MESSAGES\" target=\"_blank\">http://www.tellmatic.org/MESSAGES</a></font>";
   }
   $ver="";
   while (!feof($rh))  {
@@ -125,7 +196,7 @@ function getMessages() {
 function getCurrentVersion() {
   $file_source = "http://www.tellmatic.org/CURRENT_VERSION";
   if (($rh = fopen($file_source, 'rb')) === FALSE) {
-  	return false;
+  	return "<br><font color=red>".___("Kann Tellmatic Versionsinfo nicht öffnen").": <a href=\"http://www.tellmatic.org/CURRENT_VERSION\" target=\"_blank\">http://www.tellmatic.org/CURRENT_VERSION</a></font>";
   }
   $ver="";
   while (!feof($rh))  {
@@ -188,7 +259,10 @@ function array_unset($array,$index) {
 function getDomainFromEmail($str) {
 	$return="";
 	$domain=split("@",$str);
-	return $domain[1];
+	if (isset($domain[1])) {
+		$return=$domain[1];	
+	}
+	return $return;
 }
 
 //calculate x,y coordinates from londitude $lon and latitude $lat depending on image size $width and $height
@@ -1042,16 +1116,16 @@ function getFiles($path) {
 	$Return=Array();
 	$fc=0;
 	if (is_dir($path)) {
-	$handle=opendir($path);
-	while (($file = readdir($handle))!==false) {
-		if (($file != ".") && ($file != "..") && is_file($path."/".$file)) {
+		$handle=opendir($path);
+		while (($file = readdir($handle))!==false) {
+			if (($file != ".") && ($file != "..") && is_file($path."/".$file)) {
 				$Return[$fc]['name']=$file;
 				$Return[$fc]['size']=filesize($path."/".$file);
 				$Return[$fc]['ext']="";
-			$fc++;
-		}//is file
-	}//readdir
-	@closedir($handle);
+				$fc++;
+			}//is file
+		}//readdir
+		@closedir($handle);
 	}//is_dir path	
 	return $Return;
 }//getFiles

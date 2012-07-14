@@ -85,9 +85,26 @@ class tm_ADR {
 		if (isset($search['author']) && !empty($search['author'])) {
 			$Query .= " AND ".TM_TABLE_ADR.".author like '".dbesc($search['author'])."'";
 		}
-		if (isset($search['status']) && !empty($search['status'])) {
-			$Query .= " AND ".TM_TABLE_ADR.".status = ".checkset_int($search['status']);
-		}
+		//check for status, OR
+		if (isset($search['status'])) {
+			//if is no array, let first array entry be the string, so we always have an array
+			if (!is_array($search['status'])) {
+				$search_status=$search['status'];				
+				$search['status']=Array();
+				$search['status'][0]=$search_status;			
+			}
+			//create query
+			$ssc=count($search['status']);
+			if ($search['status'][0]>0) {
+				$Query .= " AND (";
+				for ($sscc=0;$sscc<$ssc;$sscc++) {
+					$Query .= " status=".checkset_int($search['status'][$sscc]);
+					if (($sscc+1)<$ssc) $Query.=" OR";
+				}
+				$Query .= " )";
+			}
+		}		
+
 		if (isset($search['code']) && !empty($search['code'])) {
 			$Query .= " AND ".TM_TABLE_ADR.".code = '".dbesc($search['code'])."'";
 		}
@@ -217,9 +234,23 @@ class tm_ADR {
 		if (isset($search['email']) && !empty($search['email'])) {
 			$Query .= " AND lcase(".TM_TABLE_ADR.".email) like lcase('".dbesc($search['email'])."')";
 		}
-		if (isset($search['status']) && !empty($search['status'])) {
-			$Query .= " AND ".TM_TABLE_ADR.".status = ".checkset_int($search['status']);
-		}
+		//check for status, OR
+		if (isset($search['status'])) {
+			//if is no array, let first array entry be the string, so we always have an array
+			if (!is_array($search['status'])) {
+				$search_status=$search['status'];				
+				$search['status']=Array();
+				$search['status'][0]=$search_status;			
+			}
+			//create query
+			$ssc=count($search['status']);
+			$Query .= " AND (";
+			for ($sscc=0;$sscc<$ssc;$sscc++) {
+				$Query .= " status=".checkset_int($search['status'][$sscc]);
+				if (($sscc+1)<$ssc) $Query.=" OR";
+			}
+			$Query .= " )";
+		}		
 		if (isset($search['aktiv']) && !empty($search['aktiv'])) {
 			$Query .= " AND ".TM_TABLE_ADR.".aktiv = ".checkset_int($search['aktiv']);
 		}

@@ -19,11 +19,18 @@ if (!$wysiwyg_loaded) {
 
 //TinyMCE JS HEADER
 $TinyMCE_Header='<!-- TinyMCE -->
+<script language="javascript" type="text/javascript" src="'.$tm_URL_FE.'/js/tinymce/jscripts/tiny_mce/tiny_mce.js"></script>
+<script language="javascript" type="text/javascript">
+';
+
+/*
+$TinyMCE_Header='<!-- TinyMCE -->
 <!--script language="javascript" type="text/javascript" src="'.$tm_URL_FE.'/js/tinymce/jscripts/tiny_mce/tiny_mce.js"></script-->
 <!--script language="javascript" type="text/javascript" src="'.$tm_URL_FE.'/js/tinymce/jscripts/tiny_mce/tiny_mce_gzip.php"></script-->
 <script language="javascript" type="text/javascript" src="'.$tm_URL_FE.'/js/tinymce/jscripts/tiny_mce/tiny_mce_gzip.js"></script>
 <script language="javascript" type="text/javascript">
 ';
+*/
 
 //TinyMCE Init: Init_Start + Options + Init_End
 $TinyMCE_Init_Start='
@@ -43,8 +50,7 @@ $TinyMCE_Init_End='
 
 //TinyMCE OPTIONS
 $TinyMCE_GZ_Options='
-	plugins : "style,layer,table,save,advhr,advimage,advlink,emotions,iespell,insertdatetime,preview,media,"+ 
-        "searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,search,replace,separator",
+	plugins : "style,layer,table,save,advhr,advimage,advlink,emotions,iespell,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,search,replace,separator",
 	themes : "advanced",
 	//simple,
 	languages : "'.$LOGIN->USER['lang'].'",
@@ -59,10 +65,10 @@ $TinyMCE_Options='
 		//mode : "textareas",
 		//prevent special charcter encoding: important!		//entities : "",
 		theme : "advanced",
-	remove_linebreaks : false,
-	relative_urls : false,
-	remove_script_host : false,
-	force_br_newlines : true,
+		remove_linebreaks : false,
+		relative_urls : false,
+		remove_script_host : false,
+		force_br_newlines : true,
 	    force_p_newlines : false,
 		browsers : "msie,gecko",
 		//button_tile_map : true,
@@ -83,7 +89,7 @@ $TinyMCE_Options='
 $TinyMCE_Options.='spellchecker_languages : "';
 $lc=count($LANGUAGES['lang']);
 for ($lcc=0;$lcc<$lc;$lcc++) {
-	if ($LANGUAGES['lang'][$lcc]==$LOGIN->USER['lang']) $_MAIN_OUTPUT.='+';
+	if ($LANGUAGES['lang'][$lcc]==$LOGIN->USER['lang']) $TinyMCE_Options.='+';
 	$TinyMCE_Options.=$LANGUAGES['text'][$lcc].'='.$LANGUAGES['lang'][$lcc];
 	if ($lcc<($lc-1)) $TinyMCE_Options.=',';
 }
@@ -133,14 +139,22 @@ $TinyMCE_Footer='</script>
 ';
 
 	$_MAIN_OUTPUT.=$TinyMCE_Header
-										.$TinyMCE_GZ_Init_Start
-										.$TinyMCE_GZ_Options
-										.$TinyMCE_Init_End
-										.$TinyMCE_Init_Start
-										.$TinyMCE_Options
-										.$TinyMCE_Init_End
-										.$TinyMCE_Functions
-										.$TinyMCE_Footer;
+						.$TinyMCE_Init_Start
+						.$TinyMCE_Options
+						.$TinyMCE_Init_End
+						.$TinyMCE_Functions
+						.$TinyMCE_Footer;
+/*
+	$_MAIN_OUTPUT.=$TinyMCE_Header
+						.$TinyMCE_GZ_Init_Start
+						.$TinyMCE_GZ_Options
+						.$TinyMCE_Init_End
+						.$TinyMCE_Init_Start
+						.$TinyMCE_Options
+						.$TinyMCE_Init_End
+						.$TinyMCE_Functions
+						.$TinyMCE_Footer;
+*/
 	$wysiwyg_loaded=true;
 }
 

@@ -15,50 +15,47 @@
 	06.01.2010
 
 	Opensource is a hard job!
-	The Blues:
 	It was in november 2006 when i was asked to write a small newsletter script for commercial use.
-	It should be a newslettersystem that can be sold by the company.
+	It should be a newslettersystem that can be sold and installed by the company.
 	All i got was a link to a commercial closed source properitary newsletter system that cost about 2000 euros 
-	for standard interface and usage and additional up to 3000 euros for additional features like bouncemanagement, blacklist and extras (e.g. >10k recipients etc).
-	(Looked very nice, bu tonly working in InternetExploder due to heavy use of active x and all that MS properitary closed source stuff)
-	I finished my first useable version in january 2007. Unfortunately the company was not willing to pay for all the wanted features and the job was canceled.
-	(Cost at this time was still under 1500 euros netto...:P , remember: the commercial system cost about 2000 euros + extras)
-	But it was not my indention to make a bad e-mail client replacement in php nobody wants, but a good newsletter system.
+	for standard registration and usage and additional up to 3000 euros for features like bouncemanagement, blacklist and extras (>50k recipients etc).
+	I finished my first version in january 2007. Unfortunately the company was not willing to pay for all the features and the job was canceled.
+	(price was still under 1500 euros netto..., remember: the commercial system cost about 2000 euros + extras)
+	But it was not my indention to make a bad e-mail client replacement in php, but a good newsletter system.
 	I mentioned that the company i wrote the newsletter script for didn't test it in any way or even had a closer look at it. (But a lot of silly questions 6 months later)
-	To save all the work i have done, i decided to make a complete rewrite with all the features i personally like to see in a newsletter.
-	And this list is very very long. The current version includes now about 80%. (without optimizations and enhancements that could be done ;-) 
+	To save all the work i have done, i decided to make a complete rewrite with all the features i personally like to see in a newsletter. 
 	In March 2007 i released the first open source version of Tellmatic which included, in comparison to the current version, 
-	not 1/10 of the features, but at least everything you need and get with a commercial expensive newslettersystem. Bah.
+	not half the features, but at least everything you need and get with a commercial expensive newslettersystem.
 	
-	But doing Opensource is really a hard job:
+	But doing Opensource is a hard job:
 	
 	The 1.0.8.6 release was almost finished in october 2009, but i did not had the time to make the updates, 
 	write changes (this file), doing the tests and all the stuff you need to do when releasing a new version (it's a lot!).
 	All this is because i only can develop Tellmatic in my rare spare time.
 	
-	I cancelled my last job in december 2009. I did 1st level tele-support for endusers. OUCH!
-	The worst job i've ever done! /&%&$§ I really feel a bit stupid after 6 years beeing asked by 
-	superduperwebmasters to explain what ftp is, how email works, how to press a start button and call outlook, etc., *sick²*
+	I cancelled my last job in december 2009. I did 1st level support for endusers via telephone.
+	The worst job i've ever done! /&%&$§ I feel really stupid after about 6 years beeing asked by 
+	superduperwebmasters and had to explain what ftp is, how email works, how to press a start button, etc., or why outlook can not play imap.... :P *sick²*
 	This means that i am unemployed now.
-
-	Now i have to decide if i get a new job, or continue in some other way, e.g. building model rockets and/or coding Tellmatic.
+	Now i have to decide if i find a new job, or continue in some other way.
+	I'm not a bussiness man, and don't really know how to make money with opensource. 
 	At least we all need money to paid food and flat, even if we are coding free software , right?
 	
-	If you are using Tellmatic in a commercial way, or sell service to your customers please make your donations :D
-	In 2009, about 90% of the donation came from private users with small private non commercial homepages, not companies or consultants who use or sell Tellmatic...
+	If you are using Tellmatic in a commercial way, or sell service to your customers, 
+	it would be great for me to get some piece of the cake.
+	Make your donations.
+	2009, 90% of the donation came from private users with small private non commercial homepages, not companies or consultants who use or sell Tellmatic...
 	
 	Please help me keep on developing Tellmatic. Make your donations.
 	Last year (2009) i got a total of ~300 euros (many thanks! price from tdl 2009 not included, price was 1000 euros),  
 	but this is still not enough to live and pay food and drinks i consume when spending time on developing Tellmatic. 
 
-	For this reason i will offer more commercial support in the near future. 
-
 	The new version:
 
 	Sorry, still no new filemanager, hopefully coming soon. 
 	Sorry, still no working online documentation.
-	Your donations are welcome. I can't not do this without your help.		
-
+	Your donations are welcome. i can not do this without your help.		
+		
 	Some of the new festures n 1.0.8.6, like title, sub-title and summary in newsletters were sponsored by Schroewig News and Images Berlin (www.schroewig.com)		
 	As usual, i tried to implement new features in a way so that new functions will be useful for everyone not just for the sponsor.
 		(This is why sponsors would never pay the whole work, just a few bucks.

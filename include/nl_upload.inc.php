@@ -30,7 +30,19 @@
 	$NL_Filename_P="nl_".date_convert_to_string($created)."_p.html";
 	//Bild 1
 	$NL_Imagename1="nl_".date_convert_to_string($created)."_1.jpg";
-	//Attachement 1
+	
+	#image watermark and resize	
+	//temporary image	
+	$NL_Imagename1_tmp="nl_".date_convert_to_string($created)."_1_tmp.jpg";
+	//source image, original, delete if resize and/or watermark!
+	$NL_Imagename1_source="nl_".date_convert_to_string($created)."_1_src.jpg";
+	//resized image
+	$NL_Imagename1_resized="nl_".date_convert_to_string($created)."_1_resized.jpg";
+	//watermark image
+	$NL_Imagename1_watermarked="nl_".date_convert_to_string($created)."_1_watermarked.jpg";
+
+
+	$watermark_image=TM_IMGPATH."/".$$InputName_ImageWatermarkImage;
 
 	//html datei
 	// Wurde wirklich eine Datei hochgeladen?
@@ -72,17 +84,55 @@
 	//ende upload html
 
 	//image
-	//imageupload
-	// Wurde wirklich eine Datei hochgeladen?
-	if(is_uploaded_file($_FILES["image1"]["tmp_name"])) {
-		// Gültige Endung? ($ = Am Ende des Dateinamens) (/i = Groß- Kleinschreibung nicht berücksichtigen)
-		if(preg_match("/\." . $allowed_image_filetypes . "$/i", $_FILES["image1"]["name"])) {
-			// Datei auch nicht zu groß
-			if($_FILES["image1"]["size"] <= $max_upload_size) {
-				// Alles OK -> Datei kopieren
-				if($check) {
+	if($check) {
+		//imageupload
+		// Wurde wirklich eine Datei hochgeladen?
+		if(is_uploaded_file($_FILES["image1"]["tmp_name"])) {
+			// Gültige Endung? ($ = Am Ende des Dateinamens) (/i = Groß- Kleinschreibung nicht berücksichtigen)
+			if(preg_match("/\." . $allowed_image_filetypes . "$/i", $_FILES["image1"]["name"])) {
+				// Datei auch nicht zu groß
+				if($_FILES["image1"]["size"] <= $max_upload_size) {
+					// Alles OK -> Datei kopieren
 					//http://www.php.net/manual/en/features.file-upload.php, use basename to preserve filename for multiple uploaded files.... if needed ;)
-					if (move_uploaded_file($_FILES["image1"]["tmp_name"], $tm_nlimgpath."/".$NL_Imagename1)) {
+					//save uploaded source image, do watermark and resize
+					if (move_uploaded_file($_FILES["image1"]["tmp_name"], $tm_nlimgpath."/".$NL_Imagename1_source)) {
+						//copy source image to tmp image
+						copy ($tm_nlimgpath."/".$NL_Imagename1_source,$tm_nlimgpath."/".$NL_Imagename1_tmp);
+						//create thumb ?!
+						if ($$InputName_ImageResize==1 && $$InputName_ImageResizeSize > 0) {
+							//save resized image
+							$rs=createThumb($tm_nlimgpath."/".$NL_Imagename1_tmp,$tm_nlimgpath."/".$NL_Imagename1_resized,$$InputName_ImageResizeSize,95);
+							if ($rs) {
+								//move resized image to tmp image
+								rename($tm_nlimgpath."/".$NL_Imagename1_resized,$tm_nlimgpath."/".$NL_Imagename1_tmp);
+								unlink ($tm_nlimgpath."/".$NL_Imagename1_resized);
+								$_MAIN_MESSAGE.= "<br>".sprintf(___("Bildgröße geändert in max. %s px."),$$InputName_ImageResizeSize);
+							} else {
+								$_MAIN_MESSAGE.= "<br>".sprintf(___("Fehler beim Ändern der Bildgröße in max. %s px."),$$InputName_ImageResizeSize);
+							}
+						}
+						#add watermark to image?						
+						if ($$InputName_ImageWatermark==1) {
+							if (file_exists($watermark_image)) {
+								$wm=watermark($tm_nlimgpath."/".$NL_Imagename1_tmp, $tm_nlimgpath."/".$NL_Imagename1_watermarked, $watermark_image, 95);
+								if ($wm[0]) {
+									//move resized image to tmp image
+									rename($tm_nlimgpath."/".$NL_Imagename1_watermarked,$tm_nlimgpath."/".$NL_Imagename1_tmp);
+									unlink ($tm_nlimgpath."/".$NL_Imagename1_watermarked);
+									$_MAIN_MESSAGE.= "<br>".sprintf(___("Wasserzeichen zum Bild hinzugefügt (%s)."),$$InputName_ImageWatermarkImage);
+								} else {
+									$_MAIN_MESSAGE.= "<br>".sprintf(___("Fehler beim Hinzufügen des Wasserzeichens (%s)."),$$InputName_ImageWatermarkImage);
+									$_MAIN_MESSAGE.= "<br>".$wm[1];//fehlermeldung aus createThumb
+								}
+							} else {
+								$_MAIN_MESSAGE.= "<br>".sprintf(___("Wasserzeichen existiert nicht (%s)."),$$InputName_ImageResizeSize);							
+							}
+						}
+						//copy tmp image to nl image
+						copy ($tm_nlimgpath."/".$NL_Imagename1_tmp,$tm_nlimgpath."/".$NL_Imagename1);
+						//unlink() source and temp image;
+						unlink ($tm_nlimgpath."/".$NL_Imagename1_tmp);
+						unlink ($tm_nlimgpath."/".$NL_Imagename1_source);
 						$_MAIN_MESSAGE.= "<br>".___("BILD-Datei erfolgreich hochgeladen.");
 						$_MAIN_MESSAGE.= "<ul>".$_FILES["image1"]["name"];
 						$_MAIN_MESSAGE.= " / ".$_FILES["image1"]["size"]." Byte";
@@ -96,22 +146,16 @@
 						$check=false;
 					}//copy
 				} else {
-					$_MAIN_MESSAGE.= "<br>".___("BILD-Datei konnte nicht hochgeladen werden.");
-				}//check
+					$_MAIN_MESSAGE.= "<br>".sprintf(___("Die BILD-Datei darf nur eine Grösse von %s Byte besitzen."),$max_byte_size);
+					$check=false;
+				}//max size
 			} else {
-				$_MAIN_MESSAGE.= "<br>".sprintf(___("Die BILD-Datei darf nur eine Grösse von %s Byte besitzen."),$max_byte_size);
+				$_MAIN_MESSAGE.= "<br>".___("Die BILD-Datei besitzt eine ungültige Endung.");
 				$check=false;
-			}//max size
-		} else {
-			$_MAIN_MESSAGE.= "<br>".___("Die BILD-Datei besitzt eine ungültige Endung.");
-			$check=false;
-		}//extension
-	} else {
-	}//no file
-
-
-//ende upload image
-
+			}//extension
+		}//no file
+	}//check
+	//ende upload image
 
 	//attachement
 	//attaxchement upload
@@ -291,6 +335,10 @@
 	$_Tpl_NL->setParseValue("F7","");
 	$_Tpl_NL->setParseValue("F8","");
 	$_Tpl_NL->setParseValue("F9","");
+	//title /subtitle, unpersonalisiert!
+	$_Tpl_NL->setParseValue("TITLE",$title);
+	$_Tpl_NL->setParseValue("TITLE_SUB",$title_sub);
+	$_Tpl_NL->setParseValue("SUMMARY",$summary);
 
 	$body_p=$_Tpl_NL->renderTemplate($NL_Filename_N);
 	//geparste nl datei speichern!

@@ -71,6 +71,47 @@ if (empty($sortType)) {
 	$sortType="0";//asc
 }
 
+//werte in sessions speichern! bzw loeschen
+$reset_adr_search_values=getVar("reset_adr_search_values");
+
+$InputName_SaveSearch="save_adr_search_values";//
+$$InputName_SaveSearch=getVar($InputName_SaveSearch);
+
+if ($reset_adr_search_values!=1 && $save_adr_search_values==1) {
+	$_SESSION['s_email']=$s_email;
+	$_SESSION['s_status']=$s_status;
+	$_SESSION['s_author']=$s_author;
+	$_SESSION['f0_9']=$f0_9;
+	$_SESSION['limit']=$limit;
+	$_SESSION['adr_grp_id']=$adr_grp_id;
+}
+if ($reset_adr_search_values==1) {
+	$_SESSION['s_email']="";
+	$s_email="";
+	$_SESSION['s_status']=0;
+	$s_status=0;
+	$_SESSION['s_author']=0;
+	$s_author=0;
+	$_SESSION['f0_9']="";
+	$f0_9="";
+	$_SESSION['limit']=$limit;
+	$_SESSION['adr_grp_id']=0;
+	$adr_grp_id=0;
+}
+
+###
+//parameters and link to reset all values to default, empty
+$resetSearchValuesURL=$mSTDURL;
+$resetSearchValuesURL->addParam("act","adr_list");
+$resetSearchValuesURL->addParam("no_list",1);
+$resetSearchValuesURL->addParam("reset_adr_search_values",1);
+//eigentlich voellig ueberfluessig:
+$resetSearchValuesURL->addParam("s_email","*");// * weil wenn leer wieder der session wert genommen wird.... 
+$resetSearchValuesURL->addParam("s_status",0);
+$resetSearchValuesURL->addParam("adr_grp_id",0);
+$resetSearchValuesURL->addParam("s_author",0);
+$resetSearchValuesURL->addParam("f0_9","*");// * weil wenn leer wieder der session wert genommen wird....
+$resetSearchValuesURL_=$resetSearchValuesURL->getAllParams();
 include_once (TM_INCLUDEPATH."/adr_search_form.inc.php");
 
 	$search['email']=str_replace("*","%",$s_email);

@@ -27,7 +27,10 @@ if ($check) {
 		$NEWSLETTER->setGRPStd(1,1);
 		$NEWSLETTER->addGrp(Array("name"=>"NL Group 2", "descr"=>"zum testen / for testings", "aktiv"=>0, "author"=>"install", "created"=>$created, "editor"=>"install", "updated"=>$created));
 //nl: personal, massmailing
-		$body="Hallo {F0} {F1} {F2}<br>\n".
+		$body=	"{TITLE}<br>\n".
+					"{TITLE_SUB}<br><br>\n".
+					"{SUMMARY}<br><br>\n".
+					"Hallo {F0} {F1} {F2}<br>\n".
 					"<br>\n".
 					"Attachements<br>\n".
 					"{ATTACHEMENTS}<br>\n".
@@ -73,7 +76,10 @@ if ($check) {
 					"<br>\n".
 					"Viel Spass mit tellmatic! :-)<br>\n";
 					
-		$body_text="Hallo {F0} {F1} {F2}\n".
+		$body_text="{TITLE}\n".
+					"{TITLE_SUB}\n\n".
+					"{SUMMARY}\n\n".
+					"Hallo {F0} {F1} {F2}\n".
 					"\n".
 					"Attachements\n".
 					"{ATTACHEMENTS}\n".
@@ -107,8 +113,13 @@ if ($check) {
 									"track_image"=>"_blank",
 									"content_type"=>"text/html",
 									"attachements"=>Array(),
+									"is_template"=>0,
+									"title"=>'Titel',
+									"title_sub"=>'Titel 2',
+									"summary"=>'Zusammenfassender Text zBsp. zur Anzeige auf der Webseite etc.',
 									)
 								);
+								//									"attm"=>"",//1082
 
 //adr gruppe
 		$ADDRESS=new tm_ADR();

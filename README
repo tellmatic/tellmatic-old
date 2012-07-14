@@ -29,18 +29,17 @@
 	Server / ISP:
 		- Linux oder MacosX, (NO Windows!)
 		- Apache HTTP Server (or similar, must support .htaccess) => http://httpd.apache.org/download.cgi
-		- PHP >= 4.4 => http://www.php.net/downloads.php (no CGI Installation recommended)
+		- PHP >= 4.4 => http://www.php.net/downloads.php , no early php5 (full of bugs)! 
            + Imap Library + Mysql + GD-Lib
-           (Tellmatic is developed and tested under PHP 4.4.7 and latest PHP5 stable releases + suhosin)
-		- Mysql Datenbank >= v4.1 (Mysql 4.1.x/5, NO Mysql3!)
+           (Tellmatic is developed and tested under PHP 4.4.7 and latest PHP5 stable releases + suhosin + fcgi)
+		- Mysql >= v4.1 (Mysql 4.1.x/5.x, NO Mysql3!)
            (Tellmatic is developed and tested under latest Mysql 4.x and latest Mysql5 stable releases)
-		- Access to SMTP, POP3/IMAP Server
-		- Optional: Cronjobs, PHP CLI or wget (Cronjobs execute at least every 5 Min.)
+		- Access to SMTP, POP3 and/or IMAP Server
+		- Optional: Cronjobs, PHP CLI or wget (Cronjobs execute at least every 10 Min. to be effective)
     
     Client:   
        standard Browser with Javascript support (Seamonkey, Mozilla or Firefox, IE (limited, no 24Bit PNG support))
-
-
+       IE Support is limited1 Please use a standard browser.
 
 *+*+*+*+*+*+*+*+*+*+ BASIC-FEATURES V1.0.x +*+*+*+*+*+*+*+*+*+*+*
 	Eaysy installation, installed in 2 minutes
@@ -75,6 +74,7 @@
 	Subscription-form-generator
 	Unlimited attachments
 	
+	and much more...	
 
 *+*+*+*+*+*+*+*+*+*+ INSTALLATION +*+*+*+*+*+*+*+*+*+*+*
 

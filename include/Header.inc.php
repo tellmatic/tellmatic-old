@@ -66,33 +66,18 @@ if ($logged_in) {
 $_HEAD_HTML.='
 </head>
 <body><!-- onload="init_ajax();" -->
-
 	<div id="div_loader" class="loader">
-	<br><b>
-	</b>
-	<center>
-	<b>'.
-	___("Bitte warten...").
-	'<br>'.
-	___("Seite wird geladen").'
-	</b>
-	<br>
-	<img src="'.$tm_URL_FE.'/'.TM_IMGDIR.'/counter.gif" border=0 alt="counter.gif">
-	<br>
-	<font size=-1>'.
- ___("Achtung! Ein Abbruch des Ladevorgangs kann zu Datenverlust und ungewünschten Nebeneffekten führen. Bitte tun Sie dies auf Ihr eigenes Risiko.").
-'</font><br>
-	<br>
 		<div id="ld" align="left" style="display:block;background-color:#ff0000;padding:0;">
-		<table id="lpc" bgcolor="#ffcc00" cellpadding=0 cellspacing=0><tr><td>
-		<div id="lt" style="background-color:#33ff33; color:#ffffff; font-size:12px; padding:0;">
-				<div id="ltt" style="background-color:#eeeeee; color:#ff0000; font-size:10px; padding:0;"><b>loading&nbsp;.......</b></div>
+			<table id="lpc" bgcolor="#ffcc00" cellpadding=0 cellspacing=0>
+			<tr><td>
+			<div id="lt" style="background-color:#33ff33; color:#ffffff; padding:0;">
+					<div id="ltt" style="background-color:#eeeeee; color:#ff0000; padding:0;">
+						<b>loading&nbsp;.......</b>
+					</div>
+			</div>
+			</td></tr>
+			</table>
 		</div>
-		</td></tr></table>
-		</div>
-		<br><a href="javascript:switchSection(\'div_loader\');">(X) '.___("Fenster schliessen").'</a>
-	</center>
-	<br><br>
 	</div>
 	<script type="text/javascript">
 	//<!--

@@ -36,19 +36,18 @@ BODY {
 }
 
 .loader   {
-		padding:3px;
+		padding:0px;
 		font-family : Arial,Helvetica; 
-		font-size : 10pt;
+		font-size : 8pt;
 		color: #000000;
-		width:400px; 
-		height:240px; 
+		width:984px; 
+		height:10px; 
 		position: absolute;
-		left: 300px;
-		top: 200px;
-		border:3px solid #07499c;
-   	background-color:#ffffff;
+		left: 0px;
+		top: 85px;
 		z-index: 1;
 }
+
 
 .send_status {
 	font-family : Arial,Helvetica; 

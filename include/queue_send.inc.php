@@ -62,25 +62,30 @@ if (!isset($new_q_arr[0])) {
 $qc=count($q_arr);//wieviel q eintraege gibt es?
 $_MAIN_MESSAGE.="<br>".___("Empfängerliste wird generiert.");
 $ac_total_ok=0;//gesamtanzahl adressen die eingetragen werden/wurden
+$ac_total_ok=0;//gesamtanzahl adressen die eingetragen werden/wurden
 
-if (DEBUG) echo "\nq_arr:\n";
-if (DEBUG) print_r($q_arr);
+if (DEBUG) $_MAIN_MESSAGE.= "\nq_arr:\n";
+if (DEBUG) $_MAIN_MESSAGE.=print_r($q_arr,TRUE);
 $HQTimer=new Timer();//zeitmessung startet hier
 for ($qcc=0;$qcc<$qc;$qcc++) {
 	//queue eintraege auslesen
-	if (DEBUG) echo "\nqcc= ".$qcc."\n";
-	if (DEBUG) echo "q_arr[qcc]\n";
-	if (DEBUG) print_r($q_arr[$qcc]);
+	if (DEBUG) $_MAIN_MESSAGE.= "\nqcc= ".$qcc."\n";
+	if (DEBUG) $_MAIN_MESSAGE.= "q_arr[qcc]\n";
+	if (DEBUG) $_MAIN_MESSAGE.=print_r($q_arr[$qcc],TRUE);
 	$Q=$QUEUE->getQ($q_arr[$qcc]['id']);//liefert je 1 eintrag $Q[0][]
-	if (DEBUG) echo "\nq 0 id: ".$Q[0]['id']."\n";
-	if (DEBUG) echo "\nQ:\n";
-	if (DEBUG) print_r($Q);
+	if (DEBUG) $_MAIN_MESSAGE.= "\nq 0 id: ".$Q[0]['id']."\n";
+	if (DEBUG) $_MAIN_MESSAGE.= "\nQ:\n";
+	if (DEBUG) $_MAIN_MESSAGE.=print_r($Q,TRUE);
 	$HOST=$HOSTS->getHost($Q[0]['host_id']);
-	if (DEBUG) echo "\nHOST:\n";
-	if (DEBUG) print_r($HOST);
+	if (DEBUG) $_MAIN_MESSAGE.= "\nHOST:\n";
+	if (DEBUG) $_MAIN_MESSAGE.=print_r($HOST,TRUE);
 	$GRP=$ADDRESS->getGroup($Q[0]['grp_id']);
-	if (DEBUG) echo "\nGRP:\n";
-	if (DEBUG) print_r($GRP);
+	if (DEBUG) $_MAIN_MESSAGE.= "\nGRP:\n";
+	if (DEBUG) $_MAIN_MESSAGE.= print_r($GRP,TRUE);
+	
+
+//hier pruefung ob host, nl und gruppen ueberhaupt noch existieren...... sonst undefined index wenn ein spassvogel die hosts oder nl oder adrgrp etc loescht
+	
 	if ($qcc==0) $_MAIN_MESSAGE.="<br>".sprintf(___("Ausgewählter Mail-Server: %s"),$HOST[0]['name']);//nur erster durchlauf
 	//wenn status ok, also neu 1, gestartet 2 oder angehalten 5
 	//dann neu eintrag in sendeliste/history, q_id, nl_id, grp_id, adr_id
@@ -101,8 +106,8 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 																				)
 																		);
 				$hqtime=$HQTimer->MidResult();
-				if (DEBUG) echo "\nhc_fastinsert:\n";
-				if (DEBUG) print_r($hc_fastinsert);
+				if (DEBUG) $_MAIN_MESSAGE.= "\nhc_fastinsert:\n";
+				if (DEBUG) $_MAIN_MESSAGE.=print_r($hc_fastinsert,TRUE);
 				if ($hc_fastinsert[0]) {
 					if (DEBUG) $_MAIN_MESSAGE.="<br>num rows:".$hc_fastinsert[1]."<br>affected rows:".$hc_fastinsert[2];
 					$_MAIN_MESSAGE.="<br>".sprintf(___("%s Einträge eingefügt."),$hc_fastinsert[2]);

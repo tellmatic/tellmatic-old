@@ -36,7 +36,6 @@ $$InputName_Public=getVar($InputName_Public);
 
 $InputName_PublicName="public_name";//range from
 $$InputName_PublicName=getVar($InputName_PublicName);
-//
 //wenn sich public aender loeschen wir dennoch keine referenzen von public groups zu den formularen, das wird in subscribe eh ueberprueft und beim naechsten bearbeiten des formulares bereinigt! (da edit methode alte refs loescht und komplett neu anlegt!)
 $ADDRESS=new tm_ADR();
 $GRP=$ADDRESS->getGroup($adr_grp_id,0,0,0);
@@ -63,7 +62,6 @@ if ($set=="save") {
 	} else {
 		include_once (TM_INCLUDEPATH."/adr_grp_form.inc.php");
 	}
-
 } else {
 	$name=$GRP[0]['name'];
 	$public=$GRP[0]['public'];
