@@ -19,7 +19,9 @@ $_FOOT="";
 $_FOOT.= "<div id=\"div_debug\" class=\"debug\">";
 $_FOOT.= "<a href=\"javascript:switchSection('div_debug');\"><img src=\"".$mnl_iconURL."/information.png\" border=\"0\"></a>";
 $_FOOT.= "<br>";
-$_FOOT.= "<br>MEM used: ".memory_get_usage()." Byte";
+if (function_exists('memory_get_usage')) {
+	$_FOOT.= "<br>MEM used: ".memory_get_usage()." Byte";
+}
 $_FOOT.= "<br>Time to Process: ".$T->Result()." Sek";
 $_FOOT.= "<br>Max. Upload: ".get_cfg_var("upload_max_filesize");
 $_FOOT.= "<br>Max. Memory: ".get_cfg_var("memory_limit");

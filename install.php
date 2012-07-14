@@ -16,7 +16,7 @@
 ?>
 <html>
 <head>
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=ISO-8859-15">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF8">
 <meta name="author" content="Volker">
 <meta name="Publisher" content="multi.art.studio Hanau">
 <meta name="Copyright" content="2007">
@@ -127,11 +127,34 @@ $$InputName_SMTPPass=getVar($InputName_SMTPPass);
 $InputName_SMTPDomain="smtp_domain";
 $$InputName_SMTPDomain=getVar($InputName_SMTPDomain);
 
+$check=true;
 
+if (version_compare(phpversion(), "5.0", ">=")) { 
+	$MESSAGE.="<br><font size=2 color=red><b>ACHTUNG! Sie benutzen PHP5. Weitere Details finden Sie den den Dateien README und INSTALL.
+							<br>You are using PHP5. More Details you can find in the README and INSTALL files.</b></font><br>";
+	//no error
+}
 
+if (!function_exists('imap_open')) {
+	$MESSAGE.="<br><font size=2 color=red><b>ACHTUNG! Die Funktion imap_open() existiert nicht. Weitere Details finden Sie den den Dateien README und INSTALL.
+							<br>The imap_open() function does not exist. More Details you can find in the README and INSTALL files.</b></font><br>";
+	//no error
+}
 
-if ($set=="save") {
-	$check=true;
+if (!is_writeable($mnl_path)) {
+	$MESSAGE.="<br><font size=2 color=red><b>ACHTUNG! $mnl_path ist Schreibgeschuetzt. Weitere Details finden Sie den den Dateien README und INSTALL 
+							<br>$mnl_path ist write protected. More Details you can find in the README and INSTALL files.</b></font><br>";
+	$check=false;
+}
+
+if (!is_writeable($mnl_includepath)) {
+	$MESSAGE.="<br><font size=2 color=red><b>ACHTUNG! $mnl_includepath ist Schreibgeschuetzt. Weitere Details finden Sie den den Dateien README und INSTALL 
+							<br>$mnl_includepath ist write protected. More Details you can find in the README and INSTALL files.</b></font><br>";
+	$check=false;
+}
+
+if ($set=="save" && $check) {
+	//$check=true;
 	//checkinput
 	if (empty($name)) {$check=false;$MESSAGE.="<br>Bitte Benutzernamen angeben";}
 	if (empty($pass)) {$check=false;$MESSAGE.="<br>Kein Passwort angegeben";}
@@ -140,7 +163,18 @@ if ($set=="save") {
 	if (!checkemailadr($email,2)) {$check=false;$MESSAGE.="<br>e-Mail hat ein falsches Format oder Domain ist nicht gueltig.";}
 	if (empty($db_host) || empty($db_port) || empty($db_name) || empty($db_user) || empty($db_pass)) {$check=false;$MESSAGE.="<br>Daten fuer den Zugriff auf die Datenbank sind nicht vollstaendig.";}
 	if (empty($smtp_host) || empty($smtp_domain) || empty($smtp_user) || empty($smtp_pass)) {$check=false;$MESSAGE.="<br>Daten fuer den Zugriff auf den SMTP-Server sind nicht vollstaendig.";}
+
 	if ($check) {
+	
+		//create directories!
+		mkdir($mnl_path.'/files', 0777);
+		mkdir($mnl_path.'/files/log', 0777);
+		mkdir($mnl_path.'/files/import_export', 0777);		
+		mkdir($mnl_path.'/files/forms', 0777);
+		mkdir($mnl_path.'/files/newsletter', 0777);
+		mkdir($mnl_path.'/files/newsletter/images', 0777);
+		mkdir($mnl_path.'/files/attachements', 0777);
+	
 		//database
 		//wir setzen db variablen und testen connection zur db!
 		$MNL["DB"]["Name"]=$db_name;
@@ -591,15 +625,16 @@ require valid-user
 
 			$MESSAGE.="<br>.htaccess Dateien wurden geschrieben.";
 
-
-			$MESSAGE.= "Herzlichen Glueckwunsch,\n
-					\nDie Installation der Tellmatic Newslettermascine auf ".$mnl_Domain."/".$mnl_dir." war erfogreich.\n
-					\ndie Installation ist abgeschlossen.\n
-					\nBesuchen Sie ".$mnl_Domain."/".$mnl_dir."/index.php\n
-					und melden sich mit Ihrem Benutzernamen und Passwort an.";
+			
+			$MESSAGE.= "Herzlichen Glueckwunsch,<br>
+					<br>Die Installation der Tellmatic Newslettermaschine auf ".$mnl_Domain."/".$mnl_dir." war erfogreich.<br>
+					<br>Besuchen Sie <br>".$mnl_Domain."/".$mnl_dir."/index.php<br>
+					und melden sich mit Ihrem Benutzernamen und Passwort an.<br>";
+					
+			$MESSAGE_TEXT=str_replace("<br>","\n",$MESSAGE);
 			@mail($email,
 					"Tellmatic Installation",
-					$MESSAGE,
+					$MESSAGE_TEXT,
 					"from:".$email."\r\n"
 					);
 		}//checkDB
@@ -618,7 +653,7 @@ if ($set!="save" || !$check) {
 	$Form=new mSimpleForm();
 	$FormularName="install";
 	//make new Form
-	$Form->new_Form($FormularName,"install.php","post","_self");
+	$Form->new_Form($FormularName,$_SERVER["PHP_SELF"],"post","_self");
 	//$this->set_FormStyle($FormularName,"font-size:10pt;font-color=red;");
 	////$Form->set_FormStyleClass($FormularName,"mForm");
 	//add a Description
@@ -637,7 +672,7 @@ if ($set!="save" || !$check) {
 	$Form->set_InputLabel($FormularName,$InputName_Name,"Benutzername:<br>");
 
 	//pass
-	$Form->new_Input($FormularName,$InputName_Pass,"text", $$InputName_Pass);
+	$Form->new_Input($FormularName,$InputName_Pass,"password", $$InputName_Pass);
 	$Form->set_InputStyleClass($FormularName,$InputName_Pass,"mFormText","mFormTextFocus");
 	$Form->set_InputSize($FormularName,$InputName_Pass,40,40);
 	$Form->set_InputDesc($FormularName,$InputName_Pass,"Passwort");
@@ -646,7 +681,7 @@ if ($set!="save" || !$check) {
 	$Form->set_InputLabel($FormularName,$InputName_Pass,"Passwort:<br>");
 
 	//pass2
-	$Form->new_Input($FormularName,$InputName_Pass2,"text", $$InputName_Pass2);
+	$Form->new_Input($FormularName,$InputName_Pass2,"password", $$InputName_Pass2);
 	$Form->set_InputStyleClass($FormularName,$InputName_Pass2,"mFormText","mFormTextFocus");
 	$Form->set_InputSize($FormularName,$InputName_Pass2,40,40);
 	$Form->set_InputDesc($FormularName,$InputName_Pass2,"Passwort");
@@ -701,7 +736,7 @@ if ($set!="save" || !$check) {
 	$Form->set_InputLabel($FormularName,$InputName_DBUser,"DB-User:<br>");
 
 	//dbs
-	$Form->new_Input($FormularName,$InputName_DBPass,"text", $$InputName_DBPass);
+	$Form->new_Input($FormularName,$InputName_DBPass,"password", $$InputName_DBPass);
 	$Form->set_InputStyleClass($FormularName,$InputName_DBPass,"mFormText","mFormTextFocus");
 	$Form->set_InputSize($FormularName,$InputName_DBPass,40,40);
 	$Form->set_InputDesc($FormularName,$InputName_DBPass,"DB-Pass");
@@ -737,7 +772,7 @@ if ($set!="save" || !$check) {
 	$Form->set_InputLabel($FormularName,$InputName_SMTPUser,"SMTP Username:<br>");
 
 	//smtp
-	$Form->new_Input($FormularName,$InputName_SMTPPass,"text", $$InputName_SMTPPass);
+	$Form->new_Input($FormularName,$InputName_SMTPPass,"password", $$InputName_SMTPPass);
 	$Form->set_InputStyleClass($FormularName,$InputName_SMTPPass,"mFormText","mFormTextFocus");
 	$Form->set_InputSize($FormularName,$InputName_SMTPPass,40,40);
 	$Form->set_InputDesc($FormularName,$InputName_SMTPPass,"SMTP Passwort");

@@ -13,7 +13,12 @@
 /********************************************************************************/
 
 $_MAIN_DESCR="Adressen exportieren (CSV-Export)";
-$_MAIN_MESSAGE="Bitte Addressgruppe waehlen .....";
+$_MAIN_MESSAGE="";
+
+//status
+$InputName_Status="status";//
+$status=getVar("status");
+
 
 $set=getVar("set");
 $InputName_Group="adr_grp_id";//gruppen id
@@ -27,7 +32,9 @@ if ($set=="export" && $adr_grp_id>0) {
 	
 //addressen einlesen
 	$ADDRESS=new mnlADR();
-	$ADR=$ADDRESS->getAdr(0,0,0,$adr_grp_id);//id,offset,limit,group
+	// getAdr($id=0,$offset=0,$limit=0,$group_id=0,$search=Array(),$sortIndex="",$sortType=0)
+	$search['status']=$status;
+	$ADR=$ADDRESS->getAdr(0,0,0,$adr_grp_id,$search);//id,offset,limit,group
 	$adr_grp=$ADDRESS->getGroup($adr_grp_id);
 	$ADR=sort_array($ADR,"email",1);
 	$ac=count($ADR);

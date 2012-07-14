@@ -13,11 +13,17 @@
 /********************************************************************************/
 
 $_MAIN_DESCR="Adressen importieren (CSV-Import)";
-$_MAIN_MESSAGE.="Bitte Adressdatei waehlen und Gruppen auswaehlen in welche die neuen Adressen eingetragen werden sollen.....";
-$_MAIN_MESSAGE.="<br>Die CSV-Datei muss folgendes Format besitzen:";
-$_MAIN_MESSAGE.="&nbsp;&nbsp;<em>email,f0,f1,f2,f3,f4,f5,f6,f7,f8,f9</em>";
 $set=getVar("set");
-$InputName_Group="adr_grp";//range from
+
+//status f. neue adr
+$InputName_Status="status_new";//
+$status_new=getVar("status_new");
+//status fuer existierende adr.
+$InputName_StatusEx="status_exists";//
+$status_ex=getVar("status_exists");
+
+//array mit gruppen
+$InputName_Group="adr_grp";//
 pt_register("POST","adr_grp");
 
 $InputName_File="file";//datei
@@ -61,10 +67,21 @@ if ($set=="import") {
 		$check=false;
 	}//no file
 	//ende upload 
-	
+
+	$_MAIN_MESSAGE.="<br>Status fuer neue Adressen: ";	
+	$_MAIN_MESSAGE.= "<img src=\"".$mnl_iconURL."/".$STATUS['adr']['statimg'][$status_new]."\" border=\"0\"   title=\"".$STATUS['adr']['descr'][$status_new]."\" alt=\"".$STATUS['adr']['descr'][$status_new]."\">";
+	$_MAIN_MESSAGE.= "  ".$STATUS['adr']['status'][$status_new]."  (".$STATUS['adr']['descr'][$status_new].")";
+
+	$_MAIN_MESSAGE.="<br>Status fuer bestehende Adressen: ";	
+	if ($status_ex>0) {
+		$_MAIN_MESSAGE.= "<img src=\"".$mnl_iconURL."/".$STATUS['adr']['statimg'][$status_ex]."\" border=\"0\"   title=\"".$STATUS['adr']['descr'][$status_ex]."\" alt=\"".$STATUS['adr']['descr'][$status_ex]."\">";
+		$_MAIN_MESSAGE.= "  ".$STATUS['adr']['status'][$status_ex]."  (".$STATUS['adr']['descr'][$status_ex].")";
+	} else {
+		$_MAIN_MESSAGE.= " keine Aenderung ";
+	}
+
 //datei einlesen
 	$author=$_SERVER['PHP_AUTH_USER'];
-	$status=1;
 	$code=0;
 	$lines=0;
 
@@ -208,6 +225,12 @@ if ($set=="import") {
 							$all_adr_grp);
 
 							$_MAIN_MESSAGE.="<br>Zeile ".($i+1).": e-Mail <em>".$addr[$i]['email']."</em> existiert Bereits und wurde aktualisiert und ggf in Neue Gruppen eingetragen.";
+
+							//wenn status_ex >0 dann aendern!
+							if ($status_ex>0) {
+								$ADDRESS->setStatus($ADR[0]['id'],$status_ex);
+							}
+
 							$idouble++;
 
 						//
@@ -223,7 +246,7 @@ if ($set=="import") {
 								"aktiv"=>1, 
 								"created"=>$created, 
 								"author"=>$author, 
-								"status"=>$status, 
+								"status"=>$status_new, 
 								"code"=>$code, 
 								"f0"=>$addr[$i]['f0'],
 								"f1"=>$addr[$i]['f1'],

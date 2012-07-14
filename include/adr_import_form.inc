@@ -19,7 +19,7 @@ $InputName_Reset="reset";
 $Form=new mSimpleForm();
 $FormularName="adr_import";
 //make new Form
-$Form->new_Form($FormularName,"index.php","post","_self");
+$Form->new_Form($FormularName,$_SERVER["PHP_SELF"],"post","_self");
 //add a Description
 $Form->set_FormDesc($FormularName,"Addressen aus CSV-Datei importieren");
 $Form->set_FormType($FormularName,"multipart/form-data");
@@ -49,7 +49,7 @@ $Form->set_InputReadonly($FormularName,$InputName_Group,false);
 $Form->set_InputOrder($FormularName,$InputName_Group,6);
 $Form->set_InputLabel($FormularName,$InputName_Group,"");
 //$Form->set_InputValue($FormularName,$InputName_Group,"");
-$Form->set_InputSize($FormularName,$InputName_Group,0,5);
+$Form->set_InputSize($FormularName,$InputName_Group,0,8);
 $Form->set_InputMultiple($FormularName,$InputName_Group,true);
 //add Data
 $ADDRESS=new mnlADR();
@@ -59,6 +59,40 @@ for ($accg=0; $accg<$acg; $accg++)
 {
 	$Form->add_InputOption($FormularName,$InputName_Group,$GRP[$accg]['id'],$GRP[$accg]['name']);
 }
+
+//Status
+$Form->new_Input($FormularName,$InputName_Status,"select", "");
+$Form->set_InputDefault($FormularName,$InputName_Status,1);
+$Form->set_InputStyleClass($FormularName,$InputName_Status,"mFormSelect","mFormSelectFocus");
+$Form->set_InputDesc($FormularName,$InputName_Status,"Adress-Status f. neue Adressen");
+$Form->set_InputReadonly($FormularName,$InputName_Status,false);
+$Form->set_InputOrder($FormularName,$InputName_Status,6);
+$Form->set_InputLabel($FormularName,$InputName_Status,"");
+$Form->set_InputSize($FormularName,$InputName_Status,0,1);
+$Form->set_InputMultiple($FormularName,$InputName_Status,false);
+//add Data
+$sc=count($STATUS['adr']['status']);
+for ($scc=1; $scc<=$sc; $scc++) {
+	$Form->add_InputOption($FormularName,$InputName_Status,$scc,$STATUS['adr']['status'][$scc]." (".$STATUS['adr']['descr'][$scc].")");
+}
+
+//StatusEx
+$Form->new_Input($FormularName,$InputName_StatusEx,"select", "");
+$Form->set_InputDefault($FormularName,$InputName_StatusEx,0);
+$Form->set_InputStyleClass($FormularName,$InputName_StatusEx,"mFormSelect","mFormSelectFocus");
+$Form->set_InputDesc($FormularName,$InputName_StatusEx,"Adress-Status f. existierende Adressen");
+$Form->set_InputReadonly($FormularName,$InputName_StatusEx,false);
+$Form->set_InputOrder($FormularName,$InputName_StatusEx,6);
+$Form->set_InputLabel($FormularName,$InputName_StatusEx,"");
+$Form->set_InputSize($FormularName,$InputName_StatusEx,0,1);
+$Form->set_InputMultiple($FormularName,$InputName_StatusEx,false);
+//add Data
+$Form->add_InputOption($FormularName,$InputName_StatusEx,0,"keine Aenderungen");
+$sc=count($STATUS['adr']['status']);
+for ($scc=1; $scc<=$sc; $scc++) {
+	$Form->add_InputOption($FormularName,$InputName_StatusEx,$scc,$STATUS['adr']['status'][$scc]." (".$STATUS['adr']['descr'][$scc].")");
+}
+
 
 
 
@@ -90,12 +124,29 @@ $_MAIN_OUTPUT.= $Form->INPUT[$FormularName]['act']['html'];
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName]['set']['html'];
 $_MAIN_OUTPUT.= "<table>";
 $_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top>Gruppen:<br> ";
+$_MAIN_OUTPUT.= "<td valign=top rowspan=4 style=\"border-right:1px solid grey\">Gruppen:<br>";
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Group]['html'];
 $_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "<td valign=top>CSV-Datei:<br>";
+
+
+$_MAIN_OUTPUT.= "<td valign=top>CSV-Datei:<br> ";
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_File]['html'];
 $_MAIN_OUTPUT.= "</td>";
+$_MAIN_OUTPUT.= "</tr>";
+
+$_MAIN_OUTPUT.= "<tr>";
+$_MAIN_OUTPUT.= "<td valign=top>Status f. neue Adressen:<br>";
+$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Status]['html'];
+$_MAIN_OUTPUT.= "</td>";
+$_MAIN_OUTPUT.= "</tr>";
+
+$_MAIN_OUTPUT.= "<tr>";
+$_MAIN_OUTPUT.= "<td valign=top>Status bei Update:<br>";
+$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_StatusEx]['html'];
+$_MAIN_OUTPUT.= "</td>";
+$_MAIN_OUTPUT.= "</tr>";
+
+$_MAIN_OUTPUT.= "<tr>";
 $_MAIN_OUTPUT.= "<td valign=top colspan=2><br>";
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Submit]['html'];
 //$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Reset]['html'];

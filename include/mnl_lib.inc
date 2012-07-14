@@ -30,6 +30,13 @@ if (!$mnl_config) {
 	///////////////////////////////
 	//////////////STOP/////////////
 	///////////////////////////////
+	
+
+	//dirty hack for php5! wil be fixed soon! for now we use this dirty hack until i cleaned up the messy code to work with php5.... * no comments ;-)
+	if (version_compare(phpversion(), "5.0", ">=")) {   $usePhp5=true; } else {  $usePhp5=false; }
+	define("PHP5",$usePhp5);
+	if (PHP5) ini_set('zend.ze1_compatibility_mode', '1');
+
 
 	@ini_set("max_execution_time","300");
 	@ini_set("ignore_user_abort","1");
@@ -167,11 +174,11 @@ if (!$mnl_config) {
 	//Absenderdomain, HELO 
 	$SMTPDomain=$C[0]['smtp_domain'];
 	//
-	$use_SMTPmail=true;//fuer sendmail function!
+	$use_SMTPmail=true;//fuer smtp mail function!
 		
 	//eMail prueflevel!
 	$EMAILCHECK['intern'][1]="Syntax";
-	$EMAILCHECK['intern'][2]="Syntax + MX";
+	$EMAILCHECK['intern'][2]="Syntax + MX/DNS";
 	$EMAILCHECK['intern'][3]="Syntax, MX/DNS + Validate";
 
 	$EMAILCHECK['subscribe'][1]="Syntax";
@@ -194,6 +201,8 @@ if (!$mnl_config) {
 	$STATUS['adr']['status'][9]="Fehler A";
 	$STATUS['adr']['status'][10]="Fehler S";
 	$STATUS['adr']['status'][11]="unsubscribed";
+	$STATUS['adr']['status'][12]="touch";
+	
 	
 	$STATUS['adr']['descr'][1]="Neuanmeldung";
 	$STATUS['adr']['descr'][2]="manuell Eingetragen, Syntax Geprueft, Senden OK";
@@ -206,6 +215,7 @@ if (!$mnl_config) {
 	$STATUS['adr']['descr'][9]="Fehlerhafte Adresse o. Ruecklaeufer";
 	$STATUS['adr']['descr'][10]="Fehler beim versenden, neuer Versuch";
 	$STATUS['adr']['descr'][11]="Abgemeldet";
+	$STATUS['adr']['descr'][12]="1st-Touch-Opt-In";
 	 
 	$STATUS['adr']['statimg'][0]="bullet_black.png";
 	$STATUS['adr']['statimg'][1]="new.png";
@@ -219,6 +229,7 @@ if (!$mnl_config) {
 	$STATUS['adr']['statimg'][9]="bullet_error.png";
 	$STATUS['adr']['statimg'][10]="transmit_error.png";
 	$STATUS['adr']['statimg'][11]="user_red.png";//bullet_delete
+	$STATUS['adr']['statimg'][12]="user_add.png";//bullet_delete
 	
 	 //statuscodes der newsletter und bilder dazu
 	$STATUS['nl']['status'][1]="Neu";
@@ -286,10 +297,11 @@ if (!$mnl_config) {
 //////////////////////////////////	
 
 	$ApplicationName="tellmatic";
-	$ApplicationVersion="1.01 mNL";
-	$ApplicationDescr="Die Newslettermaschine";
+	$ApplicationVersion="1.02 mNL";
+	$ApplicationDescr="the newsletter machine";
 	$ApplicationUrl="www.tellmatic.de";
 	$ApplicationText=$ApplicationName." v".$ApplicationVersion." - ".$ApplicationDescr." (".$ApplicationUrl.")";
 	$mnl_config=true;
+	
 }
 ?>

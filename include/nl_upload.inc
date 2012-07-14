@@ -204,6 +204,9 @@
 	$NLONLINE_URL=$mnl_URL."/".$mnl_nldir."/".$NL_Filename_P;
 	$NLONLINE="<a href=\"".$NLONLINE_URL."\" target=\"_blank\">";
 
+	$SUBSCRIBE_URL=$mnl_URL."/subscribe.php?doptin=1";
+	$SUBSCRIBE="<a href=\"".$SUBSCRIBE_URL."\" target=\"_blank\">";
+
 	// ---> $body_p
 	//new Template
 	$_Tpl_NL=new mTemplate();
@@ -214,6 +217,7 @@
 	$_Tpl_NL->setParseValue("NLONLINE", $NLONLINE);
 	$_Tpl_NL->setParseValue("BLINDIMAGE", $BLINDIMAGE);
 	$_Tpl_NL->setParseValue("UNSUBSCRIBE", $UNSUBSCRIBE);
+	$_Tpl_NL->setParseValue("SUBSCRIBE", $UNSUBSCRIBE);
 
 	$_Tpl_NL->setParseValue("IMAGE1_URL", $IMAGE1_URL);
 	$_Tpl_NL->setParseValue("LINK1_URL", $LINK1_URL);
@@ -221,6 +225,7 @@
 	$_Tpl_NL->setParseValue("NLONLINE_URL", $NLONLINE_URL);
 	$_Tpl_NL->setParseValue("BLINDIMAGE_URL", $BLINDIMAGE_URL);
 	$_Tpl_NL->setParseValue("UNSUBSCRIBE_URL", $UNSUBSCRIBE_URL);
+	$_Tpl_NL->setParseValue("SUBSCRIBE_URL", $SUBSCRIBE_URL);
 
 	$_Tpl_NL->setParseValue("CLOSELINK", "</a>");
 	$_Tpl_NL->setParseValue("EMAIL","");

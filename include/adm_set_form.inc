@@ -19,7 +19,7 @@ $InputName_Reset="reset";
 $Form=new mSimpleForm();
 $FormularName="adm_set";
 //make new Form
-$Form->new_Form($FormularName,"index.php","post","_self");
+$Form->new_Form($FormularName,$_SERVER["PHP_SELF"],"post","_self");
 //$this->set_FormStyle($FormularName,"font-size:10pt;font-color=red;");
 ////$Form->set_FormStyleClass($FormularName,"mForm");
 ////$Form->set_FormInputStyleClass($FormularName,"mFormText","mFormTextFocus");
@@ -145,7 +145,7 @@ $Form->set_InputOrder($FormularName,$InputName_SMTPUser,1);
 $Form->set_InputLabel($FormularName,$InputName_SMTPUser,"");
 
 //smtp
-$Form->new_Input($FormularName,$InputName_SMTPPass,"text", $$InputName_SMTPPass);
+$Form->new_Input($FormularName,$InputName_SMTPPass,"password", $$InputName_SMTPPass);
 $Form->set_InputStyleClass($FormularName,$InputName_SMTPPass,"mFormText","mFormTextFocus");
 $Form->set_InputSize($FormularName,$InputName_SMTPPass,48,256);
 $Form->set_InputDesc($FormularName,$InputName_SMTPPass,"SMTP Passwort");

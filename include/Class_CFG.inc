@@ -18,10 +18,15 @@ class mnlCFG {
 	var $LoggedInUsername;
 	var $USER=Array();
 	
-	function Login($checkadmin=0) { 
+	function Logout() {
+		/*
+		*/
+	}
+	function Login($checkadmin=0,$msg="new Login") { 
 		if (!isset($_SERVER['PHP_AUTH_USER'])) {
-			$this->authenticate("new Login");
+			$this->authenticate($msg);
 		}
+		
 		$LoginName=$_SERVER['PHP_AUTH_USER'];
 		$PassWD=$_SERVER['PHP_AUTH_PW']; 
 		if ($this->checkUserLogin($LoginName,$PassWD,$checkadmin)) {
@@ -62,7 +67,7 @@ class mnlCFG {
 
 	function authenticate($msg) 
 	{ 
-		Header("WWW-authenticate: basic realm=".$msg);
+		Header("WWW-authenticate: basic realm=$msg");
 		Header("HTTP/1.0 401 Unauthorized");
 		echo "<html><head></head><body>$msg<br>Sie sind nicht angemeldet! You are not logged in!<br><b>Zugriff verweigert! Access denied!</b><br>";
 		echo "</body></html>";

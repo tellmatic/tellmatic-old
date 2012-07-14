@@ -19,7 +19,7 @@ $InputName_Reset="reset";
 $Form=new mSimpleForm();
 $FormularName="nl_new";
 //make new Form
-$Form->new_Form($FormularName,"index.php","post","_self");
+$Form->new_Form($FormularName,$_SERVER["PHP_SELF"],"post","_self");
 //$this->set_FormStyle($FormularName,"font-size:10pt;font-color=red;");
 ////$Form->set_FormStyleClass($FormularName,"mForm");
 ////$Form->set_FormInputStyleClass($FormularName,"mFormText","mFormTextFocus");
@@ -256,24 +256,9 @@ $_MAIN_OUTPUT.= "
 						<u>Nur personalisiertes NL:</u><br>
 						{F0} bis {F9} enthaelt die Felder aus den Formularen/Adressen<br>
 						{EMAIL} enthaelt die e-Mailadresse des Empfaengers<br>
-						
+						{SUBSCRIBE} enthaelt den kompletten Link 'a href' zum Aktivierungslink ('(1st)-Touch-Opt-In) | {SUBSCRIBE_URL} enthaelt nur die URL<br>
 
 						";
 
 include_once ($mnl_includepath."/wysiwyg.inc");
-/*
-$_MAIN_OUTPUT.='
-<script type="text/javascript">
-  Calendar.setup(
-    {
-      inputField  : "date",         // ID of the input field
-      ifFormat    : "%Y-%m-%d",    // the date format
-      button      : "date",       // ID of the button
-      date			: "",
-      firstDay		: 0
-    }
-  );
-</script>
-'
-*/
 ?>

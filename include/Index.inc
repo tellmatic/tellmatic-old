@@ -14,10 +14,15 @@
 
 $T=new Timer();
 
-$LOGIN=new mnlCFG();
-$LOGIN->Login();
 
+$LOGIN=new mnlCFG();
 $action=getVar("act");
+if ($action=="logout") {
+	$LOGIN->Logout();
+} else {
+	$LOGIN->Login(0,"Tellmatic Login - Bitte geben Sie Ihren Benutzernamen und Passwort ein:");
+}
+
 if (!isset($action) || empty($action)) {$action="Welcome";}
 
 $LOGIN->getUser($LOGIN->LoggedInUsername);

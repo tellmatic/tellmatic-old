@@ -107,6 +107,9 @@ if ($set=="save") {
 			//und status 10!
 			$search['status']=10;
 			$ac +=$ADDRESS->countADR($grp_id,$search);
+			//und status 12!
+			$search['status']=12;
+			$ac +=$ADDRESS->countADR($grp_id,$search);
 			
 
 			//keine benutzbaren adressen gefunden 

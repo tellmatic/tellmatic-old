@@ -68,8 +68,8 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 				//wenn adresse nicht inaktiv und nicht unsubscribed und nicht fehlerhaft etc, dann in history aufnehmen
 				//status=1 //neu
 				if ($ADR[$acc]['aktiv']==1 && $ADR[$acc]['errors']<=$max_mails_retry) {
-					if ($ADR[$acc]['status']==1 || $ADR[$acc]['status']==2 || $ADR[$acc]['status']==3 || $ADR[$acc]['status']==4 || $ADR[$acc]['status']==10) {
-						//pruefen ob adresse schon in histpry vorhanden mit status neu=1, wenn ja , nicht hinzufuegen, den rest schon, auch wenn bereits gesendet!
+					if ($ADR[$acc]['status']==1 || $ADR[$acc]['status']==2 || $ADR[$acc]['status']==3 || $ADR[$acc]['status']==4 || $ADR[$acc]['status']==10 || $ADR[$acc]['status']==12) {
+						//pruefen ob adresse schon in history vorhanden mit status neu=1, wenn ja , nicht hinzufuegen, den rest schon, auch wenn bereits gesendet!
 						$Hnew=$QUEUE->getH(0,0,0,0,$Q[0]['nl_id'],0,$ADR[$acc]['id'],1);
 						//getH($id=0,$offset=0,$limit=0,$q_id=0,$nl_id=0,$grp_id=0,$adr_id=0,$status=0)
 						$hc_new=count($Hnew);

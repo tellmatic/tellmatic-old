@@ -19,7 +19,7 @@ $InputName_Reset="reset";
 $Form=new mSimpleForm();
 $FormularName="adr_import";
 //make new Form
-$Form->new_Form($FormularName,"index.php","post","_self");
+$Form->new_Form($FormularName,$_SERVER["PHP_SELF"],"post","_self");
 //add a Description
 $Form->set_FormDesc($FormularName,"Addressen aus CSV-Datei importieren");
 $Form->set_FormType($FormularName,"multipart/form-data");
@@ -47,6 +47,23 @@ $acg=count($GRP);
 for ($accg=0; $accg<$acg; $accg++)
 {
 	$Form->add_InputOption($FormularName,$InputName_Group,$GRP[$accg]['id'],$GRP[$accg]['name']." (".$GRP[$accg]['adr_count'].")");
+}
+
+//Status
+$Form->new_Input($FormularName,$InputName_Status,"select", "");
+$Form->set_InputDefault($FormularName,$InputName_Status,0);
+$Form->set_InputStyleClass($FormularName,$InputName_Status,"mFormSelect","mFormSelectFocus");
+$Form->set_InputDesc($FormularName,$InputName_Status,"Nur Adressen mit diesem Status exportieren");
+$Form->set_InputReadonly($FormularName,$InputName_Status,false);
+$Form->set_InputOrder($FormularName,$InputName_Status,6);
+$Form->set_InputLabel($FormularName,$InputName_Status,"");
+$Form->set_InputSize($FormularName,$InputName_Status,0,1);
+$Form->set_InputMultiple($FormularName,$InputName_Status,false);
+//add Data
+$Form->add_InputOption($FormularName,$InputName_Status,0,"Alle");
+$sc=count($STATUS['adr']['status']);
+for ($scc=1; $scc<=$sc; $scc++) {
+	$Form->add_InputOption($FormularName,$InputName_Status,$scc,$STATUS['adr']['status'][$scc]." (".$STATUS['adr']['descr'][$scc].")");
 }
 
 //submit button 
@@ -78,9 +95,17 @@ $_MAIN_OUTPUT.= $Form->INPUT[$FormularName]['set']['html'];
 $_MAIN_OUTPUT.= "<table>";
 $_MAIN_OUTPUT.= "<tr>";
 $_MAIN_OUTPUT.= "<td valign=top>";
-$_MAIN_OUTPUT.= "Gruppe ";
+$_MAIN_OUTPUT.= "Gruppe:<br>";
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Group]['html'];
 $_MAIN_OUTPUT.= "</td>";
+$_MAIN_OUTPUT.= "</tr>";
+$_MAIN_OUTPUT.= "<tr>";
+$_MAIN_OUTPUT.= "<td valign=top>";
+$_MAIN_OUTPUT.= "Adressen mit folgendem Status:<br>";
+$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Status]['html'];
+$_MAIN_OUTPUT.= "</td>";
+$_MAIN_OUTPUT.= "</tr>";
+$_MAIN_OUTPUT.= "<tr>";
 $_MAIN_OUTPUT.= "<td valign=top>";
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Submit]['html'];
 //$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Reset]['html'];

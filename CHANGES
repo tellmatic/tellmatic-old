@@ -11,6 +11,27 @@
 /* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
 /********************************************************************************/
 
+*+*+*+*+*+*+*+*+*+*+*+ CHANGES V1.0.2  +*+*+*+*+*+*+*+*+*+*+*+*
+	bugs fixed:
+		- workaround for php5, using compatibility mode ..... no comment... see README
+		- all password fields are now type 'password'
+		- check for mem_get_usage(), if not exists, memory information is not available... only for debugging purposes
+		
+	changes, new features and enhancements: 
+		- import: select new status for new and existing addresses
+		- export: only export addresses with status XXX
+		- newsletter: new Template variable {SUBSCRIBE} and {SUBSCRIBE_URL}, linking to subscribe.php and set status 'bestaetigt' like double-optin, this is almost for use with touch-optin mails :)
+			(this is when you import addresses and send a initial newsletter, you can add a link to subscribe. dont add a blindimage in your initial newsletters! after a few days, export all addresses with status 'bestaetigt' and import in a new group (like moving between groups)
+				subscribe uses the Template tpl/Form_0_os.html to show a message after clicking)
+				new status for touch is 12... (till i switch to bitmasks)
+		- installation now checks for writeable directories.
+		- installation now creates the directory file/... and all subdirectories. the empty directories are no longer included in the archiv
+		- installation now throws a message when php5 is detected.
+		- installation now checks for imap_open() and thorwos a mesage if not exists
+		- send_it.php's logfile is now in english. the status messages are sent bilingual (de/en)
+		- all forms: index.php becomes $_SERVER["PHP_SELF"]
+		- added style 'wine', a mixture of red and grey , please try it :) , and if your a 'Master of CSS' - send me your update ;-)
+		
 *+*+*+*+*+*+*+*+*+*+*+ CHANGES V1.0.1  +*+*+*+*+*+*+*+*+*+*+*+*
 	bugs fixed: 
 		- message id not exists for pop3 connections

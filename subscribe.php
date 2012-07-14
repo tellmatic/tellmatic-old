@@ -30,12 +30,18 @@ if (!isset($frm_id)) {
 $set=getVar("set");
 $doptin=getVar("doptin");//opt in click, bestaetigung, aus email f. double optin
 $email=getVar("email");
+$touch=getVar("touch");//touch=1 wenn erster kontakt und benutzer prueft gegen....
 //$adr_id=getVar("adr_id");
 $c=getVar("c");//recheck code
 $check=true;
 
 //opt in click?
-if ($doptin==1 && !empty($c) && !empty($frm_id)) { // && checkemailadr($email,$EMailcheck_Intern)
+if ($doptin==1 && !empty($c) && !empty($email)) { // && checkemailadr($email,$EMailcheck_Intern) //&& !empty($frm_id) rausgenommen!
+	//adresse pruefen:
+	$_Tpl_FRM=new mTemplate();
+	$_Tpl_FRM->setTemplatePath($mnl_formpath);
+
+	if (checkemailadr($email,$EMailcheck_Subscribe)) {
 	//double optin bestaetigung:
 	//adr suchen, code vergleichen, wenn ok, weiter, sonst ...... leere seite! -?
 	$ADDRESS=new mnlADR();
@@ -49,26 +55,35 @@ if ($doptin==1 && !empty($c) && !empty($frm_id)) { // && checkemailadr($email,$E
 		//ja, code muesste man nicht nochmal pruefen, wird ja in search bereits in der db gesucht....
 		//setstatus adr_id = 3
 		$ADDRESS->setStatus($ADR[0]['id'],3);
-		$FORMULAR=new mnlFRM();
-		/*
-		//wir zaehlen auch double optins schon bei eintragung...
-		//nicht erst bei bestatigung, siehe unten bei anmeldung....
-		//alternativ koennte man auch bei double optin die subs erst zaehlen wenn bestateigt wird....:
-		//$FORMULAR->addSub($frm_id);
-		*/
-		//template laden, vielen dank etc, Form_R.html R wie rechecked
-		//evtl mail an empfaenger, vielen dank etc... blabla
-		$Form_Filename_OS="/Form_".$frm_id."_os.html";//meldung wenn subscribed
-		$_Tpl_FRM=new mTemplate();
-		$_Tpl_FRM->setTemplatePath($mnl_formpath);
-		$MESSAGE.="Die Registrierung war erfolgreich.";
-		$_Tpl_FRM->setParseValue("FMESSAGE", $MESSAGE);
-		//template ausgeben
-		$OUTPUT.=$_Tpl_FRM->renderTemplate($Form_Filename_OS);
-	} else {
-		$OUTPUT.="not found";
-	}
+			if (!empty($frm_id)) {
+				$FORMULAR=new mnlFRM();
+				/*
+				//wir zaehlen auch double optins schon bei eintragung...
+				//nicht erst bei bestatigung, siehe unten bei anmeldung....
+				//alternativ koennte man auch bei double optin die subs erst zaehlen wenn bestateigt wird....:
+				//$FORMULAR->addSub($frm_id);
+				*/
+				//template laden, vielen dank etc, Form_R.html R wie rechecked
+				//evtl mail an empfaenger, vielen dank etc... blabla
+			}//empty frm_id
+			$MESSAGE.="Die Registrierung war erfolgreich.";
+		} else {
+			$OUTPUT.="not found";
+		}
 
+		if ($touch==1) { //not via form, touch optin! always calls Form_0_os.html in the tpldirectory!
+			$frm_id=0;
+			$_Tpl_FRM->setTemplatePath($mnl_tplpath);//set path for new template Form_0_os.html!
+		}
+	} else {
+		$MESSAGE.="Ungueltige E-Mail-Adresse!.";
+	}//checkemail
+
+	$Form_Filename_OS="/Form_".$frm_id."_os.html";//meldung wenn subscribed
+
+	$_Tpl_FRM->setParseValue("FMESSAGE", $MESSAGE);
+	//template ausgeben
+	$OUTPUT.=$_Tpl_FRM->renderTemplate($Form_Filename_OS);
 
 }
 

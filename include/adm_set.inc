@@ -81,6 +81,8 @@ if ($set=="save") {
 	if (($notify_subscribe==1 || $notify_unsubscribe==1) && empty($notify_mail)) {$check=false;$_MAIN_MESSAGE.="<br>e-Mail fuer Benachrichtigungen sollte nicht leer sein.";}
 	if (!empty($notify_mail) && !checkemailadr($notify_mail,$EMailcheck_Intern)) {$check=false;$_MAIN_MESSAGE.="<br>e-Mail fuer Benachrichtigungen bei An-/Abmeldungen hat ein falsches Format oder Domain ist nicht gueltig.";}
 
+	//check smtp/pop3 connection .... and maybe give a warning message, dont fail :)
+	//still to do , connect doesnt work here, need a testfunction........
 
 
 	if ($check) {

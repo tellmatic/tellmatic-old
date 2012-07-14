@@ -20,7 +20,7 @@ $ADDRESS=new mnlADR();//fuer die gruppen
 $Form=new mSimpleForm();
 $FormularName="adr_clean";
 //make new Form
-$Form->new_Form($FormularName,"index.php","post","_self");
+$Form->new_Form($FormularName,$_SERVER["PHP_SELF"],"post","_self");
 //$this->set_FormStyle($FormularName,"font-size:10pt;font-color=red;");
 ////$Form->set_FormStyleClass($FormularName,"mForm");
 ////$Form->set_FormInputStyleClass($FormularName,"mFormText","mFormTextFocus");

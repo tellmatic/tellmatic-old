@@ -19,7 +19,7 @@ $InputName_Reset="reset";
 $Form=new mSimpleForm();
 $FormularName="user";
 //make new Form
-$Form->new_Form($FormularName,"index.php","post","_self");
+$Form->new_Form($FormularName,$_SERVER["PHP_SELF"],"post","_self");
 //$this->set_FormStyle($FormularName,"font-size:10pt;font-color=red;");
 ////$Form->set_FormStyleClass($FormularName,"mForm");
 ////$Form->set_FormInputStyleClass($FormularName,"mFormText","mFormTextFocus");
@@ -64,7 +64,7 @@ $Form->set_InputMultiple($FormularName,$InputName_Style,false);
 //add Data
 $Form->add_InputOption($FormularName,$InputName_Style,"default","Tellmatic");
 #$Form->add_InputOption($FormularName,$InputName_Style,"grey","Grossstadt");
-#$Form->add_InputOption($FormularName,$InputName_Style,"wine","Rotwein");
+$Form->add_InputOption($FormularName,$InputName_Style,"wine","Rotwein");
 
 //submit button 
 $Form->new_Input($FormularName,$InputName_Submit,"submit","Einstellungen fuer '".$_SERVER['PHP_AUTH_USER']."' aendern");

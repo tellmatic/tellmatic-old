@@ -11,85 +11,97 @@
 /* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
 /********************************************************************************/
 
-INSTALL, 
+INSTALL
+
 	german
 	[en:] = english
 
-Archiv auf lokale Festplatte auspacken.
-Das verzeichnis tellmatic-[xxx] oder den Inhalt des Verzeichnisses in ein Verzeichnis Ihrer Wahl
- komplett per Ftp auf den Server kopieren
- 
-[en:Unpack the archive file to your local harddisc. Copy the directory tellmatic-[xxx] or the content of this directory completely to your server via ftp into a directory of your choice.]
 
-Die Verzeichnisse: ...
+Hinweise / Notes:
 
-[en:The directories: ...]
-
-	include
-	files/
-	files/forms
-	files/logs
-	files/import_export
-	files/newsletter
-	files/newsletter/images
-	files/attachements
+	PHP5: PHP5 kann zur Zeit evtl. nur eingeschraenkt genutzt werden, es ist nicht ausreichend getestet und es koennen durchaus Fehler auftreten. 
+				[en: the usage of Tellmatic and PHP5 is not tested very well yet. There may be errors....]
 	
-...muessen fuer den Webserver beschreibbar sein! ftp-> chmod --> user/group/others -> read/write/execute (0775 oder 0777)
+	imap_open(). Die Funktion imap_open() sollte von Ihrem Server und PHP unterstuetzt werden wenn Sie das Bouncemanagement nutzen wollen. 
+						Falls eine Fehlermeldung bei der Installation angezeigt wird kann diese Funktion evtl nicht benutzt werden. 
+						Bitte wenden Sie sich an Ihren Provider.
+						
+						[en: The function imap_open() must be supported by PHP. If not, you cannot use bouncemanagement. please call your provider.]
 
-[en: ...must be writable by the webserver. use chmod function of your ftp programm and set permissions to 0775 or 0777]
+Installation:
 
-
-Nun mit dem Browser die Datei
-install.php
-aufrufen, Daten eingeben und bestaetigen.
-
-[en:Now call install.php via your famous Browser and enter your data.]
-
-Alle Felder sind Pflichtangaben.
-
-[en:All fields are required]
-
-Die Einstellungen fuer SMTP/POP3 werden nicht auf Gueltigkeit ueberprueft!
-
-[en:The values for SMTP/POP3 are not checked, make sure theire valid!]
-
-Das Newsletter wird nun installiert.
-
-[en:Tellmatic is now installed]
-
-Wird eine Fehlermeldung ausgegeben, befolgen Sie bitte die Anweisungen.
-
-[en:If there occurs some error, please follow the instructions.]
-
-Nach erfolgreicher Installation die Datei
-install.php 
-loeschen oder umbenennen bzw an einen sicheren Ort verschieben.
-
-[en:Please delete, move or rename install.php after successfull installation]
-
-Die Schreibrechte fuer das Verzeichnis include koennen wieder entfernt werden. (0755 rwxr-xr-x oder 0555 r-xr-xr-x)
-
-[en:Remove write permissions for the include directory]
-
-	INFO:
-		Die Installationsroutine erstellt im Installationsverzeichnis eine Datei mit dem Namen .htusers.
-		Diese enthaelt den Benutzernamen und das verschluesselte Passwort fuer den Zugriff auf die ueber .htaccess geschuetzten Verzeichnisse files/forms, logs, import_export
-
-		[en:install.php creates a file called .htusers, it includes username and crypted password for acces to the restricted directories]
+	Archiv auf lokale Festplatte auspacken.
+	Das verzeichnis tellmatic-[xxx] oder den Inhalt des Verzeichnisses in ein Verzeichnis Ihrer Wahl
+	 komplett per Ftp auf den Server kopieren
+	 
+	[en:Unpack the archive file to your local harddisc. Copy the directory tellmatic-[xxx] or the content of this directory completely to your server via ftp into a directory of your choice.]
 	
-In include/send_it.php, subscribe.php und unsubscribe.php den Pfad zu mnl_confg.inc anpassen.
-Hier muss der komplette Pfad, Docroot+Installdirectory angegeben werden.
-
-[en:please edit path to mnl_config.inc in include/send_it.php, sunbscribe.php and unsubscribe.php - enter complete path here]
-
-Zum Versenden Cronjob erstellen: Aufruf von [user:passwort]@http://[domain]/[tellmatic-installdir]/include/send_it.php per wget (user/pw muss angegeben werden), 	oder per php CLI:
-
-[en:To send via cronjob, call [user:passwort]@http://[domain]/[tellmatic-installdir]/include/send_it.php with wget (add username and pw), or use php cli]
-	*/1 * * * * /pfad/zu/php /pfad/zu/include/send_it.php
-
-index.php aufrufen, Name und Passwort eingeben , Fertig, viel Spass!
-
-[en:call index.php, enter username and password, ready, enjoy newslettering]
+	Das Verzeichnis in dem Sie Tellmatic installieren moechten muss fuer den Webserver beschreibbar sein - ftp-> chmod --> user/group/others -> read/write/execute (0775 oder 0777)
+	[en:The directory where you install Tellmatic and the 'include' directory must be writeable by the webserver - use chmod function of your ftp programm and set permissions to 0775 or 0777]
+	
+	Nun mit dem Browser die Datei
+	install.php
+	aufrufen, Daten eingeben und bestaetigen.
+	
+	[en:Now call install.php via your famous Browser and enter your data.]
+	
+	Alle Felder sind Pflichtangaben.
+	
+	[en:All fields are required]
+	
+	Die Einstellungen fuer SMTP/POP3 werden nicht auf Gueltigkeit ueberprueft!
+	
+	[en:The values for SMTP/POP3 are not checked, make sure theire valid!]
+	
+	Das Newsletter wird nun installiert. Die Verzeichnisse sowie die Konfigurationsdatei include/mnl_config.inc und die Tabellen in der Datenbank werden angelegt
+	
+	[en:Tellmatic is now installed, the directories are created, the configurationfile include/mnl_config.inc is written and database tables gets created]
+	
+	Tellmatic erstellt die folgenden Verzeichnisse:
+	
+	[en: the following directories will be created:]
+	
+		files/
+		files/forms
+		files/logs
+		files/import_export
+		files/newsletter
+		files/newsletter/images
+		files/attachements
+	
+	Wird eine Fehlermeldung ausgegeben, befolgen Sie bitte die Anweisungen.
+	
+	[en:If there occurs some error, please follow the instructions.]
+	
+	Nach erfolgreicher Installation die Datei
+	install.php 
+	loeschen oder umbenennen bzw an einen sicheren Ort verschieben.
+	
+	[en:Please delete, move or rename install.php after successfull installation]
+	
+	Die Schreibrechte fuer das Verzeichnis include koennen wieder entfernt werden. (0755 rwxr-xr-x oder 0555 r-xr-xr-x)
+	
+	[en:Remove write permissions for the include directory]
+	
+		INFO:
+			Die Installationsroutine erstellt im Installationsverzeichnis eine Datei mit dem Namen .htusers.
+			Diese enthaelt den Benutzernamen und das verschluesselte Passwort fuer den Zugriff auf die ueber .htaccess geschuetzten Verzeichnisse files/forms, logs, import_export
+	
+			[en:install.php creates a file called .htusers, it includes username and crypted password for acces to the restricted directories]
+		
+	In include/send_it.php, subscribe.php und unsubscribe.php den Pfad zu mnl_confg.inc anpassen.
+	Hier muss der komplette Pfad, Docroot+Installdirectory angegeben werden.
+	
+	[en:please edit path to mnl_config.inc in include/send_it.php, sunbscribe.php and unsubscribe.php - enter complete path here]
+	
+	Zum Versenden Cronjob erstellen: Aufruf von [user:passwort]@http://[domain]/[tellmatic-installdir]/include/send_it.php per wget (user/pw muss angegeben werden), 	oder per php CLI:
+	
+	[en:To send via cronjob, call [user:passwort]@http://[domain]/[tellmatic-installdir]/include/send_it.php with wget (add username and pw), or use php cli]
+		*/1 * * * * /pfad/zu/php /pfad/zu/include/send_it.php
+	
+	index.php aufrufen, Name und Passwort eingeben , Fertig, viel Spass!
+	
+	[en:call index.php, enter username and password, ready, enjoy newslettering]
 
 Bei Fragen und Anregungen besuchen Sie bitte die Homepage www.tellmatic.de oder schicken eine E-Mail
 

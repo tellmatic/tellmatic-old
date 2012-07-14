@@ -413,10 +413,10 @@ function SendMail_smtp($From,$FromName,$To,$ToName,$Subject,$Text,$Html,$AttmFil
 	 * should set to the POP3 user and password*/
 	 
 	$email_message->smtp_pop3_auth_host="";
-if ($SMTPPopB4SMTP==1)
-{
-	$email_message->smtp_pop3_auth_host=$SMTPHost;
-}
+	if ($SMTPPopB4SMTP==1)
+	{
+		$email_message->smtp_pop3_auth_host=$SMTPHost;
+	}
 
 	/* Output dialog with SMTP server */
 	$email_message->smtp_debug=0;

@@ -23,7 +23,7 @@ if (file_exists($mnl_path."/install.php")) {
 if (is_writeable($mnl_includepath)) {
 	$_MAIN_MESSAGE.="<br><font size=2 color=red><b>ACHTUNG! $mnl_includepath ist nicht Schreibgeschuetzt</b></font>";
 	if (@chmod ($mnl_includepath, 0755)) {
-		$_MAIN_MESSAGE.="<br><font size=2 color=green>echte fuer $mnl_includepath wurden geaendert!</font>";
+		$_MAIN_MESSAGE.="<br><font size=2 color=green>Rechte fuer $mnl_includepath wurden geaendert!</font>";
 	} else {
 		$_MAIN_MESSAGE.="<br><font size=2 color=blue>Rechte fuer $mnl_includepath konnten nicht geaendert werden! Bitte aendern Sie diese manuell.</font>";
 	}

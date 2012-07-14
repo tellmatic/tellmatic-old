@@ -97,7 +97,7 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 
 		//Bild
 		if (file_exists($mnl_nlimgpath."/".$NL_Imagename1)) {
-			$LOG.=  "\n  NL Bild:".$mnl_URL."/".$mnl_nlimgdir."/".$NL_Imagename1;
+			$LOG.=  "\n  NL Image:".$mnl_URL."/".$mnl_nlimgdir."/".$NL_Imagename1;
 			$IMAGE1_URL=$mnl_URL."/".$mnl_nlimgdir."/".$NL_Imagename1;
 			$IMAGE1="<img src=\"".$IMAGE1_URL."\" border=0>";
 		}
@@ -131,7 +131,7 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 		$LOG.=  "\n From $FromName ($From)";
 		$LOG.=  "\n Subject".$NL[0]['subject'];
 
-		//emailobjekt vorbereiten, wird dann kopiert, hier globale einstelungen
+		//emailobjekt vorbereiten, wird dann kopiert, hier globale einstellungen
 		$email_obj=new smtp_message_class;
 		$email_obj->authentication_mechanism="LOGIN";
 		$email_obj->localhost=$SMTPDomain;
@@ -143,9 +143,10 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 		$email_obj->smtp_pop3_auth_host="";
 		if ($SMTPPopB4SMTP==1)
 		{
-			$email_message->smtp_pop3_auth_host=$SMTPHost;
+			$email_obj->smtp_pop3_auth_host=$SMTPHost;
 		}
 		$email_obj->smtp_debug=0;
+		$email_obj->SetBulkMail=1;
 		$email_obj->smtp_html_debug=0;
 		$email_obj->mailer=$ApplicationText;
 		$email_obj->SetEncodedEmailHeader("From",$From,$FromName);
@@ -168,29 +169,29 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 		//$max_mails=$max_mails_atonce;
 		$massmail=false;
 		if ($NL[0]['massmail']==1) {
-			$LOG.=  "\n Massenmailing";
+			$LOG.=  "\n massmailing";
 			$massmail=true;
 		} else {
 			// hier setzen wir auf 1 damit wir nur einmal die anzal zu berechnen brauchen!
 			//personalisiertes newsletter!
-			$LOG.=  "\n personalisiertes Newsletter!";
+			$LOG.=  "\n personalized newsletter!";
 			//max bcc adressen =1
 			$max_mails_bcc=1;
 		}
 
 		$max_mails=($max_mails_atonce * $max_mails_bcc);//maximale anzahl zu bearbeitender mails/empfaenger insgesamt! faktor max_mails_bcc
 
-		$LOG.=  "\n Versandliste wird generiert";
+		$LOG.=  "\n creating list";
 		//aktuel offene versandauftraege
 		$H=$QUEUE->getHtoSend(0,0,$max_mails,$Q[$qcc]['id']);//id , offset, limit, q_id !!!, ....
 		$hc=count($H);//wieviel sendeeintraege
 
-		$LOG.=  "\n  ".$hc." Eintraege gefunden\n";
+		$LOG.=  "\n  ".$hc." Entrys found\n";
 
 		$time=$T->MidResult();
 		$LOG.=  "\n time: ".$time;
 
-		$LOG.=  "\n verarbeite insgesamt $max_mails Adressen in $max_mails_atonce Mails mit je $max_mails_bcc Empfaengern";
+		$LOG.=  "\n working on total $max_mails addresses in $max_mails_atonce mails with $max_mails_bcc recipients for each mail";
 
 		//wenn massenmailing, body hier schon parsen!!!
 		if ($massmail) {
@@ -210,11 +211,16 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 			$BLINDIMAGE_URL=$mnl_URL."/news_blank.png.php?nl_id=".$Q[$qcc]['nl_id'];
 			$UNSUBSCRIBE_URL=$mnl_URL."/unsubscribe.php?nl_id=".$Q[$qcc]['nl_id'];
 
+			$SUBSCRIBE_URL=$mnl_URL."/subscribe.php?doptin=1";
+			$SUBSCRIBE="<a href=\"".$SUBSCRIBE_URL."\" target=\"_blank\">";
+			$LOG.=  "\n   Subscribe (touch/double optin): ".$SUBSCRIBE_URL;
+			
 			$BLINDIMAGE="<img src=\"".$BLINDIMAGE_URL."\" border=0>";
 			$LOG.=  "\n   Blindimage: ".$BLINDIMAGE_URL;
 			//link zu unsubscribe
 			$UNSUBSCRIBE="<a href=\"".$UNSUBSCRIBE_URL."\" target=\"_blank\">";
 			$LOG.=  "\n   Unsubscribe: ".$UNSUBSCRIBE_URL;
+			
 			if (!empty($NL[0]['link'])) {
 				$LINK1_URL=$mnl_URL."/click.php?nl_id=".$Q[$qcc]['nl_id'];
 				$LINK1="<a href=\"".$LINK1_URL."\" target=\"_blank\">";
@@ -229,6 +235,7 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 			$_Tpl_NL->setParseValue("CLOSELINK", "</a>");
 			$_Tpl_NL->setParseValue("BLINDIMAGE", $BLINDIMAGE);
 			$_Tpl_NL->setParseValue("UNSUBSCRIBE", $UNSUBSCRIBE);
+			$_Tpl_NL->setParseValue("SUBSCRIBE", $SUBSCRIBE);
 
 			$_Tpl_NL->setParseValue("IMAGE1_URL", $IMAGE1_URL);
 			$_Tpl_NL->setParseValue("LINK1_URL", $LINK1_URL);
@@ -236,7 +243,7 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 			$_Tpl_NL->setParseValue("NLONLINE_URL", $NLONLINE_URL);
 			$_Tpl_NL->setParseValue("BLINDIMAGE_URL", $BLINDIMAGE_URL);
 			$_Tpl_NL->setParseValue("UNSUBSCRIBE_URL", $UNSUBSCRIBE_URL);
-
+			$_Tpl_NL->setParseValue("SUBSCRIBE_URL", $SUBSCRIBE_URL);
 
 			$_Tpl_NL->setParseValue("EMAIL","");
 			$_Tpl_NL->setParseValue("F0","");
@@ -316,8 +323,8 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 								if ($ADR[0]['aktiv']==1) {
 									$LOG.=  " Aktiv: OK";
 									//status adresse pruefen , kann sich seit eintrag in die liste geaendert haben!
-									if ($ADR[0]['status']==1 || $ADR[0]['status']==2 || $ADR[0]['status']==3 || $ADR[0]['status']==4  || $ADR[0]['status']==10) {
-										$LOG.=  " Adr-Status: OK (1|2|3|4|10)";
+									if ($ADR[0]['status']==1 || $ADR[0]['status']==2 || $ADR[0]['status']==3 || $ADR[0]['status']==4  || $ADR[0]['status']==10 || $ADR[0]['status']==12) {
+										$LOG.=  " Adr-Status: OK (1|2|3|4|10|12)";
 										$h_status=5;
 									} else {//adr status
 										//////wenn adresse nicht richtigen status, status geaendert wurde nachdem h sendeliste erzeugt....
@@ -374,7 +381,14 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 									//link zu unsubscribe
 									$UNSUBSCRIBE_URL=$mnl_URL."/unsubscribe.php?h_id=".$H[$hcc]['id']."&nl_id=".$H[$hcc]['nl_id']."&a_id=".$H[$hcc]['adr_id']."&c=".$ADR[0]['code'];
 									$UNSUBSCRIBE="<a href=\"".$UNSUBSCRIBE_URL."\" target=\"_blank\">";
+									
+									$SUBSCRIBE_URL=$mnl_URL."/subscribe.php?doptin=1&email=".$ADR[0]['email']."&c=".$ADR[0]['code']."&touch=1";
+									$SUBSCRIBE="<a href=\"".$SUBSCRIBE_URL."\" target=\"_blank\">";
+
+									
 									$LOG.=  "\n   Unsubscribe: ".$UNSUBSCRIBE_URL;
+									$LOG.=  "\n   Subscribe (touch/double optin): ".$SUBSCRIBE_URL;
+
 									if (!empty($NL[0]['link'])) {
 										$LINK1_URL=$mnl_URL."/click.php?h_id=".$H[$hcc]['id']."&nl_id=".$H[$hcc]['nl_id']."&a_id=".$H[$hcc]['adr_id'];
 									}
@@ -392,6 +406,7 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 									$_Tpl_NL->setParseValue("CLOSELINK", "</a>");
 									$_Tpl_NL->setParseValue("BLINDIMAGE", $BLINDIMAGE);
 									$_Tpl_NL->setParseValue("UNSUBSCRIBE", $UNSUBSCRIBE);
+									$_Tpl_NL->setParseValue("SUBSCRIBE", $SUBSCRIBE);
 
 									$_Tpl_NL->setParseValue("IMAGE1_URL", $IMAGE1_URL);
 									$_Tpl_NL->setParseValue("LINK1_URL", $LINK1_URL);
@@ -399,7 +414,8 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 									$_Tpl_NL->setParseValue("NLONLINE_URL", $NLONLINE_URL);
 									$_Tpl_NL->setParseValue("BLINDIMAGE_URL", $BLINDIMAGE_URL);
 									$_Tpl_NL->setParseValue("UNSUBSCRIBE_URL", $UNSUBSCRIBE_URL);
-
+									$_Tpl_NL->setParseValue("SUBSCRIBE_URL", $SUBSCRIBE_URL);
+									
 									$_Tpl_NL->setParseValue("EMAIL", $ADR[0]['email']);
 									$_Tpl_NL->setParseValue("F0", $ADR[0]['f0']);
 									$_Tpl_NL->setParseValue("F1", $ADR[0]['f1']);
@@ -440,12 +456,12 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 								$ADDRESS->addNL($ADR[0]['id']);//newsletter counter hochzaehlen!
 								$LOG.=  "\n      no.: ".$bcc." | email: ".$ADR[0]['email']." | id:".$ADR[0]['id']." | status_A: ".$ADR[0]['status']."/".$a_status." | status_H: ".$H[$bcc]['status']."/".$h_status." err : ".$ADR[0]['errors'];
 							} else {// !$a_error && !$h_error
-								$LOG.=  "\n *** Adressfehler";
+								$LOG.=  "\n *** Address: Error";
 							}
 						} else {//hc_run==0 bzw $hc_wait>0
 							//nix machen
 							//$LOG.=  "\n *** Eintrag wird gerade versendet und wird uebersprungen";
-							$LOG.=  "\n *** Eintrag wurde schon bearbeitet und wird uebersprungen";
+							$LOG.=  "\n *** Entry was already processed";
 						}
 					} else {//if isset h[bcc][id]
 						//$LOG.=  "\n *** h[][id] not set";
@@ -533,7 +549,7 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 
 		}//hcc
 
-		$LOG.=  "\n\n $hc eintraege wurden bearbeitet";
+		$LOG.=  "\n\n $hc Entrys have been processed";
 		$time_total=$T->Result();
 		$LOG.=  "\n time: ".$time_total;
 
@@ -584,13 +600,14 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 			$sent_date=$created;
 			$ReportMail_HTML.="<br><b>".$sent_date."</b>
 									<br>Der Versand des Newsletter <b>".$NL[0]['subject']."</b> an die Gruppe <b>".$G[0]['name']."</b> ist abgeschlossen.
+									<br>The Mailing for Newsletter <b>".$NL[0]['subject']."</b> to Group <b>".$G[0]['name']."</b> is finished.
 									<br><ul>
-									Adressen:".$hc."
-									<br>Gesendet: ".$hc_ok."
-									<br>Fehler:".$hc_fail."
-									<br>versendet am: ".$sent_date."
-									<br>erstellt (nur versand vorbereitet): ".$created_date."
-									<br>Logfile: ".$mnl_URL."/".$mnl_logdir."/".$logfilename."
+									Adressen/s:".$hc."
+									<br>Gesendet/Sent: ".$hc_ok."
+									<br>Fehler/Errors:".$hc_fail."
+									<br>versendet am/sent at: ".$sent_date."
+									<br>erstellt (nur versand vorbereitet)/created (prepared): ".$created_date."
+									<br>Log: ".$mnl_URL."/".$mnl_logdir."/".$logfilename."
 									</ul>
 									";
 			@SendMail($From,$From,$From,$From,$ReportMail_Subject,clear_text($ReportMail_HTML),$ReportMail_HTML);
