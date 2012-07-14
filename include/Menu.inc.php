@@ -267,6 +267,67 @@ $MENU=Array(
 								),
 						),
 					4 => Array(
+						'id'=>'menu_lnk',
+						'aktiv'=>1,
+						'name'=>___("Links"),
+						'links' => Array(
+									0 => Array(
+										'aktiv'=>1,
+										'js' => 0,
+										'link' => $_SERVER["PHP_SELF"]."?act=link_grp_list",
+										'name' => ___("Gruppen"),
+										'description' => ___("Link-Gruppen anzeigen"),
+										'text' => ___("Hier verwalten Sie Ihre Link-Gruppen"),
+										'icon' => 'world.png',
+										'target' => '_self',
+										'indent' => '0',
+										'admin' => '0',
+										'manager' => '0',
+										),
+									1 => Array(
+										'aktiv'=>1,
+										'js' => 0,
+										'link' => $_SERVER["PHP_SELF"]."?act=link_grp_new",
+										'name' => ___("Neue Gruppe"),
+										'description' => ___("Neue Link-Gruppe anlegen"),
+										'text' => ___("Hier erstellen Sie eine neue Link-Gruppe"),
+										'icon' => 'world_add.png',
+										'target' => '_self',
+										'indent' => '16',
+										'admin' => '0',
+										'manager' => '0',
+										),
+
+									2 => Array(
+										'aktiv'=>1,
+										'js' => 0,
+										'link' => $_SERVER["PHP_SELF"]."?act=link_list",
+										'name' => ___("Links"),
+										'description' => ___("Links anzeigen"),
+										'text' => ___("Hier verwalten Sie Ihre Links"),
+										'icon' => 'link.png',
+										'target' => '_self',
+										'indent' => '0',
+										'admin' => '0',
+										'manager' => '0',
+										),
+									3 => Array(
+										'aktiv'=>1,
+										'js' => 0,
+										'link' => $_SERVER["PHP_SELF"]."?act=link_new",
+										'name' => ___("Neuer Link"),
+										'description' => ___("Neuen Link erstellen"),
+										'text' => ___("Hier erstellen Sie Ihre Links"),
+										'icon' => 'link_add.png',
+										'target' => '_self',
+										'indent' => '16',
+										'admin' => '0',
+										'manager' => '0',
+										),
+								),
+						),
+
+					5 => Array(
 						'id'=>'menu_st',
 						'aktiv'=>1,
 						'name'=>___("Status"),
@@ -312,7 +373,7 @@ $MENU=Array(
 										),
 								),
 						),
-					5 => Array(
+					6 => Array(
 						'id'=>'menu_vw',
 						'aktiv'=>1,
 						'name'=>___("Verwaltung"),
@@ -412,7 +473,7 @@ $MENU=Array(
 								),
 						),
 
-					6 => Array(
+					7 => Array(
 						'id'=>'menu_send',
 						'aktiv'=>1,
 						'name'=>___("Versand"),
@@ -460,7 +521,7 @@ $MENU=Array(
 
 								),
 						),
-					7 => Array(
+					8 => Array(
 						'id'=>'menu_tools',
 						'aktiv'=>1,
 						'name'=>___("Tools"),
@@ -480,7 +541,7 @@ $MENU=Array(
 										),
 								),
 						),
-					8 => Array(
+					9 => Array(
 						'id'=>'menu_user',
 						'aktiv'=>1,
 						'name'=>___("Benutzer"),
@@ -539,7 +600,7 @@ $MENU=Array(
 										),
 								),
 						),
-					9 => Array(
+					10 => Array(
 						'id'=>'menu_admin',
 						'aktiv'=>1,
 						'name'=>___("Admin"),
@@ -611,6 +672,20 @@ $MENU=Array(
 										),
 									5 => Array(
 										'aktiv'=>1,
+										'js' => 0,
+										'link' => $_SERVER["PHP_SELF"]."?act=log_list",
+										'name' => ___("Logbuch"),
+										'description' => ___("Logbuch"),
+										'text' => ___("Logbuch"),
+										'icon' => 'script.png',
+										'target' => '_self',
+										'indent' => '0',
+										'admin' => '1',
+										'manager' => '0',
+										),
+
+									6 => Array(
+										'aktiv'=>1,
 										'js' => 1,
 										'link' => "javascript:switchSection('div_debug');",
 										'name' => ___("Serverinfo"),
@@ -622,7 +697,7 @@ $MENU=Array(
 										'admin' => '0',
 										'manager' => '0',
 										),
-									6 => Array(
+									7 => Array(
 										'aktiv'=>1,
 										'js' => 1,
 										'link' => $tm_URL_FE."/".TM_INCLUDEDIR."/phpinfo.php",
@@ -635,7 +710,7 @@ $MENU=Array(
 										'admin' => '0',
 										'manager' => '0',
 										),
-									7 => Array(
+									8 => Array(
 										'aktiv'=>1,
 										'js' => 1,
 										'link' => "http://www.tellmatic.org/donate",
@@ -671,43 +746,44 @@ $_MENU="";
 $mtc=count($MENU);
 for ($mtcc=0;$mtcc<$mtc;$mtcc++) {
 	if ($MENU[$mtcc]['aktiv']==1) {
-	//add head
-	$_NAME=$MENU[$mtcc]['name'];
-	$_ID=$MENU[$mtcc]['id'];
-	$_Tpl_Menu_Head->setParseValue("_NAME", $_NAME);
-	$_Tpl_Menu_Head->setParseValue("_ID", $_ID);
-	$_MENU_HEAD=$_Tpl_Menu_Head->renderTemplate("Menu_head.html");
-	//add entries
-	$_MENU_ENTRY="";
-	$mlc=count($MENU[$mtcc]['links']);
-	for ($mlcc=0;$mlcc<$mlc;$mlcc++) {
+		//add head
+		$_NAME=$MENU[$mtcc]['name'];
+		$_ID=$MENU[$mtcc]['id'];
+		$_Tpl_Menu_Head->setParseValue("_NAME", $_NAME);
+		$_Tpl_Menu_Head->setParseValue("_ID", $_ID);
+		$_MENU_HEAD=$_Tpl_Menu_Head->renderTemplate("Menu_head.html");
+		//add entries
+		$_MENU_ENTRY="";
+		$mlc=count($MENU[$mtcc]['links']);
+		for ($mlcc=0;$mlcc<$mlc;$mlcc++) {
 			if ($MENU[$mtcc]['links'][$mlcc]['aktiv']==1) {
-		if (	($MENU[$mtcc]['links'][$mlcc]['admin']!=1 && $MENU[$mtcc]['links'][$mlcc]['manager']!=1) ||
-				($user_is_admin && $MENU[$mtcc]['links'][$mlcc]['admin']==1) ||
-				($user_is_manager && $MENU[$mtcc]['links'][$mlcc]['manager']==1)
-			)	{
-			$_Tpl_Menu_Entry->setParseValue("_NAME", $MENU[$mtcc]['links'][$mlcc]['name']);
-			$_Tpl_Menu_Entry->setParseValue("_DESCRIPTION", $MENU[$mtcc]['links'][$mlcc]['description']);
-			$_Tpl_Menu_Entry->setParseValue("_TEXT", $MENU[$mtcc]['links'][$mlcc]['text']);
-			if ($MENU[$mtcc]['links'][$mlcc]['js'] != 1) {
-				$_Tpl_Menu_Entry->setParseValue("_LINK", $MENU[$mtcc]['links'][$mlcc]['link']."&amp;s=s_".$MENU[$mtcc]['id']);
+				if (	($MENU[$mtcc]['links'][$mlcc]['admin']!=1 && $MENU[$mtcc]['links'][$mlcc]['manager']!=1) ||
+						($user_is_admin && $MENU[$mtcc]['links'][$mlcc]['admin']==1) ||
+						($user_is_manager && $MENU[$mtcc]['links'][$mlcc]['manager']==1)
+					)	{
+					$_Tpl_Menu_Entry->setParseValue("_NAME", $MENU[$mtcc]['links'][$mlcc]['name']);
+					$_Tpl_Menu_Entry->setParseValue("_DESCRIPTION", $MENU[$mtcc]['links'][$mlcc]['description']);
+					$_Tpl_Menu_Entry->setParseValue("_TEXT", $MENU[$mtcc]['links'][$mlcc]['text']);
+					if ($MENU[$mtcc]['links'][$mlcc]['js'] != 1) {
+						$_Tpl_Menu_Entry->setParseValue("_LINK", $MENU[$mtcc]['links'][$mlcc]['link']."&amp;s=s_".$MENU[$mtcc]['id']);
 						$_Tpl_Menu_Entry->setParseValue("_LOADER", "" );
-			} else {
-				$_Tpl_Menu_Entry->setParseValue("_LINK", $MENU[$mtcc]['links'][$mlcc]['link']);
-				$_Tpl_Menu_Entry->setParseValue("_LOADER", "");
-			}
-			$_Tpl_Menu_Entry->setParseValue("_ICON", $tm_iconURL."/".$MENU[$mtcc]['links'][$mlcc]['icon']);
-			$_Tpl_Menu_Entry->setParseValue("_TARGET", $MENU[$mtcc]['links'][$mlcc]['target']);
-			$_Tpl_Menu_Entry->setParseValue("_INDENT", $MENU[$mtcc]['links'][$mlcc]['indent']);
-			$_Tpl_Menu_Entry->setParseValue("_ID", "me_".$mtcc."_".$mlcc);
-			$_MENU_ENTRY.="\n".$_Tpl_Menu_Entry->renderTemplate("Menu_entry.html");
-		}//if admin
+					} else {
+						$_Tpl_Menu_Entry->setParseValue("_LINK", $MENU[$mtcc]['links'][$mlcc]['link']);
+						$_Tpl_Menu_Entry->setParseValue("_LOADER", "");
+					}
+					$_Tpl_Menu_Entry->setParseValue("_ICON", $tm_iconURL."/".$MENU[$mtcc]['links'][$mlcc]['icon']);
+					$_Tpl_Menu_Entry->setParseValue("_TARGET", $MENU[$mtcc]['links'][$mlcc]['target']);
+					$_Tpl_Menu_Entry->setParseValue("_INDENT", $MENU[$mtcc]['links'][$mlcc]['indent']);
+					$_Tpl_Menu_Entry->setParseValue("_ID", "me_".$mtcc."_".$mlcc);
+					$_MENU_ENTRY.="\n".$_Tpl_Menu_Entry->renderTemplate("Menu_entry.html");
+				}//if admin
 			}//$MENU[$mtcc]['links'][$mlcc]['aktiv']==1
 		}//for mlcc //links
-	//add foot
-	$_Tpl_Menu_Foot->setParseValue("_ID", $_ID);
-	$_MENU_FOOT=$_Tpl_Menu_Foot->renderTemplate("Menu_foot.html");
+		//add foot
+		$_Tpl_Menu_Foot->setParseValue("_ID", $_ID);
+		$_MENU_FOOT=$_Tpl_Menu_Foot->renderTemplate("Menu_foot.html");
 	}//$MENU[$mtcc]['aktiv']==1
+	
 	//toggle out if expert
 	$_MENU_FOOT.="<script language=\"javascript\" type=\"text/javascript\">\n //$_ID\n";
 	if (($mtcc>0 && is_in("s_".$_ID,$menu_sections) ) || $_ID=="menu_tm") {//$user_is_expert && 
@@ -721,8 +797,6 @@ for ($mtcc=0;$mtcc<$mtc;$mtcc++) {
 	$_MENU.=$_MENU_HEAD."\n".$_MENU_ENTRY."\n".$_MENU_FOOT."\n\n";
 }//for mtcc //topics
 
-
-
 $_MENU.= "<div class=\"userinfo\"><!--a href=\"http://www.tellmatic.org\" target=\"blank\">".$ApplicationText."</a><br-->".
 									sprintf(___("Benutzer: %s"),$LOGIN->USER['name']).
 									" (".$LOGIN->USER['style']." / ".$LOGIN->USER['lang'].")".
@@ -733,6 +807,7 @@ $_MENU.= "<div class=\"userinfo\"><!--a href=\"http://www.tellmatic.org\" target
 
 
 //some Cookie Testcode
+
 if (DEBUG) {
 	$_MENU .='
 	<div  class="userinfo">

@@ -143,10 +143,8 @@ for ($scc=1; $scc<=$sc; $scc++) {
 //aktiv neue adr
 $Form->new_Input($FormularName,$InputName_AktivNew,"select", "");
 $Form->set_InputJS($FormularName,$InputName_AktivNew," onChange=\"flash('submit','#ff0000');\" ");
-
 $Form->set_InputDefault($FormularName,$InputName_AktivNew,1);
 $Form->set_InputStyleClass($FormularName,$InputName_AktivNew,"mFormSelect","mFormSelectFocus");
-
 $Form->set_InputDesc($FormularName,$InputName_AktivNew,___("Neue Adressen de-/aktivieren"));
 $Form->set_InputReadonly($FormularName,$InputName_AktivNew,false);
 $Form->set_InputOrder($FormularName,$InputName_AktivNew,11);
@@ -220,8 +218,19 @@ $Form->set_InputStyleClass($FormularName,$InputName_Blacklist,"mFormText","mForm
 $Form->set_InputSize($FormularName,$InputName_Blacklist,48,256);
 $Form->set_InputDesc($FormularName,$InputName_Blacklist,___("Importierte Adressen in die Blacklist eintragen"));
 $Form->set_InputReadonly($FormularName,$InputName_Blacklist,false);
-$Form->set_InputOrder($FormularName,$InputName_Blacklist,16);
+$Form->set_InputOrder($FormularName,$InputName_Blacklist,17);
 $Form->set_InputLabel($FormularName,$InputName_Blacklist,"");
+
+//blacklist domains
+$Form->new_Input($FormularName,$InputName_BlacklistDomains,"checkbox", 1);
+$Form->set_InputJS($FormularName,$InputName_BlacklistDomains," onChange=\"flash('submit','#ff0000');checkImport();\" onClick=\"checkImport();\"");
+$Form->set_InputDefault($FormularName,$InputName_BlacklistDomains,$$InputName_BlacklistDomains);
+$Form->set_InputStyleClass($FormularName,$InputName_BlacklistDomains,"mFormText","mFormTextFocus");
+$Form->set_InputSize($FormularName,$InputName_BlacklistDomains,48,256);
+$Form->set_InputDesc($FormularName,$InputName_BlacklistDomains,___("Domains in die Blacklist eintragen"));
+$Form->set_InputReadonly($FormularName,$InputName_BlacklistDomains,false);
+$Form->set_InputOrder($FormularName,$InputName_BlacklistDomains,17);
+$Form->set_InputLabel($FormularName,$InputName_BlacklistDomains,"");
 
 //Dublettencheck
 $Form->new_Input($FormularName,$InputName_DoubleCheck,"checkbox", 1);
@@ -234,6 +243,19 @@ $Form->set_InputReadonly($FormularName,$InputName_DoubleCheck,false);
 $Form->set_InputOrder($FormularName,$InputName_DoubleCheck,17);
 $Form->set_InputLabel($FormularName,$InputName_DoubleCheck,"");
 
+//skip exiting ?
+$Form->new_Input($FormularName,$InputName_SkipEx,"checkbox", 1);
+#$Form->set_InputJS($FormularName,$InputName_Delete," onChange=\"flash('submit','#ff0000');\" onClick=\"del=1; document.form.".$InputName_AktivEx."; document.form.".$InputName_AktivNew."; document.form.".$InputName_StatusEx."; document.form.".$InputName_Group."; \"");
+$Form->set_InputJS($FormularName,$InputName_SkipEx," onChange=\"flash('submit','#ff0000');\"");
+#onFocus="if (!activ)this.blur();" onChange="if (!activ)this.blur();"
+#http://www.javarea.de/index.php3?opencat=Javascript&subcat=Formulare-Button&id=266
+$Form->set_InputDefault($FormularName,$InputName_SkipEx,1);
+$Form->set_InputStyleClass($FormularName,$InputName_SkipEx,"mFormText","mFormTextFocus");
+$Form->set_InputSize($FormularName,$InputName_SkipEx,48,256);
+$Form->set_InputDesc($FormularName,$InputName_SkipEx,___("Existierende Adressen überspringen, kein Update"));
+$Form->set_InputReadonly($FormularName,$InputName_SkipEx,false);
+$Form->set_InputOrder($FormularName,$InputName_SkipEx,18);
+$Form->set_InputLabel($FormularName,$InputName_SkipEx,"");
 
 //emailcheck...
 $Form->new_Input($FormularName,$InputName_ECheckImport,"select", "");
@@ -300,18 +322,21 @@ $_MAIN_OUTPUT.= $Form->INPUT[$FormularName]['act']['html'];
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName]['set']['html'];
 $_MAIN_OUTPUT.= "<table>";
 $_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top rowspan=\"13\" style=\"border-right:1px solid grey\">".tm_icon("group.png",___("Gruppen"))."&nbsp;".___("Gruppen")."<br>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Group]['html'];
-$_MAIN_OUTPUT.= "</td>";
 
 $_MAIN_OUTPUT.= "<td valign=top>".tm_icon("page_white_gear.png",___("Upload"))."&nbsp;".___("CSV-Upload").":";
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_File]['html'];
 $_MAIN_OUTPUT.= "<br>".tm_icon("disk.png",___("Datei"))."&nbsp;".___("CSV-Datei auswählen").":".$Form->INPUT[$FormularName][$InputName_FileExisting]['html'];
 $_MAIN_OUTPUT.= "</td>";
+
+$_MAIN_OUTPUT.= "<td valign=top rowspan=\"13\" style=\"border-left:1px solid grey\">".tm_icon("group.png",___("Gruppen"))."&nbsp;".___("Gruppen")."<br>";
+$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Group]['html'];
+$_MAIN_OUTPUT.= "</td>";
+
+
 $_MAIN_OUTPUT.= "</tr>";
 
 $_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td style=\"border-top:1px dashed grey\" valign=\"top\">".tm_icon("keyboard.png",___("Bulk-Import"))."&nbsp;".___("Eine E-Mail-Adresse pro Zeile").":<br>";
+$_MAIN_OUTPUT.= "<td style=\"border-top:1px dashed grey\" valign=\"top\">".tm_icon("keyboard.png",___("Bulk-Import"))."&nbsp;".___("Eine E-Mail-Adresse/Domain pro Zeile").":<br>";
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Bulk]['html'];
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "</tr>";
@@ -372,8 +397,24 @@ $_MAIN_OUTPUT.= "</tr>";
 
 $_MAIN_OUTPUT.= "<tr>";
 $_MAIN_OUTPUT.= "<td style=\"border-top:2px solid grey\" valign=\"top\">";
+$_MAIN_OUTPUT.= tm_icon("ruby_link.png",___("Blacklist Domain"))."&nbsp;".___("Blacklist Domain");
+$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_BlacklistDomains]['html'];
+$_MAIN_OUTPUT.= "</td>";
+$_MAIN_OUTPUT.= "</tr>";
+
+
+
+$_MAIN_OUTPUT.= "<tr>";
+$_MAIN_OUTPUT.= "<td style=\"border-top:2px solid grey\" valign=\"top\">";
 $_MAIN_OUTPUT.= tm_icon("key.png",___("Dublettencheck"))."&nbsp;<font color=\"#ff0000\">".___("Auf Dubletten prüfen")."</font>";
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_DoubleCheck]['html'];
+$_MAIN_OUTPUT.= "</td>";
+$_MAIN_OUTPUT.= "</tr>";
+
+$_MAIN_OUTPUT.= "<tr>";
+$_MAIN_OUTPUT.= "<td style=\"border-top:2px solid grey\" valign=\"top\">";
+$_MAIN_OUTPUT.= tm_icon("key.png",___("Kein Update"))."&nbsp;<font color=\"#ff0000\">".___("Kein Update")."</font>";
+$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_SkipEx]['html'];
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "</tr>";
 

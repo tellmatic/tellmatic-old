@@ -60,7 +60,7 @@ function userErrorHandler ($errno, $errmsg, $filename, $linenum, $vars) {
                 512 =>  "User Warning",
                 1024=>  "User Notice"
                 );
-    $user_errors = array( E_ALL, E_USER_NOTICE, E_ERROR,  E_PARSE, E_USER_ERROR, E_USER_WARNING );//E_WARNING, E_NOTICE
+    $user_errors = array( E_ALL, E_USER_NOTICE, E_ERROR,  E_PARSE, E_USER_ERROR, E_USER_WARNING, E_WARNING, E_NOTICE );//E_WARNING, E_NOTICE
 
 /*
     $err = "<errorentry>\n";
@@ -78,23 +78,25 @@ function userErrorHandler ($errno, $errmsg, $filename, $linenum, $vars) {
    $err="";
    $err_html="";
     if (in_array($errno, $user_errors)) {
-	    $err .= "PHP Error: ";
-	    $err .= "date: ".$err_date." |;| ";
-		$err .= "error no:".$errno." |;| ";
-		$err .= "error type".$errortype[$errno]." |;| ";
-		$err .= "php_error: ".$errmsg." |;| ";
-		$err .= "file:".$filename." |;| ";
-		$err .= "line ".$linenum." |;| ";
+	    #$err .= "";
+	    $err .= "errdate:".$err_date." |;| ";
+		$err .= "errno:".$errno." |;| ";
+		$err .= "errtype:".$errortype[$errno]." |;| ";
+		$err .= "errmsg:\"".$errmsg."\" |;| ";
+		$err .= "errfile:".$filename." |;| ";
+		$err .= "errline:".$linenum." |;| ";
+		//vorsicht: macht viel mist :) alle template variablen werden ausgegeben :O   //$err .= "vars:".serialize($vars)."|;|";
 		$err .="\n";
 		$_ERROR['text'].=$err;
 
-	  $err_html .= "\n<br><font size=-1 color=red><b>PHP Error!</b>";
-	  $err_html .= "\n<br>date: ".$err_date."";
-		$err_html .= "\n<br>error no:".$errno."";
-		$err_html .= "\n<br>error type".$errortype[$errno]."";
-		$err_html .= "\n<br>php_error: ".$errmsg."";
-		$err_html .= "\n<br>file:".$filename."";
-		$err_html .= "\n<br>line ".$linenum."";
+	  	$err_html .= "\n<br><font size=-1 color=red>";
+	  	$err_html .= "\n".$err_date."";
+		$err_html .= "\n PHP Error ".$errno."/".$errortype[$errno]."";
+		$err_html .= "\n \"<em>".$errmsg."</em>\"";
+		$err_html .= "\n in File: <em>".basename($filename)."</em>";
+		#$err_html .= "\n in File: <em>".basename($filename,".inc.php")."</em>";
+		$err_html .= "\n&nbsp;at Line: <em>".$linenum."</em>";
+		//$err_html .= "vars:".serialize($vars)."";
 		$err_html .="</font><br>\n";
 		$_ERROR['html'].=$err_html;
      }

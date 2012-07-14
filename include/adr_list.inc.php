@@ -311,6 +311,8 @@ $search_inaktiv['aktiv']='0';
 $entrys_inaktiv=$ADDRESS->countADR(0,$search_inaktiv);
 if ($entrys_inaktiv>0) $_MAIN_OUTPUT.="<br>".sprintf(___("%s Adressen sind deaktiviert"),"<b>".$entrys_inaktiv."</b>");
 
+$_MAIN_OUTPUT.="<br>".sprintf(___("%s Dubletten"),"<b>".($ADDRESS->count_duplicates())."</b>");
+
 $_MAIN_OUTPUT.="<br>";
 
 if ($adr_grp_id>0)
@@ -467,6 +469,10 @@ $blacklistDelURLPara->addParam("set","blacklist_del");
 $blacklistDomainDelURLPara=$blacklistURLPara;
 $blacklistDomainDelURLPara->addParam("set","blacklist_domain_del");
 
+//show log summary
+//search for logs, only section
+$search_log['object']="adr";
+include(TM_INCLUDEPATH."/log_summary_section.inc.php");
 
 //show a link to create new entry if list is empty, e.g. if searching email doesnt match, etc.
 if ($ac==0) {
@@ -751,6 +757,13 @@ for ($acc=0;$acc<$ac;$acc++) {
 		$_MAIN_OUTPUT.= "<a href=\"".$tm_URL."/".$blacklistDomainDelURLPara_."\" title=\"".___("Domain aus Blacklist löschen")."\">".tm_icon("bullet_delete.png",___("Domain aus Blacklist löschen"),"","","","ruby_link.png")."</a>";
 	}
 	$_MAIN_OUTPUT.= "&nbsp;<a href=\"".$tm_URL."/".$delURLPara_."\" onclick=\"return confirmLink(this, '".___("Adresse löschen")."')\" title=\"".___("Adresse löschen")."\">".tm_icon("cross.png",___("Adresse löschen"))."</a>";
+
+	//show log summary
+	//search for logs, section and entry!
+	//$search_log['object']="xxx"; <-- is set above in section link to logbook
+	$search_log['edit_id']=$ADR[$acc]['id'];
+	include(TM_INCLUDEPATH."/log_summary_section_entry.inc.php");
+
 	$_MAIN_OUTPUT.= "</td>";
 	$_MAIN_OUTPUT.= "</tr>";
 }

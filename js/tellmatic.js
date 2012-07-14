@@ -124,26 +124,78 @@ function checkAdrListForm() {
 function checkADRCleanForm() {
 	form=document.getElementById('adr_clean');
 	field=document.getElementById('set');
-
+	field2=document.getElementById('remove_duplicates');
+	
 	var changefield=document.getElementById('adr_grp_id_multi');
     changefield.disabled = true;
 	var changefield=document.getElementById('status_multi');
     changefield.disabled = true;
 
+	var changefield=document.getElementById('remove_duplicates_method');
+    changefield.disabled = true;
+	var changefield=document.getElementById('remove_duplicates_limit');
+    changefield.disabled = true;
+	var changefield=document.getElementById('remove_duplicates_details');
+    changefield.disabled = true;
+	var changefield=document.getElementById('remove_duplicates_export');
+    changefield.disabled = true;
 
-	if (field.value == 'set_status')  {
-		var changefield=document.getElementById('adr_grp_id_multi');
-	    changefield.disabled = true;
+	//disable all if checking duplicates 
+	if (field2.checked) {
+		//enable method and limit
+		var changefield=document.getElementById('remove_duplicates_method');
+    	changefield.disabled = false;
+		var changefield=document.getElementById('remove_duplicates_limit');
+    	changefield.disabled = false;
+		var changefield=document.getElementById('remove_duplicates_details');
+    	changefield.disabled = false;
+		var changefield=document.getElementById('remove_duplicates_export');
+    	changefield.disabled = false;
+		//disable all the rest
+		var changefield=document.getElementById('set');
+    	changefield.disabled = true;
+		var changefield=document.getElementById('blacklist');
+    	changefield.disabled = true;
+		var changefield=document.getElementById('email');
+    	changefield.disabled = true;
+		var changefield=document.getElementById('status');
+    	changefield.disabled = true;
 		var changefield=document.getElementById('status_multi');
-	    changefield.disabled = false;
-	}
-	if (field.value == 'move_grp' || field.value == 'copy_grp' || field.value == 'delete_grp')  {
+    	changefield.disabled = true;
+		var changefield=document.getElementById('adr_grp_id');
+    	changefield.disabled = true;
 		var changefield=document.getElementById('adr_grp_id_multi');
-	    changefield.disabled = false;
-		var changefield=document.getElementById('status_multi');
-	    changefield.disabled = true;
-	}
+    	changefield.disabled = true;
+	} else {
 	
+		var changefield=document.getElementById('set');
+    	changefield.disabled = false;
+		var changefield=document.getElementById('blacklist');
+    	changefield.disabled = false;
+		var changefield=document.getElementById('email');
+    	changefield.disabled = false;
+		var changefield=document.getElementById('status');
+    	changefield.disabled = false;
+		var changefield=document.getElementById('status_multi');
+    	changefield.disabled = false;
+		var changefield=document.getElementById('adr_grp_id');
+    	changefield.disabled = false;
+		var changefield=document.getElementById('adr_grp_id_multi');
+    	changefield.disabled = false;	
+	
+		if (field.value == 'set_status')  {
+			var changefield=document.getElementById('adr_grp_id_multi');
+		    changefield.disabled = true;
+			var changefield=document.getElementById('status_multi');
+		    changefield.disabled = false;
+		}
+		if (field.value == 'move_grp' || field.value == 'copy_grp' || field.value == 'delete_grp')  {
+			var changefield=document.getElementById('adr_grp_id_multi');
+		    changefield.disabled = false;
+			var changefield=document.getElementById('status_multi');
+		    changefield.disabled = true;
+		}
+	}
 }
 function checkImport() {
 	form=document.getElementById('adr_import');

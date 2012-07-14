@@ -11,6 +11,206 @@
 /* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
 /********************************************************************************/
 
+*+*+*+*+*+*+*+*+*+*+*+ CHANGES V1.0.8.9  +*+*+*+*+*+*+*+*+*+*+*+*
+	26.09.2010
+	
+	*** New features/enhancements:
+		
+	*** Enhacements, Code changes / Optimizations:
+		* Skip existing Adresses on Import!
+		* Wysiwyg: TinyMce only creates xhtml/xml headers. Sucks a bit, theheader is a bit buggy too, so i get rid of the fullpage plugin and add my own header!
+			Tinymce still /> at end of some tags, but this is only a warning and still valid HTML! :P
+			The HTML-Header and Footer is defined in tm_lib.inc.php at top of file!
+			You are a HTML Expert? Please Contact me (and make an irc meeting) to help me creating valid HTML or XHTML etc ;)
+			https://sourceforge.net/tracker/index.php?func=detail&aid=3034254&group_id=190396&atid=933192
+			http://tinymce.moxiecode.com/punbb/viewtopic.php?id=22749
+		* Class_Q: addHQ: add more indexes in temporary table, speed up next query by ~10%
+		* Queue-List: Show % done (%done total, %done-OK, %done-with-Failure, %done-current-with-Failure)
+		* NL: nl_group_list: Count Newsletters/Templates
+		 
+	*** fixed Bugs:
+	
+		* Queue: If Q was stopped/paused it was not possible to refres rcpt-list, should be possible
+				addHQ: also allow q-status 5
+		* parseNL: Use &amp; instead of &-char in URLs
+		* Forms: Description gets HTML Translated on edit: https://sourceforge.net/tracker/index.php?func=detail&aid=3034254&group_id=190396&atid=933192
+		* NOT A BUG: !! only Old Buggy Outdated Mysql 4.0 problem :P  https://sourceforge.net/projects/tellmatic/forums/forum/670073/topic/3832837
+			Soluiton for buggy/old mysql4: remove fieldnames and indexes from create temporary  table in ClassNL::addHQ and let select do the stuff, weird mysql!!! 
+		* bounce_it.php: fixed:
+				Parse error: syntax error, unexpected T_CONSTANT_ENCAPSED_STRING, expecting ',' or ';' in /homepages/44/d65929952/htdocs/Diskus/newsletter/include/bounce_it.php on line 183
+		
+		* Forms: Subscription Form showed non-Public Groups! fixed.
+		* 'host name parts in urls caused failure in complex environment'
+			https://sourceforge.net/tracker/?func=detail&aid=2860042&group_id=190396&atid=933192
+		* links: shortname too short (was 16, 48 chars are allowed)
+
+		
+
+*+*+*+*+*+*+*+*+*+*+*+ CHANGES V1.0.8.8  +*+*+*+*+*+*+*+*+*+*+*+*
+	09.07.2010
+	
+	*** New features/enhancements:
+	
+		* View newsletter online (massmail & personalized)
+			Newsletters can now be shown online.
+			Tellmatic does no more make use of the statical parsed html file.
+			The file is still created but only ment as a vague preview of your newsletter.
+			Tellmatic now uses view.php and the new parseNL method to parse Newsletters on the fly (but still using text or html template files)	
+			Newsletters are only shown if newsletter is a massmail or if newsletter is personalized and all values and parameters are valid.
+			If all parameters are correct and valid and come from a valid personalized newsletter, a personalized version is created and shown on the fly.
+			If the content type of newsletter is text only, a textversion will be shown.
+			The Newsletter is only shown if it is active and not a template.
+			Personalized Newsletters are only shown if: newsletter is active, not a template and all parameters are valid and address is not unsubscribed and active, also we need a valid history entry, if you delete the history, a personalized newsletter wont be shown!
+			{NLONLINE} and {NLONLINE_URL} now points to view.php
+			
+		* Linkmanager:
+		
+			Tellmatic comes with a new linkmanager.
+			You can create Link Groups and Links belong to one or more Link Groups.
+			Links can be personalized. If you have a personalized mailing, {F0}-{F9}, {EMAIL}, {DATE}, {CODE}, and {ADRID} in the URL are replaced with the values from the current address record.
+			Link URL can also start with #, then it dont get parsed (can be used as link inside current document, with groups you can easily create an index!)
+
+			* Short: shortname for link, should be unique and not numeric.
+			* Name: A name for the link
+			* Description: A brief description (shown as title on mouseover or in textmode)
+			* URL: a valid URL, start with http://, can be personalized, see above, if URL starts with # it doesn't get parsed
+
+			New Variables for Newsletter:
+					* {LNK:[short]}
+							e.g.: {LNK:test}
+							create a link from link with shortname="test"
+							<a href= ....>[name of link]</a>
+					* {LNKID:[id]}
+							e.g.: {LNKID:1}
+							same as above but uses link id
+							
+					* {LNK_AHREF:[short]}
+							e.g.: {LNK_AHREF:test}TEST{CLOSELINK}
+							create <a href= ....> from link with shortname="test" without name and closing </a>, you have to use {CLOSELINK}
+					* {LNKID_AHREF:[id]}
+							e.g.: {LNKID_AHREF:1}
+							same as above but uses link id
+
+					* {LNK_URL:[short]}
+							e.g.: {LNK_URL:test}
+							create URL to click.php?+parameters from link with shortname="test"
+					* {LNKID_URL:[id]}
+							e.g.: {LNKID_URL:1}
+							same as above but uses link id
+
+					* {LNK_URLRAW:[short]}
+							e.g.: {LNK_URLRAW:test}
+							create URL to raw URL as given in link with shortname="test"
+					* {LNKID_URLRAW:[id]}
+							e.g.: {LNKID_URLRAW:1}
+							same as above but uses link id
+
+					* {LNKGRP:[kurz]}
+							e.g.: {LNKGRP:infos}
+							creates a small header with group name and description and a list of links which belong to group with shortname="infos"
+					* {LNKGRPID:[id]}
+							e.g.: {LNKGRPID:1}
+							same as above but uses link group id
+			Notes:				
+				Links and link groups are only shown if active.
+				The Linktracker does some nice click tracking but may make heavy use of the lnk_click table which can get very huge in some cases.
+				There is no statistics yet. Clicks get saved in the lnk_click table and data for statistics are available at this time but not shown on the statistics page or status etc. (if you need statistics you have to do your own SQL)
+				Statistics and Reports come in the next release.
+				Statistics can't be deleted yet, there will be functions to clean up clickstats in the next releases. 
+				IP is logged, unique key for table lnk_click is lnk_id,nl_id,q_id,a_id,h_id,ip, insert on duplicate keys will only increase the counter (clicks)				
+				LINK1 and LINK1_URL are still available and won't get removed.
+			
+		* Logging:
+			Added global logging mechanism. logs all changes to database.
+			To deactivate the logbook set TM_LOG to FALSE in tm_lib.inc.php (TRUE, >=	 1.0.8.8)
+			All actions in the admin interface are now logged (adr,nl,blacklist,config,forms,hosts,users,q/h), except selects and views. (Logging is enabled for creation, edit and delete only), some actions only add a memo (e.g. when cleaning up database only the action and filter is saved)!
+			If you are an admin user you will see 2 new links. the top link is for current section. the link on bottom shows all entrys in logbook.
+			Each Entry now also have a Link to show logbook entries.
+			Try it out, works great.
+			A nice feature also is that all edited data gets logged too and if you delete an item its values are also logged..... ;-) 
+			Logbook can be searched, filtered and flushed, or only delete a selection....
+			It may be possibility to replay changes and save old/new data, but this is not implemented yet.
+					
+		* Check for duplicates
+			Tellmatic now has some methods to check and remove duplicates from the database.
+			Clean Up Form now has option to remove duplicates (from all groups). You can choose what entry you like keep in database (first/oldest, last/latest, random).
+			Duplicates can be exported before deletion.
+
+		* Import domains to blacklist:
+			domains can now be imported to the blacklist via the address import form.
+
+		* enable/disable personalized tracking (now an opton in newsletter)
+			if personalized tracking is disabled Tellmatic does only anonymous logging (newsletter id, queue id, but no adr id and history id)
+		* export bounced / deleted addresses
+			bounce_it.php now exports deleted address records as CSV.
+	
+	*** Enhacements, Code changes / Optimizations:
+	
+		* adr: added genCSV() method to create CSV lines
+		* send_it.php now uses new parser method parseNL() for newsletter parsing.
+		* send_it.php logfile created on the fly, format changed, use unique timestamp, easy to tail -f. extension is still .html but contains only plaintext
+		* send_it.php: now detects if run via browser or cli
+		* slightly adjusted php error logfile format
+		* Classes now always return siteid in array for get methods!
+		* Parser for Newsletter parseNL()
+		* use sendmail_smtp function (host_test, subscribe, unsubscribe, send_it status mails)
+		* addClick, addView, addSub, addNL methods in tm_NL/ADR/FRM now use simple sql to increase counters! no more fetching record record first and increase via php and do an update :P
+		* queue_new: show only groups with valid addresses
+		* queue_new: sort newsletter, latest on top 
+		* queue_new, queue add link in nl_list: only show nl/link if all tempates exists
+			https://sourceforge.net/tracker/?func=detail&atid=933192&aid=2971854&group_id=190396
+		
+	*** fixed Bugs:
+	
+		* sendmail_smtp/functions.inc: missing parameter: 
+			$email_obj->maximum_piped_recipients=$HOST_T[0]['smtp_max_piped_rcpt'];
+			SendMail_smtp: now return array [0]: true/fale [1]: errormessage if false or empty
+			This could lead in an error on subscribe/unsubscribe if smtp server uses tarpiting or greetdelay or teergrubing etc in some rare cases.
+		* class_adr: getGroup:if ($adr_id >0) { should be check_dbid()
+		* php_error: closedir(): supplied argument is not a valid Directory resource, /include/Functions.inc.php line 238
+		* nl_form: php_error: basename() expects parameter 1 to be string, array given include/nl_form.inc.php line 123, fixed: if not empty....
+		* nl_form: array sizes inconsistent: btsort was not resettet as empty array
+		* php_error: mysql_free_result(): supplied argument is not a valid MySQL result resource include/Class_DB.inc.php line 148 after operation
+			only call free() method if we read big datasets or if we have limited memory.
+			deactivated free() and call manually after select
+		* send_it: blacklisted is not an error. if blacklisted status 4 was set but should not change status at all. so we can use blacklist temporaryliy
+			https://sourceforge.net/tracker/?func=detail&atid=933195&aid=2971858&group_id=190396	
+		* queue_new: after adding new queue: PHP Error 2/Warning "mysql_num_rows(): supplied argument is not a valid MySQL result resource" in File: Class_DB.inc.php  at Line: 278
+		* check_it: missing $ and ; 
+			https://sourceforge.net/tracker/?func=detail&atid=933192&aid=2962261&group_id=190396
+		* Functions.inc.php: checkemailadr: missing $from parameter for validate
+		* export: english translation says import!
+		* https://sourceforge.net/tracker/?func=detail&atid=933192&aid=2958182&group_id=190396, first, lastURLpara unknown notice.... link pager doesnt work !
+		* bl_list: unknown object, unknown entrys_total
+		* newsletter subject variables were not replaced if nl was massmailing
+		* etc.
+
+		and maybe some more optimizations and bugfixes not listed here.....	
+		see ChangeLog for more Details		
+
+	*** Known Issues:
+	
+		* Tellmatic <= 1.0.8.8 does not work with PHP >=5.3
+			The PHP guys removed the zend.ze1_compatibility_mode directive (object values vs. references) which is still needed in Tellmatic <= 1.0.8.8
+			Tellmatic was developed using PHP4 and still uses some backward compatibility settings.
+			At this time, PHP 5.3 is quite new and mostly used on testing distributions, stable linux servers may still use PHP 5.2
+		* Yes! there is still no online documentation. This is a heavy job, coding is much easier and more exciting yet.
+		* Still using very outdated filemanager... Use at your own risk! You better use FTP!!!
+		
+	*** Upcoming:
+	
+		* Filemanager?
+		* Documentation online?
+		* All or most of improvements i mentioned above (Statistics etc).
+		* Get rid of zend compat mode, prepare for PHP 5.3 (need tester and free hosting with php5.3!!!!)
+		* Welcome newsletter (personalized newsletter send out on subscribe, unsubscribe...)
+		* User definable variables
+		* Languages (define languages, set nl lang, user may choose on subscribe)
+		* Content type (user may choose on subscribe text/html)
+		...and more
+
+		You can always donate to speed up development and esp. creation of a nice documentation ;) http://www.tellmatic.org/donate
+		
 *+*+*+*+*+*+*+*+*+*+*+ CHANGES V1.0.8.7  +*+*+*+*+*+*+*+*+*+*+*+*
 	23.2.2010
 	

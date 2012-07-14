@@ -56,7 +56,7 @@ $$InputName_DescrText=getVar($InputName_DescrText,0);//varname,slashes? 0=dont a
 $InputName_Summary="summary";//summary html version f. webseite
 $$InputName_Summary=getVar($InputName_Summary,0);//varname,slashes? 0=dont add slashes
 
-$InputName_Aktiv="aktiv";//altiv?
+$InputName_Aktiv="aktiv";
 $$InputName_Aktiv=getVar($InputName_Aktiv);
 
 $InputName_Template="is_template";//template?
@@ -76,6 +76,9 @@ pt_register("POST","track_image_new");
 
 $InputName_TrackImageExisting="track_image_existing";//trackimage auswahl
 $$InputName_TrackImageExisting=getVar($InputName_TrackImageExisting);
+
+$InputName_TrackPerso="track_personalized";
+$$InputName_TrackPerso=getVar($InputName_TrackPerso);
 
 $InputName_RCPTName="rcpt_name";//name
 $$InputName_RCPTName=getVar($InputName_RCPTName,0,$C[0]['rcpt_name']);
@@ -98,6 +101,7 @@ if ($set=="save") {
 	//checkinput
 	if (empty($subject)) {$check=false;$_MAIN_MESSAGE.="<br>".___("Betreff sollte nicht leer sein.");}
 
+	$NEWSLETTER=new tm_NL();
 	//upload ?!
 	include_once (TM_INCLUDEPATH."/nl_upload.inc.php");
 
@@ -110,7 +114,6 @@ if ($set=="save") {
 
 	if ($check) {
 		$status=1;
-		$NEWSLETTER=new tm_NL();
 		$NEWSLETTER->addNL(
 								Array(
 									"subject"=>$subject,
@@ -129,6 +132,7 @@ if ($set=="save") {
 									"grp_id"=>$nl_grp_id,
 									"content_type"=>$content_type,
 									"track_image"=>$track_image,
+									"track_personalized"=>$track_personalized,
 									"rcpt_name"=>$rcpt_name,
 									"attachements"=>$attach_existing,
 									)

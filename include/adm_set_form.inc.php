@@ -714,5 +714,4 @@ $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "</tr>";
 $_MAIN_OUTPUT.= "</table>";
 $_MAIN_OUTPUT.= $Form->FORM[$FormularName]['foot'];
-
 ?>

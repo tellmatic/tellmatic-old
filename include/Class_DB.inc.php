@@ -51,12 +51,12 @@ class tm_DB extends DB_Sql
  * Copyright (c) 1998-2000 NetUSE AG
  *                    Boris Erdmann, Kristian Koehntopp
  *
- * $Id: Class_DB.inc.php,v 1.6 2010/02/25 14:11:59 mcms09 Exp $
+ * $Id: Class_DB.inc.php,v 1.7 2010/07/11 02:45:30 mcms09 Exp $
  *
- */ 
+ */
 
 class DB_Sql {
-  
+
   /* public: connection parameters */
   var $Host     = "";
   var $Database = "";
@@ -117,21 +117,21 @@ class DB_Sql {
       $User     = $this->User;
     if ("" == $Password)
       $Password = $this->Password;
-      
+
     /* establish connection, select database */
     if ( 0 == $this->Link_ID ) {
-    
+
       if(!$this->PConnect) {
         $this->Link_ID = mysql_connect($Host, $User, $Password);
       } else {
-        $this->Link_ID = mysql_pconnect($Host, $User, $Password); 
+        $this->Link_ID = mysql_pconnect($Host, $User, $Password);
       }
       if (!$this->Link_ID) {
         $this->halt("connect($Host, $User, \$Password) failed.");
         return 0;
       }
 
-      if (!@mysql_select_db($Database,$this->Link_ID)) {
+      if (!mysql_select_db($Database,$this->Link_ID)) {
         $this->halt("cannot use database ".$Database);
         return 0;
       }
@@ -143,8 +143,10 @@ class DB_Sql {
 
   /* public: discard the query result */
   function free() {
-      @mysql_free_result($this->Query_ID);
-      $this->Query_ID = 0;
+  	if ($this->Query_ID > 0) {
+      mysql_free_result($this->Query_ID);
+    }
+    $this->Query_ID = 0;
   }
 
   /* public: perform a query */
@@ -166,13 +168,14 @@ class DB_Sql {
     };
 
     # New query, discard previous result.
-    if ($this->Query_ID) {
-      $this->free();
-    }
+    //doit manually!!! call free() only if needed after big selects
+    #if ($this->Query_ID) {
+    #  $this->free();
+    #}
 
     if ($this->Debug)
       printf("<font size=-1>Debug: query = %s<br></font>\n", $Query_String);
-	
+
 	    $this->Query_ID = mysql_query($Query_String,$this->Link_ID);
 	    $this->Row   = 0;
 	    $this->Errno = mysql_errno();
@@ -193,7 +196,7 @@ class DB_Sql {
       return 0;
     }
 
-    $this->Record = @mysql_fetch_array($this->Query_ID);
+    $this->Record = mysql_fetch_array($this->Query_ID);
     $this->Row   += 1;
     $this->Errno  = mysql_errno();
     $this->Error  = mysql_error();
@@ -207,17 +210,17 @@ class DB_Sql {
 
   /* public: position in result set */
   function seek($pos = 0) {
-    $status = @mysql_data_seek($this->Query_ID, $pos);
+    $status = mysql_data_seek($this->Query_ID, $pos);
     if ($status)
       $this->Row = $pos;
     else {
       $this->halt("seek($pos) failed: result has ".$this->num_rows()." rows.");
 
-      /* half assed attempt to save the day, 
+      /* half assed attempt to save the day,
        * but do not consider this documented or even
        * desireable behaviour.
        */
-      @mysql_data_seek($this->Query_ID, $this->num_rows());
+      mysql_data_seek($this->Query_ID, $this->num_rows());
       $this->Row = $this->num_rows();
       return 0;
     }
@@ -251,7 +254,7 @@ class DB_Sql {
     $this->locked = true;
     return true;
   }
-  
+
   function unlock() {
 
     // set before unlock to avoid potential loop
@@ -266,15 +269,15 @@ class DB_Sql {
 
   /* public: evaluate the result (size, width) */
   function affected_rows() {
-    return @mysql_affected_rows($this->Link_ID);
+    return mysql_affected_rows($this->Link_ID);
   }
 
   function num_rows() {
-    return @mysql_num_rows($this->Query_ID);
+    return mysql_num_rows($this->Query_ID);
   }
 
   function num_fields() {
-    return @mysql_num_fields($this->Query_ID);
+    return mysql_num_fields($this->Query_ID);
   }
 
   /* public: shorthand notation */
@@ -309,7 +312,7 @@ class DB_Sql {
         return 0;
       }
     }
-    
+
     /* get sequence number and increment */
     $q = sprintf("select nextid from %s where seq_name = '%s'",
                $this->Seq_Table,
@@ -318,7 +321,7 @@ class DB_Sql {
       $this->halt('query failed in nextid: '.$q);
       return 0;
     }
-    
+
     /* No current value, make one */
     if(!$this->next_record()) {
       $currentid = 0;
@@ -342,12 +345,12 @@ class DB_Sql {
       $this->halt('query failed in nextid: '.$q);
       return 0;
     }
-    
+
     /* if nextid() locked the sequence table, unlock it */
     if($locked) {
       $this->unlock();
     }
-    
+
     return $nextid;
   }
 
@@ -387,46 +390,47 @@ class DB_Sql {
     // result
     if ($table) {
       $this->connect();
-      $id = @mysql_list_fields($this->Database, $table);
+      $id = mysql_list_fields($this->Database, $table);
       if (!$id) {
         $this->halt("Metadata query failed.");
         return false;
       }
     } else {
-      $id = $this->Query_ID; 
+      $id = $this->Query_ID;
       if (!$id) {
         $this->halt("No query specified.");
         return false;
       }
     }
- 
-    $count = @mysql_num_fields($id);
+
+    $count = mysql_num_fields($id);
 
     // made this IF due to performance (one if is faster than $count if's)
     if (!$full) {
       for ($i=0; $i<$count; $i++) {
-        $res[$i]["table"] = @mysql_field_table ($id, $i);
-        $res[$i]["name"]  = @mysql_field_name  ($id, $i);
-        $res[$i]["type"]  = @mysql_field_type  ($id, $i);
-        $res[$i]["len"]   = @mysql_field_len   ($id, $i);
-        $res[$i]["flags"] = @mysql_field_flags ($id, $i);
+        $res[$i]["table"] = mysql_field_table ($id, $i);
+        $res[$i]["name"]  = mysql_field_name  ($id, $i);
+        $res[$i]["type"]  = mysql_field_type  ($id, $i);
+        $res[$i]["len"]   = mysql_field_len   ($id, $i);
+        $res[$i]["flags"] = mysql_field_flags ($id, $i);
       }
     } else { // full
       $res["num_fields"]= $count;
-    
+
       for ($i=0; $i<$count; $i++) {
-        $res[$i]["table"] = @mysql_field_table ($id, $i);
-        $res[$i]["name"]  = @mysql_field_name  ($id, $i);
-        $res[$i]["type"]  = @mysql_field_type  ($id, $i);
-        $res[$i]["len"]   = @mysql_field_len   ($id, $i);
-        $res[$i]["flags"] = @mysql_field_flags ($id, $i);
+        $res[$i]["table"] = mysql_field_table ($id, $i);
+        $res[$i]["name"]  = mysql_field_name  ($id, $i);
+        $res[$i]["type"]  = mysql_field_type  ($id, $i);
+        $res[$i]["len"]   = mysql_field_len   ($id, $i);
+        $res[$i]["flags"] = mysql_field_flags ($id, $i);
         $res["meta"][$res[$i]["name"]] = $i;
       }
     }
-    
+
     // free the result only if we were called on a table
     if ($table) {
-      @mysql_free_result($id);
+      #mysql_free_result($id);
+      $this->free();
     }
     return $res;
   }
@@ -434,23 +438,23 @@ class DB_Sql {
   /* public: find available table names */
   function table_names() {
     $this->connect();
-    $h = @mysql_query("show tables", $this->Link_ID);
+    $h = mysql_query("show tables", $this->Link_ID);
     $i = 0;
-    while ($info = @mysql_fetch_row($h)) {
+    while ($info = mysql_fetch_row($h)) {
       $return[$i]["table_name"]      = $info[0];
       $return[$i]["tablespace_name"] = $this->Database;
       $return[$i]["database"]        = $this->Database;
       $i++;
     }
-    
-    @mysql_free_result($h);
+    #mysql_free_result($h);
+	#$this->free();//nein, nur link id, free() nutzt query_id!    
     return $return;
   }
 
   /* private: error handling */
   function halt($msg) {
-    $this->Error = @mysql_error($this->Link_ID);
-    $this->Errno = @mysql_errno($this->Link_ID);
+    $this->Error = mysql_error($this->Link_ID);
+    $this->Errno = mysql_errno($this->Link_ID);
 
     if ($this->locked) {
       $this->unlock();

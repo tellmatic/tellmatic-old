@@ -50,7 +50,12 @@ $delURLPara->addParam("set","delete");
 #$statURLPara->addParam("act","statistic");
 #$statURLPara->addParam("set","user");
 
-$_MAIN_OUTPUT="<table border=\"0\" cellpadding=\"1\" cellspacing=\"1\" width=\"100%\">";
+//show log summary
+//search for logs, only section
+$search_log['object']="usr";
+include(TM_INCLUDEPATH."/log_summary_section.inc.php");
+
+$_MAIN_OUTPUT.="<table border=\"0\" cellpadding=\"1\" cellspacing=\"1\" width=\"100%\">";
 $_MAIN_OUTPUT.= "<thead>".
 						"<tr>".
 						"<td><b>&nbsp;</b>".
@@ -163,7 +168,7 @@ for ($ucc=0;$ucc<$uc;$ucc++) {
 		$_MAIN_OUTPUT.=  tm_icon("cancel.png",___("Inaktiv"))."&nbsp;";
 	}
 
-	if ($USER[$ucc]['admin']!=1) {	
+	if ($USER[$ucc]['admin']!=1) {
 		$_MAIN_OUTPUT.= "</a>";
 	}
 
@@ -175,6 +180,13 @@ for ($ucc=0;$ucc<$uc;$ucc++) {
 	if ($USER[$ucc]['admin']!=1) {
 		$_MAIN_OUTPUT.= "&nbsp;<a href=\"".$tm_URL."/".$delURLPara_."\" onclick=\"return confirmLink(this, '".sprintf(___("Benutzer %s löschen?"),display($USER[$ucc]['name']))."')\" title=\"".___("Benutzer löschen")."\">".tm_icon("cross.png",___("Benutzer löschen"))."</a>";
 	}
+
+	//show log summary
+	//search for logs, section and entry!
+	//$search_log['object']="xxx"; <-- is set above in section link to logbook
+	$search_log['edit_id']=$USER[$ucc]['id'];
+	include(TM_INCLUDEPATH."/log_summary_section_entry.inc.php");
+
 	$_MAIN_OUTPUT.= "</td>";
 	$_MAIN_OUTPUT.= "</tr>";
 }

@@ -82,6 +82,7 @@ $Form->set_InputSize($FormularName,$InputName_ImageWatermarkImage,0,1);
 $Form->set_InputMultiple($FormularName,$InputName_ImageWatermarkImage,false);
 //add Data
 $WatermarkImg_Files=getFiles(TM_IMGPATH) ;
+$btsort=Array();
 foreach ($WatermarkImg_Files as $field) {
 	$btsort[]=$field['name'];
 }
@@ -118,7 +119,9 @@ $Form->set_InputLabel($FormularName,$InputName_ImageResizeSize,"");
 //existing attachements
 $Form->new_Input($FormularName,$InputName_AttachExisting,"select", "");
 $Form->set_InputJS($FormularName,$InputName_AttachExisting," onChange=\"flash('submit','#ff0000');\" ");
-$Form->set_InputDefault($FormularName,$InputName_AttachExisting,basename($$InputName_AttachExisting));
+if (!empty($$InputName_AttachExisting)) {
+	#$Form->set_InputDefault($FormularName,$InputName_AttachExisting,basename($$InputName_AttachExisting));
+}
 $Form->set_InputStyleClass($FormularName,$InputName_AttachExisting,"mFormSelect","mFormSelectFocus");
 $Form->set_InputDesc($FormularName,$InputName_AttachExisting,___("Anhänge auswählen, Strg/Ctrl+Klick f. Mehrfachauswahl"));
 $Form->set_InputReadonly($FormularName,$InputName_AttachExisting,false);
@@ -128,6 +131,7 @@ $Form->set_InputSize($FormularName,$InputName_AttachExisting,0,11);
 $Form->set_InputMultiple($FormularName,$InputName_AttachExisting,true);
 //add Data
 $Attm_Dirs=getDirectories($tm_nlattachpath) ;
+$btsort=Array();
 foreach ($Attm_Dirs as $field) {
 	$btsort[]=$field['name'];
 }
@@ -140,6 +144,7 @@ for ($dcc=0; $dcc < $dc; $dcc++) {
 			$a_path.="/".$Attm_Dirs[$dcc]['name'];
 		}
 		$Attm_Files=getFiles($a_path) ;
+		$btsort=Array();
 		foreach ($Attm_Files as $field) {
 			$btsort[]=$field['name'];
 		}
@@ -303,6 +308,7 @@ $Form->set_InputMultiple($FormularName,$InputName_TrackImageExisting,false);
 $Form->add_InputOption($FormularName,$InputName_TrackImageExisting,"_global","-- GLOBAL --");
 $Form->add_InputOption($FormularName,$InputName_TrackImageExisting,"_blank","-- BLANK --");
 $TrackImg_Files=getFiles($tm_nlimgpath) ;
+$btsort=Array();
 foreach ($TrackImg_Files as $field) {
 	$btsort[]=$field['name'];
 }
@@ -323,6 +329,19 @@ $Form->set_InputDesc($FormularName,$InputName_TrackImageNew,___("neues Bild hoch
 $Form->set_InputReadonly($FormularName,$InputName_TrackImageNew,false);
 $Form->set_InputOrder($FormularName,$InputName_TrackImageNew,10);
 $Form->set_InputLabel($FormularName,$InputName_TrackImageNew,"");
+
+
+//Track personalized
+$Form->new_Input($FormularName,$InputName_TrackPerso,"checkbox", 1);
+$Form->set_InputJS($FormularName,$InputName_TrackPerso," onChange=\"flash('submit','#ff0000');\" ");
+$Form->set_InputDefault($FormularName,$InputName_TrackPerso,$$InputName_TrackPerso);
+$Form->set_InputStyleClass($FormularName,$InputName_TrackPerso,"mFormText","mFormTextFocus");
+$Form->set_InputSize($FormularName,$InputName_TrackPerso,48,48);
+$Form->set_InputDesc($FormularName,$InputName_TrackPerso,___("Tracking personalisiert"));
+$Form->set_InputReadonly($FormularName,$InputName_TrackPerso,false);
+$Form->set_InputOrder($FormularName,$InputName_TrackPerso,10);
+$Form->set_InputLabel($FormularName,$InputName_TrackPerso,"");
+
 
 //Content_Type
 $Form->new_Input($FormularName,$InputName_ContentType,"select", "");
@@ -531,6 +550,16 @@ $_MAIN_OUTPUT.= "</tr>";
 
 $_MAIN_OUTPUT.= "<tr>";
 $_MAIN_OUTPUT.= "<td valign=\"top\">";
+$_MAIN_OUTPUT.= tm_icon("bullet_star.png",___("Tracking personalisiert"),"","","","user_suit.png")."&nbsp;".___("Tracking personalisiert");
+$_MAIN_OUTPUT.= "</td>";
+$_MAIN_OUTPUT.= "<td valign=\"top\">";
+$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_TrackPerso]['html'];
+$_MAIN_OUTPUT.= "</td>";
+$_MAIN_OUTPUT.= "</tr>";
+
+
+$_MAIN_OUTPUT.= "<tr>";
+$_MAIN_OUTPUT.= "<td valign=\"top\">";
 $_MAIN_OUTPUT.= tm_icon("attach.png",___("Anhang"))."&nbsp;".___("Neuer Anhang");
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "<td valign=\"top\">";
@@ -600,6 +629,11 @@ $_MAIN_OUTPUT.=
 						sprintf(___("%s enthält die Zusammenfasung zur Anzeige auf der Webseite"),"<b>{SUMMARY}</b>")."<br>".
 						sprintf(___("%s enthält das hochgeladene Bild 'img src' | %s enthält nur die URL zum Bild"),"<b>{IMAGE1}</b>","<b>{IMAGE1_URL}</b>")."<br>".
 						sprintf(___("%s enthält den angegebenen Link 'a href' | %s enthält nur die URL des Links"),"<b>{LINK1}</b>","<b>{LINK1_URL}</b>")."<br>".
+						sprintf(___("%s / %s erstellt einen Link anhand eines Kurznamen oder ID"),sprintf("<b>{LNK:[%s]}</b>",___("kurz")),"<b>{LNKID:[id]}</b>")."<br>".						
+						sprintf(___("%s / %s erstellt einen 'a href' anhand eines Kurznamen oder ID"),sprintf("<b>{LNK_AHREF:[%s]}</b>",___("kurz")),"<b>{LNKID_AHREF:[id]}</b>")."<br>".						
+						sprintf(___("%s / %s zeigt die URL anhand eines Kurznamen oder ID"),sprintf("<b>{LNK_URL:[%s]}</b>",___("kurz")),"<b>{LNKID_URL:[id]}</b>")."<br>".						
+						sprintf(___("%s / %s zeigt die RAW-URL anhand eines Kurznamen oder ID"),sprintf("<b>{LNK_URLRAW:[%s]}</b>",___("kurz")),"<b>{LNKID_URLRAW:[id]}</b>")."<br>".
+						sprintf(___("%s / %s zeigt eine Liste von Links aus einer Gruppe anhand eines Kurznamen oder ID"),sprintf("<b>{LNKGRP:[%s]}</b>",___("kurz")),"<b>{LNKGRPID:[id]}</b>")."<br>".
 						sprintf(___("%s enthält die Links zu den Attachements"),"<b>{ATTACHEMENTS}</b>")."<br>".
 						sprintf(___("%s enthält den Link zum abmelden |   %s enthält nur die URL zum Abmeldeformular"),"<b>{UNSUBSCRIBE}</b>","<b>{UNSUBSCRIBE_URL}</b>")."<br>".
 						sprintf(___("%s enthält den Link zur Onlineversion 'a href' |  %s enthält nur die URL zur Onlineversion"),"<b>{NLONLINE}</b>","<b>{NLONLINE_URL}</b>")."<br>".

@@ -738,7 +738,7 @@ class tm_SimpleForm {
 					//einfacher wert						
 						if ($this->INPUT[$formname][$name]['default']==$this->OPTION[$formname][$name][$counter]['value'])
 						{
-							$this->INPUT[$formname][$name]['html'] .=	" selected=\"selected\"";
+							$this->INPUT[$formname][$name]['html'] .=	" selected=\"selected\" ";
 						}
 				}
 				if (!empty($this->OPTION[$formname][$name][$counter]['style'])) {

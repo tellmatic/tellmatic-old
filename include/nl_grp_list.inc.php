@@ -31,7 +31,7 @@ if ($set=="aktiv") {
 	}
 }
 if ($set=="standard") {
-	$NEWSLETTER->setGRPStd($nl_grp_id,$val);
+	$NEWSLETTER->setGRPStd($nl_grp_id,$val);//val???
 	$_MAIN_MESSAGE.="<br>".___("Neue Standardgruppe wurde definiert.");
 }
 if ($set=="delete" && $doit==1) {
@@ -68,7 +68,12 @@ $statURLPara=$mSTDURL;
 $statURLPara->addParam("act","statistic");
 $statURLPara->addParam("set","nlg");
 
-$_MAIN_OUTPUT="<table border=\"0\" cellpadding=\"1\" cellspacing=\"1\" width=\"100%\">";
+//show log summary
+//search for logs, only section
+$search_log['object']="nl_grp";
+include(TM_INCLUDEPATH."/log_summary_section.inc.php");
+
+$_MAIN_OUTPUT.="<table border=\"0\" cellpadding=\"1\" cellspacing=\"1\" width=\"100%\">";
 $_MAIN_OUTPUT.= "<thead>".
 						"<tr>".
 						"<td><b>&nbsp;</b>".
@@ -166,11 +171,16 @@ for ($nccg=0;$nccg<$ncg;$nccg++) {
 	if ($GRP[$nccg]['standard']!=1) {
 		$_MAIN_OUTPUT.= "</a>";
 	}
+	
+	$nlcount_notpl=$NEWSLETTER->countNL($GRP[$nccg]['id'],Array("is_template"=>0));
+	$nlcount_tpl=$NEWSLETTER->countNL($GRP[$nccg]['id'],Array("is_template"=>1));	
+	
 	$_MAIN_OUTPUT.= "</td>";
 	$_MAIN_OUTPUT.= "<td>";
 	$_MAIN_OUTPUT.= "<a href=\"".$tm_URL."/".$editURLPara_."\" title=\"".___("Newslettergruppe bearbeiten")."\">".tm_icon("pencil.png",___("Newslettergruppe bearbeiten"))."</a>";
 	$_MAIN_OUTPUT.= "&nbsp;<a href=\"".$tm_URL."/".$addnlURLPara_."\" title=\"".___("Neuen Newsletter in dieser Gruppe erstellen")."\">".tm_icon("newspaper_add.png",___("Neuen Newsletter in dieser Gruppe erstellen"))."</a>";
-	$_MAIN_OUTPUT.= "&nbsp;<a href=\"".$tm_URL."/".$shownlURLPara_."\" title=\"".___("Alle Newsletter in dieser Gruppe anzeigen")."\">".tm_icon("newspaper_go.png",___("Alle Newsletter in dieser Gruppe anzeigen"))."&nbsp;".$GRP[$nccg]['nl_count']."</a>";
+	$_MAIN_OUTPUT.= "&nbsp;<a href=\"".$tm_URL."/".$shownlURLPara_."\" title=\"".___("Alle Newsletter in dieser Gruppe anzeigen")."\">".tm_icon("newspaper_go.png",___("Alle Newsletter in dieser Gruppe anzeigen"))."&nbsp;"."</a>";//.$GRP[$nccg]['nl_count']
+	$_MAIN_OUTPUT.=$nlcount_notpl."/".$nlcount_tpl;
 	if ($GRP[$nccg]['standard']==1) {
 	} else {
 		//wenn gruppe aktiv ist, dann darf man sie als standard definieren
@@ -180,6 +190,13 @@ for ($nccg=0;$nccg<$ncg;$nccg++) {
 		//loeschen
 		$_MAIN_OUTPUT.= "&nbsp;<a href=\"".$tm_URL."/".$delURLPara_."\" onclick=\"return confirmLink(this, '".sprintf(___("Newslettergruppe %s löschen und Newsletter dieser Gruppe der Standardgruppe zuordnen?"),display($GRP[$nccg]['name']))."')\" title=\"".___("Newslettergruppe löschen")."\">".tm_icon("cross.png",___("Newslettergruppe löschen"))."</a>";
 	}
+
+	//show log summary
+	//search for logs, section and entry!
+	//$search_log['object']="xxx"; <-- is set above in section link to logbook
+	$search_log['edit_id']=$GRP[$nccg]['id'];
+	include(TM_INCLUDEPATH."/log_summary_section_entry.inc.php");
+
 	$_MAIN_OUTPUT.= "</td>";
 	$_MAIN_OUTPUT.= "</tr>";
 }

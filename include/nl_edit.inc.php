@@ -73,6 +73,9 @@ pt_register("POST","track_image_new");
 $InputName_TrackImageExisting="track_image_existing";//trackimage auswahl
 $$InputName_TrackImageExisting=getVar($InputName_TrackImageExisting);
 
+$InputName_TrackPerso="track_personalized";
+$$InputName_TrackPerso=getVar($InputName_TrackPerso);
+
 $InputName_RCPTName="rcpt_name";//name
 $$InputName_RCPTName=getVar($InputName_RCPTName);
 
@@ -134,6 +137,7 @@ if ($set=="save") {
 									"grp_id"=>$nl_grp_id,
 									"content_type"=>$content_type,
 									"track_image"=>$track_image,
+									"track_personalized"=>$track_personalized,
 									"rcpt_name"=>$rcpt_name,
 									"attachements"=>$attach_existing,
 									)
@@ -171,6 +175,7 @@ if ($set=="save") {
 	$nl_grp_id=$NL[0]['grp_id'];
 	$content_type=$NL[0]['content_type'];
 	$rcpt_name=$NL[0]['rcpt_name'];
+	$track_personalized=$NL[0]['track_personalized'];
 	$$InputName_TrackImageExisting=$NL[0]['track_image'];
 	//array umwandeln, der array aus get sieht anders aus als der fuer update und new!!!
 	$atc=0;

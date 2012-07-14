@@ -19,7 +19,37 @@
 /**/
 /**/
 /**/
-/******************************DO NOT CHANGE:**********************************/
+//Header and Footer that gets added to each Newsletter:
+//{TITLE} and {TITLE_SUB} are replaces by actual NL Title und Sub-Title!
+//in the default shown here i mixed up quotes and double quotes ;-) almost to add ne lines and format the source, and to not have to escape doublequotes for doctype etc.
+			$TM_NL_HTML_Start='<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">'.
+												"\n<html>\n<head>\n".
+												'<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">'.
+												"\n".
+												'<META CONTENT="{TM_APPTEXT}" NAME="created-with">'.
+												"\n".												
+												'<META CONTENT="{TM_VERSION}" NAME="tellmatic-version">'.
+												"\n".
+												'<title>{TITLE}-{TITLE_SUB}</title>'.
+												"\n".
+												'</head>'.
+												"\n".
+												'<body>';
+			$TM_NL_HTML_End="\n".
+												'<br><div style="font-size:7pt">Newsletter created with {TM_APPTEXT}</div>'.
+												"\n".
+												'</body>'.
+												"\n".
+												'</html>';
+/**/
+/**/
+/**/
+/**/
+/**/
+/**/
+/**/
+/**/
+/******************************DO NOT CHANGE - or only if you exactly know what you are doing ;-) :**********************************/
 /**/
 /**/
 /**/
@@ -35,14 +65,12 @@ if (!isset($tm_config)) {
 if (!$tm_config) {
 
 	/***********************************************************/
-	//
 	//Dateformat for Newsletters to parse {DATE}
 	/***********************************************************/
 	define ("TM_NL_DATEFORMAT","d.m.Y");
 	//en: Y-m-d
 	//de: d.m.Y
 	//see: www.php.net/date
-
 	/***********************************************************/
 	//demomode und debugmode
 	/***********************************************************/
@@ -50,12 +78,19 @@ if (!$tm_config) {
 	define ("DEBUG", FALSE);//printout useful infos
 	define ("DEBUG_SQL", FALSE);//Warning! this will print out all sql queries!!!
 	define ("DEBUG_SMTP", FALSE);//Warning! this will print out all smtp messages and communication with server
+	define ("TM_LOG", TRUE);//use logbook
 
 	/***********************************************************/
 	//use temporary html files?
 	/***********************************************************/
 	define ("USE_TMP_HTML_FILES", TRUE);//save output to temporary html files in admin/tmp
 	//this is useful if you want to prevent reloading a page with new values! 
+
+	/***********************************************************/
+	//defne globals for Newsletter html head and foot from variables defined by user at top of file!
+	/***********************************************************/
+	define ("TM_NL_HTML_START", $TM_NL_HTML_Start);
+	define ("TM_NL_HTML_END", $TM_NL_HTML_End);
 	
 	/***********************************************************/
 	//siteid
@@ -190,7 +225,7 @@ if (!$tm_config) {
 /***********************************************************/
 //URLs
 /***********************************************************/
-	$tm_URL=TM_DOMAIN."/".TM_DIR."/admin";//backend, admin
+	$tm_URL="/".TM_DIR."/admin";//backend, admin //TM_DOMAIN.
 	$tm_URL_FE=TM_DOMAIN."/".TM_DIR;//frontend!
 	$tm_imgURL=$tm_URL_FE."/".TM_IMGDIR;
 	$tm_iconURL=$tm_URL_FE."/".TM_ICONDIR;
@@ -233,6 +268,10 @@ if (!$tm_config) {
 	define ("TM_TABLE_FRM_S", $tm_tablePrefix."frm_s");
 	define ("TM_TABLE_HOST", $tm_tablePrefix."hosts");
 	define ("TM_TABLE_BLACKLIST", $tm_tablePrefix."blacklist");
+	define ("TM_TABLE_LNK", $tm_tablePrefix."lnk");
+	define ("TM_TABLE_LNK_GRP", $tm_tablePrefix."lnk_grp");
+	define ("TM_TABLE_LNK_GRP_REF", $tm_tablePrefix."lnk_grp_ref");
+	define ("TM_TABLE_LNK_CLICK", $tm_tablePrefix."lnk_click");
 
 /***********************************************************/
 //includes: funktionen, klassen

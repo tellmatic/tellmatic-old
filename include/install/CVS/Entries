@@ -7,10 +7,10 @@
 /install_license.inc.php/1.2/Tue Jul  7 10:10:59 2009//
 /install_form.inc.php/1.6/Sat Jul 11 00:16:26 2009//
 /install_finish.inc.php/1.4/Sat Jul 11 00:17:41 2009//
-/install_conf.inc.php/1.11/Sun Dec 27 02:51:46 2009//
 /install_check_db.inc.php/1.5/Wed Feb 24 14:10:19 2010//
-/install_check_pre.inc.php/1.6/Wed Feb 24 10:27:18 2010//
-/install_examples.inc.php/1.9/Wed Feb 24 10:28:59 2010//
-/install_conf_sql.inc.php/1.22/Fri Feb 26 11:58:41 2010//
-/install_install.inc.php/1.13/Fri Feb 26 12:02:37 2010//
+/install_check_pre.inc.php/1.7/Sat Jul 10 16:11:00 2010//
+/install_conf.inc.php/1.13/Mon Jul 12 09:06:42 2010//
+/install_install.inc.php/1.14/Mon Jul 12 09:10:30 2010//
+/install_examples.inc.php/1.12/Mon Jul 12 09:34:18 2010//
+/install_conf_sql.inc.php/1.24/Sun Sep 26 09:23:15 2010//
 D

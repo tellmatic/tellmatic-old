@@ -3,7 +3,7 @@
 /* this file is part of: / diese Datei ist ein Teil von:                        	*/
 /* tellmatic, the newslettermachine                                             	*/
 /* tellmatic, die Newslettermaschine                                            */
-/* 2006/7 by Volker Augustin, multi.art.studio Hanau                            */
+/* 2006/2010 by Volker Augustin, multi.art.studio Hanau                            */
 /* Contact/Kontakt: info@tellmatic.org                                      */
 /* Homepage: www.tellmatic.org                                                   */
 /* leave this header in file!                                                   */
@@ -23,11 +23,13 @@ if ($check) {
 //nl gruppe
 		$NEWSLETTER=new tm_NL();
 
-		$NEWSLETTER->addGrp(Array("name"=>"NL Group 1", "descr"=>"zum testen / for testings", "aktiv"=>1, "author"=>"install", "created"=>$created, "editor"=>"install", "updated"=>$created));
+		$NEWSLETTER->addGrp(Array("name"=>"Newsletter Group 1", "descr"=>"zum testen / for testings", "aktiv"=>1, "author"=>"install", "created"=>$created, "editor"=>"install", "updated"=>$created));
 		$NEWSLETTER->setGRPStd(1,1);
-		$NEWSLETTER->addGrp(Array("name"=>"NL Group 2", "descr"=>"zum testen / for testings", "aktiv"=>0, "author"=>"install", "created"=>$created, "editor"=>"install", "updated"=>$created));
+		$NEWSLETTER->addGrp(Array("name"=>"Newsletter Group 2", "descr"=>"zum testen / for testings", "aktiv"=>0, "author"=>"install", "created"=>$created, "editor"=>"install", "updated"=>$created));
 //nl: personal, massmailing
-		$body=	"{TITLE}<br>\n".
+		$body=	"\n".
+					"<a name=\"top\"></a>\n".
+					"{TITLE}<br>\n".
 					"{TITLE_SUB}<br><br>\n".
 					"{SUMMARY}<br><br>\n".
 					"Hallo {F0} {F1} {F2}<br>\n".
@@ -40,6 +42,29 @@ if ($check) {
 					"<br>\n".
 					"Link mit Link<br>\n".
 					"{LINK1}{LINK1_URL}{CLOSELINK}<br>\n".
+					"<br>\n".
+					"Links:<br>\n".
+					"<br>\n".
+					"show link from shortname<br>\n".
+					"{LNK:tm.home}<br>\n".
+					"show link url from shortname<br>\n".
+					"{LNK_URL:tm.home}<br>\n".
+					"show link group<br>\n".
+					"{LNKGRP:tellmatic}<br>\n".
+					"show link by id<br>\n".
+					"{LNKID:1}<br>\n".
+					"show link url by id<br>\n".
+					"{LNKID_URL:1}<br>\n".
+					"show raw link url by id<br>\n".
+					"{LNKID_URLRAW:1}<br>\n".
+					"show raw link url by shortname<br>\n".
+					"{LNK_URLRAW:tm.home}<br>\n".
+					"show link group by shortname<br>\n".
+					"{LNKGRP:tm}<br>\n".
+					"show link group by shortname<br>\n".
+					"{LNKGRP:index}<br>\n".
+					"show link group by id<br>\n".
+					"{LNKGRPID:1}<br>\n".
 					"<br>\n".
 					"Bild-URL<br>\n".
 					"{IMAGE1_URL}<br>\n".
@@ -77,7 +102,9 @@ if ($check) {
 					"Ihre bei uns gespeicherten Daten:<br>\n".
 					"<br>\n".
 					"{MEMO}\n".
-					"Viel Spass mit tellmatic! :-)<br>\n";
+					"Viel Spass mit tellmatic! :-)<br>\n".
+					"<a name=\"bottom\"></a>".
+					"\n";
 					
 		$body_text="{TITLE}\n".
 					"{TITLE_SUB}\n\n".
@@ -115,7 +142,7 @@ if ($check) {
 									"massmail"=>0,
 									"link"=>"http://www.tellmatic.org",
 									"created"=>date("Y-m-d H:i:s"),
-									"author"=>"example",
+									"author"=>"install",
 									"grp_id"=>1,
 									"rcpt_name"=>"Newsletter",
 									"track_image"=>"_blank",
@@ -125,9 +152,94 @@ if ($check) {
 									"title"=>'Titel',
 									"title_sub"=>'Titel 2',
 									"summary"=>'Zusammenfassender Text zBsp. zur Anzeige auf der Webseite etc.',
+									"track_personalized"=>1,
 									)
 								);
 								//									"attm"=>"",//1082
+
+//add link groups
+$LINKS=new tm_LNK();
+		$lnk_group_id_1=$LINKS->addGrp(Array(
+				"short"=>"tellmatic",
+				"name"=>"Tellmatic",
+				"descr"=>"Tellmatic Links",
+				"aktiv"=>1,
+				"created"=>date("Y-m-d H:i:s"),
+				"author"=>"install"
+				));
+		$lnk_group_id_2=$LINKS->addGrp(Array(
+				"short"=>"index",
+				"name"=>"Index",
+				"descr"=>"Newsletter Index",
+				"aktiv"=>1,
+				"created"=>date("Y-m-d H:i:s"),
+				"author"=>"install"
+				));
+//add links		
+		$LINKS->add(Array(
+					"short"=>"tm.home",
+					"name"=>"Tellmatic Homepage",
+					"url"=>"http://www.tellmatic.org",
+					"descr"=>"Tellmatic Homepage",
+					"aktiv"=>1,
+					"created"=>date("Y-m-d H:i:s"),
+					"author"=>"install"
+					),
+					Array(0 => $lnk_group_id_1));
+		$LINKS->add(Array(
+					"short"=>"tm.doc",
+					"name"=>"Tellmatic Documentation",
+					"url"=>"http://doc.tellmatic.org",
+					"descr"=>"Tellmatic Online Documentation",
+					"aktiv"=>1,
+					"created"=>date("Y-m-d H:i:s"),
+					"author"=>"install"
+					),
+					Array(0 => $lnk_group_id_1));
+		$LINKS->add(Array(
+					"short"=>"tm.donate",
+					"name"=>"Donate to Tellmatic",
+					"url"=>"http://www.tellmatic.org/donate",
+					"descr"=>"Tellmatic Donation",
+					"aktiv"=>1,
+					"created"=>date("Y-m-d H:i:s"),
+					"author"=>"install"
+					),
+					Array(0 => $lnk_group_id_1));
+		$LINKS->add(Array(
+					"short"=>"tm.contact",
+					"name"=>"Contact / Kontakt",
+					"url"=>"http://www.tellmatic.org/contact&sendForm=1&name={F1} {F2}&email={EMAIL}&code={CODE}&adrid={ADRID}&subject=Test",
+					"descr"=>"Tellmatic Contact",
+					"aktiv"=>1,
+					"created"=>date("Y-m-d H:i:s"),
+					"author"=>"install"
+					),
+					Array(0 => $lnk_group_id_1));
+
+
+
+		$LINKS->add(Array(
+					"short"=>"idx.top",
+					"name"=>"Top",
+					"url"=>"#top",
+					"descr"=>"Jump to Top",
+					"aktiv"=>1,
+					"created"=>date("Y-m-d H:i:s"),
+					"author"=>"install"
+					),
+					Array(0 => $lnk_group_id_2));
+		$LINKS->add(Array(
+					"short"=>"idx.bottom",
+					"name"=>"Bottom",
+					"url"=>"#bottom",
+					"descr"=>"Jump to Bottom",
+					"aktiv"=>1,
+					"created"=>date("Y-m-d H:i:s"),
+					"author"=>"install"
+					),
+					Array(0 => $lnk_group_id_2));
+
 
 //adr gruppe
 		$ADDRESS=new tm_ADR();
@@ -142,7 +254,7 @@ if ($check) {
 					"email"=>"test@tellmatic.org",
 					"aktiv"=>1,
 					"created"=>date("Y-m-d H:i:s"),
-					"author"=>"example",
+					"author"=>"install",
 					"status"=>3,
 					"code"=>$code,
 					"memo"=>$created,
@@ -165,7 +277,7 @@ if ($check) {
 					"email"=>"bounce@tellmatic.org",
 					"aktiv"=>1,
 					"created"=>date("Y-m-d H:i:s"),
-					"author"=>"example",
+					"author"=>"install",
 					"status"=>1,
 					"code"=>$code,
 					"memo"=>$created,
@@ -192,7 +304,7 @@ if ($check) {
 				"descr"=>"zum testen / for testing",
 				"aktiv"=>1,
 				"created"=>date("Y-m-d H:i:s"),
-				"author"=>"example",
+				"author"=>"install",
 				"double_optin"=>1,
 				"use_captcha"=>1,
 				"digits_captcha"=>4,

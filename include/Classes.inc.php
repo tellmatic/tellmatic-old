@@ -14,6 +14,7 @@
 
 require_once (TM_INCLUDEPATH."/Class_DB.inc.php");
 require_once (TM_INCLUDEPATH."/Class_Misc.inc.php");
+require_once (TM_INCLUDEPATH."/Class_Log.inc.php");
 require_once (TM_INCLUDEPATH."/Class_URL.inc.php");
 require_once (TM_INCLUDEPATH."/Class_Tpl.inc.php");
 require_once (TM_INCLUDEPATH."/Class_CFG.inc.php");
@@ -22,6 +23,7 @@ require_once (TM_INCLUDEPATH."/Class_Q.inc.php");
 require_once (TM_INCLUDEPATH."/Class_Adr.inc.php");
 require_once (TM_INCLUDEPATH."/Class_Blacklist.inc.php");
 require_once (TM_INCLUDEPATH."/Class_Form.inc.php");
+require_once (TM_INCLUDEPATH."/Class_Link.inc.php");
 require_once (TM_INCLUDEPATH."/Class_Host.inc.php");
 require_once (TM_INCLUDEPATH."/Class_Mail.inc.php");
 require_once (TM_INCLUDEPATH."/Class_Bounce.inc.php");

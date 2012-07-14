@@ -31,3 +31,15 @@
 .tablerow_odd {
 	background-color: #cccccc;
 }
+.red {
+	background-color: #ff0000;
+}
+.blue {
+	background-color: #0000ff;
+}
+.green {
+	background-color: #0000ff;
+}
+.edit_tinymce_css_for_new_style {
+	background-color: #ffffff;
+}

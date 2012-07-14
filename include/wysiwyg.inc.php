@@ -50,7 +50,7 @@ $TinyMCE_Init_End='
 
 //TinyMCE OPTIONS
 $TinyMCE_GZ_Options='
-	plugins : "style,layer,table,save,advhr,advimage,advlink,emotions,iespell,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,search,replace,separator",
+	plugins : "style,layer,table,save,advhr,advimage,advlink,emotions,iespell,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,layer,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,search,replace,separator",
 	themes : "advanced",
 	//simple,
 	languages : "'.$LOGIN->USER['lang'].'",
@@ -59,6 +59,7 @@ $TinyMCE_GZ_Options='
 ';
 
 $TinyMCE_Options='
+		accessibility_warnings : true,
 		mode : "none",
 		debug : false,
 		disk_cache : true,
@@ -73,8 +74,10 @@ $TinyMCE_Options='
 		browsers : "msie,gecko",
 		//button_tile_map : true,
 		language : "'.$LOGIN->USER['lang'].'",
-		plugins : "table,advimage,advhr,insertdatetime,preview,searchreplace,contextmenu,paste,directionality,spellchecker,fullpage,layer,fullscreen,media,emotions", //flash
-		theme_advanced_buttons1_add_before : "help,fullpage,preview,fullscreen,separator,spellchecker,separator,cut,copy,paste,pastetext,pasteword,separator,search,replace,separator",
+		plugins : "table,advimage,advhr,insertdatetime,preview,searchreplace,contextmenu,paste,directionality,spellchecker,layer,fullscreen,media,emotions", //flash
+		//plugins : "table,advimage,advhr,insertdatetime,preview,searchreplace,contextmenu,paste,directionality,spellchecker,layer,fullscreen,media,emotions", //fullpage,flash
+		theme_advanced_buttons1_add_before : "help,preview,fullscreen,separator,spellchecker,separator,cut,copy,paste,pastetext,pasteword,separator,search,replace,separator",
+		//theme_advanced_buttons1_add_before : "help,fullpage,preview,fullscreen,separator,spellchecker,separator,cut,copy,paste,pastetext,pasteword,separator,search,replace,separator", //fullpage,
 		theme_advanced_buttons1_add : "",
 		theme_advanced_buttons2_add_before: "fontselect,fontsizeselect,forecolor,backcolor",
 		theme_advanced_buttons2_add : "separator,insertdate,inserttime,separator,flash,media",
@@ -107,7 +110,7 @@ $TinyMCE_Options.='
 		//flash_menu : "false"
 		fullpage_default_langcode : "'.$LOGIN->USER['lang'].'",
 		fullpage_default_title : "",
-		fullpage_default_encoding : "'.$encoding.'",
+		fullpage_default_encoding : "'.strtolower($encoding).'",
 		fullpage_default_xml_pi : false,
 		fullpage_default_doctype : "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">",
 		fullscreen_new_window : true,

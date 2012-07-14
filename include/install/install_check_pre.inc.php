@@ -25,8 +25,8 @@ if (version_compare(phpversion(), "5.0", ">=")) {
 } else {
 	$usePhp5=false;
 }
+
 define("PHP5",$usePhp5);
-if (PHP5) ini_set('zend.ze1_compatibility_mode', '1');
 
 /***********************************************************/
 //check
@@ -41,7 +41,7 @@ if ($exec_time==0) {
 }
 
 if (ini_get("register_globals")=='on') {
-	$ERR_MESSAGE.="<br>".___("WARNUNG!")." ".sprintf(___("Register Globals ist %s."),"<font color=\"red\">ON</font>");
+	$ERR_MESSAGE.="<br>".___("WARNUNG!")." ".sprintf(___("Register Globals ist %s."),"<font color=\"orange\">ON</font>");
 } else {
 	#$ERR_MESSAGE.="<br>".sprintf(___("Register Globals ist %s."),"<font color=\"green\">OFF</font>");
 }
@@ -51,18 +51,18 @@ if (!ini_get("safe_mode")=='off') {
 	#$ERR_MESSAGE.="<br>".sprintf(___("Safe Mode ist %s."),"<font color=\"green\">ON</font>");
 }
 if (ini_get("magic_quotes_gpc")=='on') {
-	$ERR_MESSAGE.="<br>".___("WARNUNG!")." ".sprintf(___("Magic Quotes ist %s."),"<font color=\"red\">ON</font>");
+	$ERR_MESSAGE.="<br>".___("WARNUNG!")." ".sprintf(___("Magic Quotes ist %s."),"<font color=\"orange\">ON</font>");
 } else {
 	#$ERR_MESSAGE.="<br>".sprintf(___("Magic Quotes ist %s."),"<font color=\"green\">OFF</font>");
 }
 
 
 if ($mem>0 && $mem<8*1024*1024) {
-	$ERR_MESSAGE.="<br>".sprintf(___("FEHLER! Für Tellmatic sollten mindestens %s Speicher für PHP zur Verfügung stehen, besser mehr"),"8MB")."";
+	$ERR_MESSAGE.="<br><font color=\"red\">".sprintf(___("FEHLER! Für Tellmatic sollten mindestens %s Speicher für PHP zur Verfügung stehen, besser mehr"),"8MB")."</font>";
 	$check=false;
 }
 if ($exec_time> 0 && $exec_time<15) {
-	$ERR_MESSAGE.="<br>".sprintf(___("FEHLER! Für Tellmatic sollten mindestens %s Sekunden Ausführungszeit für PHP zur Verfügung stehen, besser mehr"),"15")."";
+	$ERR_MESSAGE.="<br><font color=\"red\">".sprintf(___("FEHLER! Für Tellmatic sollten mindestens %s Sekunden Ausführungszeit für PHP zur Verfügung stehen, besser mehr"),"15")."</font>";
 	$check=false;
 }
 
@@ -73,9 +73,15 @@ if ($exec_time<30) {
 
 //check for php version
 if (version_compare(phpversion(), "4.4", "<")) {
-	$ERR_MESSAGE.="<br>".___("FEHLER! Sie verwenden PHP Version < 4.4. Tellmatic benötigt mindestens Version 4.4.")."";
+	$ERR_MESSAGE.="<br><font color=\"red\">".___("FEHLER! Sie verwenden PHP Version < 4.4. Tellmatic benötigt mindestens Version 4.4.")."</font>";
 	$check=false;
 }
+if (version_compare(phpversion(), "5.3", ">=")) {
+	$ERR_MESSAGE.="<br><font color=\"red\">".___("FEHLER!")." ".___("Sie verwenden PHP >=5.3.")."</font>";
+	$check=false;
+}
+
+if (PHP5 && $check) ini_set('zend.ze1_compatibility_mode', '1');
 
 //if check is true (enough memory, exec time and php version)
 if ($check) {

@@ -92,7 +92,17 @@ $created=date("Y-m-d H:i:s");
 srand((double)microtime()*1000000);
 $rcode=rand(11,99);
 $Export_Filename="bounceit_".date_convert_to_string($created)."-".$rcode.".csv";
-$fp = fopen($tm_datapath."/".$Export_Filename,"w");
+$BounceDel_Filename="bounceit-delete_".date_convert_to_string($created)."-".$rcode.".csv";
+$fp = fopen($tm_datapath."/".$Export_Filename,"a");
+$fpdel = fopen($tm_datapath."/".$BounceDel_Filename,"a");
+$delimiter=",";
+$CSV=$ADDRESS->genCSVHeader($delimiter);
+if ($fp) {
+	if (!DEMO) fputs($fp,$CSV,strlen($CSV));
+}
+if ($fpdel) {
+	if (!DEMO) fputs($fpdel,$CSV,strlen($CSV));
+}
 
 echo  ___("Export").": ".$Export_Filename."\n";
 
@@ -100,14 +110,16 @@ $search['email_exact_match']=true;
 
 for ($bcc=0;$bcc<$bc;$bcc++) {
 	$search['email']=$Bounces[$bcc];
-
-	$CSV="\"".$Bounces[$bcc]."\"\n";
-	fputs($fp,$CSV,strlen($CSV));
-
 	$A=$ADDRESS->getAdr(0,0,0,0,$search,"",0,0);
+	//CSV Zeile erstellen:
+	$CSV=$ADDRESS->genCSVline($A[0],$delimiter);
+	//und in file schreiben:
+	if (!DEMO && $fp) fputs($fp,$CSV,strlen($CSV));
+
 	if (isset($A[0]['id'])) {
 		$protocol="bounce_it.php: ";
 		if ($C[0]['bounceit_action'] == "delete") {
+			if (!DEMO && $fpdel) fputs($fpdel,$CSV,strlen($CSV));
 			if (!DEMO) $ADDRESS->delAdr($A[0]['id']);
 			$protocol.= sprintf(___("Die Adresse %s wurde gelöscht."),$A[0]['email'])."\n";
 		}
@@ -168,6 +180,7 @@ for ($bcc=0;$bcc<$bc;$bcc++) {
 	flush();
 	ob_flush();
 }//for $bcc
-
+echo "Logfiles: ".$BounceDel_Filename." / ".$Export_Filename;
 fclose($fp);
+fclose($fpdel);
 ?>

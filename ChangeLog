@@ -1,3 +1,634 @@
+2010-09-27 Monday 12:01  mcms09
+
+	Changed:
+		include/install/install_conf_sql.inc.php (1.24), "Exp", lines: +2 -2
+
+	allow 48 chars for shortnames in lnk and lnk_grp
+
+2010-09-27 Monday 12:00  mcms09
+
+	Changed:
+		include/wysiwyg.inc.php (1.12), "Exp", lines: +7 -4
+
+	we dont use the buggy fullpage plugin anymore... bugged
+
+2010-09-27 Monday 12:00  mcms09
+
+	Changed:
+		include/tm_version.inc.php (1.12), "Exp", lines: +14 -5
+
+	1089, make variables a constant
+
+2010-09-27 Monday 11:59  mcms09
+
+	Changed:
+		include/tm_lib.inc.php (1.21), "Exp", lines: +39 -3
+
+	define header and footer for html newsletter, no domainname in urls
+
+2010-09-27 Monday 11:59  mcms09
+
+	Changed:
+		include/tellmatic.sql (1.7), "Exp", lines: +2 -2
+
+	short name was too short in lnk/lnk_grp
+
+2010-09-27 Monday 11:58  mcms09
+
+	Changed:
+		include/send_it.php (1.24), "Exp", lines: +2 -1
+
+	no br if browser output
+
+2010-09-27 Monday 11:57  mcms09
+
+	Changed:
+		include/queue_list.inc.php (1.11), "Exp", lines: +21 -3
+
+	status, % done, ok, failed, etc
+
+2010-09-27 Monday 11:57  mcms09
+
+	Changed:
+		include/nl_grp_list.inc.php (1.5), "Exp", lines: +6 -1
+
+	count nl/tpl
+
+2010-09-27 Monday 11:56  mcms09
+
+	Changed:
+		include/form_edit.inc.php (1.6), "Exp", lines: +1 -1
+
+	form description got weird on edit
+
+2010-09-27 Monday 11:56  mcms09
+
+	Changed:
+		include/bounce_it.php (1.3), "Exp", lines: +1 -1
+
+	fixed syntax error, typo
+
+2010-09-27 Monday 11:55  mcms09
+
+	Changed:
+		include/adr_import.inc.php (1.10), "Exp", lines: +31 -6
+		include/adr_import_form.inc.php (1.6), "Exp", lines: +21 -4
+
+	skip existing records
+
+2010-09-27 Monday 11:54  mcms09
+
+	Changed:
+		include/Login_guard_ret.inc.php (1.3), "Exp", lines: +1 -0
+
+	activate logging
+
+2010-09-27 Monday 11:54  mcms09
+
+	Changed:
+		include/Functions.inc.php (1.23), "Exp", lines: +14 -0
+
+	displayDouble: 2.00 -> 2, 2.01 -> 2.01
+
+2010-09-27 Monday 11:53  mcms09
+
+	Changed:
+		include/Errorhandling.inc.php (1.4), "Exp", lines: +1 -1
+
+	+E_WARNING +E_NOTICE
+
+2010-09-27 Monday 11:53  mcms09
+
+	Changed:
+		include/Class_Q.inc.php (1.12), "Exp", lines: +22 -6
+
+	allow recreate rcpt list if q is stopped/paused
+
+2010-09-27 Monday 11:52  mcms09
+
+	Changed:
+		include/Class_NL.inc.php (1.10), "Exp", lines: +17 -11
+
+	add html header and footer, use &amp; instaed of &
+
+2010-09-27 Monday 11:51  mcms09
+
+	Changed:
+		include/Class_Link.inc.php (1.2), "Exp", lines: +36 -17
+
+	parse additional parameters for anchor tag
+
+2010-09-27 Monday 11:51  mcms09
+
+	Changed:
+		include/Class_Adr.inc.php (1.10), "Exp", lines: +4 -2
+
+	fixed bug: non public groups were shown in subscription form
+
+2010-09-27 Monday 11:49  mcms09
+
+	Changed:
+		INSTALL.DE (1.10), "Exp", lines: +5 -2
+		INSTALL.EN (1.9), "Exp", lines: +5 -2
+
+	corrected typo
+
+2010-09-27 Monday 11:49  mcms09
+
+	Changed:
+		CHANGES (1.23), "Exp", lines: +35 -0
+
+	CHANGES for 1089
+
+2010-09-27 Monday 11:48  mcms09
+
+	Changed:
+		UPDATE (1.21), "Exp", lines: +37 -1
+
+	UPDATE for 1089
+
+2010-07-12 Monday 11:34  tag r-1-0-8-8
+
+2010-07-12 Monday 11:34  mcms09
+
+	Changed:
+		include/install/install_examples.inc.php (1.12), "Exp", lines: +1 -1
+
+	typo
+
+2010-07-12 Monday 11:18  mcms09
+
+	Changed:
+		tpl/Form_0_os.html (1.5), "Exp", lines: +3 -3
+
+	name/descr
+
+2010-07-12 Monday 11:17  mcms09
+
+	Changed:
+		include/queue_form.inc.php (1.7), "Exp", lines: +9 -5
+
+	only show groups with at least 1 valid adr
+
+2010-07-12 Monday 11:16  mcms09
+
+	Changed:
+		include/nl_list_legende.inc.php (1.8), "Exp", lines: +6 -1
+
+	logging
+
+2010-07-12 Monday 11:15  mcms09
+
+	Changed:
+		include/nl_list.inc.php (1.9), "Exp", lines: +25 -28
+
+	logging, show add queue link only if tpl exists
+
+2010-07-12 Monday 11:13  mcms09
+
+	Changed:
+		include/adr_import_form.inc.php (1.5), "Exp", lines: +28 -4
+
+	import domains to blacklist
+
+2010-07-12 Monday 11:11  mcms09
+
+	Changed:
+		include/install/install_install.inc.php (1.14), "Exp", lines: +5 -0
+
+	add link tables
+
+2010-07-12 Monday 11:07  mcms09
+
+	Changed:
+		include/install/install_conf.inc.php (1.13), "Exp", lines: +1 -1
+
+	typo
+
+2010-07-12 Monday 10:59  mcms09
+
+	Changed:
+		include/install/install_examples.inc.php (1.11), "Exp", lines: +8 -8
+
+	LINK vs $LINK vs $LINKS
+
+2010-07-12 Monday 10:56  mcms09
+
+	Changed:
+		include/install/install_conf.inc.php (1.12), "Exp", lines: +1 -0
+
+	missing TM_LOG
+
+2010-07-11 Sunday 23:58  mcms09
+
+	Changed:
+		CHANGES (1.22), "Exp", lines: +1 -1
+
+	changes for 1088
+
+2010-07-11 Sunday 13:47  mcms09
+
+	Changed:
+		ChangeLog (1.15), "Exp", lines: +447 -0
+
+	changelog for 1088
+
+2010-07-11 Sunday 13:29  mcms09
+
+	Changed:
+		locale/tellmatic-de.po (1.6), "Exp", lines: +3401 -4458
+		locale/tellmatic-en.po (1.8), "Exp", lines: +393 -7114
+		locale/tellmatic-es.po (1.6), "Exp", lines: +3179 -4214
+		locale/tellmatic-it.po (1.6), "Exp", lines: +3179 -4214
+		locale/tellmatic-nl.po (1.4), "Exp", lines: +3187 -4198
+		locale/tellmatic-pt.po (1.4), "Exp", lines: +3179 -4213
+
+	new phrases
+
+2010-07-11 Sunday 13:28  mcms09
+
+	Changed:
+		locale/mkpo.sh (1.6), "Exp", lines: +3 -3
+
+	new gettext sucks a bit and returns a new format that cant be read
+	by some poedit versions... ouch
+
+2010-07-11 Sunday 13:27  mcms09
+
+	Changed:
+		js/tellmatic.js (1.9), "Exp", lines: +62 -10
+
+	check form if remove duplicates enabled
+
+2010-07-11 Sunday 13:25  mcms09
+
+	Changed:
+		include/install/install_examples.inc.php (1.10), "Exp", lines: +121 -9
+
+	add examples for linkmanager
+
+2010-07-11 Sunday 13:25  mcms09
+
+	Changed:
+		include/install/install_conf_sql.inc.php (1.23), "Exp", lines: +86 -0
+
+	new sql for 1088
+
+2010-07-11 Sunday 13:24  mcms09
+
+	Changed:
+		include/install/install_check_pre.inc.php (1.7), "Exp", lines: +12 -6
+
+	check for php 5.3
+
+2010-07-11 Sunday 13:23  mcms09
+
+	Changed:
+		include/tm_version.inc.php (1.11), "Exp", lines: +1 -1
+
+	1.0.8.8
+
+2010-07-11 Sunday 13:23  mcms09
+
+	Changed:
+		include/tm_lib.inc.php (1.20), "Exp", lines: +5 -2
+
+	logbook , linkmanager tables
+
+2010-07-11 Sunday 13:22  mcms09
+
+	Changed:
+		include/subscribe.inc.php (1.11), "Exp", lines: +8 -5
+		include/unsubscribe.inc.php (1.8), "Exp", lines: +6 -2
+
+	use sendmail_smtp
+
+2010-07-11 Sunday 13:20  mcms09
+
+	Changed:
+		include/tellmatic.sql (1.6), "Exp", lines: +146 -33
+
+	mysql sql structure for 1088
+
+2010-07-11 Sunday 13:20  mcms09
+
+	Changed:
+		include/status.inc.php (1.6), "Exp", lines: +63 -23
+
+	show summary
+
+2010-07-11 Sunday 13:18  mcms09
+
+	Changed:
+		include/nl_upload.inc.php (1.8), "Exp", lines: +5 -89
+		include/send_it.php (1.23), "Exp", lines: +33 -208
+
+	use new parser method
+
+2010-07-11 Sunday 13:17  mcms09
+
+	Changed:
+		include/nl_grp_list.inc.php (1.4), "Exp", lines: +14 -2
+		include/nl_grp_list_legende.inc.php (1.4), "Exp", lines: +1 -1
+		include/queue_list.inc.php (1.10), "Exp", lines: +42 -25
+		include/queue_list_legende.inc.php (1.6), "Exp", lines: +3 -1
+
+	add logging
+
+2010-07-11 Sunday 13:17  mcms09
+
+	Changed:
+		include/nl_edit.inc.php (1.10), "Exp", lines: +5 -0
+		include/nl_form.inc.php (1.13), "Exp", lines: +35 -1
+		include/nl_new.inc.php (1.12), "Exp", lines: +6 -2
+
+	personalized tracking
+
+2010-07-11 Sunday 13:13  mcms09
+
+	Changed:
+		include/host_test.inc.php (1.5), "Exp", lines: +25 -50
+
+	use sendmail_smtp
+
+2010-07-11 Sunday 13:12  mcms09
+
+	Changed:
+		include/form_list.inc.php (1.7), "Exp", lines: +14 -2
+		include/form_list_legende.inc.php (1.6), "Exp", lines: +1 -0
+		include/host_list.inc.php (1.3), "Exp", lines: +18 -4
+		include/host_list_legende.inc.php (1.4), "Exp", lines: +1 -0
+
+	add logging
+
+2010-07-11 Sunday 13:11  mcms09
+
+	Changed:
+		include/click.inc.php (1.3), "Exp", lines: +178 -32
+
+	do some nice clicktracking and url forwarding
+
+2010-07-11 Sunday 13:09  mcms09
+
+	Changed:
+		include/bounce_it.php (1.2), "Exp", lines: +19 -6
+
+	export bounced/deketed adr
+
+2010-07-11 Sunday 13:08  mcms09
+
+	Changed:
+		include/adr_grp_list.inc.php (1.5), "Exp", lines: +20 -1
+		include/adr_grp_list_legende.inc.php (1.5), "Exp", lines: +2 -1
+		include/adr_list.inc.php (1.10), "Exp", lines: +13 -0
+		include/adr_list_legende.inc.php (1.6), "Exp", lines: +1 -0
+		include/bl_list.inc.php (1.3), "Exp", lines: +12 -1
+		include/bl_list_legende.inc.php (1.4), "Exp", lines: +1 -0
+
+	add logging
+
+2010-07-11 Sunday 13:05  mcms09
+
+	Changed:
+		include/adr_import.inc.php (1.9), "Exp", lines: +42 -3
+
+	import domains to blacklist
+
+2010-07-11 Sunday 13:03  mcms09
+
+	Changed:
+		include/adr_export.inc.php (1.7), "Exp", lines: +7 -31
+
+	use genCSVline method
+
+2010-07-11 Sunday 13:02  mcms09
+
+	Changed:
+		include/adr_clean.inc.php (1.6), "Exp", lines: +89 -2
+		include/adr_clean_form.inc.php (1.6), "Exp", lines: +78 -1
+
+	add remove duplicates feature
+
+2010-07-11 Sunday 13:01  mcms09
+
+	Changed:
+		include/adm_set_form.inc.php (1.7), "Exp", lines: +0 -1
+		include/adm_user_list.inc.php (1.4), "Exp", lines: +14 -2
+		include/adm_user_list_legende.inc.php (1.6), "Exp", lines: +1 -0
+
+	add logging
+
+2010-07-11 Sunday 12:55  mcms09
+
+	Changed:
+		include/adm_set.inc.php (1.10), "Exp", lines: +7 -2
+
+	add log summary
+
+2010-07-11 Sunday 12:54  mcms09
+
+	Changed:
+		include/Main.inc.php (1.9), "Exp", lines: +25 -0
+		include/Menu.inc.php (1.10), "Exp", lines: +116 -41
+
+	add linkmanager
+
+2010-07-11 Sunday 12:53  mcms09
+
+	Changed:
+		include/Functions.inc.php (1.22), "Exp", lines: +30 -7
+
+	fixed missing param in sendmail_smtp, pipe_max_rcpt
+
+2010-07-11 Sunday 12:51  mcms09
+
+	Changed:
+		include/Errorhandling.inc.php (1.3), "Exp", lines: +16 -14
+
+	slightly adjusted error log file
+
+2010-07-11 Sunday 12:50  mcms09
+
+	Changed:
+		include/Classes.inc.php (1.5), "Exp", lines: +2 -0
+
+	include Linkmanager Class
+
+2010-07-11 Sunday 12:50  mcms09
+
+	Changed:
+		include/Class_mSimpleForm.inc.php (1.5), "Exp", lines: +1 -1
+
+	add a missing space
+
+2010-07-11 Sunday 12:49  mcms09
+
+	Changed:
+		include/Class_Q.inc.php (1.11), "Exp", lines: +81 -31
+
+	logging
+
+2010-07-11 Sunday 04:47  mcms09
+
+	Changed:
+		include/Class_NL.inc.php (1.9), "Exp", lines: +328 -23
+
+	logging, new parser Method, parseNL()
+
+2010-07-11 Sunday 04:46  mcms09
+
+	Changed:
+		include/Class_Form.inc.php (1.8), "Exp", lines: +40 -17
+		include/Class_Host.inc.php (1.4), "Exp", lines: +53 -15
+
+	logging
+
+2010-07-11 Sunday 04:45  mcms09
+
+	Changed:
+		include/Class_DB.inc.php (1.7), "Exp", lines: +52 -48
+
+	someoptimizations, mysql_free_result should not always be called
+
+2010-07-11 Sunday 04:41  mcms09
+
+	Changed:
+		include/Class_Blacklist.inc.php (1.3), "Exp", lines: +39 -9
+		include/Class_CFG.inc.php (1.6), "Exp", lines: +116 -89
+
+	logging
+
+2010-07-11 Sunday 04:41  mcms09
+
+	Changed:
+		include/Class_Adr.inc.php (1.9), "Exp", lines: +276 -25
+
+	check duplicates, logging, optimizations, genCSVline()
+
+2010-07-11 Sunday 04:33  mcms09
+
+	Changed:
+		css/tellmatic.css (1.4), "Exp", lines: +22 -0
+		css/tinymce.css (1.2), "Exp", lines: +12 -0
+
+	css for logbook, example
+
+2010-07-11 Sunday 04:31  mcms09
+
+	Changed:
+		README (1.6), "Exp", lines: +11 -4
+
+	readme for 1088
+
+2010-07-11 Sunday 04:28  mcms09
+
+	Changed:
+		UPDATE (1.20), "Exp", lines: +117 -11
+
+	update instructions for 1088
+
+2010-07-11 Sunday 04:28  mcms09
+
+	Changed:
+		CHANGES (1.21), "Exp", lines: +165 -0
+
+	changes for 1088
+
+2010-07-11 Sunday 04:21  mcms09
+
+	Added:
+		include/Class_Link.inc.php (1.1)
+		include/link_edit.inc.php (1.1)
+		include/link_form.inc.php (1.1)
+		include/link_grp_edit.inc.php (1.1)
+		include/link_grp_form.inc.php (1.1)
+		include/link_grp_list.inc.php (1.1)
+		include/link_grp_list_legende.inc.php (1.1)
+		include/link_grp_new.inc.php (1.1)
+		include/link_list.inc.php (1.1)
+		include/link_list_legende.inc.php (1.1)
+		include/link_new.inc.php (1.1)
+		include/link_search.inc.php (1.1)
+		include/link_search_form.inc.php (1.1)
+
+	Linkmanager
+
+2010-07-11 Sunday 04:17  mcms09
+
+	Added:
+		include/Class_Log.inc.php (1.1)
+		include/log_list.inc.php (1.1)
+		include/log_list_legende.inc.php (1.1)
+		include/log_search.inc.php (1.1)
+		include/log_search_form.inc.php (1.1)
+		include/log_summary_section.inc.php (1.1)
+		include/log_summary_section_entry.inc.php (1.1)
+
+	Logging
+
+2010-07-11 Sunday 04:15  mcms09
+
+	Added:
+		view.php (1.1)
+		include/view.inc.php (1.1)
+
+	view newsletter online
+
+2010-03-12 Friday 03:31  mcms09
+
+	Changed:
+		include/subscribe.inc.php (1.10), "Exp", lines: +34 -11
+
+	somewhat better error handling:
+
+
+
+https://sourceforge.net/tracker/?func=detail&atid=933192&aid=2969009&group_id=190396
+
+2010-03-11 Thursday 18:50  mcms09
+
+	Changed:
+		include/bl_list.inc.php (1.2), "Exp", lines: +20 -3
+
+	fixed missing urlparameters for pager
+
+2010-03-11 Thursday 18:49  mcms09
+
+	Changed:
+		include/tm_version.inc.php (1.10), "Exp", lines: +1 -1
+
+	1.0.8.7-3
+
+2010-03-11 Thursday 18:46  mcms09
+
+	Changed:
+		INSTALL.DE (1.9), "Exp", lines: +1 -1
+		INSTALL.EN (1.8), "Exp", lines: +1 -1
+
+	its best to have a subdomain
+
+2010-03-11 Thursday 18:36  mcms09
+
+	Changed:
+		include/adr_search_form.inc.php (1.6), "Exp", lines: +2 -2
+
+	show adr count in grouplists
+
+2010-03-11 Thursday 18:31  mcms09
+
+	Changed:
+		include/form_form.inc.php (1.7), "Exp", lines: +4 -6
+
+	show adr count in grouplists
+
+2010-03-06 Saturday 23:59  mcms09
+
+	Changed:
+		include/send_it.php (1.22), "Exp", lines: +207 -153
+		include/queue_list.inc.php (1.9), "Exp", lines: +2 -2
+
+	new logging, write logs on the fly, unique format with ts and procid
+
 2010-03-06 Saturday 12:27  tag r-1-0-8-7
 
 2010-03-06 Saturday 12:27  mcms09

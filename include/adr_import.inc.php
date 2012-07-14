@@ -25,6 +25,7 @@ $status_ex=getVar("status_exists");
 //aktiv fuer neue adr.
 $InputName_AktivNew="aktiv_new";//
 $$InputName_AktivNew=getVar($InputName_AktivNew);
+
 //aktiv fuer existierende adr.
 $InputName_AktivEx="aktiv_existing";//
 $$InputName_AktivEx=getVar($InputName_AktivEx);
@@ -32,6 +33,10 @@ $$InputName_AktivEx=getVar($InputName_AktivEx);
 //Dublettencheck on off
 $InputName_DoubleCheck="check_double";//
 $$InputName_DoubleCheck=getVar($InputName_DoubleCheck);
+
+//bestehende adressen ueberspringen? skip existing adr? no update!
+$InputName_SkipEx="skip_existing";//
+$$InputName_SkipEx=getVar($InputName_SkipEx);
 
 //trennzeichen
 $InputName_Delimiter="delimiter";//
@@ -59,6 +64,10 @@ $$InputName_Delete=getVar($InputName_Delete,0);
 //blacklist
 $InputName_Blacklist="blacklist";//
 $$InputName_Blacklist=getVar($InputName_Blacklist,0);
+
+//blacklist domains
+$InputName_BlacklistDomains="blacklist_domains";//
+$$InputName_BlacklistDomains=getVar($InputName_BlacklistDomains,0);
 
 //merge groups
 $InputName_GroupsMerge="merge_groups";//
@@ -95,6 +104,10 @@ if ($set=="import") {
 	$check=false;
 
 	$EMailcheck_Import=$check_mail_import;
+
+	if ($blacklist_domains==1) {
+		$bl_domains=Array();//array mit domainnamen in blacklist
+	}
 
 	if (empty($adr_grp)) {
 		$IMPORT_MESSAGE.= "<br>".___("Keine Gruppe gewählt. Es werden keine neuen Daten importiert.");
@@ -158,7 +171,7 @@ if ($set=="import") {
 
 
 
-	if ($check && $delete!=1 && $blacklist!=1) {
+	if ($check && $delete!=1 && $blacklist!=1 && $blacklist_domains!=1) {
 		$IMPORT_MESSAGE.="<br>".___("Status für neue Adressen: ");
 		$IMPORT_MESSAGE.=tm_icon($STATUS['adr']['statimg'][$status_new],$STATUS['adr']['descr'][$status_new]);
 		$IMPORT_MESSAGE.= "  ".$STATUS['adr']['status'][$status_new]."  (".$STATUS['adr']['descr'][$status_new].")";
@@ -200,8 +213,13 @@ if ($set=="import") {
 			$IMPORT_MESSAGE.="<br>".tm_icon("cancel.png",___("Inaktiv"));
 			$IMPORT_MESSAGE.= "&nbsp;".___("Bestehende Adressen werden de-aktiviert.");
 		}
+		if ($skip_existing==1) {
+			$IMPORT_MESSAGE.= "<br>".___("Bestehende Adressen werden übesprungen.");
+		} else {
+			$IMPORT_MESSAGE.= "<br>".___("Bestehende Adressen werden aktualisiert.");		
+		}
 
-	}//check && delete !=1 && blacklist!=1
+	}//check && delete !=1 && blacklist!=1 && blacklist_domains!=1
 
 /******************************************************************************/
 
@@ -396,6 +414,7 @@ if ($set=="import") {
 		$iok=0;
 		#$ifail=0;//oben!!! vor dem einlesen, da email check schon beim einlesen
 		$idouble=0;
+		$iskipdouble=0;		
 		$idelete=0;
 		$iblacklist=0;
 		srand((double)microtime()*1000000);#aus der schleife rausgenommen
@@ -417,7 +436,8 @@ if ($set=="import") {
 						//	function getAdr($id=0,$offset=0,$limit=0,$group_id=0,$search=Array(),$sortIndex="",$sortType=0,$Details=1) {
 						$ADR=$ADDRESS->getAdr(0,0,0,0,$search,"","",0);
 						$ac=count($ADR);//anzahl gefundener adressen
-						if ($ac>0) {
+						//wenn adr gefunden und existierende nicht ueberspungen werden sollen						
+						if ($ac>0 && $skip_existing!=1) {
 							//gruppen zusammenfuehren, nur wenn nicht geloescht werden soll
 							if ($merge_groups==1 && $delete !=1) {
 								//wir diffen die gruppen und fuegen nur die referenzen hinzu die noch nicht existieren!
@@ -433,17 +453,24 @@ if ($set=="import") {
 								//next we should use method mergeGroups
 								$all_adr_grp=$ADDRESS->mergeGroups($adr_grp,$old_adr_grp);//testing!
 							} else {// merge groups
-								$all_adr_grp=$new_adr_grp;//gruppe aus formular uebernehmen, ueberschreiben!
+									$all_adr_grp=$new_adr_grp;//gruppe aus formular uebernehmen, ueberschreiben!
 							}//merge
+						}//ac>0 && $skip_existing!=1
+						if ($ac>0) {
 							$adr_exists=true;//adresse existiert
-						}//ac>0
+						}
 					}//check_double
 					//////////////////////
 					//oh! adresse ist bereits vorhanden!
 					if ($adr_exists) {
 					//wenn adresse existiert,
-						//und nicht loeschen...:
-						if ($delete!=1) {
+							if ($delete!=1 && $skip_existing==1) {
+								$IMPORT_LOG.="<br>".sprintf(___("Zeile %s: E-Mail %s existiert Bereits und wird übersprungen."),($import_offset_user+$i+1),"<em>".$addr[$i]['email']."</em>");
+								$iskipdouble++;
+							}
+
+						//und nicht loeschen... und nicht ubespringen:
+						if ($delete!=1 && $skip_existing!=1) {
 							//adressdaten updaten!
 							$code=$ADR[0]['code'];//code
 							if ($aktiv_existing==-1) {
@@ -547,21 +574,58 @@ if ($set=="import") {
 					}//adr exists false
 
 					//importierte Adressen loeschen?
+				//domains der liste hinzufuegen fuer blacklisting der domains
+				if ($blacklist_domains==1) {
+					$bl_domains[$i]=getDomainFromEMail($addr[$i]['email']);
+					
+				}
+
 			}//isset email
 		}//for
 
 		//adressen vergessen
 		unset ($addr);
+
+		if ($blacklist_domains==1) {
+			$bl_domains=array_unique($bl_domains);//unify!
+			foreach ($bl_domains as $bl_domainname) {
+				//dublettencheck! per getBL
+				if (!empty($bl_domainname)) {
+					$BL=$BLACKLIST->getBL(0,Array("type"=>"domain","expr"=>$bl_domainname));
+					//wenn nix gefunden, eintragen:
+					if (count($BL)<1) {
+						$BLACKLIST->addBL(Array(
+										"siteid"=>TM_SITEID,
+										"expr"=>$bl_domainname,
+										"aktiv"=>1,
+										"type"=>"domain"
+										));
+						$IMPORT_MESSAGE.="<br>".sprintf(___("Die Domain %s wurde in die Blacklist eingetragen."),display($bl_domainname));
+					} else {
+						$IMPORT_MESSAGE.="<br>".sprintf(___("Die Domain %s ist bereits in der Blacklist vorhanden."),display($bl_domainname));
+					}//if count<1
+				}//!empty
+			}//foreach bl_domains as bl_domain
 		
+		
+			$IMPORT_MESSAGE.="<br>".sprintf(___("%s Domains wurden zur Blacklist hinzgefügt."),count($bl_domains));
+		}
+
 		if ($blacklist==1) {
 			$IMPORT_MESSAGE.= "<br><br>".sprintf(___("Es wurden %s von %s Einträgen in die Blacklist eingefügt."),$iblacklist,($i));//i-1
 		}
 		if ($delete==1) {
 			$IMPORT_MESSAGE.= "<br><br>".sprintf(___("Es wurden %s von %s Einträgen gelöscht."),$idelete,($i));//i-1
 		} else {
-			$IMPORT_MESSAGE.= "<br><br>".sprintf(___("Es wurden %s von %s Einträgen importiert und in die gewählten Gruppen eingetragen."),$iok,($i));//i-1
+			$IMPORT_MESSAGE.= "<br><br>".sprintf(___("Es wurden %s von %s Einträgen importiert und in die gewählten Gruppen eingetragen."),$iok,$i);//i-1
 			$IMPORT_MESSAGE.= "<br>".sprintf(___("%s Einträge waren Fehlerhaft und wurden NICHT importiert."),$ifail);
-			$IMPORT_MESSAGE.= "<br>".sprintf(___("%s Eintraege sind bereits vorhanden und wurden aktualisiert."),$idouble);
+			
+			if ($skip_existing!=1) {
+				$IMPORT_MESSAGE.= "<br>".sprintf(___("%s Eintraege sind bereits vorhanden und wurden aktualisiert."),$idouble);
+			} else {
+				$IMPORT_MESSAGE.= "<br>".sprintf(___("%s Eintraege sind bereits vorhanden und wurden übersprungen."),$iskipdouble);//
+			}
+
 		}
 
 		$IMPORT_MESSAGE.= "<br>".sprintf(___("Bearbeitungszeit: %s Sekunden"),number_format($T->MidResult(), 2, ',', ''));

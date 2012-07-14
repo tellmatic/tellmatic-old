@@ -39,13 +39,13 @@ if (check_dbid($q_id)) {
 //stop queue
 if ($set=="stop" && $doit==1 && check_dbid($q_id)) {
 	$QUEUE->setStatus($q_id,5);
-	$LOG="<br>\n\n".date("d-m-Y H:i:s")." ---- Q ID $q_id halted.\n\n<br>";
+	$LOG="[".microtime(TRUE)."][0],".date("Y-m-d H:i:s").",q:".$q_id.",n:0,g:0,a:0,t: Q ID $q_id halted\n";
 	update_file($tm_logpath,$logfilename,$LOG);
 }
 //continue stopped queue
 if ($set=="continue" && $doit==1 && check_dbid($q_id)) {
 	$QUEUE->setStatus($q_id,2);
-	$LOG="<br>\n\n".date("d-m-Y H:i:s")." ---- Q ID $q_id continues.\n\n<br>";
+	$LOG="[".microtime(TRUE)."][0],".date("Y-m-d H:i:s").",q:".$q_id.",n:0,g:0,a:0,t: Q ID $q_id continues\n";
 	update_file($tm_logpath,$logfilename,$LOG);
 }
 
@@ -55,37 +55,37 @@ if ( ($set=="delete" || $set=="delete_all") && $doit==1 && check_dbid($q_id)) {
 	//Q holen
 	$Q=$QUEUE->getQ($q_id);
 	if (isset($Q[0]['id']))	{
-	//und q fuer newsletter aus aktueller q holen
-	//eintraege zaehlen, wieviele qs fuer newsletter dieser q
-	$QNL=$QUEUE->getQ(0,0,0,$Q[0]['nl_id']);
-	$nqc=count($QNL);
-	if ($nqc>0) {
-	}
-	//wenn hoechstens 1 eintrag, dann status des nl auf archiv setzen, ...5=archiv
-	//ansonsten weiter
-	if ($nqc<=1) {
-		$NEWSLETTER->setStatus($Q[0]['nl_id'],5);
-	}
-	//q loeschen
-	if ($set=="delete") {
-		if (!DEMO) $QUEUE->delQ($q_id);
-		$_MAIN_MESSAGE.="<br>".___("Q Eintrag wurde gelöscht.");
-	}
-	if ($set=="delete_all") {
-		if (!DEMO) $QUEUE->delQ($q_id,1);//, 1delH=1, auch historie loeschen
-		$_MAIN_MESSAGE.="<br>".___("Q Eintrag und Historie wurde gelöscht.");
-	}
+		//und q fuer newsletter aus aktueller q holen
+		//eintraege zaehlen, wieviele qs fuer newsletter dieser q
+		$QNL=$QUEUE->getQ(0,0,0,$Q[0]['nl_id']);
+		$nqc=count($QNL);
+		if ($nqc>0) {
+		}
+		//wenn hoechstens 1 eintrag, dann status des nl auf archiv setzen, ...5=archiv
+		//ansonsten weiter
+		if ($nqc<=1) {
+			$NEWSLETTER->setStatus($Q[0]['nl_id'],5);
+		}
+		//q loeschen
+		if ($set=="delete") {
+			if (!DEMO) $QUEUE->delQ($q_id);
+			$_MAIN_MESSAGE.="<br>".___("Q Eintrag wurde gelöscht.");
+		}
+		if ($set=="delete_all") {
+			if (!DEMO) $QUEUE->delQ($q_id,1);//, 1delH=1, auch historie loeschen
+			$_MAIN_MESSAGE.="<br>".___("Q Eintrag und Historie wurde gelöscht.");
+		}
 	}//isset Q[id]
 }//delete |< delete_all && doit
 //delete logfile
 if ($set=="delete_log" && $doit==1) {
 	$Q=$QUEUE->getQ($q_id);
 	if (isset($Q[0]['id']))	{
-	if (!DEMO && @unlink($tm_logpath."/".$logfilename)) {
-		$_MAIN_MESSAGE.="<br>".___("Logfile wurde gelöscht.");
-	} else {
-		$_MAIN_MESSAGE.="<br>".___("Logfile konnte nicht gelöscht werden.");
-	}
+		if (!DEMO && @unlink($tm_logpath."/".$logfilename)) {
+			$_MAIN_MESSAGE.="<br>".___("Logfile wurde gelöscht.");
+		} else {
+			$_MAIN_MESSAGE.="<br>".___("Logfile konnte nicht gelöscht werden.");
+		}
 	}//isset Q[id]
 }
 
@@ -122,10 +122,12 @@ $sendFastURLPara->addParam("act","queue_send");
 $sendFastURLPara->addParam("set","q");
 $sendFastURLPara->addParam("nl_id",$nl_id);
 $sendFastURLPara->addParam("startq",1);
+
 $refreshRCPTListURLPara=$mSTDURL;
 $refreshRCPTListURLPara->addParam("act","queue_send");
 $refreshRCPTListURLPara->addParam("set","q");
 $refreshRCPTListURLPara->addParam("nl_id",$nl_id);
+
 $delURLPara=$mSTDURL;
 $delURLPara->addParam("act","queue_list");
 $delURLPara->addParam("set","delete");
@@ -154,9 +156,17 @@ $statURLPara=$mSTDURL;
 $statURLPara->addParam("act","statistic");
 $statURLPara->addParam("set","queue");
 
+//show log summary
+//search for logs, only section
+$search_log['object']="q";
+include(TM_INCLUDEPATH."/log_summary_section.inc.php");
+
+
 $reloadURLPara_=$reloadURLPara->getAllParams();
+//refresh list
 $_MAIN_OUTPUT.= "<a href=\"".$tm_URL."/".$reloadURLPara_."\" title=\"".___("Anzeige aktualisieren")."\">".tm_icon("arrow_refresh.png",___("Anzeige aktualisieren"))."&nbsp;".___("Anzeige aktualisieren")."</a><br><br>";
 
+//show table
 $_MAIN_OUTPUT.="<table border=\"0\" cellpadding=\"1\" cellspacing=\"1\" width=\"100%\">";
 $_MAIN_OUTPUT.= "<thead>".
 						"<tr>".
@@ -239,6 +249,19 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 	$statURLPara_=$statURLPara->getAllParams();
 
 
+	//status %
+	//1%
+	$one_percent=($hc / 100);
+	//erledigt gesamt
+	$percent_done_formatted= ($one_percent > 0)  ? DisplayDouble( ( ($hc_ok + $hc_fail) / $one_percent ), 2,",",".") : 0;
+	//anteil ok	
+	$percent_ok_formatted=($one_percent > 0) ? DisplayDouble( ($hc_ok / $one_percent) , 2,",",".") : 0;
+	//anteil failed
+	$percent_fail_formatted=($one_percent > 0) ? DisplayDouble( ($hc_fail / $one_percent) , 2,",",".") : 0;
+	//anteil failed aktuell
+	$percent_done_fail_formatted=($hc_fail > 0 || $hc_ok > 0) ? DisplayDouble( ($hc_fail / ( ($hc_fail + $hc_ok) / 100 ) ) , 2,",",".") : 0;
+	
+
 	$_MAIN_OUTPUT.= "<tr id=\"row_".$qcc."\"  bgcolor=\"".$bgcolor."\"  onmouseover=\"setBGColor('row_".$qcc."','".$row_bgcolor_hilite."');\" onmouseout=\"setBGColor('row_".$qcc."','".$bgcolor."');\">";
 	$_MAIN_OUTPUT.= "<td width=50>";
 	if ($Q[$qcc]['check_blacklist']==1) {
@@ -300,12 +323,17 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 	}
 		$_MAIN_OUTPUT .="<br>".
 								___("Adressen: ").$hc.
+								"<br>".___("Bearbeitet: ").($hc_ok+$hc_fail)." = ".$percent_done_formatted."%".								
 								"<br>".___("Wartend: ").$hc_new.
-								"<br>".___("Gesendet: ").$hc_ok.
-								"<br>".___("Fehler: ").$hc_fail.
+								"<br>".___("Gesendet: ").$hc_ok." = ".$percent_ok_formatted."%".
+								"<br>".___("Fehler: ").$hc_fail." = ".$percent_fail_formatted."%"." == ".$percent_done_fail_formatted."%".
 								"<br>".___("versendet am: ").$sent_date.
 								"<br>".___("Angezeigt: ").$hc_view.
 								"";
+//evtl noch zeit anzeigen wann der auftrag bei der aktuellen geschwindigkeit beendet ist, sinnloser wert wenn der versand enmal fuer laenger unterbrochen wurde, aber weils spass macht koennte man es hier hinzufuegen, datum versand start in microtime umrechnen, erledigte adressen von damals bis jetzt, zeit pro adr ermitteln und mit dem rest multiplizieren, dann zurueckrechnen wie lange es noch dauert in stunden/minuten und zeit wann es beendet sein wird.
+
+
+	$_MAIN_OUTPUT.=sprintf(___("%s erledigt, davon %s OK, %s Adressen mit Fehler beim Versand (entspricht aktuell %s aller verarbeiteten Adressen)"),"<br><strong>".$percent_done_formatted."%</strong>","&nbsp;<font color=\"green\">".$percent_ok_formatted."%</font>"," <font color=\"red\">".$percent_fail_formatted."%</font>","&nbsp;<font color=\"red\">".$percent_done_fail_formatted."%</font>");
 	$_MAIN_OUTPUT.= "</div>";
 
 	$_MAIN_OUTPUT.= "</td>";
@@ -337,13 +365,15 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 		$_MAIN_OUTPUT.= "</blink>";
 	}
 
-
+	$_MAIN_OUTPUT.="<br><strong>".$percent_done_formatted."%</strong>&nbsp;<font color=\"green\">".$percent_ok_formatted."%</font> <font color=\"red\">".$percent_fail_formatted."%</font>&nbsp;<font color=\"red\">".$percent_done_fail_formatted."%</font>";
 
 	$_MAIN_OUTPUT.= "</td>";
 	$_MAIN_OUTPUT.= "<td>";
 	//wenn status q ok, =1 , neu, und newsletter aktiv, dann einzelnen sendebutton anzeigen!
 	if ($Q[$qcc]['status']==1 && $NL[0]['aktiv']==1  && isset($HOST[0]) && $HOST[0]['aktiv']==1) {
 		$_MAIN_OUTPUT.= "&nbsp;<a href=\"".$tm_URL."/".$sendFastURLPara_."\" title=\"".___("Newsletter an gewählte Gruppe versenden")."\">".tm_icon("bullet_star.png",___("Senden"),"","","","email_go.png")."</a>";
+	}
+	if ($Q[$qcc]['status']==4) {
 	}
 
 //adressen nachfassen!
@@ -378,6 +408,11 @@ if ($hc_new < $valid_adr_c) {
 	$_MAIN_OUTPUT.= "&nbsp;<a href=\"".$tm_URL."/".$delURLPara_."\" onclick=\"return confirmLink(this, '".sprintf(___("Q ID: %s löschen?"),$Q[$qcc]['id'])."')\" title=\"".___("Q löschen")."\">".tm_icon("cross.png",___("Q löschen"))."</a>";
 	$_MAIN_OUTPUT.= "&nbsp;<a href=\"".$tm_URL."/".$delAllURLPara_."\" onclick=\"return confirmLink(this, '".sprintf(___("Q ID: %s und Historie löschen?"),$Q[$qcc]['id'])."')\" title=\"".___("Q löschen")."\">".tm_icon("bullet_delete.png",___("Q komplett Löschen"),"","","","cross.png")."</a>";
  
+	//show log summary
+	//search for logs, section and entry!
+	//$search_log['object']="xxx"; <-- is set above in section link to logbook
+	$search_log['edit_id']=$Q[$qcc]['id'];
+	include(TM_INCLUDEPATH."/log_summary_section_entry.inc.php");
 
 	$_MAIN_OUTPUT.= "</td>";
 	$_MAIN_OUTPUT.= "</tr>";

@@ -65,13 +65,13 @@ $Form->set_InputSize($FormularName,$InputName_Group,0,1);
 $Form->set_InputMultiple($FormularName,$InputName_Group,false);
 //add Data
 $ADDRESS=new tm_ADR();
-$GRP=$ADDRESS->getGroup();
+$GRP=$ADDRESS->getGroup(0,0,0,1);
 $acg=count($GRP);
 
 $Form->add_InputOption($FormularName,$InputName_Group,"","-- alle");
 for ($accg=0; $accg<$acg; $accg++)
 {
-	$Form->add_InputOption($FormularName,$InputName_Group,$GRP[$accg]['id'],$GRP[$accg]['name']);
+	$Form->add_InputOption($FormularName,$InputName_Group,$GRP[$accg]['id'],$GRP[$accg]['name']." (".$GRP[$accg]['adr_count'].")");
 }
 
 //Author bzw Formular! Form_[ID]

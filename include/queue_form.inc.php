@@ -20,7 +20,7 @@ $Form=new tm_SimpleForm();
 $FormularName="queue_new";
 //make new Form
 $Form->new_Form($FormularName,$_SERVER["PHP_SELF"],"post","_self");
-$Form->set_FormJS($FormularName," onSubmit=\"switchSection('div_loader');\" OnChange=\"checkQNewLimitOffset();\" onClick=\"checkQNewLimitOffset();\"");
+$Form->set_FormJS($FormularName," onSubmit=\"switchSection('div_loader');\" ");
 //add a Description
 $Form->set_FormDesc($FormularName,___("neuen Q erstellen"));
 //variable content aus menu als hidden field!
@@ -43,11 +43,14 @@ $Form->set_InputSize($FormularName,$InputName_NL,0,5);
 $Form->set_InputMultiple($FormularName,$InputName_NL,false);
 //add Data
 $NEWSLETTER=new tm_NL();
-$NL=$NEWSLETTER->getNL();
+//nur aktive, keine templates
+$NL=$NEWSLETTER->getNL(0,0,0,0,0,$sortIndex="id",$sortType=1,Array("aktiv"=>1, "is_template"=>0));
 $nc=count($NL);
 for ($ncc=0; $ncc<$nc; $ncc++)
 {
-	if ($NL[$ncc]['aktiv']==1 && $NL[$ncc]['is_template']==0) {
+	//nur nl mit existierenden templates f. html/textparts
+	if (file_exists($tm_nlpath."/nl_".date_convert_to_string($NL[$ncc]['created'])."_n.html") 
+		&& file_exists($tm_nlpath."/nl_".date_convert_to_string($NL[$ncc]['created'])."_t.txt")) {
 		$NLOpt=display($NL[$ncc]['subject']);
 		if ($NL[$ncc]['massmail']==1) {
 			$NLOpt .="   ".___("(Massenmailing)");
@@ -75,8 +78,9 @@ $GRP=$ADDRESS->getGroup(0,0,0,1);
 $acg=count($GRP);
 for ($accg=0; $accg<$acg; $accg++)
 {
-	if ($GRP[$accg]['aktiv']==1) {
-		$Form->add_InputOption($FormularName,$InputName_Group,$GRP[$accg]['id'],display($GRP[$accg]['name'])." (".$GRP[$accg]['adr_count']." ".___("Adressen").")");
+	$valid_adr_c=$ADDRESS->countValidADR($GRP[$accg]['id']);
+	if ($GRP[$accg]['aktiv']==1 && $valid_adr_c>0) {
+		$Form->add_InputOption($FormularName,$InputName_Group,$GRP[$accg]['id'],display($GRP[$accg]['name'])." (".$GRP[$accg]['adr_count']." / ".$valid_adr_c." ".___("Adressen").")");
 	}
 }
 

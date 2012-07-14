@@ -145,10 +145,76 @@ $Form->set_InputJS($FormularName,$InputName_Blacklist," onChange=\"flash('submit
 $Form->set_InputDefault($FormularName,$InputName_Blacklist,$$InputName_Blacklist);
 $Form->set_InputStyleClass($FormularName,$InputName_Blacklist,"mFormText","mFormTextFocus");
 $Form->set_InputSize($FormularName,$InputName_Blacklist,48,256);
-$Form->set_InputDesc($FormularName,$InputName_Blacklist,___("Importierte Adressen in die Blacklist eintragen"));
+$Form->set_InputDesc($FormularName,$InputName_Blacklist,___("Adressen in die Blacklist eintragen"));
 $Form->set_InputReadonly($FormularName,$InputName_Blacklist,false);
 $Form->set_InputOrder($FormularName,$InputName_Blacklist,7);
 $Form->set_InputLabel($FormularName,$InputName_Blacklist,"");
+
+//remove duplicates
+$Form->new_Input($FormularName,$InputName_RemoveDups,"checkbox", 1);
+$Form->set_InputJS($FormularName,$InputName_RemoveDups," onChange=\"flash('submit','#ff0000');checkImport();\"\"");
+$Form->set_InputDefault($FormularName,$InputName_RemoveDups,$$InputName_RemoveDups);
+$Form->set_InputStyleClass($FormularName,$InputName_RemoveDups,"mFormText","mFormTextFocus");
+$Form->set_InputDesc($FormularName,$InputName_RemoveDups,___("Alle Duplikate ermitteln und entfernen"));
+$Form->set_InputReadonly($FormularName,$InputName_RemoveDups,false);
+$Form->set_InputOrder($FormularName,$InputName_RemoveDups,7);
+$Form->set_InputLabel($FormularName,$InputName_RemoveDups,"");
+
+//remove dups method
+$Form->new_Input($FormularName,$InputName_RemoveDupsMethod,"select", "");
+$Form->set_InputJS($FormularName,$InputName_RemoveDupsMethod," onChange=\"flash('submit','#ff0000');\" ");
+$Form->set_InputDefault($FormularName,$InputName_RemoveDupsMethod,$$InputName_RemoveDupsMethod);
+$Form->set_InputStyleClass($FormularName,$InputName_RemoveDupsMethod,"mFormSelect","mFormSelectFocus");
+$Form->set_InputDesc($FormularName,$InputName_RemoveDupsMethod,___("Welcher Eintrag soll erhalten bleiben?"));
+$Form->set_InputReadonly($FormularName,$InputName_RemoveDupsMethod,false);
+$Form->set_InputOrder($FormularName,$InputName_RemoveDupsMethod,8);
+$Form->set_InputLabel($FormularName,$InputName_RemoveDupsMethod,"");
+$Form->set_InputSize($FormularName,$InputName_RemoveDupsMethod,0,1);
+$Form->set_InputMultiple($FormularName,$InputName_RemoveDupsMethod,false);
+//add Data
+$Form->add_InputOption($FormularName,$InputName_RemoveDupsMethod,"first",___("Ersten/Ältesten Eintrag behalten"));
+$Form->add_InputOption($FormularName,$InputName_RemoveDupsMethod,"last",___("Letzten/Neuesten Eintrag behalten"));
+$Form->add_InputOption($FormularName,$InputName_RemoveDupsMethod,"random",___("Zufälligen Eintrag behalten"));
+
+//remove dups limit
+$Form->new_Input($FormularName,$InputName_RemoveDupsLimit,"select", "");
+$Form->set_InputJS($FormularName,$InputName_RemoveDupsLimit," onChange=\"flash('submit','#ff0000');\" ");
+$Form->set_InputDefault($FormularName,$InputName_RemoveDupsLimit,$$InputName_RemoveDupsLimit);
+$Form->set_InputStyleClass($FormularName,$InputName_RemoveDupsLimit,"mFormSelect","mFormSelectFocus");
+$Form->set_InputDesc($FormularName,$InputName_RemoveDupsLimit,___("Limit"));
+$Form->set_InputReadonly($FormularName,$InputName_RemoveDupsLimit,false);
+$Form->set_InputOrder($FormularName,$InputName_RemoveDupsLimit,9);
+$Form->set_InputLabel($FormularName,$InputName_RemoveDupsLimit,"");
+$Form->set_InputSize($FormularName,$InputName_RemoveDupsLimit,0,1);
+$Form->set_InputMultiple($FormularName,$InputName_RemoveDupsLimit,false);
+//add Data
+$Form->add_InputOption($FormularName,$InputName_RemoveDupsLimit,10,10);
+$Form->add_InputOption($FormularName,$InputName_RemoveDupsLimit,100,100);
+$Form->add_InputOption($FormularName,$InputName_RemoveDupsLimit,1000,1000);
+$Form->add_InputOption($FormularName,$InputName_RemoveDupsLimit,2500,2500);
+$Form->add_InputOption($FormularName,$InputName_RemoveDupsLimit,5000,"5k");
+$Form->add_InputOption($FormularName,$InputName_RemoveDupsLimit,10000,"10k");
+$Form->add_InputOption($FormularName,$InputName_RemoveDupsLimit,0,___("Alle"));
+
+//remove duplicates, show details?
+$Form->new_Input($FormularName,$InputName_RemoveDupsDetails,"checkbox", 1);
+$Form->set_InputJS($FormularName,$InputName_RemoveDupsDetails," onChange=\"flash('submit','#ff0000');checkImport();\"\"");
+$Form->set_InputDefault($FormularName,$InputName_RemoveDupsDetails,$$InputName_RemoveDupsDetails);
+$Form->set_InputStyleClass($FormularName,$InputName_RemoveDupsDetails,"mFormText","mFormTextFocus");
+$Form->set_InputDesc($FormularName,$InputName_RemoveDupsDetails,___("Details zu allen Duplikaten anzeigen"));
+$Form->set_InputReadonly($FormularName,$InputName_RemoveDupsDetails,false);
+$Form->set_InputOrder($FormularName,$InputName_RemoveDupsDetails,10);
+$Form->set_InputLabel($FormularName,$InputName_RemoveDupsDetails,"");
+
+//export duplicates
+$Form->new_Input($FormularName,$InputName_RemoveDupsExport,"checkbox", 1);
+$Form->set_InputJS($FormularName,$InputName_RemoveDupsExport," onChange=\"flash('submit','#ff0000');checkImport();\"\"");
+$Form->set_InputDefault($FormularName,$InputName_RemoveDupsExport,$$InputName_RemoveDupsExport);
+$Form->set_InputStyleClass($FormularName,$InputName_RemoveDupsExport,"mFormText","mFormTextFocus");
+$Form->set_InputDesc($FormularName,$InputName_RemoveDupsExport,___("Duplikate als .csv Datei exportieren"));
+$Form->set_InputReadonly($FormularName,$InputName_RemoveDupsExport,false);
+$Form->set_InputOrder($FormularName,$InputName_RemoveDupsExport,11);
+$Form->set_InputLabel($FormularName,$InputName_RemoveDupsExport,"");
 
 //submit button
 $Form->new_Input($FormularName,$InputName_Submit,"submit",___("Aktion Ausführen"));
@@ -214,6 +280,17 @@ $_MAIN_OUTPUT.= "</tr>";
 $_MAIN_OUTPUT.= "<tr>";
 $_MAIN_OUTPUT.= "<td valign=\"top\" colspan=1>".tm_icon("ruby.png",___("Blacklist"))."&nbsp;".___("Adressen zur Blacklist hinzufügen:")."";
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Blacklist]['html'];
+$_MAIN_OUTPUT.= "</td>";
+$_MAIN_OUTPUT.= "</tr>";
+
+$_MAIN_OUTPUT.= "<tr>";
+$_MAIN_OUTPUT.= "<td valign=\"top\" colspan=1>".tm_icon("text_columns.png",___("Dubletten entfernen"))."&nbsp;".___("Dubletten suchen und entfernen:")."";
+$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_RemoveDups]['html'];
+$_MAIN_OUTPUT.= "&nbsp;".$Form->INPUT[$FormularName][$InputName_RemoveDupsMethod]['html'];
+$_MAIN_OUTPUT.= "&nbsp;".___("Limit")."&nbsp;".$Form->INPUT[$FormularName][$InputName_RemoveDupsLimit]['html'];
+$_MAIN_OUTPUT.= "&nbsp;".___("Details")."&nbsp;".$Form->INPUT[$FormularName][$InputName_RemoveDupsDetails]['html'];
+$_MAIN_OUTPUT.= "&nbsp;".___("Export")."&nbsp;".$Form->INPUT[$FormularName][$InputName_RemoveDupsExport]['html'];
+
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "</tr>";
 

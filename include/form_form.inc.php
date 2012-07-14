@@ -172,13 +172,13 @@ $Form->set_InputSize($FormularName,$InputName_Group,0,5);
 $Form->set_InputMultiple($FormularName,$InputName_Group,true);
 //add Data
 $ADDRESS=new tm_ADR();
-$GRP=$ADDRESS->getGroup();
+$GRP=$ADDRESS->getGroup(0,0,0,1);
 $acg=count($GRP);
 for ($accg=0; $accg<$acg; $accg++)
 {
 	$grp_name=$GRP[$accg]['name'];
 	if ($GRP[$accg]['aktiv']!=1) $grp_name.=" (na)";
-	$Form->add_InputOption($FormularName,$InputName_Group,$GRP[$accg]['id'],$grp_name);
+	$Form->add_InputOption($FormularName,$InputName_Group,$GRP[$accg]['id'],$grp_name." (".$GRP[$accg]['adr_count'].")");
 }
 
 //Public Group, subscriber can choose
@@ -195,15 +195,13 @@ $Form->set_InputSize($FormularName,$InputName_GroupPub,0,5);
 $Form->set_InputMultiple($FormularName,$InputName_GroupPub,true);
 //add Data
 $ADDRESS=new tm_ADR();
-$GRPPUB=$ADDRESS->getGroup();
+$GRPPUB=$ADDRESS->getGroup(0,0,0,1,Array("public"=>1));
 $acgp=count($GRPPUB);
 for ($accgp=0; $accgp<$acgp; $accgp++)
 {
-	if ($GRPPUB[$accgp]['public']==1) {
 		$grp_name=$GRPPUB[$accgp]['name'];
 		if ($GRPPUB[$accgp]['aktiv']!=1) $grp_name.=" (na)";
-		$Form->add_InputOption($FormularName,$InputName_GroupPub,$GRPPUB[$accgp]['id'],$grp_name." [".$GRPPUB[$accgp]['public_name']."]");
-	}
+		$Form->add_InputOption($FormularName,$InputName_GroupPub,$GRPPUB[$accgp]['id'],$grp_name." [".$GRPPUB[$accgp]['public_name']."] (".$GRPPUB[$accgp]['adr_count'].")");
 }
 
 //SubmitValue

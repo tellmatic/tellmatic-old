@@ -11,6 +11,148 @@
 /* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
 /********************************************************************************/
 
+*+*+*+*+*+*+*+*+*+*+*+ 1.0.8.9
+--en
+	Read the CHANGES file carefully! It contains the list of new features and changes with some more or less technical details! 
+	Please also read INSTALL.EN on how to set up cronjob scripts, auto-validation and auto-bounce,amagement.	
+
+	Backup all your files and the database!
+	To update earlier Versions than 1.0.8.8 please follow instructions for update to 1.0.8.8
+	Backup all your files and the database!	
+	Copy newer files and don't forget to set path in *.php in / and include/send_it.php after updating if you plan to use cronjobs!
+	Backup the database! Do it now!
+	Update Database use phpMyAdmin or console etc, see SQL below!
+	if don't you want to use the new feature for saving output to temporary files in admin/tmp please set USE_TMP_HTML_FILES to FALSE in tm_lib.inc.php (default: TRUE  since 1.0.8.8)
+	To deactivate the logbook set TM_LOG to FALSE in tm_lib.inc.php (TRUE, >=	 1.0.8.8)
+	That's it. Have fun with the new features!
+	
+--de
+	Lesen sie die Datei CHANGES aufmerksam durch. Hier stehen nuetzlich Hinweise und einige technische Infos zu den Aenderungen!!!
+	Bitte lesen Sie auch die INSTALL.DE Datei. Dort wird beschrieben wie man die neuen Scripte fuer automatisches Boundemanagement und E-Mail-Adressen Validierung einrichtet.
+	Sichern Sie alle Daten und Datenbanken!
+	Zum Update von einer frueheren Version als 1.0.8.8 befolgen Sie zuerst die Anweisungen fuer das Update auf 1.0.8.8
+	Sichern Sie alle Daten und Datenbanken!
+	Kopieren Sie die neuen Dateien auf den Server. Vergessen Sie nicht den Pfad in den *.php Dateien im Installationsverzeichnis anzupassen / sowie include/send_it.php / check_it.php / bounce_it.php wenn Cronjobs genutzt werden sollen.
+	Sichern Sie die alte Datenbank! Jetzt!
+	Aktualisieren Sie die Datenbank, s.u.
+	Wenn Sie das neue Feature womit die Ausgabe in temporaere HTML Dateien in admin/tmp geschrieben wird nicht nutzen moechten, setzen Sie USE_TMP_HTML_FILES in tm_lib.inc.php auf FALSE (standard: TRUE, seit 1.0.8.7)
+	Zum deaktivieren des Logbuchs TM_LOG in tm_lib.inc.php auf FALSE setzen (TRUE, seit 1.0.8.8)	
+	Das wars, viel Spass.
+	
+-- SQL update 1.0.8.8 --> 1.0.8.9:
+
+Datenbank aktualisieren: / Update Database:
+
+	ALTER TABLE `lnk` CHANGE `short` `short` VARCHAR( 48 ) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL;
+	ALTER TABLE `lnk_grp` CHANGE `short` `short` VARCHAR( 48 ) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL;
+
+
+*+*+*+*+*+*+*+*+*+*+*+ 1.0.8.8
+--en
+	Read the CHANGES file carefully! It contains the list of new features and changes with some more or less technical details! 
+	Please also read INSTALL.EN on how to set up cronjob scripts, auto-validation and auto-bounce,amagement.	
+
+	Backup all your files and the database!
+	To update earlier Versions than 1.0.8.7 please follow instructions for update to 1.0.8.7
+	Backup all your files and the database!	
+	Copy newer files and don't forget to set path in *.php in / and include/send_it.php after updating if you plan to use cronjobs!
+	Backup the database! Do it now!
+	Update Database use phpMyAdmin or console etc, see SQL below!
+	if don't you want to use the new feature for saving output to temporary files in admin/tmp please set USE_TMP_HTML_FILES to FALSE in tm_lib.inc.php (default: TRUE  since 1.0.8.8)
+	To deactivate the logbook set TM_LOG to FALSE in tm_lib.inc.php (TRUE, >=	 1.0.8.8)
+	That's it. Have fun with the new features!
+	
+--de
+	Lesen sie die Datei CHANGES aufmerksam durch. Hier stehen nuetzlich Hinweise und einige technische Infos zu den Aenderungen!!!
+	Bitte lesen Sie auch die INSTALL.DE Datei. Dort wird beschrieben wie man die neuen Scripte fuer automatisches Boundemanagement und E-Mail-Adressen Validierung einrichtet.
+	Sichern Sie alle Daten und Datenbanken!
+	Zum Update von einer frueheren Version als 1.0.8.7 befolgen Sie zuerst die Anweisungen fuer das Update auf 1.0.8.7
+	Sichern Sie alle Daten und Datenbanken!
+	Kopieren Sie die neuen Dateien auf den Server. Vergessen Sie nicht den Pfad in den *.php Dateien im Installationsverzeichnis anzupassen / sowie include/send_it.php / check_it.php / bounce_it.php wenn Cronjobs genutzt werden sollen.
+	Sichern Sie die alte Datenbank! Jetzt!
+	Aktualisieren Sie die Datenbank, s.u.
+	Wenn Sie das neue Feature womit die Ausgabe in temporaere HTML Dateien in admin/tmp geschrieben wird nicht nutzen moechten, setzen Sie USE_TMP_HTML_FILES in tm_lib.inc.php auf FALSE (standard: TRUE, seit 1.0.8.7)
+	Zum deaktivieren des Logbuchs TM_LOG in tm_lib.inc.php auf FALSE setzen (TRUE, seit 1.0.8.8)	
+	Das wars, viel Spass.
+	
+-- SQL update 1.0.8.7 --> 1.0.8.8:
+
+Datenbank aktualisieren: / Update Database:
+
+ALTER TABLE nl ADD track_personalized TINYINT NOT NULL DEFAULT 1 AFTER track_image;
+
+CREATE TABLE `log` (
+  `id` int(11) NOT NULL auto_increment,
+  `siteid` varchar(255) character set utf8 NOT NULL default '',
+  `date` datetime NOT NULL default '0000-00-00 00:00:00',
+  `author_id` int(11) NOT NULL default '0',
+  `action` enum('new','edit','delete','memo','usage') character set utf8 NOT NULL default 'memo' COMMENT 'ausgefuehrte aktion: new, edit, delete',
+  `object` varchar(64) character set utf8 NOT NULL default '' COMMENT 'wo wurde geaendert',
+  `property` varchar(64) character set utf8 NOT NULL default '' COMMENT 'was wurde geaendert, feldname',
+  `x_value` longtext character set utf8 NOT NULL COMMENT 'alter wert',
+  `edit_id` int(11) NOT NULL default '0' COMMENT 'id des geaenderten eintrags, bzw id des neuen eintrags oder geloeschte',
+  `data` longtext character set utf8,
+  `memo` varchar(255) character set utf8 NOT NULL default '' COMMENT 'wenn loeschung, enthaelt dieses feld einen teil de alten daten!',
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+CREATE TABLE `lnk` (
+  `id` bigint(20) NOT NULL auto_increment,
+  `siteid` varchar(64) collate utf8_bin NOT NULL,
+  `created` datetime NOT NULL,
+  `updated` datetime NOT NULL,
+  `author` varchar(64) collate utf8_bin NOT NULL,
+  `editor` varchar(64) collate utf8_bin NOT NULL,
+  `aktiv` tinyint(1) NOT NULL,
+  `short` varchar(16) collate utf8_bin NOT NULL,
+  `name` varchar(255) collate utf8_bin NOT NULL,
+  `url` tinytext collate utf8_bin NOT NULL,
+  `descr` tinytext collate utf8_bin NOT NULL,
+  `clicks` bigint(20) NOT NULL default '0',
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+CREATE TABLE `lnk_click` (
+  `id` bigint(11) NOT NULL auto_increment,
+  `created` datetime NOT NULL,
+  `siteid` varchar(64) collate utf8_bin NOT NULL default '',
+  `lnk_id` int(11) NOT NULL default '0',
+  `nl_id` int(11) NOT NULL default '0',
+  `q_id` int(11) NOT NULL default '0',
+  `adr_id` bigint(11) NOT NULL default '0',
+  `h_id` bigint(11) NOT NULL default '0',
+  `ip` varchar(16) collate utf8_bin NOT NULL default '0.0.0.0',
+  `clicks` int(11) NOT NULL default '1',
+  PRIMARY KEY  (`id`),
+  UNIQUE KEY `unique_clicks` (`siteid`,`lnk_id`,`nl_id`,`q_id`,`adr_id`,`h_id`,`ip`),
+  KEY `siteid` (`siteid`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+CREATE TABLE `lnk_grp` (
+  `id` int(11) NOT NULL auto_increment COMMENT 'unique internal id',
+  `siteid` varchar(64) collate utf8_bin NOT NULL COMMENT 'site id',
+  `created` datetime NOT NULL COMMENT 'creation date',
+  `updated` datetime NOT NULL COMMENT 'last update date',
+  `author` varchar(64) collate utf8_bin NOT NULL COMMENT 'author name/id',
+  `editor` varchar(64) collate utf8_bin NOT NULL COMMENT 'editor name/id',
+  `aktiv` tinyint(1) NOT NULL,
+  `standard` tinyint(1) NOT NULL default '0',
+  `short` varchar(16) collate utf8_bin NOT NULL,
+  `name` varchar(255) collate utf8_bin NOT NULL,
+  `descr` tinytext collate utf8_bin NOT NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+CREATE TABLE `lnk_grp_ref` (
+  `id` int(11) NOT NULL auto_increment,
+  `siteid` varchar(64) collate utf8_bin NOT NULL default '',
+  `item_id` int(11) NOT NULL default '0',
+  `grp_id` int(11) NOT NULL default '0',
+  PRIMARY KEY  (`id`),
+  KEY `siteid` (`siteid`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+
 *+*+*+*+*+*+*+*+*+*+*+ 1.0.8.7
 --en
 	Read the CHANGES file carefully! It contains the list of new features and changes with some more or less technical details! 
@@ -29,7 +171,7 @@
 	Lesen sie die Datei CHANGES aufmerksam durch. Hier stehen nuetzlich Hinweise und einige technische Infos zu den Aenderungen!!!
 	Bitte lesen Sie auch die INSTALL.DE Datei. Dort wird beschrieben wie man die neuen Scripte fuer automatisches Boundemanagement und E-Mail-Adressen Validierung einrichtet.
 	Sichern Sie alle Daten und Datenbanken!
-	Zum Update von einer frueheren Verison als 1.0.8.6 befolgen Sie zuerst die Anweisungen fuer das Update auf 1.0.8.6
+	Zum Update von einer frueheren Version als 1.0.8.6 befolgen Sie zuerst die Anweisungen fuer das Update auf 1.0.8.6
 	Sichern Sie alle Daten und Datenbanken!
 	Kopieren Sie die neuen Dateien auf den Server. Vergessen Sie nicht den Pfad in den *.php Dateien im Installationsverzeichnis anzupassen / sowie include/send_it.php / check_it.php / bounce_it.php wenn Cronjobs genutzt werden sollen.
 	Sichern Sie die alte Datenbank! Jetzt!
@@ -79,7 +221,7 @@ Datenbank aktualisieren: / Update Database:
 --de
 	Lies die Datei CHANGES aufmerksam durch. Hier stehen nuetzlich Hinweise und einige technische Infos zu den Aenderungen!!!
 	Sichere alle deine Daten und Datenbanken!
-	Zum Update auf 1.0.8.6 von einer frueheren Verison als 1.0.8.5 befolge zuerst die Anweisungen fuer das Update auf 1.0.8.5
+	Zum Update auf 1.0.8.6 von einer frueheren Version als 1.0.8.5 befolge zuerst die Anweisungen fuer das Update auf 1.0.8.5
 	Sichere alle deine Daten und Datenbanken!
 	Kopieren die neuen Dateien auf den Server. Vergiss nicht den Pfad in den *.php Dateien in / und include/send_it.php anzupassen wenn Cronjobs genutzt werden sollen.
 	Sichere deine Datenbank! Jetzt!
@@ -110,7 +252,7 @@ Datenbank aktualisieren: / Update Database:
 --de
 	Lies die Datei CHANGES aufmerksam durch. Hier stehen nuetzlich Hinweise und einige technische Infos zu den Aenderungen!!!
 	Sichere alle deine Daten und Datenbanken!
-	Zum Update auf 1.0.8.5 von einer frueheren Verison als 1.0.8.4 befolge zuerst die Anweisungen fuer das Update auf 1.0.8.4
+	Zum Update auf 1.0.8.5 von einer frueheren Version als 1.0.8.4 befolge zuerst die Anweisungen fuer das Update auf 1.0.8.4
 	Sichere alle deine Daten und Datenbanken!
 	Kopieren die neuen Dateien auf den Server. Vergiss nicht den Pfad in den *.php Dateien in / und include/send_it.php anzupassen wenn Cronjobs genutzt werden sollen.
 	Sichere deine Datenbank! Jetzt!
@@ -137,7 +279,7 @@ Datenbank aktualisieren: / Update Database:
 
 --de
 	Lies die Datei CHANGES aufmerksam durch. Hier stehen nuetzlich Hinweise und einige technische Infos zu den Aenderungen!!!
-	Zum Update einer frueheren Verison als 1.0.8.4 befolge zuerst die Anweisungen fuer das Update auf 1.0.8.4
+	Zum Update einer frueheren Version als 1.0.8.4 befolge zuerst die Anweisungen fuer das Update auf 1.0.8.4
 	Kopiere alle neuen Dateien aus dem Archiv im Verzeichnis include/ (ohne Unterverzeichnisse) und include/install in das Tellmatic include-Verzeichnis.
 	Die wichtigste Datei ist die Class_Q.inc.php !
 	Fertig! Das wars.
@@ -159,7 +301,7 @@ Datenbank aktualisieren: / Update Database:
 --de
 	Lies die Datei CHANGES aufmerksam durch. Hier stehen nuetzlich Hinweise und einige technische Infos zu den Aenderungen!!!
 	Sichere alle deine Daten und Datenbanken!
-	Zum Update auf 1.0.8.4 von einer frueheren Verison als 1.0.8.2 befolge zuerst die Anweisungen fuer das Update auf 1.0.8.2
+	Zum Update auf 1.0.8.4 von einer frueheren Version als 1.0.8.2 befolge zuerst die Anweisungen fuer das Update auf 1.0.8.2
 	Melde dich als Administrator in Tellmatic an und schreibe die Einstellungen fuer den SMTP Server und E-Mails bei den Einstellungen auf!
 	Sichere alle deine Daten und Datenbanken!
 	Kopieren die neuen Dateien auf den Server. Vergiss nicht den Pfad in den *.php Dateien in / und include/send_it.php anzupassen wenn Cronjobs genutzt werden sollen.
@@ -211,7 +353,7 @@ Datenbank aktualisieren: / Update Database:
 	Update Database, see below
 --de
 	Kopieren Sie die neuen Dateien auf Ihren Server. Vergessen Sie nicht den Pfad in den *.php Dateien in / und include/send_it.php anzupassen wenn Cronjobs genutzt werden sollen
-	Zum Update auf 1.0.8.2 von einer frueheren Verison als 1.0.8.1 befolgen Sie bitte zuerst die Anweisungen fuer 1.0.8.1
+	Zum Update auf 1.0.8.2 von einer frueheren Version als 1.0.8.1 befolgen Sie bitte zuerst die Anweisungen fuer 1.0.8.1
 	Aktualisieren Sie die Datenbank, s.u.
 ------------------------------
 Datenbank aktualisieren: / Update Database:
@@ -228,7 +370,7 @@ Datenbank aktualisieren: / Update Database:
 	Update Database, see below
 --de
 	Kopieren Sie die neuen Dateien auf Ihren Server. Vergessen Sie nicht den Pfad in den *.php Dateien in / und include/send_it.php anzupassen wenn Cronjobs genutzt werden sollen
-	Zum Update auf 1.0.8.1 von einer frueheren Verison als 1.0.8.0 befolgen Sie bitte zuerst die Anweisungen fuer 1.0.8.0
+	Zum Update auf 1.0.8.1 von einer frueheren Version als 1.0.8.0 befolgen Sie bitte zuerst die Anweisungen fuer 1.0.8.0
 	Aktualisieren Sie die Datenbank, s.u.
 ------------------------------
 in include/tm_config.inc.php:
@@ -258,7 +400,7 @@ INDEX ( `nl_id` )
 	Enter Mailservers for smtp (send mails) and pop3/imap (bouncemanagement). The Server set in the mainsettings is used for internal mails now. 
 --de
 	Kopieren Sie die neuen Dateien auf Ihren Server. Vergessen Sie nicht den Pfad in den *.php Dateien in / und include/send_it.php anzupassen wenn Cronjobs genutzt werden sollen
-	Zum Update auf 1.0.7.4 von einer frueheren Verison als 1.0.7.4 befolgen Sie bitte die Anweisungen fuer 1.0.7.4
+	Zum Update auf 1.0.7.4 von einer frueheren Version als 1.0.7.4 befolgen Sie bitte die Anweisungen fuer 1.0.7.4
 	Aktualisieren Sie die Datenbank, s.u.
 	Tragen Sie die  Mailserver für smtp (Mails senden) und pop3/imap (Bouncemanagement) ein. Der in den Einstellungen angegebene SMTP-Serger wird weiterhin fuer interne Mails verwendet!
 ------------------------------
@@ -322,7 +464,7 @@ ALTER TABLE `nl_q` ADD `check_blacklist` TINYINT NOT NULL DEFAULT '0' AFTER `sen
 
 --de
 	Kopieren Sie die neuen Dateien auf Ihren Server. Vergessen Sie nicht den Pfad in den *.php Dateien in / und include/send_it.php anzupassen wenn Cronjobs genutzt werden sollen
-	Zum Update auf 1.0.7.4 von einer frueheren Verison als 1.0.7.3 befolgen Sie bitte die Anweisungen fuer 1.0.7.3
+	Zum Update auf 1.0.7.4 von einer frueheren Version als 1.0.7.3 befolgen Sie bitte die Anweisungen fuer 1.0.7.3
 	
 *+*+*+*+*+*+*+*+*+*+*+ 1.0.7.3
 --en
@@ -356,7 +498,7 @@ ALTER TABLE `nl_q` ADD `check_blacklist` TINYINT NOT NULL DEFAULT '0' AFTER `sen
 	
 --de
 	Kopieren Sie die neuen Dateien auf Ihren Server. Vergessen Sie nicht den Pfad in send_it.php anzupassen wenn Cronjobs genutzt werden sollen-
-	Zum Update auf 1.0.7.3 von einer frueheren Verison als 1.0.7.2 befolgen Sie bitte die Anweisungen fuer 1.0.7.2
+	Zum Update auf 1.0.7.3 von einer frueheren Version als 1.0.7.2 befolgen Sie bitte die Anweisungen fuer 1.0.7.2
 
 	editieren Sie anschliessend die Datei include/tm_config.inc.php:
 
@@ -402,7 +544,7 @@ ALTER TABLE `nl_q` ADD `check_blacklist` TINYINT NOT NULL DEFAULT '0' AFTER `sen
 	
 --de
 	Kopieren Sie die neuen Dateien auf Ihren Server. Vergessen Sie nicht den Pfad in send_it.php anzupassen wenn Cronjobs genutzt werden sollen-
-	Zum Update auf 1.0.7.1 von einer frueheren Verison als 1.0.7 befolgen Sie bitte die Anweisungen fuer 1.0.7
+	Zum Update auf 1.0.7.1 von einer frueheren Version als 1.0.7 befolgen Sie bitte die Anweisungen fuer 1.0.7
 
 UPDATE
 *+*+*+*+*+*+*+*+*+*+*+ 1.0.7 

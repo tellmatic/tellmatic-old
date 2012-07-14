@@ -257,10 +257,13 @@ run:2
 		} else {
 			if ($append!=1) {
 				//CSV Headline
-				$CSV="\"email\"$delimiter\"f0\"$delimiter\"f1\"$delimiter\"f2\"$delimiter\"f3\"$delimiter\"f4\"$delimiter\"f5\"$delimiter\"f6\"$delimiter\"f7\"$delimiter\"f8\"$delimiter\"f9\"$delimiter\"id\"$delimiter\"created\"$delimiter\"author\"$delimiter\"updated\"$delimiter\"editor\"$delimiter\"aktiv\"$delimiter\"status\"$delimiter\"code\"$delimiter\"errors\"$delimiter\"clicks\"$delimiter\"views\"$delimiter\"newsletter\"$delimiter\"memo\"\n";
+				$CSV=$ADDRESS->genCSVHeader($delimiter);
+				/*
+				"\"email\"$delimiter\"f0\"$delimiter\"f1\"$delimiter\"f2\"$delimiter\"f3\"$delimiter\"f4\"$delimiter\"f5\"$delimiter\"f6\"$delimiter\"f7\"$delimiter\"f8\"$delimiter\"f9\"$delimiter\"id\"$delimiter\"created\"$delimiter\"author\"$delimiter\"updated\"$delimiter\"editor\"$delimiter\"aktiv\"$delimiter\"status\"$delimiter\"code\"$delimiter\"errors\"$delimiter\"clicks\"$delimiter\"views\"$delimiter\"newsletter\"$delimiter\"memo\"\n";
+				*/
 				//write header
 				if (DEBUG) $_MAIN_MESSAGE.="<br>Schreibe CSV-Header";
-				fputs($fp,$CSV,strlen($CSV));
+				if (!DEMO) fputs($fp,$CSV,strlen($CSV));
 			}
 			//anzahl wirklich exportierter eintraege:
 			$exported=0;
@@ -304,38 +307,11 @@ run:2
 								($check_blacklist=="not_blacklisted" && !$blacklisted) 
 								) {
 									//CSV Zeile erstellen:
-									$CSV="";
-									$memo=str_replace("\n"," --|-- ",$ADR[$acc]['memo']);
-									$memo=str_replace("\r"," --|-- ",$memo);
-									$CSV.="\"".$ADR[$acc]['email']."\"$delimiter";
-									$CSV.="\"".$ADR[$acc]['f0']."\"$delimiter";
-									$CSV.="\"".$ADR[$acc]['f1']."\"$delimiter";
-									$CSV.="\"".$ADR[$acc]['f2']."\"$delimiter";
-									$CSV.="\"".$ADR[$acc]['f3']."\"$delimiter";
-									$CSV.="\"".$ADR[$acc]['f4']."\"$delimiter";
-									$CSV.="\"".$ADR[$acc]['f5']."\"$delimiter";
-									$CSV.="\"".$ADR[$acc]['f6']."\"$delimiter";
-									$CSV.="\"".$ADR[$acc]['f7']."\"$delimiter";
-									$CSV.="\"".$ADR[$acc]['f8']."\"$delimiter";
-									$CSV.="\"".$ADR[$acc]['f9']."\"$delimiter";
-									$CSV.="\"".$ADR[$acc]['id']."\"$delimiter";
-									$CSV.="\"".$ADR[$acc]['created']."\"$delimiter";
-									$CSV.="\"".$ADR[$acc]['author']."\"$delimiter";
-									$CSV.="\"".$ADR[$acc]['updated']."\"$delimiter";
-									$CSV.="\"".$ADR[$acc]['editor']."\"$delimiter";
-									$CSV.="\"".$ADR[$acc]['aktiv']."\"$delimiter";
-									$CSV.="\"".$ADR[$acc]['status']."\"$delimiter";
-									$CSV.="\"".$ADR[$acc]['code']."\"$delimiter";
-									$CSV.="\"".$ADR[$acc]['errors']."\"$delimiter";
-									$CSV.="\"".$ADR[$acc]['clicks']."\"$delimiter";
-									$CSV.="\"".$ADR[$acc]['views']."\"$delimiter";
-									$CSV.="\"".$ADR[$acc]['newsletter']."\"$delimiter";
-									$CSV.="\"".$memo."\"$delimiter";
-									$CSV.="\n";
+									$CSV=$ADDRESS->genCSVline($ADR[$acc],$delimiter);
 									//free some memory ;-)
 									unset($ADR[$acc]);
 									//und in file schreiben:
-									fputs($fp,$CSV,strlen($CSV));
+									if (!DEMO) fputs($fp,$CSV,strlen($CSV));
 									$exported++;
 							}
 						}//for	$acc

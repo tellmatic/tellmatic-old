@@ -173,7 +173,9 @@ if ($check && $set=="unsubscribe") {
 														"<br>\n".
 														"Der Datensatz wurde de-aktiviert und markiert (Unsubscribed) und wurde ab sofort aus der Empfaengerliste ausgeschlossen.\n".
 														"<br>The Address has been deactivated and marked as unsubscribed and will be excluded from recipients list.\n";
-						@SendMail($HOST[0]['sender_email'],$HOST[0]['sender_name'],$C[0]['notify_mail'],$HOST[0]['sender_name'],$SubscriptionMail_Subject,clear_text($SubscriptionMail_HTML),$SubscriptionMail_HTML,Array(),$HOST);//fixed, now uses defaulthost
+						@SendMail_smtp($HOST[0]['sender_email'],$HOST[0]['sender_name'],$C[0]['notify_mail'],$HOST[0]['sender_name'],$SubscriptionMail_Subject,clear_text($SubscriptionMail_HTML),$SubscriptionMail_HTML,Array(),$HOST);//fixed, now uses defaulthost
+						//now use smtp directly
+						//sendmail_smtp[0]=true/false [1]=""/errormessage
 						if ($C[0]['unsubscribe_sendmail']==1) {
 							//unsubscribe mail to subscriber
 							$UnsubscribeMail_Subject="Tellmatic: Abmeldung / Unsubscribe";
@@ -181,7 +183,9 @@ if ($check && $set=="unsubscribe") {
 							$_Tpl_UnsubscribeMail->setTemplatePath(TM_TPLPATH);
 							$_Tpl_UnsubscribeMail->setParseValue("EMAIL", $email);
 							$UnsubscribeMail_HTML=$_Tpl_UnsubscribeMail->renderTemplate("Unsubscribe_mail.html");
-							@SendMail($HOST[0]['sender_email'],$HOST[0]['sender_name'],$email,"<__".$email."__>",$UnsubscribeMail_Subject,clear_text($UnsubscribeMail_HTML),$UnsubscribeMail_HTML,Array(),$HOST);//fixed, now uses defaulthost
+							@SendMail_smtp($HOST[0]['sender_email'],$HOST[0]['sender_name'],$email,"<__".$email."__>",$UnsubscribeMail_Subject,clear_text($UnsubscribeMail_HTML),$UnsubscribeMail_HTML,Array(),$HOST);//fixed, now uses defaulthost
+						//now use smtp directly
+						//sendmail_smtp[0]=true/false [1]=""/errormessage
 						}
 						$email="";
 					}//send notify

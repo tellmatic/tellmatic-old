@@ -20,7 +20,8 @@ $_MAIN_OUTPUT.= "<h3>".___("Legende")."</h3>";
 $_MAIN_OUTPUT.= "<strong>".___("Eigenschaften")."</strong><br>";
 $_MAIN_OUTPUT.= tm_icon("textfield_rename.png",___("Vorlage"))."&nbsp;".___("Dieses NL ist eine Vorlage für neue NL und kann nicht versendet werden.")."<br>";
 $_MAIN_OUTPUT.= tm_icon("lorry.png",___("Massenmailing"))."&nbsp;".___("Massenmailing (per BCC:, kein feedback)")."<br>";
-$_MAIN_OUTPUT.= tm_icon("user_suit.png",___("personalisierter Newsletter"))."&nbsp;".___("personalisierter Newsletter")."<br>";
+$_MAIN_OUTPUT.= tm_icon("user_suit.png",___("personalisierter Newsletter"))."&nbsp;".___("personalisierter Newsletter")." / ";
+$_MAIN_OUTPUT.= tm_icon("bullet_star.png",___("personalisierter Newsletter"),"","","","user_suit.png")."&nbsp;".___("personalisiertes Tracking")."<br>";
 $_MAIN_OUTPUT.= tm_icon("page_white_office.png",___("TEXT/HTML"))."&nbsp;".___("TEXT/HTML")." | ";
 $_MAIN_OUTPUT.= tm_icon("page_white_h.png",___("HTML"))."&nbsp;".___("HTML")." | ";
 $_MAIN_OUTPUT.= tm_icon("page_white_text.png",___("TEXT"))."&nbsp;".___("TEXT")."<br>";
@@ -33,6 +34,8 @@ $_MAIN_OUTPUT.= tm_icon("bullet_star.png",___("Versenden"),"","","","email_go.pn
 $_MAIN_OUTPUT.= tm_icon("eye.png",___("Online"))."&nbsp;".___("Onlineversion des Newsletter anzeigen")."<br>";
 //link zum testpart template!
 $_MAIN_OUTPUT.= tm_icon("page_white.png",___("Text"))."&nbsp;".___("PlainText Version anzeigen")."<br>";
+//link zum link
+$_MAIN_OUTPUT.= tm_icon("world_go.png",___("Link öffnen"))."&nbsp;".___("Link öffnen")."<br>";
 //link zum bild
 $_MAIN_OUTPUT.= tm_icon("photo.png",___("Bild anzeigen"))."&nbsp;".___("verknüpftes Bild anzeigen")."<br>";
 $_MAIN_OUTPUT.= tm_icon("photo_delete.png",___("Bild löschen"))."&nbsp;".___("verknüpftes Bild löschen")."<br>";
@@ -50,6 +53,8 @@ $_MAIN_OUTPUT.= tm_icon("add.png",___("Newsletter und Dateien kopieren"))."&nbsp
 $_MAIN_OUTPUT.= tm_icon("chart_pie.png",___("Statistik"))."&nbsp;".___("Statistik anzeigen")."<br>";
 $_MAIN_OUTPUT.= tm_icon("chart_bar_delete.png",___("Historie löschen"))."&nbsp;".___("Historie löschen")."<br>";
 $_MAIN_OUTPUT.= tm_icon("arrow_switch.png",___("Adressen nachfassen / Empfängerliste aktualisieren"),"","","","email_go.png")."&nbsp;".___("Adressen nachfassen / Empfängerliste aktualisieren")."<br>";
+$_MAIN_OUTPUT.= tm_icon("script.png",___("Logbuch anzeigen"))."&nbsp;".___("Logbuch anzeigen")."<br>";
+
 $_MAIN_OUTPUT.= "<br><strong>".___("Status")."</strong><br>";
 $sc=count($STATUS['nl']['status']);
 for ($scc=1; $scc<=$sc; $scc++)//0

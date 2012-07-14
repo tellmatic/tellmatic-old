@@ -16,6 +16,7 @@ define("DEBUG",FALSE);
 define("DEBUG_SMTP",FALSE);
 define("DEBUG_SQL",FALSE);
 define("DEMO",FALSE);
+define ("TM_LOG",FALSE);
 
 /***********************************************************/
 //guess path

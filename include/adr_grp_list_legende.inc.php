@@ -24,13 +24,14 @@ $_MAIN_OUTPUT.= tm_icon("tick.png",___("Gruppe ist Aktiv"))."&nbsp;";
 $_MAIN_OUTPUT.= tm_icon("cancel.png",___("Gruppe ist Inaktiv"))."&nbsp;".___("Gruppe ist Aktiv/Inaktiv (Klick=Deaktivieren/Aktivieren)")."<br>";
 $_MAIN_OUTPUT.= tm_icon("pencil.png",___("Bearbeiten"))."&nbsp;".___("Bearbeiten")."<br>";
 $_MAIN_OUTPUT.= tm_icon("vcard_add.png",___("Adresse in dieser Gruppe erstellen"))."&nbsp;".___("Adresse in dieser Gruppe erstellen")."<br>";
-$_MAIN_OUTPUT.= tm_icon("group_go.png",___("Adressen dieser Gruppe anzeigen"))."&nbsp;".___("Adressen dieser Gruppe anzeigen, Anzahl der Adressen in dieser Gruppe")."<br>";
+$_MAIN_OUTPUT.= tm_icon("group_go.png",___("Adressen dieser Gruppe anzeigen"))."&nbsp;".___("Adressen dieser Gruppe anzeigen")."<br>";
 $_MAIN_OUTPUT.= tm_icon("chart_pie.png",___("Statistik anzeigen"))."&nbsp;".___("Statistik anzeigen")."<br>";
 $_MAIN_OUTPUT.= tm_icon("page_white_go.png",___("Diese Gruppe als Standardgruppe definieren"))."&nbsp;".___("Diese Gruppe als Standardgruppe definieren")."<br>";
 $_MAIN_OUTPUT.= tm_icon("cross.png",___("Gruppe löschen und Adressen der Standardgruppe zuordnen"))."&nbsp;".___("Gruppe löschen und Adressen der Standardgruppe zuordnen")."<br>";
 $_MAIN_OUTPUT.= tm_icon("bomb.png",___("Gruppe löschen und Adressen der Gruppe löschen"))."&nbsp;".___("Gruppe löschen und Adressen der Gruppe löschen (Adressen werden komplett gelöscht und auch aus allen anderen Gruppen entfernt!)")."<br>";
 $_MAIN_OUTPUT.= tm_icon("hourglass_go.png",___("Q für diese Gruppe anzeigen"))."&nbsp;".___("Q für diese Gruppe anzeigen")."<br>";
 $_MAIN_OUTPUT.= tm_icon("arrow_switch.png",___("Empfängerliste aktualisieren"),"","","","email_go.png")."&nbsp;".___("Adressen nachfassen / Empfängerliste aktualisieren")."<br>";
+$_MAIN_OUTPUT.= tm_icon("script.png",___("Logbuch anzeigen"))."&nbsp;".___("Logbuch anzeigen")."<br>";
 $_MAIN_OUTPUT.= "</div><br><br>";
 $_MAIN_OUTPUT.= "<script type=\"text/javascript\">";
 if ($user_is_expert) {

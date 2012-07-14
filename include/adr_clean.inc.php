@@ -40,6 +40,21 @@ if (!isset($$InputName_GroupDst)) {
 	$$InputName_GroupDst=Array();
 }
 
+$InputName_RemoveDups="remove_duplicates";//
+$$InputName_RemoveDups=getVar($InputName_RemoveDups);//aerch and remove duplicates?
+
+$InputName_RemoveDupsDetails="remove_duplicates_details";
+$$InputName_RemoveDupsDetails=getVar($InputName_RemoveDupsDetails);//show details when removing dups
+
+$InputName_RemoveDupsMethod="remove_duplicates_method";
+$$InputName_RemoveDupsMethod=getVar($InputName_RemoveDupsMethod);//duplicate remove method, keep first last random
+
+$InputName_RemoveDupsLimit="remove_duplicates_limit";
+$$InputName_RemoveDupsLimit=getVar($InputName_RemoveDupsLimit);//limit, remove xxx dups at once
+
+$InputName_RemoveDupsExport="remove_duplicates_export";//export dups?
+$$InputName_RemoveDupsExport=getVar($InputName_RemoveDupsExport);//export dups?
+
 $showGroupUrlPara=$mSTDURL;
 $showGroupStatusUrlPara=$mSTDURL;
 
@@ -55,7 +70,7 @@ if (!empty($set)) {
 	$_MAIN_MESSAGE.="<br>".sprintf(___("%s Einträge werden bearbeitet."),"<b>".$ac."</b>");
 }
 
-if (((!empty($set) && $set!="delete") || $blacklist==1) && $ac>0) { // wenn min 1 adr gefunden
+if (((!empty($set) && $set!="delete") || $blacklist==1) && $ac>0 && $remove_duplicates!=1) { // wenn min 1 adr gefunden
 	//meldungen ausgeben
 	if ($set=="aktiv_1") {
 		$_MAIN_MESSAGE.="<br>".___("Ausgewählte Adressen werden aktiviert");
@@ -159,6 +174,77 @@ if ($set=="check") {
 	if ($status>0) $_MAIN_MESSAGE.="<br>".sprintf(___("%s Einträge aus der Gruppe %s mit dem Status %s wurden zur Prüfung vorgemerkt."),"<b>".$ac."</b>","<b>".$GRP[0]['name']."</b>","<b>".$STATUS['adr']['status'][$search['status']]."</b>");
 }
 
+if ($remove_duplicates==1) {
+	$_MAIN_MESSAGE.="<br>".sprintf(___("Duplikate aus ALLEN Gruppen werden ermittelt und geloescht"));
+	if ($remove_duplicates_limit>0) {	
+		$_MAIN_MESSAGE.="<br>".___("Limit").": ".$remove_duplicates_limit;
+	}
+	//if not exporting,just use delete dups method
+	if ($remove_duplicates_export!=1) {
+		$ADDRESS->remove_duplicates(Array('method'=>$remove_duplicates_method, 'limit' => $remove_duplicates_limit));
+	}
+	//otherwise, if we want to export addresses first, we have to fetch, export and delete the adr ourselv
+	if ($remove_duplicates_export==1) {
+		$created=date("Y-m-d H:i:s");
+		$CSV_Filename="duplicates_".date_convert_to_string($created)."";
+		//extension .csv
+		$CSV_Filename=$CSV_Filename.".csv";
+		$delimiter=",";
+		$fp = fopen($tm_datapath."/".$CSV_Filename,"a");
+		if ($fp) {
+			$CSV=$ADDRESS->genCSVHeader($delimiter);
+			if (!DEMO) fputs($fp,$CSV,strlen($CSV));
+			$ADDRESS->fetch_duplicates(Array('method'=>$remove_duplicates_method, 'limit' => $remove_duplicates_limit));
+			//now export and delete each entry
+			foreach ($ADDRESS->DUPLICATES['dups'] as $DUPDEL) {
+				foreach ($DUPDEL['del'] as $adr_dupdel_id) {
+	
+					//fetch data for export
+					$ADRDUP=$ADDRESS->getAdr($adr_dupdel_id,0,0,0,Array(),"",0,1);//with details
+					//CSV Zeile erstellen:
+					$CSV=$ADDRESS->genCSVline($ADRDUP[0],$delimiter);
+					//und in file schreiben:
+					if (!DEMO) fputs($fp,$CSV,strlen($CSV));
+					//finally delete duplicate from database
+					if (!DEMO) $ADDRESS->delADR($adr_dupdel_id);
+				}
+			}
+			fclose($fp);
+		}
+	}
+	
+	
+		
+	if ($remove_duplicates_method=='first') {
+		$_MAIN_MESSAGE.="<br>".___("Es wird jeweils der erste/älteste Eintrag erhalten");
+	}
+	if ($remove_duplicates_method=='last') {
+		$_MAIN_MESSAGE.="<br>".___("Es wird jeweils der letzte/neueste Eintrag erhalten");
+	}
+	if ($remove_duplicates_method=='random') {
+		$_MAIN_MESSAGE.="<br>".___("Es wird jeweils ein zufälliger Eintrag erhalten");
+	}
+	$_MAIN_MESSAGE.="<br>";
+	$_MAIN_MESSAGE.="<br>".sprintf(___("Es wurden %s Adressen mit insgesamt %s Dubletten gefunden"),"<b>".$ADDRESS->DUPLICATES['count']."</b>","<b>".$ADDRESS->DUPLICATES['count_dup']."</b>");
+	if ($remove_duplicates_details==1) {
+		$_MAIN_MESSAGE.="<br>".___("Details").":";
+		foreach ($ADDRESS->DUPLICATES['dups'] as $DUP) {
+			$_MAIN_MESSAGE.="<br>".sprintf(___("E-Mail %s hat %s Duplikate"),"<b>".$DUP['email']."</b>","<b>".$DUP['qty']."</b>");
+			$_MAIN_MESSAGE.="<br>&nbsp;&nbsp;&nbsp;".sprintf(___("Eintrag mit ID %s wird erhalten."),"<b>".$DUP['id'][$DUP['keep']]."</b>");
+			$dupdelids="";
+			foreach ($DUP['del'] as $delid) {
+				$dupdelids.=$delid." ";
+			}
+			
+			$_MAIN_MESSAGE.="<br>&nbsp;&nbsp;&nbsp;".sprintf(___("Einträg mit den IDs %s wurden gelöscht"),"<b>".$dupdelids."</b>");
+		}
+	}
+	$_MAIN_MESSAGE.="<br><br>".sprintf(___("Es wurden %s Duplikate entfernt"),"<b>".(($ADDRESS->DUPLICATES['count_dup'] - $ADDRESS->DUPLICATES['count']))."</b>");
+	if ($remove_duplicates_export==1) {
+		$_MAIN_MESSAGE.= "<br>".sprintf(___("Datei gespeichert unter: %s"),"<a href=\"".$tm_URL_FE."/".$tm_datadir."/".$CSV_Filename."\" target=\"_preview\">".$tm_datadir."/".$CSV_Filename."</a>");
+	}
+	#if (DEBUG) $_MAIN_MESSAGE.="<pre>".print_r($ADDRESS->DUPLICATES,true)."</pre>";
+}
 
 //uebersicht anzeigen!
 $_MAIN_OUTPUT.="<div class=\"adr_summary\">";#ccdddd
@@ -175,6 +261,8 @@ $search_inaktiv=Array();
 $search_inaktiv['aktiv']='0';
 $entrys_inaktiv=$ADDRESS->countADR(0,$search_inaktiv);//anzahl eintraege die zur pruefung markiert sind
 if ($entrys_inaktiv>0) $_MAIN_OUTPUT.="<br>".sprintf(___("%s Adressen sind deaktiviert"),"<b>".$entrys_inaktiv."</b>");
+$_MAIN_OUTPUT.="<br>".sprintf(___("%s Dubletten"),"<b>".($ADDRESS->count_duplicates())."</b>");
+
 $_MAIN_OUTPUT.="<br><br></div><br>";
 	$AG=$ADDRESS->getGroup();
 	$agc=count($AG);
@@ -182,7 +270,6 @@ $_MAIN_OUTPUT.="<br><br></div><br>";
 	
 		$showGroupUrlPara->addParam("adr_grp_id",$AG[$agcc]['id']);
 		$showGroupStatusUrlPara->addParam("adr_grp_id",$AG[$agcc]['id']);
-
 		$showGroupUrlPara_=$showGroupUrlPara->getAllParams();
 		
 		$_MAIN_OUTPUT.= "<a  href=\"javascript:switchSection('g_".$AG[$agcc]['id']."')\" title=\"".___("Details")."\">";

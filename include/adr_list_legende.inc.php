@@ -34,6 +34,7 @@ $_MAIN_OUTPUT.= tm_icon("bullet_delete.png",___("Adresse aus Blacklist löschen"
 $_MAIN_OUTPUT.= tm_icon("bullet_add.png",___("Domain der Adresse in Blacklist eintragen"),"","","","ruby_link.png")."&nbsp;".___("Domain der Adresse in Blacklist eintragen")."<br>";
 $_MAIN_OUTPUT.= tm_icon("bullet_delete.png",___("Domain der Adresse aus Blacklist löschen"),"","","","ruby_link.png")."&nbsp;".___("Domain der Adresse aus Blacklist löschen")."<br>";
 $_MAIN_OUTPUT.= tm_icon("cross.png",___("Löschen"))."&nbsp;".___("Adresse löschen")."<br>";
+$_MAIN_OUTPUT.= tm_icon("script.png",___("Logbuch anzeigen"))."&nbsp;".___("Logbuch anzeigen")."<br>";
 $_MAIN_OUTPUT.= "<br><strong>".___("Status")."</strong><br>";
 $sc=count($STATUS['adr']['status']);
 for ($scc=1; $scc<=$sc; $scc++)//0

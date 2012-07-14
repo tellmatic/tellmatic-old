@@ -13,16 +13,41 @@
 /********************************************************************************/
 
 class tm_HOST {
+	/**
+	* Host Object
+	* @var array
+	*/
 	var $HOST=Array();
-
-  var $DB;
-#  var $DB2;//2nd connection, e.g. needed to count adr from within getgroup()!
-
-  function tm_HOST() {
+	/**
+	* DB Object
+	* @var object
+	*/
+	var $DB;
+	/**
+	* Helper DB Object
+	* @var object
+	*/
+	var $DB2;
+	/**
+	* LOG Object
+	* @var object
+	*/	
+	var $LOG;
+  
+	/**
+	* Constructor, creates new Instances for DB and LOG Objects 
+	* @param
+	*/	
+	function tm_HOST() {
+		#$this->DB=new tm_DB();
 		$this->DB=new tm_DB();
-#		$this->DB2=new tm_DB();
-  }
-
+		if (TM_LOG) $this->LOG=new tm_LOG();
+	}
+	/**
+	* get Item
+	* @param
+	* @return boolean
+	*/	
 	function getHost($id=0,$search=Array()) {
 		$this->HOST=Array();
 		#$DB=new tm_DB();
@@ -107,6 +132,7 @@ class tm_HOST {
 								WHERE id=".checkset_int($id)." 
 								AND siteid='".TM_SITEID."'";
 			if ($this->DB->Query($Query)) {
+				if (TM_LOG) $this->LOG->log(Array("data"=>Array("aktiv"=>$aktiv,"id"=>$id),"object"=>"host","action"=>"edit"));
 				$Return=true;
 			}
 		}
@@ -149,6 +175,9 @@ class tm_HOST {
 					$Return[0]=true;
 					$Return[1]=$this->DB->LastInsertID;
 				}
+				//log
+				$host['id']=$this->DB->LastInsertID;
+				if (TM_LOG) $this->LOG->log(Array("data"=>$host,"object"=>"host","action"=>"new"));
 		}
 		return $Return;
 	}//addHost
@@ -171,6 +200,7 @@ class tm_HOST {
 					aktiv=".checkset_int($host["aktiv"])."
 					WHERE siteid='".TM_SITEID."' AND id=".checkset_int($host["id"]);
 			if ($this->DB->Query($Query)) {
+				if (TM_LOG) $this->LOG->log(Array("data"=>$host,"object"=>"host","action"=>"edit"));
 				$Return=true;
 			}
 		}
@@ -180,15 +210,17 @@ class tm_HOST {
 	function delHost($id) {
 		$Return=false;
 		if (check_dbid($id)) {
+			//log before deletion
+			if (TM_LOG) $this->LOG->log(Array("data"=>Array("id"=>$id),"object"=>"host","action"=>"delete"));
 			$Query ="DELETE FROM ".TM_TABLE_HOST." WHERE siteid='".TM_SITEID."' AND id=".checkset_int($id);
-				if ($this->DB->Query($Query)) {
-					$Return=true;
-				} else {
-					$Return=false;
-					return $Return;
-				}
+			if ($this->DB->Query($Query)) {
+				$Return=true;
+			} else {
+				$Return=false;
+				return $Return;
+			}
 		}
-		//todo: defaulthost fuer offene versendeauftraege!!! host nur loeschen wenn nicht aktuell benutzt wird! oder komplett loeschen....
+		//todo: defaulthost fuer offene versendeauftraege!!! host nur loeschen wenn nicht aktuell benutzt wird! oder komplett loeschen auch aus refs und ersetzen....
 		return $Return;
 	}//delHost
 
@@ -204,7 +236,11 @@ class tm_HOST {
 						SET standard=0
 						WHERE standard=1
 						AND siteid='".TM_SITEID."'";
+			//log				
+			$HOSTSTD=$this->getStdSMTPHost();
 			if ($this->DB->Query($Query)) {
+				//log				
+				if (TM_LOG) $this->LOG->log(Array("data"=>Array("standard"=>0,"id"=>$HOSTSTD[0]['id']),"object"=>"host","action"=>"edit"));
 				$Return=true;
 			} else {
 				$Return=false;
@@ -215,6 +251,8 @@ class tm_HOST {
 						WHERE id=".checkset_int($id)."
 						AND siteid='".TM_SITEID."'";
 			if ($this->DB->Query($Query)) {
+				//log				
+				if (TM_LOG) $this->LOG->log(Array("data"=>Array("standard"=>1,"id"=>$id),"object"=>"host","action"=>"edit"));			
 				$Return=true;
 			} else {
 				$Return=false;

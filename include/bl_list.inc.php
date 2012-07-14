@@ -14,7 +14,6 @@
 
 $_MAIN_DESCR=___("Blacklist verwalten");
 $_MAIN_MESSAGE.="";
-$_MAIN_OUTPUT="";
 $BLACKLIST=new tm_BLACKLIST();
 
 $bl_id=getVar("bl_id");
@@ -44,7 +43,7 @@ if (empty($offset) || $offset<0) {
 }
 $limit=getVar("limit");
 if (empty($limit) || $limit<10) {
-	$limit=25;
+	$limit=10;
 }
 
 if ($set=="aktiv") {
@@ -65,6 +64,8 @@ if ($user_is_manager && $set=="export_blacklist") {
 	require_once(TM_INCLUDEPATH."/bl_export.inc.php");
 }
 
+$entrys_total=$BLACKLIST->countBL(Array("type"=>$type));
+
 $mSTDURL->addParam("type",$type);
 
 $editURLPara=$mSTDURL;
@@ -78,6 +79,20 @@ $delURLPara->addParam("set","delete");
 $sortURLPara=$mSTDURL;
 $sortURLPara->addParam("act","bl_list");
 $sortURLPara_=$sortURLPara->getAllParams();
+
+$firstURLPara=$mSTDURL;
+$firstURLPara->addParam("act","bl_list");
+$firstURLPara->addParam("offset",0);
+$firstURLPara->addParam("st",$sortType);
+$firstURLPara->addParam("si",$sortIndex);
+$firstURLPara_=$firstURLPara->getAllParams();
+
+$lastURLPara=$mSTDURL;
+$lastURLPara->addParam("act","bl_list");
+$lastURLPara->addParam("offset",($entrys_total-$limit));
+$lastURLPara->addParam("st",$sortType);
+$lastURLPara->addParam("si",$sortIndex);
+$lastURLPara_=$lastURLPara->getAllParams();
 
 $nextURLPara=$mSTDURL;
 $nextURLPara->addParam("act","bl_list");
@@ -102,9 +117,15 @@ $exportURLPara_=$exportURLPara->getAllParams();
 $BL=$BLACKLIST->getBL(0,Array("type"=>$type),$offset,$limit);
 $BL=sort_array($BL,$sortIndex,$sortType);
 $bc=count($BL);
-
 $entrys=$bc; // fuer pager.inc!!!
-$entrys_total=$BLACKLIST->countBL(Array("type"=>$type));
+
+$pagesURLPara=$mSTDURL;
+//will be defined and use in pager.inc.php
+
+//show log summary
+//search for logs, only section
+$search_log['object']="bl";
+include(TM_INCLUDEPATH."/log_summary_section.inc.php");
 
 require_once(TM_INCLUDEPATH."/bl_list_form.inc.php");
 //pager
@@ -200,6 +221,13 @@ for ($bcc=0;$bcc<$bc;$bcc++) {
 	$_MAIN_OUTPUT.= "<td>";
 	$_MAIN_OUTPUT.= "&nbsp;<a href=\"".$tm_URL."/".$editURLPara_."\" title=\"".___("Eintrag bearbeiten")."\">".tm_icon("pencil.png",___("Eintrag bearbeiten"))."</a>";
 	$_MAIN_OUTPUT.= "&nbsp;<a href=\"".$tm_URL."/".$delURLPara_."\" onclick=\"return confirmLink(this, '".sprintf(___("Eintrag %s löschen?"),display($BL[$bcc]['expr']))."')\" title=\"".___("Eintrag löschen")."\">".tm_icon("cross.png",___("Eintrag löschen"))."</a>";
+
+	//show log summary
+	//search for logs, section and entry!
+	//$search_log['object']="xxx"; <-- is set above in section link to logbook
+	$search_log['edit_id']=$BL[$bcc]['id'];
+	include(TM_INCLUDEPATH."/log_summary_section_entry.inc.php");
+
 	$_MAIN_OUTPUT.= "</td>";
 	$_MAIN_OUTPUT.= "</tr>";
 }

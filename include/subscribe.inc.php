@@ -18,6 +18,7 @@ if (!isset($called_via_url)) {$called_via_url=true;}
 
 $HOSTS=new tm_HOST();
 $HOST=$HOSTS->getStdSMTPHost();
+
 $MESSAGE="";
 $OUTPUT="";
 if (!isset($frm_id)) {
@@ -32,6 +33,11 @@ $code=getVar("code");//recheck code
 $check=true;
 //opt in click?
 if ($doptin==1 && !empty($code) && !empty($email)) { // && checkEmailAdr($email,$EMailcheck_Intern) //&& !empty($frm_id) rausgenommen!
+	$subscribed_via_doptin=false;
+	if (!empty($frm_id)) {
+		$FORMULAR=new tm_FRM();
+		$FRM=$FORMULAR->getForm($frm_id);
+	}
 	//adresse pruefen:
 	$_Tpl_FRM=new tm_Template();
 	$_Tpl_FRM->setTemplatePath($tm_formpath);
@@ -50,8 +56,8 @@ if ($doptin==1 && !empty($code) && !empty($email)) { // && checkEmailAdr($email,
 			//ja, code muesste man nicht nochmal pruefen, wird ja in search bereits in der db gesucht....
 			//setstatus adr_id = 3
 			$ADDRESS->setStatus($ADR[0]['id'],3);
+			$subscribed_via_doptin=true;
 			if (!empty($frm_id)) {
-				$FORMULAR=new tm_FRM();
 				/*
 				//wir zaehlen auch double optins schon bei eintragung...
 				//nicht erst bei bestatigung, siehe unten bei anmeldung....
@@ -61,9 +67,12 @@ if ($doptin==1 && !empty($code) && !empty($email)) { // && checkEmailAdr($email,
 				//template laden, vielen dank etc, Form_R.html R wie rechecked
 				//evtl mail an empfaenger, vielen dank etc... blabla
 			}//empty frm_id
-			$MESSAGE.="OK";
 		} else {
-			$OUTPUT.="ERR 2";
+			if (!empty($frm_id)) {
+				$OUTPUT.=$FRM[0]['email_errmsg']."<br>";
+			} else {
+				$OUTPUT.="ERR 2<br>";
+			}
 		}
 
 		if ($touch==1) { //not via form, touch optin! always calls Form_0_os.html in the tpldirectory!
@@ -71,14 +80,26 @@ if ($doptin==1 && !empty($code) && !empty($email)) { // && checkEmailAdr($email,
 			$_Tpl_FRM->setTemplatePath(TM_TPLPATH);//set path for new template Form_0_os.html!
 		}
 	} else {
-		$MESSAGE.="ERR 1";
+		if (!empty($frm_id)) {
+			$OUTPUT.=$FRM[0]['email_errmsg']."<br>";
+		} else {
+			$OUTPUT.="ERR 1<br>";
+		}
 	}//checkemail
 
-	$Form_Filename_OS="/Form_".$frm_id."_os.html";//meldung wenn subscribed
-
-	$_Tpl_FRM->setParseValue("FMESSAGE", $MESSAGE);
-	//template ausgeben
-	$OUTPUT.=$_Tpl_FRM->renderTemplate($Form_Filename_OS);
+	if ($subscribed_via_doptin) {
+		$Form_Filename_OS="/Form_".$frm_id."_os.html";//meldung wenn subscribed		
+		if (!empty($frm_id)) {
+			$_Tpl_FRM->setParseValue("FNAME", display($FRM[0]['name']));
+			$_Tpl_FRM->setParseValue("FDESCR", display($FRM[0]['descr']));
+		} else {
+			$_Tpl_FRM->setParseValue("FNAME", "--");
+			$_Tpl_FRM->setParseValue("FDESCR", "--");
+		}
+		$_Tpl_FRM->setParseValue("FMESSAGE", $MESSAGE);
+		//template ausgeben
+		$OUTPUT.=$_Tpl_FRM->renderTemplate($Form_Filename_OS);
+	}
 }
 
 //wenn formularid uebermittelt (fid), nur wenn kein optin recheck!
@@ -132,7 +153,6 @@ if ($frm_id>0 && $doptin!=1) {
 			$ADDRESS=new tm_ADR();
 			$created=date("Y-m-d H:i:s");
 			//$date_sub=strftime("%d-%m-%Y %H:%M:%S",mk_microtime($created));
-			$date_sub=$created;
 			$date_sub=date(TM_NL_DATEFORMAT);//used in template and email, formatted
 			$author=$FRM[0]['id'];
 			//double optin
@@ -245,7 +265,7 @@ if ($frm_id>0 && $doptin!=1) {
 					}//overwrite pubgroups
 				} else {//adr exists
 					if (DEBUG) $MESSAGE.="<br>Debug: email not yet exists, save new entry";
-					}
+				}
 
 				//re-index, important!
 				$new_adr_grp=array_values($new_adr_grp);				
@@ -355,7 +375,9 @@ if ($frm_id>0 && $doptin!=1) {
 						$SubscriptionMail_HTML.=$MSG['subscribe']['mail']['body_new'];
 					}
 
-					@SendMail($HOST[0]['sender_email'],$HOST[0]['sender_name'],$HOST[0]['notify_mail'],$HOST[0]['sender_name'],$SubscriptionMail_Subject,clear_text($SubscriptionMail_HTML),$SubscriptionMail_HTML,Array(),$HOST); //fixed, now uses defaulthost, http://sourceforge.net/tracker/?func=detail&aid=2642029&group_id=190396&atid=933192
+					@SendMail_smtp($HOST[0]['sender_email'],$HOST[0]['sender_name'],$HOST[0]['notify_mail'],$HOST[0]['sender_name'],$SubscriptionMail_Subject,clear_text($SubscriptionMail_HTML),$SubscriptionMail_HTML,Array(),$HOST); //fixed, now uses defaulthost, http://sourceforge.net/tracker/?func=detail&aid=2642029&group_id=190396&atid=933192
+					//now use smtp directly
+					//sendmail_smtp[0]=true/false [1]=""/errormessage
 				}//send notify
 
 				//send double optin:
@@ -378,7 +400,9 @@ if ($frm_id>0 && $doptin!=1) {
 					//template ausgeben
 					$OptinMail_HTML=$_Tpl_FRM->renderTemplate($Form_Filename_O);
 					$OptinMail_Subject=$MSG['subscribe']['mail']['subject_user'];
-					@SendMail($HOST[0]['sender_email'],$HOST[0]['sender_name'],$email,$HOST[0]['sender_name'],$OptinMail_Subject,clear_text($OptinMail_HTML),$OptinMail_HTML,Array(),$HOST);//fixed, now uses defaulthost, http://sourceforge.net/tracker/?func=detail&aid=2642029&group_id=190396&atid=933192
+					@SendMail_smtp($HOST[0]['sender_email'],$HOST[0]['sender_name'],$email,$HOST[0]['sender_name'],$OptinMail_Subject,clear_text($OptinMail_HTML),$OptinMail_HTML,Array(),$HOST);//fixed, now uses defaulthost, http://sourceforge.net/tracker/?func=detail&aid=2642029&group_id=190396&atid=933192
+					//now use smtp directly
+					//sendmail_smtp[0]=true/false [1]=""/errormessage
 				}
 
 				if (!$adr_exists) {
@@ -499,10 +523,12 @@ if ($frm_id>0 && $doptin!=1) {
 		if (DEBUG) $OUTPUT.="<br>Debug: form not active";
 		$OUTPUT.="na";
 	}//aktiv==1, form nicht aktiv!
-} else {
+}
+
+if (empty($frm_id) && $touch!=1){
 	if (DEBUG) $OUTPUT.="<br>Debug: no form id";
-	$OUTPUT.="?";
-}//frm_id>0 keine formular id uebergeben
+	$OUTPUT.="?".$frm_id;
+}
 
 //anzeige
 if ($called_via_url) {

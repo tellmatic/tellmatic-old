@@ -15,7 +15,6 @@
 //Legende
 $_MAIN_OUTPUT.="<br><b><a href=\"#\" title=\"".___("Legende / Status ein-ausblenden")."\" id=\"toggle_legende\">".tm_icon("rainbow.png",___("Legende / Status"))."&nbsp;".___("Legende / Status")."</a></b>";
 $_MAIN_OUTPUT.= "<div id=\"legende\" class=\"legende\">";
-
 $_MAIN_OUTPUT.= "<h3>".___("Legende")."</h3>";
 $_MAIN_OUTPUT.= "<strong>".___("Eigenschaften")."</strong><br>";
 $_MAIN_OUTPUT.= tm_icon("page_white_lightning.png",___("Standardgruppe"))."&nbsp;".___("Standardgruppe (kann nicht de-aktiviert und gelöscht werden)")."<br>";
@@ -27,6 +26,7 @@ $_MAIN_OUTPUT.= tm_icon("newspaper_add.png",___("Newsletter in dieser Gruppe ers
 $_MAIN_OUTPUT.= tm_icon("newspaper_go.png",___("Newsletter dieser Gruppe anzeigen"))."&nbsp;".___("Newsletter dieser Gruppe anzeigen, Anzahl der Newsletter in dieser Gruppe")."<br>";
 $_MAIN_OUTPUT.= tm_icon("page_white_go.png",___("als Standardgruppe"))."&nbsp;".___("Diese Gruppe als Standardgruppe definieren")."<br>";
 $_MAIN_OUTPUT.= tm_icon("cross.png",___("Löschen"))."&nbsp;".___("Gruppe löschen und Newsletter der Standardgruppe zuordnen")."<br>";
+$_MAIN_OUTPUT.= tm_icon("script.png",___("Logbuch anzeigen"))."&nbsp;".___("Logbuch anzeigen")."<br>";
 $_MAIN_OUTPUT.= "</div><br><br>";
 $_MAIN_OUTPUT.= "<script type=\"text/javascript\">";
 if ($user_is_expert) {

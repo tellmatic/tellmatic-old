@@ -14,19 +14,41 @@
 
 
 class tm_FRM {
+	/**
+	* Form Object
+	* @var array
+	*/
 	var $FORM=Array();
- 	var $DB;
-  #var $DB2;//2nd connection, e.g. needed to count adr from within getgroup()!
-
-  function tm_FRM() {
+	/**
+	* DB Object
+	* @var object
+	*/
+	var $DB;
+	/**
+	* Helper DB Object
+	* @var object
+	*/
+	var $DB2;
+	/**
+	* LOG Object
+	* @var object
+	*/	
+	var $LOG;
+  
+	/**
+	* Constructor, creates new Instances for DB and LOG Objects 
+	* @param
+	*/	
+	function tm_FRM() {
 		$this->DB=new tm_DB();
-		#$this->DB2=new tm_DB();
-  }
+		$this->DB2=new tm_DB();
+		if (TM_LOG) $this->LOG=new tm_LOG();
+  	}
 
 	function getForm($id=0,$offset=0,$limit=0,$group_id=0,$sortIndex="",$sortType=0) {
 		$this->FRM=Array();
 		#$DB=new tm_DB();
-		$Query ="	SELECT ".TM_TABLE_FRM.".id, ".TM_TABLE_FRM.".name, ".TM_TABLE_FRM.".action_url, ".TM_TABLE_FRM.".descr, ".TM_TABLE_FRM.".aktiv, ".TM_TABLE_FRM.".author, ".TM_TABLE_FRM.".created, ".TM_TABLE_FRM.".editor, ".TM_TABLE_FRM.".updated, ".TM_TABLE_FRM.".double_optin, ".TM_TABLE_FRM.".subscriptions,
+		$Query ="	SELECT ".TM_TABLE_FRM.".id, ".TM_TABLE_FRM.".siteid, ".TM_TABLE_FRM.".name, ".TM_TABLE_FRM.".action_url, ".TM_TABLE_FRM.".descr, ".TM_TABLE_FRM.".aktiv, ".TM_TABLE_FRM.".author, ".TM_TABLE_FRM.".created, ".TM_TABLE_FRM.".editor, ".TM_TABLE_FRM.".updated, ".TM_TABLE_FRM.".double_optin, ".TM_TABLE_FRM.".subscriptions,
 						 ".TM_TABLE_FRM.".use_captcha,  ".TM_TABLE_FRM.".digits_captcha,  ".TM_TABLE_FRM.".subscribe_aktiv, ".TM_TABLE_FRM.".check_blacklist,
 						 ".TM_TABLE_FRM.".force_pubgroup, ".TM_TABLE_FRM.".overwrite_pubgroup,
 						 ".TM_TABLE_FRM.".submit_value, ".TM_TABLE_FRM.".reset_value,
@@ -67,6 +89,7 @@ class tm_FRM {
 		$ac=0;
 		while ($this->DB->next_record()) {
 			$this->FORM[$ac]['id']=$this->DB->Record['id'];
+			$this->FORM[$ac]['siteid']=$this->DB->Record['siteid'];
 			$this->FORM[$ac]['name']=$this->DB->Record['name'];
 			$this->FORM[$ac]['action_url']=$this->DB->Record['action_url'];
 			$this->FORM[$ac]['aktiv']=$this->DB->Record['aktiv'];
@@ -158,7 +181,7 @@ class tm_FRM {
 	function setAktiv($id=0,$aktiv=1) {
 		$Return=false;
 		if (check_dbid($id)) {
-			#$DB=new tm_DB();
+			if (TM_LOG) $this->LOG->log(Array("data"=>Array("aktiv"=>$aktiv,"id"=>$id),"object"=>"frm","action"=>"edit"));
 			$Query ="UPDATE ".TM_TABLE_FRM." SET aktiv=".checkset_int($aktiv)." WHERE id=".checkset_int($id)." AND siteid='".TM_SITEID."'";
 			if ($this->DB->Query($Query)) {
 				$Return=true;
@@ -175,7 +198,7 @@ class tm_FRM {
 			$author=$LOGIN->USER['name'];
 			$FRM=$this->getForm($id);
 			$ADDRESS=new tm_ADR();
-			$adr_grp=$ADDRESS->getGroupID(0,0,$id);
+			$adr_grp=$ADDRESS->getGroupID(0,0,$id);//get groups from form, hmmm, what about public forms?
 			//make a copy
 			$FRM_copy=$FRM[0];
 			//change some values
@@ -192,7 +215,7 @@ class tm_FRM {
 	function delForm($id) {
 		$Return=false;
 		if (check_dbid($id)) {
-			#$DB=new tm_DB();
+			if (TM_LOG) $this->LOG->log(Array("data"=>Array("id"=>$id),"object"=>"frm","action"=>"delete"));
 			//referenzen loeschen
 			$Query ="DELETE FROM ".TM_TABLE_FRM_GRP_REF." WHERE siteid='".TM_SITEID."' AND frm_id=".checkset_int($id);
 			if ($this->DB->Query($Query)) {
@@ -378,10 +401,14 @@ class tm_FRM {
 		//Formular Template erzeugen, OptinMail
 		$Form_O_Html=$_Tpl_FRM->renderTemplate($Form_Filename_O_TPL);
 		write_file($tm_formpath,$Form_Filename_O,$Form_O_Html);
-
 		//Formular Template erzeugen, OptinMail nach Bestaetigung
 		$Form_OS_Html=$_Tpl_FRM->renderTemplate($Form_Filename_OS_TPL);
 		write_file($tm_formpath,$Form_Filename_OS,$Form_OS_Html);
+		//log
+		$frm['id']=$new_frm_id;
+		$frm['grp']=$grp;
+		$frm['grp_pub']=$grp_pub;
+		if (TM_LOG) $this->LOG->log(Array("data"=>$frm,"object"=>"frm","action"=>"new"));
 
 		return $Return;
 	}//addForm
@@ -390,7 +417,7 @@ class tm_FRM {
 		global $tm_formpath, $tm_URL;
 		$Return=false;
 		if (check_dbid($frm['id'])) {
-			#$DB=new tm_DB();
+			if (TM_LOG) $this->LOG->log(Array("data"=>$frm,"object"=>"frm","action"=>"edit"));
 			$Query ="UPDATE ".TM_TABLE_FRM." SET
 						name='".dbesc($frm["name"])."', action_url='".dbesc($frm["action_url"])."', descr='".dbesc($frm["descr"])."', aktiv=".checkset_int($frm["aktiv"]).",
 						updated='".dbesc($frm["created"])."',
@@ -518,12 +545,8 @@ class tm_FRM {
 	function addSub($frm_id,$adr_id=0) {
 		$Return=false;
 		if (check_dbid($frm_id)) {
-			$F=$this->getForm($frm_id);
-			$subs=$F[0]['subscriptions'];
-			$subs++;
-
 			$Query ="UPDATE ".TM_TABLE_FRM."
-						SET subscriptions='".$subs."'
+						SET subscriptions=subscriptions+1
 						WHERE siteid='".TM_SITEID."'
 						AND id=".checkset_int($frm_id);
 			if ($this->DB->Query($Query)) {

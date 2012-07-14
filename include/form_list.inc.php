@@ -86,7 +86,12 @@ $statURLPara=$mSTDURL;
 $statURLPara->addParam("act","statistic");
 $statURLPara->addParam("set","frm");
 
-$_MAIN_OUTPUT="<table border=\"0\" cellpadding=\"1\" cellspacing=\"1\" width=\"100%\">";
+//show log summary
+//search for logs, only section
+$search_log['object']="frm";
+include(TM_INCLUDEPATH."/log_summary_section.inc.php");
+
+$_MAIN_OUTPUT.="<table border=\"0\" cellpadding=\"1\" cellspacing=\"1\" width=\"100%\">";
 $_MAIN_OUTPUT.= "<thead>".
 						"<tr>".
 						"<td><b>".___("ID")."</b>".
@@ -306,7 +311,7 @@ for ($acc=0;$acc<$ac;$acc++) {
 			$_MAIN_OUTPUT.= " (na)</span>";
 		}
 
-		$_MAIN_OUTPUT.= ",";
+		$_MAIN_OUTPUT.= ", ";
 
 	}
 
@@ -335,6 +340,13 @@ for ($acc=0;$acc<$ac;$acc++) {
 	$_MAIN_OUTPUT.= "&nbsp;<a href=\"".$tm_URL."/".$copyURLPara_."\" onclick=\"return confirmLink(this, '".___("Formular kopieren")."')\" title=\"".___("Formular kopieren")."\">".tm_icon("add.png",___("Kopieren"))."</a>";
 	$_MAIN_OUTPUT.= "&nbsp;<a href=\"".$tm_URL."/".$statURLPara_."\" title=\"".___("Statistik anzeigen")."\">".tm_icon("chart_pie.png",___("Statistik"))."</a>";
 	$_MAIN_OUTPUT.= "&nbsp;<a href=\"".$tm_URL."/".$delURLPara_."\" onclick=\"return confirmLink(this, '".sprintf(___("Formular %s löschen"),display($FRM[$acc]['name']))."')\" title=\"".___("Formular löschen")."\">".tm_icon("cross.png",___("Löschen"))."</a>";
+
+	//show log summary
+	//search for logs, section and entry!
+	//$search_log['object']="xxx"; <-- is set above in section link to logbook
+	$search_log['edit_id']=$FRM[$acc]['id'];
+	include(TM_INCLUDEPATH."/log_summary_section_entry.inc.php");
+
 	$_MAIN_OUTPUT.= "</td>";
 	$_MAIN_OUTPUT.= "</tr>";
 }

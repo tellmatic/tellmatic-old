@@ -16,3 +16,25 @@
 	border: 1px dashed #cccccc;
 	padding:4px;
 }
+.log_summary {
+	/*background-color:#cc8888;*/
+	border:1px dashed #ffffff;
+	padding:4px;
+	font-size:7pt;
+}
+.log_summary td {
+	background-color:#eeeeee;
+	/*border:1px dashed #cccccc;*/
+	padding:0px;
+	font-size:7pt;
+}
+
+.link_logbook_section {
+	background-color:#eeeeff;
+}
+/*
+ .image_fader{ 
+ 	position:relative; 
+ 	filter:alpha(opacity=40); 
+	-moz-opacity:0.39603960396039606
+ }

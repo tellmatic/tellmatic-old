@@ -1,9 +1,13 @@
 <?php
+/**
+* ADR
+* @author      Volker Augustin
+*/
 /********************************************************************************/
 /* this file is part of: / diese Datei ist ein Teil von:                        */
 /* tellmatic, the newslettermachine                                             */
 /* tellmatic, die Newslettermaschine                                            */
-/* 2006/7 by Volker Augustin, multi.art.studio Hanau                            */
+/* 2006-10 by Volker Augustin, multi.art.studio Hanau                            */
 /* Contact/Kontakt: info@tellmatic.org                                      */
 /* Homepage: www.tellmatic.org                                                   */
 /* leave this header in file!                                                   */
@@ -12,18 +16,52 @@
 /* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
 /********************************************************************************/
 
+/**
+* Address Class
+* <code>
+* </code>
+* @author      Volker Augustin
+*/
 class tm_ADR {
+	/**
+	* ADR Object
+	* @var object
+	*/
 	var $ADR=Array();
+	/**
+	* ADR Grp Object
+	* @var object
+	*/
 	var $GRP=Array();
-
-  var $DB;
-  var $DB2;//2nd connection, e.g. needed to count adr from within getgroup()!
-
-  function tm_ADR() {
+	/**
+	* DB Object
+	* @var object
+	*/
+	var $DB;
+	/**
+	* Helper DB Object
+	* @var object
+	*/
+	var $DB2;//2nd connection, e.g. needed to count adr from within getgroup()!
+	/**
+	* LOG Object
+	* @var object
+	*/	var $LOG;
+  
+	/**
+	* Constructor, creates new Instances for DB and LOG Objects 
+	* @param
+	*/	
+	function tm_ADR() {
 		$this->DB=new tm_DB();
 		$this->DB2=new tm_DB();
-  }
-
+		if (TM_LOG) $this->LOG=new tm_LOG();
+	}
+	/**
+	* get Item
+	* @param
+	* @return boolean
+	*/	
 	function getAdr($id=0,$offset=0,$limit=0,$group_id=0,$search=Array(),$sortIndex="",$sortType=0,$Details=1) {
 		$this->ADR=Array();
 		#$DB=new tm_DB();
@@ -40,7 +78,8 @@ class tm_ADR {
 										.TM_TABLE_ADR.".clicks, "
 										.TM_TABLE_ADR.".views, "
 										.TM_TABLE_ADR.".newsletter, "
-										.TM_TABLE_ADR.".recheck ";
+										.TM_TABLE_ADR.".recheck, "
+										.TM_TABLE_ADR.".siteid ";
 			$Query .=", ".TM_TABLE_ADR_DETAILS.".id as d_id,"
 								.TM_TABLE_ADR_DETAILS.".memo";
 
@@ -167,6 +206,7 @@ class tm_ADR {
 			$this->ADR[$ac]['memo']=$this->DB->Record['memo'];
 			$this->ADR[$ac]['recheck']=$this->DB->Record['recheck'];
 			$this->ADR[$ac]['d_id']=$this->DB->Record['d_id'];
+			$this->ADR[$ac]['siteid']=$this->DB->Record['siteid'];
 			if ($Details==1) {
 				#$this->ADR[$ac]['memo']=$this->DB->Record['memo'];
 				#$this->ADR[$ac]['d_id']=$this->DB->Record['d_id'];
@@ -183,6 +223,7 @@ class tm_ADR {
 			}
 			$ac++;
 		}
+		$this->DB->free();
 		return $this->ADR;
 	}//getAdr
 
@@ -241,6 +282,7 @@ class tm_ADR {
 			$ADRID[$ac]=$DB->Record['id'];
 			$ac++;
 		}
+		$this->DB->free();
 		return $ADRID;
 	}//getAdrID
 
@@ -347,7 +389,8 @@ class tm_ADR {
 							".TM_TABLE_ADR_GRP.".author,
 							".TM_TABLE_ADR_GRP.".editor,
 							".TM_TABLE_ADR_GRP.".created,
-							".TM_TABLE_ADR_GRP.".updated
+							".TM_TABLE_ADR_GRP.".updated,
+							".TM_TABLE_ADR_GRP.".siteid
 			FROM ".TM_TABLE_ADR_GRP."
 			WHERE ".TM_TABLE_ADR_GRP.".siteid='".TM_SITEID."'
 			";
@@ -367,7 +410,8 @@ class tm_ADR {
 												".TM_TABLE_ADR_GRP.".author,
 												".TM_TABLE_ADR_GRP.".editor,
 												".TM_TABLE_ADR_GRP.".created,
-												".TM_TABLE_ADR_GRP.".updated
+												".TM_TABLE_ADR_GRP.".updated,
+												".TM_TABLE_ADR_GRP.".siteid
 				FROM ".TM_TABLE_ADR_GRP.", ".TM_TABLE_ADR_GRP_REF."
 				WHERE ".TM_TABLE_ADR_GRP.".id=".TM_TABLE_ADR_GRP_REF.".grp_id
 				AND ".TM_TABLE_ADR_GRP.".siteid='".TM_SITEID."'
@@ -388,12 +432,15 @@ class tm_ADR {
 				".TM_TABLE_ADR_GRP.".editor,
 				".TM_TABLE_ADR_GRP.".created,
 				".TM_TABLE_ADR_GRP.".updated,
+				".TM_TABLE_ADR_GRP.".siteid,
 				".TM_TABLE_FRM_GRP_REF.".public as public_frm_ref
 				FROM ".TM_TABLE_ADR_GRP.", ".TM_TABLE_FRM_GRP_REF."
 				WHERE ".TM_TABLE_ADR_GRP.".id=".TM_TABLE_FRM_GRP_REF.".grp_id
 				AND ".TM_TABLE_ADR_GRP.".siteid='".TM_SITEID."'
 				AND ".TM_TABLE_FRM_GRP_REF.".siteid='".TM_SITEID."'
 				AND ".TM_TABLE_FRM_GRP_REF.".frm_id=".checkset_int($frm_id);
+		}
+
 			//nur opublic groups? 0/1
 			if ( isset($search['public']) ) {
 				$Query .= "
@@ -403,11 +450,11 @@ class tm_ADR {
 			//nur pub groups references
 			if ( isset($search['public_frm_ref']) ) {
 				$Query .= "
-				AND ".TM_TABLE_FRM_GRP_REF.".public=".checkset_int($search['public_frm_ref'])."
+				AND ".TM_TABLE_FRM_GRP_REF.".frm_id=".checkset_int($search['public_frm_ref'])."
 				";
 			
 			}
-		}
+
 		
 		if (isset($search['aktiv']) && ($search['aktiv']==="1" || $search['aktiv']==="0")) {//!!! we have to compare strings, weird php! argh.
 			$Query .= " AND ".TM_TABLE_ADR_GRP.".aktiv=".checkset_int($search['aktiv']);
@@ -417,6 +464,7 @@ class tm_ADR {
 		$ac=0;
 		while ($this->DB->next_record()) {
 			$this->GRP[$ac]['id']=$this->DB->Record['id'];
+			$this->GRP[$ac]['siteid']=$this->DB->Record['siteid'];
 			$this->GRP[$ac]['name']=$this->DB->Record['name'];
 			$this->GRP[$ac]['public']=$this->DB->Record['public'];
 			$this->GRP[$ac]['public_name']=$this->DB->Record['public_name'];
@@ -435,10 +483,12 @@ class tm_ADR {
 			}
 			$ac++;
 		}
+		$this->DB->free();
 		return $this->GRP;
 	}//getGroup
 
 	function getGroupID($id=0,$adr_id=0,$frm_id=0,$search=Array()) {
+	//quick hack, should use create query method 
 	//liefert NUR die IDs zurueck als Array!!! Beoetigt fuer die Formulare
 		$GRPID=Array();
 		$GRP=$this->getGroup($id,$adr_id,$frm_id,0,$search);
@@ -449,6 +499,19 @@ class tm_ADR {
 		return $GRPID;
 	}//getGroupID
 
+	function getGroupStd() {
+	//quick hack, should use create query method
+		$GRPSTD=Array();
+		$GRP=$this->getGroup();
+		//$this->getGroup(0,0,0,0,Array());
+		foreach ($GRP as $GROUP) {
+			if ($GROUP['standard']==1) {
+				$GRPSTD=$GROUP;
+			}
+		}
+		unset($GRP);
+		return $GRPSTD;
+	}//getGroupStd
 
 
 	function setAktiv($id=0,$aktiv=1) {
@@ -456,6 +519,7 @@ class tm_ADR {
 		if (check_dbid($id)) {
 			$Query ="UPDATE ".TM_TABLE_ADR." SET aktiv=".checkset_int($aktiv)." WHERE id=".checkset_int($id)." AND siteid='".TM_SITEID."'";
 			if ($this->DB->Query($Query)) {
+				if (TM_LOG) $this->LOG->log(Array("data"=>Array("aktiv"=>$aktiv,"id"=>$id),"object"=>"adr","action"=>"edit"));
 				$Return=true;
 			}
 		}
@@ -467,6 +531,7 @@ class tm_ADR {
 		if (check_dbid($id)) {
 			$Query ="UPDATE ".TM_TABLE_ADR_GRP." SET aktiv=".checkset_int($aktiv)." WHERE id=".checkset_int($id)." AND siteid='".TM_SITEID."'";
 			if ($this->DB->Query($Query)) {
+				if (TM_LOG) $this->LOG->log(Array("data"=>Array("aktiv"=>$aktiv,"id"=>$id),"object"=>"adr_grp","action"=>"edit"));
 				$Return=true;
 			}
 		}
@@ -477,7 +542,11 @@ class tm_ADR {
 		$Return=false;
 		if (check_dbid($id)) {
 			$Query ="UPDATE ".TM_TABLE_ADR_GRP." SET standard=0 WHERE standard=1 AND siteid='".TM_SITEID."'";
+			//log
+			$GRPSTD=$this->getGroupStd();
 			if ($this->DB->Query($Query)) {
+				//log
+				if (TM_LOG) $this->LOG->log(Array("data"=>Array("standard"=>0,"id"=>$GRPSTD['id']),"object"=>"adr_grp","action"=>"edit"));
 				$Return=true;
 			} else {
 				$Return=false;
@@ -485,6 +554,8 @@ class tm_ADR {
 			}
 			$Query ="UPDATE ".TM_TABLE_ADR_GRP." SET standard=1 WHERE id=".checkset_int($id)." AND siteid='".TM_SITEID."'";
 			if ($this->DB->Query($Query)) {
+				//log
+				if (TM_LOG) $this->LOG->log(Array("data"=>Array("standard"=>1,"id"=>$id),"object"=>"adr_grp","action"=>"edit"));
 				$Return=true;
 			} else {
 				$Return=false;
@@ -513,9 +584,13 @@ class tm_ADR {
 					'".dbesc($group["created"])."', '".dbesc($group["author"])."',
 					'".TM_SITEID."')";
 		if ($this->DB->Query($Query)) {
+			//log
+			$group['id']=$this->DB->LastInsertID;
+			if (TM_LOG) $this->LOG->log(Array("data"=>$group,"object"=>"adr_grp","action"=>"new"));
 			$Return=true;
 		}
 		return $Return;
+		//should return ID!!!
 	}//addGrp
 
 	function updateGrp($group) {
@@ -532,6 +607,7 @@ class tm_ADR {
 					editor='".dbesc($group["author"])."'
 					WHERE siteid='".TM_SITEID."' AND id=".checkset_int($group["id"]);
 			if ($this->DB->Query($Query)) {
+				if (TM_LOG) $this->LOG->log(Array("data"=>$group,"object"=>"adr_grp","action"=>"edit"));
 				$Return=true;
 			}
 		}
@@ -557,6 +633,11 @@ class tm_ADR {
 								AND ".TM_TABLE_ADR.".status=".checkset_int($search['status']);
 				}
 				if ($this->DB->Query($Query)) {
+					//Log only here					
+					//NO ITEM LOGGING
+					//BUT LOG ACTION
+					if (TM_LOG) $this->LOG->log(Array("data"=>Array("id"=>0,"search"=>$search),"object"=>"adr","action"=>"delete","memo"=>"cleanAdr()"));
+
 					$Return=true;
 				} else {
 					$Return=false;
@@ -637,10 +718,15 @@ class tm_ADR {
 	function delGrp($id,$reorg=1,$deleteAdr=0) {
 		$Return=false;
 		if (check_dbid($id)) {
+			//OK, log here, befoe deletion, but maybe add some more logging on details, new references etc
+			if (TM_LOG) $this->LOG->log(Array("data"=>Array("id"=>$id),"object"=>"adr_grp","action"=>"delete","memo"=>"reorg:".$reorg." deladr:".$deleteAdr));					
+			if (TM_LOG && $deleteAdr==1) $this->LOG->log(Array("data"=>Array("id"=>0),"object"=>"adr","action"=>"delete","memo"=>"deleted adr group ".$id." and all adr"));
+
 			//wenn reorg==1, dfault, dann adressen der standardgruppe neu zuordnen
 			//andernfalls, auch adressen loeschen?
 			//standard gruppe suchen
 			if ($reorg==1) {
+				//ggf get Std Group() nutzen
 				$Query ="SELECT id FROM ".TM_TABLE_ADR_GRP
 								." WHERE siteid='".TM_SITEID
 								."' AND standard=1";
@@ -786,6 +872,7 @@ class tm_ADR {
 	function delAdr($id) {
 		$Return=false;
 		if (check_dbid($id)) {
+			if (TM_LOG) $this->LOG->log(Array("data"=>Array("id"=>$id),"object"=>"adr","action"=>"delete"));
 			//versandliste, history h loeschen
 			//ok jetzt historie loeschen! aber nicht wenn adr_grp oder q!
 			$Query ="DELETE FROM ".TM_TABLE_NL_H." WHERE siteid='".TM_SITEID."' AND adr_id=".checkset_int($id);
@@ -897,6 +984,13 @@ class tm_ADR {
 				$Return=false;
 				return $Return;
 			}//if query
+
+			//log here
+			$adr['id']=$new_adr_id;
+			$adr['grp']=$grp;
+			if (TM_LOG) $this->LOG->log(Array("data"=>$adr,"object"=>"adr","action"=>"new"));
+			
+			
 			//memo eintragen
 			//wenn memo expliziot gesetzt wurde, hier anfuegen, ansonsten muss das script selbst addMemo() oder newMemo() aufrufen!
 			if (isset($adr['memo']) && !empty($adr['memo'])) $this->newMemo($new_adr_id,$adr['memo']); // neue memo!
@@ -917,6 +1011,7 @@ class tm_ADR {
 			//gruppen eintragen
 			$acg=count($grp);
 			if ($acg>0) {
+				if (TM_LOG) $this->LOG->log(Array("data"=>Array("id"=>$adr_id,"grp"=>$grp),"object"=>"adr","action"=>"edit"));
 				for ($accg=0;$accg<$acg;$accg++) {
 					if (isset($grp[$accg])) {
 						$Query="INSERT INTO ".TM_TABLE_ADR_GRP_REF." (adr_id,grp_id,siteid) VALUES (".checkset_int($adr_id).",".checkset_int($grp[$accg]).",'".TM_SITEID."')";
@@ -934,11 +1029,13 @@ class tm_ADR {
 	}
 
 	function setStatus($id,$status) {
+		//ups, author und editdatum vergessen...hmmm
 		$Return=false;
 		if (check_dbid($id)) {
 			$Query ="UPDATE ".TM_TABLE_ADR." SET status=".checkset_int($status)."
 						 WHERE siteid='".TM_SITEID."' AND id=".checkset_int($id);
 			if ($this->DB->Query($Query)) {
+				if (TM_LOG) $this->LOG->log(Array("data"=>Array("status"=>$status,"id"=>$id),"object"=>"adr","action"=>"edit"));
 				$Return=true;
 			} else {
 				$Return=false;
@@ -948,12 +1045,15 @@ class tm_ADR {
 		return $Return;
 	}
 
+	//fuer unsubscribe form
 	function unsubscribe($id,$author) {
 		$Return=false;
 		if (check_dbid($id)) {
-			$Query ="UPDATE ".TM_TABLE_ADR." SET updated='".date("Y-m-d H:i:s")."', status=11, editor='".dbesc($author)."'
-						 WHERE siteid='".TM_SITEID."' AND id=".checkset_int($id);
+			$updated=date("Y-m-d H:i:s");
+			$Query ="UPDATE ".TM_TABLE_ADR." SET updated='".$updated."', status=11, editor='".dbesc($author)."' WHERE siteid='".TM_SITEID."' AND id=".checkset_int($id);
+			//log
 			if ($this->DB->Query($Query)) {
+				if (TM_LOG) $this->LOG->log(Array("data"=>Array("status"=>11,"id"=>$id,"editor"=>$author, "updated"=>$updated),"object"=>"adr","action"=>"edit","memo"=>"adr_unsubscribe()"));
 				$Return=true;
 			}
 		}
@@ -963,6 +1063,7 @@ class tm_ADR {
 	function updateAdr($adr,$grp) {
 		$Return=false;
 		if (isset($adr['id']) && check_dbid($adr['id'])) {
+			$adr['grp']=$grp;			
 			$Query ="UPDATE ".TM_TABLE_ADR." SET
 							email=lcase('".dbesc($adr["email"])."'),
 							aktiv=".checkset_int($adr["aktiv"]).",
@@ -970,6 +1071,8 @@ class tm_ADR {
 							updated='".dbesc($adr["created"])."'
 						 WHERE siteid='".TM_SITEID."' AND id=".checkset_int($adr["id"]);
 			if ($this->DB->Query($Query)) {
+				$adr['grp']=$grp;
+				if (TM_LOG) $this->LOG->log(Array("data"=>$adr,"object"=>"adr","action"=>"edit"));
 				$Return=true;
 			} else {
 				$Return=false;
@@ -1064,10 +1167,7 @@ function mergeGroups($grp1,$grp2) {
 	function addClick($adr_id) {
 		$Return=false;
 		if (check_dbid($adr_id)) {
-			$ADR=$this->getADR($adr_id);
-			$clicks=$ADR[0]['clicks'];
-			$clicks++;
-			$Query ="UPDATE ".TM_TABLE_ADR." SET clicks=".checkset_int($clicks)." WHERE siteid='".TM_SITEID."' AND id=".checkset_int($adr_id);
+			$Query ="UPDATE ".TM_TABLE_ADR." SET clicks=clicks+1 WHERE siteid='".TM_SITEID."' AND id=".checkset_int($adr_id);
 			if ($this->DB->Query($Query)) {
 				$Return=true;
 			}
@@ -1078,10 +1178,7 @@ function mergeGroups($grp1,$grp2) {
 	function addView($adr_id) {
 		$Return=false;
 		if (check_dbid($adr_id)) {
-			$ADR=$this->getADR($adr_id);
-			$views=$ADR[0]['views'];
-			$views++;
-			$Query ="UPDATE ".TM_TABLE_ADR." SET views=".checkset_int($views)." WHERE siteid='".TM_SITEID."' AND id=".checkset_int($adr_id);
+			$Query ="UPDATE ".TM_TABLE_ADR." SET views=views+1 WHERE siteid='".TM_SITEID."' AND id=".checkset_int($adr_id);
 			if ($this->DB->Query($Query)) {
 				$Return=true;
 			}
@@ -1092,10 +1189,7 @@ function mergeGroups($grp1,$grp2) {
 	function addNL($adr_id) {
 		$Return=false;
 		if (check_dbid($adr_id)) {
-			$ADR=$this->getADR($adr_id);
-			$nl=$ADR[0]['newsletter'];
-			$nl++;
-			$Query ="UPDATE ".TM_TABLE_ADR." SET newsletter=".checkset_int($nl)." WHERE siteid='".TM_SITEID."' AND id=".checkset_int($adr_id);
+			$Query ="UPDATE ".TM_TABLE_ADR." SET newsletter=newsletter+1 WHERE siteid='".TM_SITEID."' AND id=".checkset_int($adr_id);
 			if ($this->DB->Query($Query)) {
 				$Return=true;
 			}
@@ -1174,6 +1268,165 @@ function mergeGroups($grp1,$grp2) {
 			$Query .= " AND ".TM_TABLE_ADR.".id=".checkset_int($id);
 		}
 		$this->DB2->Query($Query);
+	}
+
+	function remove_duplicates($search) {
+		$this->fetch_duplicates($search);
+		
+		//now deleting duplicates one by one, this must be imporved
+		//lateron we will only set a delete flag and then use a clean up function like in clean_adr
+		foreach ($this->DUPLICATES['dups'] as $DUP) {
+			foreach ($DUP['del'] as $del_id) {
+				if (!DEMO) $this->delADR($del_id);
+			}
+		}
+		return $this->DUPLICATES;
+	}
+	function fetch_duplicates($search) {
+		$this->DUPLICATES=Array();
+		$this->DUPLICATES['dups']=Array();
+		$ac=0;
+		//check if keep method is set, this tells the method what address should be kept, first, last or random, others get deleted!!!
+		if (isset($search['method'])) {
+			//create the query, this will return only addresses with at least 1 duplicate (having qty>0)
+			//we have to use innerjoin because we have an additional unique index 'id'
+			//query willnot return qty, so he have to count them ourself			
+			//this does the trick:
+			
+			#SELECT t1.id, t1.colb FROM t1 INNER JOIN (SELECT count(t1.colb) AS qty, t1.colb FROM t1 GROUP t1.colb HAVING qty>1) AS dups ON t1.colb=dups.colb ORDER BY t1.colb, t1.id
+			$Query = "SELECT 
+						".TM_TABLE_ADR.".id, 
+						".TM_TABLE_ADR.".email 
+						FROM ".TM_TABLE_ADR."
+						INNER JOIN ( 
+							SELECT count(".TM_TABLE_ADR.".email) AS qty,
+								".TM_TABLE_ADR.".email 
+								FROM ".TM_TABLE_ADR." 
+								GROUP BY ".TM_TABLE_ADR.".email
+								HAVING qty >1
+								";
+			if (isset($search['limit']) && $search['limit']>0) {
+				$Query.=" LIMIT ".checkset_int($search['limit'])."
+						";
+			}
+			$Query.=") AS dups
+							ON 
+							".TM_TABLE_ADR.".email = dups.email 
+						ORDER BY ".TM_TABLE_ADR.".email ASC,".TM_TABLE_ADR.".id ASC
+					";			
+			//SORT BY IST RELEVANT, DA WIR KEEP LATEST ODER KEEP FIRST ENTRY NUTZEN.
+			//send query to db and fetch duplicates
+			$this->DB->Query($Query);
+			$dupcount=0;
+			while ($this->DB->next_record()) {
+				//index for dupicates array is the email address! hmmmm
+				$email=$this->DB->Record['email'];
+				//check if index exists, otherwise create it and save data, count duplicates
+				if (isset($this->DUPLICATES['dups'][$email])) {
+					$qty=count($this->DUPLICATES['dups'][$email]['id']);
+					$this->DUPLICATES['dups'][$email]['id'][$qty]=$this->DB->Record['id'];
+					//count
+					$this->DUPLICATES['dups'][$email]['qty']++; #++ oder $qty+1;
+				} else {
+					$this->DUPLICATES['dups'][$email]['email']=$this->DB->Record['email'];
+					$this->DUPLICATES['dups'][$email]['qty']=1;
+					$this->DUPLICATES['dups'][$email]['id'][0]=$this->DB->Record['id'];
+				}
+				$dupcount++;
+				#= $dupcount + $this->DUPLICATES[$email]['qty'];
+			}//while
+			$this->DB->free();
+			//array is created like so:
+			//['dups']: 'email' - unique email adr, 'qty' count/quantity, 'id' =Array with ids
+			//count: unique dups
+			//cound_dup: all dups
+			
+			//now walk through the array and check which entry should be kept using array index
+			foreach ($this->DUPLICATES['dups'] as $DUP) {	
+				if ($search['method']=='random') {
+					$keep=rand(0,($DUP['qty']-1));
+				}		
+				if ($search['method']=='first') {
+					$keep=0;
+				}		
+				if ($search['method']=='last') {
+					$keep=$DUP['qty']-1;
+				}
+				$this->DUPLICATES['dups'][$DUP['email']]['keep']=$keep;
+				$this->DUPLICATES['dups'][$DUP['email']]['del']=Array();
+				//save ids to delete in an array 'del'
+				for ($dc=0;$dc<$DUP['qty'];$dc++) {
+					if ($dc != $keep) {
+						$del=count($this->DUPLICATES['dups'][$DUP['email']]['del']);
+						$this->DUPLICATES['dups'][$DUP['email']]['del'][$del]=$DUP['id'][$dc];
+					}//if				
+				}//for
+				
+				###improvements:
+				#check syntax etc and check what data should be preserved...! automagic, if keeping email is invalid, use another one etc pp
+			}//foreach
+		}//isst method
+
+
+		//count
+		$this->DUPLICATES['count']=count($this->DUPLICATES['dups']);//must be first defined, we add more indexes later!!!
+		$this->DUPLICATES['count_dup']=$dupcount;
+
+
+		//return array to display
+		return $this->DUPLICATES;
+	}//fetch_duplicates
+	
+	function count_duplicates() {
+		$count=0;
+		$Query = "SELECT ".TM_TABLE_ADR.".email, count(".TM_TABLE_ADR.".email) AS qty
+					FROM ".TM_TABLE_ADR." 
+							GROUP BY ".TM_TABLE_ADR.".email
+							HAVING qty >1
+							";
+		$this->DB->Query($Query);
+		while ($this->DB->next_record()) {
+			//index for dupicates array is the email address! hmmmm
+			$count +=$this->DB->Record['qty'];
+		}
+		return $count;
+	}//count_duplicates
+	
+	function genCSVHeader($delimiter=",") {
+	 	$CSV="\"email\"$delimiter\"f0\"$delimiter\"f1\"$delimiter\"f2\"$delimiter\"f3\"$delimiter\"f4\"$delimiter\"f5\"$delimiter\"f6\"$delimiter\"f7\"$delimiter\"f8\"$delimiter\"f9\"$delimiter\"id\"$delimiter\"created\"$delimiter\"author\"$delimiter\"updated\"$delimiter\"editor\"$delimiter\"aktiv\"$delimiter\"status\"$delimiter\"code\"$delimiter\"errors\"$delimiter\"clicks\"$delimiter\"views\"$delimiter\"newsletter\"$delimiter\"memo\"\n";
+		return $CSV;	
+	}
+	
+	function genCSVline($ADR,$delimiter=",") {
+		$CSV="";		
+		$memo=str_replace("\n"," --|-- ",$ADR['memo']);
+		$memo=str_replace("\r"," --|-- ",$memo);
+		$CSV.="\"".$ADR['email']."\"$delimiter";
+		$CSV.="\"".$ADR['f0']."\"$delimiter";
+		$CSV.="\"".$ADR['f1']."\"$delimiter";
+		$CSV.="\"".$ADR['f2']."\"$delimiter";
+		$CSV.="\"".$ADR['f3']."\"$delimiter";
+		$CSV.="\"".$ADR['f4']."\"$delimiter";
+		$CSV.="\"".$ADR['f5']."\"$delimiter";
+		$CSV.="\"".$ADR['f6']."\"$delimiter";
+		$CSV.="\"".$ADR['f7']."\"$delimiter";
+		$CSV.="\"".$ADR['f8']."\"$delimiter";
+		$CSV.="\"".$ADR['f9']."\"$delimiter";
+		$CSV.="\"".$ADR['id']."\"$delimiter";
+		$CSV.="\"".$ADR['created']."\"$delimiter";
+		$CSV.="\"".$ADR['author']."\"$delimiter";
+		$CSV.="\"".$ADR['updated']."\"$delimiter";
+		$CSV.="\"".$ADR['editor']."\"$delimiter";
+		$CSV.="\"".$ADR['aktiv']."\"$delimiter";
+		$CSV.="\"".$ADR['status']."\"$delimiter";
+		$CSV.="\"".$ADR['code']."\"$delimiter";
+		$CSV.="\"".$ADR['errors']."\"$delimiter";
+		$CSV.="\"".$ADR['clicks']."\"$delimiter";
+		$CSV.="\"".$ADR['views']."\"$delimiter";
+		$CSV.="\"".$ADR['newsletter']."\"$delimiter";
+		$CSV.="\"".$memo."\"$delimiter";
+		$CSV.="\n";
+		return $CSV;
 	}
 }//class
 ?>

@@ -321,7 +321,7 @@ if ($set=="save") {
 	$adr_grp=array_values($adr_grp);
 	$name=$FRM[0]['name'];
 	$action_url=$FRM[0]['action_url'];
-	$descr=display($FRM[0]['descr']);
+	$descr=display$FRM[0]['descr'];
 	$aktiv=$FRM[0]['aktiv'];
 	$double_optin=$FRM[0]['double_optin'];
 	$use_captcha=$FRM[0]['use_captcha'];

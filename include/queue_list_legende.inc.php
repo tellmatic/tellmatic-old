@@ -26,12 +26,14 @@ $_MAIN_OUTPUT.= tm_icon("bullet_black.png",___("Empfängerliste automatisch erst
 $_MAIN_OUTPUT.= "<br><strong>".___("Aktionen")."</strong><br>";
 $_MAIN_OUTPUT.= tm_icon("arrow_switch.png",___("Empfängerliste aktualisieren"),"","","","email_go.png")."&nbsp;".___("Adressen nachfassen / Empfängerliste aktualisieren")."<br>";
 $_MAIN_OUTPUT.= tm_icon("script.png",___("Logfile anzeigen")).tm_icon("script_lightning.png",___("Logfile anzeigen"))."&nbsp;".___("Logfile anzeigen")."<br>";
-$_MAIN_OUTPUT.= tm_icon("script_delete.png",___("Logfile loeschen"))."&nbsp;".___("Logfile lÖschen")."<br>";
+$_MAIN_OUTPUT.= tm_icon("script_delete.png",___("Logfile loeschen"))."&nbsp;".___("Logfile löschen")."<br>";
 $_MAIN_OUTPUT.= tm_icon("bullet_star.png",___("Diesen Eintrag versenden"),"","","","email_go.png")."&nbsp;".___("Diesen Eintrag versenden")."<br>";
 $_MAIN_OUTPUT.= tm_icon("control_stop.png",___("Anhalten"))."&nbsp;".___("Anhalten")."<br>";
 $_MAIN_OUTPUT.= tm_icon("control_play.png",___("Fortfahren"))."&nbsp;".___("Fortfahren")."<br>";
 $_MAIN_OUTPUT.= tm_icon("cross.png",___("Löschen"))."&nbsp;".___("Q löschen")."<br>";
 $_MAIN_OUTPUT.= tm_icon("bullet_delete.png",___("Q komplett Löschen"),"","","","cross.png")."&nbsp;".___("Q Komplett löschen, auch Historie")."<br>";
+$_MAIN_OUTPUT.= tm_icon("script.png",___("Logbuch anzeigen"))."&nbsp;".___("Logbuch anzeigen")."<br>";
+
 $_MAIN_OUTPUT.= "<br><strong>".___("Status")."</strong><br>";
 $sc=count($STATUS['q']['status']);
 for ($scc=1; $scc<=$sc; $scc++)//0

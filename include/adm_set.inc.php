@@ -14,15 +14,20 @@
 
 $_MAIN_DESCR=___("Systemeinstellungen ändern");
 
-$_MAIN_OUTPUT.= "<strong>".___("Globale Einstellungen")."</strong><br>";
-
 if (!$user_is_admin) {
 	$_MAIN_MESSAGE.="<br>".___("Sie haben keine Berechtigung dies zu tun");
 	$LOGIN->Logout();
 }
 
+//show log summary
+//search for logs, only section
+$search_log['object']="adr";
+include(TM_INCLUDEPATH."/log_summary_section.inc.php");
+
 if ($user_is_admin) {
+
 	$_MAIN_MESSAGE.="";
+	$_MAIN_OUTPUT.= "<br><strong>".___("Globale Einstellungen")."</strong><br>";
 
 	$set=getVar("set");
 

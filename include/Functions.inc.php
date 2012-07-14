@@ -14,6 +14,20 @@
 
 /**functions**/
 
+//displays 2 for 2.00 or 2.01 for 2.01, preserves decimal values
+//Jeroen de Bruijn [NL]
+//http://php.net/manual/de/function.number-format.php
+//we use pregsplit instead. split is outdated since php 503 :P
+function DisplayDouble($value,$dec=2,$sep="",$thousands="") {
+  list($whole, $decimals) = preg_split("/[.,]/", number_format($value,$dec+2));//weird: floatval will not do it
+  if (intval($decimals) > 0) {
+    	return number_format($value,$dec,$sep,$thousands);
+  	} else {
+    	return number_format($value,0,$sep,$thousands);
+    }
+}
+  
+
 //watermark an image
 function watermark($image_source, $image_new, $image_watermark, $quality=95) {
 	$Return[0]=true;
@@ -208,15 +222,17 @@ function getCurrentVersion() {
 
 //fetch directory names in path, returns an array of paths, no subdirectories
 function getCSSDirectories($path) {
+	clearstatcache();
 	$Return=Array();
 	$dc=0;
 	$handle=opendir($path);
 	while (($file = readdir($handle))!==false) {
 		if (($file != ".") && ($file != "..")) {
-			if (opendir($path."/".$file)) { //is_dir is false for some reasons for some directories!
+			#if (opendir($path."/".$file)) {
+			if (is_dir($path."/".$file)) {
 				$Return[$dc]=$file;
 				$dc++;
-				closedir($path."/".$file);
+				#closedir($path."/".$file);
 			}
 		}
 	}
@@ -261,6 +277,9 @@ function getDomainFromEmail($str) {
 	$domain=split("@",$str);
 	if (isset($domain[1])) {
 		$return=$domain[1];	
+	} else {
+		//as is
+		$return=$domain[0];
 	}
 	return $return;
 }
@@ -720,7 +739,7 @@ function SendMail($from_address,$from_name,$to_address,$to_name,$subject,$text,$
  	return $return;
 }
 
-function SendMail_smtp($from_address,$from_name,$to_address,$to_name,$subject,$text,$html,$AttmFiles,$HOST=Array()) {
+function SendMail_smtp($from_address,$from_name,$to_address,$to_name,$subject,$text,$html,$AttmFiles=Array(),$HOST=Array()) {
 	global $ApplicationText;
 	global $encoding;//use default encoding
 	$return=false;
@@ -764,6 +783,7 @@ function SendMail_smtp($from_address,$from_name,$to_address,$to_name,$subject,$t
 			$email_message->smtp_debug=0;
 			$email_message->smtp_html_debug=0;
 		}
+	$email_message->maximum_piped_recipients=$HOST[0]['smtp_max_piped_rcpt'];//sends only XX rcpt to before waiting for ok from server!
 	$email_message->mailer=$ApplicationText." using smtp";
 	$email_message->SetEncodedEmailHeader("To",$to_address,$to_name);
 	$email_message->SetEncodedEmailHeader("From",$HOST[0]['sender_email'],$HOST[0]['sender_name']);
@@ -794,10 +814,12 @@ function SendMail_smtp($from_address,$from_name,$to_address,$to_name,$subject,$t
 	for($recipient=0,Reset($email_message->invalid_recipients);$recipient<count($email_message->invalid_recipients);Next($email_message->invalid_recipients),$recipient++)
 		echo "Invalid recipient: ",Key($email_message->invalid_recipients)," Error: ",$email_message->invalid_recipients[Key($email_message->invalid_recipients)],"\n";
 	if(strcmp($error,"")) {
-		echo "\n&nbsp;&nbsp; <b>Error <font color=\"#ff0000\">$error</font></b>\n";
+		$return[0]=false;
+		$return[1]=$error;
 	}
 	if (empty($error)) {
-		$return=true;
+		$return[0]=true;
+		$return[1]="";
 	}
 	return $return;
 }
@@ -1110,21 +1132,32 @@ if (PHPWIN && !function_exists('getmxrr')) {
 	}
 }
 
+/*****************************************************************************************/
+/*****************************************************************************************/
+/*****************************************************************************************/
 function getDirectories($path) {
+	clearstatcache();	
 	$Return=Array();
 	$dc=0;
 	$handle=opendir($path);
 	while (($file = readdir($handle))!==false) {
-			if (opendir($path."/".$file)) { //is_dir is false for some reasons for some directories!
+		#if (($file != ".")) {//&& ($file != "..")) 
+			#if (opendir($path."/".$file)) {
+			if (is_dir($path."/".$file)) {
 				$Return[$dc]['name']=$file;
 				$Return[$dc]['files']=0;
 				$dc++;
-				closedir($path."/".$file);
+				#closedir($path."/".$file);
 			}
+		#}
 	}
 	@closedir($handle);
 	return $Return;
 }//getDirectories
+
+/*****************************************************************************************/
+/*****************************************************************************************/
+/*****************************************************************************************/
 
 function getFiles($path) {
 	clearstatcache();
@@ -1144,6 +1177,10 @@ function getFiles($path) {
 	}//is_dir path	
 	return $Return;
 }//getFiles
+
+/*****************************************************************************************/
+/*****************************************************************************************/
+/*****************************************************************************************/
 //formats readable ouput to display filesizes in Byte/KByte or MByte dpepending on the size
 function formatFileSize($val) {
 	$Return=0;

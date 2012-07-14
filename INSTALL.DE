@@ -22,7 +22,7 @@ Hinweise:
 	siehe FAQ http://www.tellmatic.org/faq
 
 Installation:
-
+	Erstellen Sie wenn moeglich eine subdomain tellmatic.[ihredomain].[tld] mit einem separaten Verzeichnis.
 	Packen Sie das Archiv auf die lokale Festplatte aus (tar -xzvf tellmatic-x.x.x.tgz or use a new winzip version).
 	Das verzeichnis tellmatic-[xxx] oder den Inhalt des Verzeichnisses in ein Verzeichnis Ihrer Wahl auf den Server kopieren.
 	(Bilder muessen im Binaermodus uebertragen werden. Auto-Modus ist OK, aber fuehrt bei manchen FTP Clients zu Problemen und diese uebertragen die Dateien dann als Text.
@@ -82,8 +82,11 @@ Installation:
 	require_once ("./tm_config.inc.php");
 
 	Zum automatischen Versenden erstellen Sie einen Cronjob auf Ihrem Server:
-	Aufruf von http://[user:passwort]@[domain]/[tellmatic-installdir]/include/send_it.php per wget (user/pw muss angegeben werden), 	oder per php CLI:
-		*/5 * * * * /pfad/zu/php-cli-binary /pfad/zu/include/send_it.php
+	Mittels wget: 
+		*/5 * * * * wget http://[user:passwort]@[domain]/[tellmatic-installdir]/include/send_it.php > /dev/null
+	(user/pw muss angegeben werden), 	
+	oder per php CLI (empfohlen!):
+		*/5 * * * * /pfad/zu/php-cli-binary /pfad/zu/include/send_it.php > /dev/null
 
 
 	Sollten Sie keine Moeglichkeit haben einen Cronjob einzurichten, verwenden Sie bitte den manuellen Versand.

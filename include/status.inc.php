@@ -51,29 +51,51 @@ $showadrURLPara_=$showadrURLPara->getAllParams();
 $showgrpURLPara_=$showgrpURLPara->getAllParams();
 
 
-//uebersicht anzeigen!
+
+//übersicht
 $_MAIN_OUTPUT.="<div class=\"adr_summary\">";#ccdddd
 $_MAIN_OUTPUT.=tm_icon("information.png",___("Übersicht"),___("Übersicht"))."&nbsp;<b>".___("Übersicht").":</b>";
+
+//anzahl alle
 $entrys_all=$ADDRESS->countADR();//anzahl eintraege, alles
-$_MAIN_OUTPUT.="<br>".sprintf(___("Adressen (gesamt): %s"),"<b>".$entrys_all."</b>");
+$_MAIN_OUTPUT.="<br>".sprintf(___("%s Adressen Gesamt"),"<b>".$entrys_all."</b>");
+
+//anzahl recheck alle
 $search_recheck=Array();
 $search_recheck['recheck']=1;
 $entrys_recheck=$ADDRESS->countADR(0,$search_recheck);//anzahl eintraege die zur pruefung markiert sind
-if ($entrys_recheck>0) $_MAIN_OUTPUT.=" / ".sprintf(___("Adressen (zur Prüfung vorgemerkt): %s"),"<b>".$entrys_recheck."</b>");
-$_MAIN_OUTPUT.="<br><br></div><br>";
+if ($entrys_recheck>0) $_MAIN_OUTPUT.="<br>".sprintf(___("%s Adressen sind zur Prüfung vorgemerkt"),"<b>".$entrys_recheck."</b>");
+
+//anzahl inaktiv/deaktivert
+$search_inaktiv=Array();
+$search_inaktiv['aktiv']='0';
+$entrys_inaktiv=$ADDRESS->countADR(0,$search_inaktiv);
+if ($entrys_inaktiv>0) $_MAIN_OUTPUT.="<br>".sprintf(___("%s Adressen sind deaktiviert"),"<b>".$entrys_inaktiv."</b>");
+
+$_MAIN_OUTPUT.="<br>".sprintf(___("%s Dubletten"),"<b>".($ADDRESS->count_duplicates())."</b>");
+$_MAIN_OUTPUT.="<br></div>";
+
+
+
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Gesamt nach Status
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//$_MAIN_OUTPUT.="<br><br>";
+
 $_MAIN_OUTPUT.="<br><center><table border=0><tr><td valign=\"top\" align=\"left\">";// width=50%<h1>".___("Gesamtstatus")."</h1><br>
+////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////////////////////////////////////
 //Adressen-Gruppen
 ////////////////////////////////////////////////////////////////////////////////////////
 //prepare chart
-	$chart = new HorizontalChart(640,360);
-	$chart->setLogo(TM_IMGPATH."/blank.png");//tellmatic_logo_256.png
-	$_MAIN_OUTPUT.= "<br><img alt=\"Chart\"  src=\"".$tm_URL_FE."/".$tm_reportdir."/status_adrg_total_".TM_TODAY.".png\"><br>";
-
+#$chart = new PieChart(640,480);
+$chart = new HorizontalChart(640,360);
+$chart->setLogo(TM_IMGPATH."/blank.png");//tellmatic_logo_256.png
+$_MAIN_OUTPUT.= "<br><img alt=\"Chart\"  src=\"".$tm_URL_FE."/".$tm_reportdir."/status_adrg_total_".TM_TODAY.".png\"><br>";
 //	function getGroup($id=0,$adr_id=0,$frm_id=0,$count=0) {
 $AG=$ADDRESS->getGroup(0,0,0,1);//count!
 $agc=count($AG);
@@ -114,25 +136,33 @@ for ($agcc=0; $agcc<$agc; $agcc++) {
 	$_MAIN_OUTPUT.="<a href=\"".$tm_URL."/".$showadrgURLPara_."\">".tm_icon("chart_pie.png",___("Statistik anzeigen"))."</a>";
 	$_MAIN_OUTPUT.="</td>";
 	$_MAIN_OUTPUT.="</tr>";
-//add values to chart
+	//add values to chart
 	$adc_pc=$AG[$agcc]['adr_count']/($ac/100);//anteil in prozent
 	$chart->addPoint(new Point($AG[$agcc]['name']." (".number_format($adc_pc, 2, ',', '')."%)", $AG[$agcc]['adr_count']));
 }
 $_MAIN_OUTPUT.="</table>";
-
 //create chart
 $chart->setTitle(___("Adressgruppen")." ".TM_TODAY);
-	$chart->render($tm_reportpath."/status_adrg_total_".TM_TODAY.".png");
+$chart->render($tm_reportpath."/status_adrg_total_".TM_TODAY.".png");
+
+////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
+
 $_MAIN_OUTPUT.="</td></tr><tr><td valign=\"top\" align=\"left\" style=\"border-top:1px solid #000000\">";// width=50%
+
+////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////////////////////////////////////
 //Adressen:
 ////////////////////////////////////////////////////////////////////////////////////////
 //prepare chart
-	#$chart = new PieChart(640,480);
-	$chart = new HorizontalChart(640,360);
-	$chart->setLogo(TM_IMGPATH."/blank.png");//tellmatic_logo_256.png
-	$_MAIN_OUTPUT.= "<br><img alt=\"Chart\"  src=\"".$tm_URL_FE."/".$tm_reportdir."/status_adr_total_".TM_TODAY.".png\"><br>";
+#$chart = new PieChart(640,480);
+$chart = new HorizontalChart(640,360);
+$chart->setLogo(TM_IMGPATH."/blank.png");//tellmatic_logo_256.png
+$_MAIN_OUTPUT.= "<br><img alt=\"Chart\"  src=\"".$tm_URL_FE."/".$tm_reportdir."/status_adr_total_".TM_TODAY.".png\"><br>";
 //
 $AG=$ADDRESS->getGroup();
 $agc=count($AG);
@@ -176,27 +206,34 @@ for ($ascc=1; $ascc<=$asc; $ascc++)//0
 	$_MAIN_OUTPUT.="</td>";	
 	$_MAIN_OUTPUT.="</td>";
 	$_MAIN_OUTPUT.="</tr>";
-
-//add values to chart
+	
+	//add values to chart
 	$adc_pc=$adc/($ac/100);//anteil in prozent
 	$chart->addPoint(new Point($STATUS['adr']['status'][$ascc]." (".number_format($adc_pc, 2, ',', '')."%)", $adc));
 }
 $_MAIN_OUTPUT.="</table>";
 //create chart
 $chart->setTitle(___("Adressen")." ".TM_TODAY);
-	$chart->render($tm_reportpath."/status_adr_total_".TM_TODAY.".png");
+$chart->render($tm_reportpath."/status_adr_total_".TM_TODAY.".png");
 
+////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////
 
 $_MAIN_OUTPUT.="</td></tr><tr><td valign=\"top\" align=\"left\" style=\"border-top:1px solid #000000\">";// width=50%
 
 ////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////////////////////////////
 //Newsletter Queue:
 ////////////////////////////////////////////////////////////////////////////////////////
 //prepare chart
-	$chart = new HorizontalChart(640,360);
-	$chart->setLogo(TM_IMGPATH."/blank.png");//tellmatic_logo_256.png
-	$_MAIN_OUTPUT.= "<br><img alt=\"Chart\"  src=\"".$tm_URL_FE."/".$tm_reportdir."/status_q_total_".TM_TODAY.".png\"><br>";
+#$chart = new PieChart(640,480);
+$chart = new HorizontalChart(640,360);
+$chart->setLogo(TM_IMGPATH."/blank.png");//tellmatic_logo_256.png
+$_MAIN_OUTPUT.= "<br><img alt=\"Chart\"  src=\"".$tm_URL_FE."/".$tm_reportdir."/status_q_total_".TM_TODAY.".png\"><br>";
 $NG=$NEWSLETTER->getGroup();
 $nlgc=count($NG);
 $N=$NEWSLETTER->getNLID();//$group
@@ -227,6 +264,7 @@ $_MAIN_OUTPUT.=___("Status");
 $_MAIN_OUTPUT.="</td>";
 $_MAIN_OUTPUT.="</tr>";
 $_MAIN_OUTPUT.="</thead>";
+
 for ($hscc=1; $hscc<=$hsc; $hscc++)//0
 {
 	if ($hscc%2==0) {$bgcolor=$row_bgcolor;} else {$bgcolor=$row_bgcolor2;}
@@ -248,9 +286,11 @@ for ($hscc=1; $hscc<=$hsc; $hscc++)//0
 $_MAIN_OUTPUT.="</table>";	
 //create chart
 $chart->setTitle(___("Newsletter Queue")." ".TM_TODAY);
-	$chart->render($tm_reportpath."/status_q_total_".TM_TODAY.".png");
-////////////////////////////////////////////////////////////////////////////////////////
+$chart->render($tm_reportpath."/status_q_total_".TM_TODAY.".png");
 
+////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
 $_MAIN_OUTPUT.="</td></tr>".
 					"</table>".
 					"</center>";

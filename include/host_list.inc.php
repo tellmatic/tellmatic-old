@@ -14,7 +14,6 @@
 
 $_MAIN_DESCR=___("Mailserver verwalten");
 $_MAIN_MESSAGE.="";
-$_MAIN_OUTPUT="";
 $HOSTS=new tm_HOST();
 
 $h_id=getVar("h_id");
@@ -63,6 +62,12 @@ $statURLPara=$mSTDURL;
 $statURLPara->addParam("act","statistic");
 $statURLPara->addParam("set","user");
 
+//show log summary
+//search for logs, only section
+$search_log['object']="host";
+include(TM_INCLUDEPATH."/log_summary_section.inc.php");
+
+
 $_MAIN_OUTPUT.="<table border=\"0\" cellpadding=\"1\" cellspacing=\"1\" width=\"100%\">";
 $_MAIN_OUTPUT.= "<thead>".
 						"<tr>".
@@ -109,6 +114,7 @@ for ($hcc=0;$hcc<$hc;$hcc++) {
 
 	$stdURLPara->addParam("h_id",$HOST[$hcc]['id']);
 	$stdURLPara_=$stdURLPara->getAllParams();
+	
 	$delURLPara->addParam("h_id",$HOST[$hcc]['id']);
 	$delURLPara_=$delURLPara->getAllParams();
 
@@ -198,6 +204,7 @@ for ($hcc=0;$hcc<$hc;$hcc++) {
 			$_MAIN_OUTPUT.= "<br>".___("Return-Path").": bounce@my-domain.tld";
 		}
 	}//smtp
+
 	$_MAIN_OUTPUT.= "</div>";
 	$_MAIN_OUTPUT.= "</td>";
 	$_MAIN_OUTPUT.= "<td>";
@@ -240,23 +247,30 @@ for ($hcc=0;$hcc<$hc;$hcc++) {
 		$_MAIN_OUTPUT.=  tm_icon("cancel.png",___("Inaktiv"))."&nbsp;";
 	}
 	if ($HOST[$hcc]['standard']!=1) {
-	$_MAIN_OUTPUT.= "</a>";
+		$_MAIN_OUTPUT.= "</a>";
 	}
 	$_MAIN_OUTPUT.= "</td>";
 	$_MAIN_OUTPUT.= "<td>";
+	
 	if ($HOST[$hcc]['aktiv']==1 && $HOST[$hcc]['standard']!=1 && $HOST[$hcc]['type']=="smtp") {
 		$_MAIN_OUTPUT.= "&nbsp;<a href=\"".$tm_URL."/".$stdURLPara_."\" title=\"".___("Standard SMTP Host")."\">".tm_icon("arrow_right.png",___("Standard SMTP Host"),"","","","server_compressed.png")."</a>";
 	}
+	
 	$_MAIN_OUTPUT.= "&nbsp;<a href=\"".$tm_URL."/".$testURLPara_."\" title=\"".___("Server testen")."\">".tm_icon("server_connect.png",___("Server testen"))."</a>";
 	$_MAIN_OUTPUT.= "&nbsp;<a href=\"".$tm_URL."/".$editURLPara_."\" title=\"".___("Server bearbeiten")."\">".tm_icon("pencil.png",___("Server bearbeiten"))."</a>";
-	#$_MAIN_OUTPUT.=  "&nbsp;<a href=\"".$tm_URL."/".$statURLPara_."\" title=\"".___("Statistik anzeigen")."\">".tm_icon("chart_pie.png",___("Statistik anzeigen"))."</a>";
 	//loeschen
 	$_MAIN_OUTPUT.= "&nbsp;<a href=\"".$tm_URL."/".$delURLPara_."\" onclick=\"return confirmLink(this, '".sprintf(___("Server %s löschen?"),display($HOST[$hcc]['name']))."')\" title=\"".___("Server löschen")."\">".tm_icon("cross.png",___("Server löschen"))."</a>";
+
+	//show log summary
+	//search for logs, section and entry!
+	//$search_log['object']="xxx"; <-- is set above in section link to logbook
+	$search_log['edit_id']=$HOST[$hcc]['id'];
+	include(TM_INCLUDEPATH."/log_summary_section_entry.inc.php");
+
 	$_MAIN_OUTPUT.= "</td>";
 	$_MAIN_OUTPUT.= "</tr>";
 }
 
 $_MAIN_OUTPUT.= "</tbody></table>";
-
 include(TM_INCLUDEPATH."/host_list_legende.inc.php");
 ?>

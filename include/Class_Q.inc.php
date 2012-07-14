@@ -14,17 +14,45 @@
 
 
 class tm_Q {
-	var $ADR=Array();
-	var $GRP=Array();
+	/**
+	* Queue
+	* @var array
+	*/
 	var $Q=Array();
-  var $DB;
-  #var $DB2;//2nd connection, e.g. needed to count adr from within getgroup()!
-
-  function tm_Q() {
+	/**
+	* Adress Groups
+	* @var array
+	*/
+	var $GRP=Array();
+	/**
+	* Addresses
+	* @var array
+	*/
+	var $ADR=Array();
+	/**
+	* DB Object
+	* @var object
+	*/
+	var $DB;
+	/**
+	* Helper DB Object
+	* @var object
+	*/
+	var $DB2;
+	/**
+	* LOG Object
+	* @var object
+	*/	
+	var $LOG;
+	/**
+	* Constructor, creates new Instances for DB and LOG Objects 
+	* @param
+	*/	
+	function tm_Q() {
 		$this->DB=new tm_DB();
-		#$this->DB2=new tm_DB();
-		//wichtig! hier darf kein fehler passieren indem man db un db2 verwechselt! sonst stimmen die ergebnisse nicht mehr!!!!
-  }
+		$this->DB2=new tm_DB();
+		if (TM_LOG) $this->LOG=new tm_LOG();
+	}
 
 	function getQ($id=0,$offset=0,$limit=0,$nl_id=0,$grp_id=0,$status=0,$search=Array()) {
 		$this->Q=Array();
@@ -38,7 +66,8 @@ class tm_Q {
 											.TM_TABLE_NL_Q.".send_at, "
 											.TM_TABLE_NL_Q.".check_blacklist, "
 											.TM_TABLE_NL_Q.".autogen, "
-											.TM_TABLE_NL_Q.".sent
+											.TM_TABLE_NL_Q.".sent, "
+											.TM_TABLE_NL_Q.".siteid
 						FROM ".TM_TABLE_NL_Q."
 					";
 		$Query .=" WHERE ".TM_TABLE_NL_Q.".siteid='".TM_SITEID."'";
@@ -85,6 +114,7 @@ class tm_Q {
 			$this->Q[$ac]['nl_id']=$this->DB->Record['nl_id'];
 			$this->Q[$ac]['grp_id']=$this->DB->Record['grp_id'];
 			$this->Q[$ac]['host_id']=$this->DB->Record['host_id'];
+			$this->Q[$ac]['siteid']=$this->DB->Record['siteid'];
 			$ac++;
 		}
 		return $this->Q;
@@ -104,10 +134,10 @@ class tm_Q {
 		if ($status>0) {
 			$Query .=" AND status=".checkset_int($status)."";
 		}
-		$this->DB->Query($Query);
+		$this->DB2->Query($Query);
 		$count=0;
-		if ($this->DB->next_record()) {
-			$count=$this->DB->Record['c'];
+		if ($this->DB2->next_record()) {
+			$count=$this->DB2->Record['c'];
 		}
 		return $count;
 	}//countQ
@@ -138,15 +168,18 @@ class tm_Q {
 		if (check_dbid($id)) {
 			$Query ="UPDATE ".TM_TABLE_NL_Q." SET autogen=".checkset_int($autogen)." WHERE id=".checkset_int($id)." AND siteid='".TM_SITEID."'";
 			if ($this->DB->Query($Query)) {
+				//log
+				if (TM_LOG) $this->LOG->log(Array("data"=>Array("autogen"=>$autogen,"id"=>$id),"object"=>"q","action"=>"edit"));
 				$Return=true;
 			}
 		}
 		return $Return;
-	}//setAktiv
+	}//setAutogen
+
 	function getQtoSend($id=0,$offset=0,$limit=0,$nl_id=0,$grp_id=0,$search=Array()) {
 		$this->Q=Array();
 		if (!isset($search['send_at'])) {
-		$send_at=date("Y-m-d H:i:s");
+			$send_at=date("Y-m-d H:i:s");
 		}
 		$Query ="SELECT ".TM_TABLE_NL_Q.".id, "
 											.TM_TABLE_NL_Q.".nl_id, "
@@ -157,7 +190,8 @@ class tm_Q {
 											.TM_TABLE_NL_Q.".status, "
 											.TM_TABLE_NL_Q.".check_blacklist, "
 											.TM_TABLE_NL_Q.".autogen, "
-											.TM_TABLE_NL_Q.".send_at
+											.TM_TABLE_NL_Q.".send_at, "
+											.TM_TABLE_NL_Q.".siteid
 						FROM ".TM_TABLE_NL_Q."
 					";
 		$Query .=" WHERE ".TM_TABLE_NL_Q.".siteid='".TM_SITEID."'";
@@ -177,13 +211,10 @@ class tm_Q {
 		if (check_dbid($grp_id)) {
 			$Query .=" AND ".TM_TABLE_NL_Q.".grp_id=".checkset_int($grp_id)." ";
 		}
-
 		$Query .=" ORDER BY ".TM_TABLE_NL_Q.".send_at asc,".TM_TABLE_NL_Q.".status asc	";
-
 		if ($limit >0 and $offset>=0) {
 			$Query .= " LIMIT ".checkset_int($offset)." ,".checkset_int($limit);
 		}
-
 		$this->DB->Query($Query);
 		$qc=0;
 		while ($this->DB->next_record()) {
@@ -197,11 +228,11 @@ class tm_Q {
 			$this->Q[$qc]['nl_id']=$this->DB->Record['nl_id'];
 			$this->Q[$qc]['grp_id']=$this->DB->Record['grp_id'];
 			$this->Q[$qc]['host_id']=$this->DB->Record['host_id'];
+			$this->Q[$qc]['siteid']=$this->DB->Record['siteid'];
 			$qc++;
 		}
 		return $this->Q;
 	}//getQtoSend
-
 
 	function getQID($nl_id=0, $grp_id=0, $status=0) {
 		$this->Q=Array();
@@ -229,7 +260,6 @@ class tm_Q {
 		return $this->Q;
 	}//getQID
 
-
 	function getH($id=0,$offset=0,$limit=0,$q_id=0,$nl_id=0,$grp_id=0,$adr_id=0,$status=0) {
 		$this->H=Array();
 		$Query ="SELECT ".TM_TABLE_NL_H.".id, "
@@ -240,7 +270,9 @@ class tm_Q {
 											.TM_TABLE_NL_H.".host_id, "
 											.TM_TABLE_NL_H.".created, "
 											.TM_TABLE_NL_H.".status, "
-											.TM_TABLE_NL_H.".sent
+											.TM_TABLE_NL_H.".sent, "
+											.TM_TABLE_NL_H.".ip, "
+											.TM_TABLE_NL_H.".siteid
 						FROM ".TM_TABLE_NL_H."	";
 		$Query .=" WHERE ".TM_TABLE_NL_H.".siteid='".TM_SITEID."'";
 		if (check_dbid($q_id)) {
@@ -278,6 +310,8 @@ class tm_Q {
 			$this->H[$hc]['adr_id']=$this->DB->Record['adr_id'];
 			$this->H[$hc]['host_id']=$this->DB->Record['host_id'];
 			$this->H[$hc]['sent']=$this->DB->Record['sent'];
+			$this->H[$hc]['ip']=$this->DB->Record['ip'];
+			$this->H[$hc]['siteid']=$this->DB->Record['siteid'];
 			$hc++;
 		}
 		return $this->H;
@@ -296,7 +330,8 @@ class tm_Q {
 											.TM_TABLE_NL_H.".host_id, "
 											.TM_TABLE_NL_H.".created, "
 											.TM_TABLE_NL_H.".status, "
-											.TM_TABLE_NL_H.".sent
+											.TM_TABLE_NL_H.".sent, "
+											.TM_TABLE_NL_H.".siteid
 						FROM ".TM_TABLE_NL_H."
 					";
 		$Query .=" WHERE ".TM_TABLE_NL_H.".siteid='".TM_SITEID."'";
@@ -333,6 +368,7 @@ class tm_Q {
 			$this->H[$ac]['adr_id']=$this->DB->Record['adr_id'];
 			$this->H[$ac]['host_id']=$this->DB->Record['host_id'];
 			$this->H[$ac]['sent']=$this->DB->Record['sent'];
+			$this->H[$ac]['siteid']=$this->DB->Record['siteid'];
 			$ac++;
 		}
 		return $this->H;
@@ -361,11 +397,11 @@ class tm_Q {
 		if ($status>0) {
 			$Query .=" AND ".TM_TABLE_NL_H.".status=".checkset_int($status)." ";
 		}
-		$Query .=" ORDER BY ".TM_TABLE_NL_H.".created desc	";
+		$Query .=" ORDER BY ".TM_TABLE_NL_H.".created desc ";
 
-		$this->DB->Query($Query);
-		if ($this->DB->next_record()) {
-			$count=$this->DB->Record['c'];
+		$this->DB2->Query($Query);
+		if ($this->DB2->next_record()) {
+			$count=$this->DB2->Record['c'];
 		}
 		return $count;
 	}//getH
@@ -374,6 +410,8 @@ class tm_Q {
 	function delQ($id,$delH=0) {
 		$Return=false;
 		if (check_dbid($id)) {
+			//log before deletion
+			if (TM_LOG) $this->LOG->log(Array("data"=>Array("id"=>$id),"object"=>"q","action"=>"delete","memo"=>"del H:".$delH));
 			//q loeschen
 			$Query ="DELETE FROM ".TM_TABLE_NL_Q
 							." WHERE siteid='".TM_SITEID."' AND id=".checkset_int($id);
@@ -413,7 +451,7 @@ class tm_Q {
 		//neue Q speichern fuer jede gewaehlte Gruppe
 		$gc=count($grp);
 		if (check_dbid($q['nl_id'])) {
-		for ($gcc=0;$gcc<$gc;$gcc++) {
+			for ($gcc=0;$gcc<$gc;$gcc++) {
 				$Query ="INSERT INTO ".TM_TABLE_NL_Q." (nl_id,grp_id,host_id,status,send_at,check_blacklist,author,created,siteid)
 									VALUES (".checkset_int($q["nl_id"]).","
 													.checkset_int($grp[$gcc]).","
@@ -428,6 +466,11 @@ class tm_Q {
 				if ($this->DB->Query($Query)) {
 					$Return[$qc]['result']=true;
 					$Return[$qc]['id']=$this->DB->LastInsertID;
+					//log
+					$q['id']=$Return[$qc]['id'];
+					if (TM_LOG) $this->LOG->log(Array("data"=>$q,"object"=>"q","action"=>"new"));					
+					
+					
 					if (isset($q['autogen'])) {
 						$this->setAutogen($Return[$qc]['id'], checkset_int($q['autogen']));
 					}//if autogen
@@ -444,6 +487,7 @@ class tm_Q {
 
 	function addH($h) {
 		$Return=false;
+		//do not log!
 		if (check_dbid($h['q_id']) && check_dbid($h['nl_id']) && check_dbid($h['grp_id']) &&	check_dbid($h['adr_id'])	) {
 			//neue History, Versandliste
 			$Query ="INSERT INTO ".TM_TABLE_NL_H." (q_id,nl_id,grp_id,adr_id,host_id,status,created,sent,siteid)
@@ -465,6 +509,7 @@ class tm_Q {
 	}//addH
 
 	function setHStatus($id,$status) {
+	//do not log!
 		$Return=false;
 		if (check_dbid($id)) {
 			$Query ="UPDATE ".TM_TABLE_NL_H." SET status=".checkset_int($status)."
@@ -477,6 +522,7 @@ class tm_Q {
 	}
 
 	function setHSentDate($id,$created) {
+	//do not log!
 		$Return=false;
 		if (check_dbid($id)) {
 			$Query ="UPDATE ".TM_TABLE_NL_H." SET sent='".dbesc($created)."'
@@ -489,6 +535,7 @@ class tm_Q {
 	}
 
 	function setHIP($id,$ip) {
+	//do not log!
 		$Return=false;
 		if (check_dbid($id)) {
 			$Query ="UPDATE ".TM_TABLE_NL_H." SET ip='".dbesc($ip)."'
@@ -506,6 +553,8 @@ class tm_Q {
 			$Query ="UPDATE ".TM_TABLE_NL_Q." SET status=".checkset_int($status)."
 						 WHERE siteid='".TM_SITEID."' AND id=".checkset_int($id);
 			if ($this->DB->Query($Query)) {
+				//log
+				if (TM_LOG) $this->LOG->log(Array("data"=>Array("status"=>$status,"id"=>$id),"object"=>"q","action"=>"edit"));
 				$Return=true;
 			}
 		}
@@ -518,6 +567,7 @@ class tm_Q {
 			$Query ="UPDATE ".TM_TABLE_NL_Q." SET sent='".dbesc($date)."'
 						 WHERE siteid='".TM_SITEID."' AND id=".checkset_int($id);
 			if ($this->DB->Query($Query)) {
+				if (TM_LOG) $this->LOG->log(Array("data"=>Array("sent"=>$date,"id"=>$id),"object"=>"q","action"=>"edit"));
 				$Return=true;
 			}
 		}
@@ -546,6 +596,7 @@ class tm_Q {
 					$Query .=" AND status!=1 AND status!=5 ";//nicht status 1 neu und 5 versand
 				}
 				if ($this->DB->Query($Query)) {
+					if (TM_LOG) $this->LOG->log(Array("data"=>Array("id"=>0,"search"=>$search),"object"=>"q","action"=>"delete","memo"=>"clearH()"));
 					$Return=true;
 				} else {
 					$Return=false;
@@ -659,18 +710,31 @@ class tm_Q {
 			CREATE TEMPORARY TABLE
 				".$tmp_tablename." 
 				(
-					adr_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-					siteid varchar(64)
+					nl_h_adr_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+					adr_status INT NOT NULL,
+					nl_h_status INT NOT NULL,
+					nl_h_nl_id INT NOT NULL,
+					tmp_siteid varchar(64),
+					/* 1089, added more indexes, gives us ~+10% more speed during the join select in the next select query */	
+					KEY `adr_status` (`adr_status`),
+					KEY `nl_h_status` (`nl_h_status`),
+					KEY `nl_h_nl_id` (`nl_h_nl_id`),
+					KEY `tmp_siteid` (`tmp_siteid`)					
 				)
 			SELECT 
 				/*select adr_id from recipients list nl_h*/
-				".TM_TABLE_NL_H.".adr_id as adr_id,
+				".TM_TABLE_NL_H.".adr_id AS nl_h_adr_id,
+				".TM_TABLE_ADR.".status AS adr_status,
+				".TM_TABLE_NL_H.".nl_id AS nl_h_status,
+				".TM_TABLE_NL_H.".nl_id AS nl_h_nl_id,
 				/*with siteid*/
 				'".TM_SITEID."' as siteid
 			FROM ".TM_TABLE_NL_H."
 				/* join with addresstable */
 				INNER JOIN ".TM_TABLE_ADR." 
-					ON (".TM_TABLE_NL_H.".adr_id = ".TM_TABLE_ADR.".id)
+					ON (
+							".TM_TABLE_NL_H.".adr_id = ".TM_TABLE_ADR.".id
+						)
 			WHERE 
 				/* with siteid */
 				".TM_TABLE_ADR.".siteid='".TM_SITEID."'
@@ -678,6 +742,7 @@ class tm_Q {
 				/* for selected newsletter */
 				AND ".TM_TABLE_NL_H.".nl_id=".checkset_int($h['nl_id'])."
 				/* with status=1=new */
+				/* 2DO: MAYBE MAKE THAT AN OPTION*/
 				AND (
 						".TM_TABLE_NL_H.".status !=4 /* was status=1 */
 						/*new:*/
@@ -732,7 +797,7 @@ class tm_Q {
 				INNER JOIN ".TM_TABLE_NL." 
 					ON (".TM_TABLE_NL_Q.".nl_id = ".TM_TABLE_NL.".id)
 				/* left join now adresstable adr.id with temporary historytable/recipientstable $tmp_tablename.adr_id */
-				LEFT JOIN ".$tmp_tablename." ON (".TM_TABLE_ADR.".id = ".$tmp_tablename.".adr_id) 
+				LEFT JOIN ".$tmp_tablename." ON (".TM_TABLE_ADR.".id = ".$tmp_tablename.".nl_h_adr_id) 
 			WHERE 
 				/* Address is active */
 				".TM_TABLE_ADR.".aktiv=1
@@ -759,8 +824,10 @@ class tm_Q {
 				AND ".TM_TABLE_NL_Q.".grp_id=".checkset_int($h['grp_id'])."
 				AND (
 						/* q status must be 1 new or 2 started */
+						/* or 5, stopped/paused! */
 						".TM_TABLE_NL_Q.".status=1
 						OR ".TM_TABLE_NL_Q.".status=2
+						OR ".TM_TABLE_NL_Q.".status=5
 						)
 				/* group must be active */
 				AND ".TM_TABLE_ADR_GRP.".aktiv=1
@@ -774,17 +841,17 @@ class tm_Q {
 				AND ".TM_TABLE_NL_Q.".siteid='".TM_SITEID."'
 				AND
 				/* only addresses not included in temporary table */
-				".$tmp_tablename.".adr_id IS NULL
+				".$tmp_tablename.".nl_h_adr_id IS NULL
 				";
 			if (DEBUG) $_MAIN_MESSAGE.="<br><strong>Create temporary Table ".$tmp_tablename."</strong><br><pre><font size=1>".$Query_TempTable."</font></pre>";
 			if ($this->DB->Query($Query_TempTable)) {
 				$Return[0]=TRUE;
-				$Return[1]=$this->DB->num_rows();
+				$Return[1]=0;#$Return[1]=$this->DB->num_rows();
 				$Return[2]=$this->DB->affected_rows();
 				if (DEBUG) $_MAIN_MESSAGE.="<br><strong>Select into nl_h</strong><br><pre><font size=1>".$Query_SelectInto."</font></pre>";
 				if ($this->DB->Query($Query_SelectInto)) {
 					$Return[0]=TRUE;
-					$Return[1]=$this->DB->num_rows();
+					$Return[1]=0; #$Return[1]=$this->DB->num_rows();//fehler, maysql warning...
 					$Return[2]=$this->DB->affected_rows();
 				} else {
 					$Return[0]=FALSE;
@@ -799,5 +866,4 @@ class tm_Q {
 	}//addHQ
 
 }  //class
-
 ?>

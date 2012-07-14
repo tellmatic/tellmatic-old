@@ -12,6 +12,7 @@
 /* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
 /********************************************************************************/
 
+	$LINK=new tm_LNK();
 	//dateiupload
 	$file_content="";
 	$body_tmp="";
@@ -105,7 +106,6 @@
 							if ($rs) {
 								//move resized image to tmp image
 								rename($tm_nlimgpath."/".$NL_Imagename1_resized,$tm_nlimgpath."/".$NL_Imagename1_tmp);
-								unlink ($tm_nlimgpath."/".$NL_Imagename1_resized);
 								$_MAIN_MESSAGE.= "<br>".sprintf(___("Bildgröße geändert in max. %s px."),$$InputName_ImageResizeSize);
 							} else {
 								$_MAIN_MESSAGE.= "<br>".sprintf(___("Fehler beim Ändern der Bildgröße in max. %s px."),$$InputName_ImageResizeSize);
@@ -118,7 +118,6 @@
 								if ($wm[0]) {
 									//move resized image to tmp image
 									rename($tm_nlimgpath."/".$NL_Imagename1_watermarked,$tm_nlimgpath."/".$NL_Imagename1_tmp);
-									unlink ($tm_nlimgpath."/".$NL_Imagename1_watermarked);
 									$_MAIN_MESSAGE.= "<br>".sprintf(___("Wasserzeichen zum Bild hinzugefügt (%s)."),$$InputName_ImageWatermarkImage);
 								} else {
 									$_MAIN_MESSAGE.= "<br>".sprintf(___("Fehler beim Hinzufügen des Wasserzeichens (%s)."),$$InputName_ImageWatermarkImage);
@@ -254,98 +253,15 @@
 	$body_tmp=stripslashes($body_tmp);
 	write_file($tm_nlpath,$NL_Filename_N,$body_tmp);
 	//template fuer textpart speichern
-	#$body_text_tmp=$body_text;
 	$body_text_tmp=stripslashes($body_text);
 	write_file($tm_nlpath,$NL_Filename_T,$body_text_tmp);
 	//wird nun zur onlineversion geparsed!
 	//geparster content, wird als nl file gespeichert nl+created bei new und update!
-	// ----> $body_tmp; --> Template ist $NL_Filename_N
-	//content parsen nach  {IMAGE1} etc.
-	//dieses dann ersetzen durch das bild!
-	//template values
-	$IMAGE1="";
-	$LINK1="";
-	$ATTACHEMENTS="";
-	$IMAGE1_URL="";
-	$LINK1_URL="";
-	//Bild
-	if (file_exists($tm_nlimgpath."/".$NL_Imagename1)) {
-		$IMAGE1_URL=$tm_URL_FE."/".$tm_nlimgdir."/".$NL_Imagename1;
-		$IMAGE1="<img src=\"".$IMAGE1_URL."\" border=0>";
-	}
-	//Link
-	if (!empty($link)) {
-		$LINK1_URL=$link;
-		$LINK1="<a href=\"".$LINK1_URL."\" target=\"_link\">";
-	}
-	//link zu attachement:
-			foreach ($attach_existing as $filename) {
-				$ATTACHEMENTS.= "<a href=\"".$tm_URL_FE."/".$tm_nlattachdir."/".$filename."\" target=\"_blank\" title=\"".$filename."\">";
-				$ATTACHEMENTS.=$filename;
-				$ATTACHEMENTS.= "</a><br>\n";
-			}
-	//blindimage
-	$BLINDIMAGE_URL=$tm_URL_FE."/news_blank.png.php?nl_id=".$nl_id;//?nl_id=".$Q[$qcc]['nl_id'];
-	$BLINDIMAGE="<img src=\"".$BLINDIMAGE_URL."\" border=0>";
-	//link zu unsubscribe
-	$UNSUBSCRIBE_URL=$tm_URL_FE."/unsubscribe.php?nl_id=".$nl_id;//?nl_id=".$Q[$qcc]['nl_id'];
-	$UNSUBSCRIBE="<a href=\"".$UNSUBSCRIBE_URL."\" target=\"_blank\">";
-	//link zur onlineversion, geparsed
-	$NLONLINE_URL=$tm_URL_FE."/".$tm_nldir."/".$NL_Filename_P;
-	$NLONLINE="<a href=\"".$NLONLINE_URL."\" target=\"_blank\">";
+	//new: use parse function !
+	//first fetch newsletter and pass [0] (which is array containing nl data) to parseNL function
+	$NL_parse=$NEWSLETTER->getNL($nl_id,0,0,0,1);
+	$body_p=$NEWSLETTER->parseNL(Array("nl"=>$NL_parse[0]),"html");//no adr record, this is anonymous online version
 
-	$SUBSCRIBE_URL=$tm_URL_FE."/subscribe.php?nl_id=".$nl_id."&doptin=1&c=&email=";
-	$SUBSCRIBE="<a href=\"".$SUBSCRIBE_URL."\" target=\"_blank\">";
-
-	//$SUBSCRIBE_URL="#";
-	//$SUBSCRIBE="<a href=\"".$SUBSCRIBE_URL."\" target=\"_self\">";
-
-	//summary parsen....
-	// ---> $body_p
-	//new Template
-	$_Tpl_NL=new tm_Template();
-	$_Tpl_NL->setTemplatePath($tm_nlpath);
-	$_Tpl_NL->setParseValue("IMAGE1", $IMAGE1);
-	$_Tpl_NL->setParseValue("LINK1", $LINK1);
-	$_Tpl_NL->setParseValue("ATTACHEMENTS", $ATTACHEMENTS);
-	$_Tpl_NL->setParseValue("ATTACH1", "");
-	$_Tpl_NL->setParseValue("NLONLINE", $NLONLINE);
-	$_Tpl_NL->setParseValue("BLINDIMAGE", $BLINDIMAGE);
-	$_Tpl_NL->setParseValue("UNSUBSCRIBE", $UNSUBSCRIBE);
-	$_Tpl_NL->setParseValue("SUBSCRIBE", $SUBSCRIBE);
-
-	$_Tpl_NL->setParseValue("IMAGE1_URL", $IMAGE1_URL);
-	$_Tpl_NL->setParseValue("LINK1_URL", $LINK1_URL);
-	$_Tpl_NL->setParseValue("ATTACH1_URL", "");
-	$_Tpl_NL->setParseValue("NLONLINE_URL", $NLONLINE_URL);
-	$_Tpl_NL->setParseValue("BLINDIMAGE_URL", $BLINDIMAGE_URL);
-	$_Tpl_NL->setParseValue("UNSUBSCRIBE_URL", $UNSUBSCRIBE_URL);
-	$_Tpl_NL->setParseValue("SUBSCRIBE_URL", $SUBSCRIBE_URL);
-
-	$_Tpl_NL->setParseValue("CLOSELINK", "</a>");
-	$_Tpl_NL->setParseValue("DATE", date(TM_NL_DATEFORMAT));
-	$_Tpl_NL->setParseValue("EMAIL","");
-	$_Tpl_NL->setParseValue("CODE","");
-	$_Tpl_NL->setParseValue("F0","");
-	$_Tpl_NL->setParseValue("F1","");
-	$_Tpl_NL->setParseValue("F2","");
-	$_Tpl_NL->setParseValue("F3","");
-	$_Tpl_NL->setParseValue("F4","");
-	$_Tpl_NL->setParseValue("F5","");
-	$_Tpl_NL->setParseValue("F6","");
-	$_Tpl_NL->setParseValue("F7","");
-	$_Tpl_NL->setParseValue("F8","");
-	$_Tpl_NL->setParseValue("F9","");
-	$_Tpl_NL->setParseValue("MEMO","");
-	
-	//title /subtitle, unpersonalisiert!
-	$_Tpl_NL->setParseValue("TITLE",$title);
-	$_Tpl_NL->setParseValue("TITLE_SUB",$title_sub);
-	$_Tpl_NL->setParseValue("SUMMARY",$summary);
-
-	$body_p=$_Tpl_NL->renderTemplate($NL_Filename_N);
 	//geparste nl datei speichern!
 	write_file($tm_nlpath,$NL_Filename_P,$body_p);
-
-	//
 ?>

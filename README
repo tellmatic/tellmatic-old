@@ -35,7 +35,8 @@
 		- Apache HTTP Server (or similar, must support .htaccess) => http://httpd.apache.org/download.cgi
 		- PHP >= 4.4 => http://www.php.net/downloads.php , no early php5 (full of bugs)! 
            + Imap Library + Mysql + GD-Lib
-           (Tellmatic is developed and tested under PHP 4.4.7 and latest PHP5 stable releases + suhosin + fcgi)
+           
+           (Tellmatic is developed and tested under PHP 4.4.7 and latest PHP5.2 stable releases + suhosin + fcgi)
 		- Mysql >= v4.1 (Mysql 4.1.x/5.x, NO Mysql3!)
            (Tellmatic is developed and tested under latest Mysql 4.x and latest Mysql5 stable releases)
 		- Access to SMTP, POP3 and/or IMAP Server
@@ -60,19 +61,25 @@
 	Geographical maps (subscriptions, readers, etc.), using GeoIP API and database
 	Scheduled mail delivery, (with cronjobs), write now, send in two weeks
 	Multiple address-/recipientgroups per address (private and public groups, define default groups/subcribers can choose from public groups etc)
+	Unlimited! Unlimited amount of emails, newsletter etc, no hardcoded Limits! (Just depends on your server settings)
 	Newslettergroups
+	Newsletter Templates
 	Bouncemanagement
+	Duplicate Checking!
 	Errormanagement, delivery-errors, address-errors etc
-	General statistics and reports
-	"Clean Up Database"-Feature (delete, move failed addresses etc)
+	Statistics and reports
+	"Clean Up Database"-Feature (delete, move, set status of failed addresses etc.)
 	Email-Reports 
 	Click-/Linktracker
 	Viewtracker (blank blindimage, or any other png/jpg)
-	Email validation (3 levels for internal and subscriptions)
+	Linkmanager and Link-Tracking, Links can be personalized 
+	personalized Tracking option
+	Email validation (3 levels for internal and subscriptions, import etc)
 	CSV address import
 	CSV address export
 	Personalized newsletter (add a private salutation etc, track clicks, views etc.)
 	Massmailing (send anonymized newsletter)
+	View personalized Newsletter online
 	Delivery via SMTP
 	Double opt-in/out
 	Subscription-form-generator

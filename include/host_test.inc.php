@@ -63,14 +63,14 @@ if (!DEMO) {
 //POP3 IMAP testen
 if ($HOST_T[0]['type']=="imap" || $HOST_T[0]['type']=="pop3")	{
 	if (!DEMO) {
-	$Mailer->Connect($HOST_T[0]['host'], $HOST_T[0]['user'], $HOST_T[0]['pass'],$HOST_T[0]['type'],$HOST_T[0]['port'],$HOST_T[0]['options']);
-	if (!empty($Mailer->Error)) {
-		$Error=$Mailer->Error;
-		$host_test=FALSE;
-	} else {
-		$host_test=TRUE;
-		$Error="".sprintf(___("Gesamt: %s Mails"),$Mailer->count_msg);
-	}
+		$Mailer->Connect($HOST_T[0]['host'], $HOST_T[0]['user'], $HOST_T[0]['pass'],$HOST_T[0]['type'],$HOST_T[0]['port'],$HOST_T[0]['options']);
+		if (!empty($Mailer->Error)) {
+			$Error=$Mailer->Error;
+			$host_test=FALSE;
+		} else {
+			$host_test=TRUE;
+			$Error="".sprintf(___("Gesamt: %s Mails"),$Mailer->count_msg);
+		}
 	}//demo
 	if (DEMO) $host_test=TRUE;
 }//type==pop3/imap
@@ -78,48 +78,22 @@ if ($HOST_T[0]['type']=="imap" || $HOST_T[0]['type']=="pop3")	{
 //SMTP testen
 if ($HOST_T[0]['type']=="smtp")	{
 	if (!DEMO) {
-	//include necessary smtp-classes
-	require_once(TM_INCLUDEPATH."/Class_SMTP.inc.php");
-	//create e-mail object
-	$email_obj=new smtp_message_class;//use SMTP!
 
-	$email_obj->default_charset=$encoding;
-	$email_obj->authentication_mechanism=$HOST_T[0]['smtp_auth'];
-	$email_obj->localhost=$HOST_T[0]['smtp_domain'];
-	$email_obj->smtp_host=$HOST_T[0]['host'];
-	$email_obj->smtp_user=$HOST_T[0]['user'];
-	$email_obj->smtp_port=$HOST_T[0]['port'];
-	$email_obj->smtp_realm="";
-	$email_obj->smtp_workstation="";
-	$email_obj->smtp_password=$HOST_T[0]['pass'];
-		$email_obj->ssl=$HOST_T[0]['smtp_ssl'];
-	$email_obj->smtp_pop3_auth_host="";
-	$email_obj->smtp_debug=0;
-		if (DEBUG_SMTP) 	$email_obj->smtp_debug=1;
-	$email_obj->smtp_html_debug=0;
-	$email_obj->SetBulkMail=1;
-	$email_obj->mailer=$ApplicationText;
-	$email_obj->SetEncodedEmailHeader("To",$LOGIN->USER['email'],$LOGIN->USER['name']);
-		$email_obj->SetEncodedEmailHeader("From",$HOST_T[0]['sender_email'],$HOST_T[0]['sender_name']);
-		$email_obj->SetEncodedEmailHeader("Reply-To",$HOST_T[0]['reply_to'],$HOST_T[0]['sender_name']);
-		$email_obj->SetHeader("Return-Path",$HOST_T[0]['return_mail']);
-		$email_obj->SetEncodedEmailHeader("Errors-To",$HOST_T[0]['return_mail'],$HOST_T[0]['sender_name']);
-		$email_obj->SetEncodedHeader("Subject","Testing Tellmatic SMTP-Server ".$HOST_T[0]['name']);
-		$email_obj->maximum_piped_recipients=$HOST_T[0]['smtp_max_piped_rcpt'];//sends only XX rcpt to before waiting for ok from server!
-	$TestMessage="Hello,\n\n";
-	$TestMessage.="This is ".$ApplicationText.".\n\n";
-	$TestMessage.="If you can read this message, testing SMTP-Server '".$HOST_T[0]['name']."' was successfull.\n\n";
-	$TestMessage.="Thank you for using ".$ApplicationText.".\nv.";
-	$email_obj->AddQuotedPrintableTextPart($TestMessage);	
+		$TestMessage="Hello,\n\n";
+		$TestMessage.="This is ".$ApplicationText.".\n\n";
+		$TestMessage.="If you can read this message, testing SMTP-Server '".$HOST_T[0]['name']."' was successfull.\n\n";
+		$TestMessage.="Thank you for using ".$ApplicationText.".\nv.";
 
-	$smtp_err=$email_obj->Send();
-	$Error=$smtp_err;
-	#$Error.=$email_obj->debug_msg;
-	
-	if (!empty($smtp_err)) {
-		$host_test=FALSE;
-		#$Error.=$email_obj->debug_msg;
-	} else {
+		//new: !!!use sendmail_smtp!!! see Functions.inc
+		#function SendMail_smtp($from_address,$from_name,$to_address,$to_name,$subject,$text,$html,$AttmFiles=Array(),$HOST=Array()) {}
+		$subject_t="Testing Tellmatic SMTP-Server ".$HOST_T[0]['name'];
+		$smtp_err=SendMail_smtp($HOST_T[0]['sender_email'],$HOST_T[0]['sender_name'],$LOGIN->USER['email'],$LOGIN->USER['name'],$subject_t,$TestMessage,$TestMessage,$AttmFiles=Array(),$HOST_T);
+
+		
+		if (!$smtp_err[0]) {
+			$host_test=FALSE;
+			$Error.=$smtp_err[1];#$email_obj->debug_msg;
+		} else {
 			$Error.=sprintf(___("Eine Testmail wurde an die E-Mail-Adresse %s %s gesendet."),$LOGIN->USER['name'],$LOGIN->USER['email']);
 			$host_test=TRUE;
 		}
@@ -129,6 +103,7 @@ if ($HOST_T[0]['type']=="smtp")	{
 		$host_test=TRUE;
 	}
 }//type==smtp
+
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "</tr>";
 $_MAIN_OUTPUT.= "<tr>";

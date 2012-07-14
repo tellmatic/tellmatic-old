@@ -297,6 +297,7 @@ CREATE TABLE ".$tm_tablePrefix."nl (
   grp_id int NOT NULL default '0',
   content_type varchar(12) collate utf8_bin NOT NULL default 'html',
   track_image varchar(255) collate utf8_bin NOT NULL default '_global',
+  track_personalized tinyint NOT NULL default 1,
   is_template tinyint NOT NULL default '0',
   siteid varchar(64) collate utf8_bin NOT NULL default '',
   PRIMARY KEY  (id),
@@ -478,6 +479,91 @@ INDEX ( nl_id )
 ) ENGINE=".$db_type."  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 ";
 
+$sql[16]['name']=___("Tabelle")." '".$tm_tablePrefix."log' - ".___("Logbuch");
+$sql[16]['sql']="
+CREATE TABLE ".$tm_tablePrefix."log (
+id INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+date datetime NOT NULL default '0000-00-00 00:00:00',
+author_id int(11) NOT NULL default '0',
+action enum('new','edit','delete','memo','usage') NOT NULL default 'memo',
+object varchar(64) NOT NULL default '',
+property varchar(64) NOT NULL default '',
+x_value longtext NOT NULL,
+edit_id int(11) NOT NULL default '0',
+data longtext,
+memo varchar(255) NOT NULL default '',
+siteid VARCHAR( 64 ) NOT NULL ,
+INDEX ( edit_id )
+) ENGINE=".$db_type."  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+";
+
+$sql[17]['name']=___("Tabelle")." '".$tm_tablePrefix."lnk' - ".___("Links");
+$sql[17]['sql']="
+CREATE TABLE ".$tm_tablePrefix."lnk (
+  id bigint(20) NOT NULL auto_increment,
+  siteid varchar(64) collate utf8_bin NOT NULL,
+  created datetime NOT NULL,
+  updated datetime NOT NULL,
+  author varchar(64) collate utf8_bin NOT NULL,
+  editor varchar(64) collate utf8_bin NOT NULL,
+  aktiv tinyint(1) NOT NULL,
+  short varchar(48) collate utf8_bin NOT NULL,
+  name varchar(255) collate utf8_bin NOT NULL,
+  url tinytext collate utf8_bin NOT NULL,
+  descr tinytext collate utf8_bin NOT NULL,
+  clicks bigint(20) NOT NULL default '0',
+  PRIMARY KEY  (id)
+) ENGINE=".$db_type."  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+";
+
+$sql[18]['name']=___("Tabelle")." '".$tm_tablePrefix."lnk_grp' - ".___("Link Gruppen");
+$sql[18]['sql']="
+CREATE TABLE ".$tm_tablePrefix."lnk_grp (
+  id int(11) NOT NULL auto_increment COMMENT 'unique internal id',
+  siteid varchar(64) collate utf8_bin NOT NULL COMMENT 'site id',
+  created datetime NOT NULL COMMENT 'creation date',
+  updated datetime NOT NULL COMMENT 'last update date',
+  author varchar(64) collate utf8_bin NOT NULL COMMENT 'author name/id',
+  editor varchar(64) collate utf8_bin NOT NULL COMMENT 'editor name/id',
+  aktiv tinyint(1) NOT NULL,
+  standard tinyint(1) NOT NULL default '0',
+  short varchar(48) collate utf8_bin NOT NULL,
+  name varchar(255) collate utf8_bin NOT NULL,
+  descr tinytext collate utf8_bin NOT NULL,
+  PRIMARY KEY  (id)
+) ENGINE=".$db_type." DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+";
+
+$sql[19]['name']=___("Tabelle")." '".$tm_tablePrefix."lnk_grp_ref' - ".___("Link Gruppen Referenzen");
+$sql[19]['sql']="
+CREATE TABLE ".$tm_tablePrefix."lnk_grp_ref (
+  id int(11) NOT NULL auto_increment,
+  siteid varchar(64) collate utf8_bin NOT NULL default '',
+  item_id int(11) NOT NULL default '0',
+  grp_id int(11) NOT NULL default '0',
+  PRIMARY KEY  (id),
+  KEY siteid (siteid)
+) ENGINE=".$db_type."  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+";
+
+$sql[20]['name']=___("Tabelle")." '".$tm_tablePrefix."lnk_click' - ".___("Klicks");
+$sql[20]['sql']="
+CREATE TABLE ".$tm_tablePrefix."lnk_click (
+  id bigint(11) NOT NULL auto_increment,
+  created datetime NOT NULL,
+  siteid varchar(64) collate utf8_bin NOT NULL default '',
+  lnk_id int(11) NOT NULL default '0',
+  nl_id int(11) NOT NULL default '0',
+  q_id int(11) NOT NULL default '0',
+  adr_id bigint(11) NOT NULL default '0',
+  h_id bigint(11) NOT NULL default '0',
+  ip varchar(16) collate utf8_bin NOT NULL default '0.0.0.0',
+  clicks int(11) NOT NULL default '1',
+  PRIMARY KEY  (id),
+  UNIQUE KEY unique_clicks (siteid,lnk_id,nl_id,q_id,adr_id,h_id,ip),
+  KEY siteid (siteid)
+) ENGINE=".$db_type." DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+";
 
 /***********************************************************/
 //create tables etc

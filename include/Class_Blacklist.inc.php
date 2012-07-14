@@ -13,19 +13,43 @@
 /********************************************************************************/
 
 class tm_BLACKLIST {
+	/**
+	* Blacklist Object
+	* @var array
+	*/
 	var $BLACKLIST=Array();
-
-  var $DB;
-  var $DB2;//2nd connection, e.g. needed to count adr from within getgroup()!
-
-  function tm_BLACKLIST() {
+	/**
+	* DB Object
+	* @var object
+	*/
+	var $DB;
+	/**
+	* Helper DB Object
+	* @var object
+	*/
+	var $DB2;
+	/**
+	* LOG Object
+	* @var object
+	*/	
+	var $LOG;
+  
+	/**
+	* Constructor, creates new Instances for DB and LOG Objects 
+	* @param
+	*/	
+	function tm_BLACKLIST() {
 		$this->DB=new tm_DB();
 		$this->DB2=new tm_DB();
-  }
-
+		if (TM_LOG) $this->LOG=new tm_LOG();
+	}
+	/**
+	* get Item
+	* @param
+	* @return boolean
+	*/	
 	function getBL($id=0,$search=Array(),$offset=0,$limit=0) {
 		$this->BLACKLIST=Array();
-		#$DB=new tm_DB();
 		$Query ="SELECT ".TM_TABLE_BLACKLIST.".id, "
 										.TM_TABLE_BLACKLIST.".type, "
 										.TM_TABLE_BLACKLIST.".expr, "
@@ -62,13 +86,14 @@ class tm_BLACKLIST {
 			$hc++;
 		}
 		return $this->BLACKLIST;
-	}//getHost
+	}//getBL
 
 	function setAktiv($id=0,$aktiv=1) {
 		$Return=false;
 		if (check_dbid($id)) {
 			$Query ="UPDATE ".TM_TABLE_BLACKLIST." SET aktiv=".checkset_int($aktiv)." WHERE id=".checkset_int($id)." AND siteid='".TM_SITEID."'";
 			if ($this->DB->Query($Query)) {
+				if (TM_LOG) $this->LOG->log(Array("data"=>Array("aktiv"=>$aktiv,"id"=>$id),"object"=>"bl","action"=>"edit"));
 				$Return=true;
 			}
 		}
@@ -87,6 +112,9 @@ class tm_BLACKLIST {
 					".checkset_int($blacklist["aktiv"]).",
 					'".TM_SITEID."')";
 		if ($this->DB->Query($Query)) {
+			//log
+			$blacklist['id']=$this->DB->LastInsertID;
+			if (TM_LOG) $this->LOG->log(Array("data"=>$blacklist,"object"=>"bl","action"=>"new"));
 			$Return=true;
 		}
 		return $Return;
@@ -101,6 +129,7 @@ class tm_BLACKLIST {
 					aktiv=".checkset_int($blacklist["aktiv"])."
 					WHERE siteid='".TM_SITEID."' AND id=".checkset_int($blacklist["id"]);
 			if ($this->DB->Query($Query)) {
+				if (TM_LOG) $this->LOG->log(Array("data"=>$blacklist,"object"=>"bl","action"=>"edit"));
 				$Return=true;
 			}
 		}
@@ -110,6 +139,7 @@ class tm_BLACKLIST {
 	function delBL($id) {
 		$Return=false;
 		if (check_dbid($id)) {
+			if (TM_LOG) $this->LOG->log(Array("data"=>Array("id"=>$id),"object"=>"bl","action"=>"delete"));
 			$Query ="DELETE FROM ".TM_TABLE_BLACKLIST." WHERE siteid='".TM_SITEID."' AND id=".checkset_int($id);
 				if ($this->DB->Query($Query)) {
 					$Return=true;

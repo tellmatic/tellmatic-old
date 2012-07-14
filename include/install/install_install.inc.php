@@ -33,6 +33,11 @@ if ($check && $checkDB) {
 	define ("TM_TABLE_FRM_S", $tm_tablePrefix."frm_s");
 	define ("TM_TABLE_HOST", $tm_tablePrefix."hosts");
 	define ("TM_TABLE_BLACKLIST", $tm_tablePrefix."blacklist");
+	define ("TM_TABLE_LNK", $tm_tablePrefix."lnk");
+	define ("TM_TABLE_LNK_GRP", $tm_tablePrefix."lnk_grp");
+	define ("TM_TABLE_LNK_GRP_REF", $tm_tablePrefix."lnk_grp_ref");
+	define ("TM_TABLE_LNK_CLICK", $tm_tablePrefix."lnk_click");
+
 
 /***********************************************************/
 //add user

@@ -17,7 +17,21 @@ class tm_CFG {
 	var $C=Array();
 	var $USER=Array();
 
-
+	/**
+	* LOG Object
+	* @var object
+	*/	var $LOG;
+  
+	/**
+	* Constructor, creates new Instances for DB and LOG Objects 
+	* @param
+	*/	
+	function tm_CFG() {
+		$this->DB=new tm_DB();
+		$this->DB2=new tm_DB();
+		if (TM_LOG) $this->LOG=new tm_LOG();
+	}
+	
 //LOGIN / LOGOUT
 	function Logout() {
 		//logout....
@@ -65,7 +79,6 @@ class tm_CFG {
 	}
 
 	function checkUserLogin($name,$passwd,$checkadmin=0) {
-		$DB = new tm_DB();
 		$Query="
 				SELECT name,aktiv,admin FROM ".TM_TABLE_USER."
 				WHERE name='".dbesc($name)."'
@@ -74,9 +87,9 @@ class tm_CFG {
 				AND siteid='".TM_SITEID."'
 				ORDER by name
 				";
-		$DB->Query($Query);
-		if ($DB->next_record())	{
-			$isAdmin=$DB->Record['admin'];
+		$this->DB->Query($Query);
+		if ($this->DB->next_record())	{
+			$isAdmin=$this->DB->Record['admin'];
 			if ($checkadmin==1) {
 				if ($isAdmin==1) {
 					return true;
@@ -108,9 +121,16 @@ class tm_CFG {
 		return $this->USER;
 	}//getUserSettings
 
+	function getUserName($id=0) {
+		$USER_=$this->getUsers("",$id);
+		if ( isset($USER_[0]) && !empty($USER_[0]['name']) ) {
+			return $USER_[0]['name'];
+		} else {
+			return "-- ".___("Unbekannt")." --";
+		}
+	}
 	function getUsers($user="",$id=0) {
 		$USER=Array();//this->
-		$DB=new tm_DB();
 		$Query ="	SELECT id,
 							name,
 							passwd,
@@ -122,7 +142,8 @@ class tm_CFG {
 							style,
 							lang,
 							expert,
-							aktiv
+							aktiv,
+							siteid
 						FROM ".TM_TABLE_USER."
 						WHERE siteid='".TM_SITEID."'";
 		if (!empty($user)) {
@@ -135,37 +156,39 @@ class tm_CFG {
 			$Query .=" LIMIT 1";
 		}
 
-		$DB->Query($Query);
+		$this->DB->Query($Query);
 		$uc=0;
-		while ($DB->next_record()) {
-			$USER[$uc]['id']=$DB->Record['id'];//this->
-			$USER[$uc]['name']=$DB->Record['name'];
-			$USER[$uc]['passwd']=$DB->Record['passwd'];
-			$USER[$uc]['crypt']=$DB->Record['crypt'];
-			$USER[$uc]['email']=$DB->Record['email'];
-			$USER[$uc]['last_login']=$DB->Record['last_login'];
-			$USER[$uc]['admin']=$DB->Record['admin'];
-			$USER[$uc]['manager']=$DB->Record['manager'];
-			$USER[$uc]['style']=$DB->Record['style'];
-			$USER[$uc]['lang']=$DB->Record['lang'];
-			$USER[$uc]['expert']=$DB->Record['expert'];
-			$USER[$uc]['aktiv']=$DB->Record['aktiv'];
+		while ($this->DB->next_record()) {
+			$USER[$uc]['id']=$this->DB->Record['id'];//this->
+			$USER[$uc]['name']=$this->DB->Record['name'];
+			$USER[$uc]['passwd']=$this->DB->Record['passwd'];
+			$USER[$uc]['crypt']=$this->DB->Record['crypt'];
+			$USER[$uc]['email']=$this->DB->Record['email'];
+			$USER[$uc]['last_login']=$this->DB->Record['last_login'];
+			$USER[$uc]['admin']=$this->DB->Record['admin'];
+			$USER[$uc]['manager']=$this->DB->Record['manager'];
+			$USER[$uc]['style']=$this->DB->Record['style'];
+			$USER[$uc]['lang']=$this->DB->Record['lang'];
+			$USER[$uc]['expert']=$this->DB->Record['expert'];
+			$USER[$uc]['aktiv']=$this->DB->Record['aktiv'];
+			$USER[$uc]['siteid']=$this->DB->Record['siteid'];
 			$uc++;
 		}
 		return $USER;//this->
 	}//getUsers
 
-
 	function addUSER($user) {
 		$Return=false;
-		$DB=new tm_DB();
 		$Query ="INSERT INTO
 						".TM_TABLE_USER."
 					(name,passwd,crypt,email,last_login,aktiv,admin,manager,style,lang,expert,siteid)
 					VALUES
 					('".dbesc($user['name'])."','".dbesc($user['passwd'])."','".dbesc($user['crypt'])."','".dbesc($user['email'])."',0,".checkset_int($user['aktiv']).",".checkset_int($user['admin']).",".checkset_int($user['manager']).",'".dbesc($user['style'])."','".dbesc($user['lang'])."',".checkset_int($user['expert']).",'".dbesc($user['siteid'])."')
 					";
-		if ($DB->Query($Query)) {
+		if ($this->DB->Query($Query)) {
+			//log
+			$user['id']=$this->DB->LastInsertID;
+			if (TM_LOG) $this->LOG->log(Array("data"=>$user,"object"=>"usr","action"=>"new"));
 			$Return=true;
 		}
 		return $Return;
@@ -173,7 +196,6 @@ class tm_CFG {
 
 	function updateUser($user) {
 		$Return=false;
-		$DB=new tm_DB();
 		if (check_dbid($user['id'])) {
 			$Query ="UPDATE ".TM_TABLE_USER."
 					SET
@@ -186,7 +208,8 @@ class tm_CFG {
 					expert='".dbesc($user["expert"])."',
 					aktiv='".dbesc($user["aktiv"])."'
 					WHERE id=".checkset_int($user['id'])." AND siteid='".TM_SITEID."'";
-			if ($DB->Query($Query)) {
+			if ($this->DB->Query($Query)) {
+				if (TM_LOG) $this->LOG->log(Array("data"=>$user,"object"=>"usr","action"=>"edit"));
 				$Return=true;
 			}
 			return $Return;
@@ -196,9 +219,9 @@ class tm_CFG {
 	function delUser($id=0) {
 		$Return=false;
 		if (check_dbid($id)) {
-			$DB=new tm_DB();
+			if (TM_LOG) $this->LOG->log(Array("data"=>Array("id"=>$id),"object"=>"usr","action"=>"delete"));
 			$Query ="DELETE FROM ".TM_TABLE_USER." WHERE id=".checkset_int($id)." AND admin!='1' AND siteid='".TM_SITEID."'";
-			if ($DB->Query($Query)) {
+			if ($this->DB->Query($Query)) {
 				$Return=true;
 			}
 		}
@@ -206,11 +229,11 @@ class tm_CFG {
 	}//delUser
 	
 	function setPasswd($user,$passwd,$crypt) {
+		$U=$this->getUser($user);
 		$Return=false;
-		$DB=new tm_DB();
 		$Query ="UPDATE ".TM_TABLE_USER." SET passwd='".dbesc($passwd)."', crypt='".dbesc($crypt)."' WHERE siteid='".dbesc(TM_SITEID)."' AND name='".dbesc($user)."'";
-		if ($DB->Query($Query)) {
-			$Return=true;
+		if ($this->DB->Query($Query)) {
+			if (TM_LOG) $this->LOG->log(Array("data"=>Array("passwd"=>"[new passwd]","id"=>$U['id']),"object"=>"usr","action"=>"edit"));			$Return=true;
 		}
 		return $Return;
 	}//setPasswd
@@ -218,50 +241,53 @@ class tm_CFG {
 	//update last_login
 	function setTime($user) {
 		$Return=false;
-		$DB=new tm_DB();
 		$time=time();
 		$Query ="UPDATE ".TM_TABLE_USER." SET last_login='".$time."' WHERE siteid='".dbesc(TM_SITEID)."' AND name='".dbesc($user)."'";
-		if ($DB->Query($Query)) {
+		if ($this->DB->Query($Query)) {
 			$Return=$time;
 		}
 		return $Return;
 	}//setPasswd
 
 	function setStyle($user,$style="default") {
+		$U=$this->getUser($user);
 		$Return=false;
-		$DB=new tm_DB();
 		$Query ="UPDATE ".TM_TABLE_USER." SET style='".dbesc($style)."' WHERE siteid='".TM_SITEID."'	AND name='".dbesc($user)."'";
-		if ($DB->Query($Query)) {
+		if ($this->DB->Query($Query)) {
+			if (TM_LOG) $this->LOG->log(Array("data"=>Array("style"=>$style,"id"=>$U['id']),"object"=>"usr","action"=>"edit"));
 			$Return=true;
 		}
 		return $Return;
 	}//setStyle
 
 	function setEMail($user,$email) {
+		$U=$this->getUser($user);
 		$Return=false;
-		$DB=new tm_DB();
 		$Query ="UPDATE ".TM_TABLE_USER." SET `email`='".dbesc($email)."' WHERE siteid='".TM_SITEID."' AND name='".dbesc($user)."'";
-		if ($DB->Query($Query)) {
+		if ($this->DB->Query($Query)) {
+			if (TM_LOG) $this->LOG->log(Array("data"=>Array("email"=>$email,"id"=>$U['id']),"object"=>"usr","action"=>"edit"));
 			$Return=true;
 		}
 		return $Return;
-	}//setLang
+	}
 
 	function setLang($user,$lang="de") {
+		$U=$this->getUser($user);
 		$Return=false;
-		$DB=new tm_DB();
 		$Query ="UPDATE ".TM_TABLE_USER." SET `lang`='".dbesc($lang)."' WHERE siteid='".TM_SITEID."' AND name='".dbesc($user)."'";
-		if ($DB->Query($Query)) {
+		if ($this->DB->Query($Query)) {
+			if (TM_LOG) $this->LOG->log(Array("data"=>Array("lang"=>$lang,"id"=>$U['id']),"object"=>"usr","action"=>"edit"));
 			$Return=true;
 		}
 		return $Return;
 	}//setLang
 
 	function setExpert($user,$expert=0) {
+		$U=$this->getUser($user);
 		$Return=false;
-		$DB=new tm_DB();
 		$Query ="UPDATE ".TM_TABLE_USER." SET `expert`='".dbesc($expert)."' WHERE siteid='".TM_SITEID."' AND name='".dbesc($user)."'";
-		if ($DB->Query($Query)) {
+		if ($this->DB->Query($Query)) {
+			if (TM_LOG) $this->LOG->log(Array("data"=>Array("expert"=>$expert,"id"=>$U['id']),"object"=>"usr","action"=>"edit"));
 			$Return=true;
 		}
 		return $Return;
@@ -270,9 +296,9 @@ class tm_CFG {
 	function setUSERAktiv($id=0,$aktiv=1) {
 		$Return=false;
 		if (check_dbid($id)) {
-			$DB=new tm_DB();
 			$Query ="UPDATE ".TM_TABLE_USER." SET aktiv=".checkset_int($aktiv)." WHERE id=".checkset_int($id)." AND admin!='1' AND siteid='".TM_SITEID."'";
-			if ($DB->Query($Query)) {
+			if ($this->DB->Query($Query)) {
+				if (TM_LOG) $this->LOG->log(Array("data"=>Array("aktiv"=>$aktiv,"id"=>$id),"object"=>"usr","action"=>"edit"));
 				$Return=true;
 			}
 		}
@@ -282,9 +308,9 @@ class tm_CFG {
 	function setAdmin($id,$admin=0) {
 		$Return=false;
 		if (check_dbid($id)) {
-			$DB=new tm_DB();
 			$Query ="UPDATE ".TM_TABLE_USER." SET `admin`=".checkset_int($admin)." WHERE siteid='".TM_SITEID."' AND id=".checkset_int($id);
-			if ($DB->Query($Query)) {
+			if ($this->DB->Query($Query)) {
+				if (TM_LOG) $this->LOG->log(Array("data"=>Array("admin"=>$admin,"id"=>$id),"object"=>"usr","action"=>"edit"));
 				$Return=true;
 			}
 		}
@@ -294,9 +320,9 @@ class tm_CFG {
 	function setManager($id,$manager=0) {
 		$Return=false;
 		if (check_dbid($id)) {
-			$DB=new tm_DB();
 			$Query ="UPDATE ".TM_TABLE_USER." SET `manager`=".checkset_int($manager)." WHERE siteid='".TM_SITEID."' AND id=".checkset_int($id);
-			if ($DB->Query($Query)) {
+			if ($this->DB->Query($Query)) {
+				if (TM_LOG) $this->LOG->log(Array("data"=>Array("manager"=>$manager,"id"=>$id),"object"=>"usr","action"=>"edit"));
 				$Return=true;
 			}
 		}
@@ -307,17 +333,16 @@ class tm_CFG {
  //CONFIG
 	function getSites() {
 		$Sites=Array();
-		$DB=new tm_DB();
 		$Query ="	SELECT id,
 							name, siteid
 						FROM ".TM_TABLE_CONFIG."
 					";
-		$DB->Query($Query);
+		$this->DB->Query($Query);
 		$cc=0;
-		while ($DB->next_record()) {
-			$Sites[$cc]['id']=$DB->Record['id'];
-			$Sites[$cc]['name']=$DB->Record['name'];
-			$Sites[$cc]['siteid']=$DB->Record['siteid'];
+		while ($this->DB->next_record()) {
+			$Sites[$cc]['id']=$this->DB->Record['id'];
+			$Sites[$cc]['name']=$this->DB->Record['name'];
+			$Sites[$cc]['siteid']=$this->DB->Record['siteid'];
 			$cc++;
 		}
 		return $Sites;
@@ -325,9 +350,9 @@ class tm_CFG {
 
 	function getCFG($siteid) {
 		$this->C=Array();
-		$DB=new tm_DB();
 		$Query ="
 						SELECT id,
+							siteid,
 							name,
 							notify_mail,
 							notify_subscribe,
@@ -358,45 +383,45 @@ class tm_CFG {
 						WHERE siteid='".TM_SITEID."'
 						LIMIT 1
 					";
-		$DB->Query($Query);
+		$this->DB->Query($Query);
 		$cc=0;
-		if ($DB->next_record()) {
-			$this->C[$cc]['id']=$DB->Record['id'];
-			$this->C[$cc]['name']=$DB->Record['name'];
+		if ($this->DB->next_record()) {
+			$this->C[$cc]['id']=$this->DB->Record['id'];
+			$this->C[$cc]['siteid']=$this->DB->Record['siteid'];
+			$this->C[$cc]['name']=$this->DB->Record['name'];
 			#$this->C[$cc]['siteid']=$siteid;
 			$this->C[$cc]['siteid']=TM_SITEID;
-			$this->C[$cc]['notify_mail']=$DB->Record['notify_mail'];
-			$this->C[$cc]['notify_subscribe']=$DB->Record['notify_subscribe'];
-			$this->C[$cc]['notify_unsubscribe']=$DB->Record['notify_unsubscribe'];
-			$this->C[$cc]['emailcheck_intern']=$DB->Record['emailcheck_intern'];
-			$this->C[$cc]['emailcheck_subscribe']=$DB->Record['emailcheck_subscribe'];
-			$this->C[$cc]['emailcheck_sendit']=$DB->Record['emailcheck_sendit'];
-			$this->C[$cc]['emailcheck_checkit']=$DB->Record['emailcheck_checkit'];
-			$this->C[$cc]['max_mails_retry']=$DB->Record['max_mails_retry'];
-			$this->C[$cc]['check_version']=$DB->Record['check_version'];
-			$this->C[$cc]['track_image']=$DB->Record['track_image'];
-			$this->C[$cc]['rcpt_name']=$DB->Record['rcpt_name'];
-			$this->C[$cc]['unsubscribe_use_captcha']=$DB->Record['unsubscribe_use_captcha'];
-			$this->C[$cc]['unsubscribe_digits_captcha']=$DB->Record['unsubscribe_digits_captcha'];
-			$this->C[$cc]['unsubscribe_sendmail']=$DB->Record['unsubscribe_sendmail'];
-			$this->C[$cc]['unsubscribe_action']=$DB->Record['unsubscribe_action'];
-			$this->C[$cc]['checkit_limit']=$DB->Record['checkit_limit'];
-			$this->C[$cc]['checkit_from_email']=$DB->Record['checkit_from_email'];
-			$this->C[$cc]['checkit_adr_reset_error']=$DB->Record['checkit_adr_reset_error'];
-			$this->C[$cc]['checkit_adr_reset_status']=$DB->Record['checkit_adr_reset_status'];
-			$this->C[$cc]['bounceit_limit']=$DB->Record['bounceit_limit'];
-			$this->C[$cc]['bounceit_host']=$DB->Record['bounceit_host'];
-			$this->C[$cc]['bounceit_action']=$DB->Record['bounceit_action'];
-			$this->C[$cc]['bounceit_search']=$DB->Record['bounceit_search'];
-			$this->C[$cc]['bounceit_filter_to']=$DB->Record['bounceit_filter_to'];
-			$this->C[$cc]['bounceit_filter_to_email']=$DB->Record['bounceit_filter_to_email'];
+			$this->C[$cc]['notify_mail']=$this->DB->Record['notify_mail'];
+			$this->C[$cc]['notify_subscribe']=$this->DB->Record['notify_subscribe'];
+			$this->C[$cc]['notify_unsubscribe']=$this->DB->Record['notify_unsubscribe'];
+			$this->C[$cc]['emailcheck_intern']=$this->DB->Record['emailcheck_intern'];
+			$this->C[$cc]['emailcheck_subscribe']=$this->DB->Record['emailcheck_subscribe'];
+			$this->C[$cc]['emailcheck_sendit']=$this->DB->Record['emailcheck_sendit'];
+			$this->C[$cc]['emailcheck_checkit']=$this->DB->Record['emailcheck_checkit'];
+			$this->C[$cc]['max_mails_retry']=$this->DB->Record['max_mails_retry'];
+			$this->C[$cc]['check_version']=$this->DB->Record['check_version'];
+			$this->C[$cc]['track_image']=$this->DB->Record['track_image'];
+			$this->C[$cc]['rcpt_name']=$this->DB->Record['rcpt_name'];
+			$this->C[$cc]['unsubscribe_use_captcha']=$this->DB->Record['unsubscribe_use_captcha'];
+			$this->C[$cc]['unsubscribe_digits_captcha']=$this->DB->Record['unsubscribe_digits_captcha'];
+			$this->C[$cc]['unsubscribe_sendmail']=$this->DB->Record['unsubscribe_sendmail'];
+			$this->C[$cc]['unsubscribe_action']=$this->DB->Record['unsubscribe_action'];
+			$this->C[$cc]['checkit_limit']=$this->DB->Record['checkit_limit'];
+			$this->C[$cc]['checkit_from_email']=$this->DB->Record['checkit_from_email'];
+			$this->C[$cc]['checkit_adr_reset_error']=$this->DB->Record['checkit_adr_reset_error'];
+			$this->C[$cc]['checkit_adr_reset_status']=$this->DB->Record['checkit_adr_reset_status'];
+			$this->C[$cc]['bounceit_limit']=$this->DB->Record['bounceit_limit'];
+			$this->C[$cc]['bounceit_host']=$this->DB->Record['bounceit_host'];
+			$this->C[$cc]['bounceit_action']=$this->DB->Record['bounceit_action'];
+			$this->C[$cc]['bounceit_search']=$this->DB->Record['bounceit_search'];
+			$this->C[$cc]['bounceit_filter_to']=$this->DB->Record['bounceit_filter_to'];
+			$this->C[$cc]['bounceit_filter_to_email']=$this->DB->Record['bounceit_filter_to_email'];
 		}
 		return $this->C;
 	}//getCFG
 
 	function addCFG($cfg) {
 		$Return=false;
-		$DB=new tm_DB();
 
 		$Query ="INSERT INTO
 						".TM_TABLE_CONFIG."
@@ -460,7 +485,10 @@ class tm_CFG {
 					'".dbesc($cfg["siteid"])."'
 					)
 					";
-		if ($DB->Query($Query)) {
+		if ($this->DB->Query($Query)) {
+			//log
+			$cfg['id']=$this->DB->LastInsertID;
+			if (TM_LOG) $this->LOG->log(Array("data"=>$cfg,"object"=>"cfg","action"=>"new"));
 			$Return=true;
 		} else {
 			$Return=false;
@@ -471,7 +499,6 @@ class tm_CFG {
 
 	function updateCFG($cfg) {
 		$Return=false;
-		$DB=new tm_DB();
 		$Query ="UPDATE ".TM_TABLE_CONFIG."
 					SET
 					name='".dbesc($cfg["name"])."',
@@ -502,12 +529,12 @@ class tm_CFG {
 					bounceit_filter_to_email='".dbesc($cfg["bounceit_filter_to_email"])."'
 					WHERE siteid='".dbesc($cfg["siteid"])."'
 					";
-		if ($DB->Query($Query)) {
+		if ($this->DB->Query($Query)) {
+			if (TM_LOG) $this->LOG->log(Array("data"=>$cfg,"object"=>"cfg","action"=>"edit"));			
 			$Return=true;
 		}
 		return $Return;
 	}//updateCFG
-
 
 }//Class CFG
 ?>

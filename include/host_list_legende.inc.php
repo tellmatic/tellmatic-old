@@ -30,6 +30,7 @@ $_MAIN_OUTPUT.= tm_icon("server_connect.png",___("Server testen"))."&nbsp;".___(
 $_MAIN_OUTPUT.= tm_icon("pencil.png",___("Bearbeiten"))."&nbsp;".___("Bearbeiten")."<br>";
 #$_MAIN_OUTPUT.= tm_icon("chart_pie.png",___("Statistik anzeigen"))."&nbsp;".___("Statistik anzeigen")."<br>";
 $_MAIN_OUTPUT.= tm_icon("cross.png",___("Mail-Server löschen"))."&nbsp;".___("Mail-Server löschen")."<br>";
+$_MAIN_OUTPUT.= tm_icon("script.png",___("Logbuch anzeigen"))."&nbsp;".___("Logbuch anzeigen")."<br>";
 $_MAIN_OUTPUT.= "</div><br><br>";
 $_MAIN_OUTPUT.= "<script type=\"text/javascript\">";
 if ($user_is_expert) {

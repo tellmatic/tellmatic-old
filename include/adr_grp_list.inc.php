@@ -90,6 +90,7 @@ $statURLPara->addParam("set","adrg");
 $sortURLPara=$mSTDURL;
 $sortURLPara->addParam("act","adr_grp_list");
 $sortURLPara_=$sortURLPara->getAllParams();
+
 $refreshRCPTListURLPara=$mSTDURL;
 $refreshRCPTListURLPara->addParam("act","queue_send");
 $refreshRCPTListURLPara->addParam("set","adrg");
@@ -102,7 +103,14 @@ $showqURLPara->delParam("limit");
 $showqURLPara->delParam("st");
 $showqURLPara->delParam("si");
 
-$_MAIN_OUTPUT="<table border=\"0\" cellpadding=\"1\" cellspacing=\"1\" width=\"100%\">";
+
+//show log summary
+//search for logs, only section
+$search_log['object']="adr_grp";
+include(TM_INCLUDEPATH."/log_summary_section.inc.php");
+
+
+$_MAIN_OUTPUT.="<table border=\"0\" cellpadding=\"1\" cellspacing=\"1\" width=\"100%\">";
 $_MAIN_OUTPUT.= "<thead>".
 						"<tr>".
 						"<td><b>ID</b>".
@@ -167,6 +175,7 @@ for ($accg=0;$accg<$acg;$accg++) {
 
 	$statURLPara->addParam("adr_grp_id",$GRP[$accg]['id']);
 	$statURLPara_=$statURLPara->getAllParams();
+
 	$refreshRCPTListURLPara->addParam("grp_id",$GRP[$accg]['id']);
 	$refreshRCPTListURLPara_=$refreshRCPTListURLPara->getAllParams();
 	
@@ -260,10 +269,20 @@ for ($accg=0;$accg<$acg;$accg++) {
 	if ($QUEUE->countQ($nl_id=0,$GRP[$accg]['id']) >0) {
 				$_MAIN_OUTPUT.= "<a href=\"".$tm_URL."/".$showqURLPara_."\" title=\"".___("Q für diese Gruppe anzeigen")."\">".tm_icon("hourglass_go.png",___("Q für diese Gruppe anzeigen"))."&nbsp;";
 	}
+	#ok, aber nur fuer queues die noch nicht versendet wurden etc pp, und die noch nich gestartet wurden etc.
 	if (($QUEUE->countQ($nl_id=0,$GRP[$accg]['id'],$status=2) + $QUEUE->countQ($nl_id=0,$GRP[$accg]['id'],$status=5)) > 0) {
 		#$_MAIN_OUTPUT.= "&nbsp;<a href=\"".$tm_URL."/".$sendFastURLPara_."\" title=\"".___("Adressen nachfassen / Empfängerliste aktualisieren")."\">".tm_icon("arrow_switch.png",___("Adressen nachfassen / Empfängerliste aktualisieren"),"","","","email_go.png")."</a>";
 		$_MAIN_OUTPUT.= "&nbsp;<a href=\"".$tm_URL."/".$refreshRCPTListURLPara_."\" title=\"".___("Adressen nachfassen / Empfängerliste aktualisieren")."\">".tm_icon("arrow_switch.png",___("Adressen nachfassen / Empfängerliste aktualisieren"),"","","","email_go.png")."</a>";
 	}
+
+
+	//show log summary
+	//search for logs, section and entry!
+	//$search_log['object']="xxx"; <-- is set above in section link to logbook
+	$search_log['edit_id']=$GRP[$accg]['id'];
+	include(TM_INCLUDEPATH."/log_summary_section_entry.inc.php");
+
+
 	$_MAIN_OUTPUT.= "</td>";
 	$_MAIN_OUTPUT.= "</tr>";
 }

@@ -15,6 +15,8 @@
 if (file_exists(TM_PATH."/install.php")) {
 	$_MAIN_MESSAGE.="<br><font size=2 color=red><b>".___("ACHTUNG! /install.php existiert! Die Datei install.php bitte nach erfolgreicher Installation verschieben oder löschen!")."</b></font>";
 }
+if (is_writeable(TM_INCLUDEPATH)) {
+}
 
 if (is_writeable(TM_INCLUDEPATH."/tm_config.inc.php")) {
 	$_MAIN_MESSAGE.="<br><font size=2 color=red><b>".___("tm_config.inc ist nicht schreibgeschützt!")." </b></font>";
@@ -73,6 +75,12 @@ if (!file_exists($tm_reportpath."/.htaccess")) {
 }
 
 if ($logged_in) {
+
+//log
+$LOGS=new tm_LOG();
+if (TM_LOG) $LOGS->log(Array("data"=>Array("id"=>$LOGIN->USER['id'],"act"=>$action),"object"=>"usr","action"=>"usage"));
+
+
 	$_MAIN_DESCR=___("Bitte aus dem Menü wählen.");
 
 	switch ($action) {
@@ -88,6 +96,8 @@ if ($logged_in) {
 		case 'host_list' : if ($user_is_admin) require_once (TM_INCLUDEPATH."/host_list.inc.php"); break;
 		case 'host_new' : if ($user_is_admin) require_once (TM_INCLUDEPATH."/host_new.inc.php"); break;
 		case 'host_edit' : if ($user_is_admin) require_once (TM_INCLUDEPATH."/host_edit.inc.php"); break;
+		//auch als manager
+		case 'log_list' : if ($user_is_admin) require_once (TM_INCLUDEPATH."/log_list.inc.php"); break;
 		//user
 		case 'user' : require_once (TM_INCLUDEPATH."/user.inc.php"); break;
 		//verwaltung
@@ -118,6 +128,13 @@ if ($logged_in) {
 		case 'adr_edit' : require_once (TM_INCLUDEPATH."/adr_edit.inc.php"); break;
 		case 'adr_import' : if ($user_is_manager) require_once (TM_INCLUDEPATH."/adr_import.inc.php"); break;
 		case 'adr_export' : if ($user_is_manager) require_once (TM_INCLUDEPATH."/adr_export.inc.php"); break;
+		//links
+		case 'link_grp_list' : require_once (TM_INCLUDEPATH."/link_grp_list.inc.php"); break;
+		case 'link_grp_new' : require_once (TM_INCLUDEPATH."/link_grp_new.inc.php"); break;
+		case 'link_grp_edit' : require_once (TM_INCLUDEPATH."/link_grp_edit.inc.php"); break;
+		case 'link_list' : require_once (TM_INCLUDEPATH."/link_list.inc.php"); break;
+		case 'link_new' : require_once (TM_INCLUDEPATH."/link_new.inc.php"); break;
+		case 'link_edit' : require_once (TM_INCLUDEPATH."/link_edit.inc.php"); break;
 		//formulare
 		case 'form_list' : require_once (TM_INCLUDEPATH."/form_list.inc.php"); break;
 		case 'form_new' : require_once (TM_INCLUDEPATH."/form_new.inc.php"); break;
@@ -171,6 +188,14 @@ if ($logged_in) {
 										"toggleSlide('me_0_1','main_info',0);".
 										"toggleSlide('me_0_2','main_help',0);".
 										"</script>";
+
+
+	//show log summary
+	//search for logs, only section
+	$search_log=Array();//empty=all
+	include(TM_INCLUDEPATH."/log_summary_section.inc.php");
+
+
 }//logged in
 
 
