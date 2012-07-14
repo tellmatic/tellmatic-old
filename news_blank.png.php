@@ -24,7 +24,9 @@ settings per newsletter -->
 		eigenes bild --> extension auslesen, jpg oder png erzeugen
 	bild ausgeben.
 */
-require_once ("./include/tm_config.inc.php");
-require_once(TM_INCLUDEPATH."/news_blank.png.inc.php");
+#require_once ("./include/tm_config.inc.php");
+require_once(realpath(dirname(__FILE__))."/include/tm_config.inc.php");
+
+require_once(TM_INCLUDEPATH_FE."/news_blank.png.inc.php");
 
 ?>

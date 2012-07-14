@@ -31,7 +31,13 @@ function tinymce_createimagelist($FileA,$UrlPrefix) {
 	Return $Return;
 }
 
-	$tinymce_il="";
+$tinymce_il="";
+#unset($FileARRAY);
+#gen_rec_files_array($tm_nlimgpath);
+#$tinymce_il.=tinymce_createimagelist($FileARRAY,$tm_URL_FE."/".$tm_nlimgdir);
+
+
+//new:
 $Attm_Dirs=getDirectories($tm_nlimgpath) ;
 foreach ($Attm_Dirs as $field) {
 	$btsort[]=$field['name'];

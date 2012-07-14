@@ -1,6 +1,6 @@
 <?php
 /**
- * $Id: rpc.php,v 1.1 2009/07/06 10:37:56 mcms09 Exp $
+ * $Id: rpc.php 822 2008-04-28 13:45:03Z spocke $
  *
  * @author Moxiecode
  * @copyright Copyright © 2004-2007, Moxiecode Systems AB, All rights reserved.

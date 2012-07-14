@@ -13,8 +13,8 @@
 /********************************************************************************/
 exit;//remove this line or add # in front of line
 //inclue tm config 
-include ("./include/tm_config.inc.php");//change path to full path to tm_config if the script is not in tellmatic installation directory!
-
+#require_once ("./include/tm_config.inc.php");//change path to full path to tm_config if the script is not in tellmatic installation directory!
+require_once(realpath(dirname(__FILE__))."/include/tm_config.inc.php");
 //Beispielcode: letzte X Newsletter anzeigen, newsletter aber aus q holen! nur mit status versendet!
 //"Newsletter-Archiv"
 

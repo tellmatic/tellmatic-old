@@ -1,6 +1,6 @@
 <?php
 /**
- * $Id: Logger.php,v 1.1 2009/07/06 10:37:57 mcms09 Exp $
+ * $Id: Logger.class.php 10 2007-05-27 10:55:12Z spocke $
  *
  * @package MCFileManager.filesystems
  * @author Moxiecode

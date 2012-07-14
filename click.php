@@ -12,6 +12,8 @@
 /* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
 /********************************************************************************/
 //aufruf: click.php?h_id=&nl_id=&a_id=
-require_once ("./include/tm_config.inc.php");
-require_once(TM_INCLUDEPATH."/click.inc.php");
+#require_once ("./include/tm_config.inc.php");
+require_once(realpath(dirname(__FILE__))."/include/tm_config.inc.php");
+
+require_once(TM_INCLUDEPATH_FE."/click.inc.php");
 ?>

@@ -95,7 +95,7 @@ Datenbank aktualisieren: / Update Database:
 		ALTER TABLE `config` ADD `unsubscribe_host` INT NOT NULL DEFAULT '0' AFTER `unsubscribe_action` ;
 		ALTER TABLE `config` ADD INDEX ( `unsubscribe_host` ) ;
 
-		ALTER TABLE `config` CHANGE `unsubscribe_action` `unsubscribe_action` ENUM( 'unsubscribe', 'delete', 'blacklist', 'blacklist_delete' ) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT 'unsubscribe'
+		ALTER TABLE `config` CHANGE `unsubscribe_action` `unsubscribe_action` ENUM( 'unsubscribe', 'delete', 'blacklist', 'blacklist_delete' ) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT 'unsubscribe';
 
 		ALTER TABLE `adr_grp` ADD `prod` TINYINT( 1 ) NOT NULL DEFAULT '0' AFTER `standard` ;
 		ALTER TABLE `adr_grp` ADD INDEX ( `prod` ) ;		
@@ -105,7 +105,7 @@ Datenbank aktualisieren: / Update Database:
 		ALTER TABLE `nl_q` ADD INDEX ( `touch` ) ;
 		ALTER TABLE `nl_q` ADD INDEX ( `proof` ) ;
 
-		ALTER TABLE `nl_h` ADD `proof` SMALLINT '0' COMMENT 'optional proof return value' AFTER `errors` ;		
+		ALTER TABLE `nl_h` ADD `proof` SMALLINT DEFAULT '0' COMMENT 'optional proof return value' AFTER `errors` ;		
 
 		ALTER TABLE `hosts` ADD `delay` INT NOT NULL DEFAULT '100000' AFTER `reply_to` ;
 

@@ -1,5 +1,5 @@
 /**
- * $Id: validate.js,v 1.2 2009/07/06 10:15:32 mcms09 Exp $
+ * $Id: validate.js 758 2008-03-30 13:53:29Z spocke $
  *
  * Various form validation methods.
  *

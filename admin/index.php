@@ -12,10 +12,39 @@
 /* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
 /********************************************************************************/
 
-if (!file_exists("../include/tm_config.inc.php")) {
+if (!file_exists(realpath(dirname(__FILE__))."/../include/tm_config.inc.php")) {
+//"../include/tm_config.inc.php"
+	echo "config file missing!";
 	exit;
 }
-require_once ("../include/tm_config.inc.php");
-require_once (TM_DOCROOT."/".TM_DIR."/include/tm_lib_admin.inc.php");
-require_once (TM_INCLUDEPATH."/Index.inc.php");
+#require_once ("../include/tm_config.inc.php");
+require_once(realpath(dirname(__FILE__))."/../include/tm_config.inc.php");
+
+require_once (TM_INCLUDEPATH_LIB."/tm_lib_admin.inc.php");
+
+$dl=getVar('dl');
+
+//?dl=i|f,section,filename
+//downloadfile (f), showimage (i) 
+//section definiert bereich auf /files, also import_export etc, darf aber nicht als dir genommen werden wegen ../ etc
+//also if section=bla then dir=blub!
+
+if ($dl=='f' || $dl=='i') {
+	require_once (TM_INCLUDEPATH_LIB."/Login.inc.php");
+	
+	if ($logged_in) {
+		echo "yeah, logged in";
+	} else {
+		echo "not logged in, go away";	
+	}
+	
+	if ($dl=="f") {
+		exit;
+	}
+	if ($dl=="i") {
+		exit;
+	}
+} else {
+	require_once (TM_INCLUDEPATH_LIB."/Index.inc.php");
+}
 ?>

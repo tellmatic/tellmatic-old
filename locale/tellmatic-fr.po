@@ -4655,10 +4655,10 @@ msgid "Neuer Link"
 msgstr "Nouveau link"
 
 msgid "http://"
-msgstr "http.//"
+msgstr "http://"
 
 msgid "Beschreibung/Title"
-msgstr "Decsription/Title"
+msgstr "Description/Title"
 
 msgid "Einträge suchen und filtern"
 msgstr "Search and filter entries"

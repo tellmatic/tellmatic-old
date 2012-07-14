@@ -8,10 +8,9 @@
 		width:983px; 
 		height:86px;
 		z-index:10;
+		background-color: #eeeeff;
 		background-image:url(img/head.png); background-repeat:repeat;
 }
-
-
 
 .head_info   {
 		font-family : Arial,Helvetica; 

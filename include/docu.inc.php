@@ -13,9 +13,12 @@
 /********************************************************************************/
 
 $_MAIN_DESCR=___("Hilfe / Dokumentation");
-$_MAIN_MESSAGE.="";
+$_MAIN_MESSAGE.="";//<br>Hier wird Ihnen hoffentlich geholfen :)";
+
 //new Template
 $_Tpl_Help=new tm_Template();
 $_Tpl_Help->setTemplatePath(TM_TPLPATH);
+//$_Tpl_Help->setParseValue("_MENU", $_MENU);
+
 $_MAIN_OUTPUT.=$_Tpl_Help->renderTemplate("Help.html");
 ?>

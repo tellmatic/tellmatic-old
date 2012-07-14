@@ -1,5 +1,5 @@
 /**
- * $Id: form_utils.js,v 1.2 2009/07/06 10:15:32 mcms09 Exp $
+ * $Id: form_utils.js 996 2009-02-06 17:32:20Z spocke $
  *
  * Various form utilitiy functions.
  *

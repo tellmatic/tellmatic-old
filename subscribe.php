@@ -13,7 +13,9 @@
 /********************************************************************************/
 
 //config einbinden
-require_once ("./include/tm_config.inc.php");
+#require_once ("./include/tm_config.inc.php");
+require_once(realpath(dirname(__FILE__))."/include/tm_config.inc.php");
+
 //if subscribe.php is included in your script, please set frm_id to Form ID and $called_via_url=false; $_CONTENT holds the html output
-require_once(TM_INCLUDEPATH."/subscribe.inc.php");
+require_once(TM_INCLUDEPATH_FE."/subscribe.inc.php");
 ?>

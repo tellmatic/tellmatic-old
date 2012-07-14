@@ -1,6 +1,6 @@
 <?php
 /**
- * $Id: EnchantSpell.php,v 1.1 2009/07/06 10:37:56 mcms09 Exp $
+ * $Id: editor_plugin_src.js 201 2007-02-12 15:56:56Z spocke $
  *
  * This class was contributed by Michel Weimerskirch.
  *

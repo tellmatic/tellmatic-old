@@ -18,7 +18,7 @@
 .menu_head {
  display:block;
  padding:3px;
- border-top:2px solid #ffffff;
+ border-top:2px solid #eeeeff;
  background-color:#07499c;
  text-align:left;
  font-weight:bold;
@@ -34,7 +34,7 @@
 .menu_entry {
  display:block;
  padding:3px;
- border-top:2px solid #ffffff;
+ border-top:2px solid #eeeeff;
  background-color:#d4e0e0;
  text-align:left;
  font-weight:bold;
@@ -49,7 +49,7 @@
 .menu_foot {
  display:block;
  padding:3px;
- border-top:2px solid #ffffff;
+ border-top:2px solid #eeeeff;
   background-color:#c4d4d4;
  text-align:left;
  font-weight:bold;

@@ -1584,7 +1584,7 @@ msgid "Zeitüberschreitung"
 msgstr "Timeout"
 
 msgid "Sie sind angemeldet"
-msgstr "You are logged out"
+msgstr "You are logged in"
 
 msgid "ACHTUNG! /install.php existiert! Die Datei install.php bitte nach erfolgreicher Installation verschieben oder löschen!"
 msgstr "Warning! install.php exists. Please move or rename."
@@ -2027,7 +2027,7 @@ msgid "%s Queues für diese Newsletter wurden gelöscht."
 msgstr "%s queue entries have been deleted for this newsletter"
 
 msgid "Eintrag und dazugehörige Dateien wurde kopiert."
-msgstr "Entry and associated files have been deleted"
+msgstr "Entry and associated files have been copied"
 
 #, c-format
 msgid "Gewählte Gruppe: %s"
@@ -3930,7 +3930,7 @@ msgid "Installation fertigstellen"
 msgstr "Finish Installation"
 
 msgid "Soll eine Installations-Mail an die Entwickler von Tellmatic gesendet werden? Die E-Mail enthält die oben angegebenen Informationen. Es werden keine sensitiven Daten wie Passwörter oder Benutzernamen verschickt. Die Daten werden nur zu statistischen Zwecken verwendet."
-msgstr "Shold we send an email to the Tellmatic developers? The email does NOT contain sensitive data like usernames and passwords. It is only used for statistics."
+msgstr "Should we send an email to the Tellmatic developers? The email does NOT contain sensitive data like usernames and passwords. It is only used for statistics."
 
 msgid "Wenn Sie alle Angaben gemacht haben bestätigen Sie bitte hier. Tellmatic wird im nächsten Schritt installiert. Sollten Fehler auftreten wird dieses Formular wieder angezeigt und eine Warnmeldung bezüglich der aufgetretenen Fehler ausgegeben."
 msgstr "If you have filled out all necessary fields, please click to continue. In the next step we will check the input and if everything works Tellmatic gets installed. If there are any errrors a message will be shown."
@@ -4655,10 +4655,10 @@ msgid "Neuer Link"
 msgstr "New link"
 
 msgid "http://"
-msgstr "http.//"
+msgstr "http://"
 
 msgid "Beschreibung/Title"
-msgstr "Decsription/Title"
+msgstr "Description/Title"
 
 msgid "Einträge suchen und filtern"
 msgstr "Search and filter entries"

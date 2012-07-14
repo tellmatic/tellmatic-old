@@ -15,6 +15,10 @@
 //configure
 /***********************************************************/
 //guess path to config and include
-require_once(realpath(dirname(__FILE__))."/include/install/install_conf.inc.php");
-require_once(TM_INCLUDEPATH."/install/install.inc.php");
+#define("TM_DOCROOT",dirname(__FILE__));
+#define("TM_DOCROOT",realpath(dirname(__FILE__)));
+#^^ bringt nix da wir unbedingt den dirnamen brauchen, falls nicht im docroot vom httpd installiert
+require_once(realpath(dirname(__FILE__))."/include/tm_Install/install_conf.inc.php");
+#require_once(TM_DOCROOT."/include/install/install_conf.inc.php");
+require_once(TM_INCLUDEPATH_INSTALL."/install.inc.php");
 ?>
