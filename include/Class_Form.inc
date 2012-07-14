@@ -17,7 +17,6 @@ class mnlFRM {
 	var $FORM=Array();
   
 	function getForm($id=0,$offset=0,$limit=0,$group_id=0,$sortIndex="",$sortType=0) {
-		global $mnl_siteid;
 		$this->FRM=Array();
 		$DB=new ConnectDB();
 		$Query ="	SELECT ".mnlTABLE_FRM.".id, ".mnlTABLE_FRM.".name, ".mnlTABLE_FRM.".descr, ".mnlTABLE_FRM.".aktiv, ".mnlTABLE_FRM.".author, ".mnlTABLE_FRM.".created, ".mnlTABLE_FRM.".editor, ".mnlTABLE_FRM.".updated, ".mnlTABLE_FRM.".double_optin, ".mnlTABLE_FRM.".subscriptions,
@@ -30,13 +29,13 @@ class mnlFRM {
 		if (check_dbid($group_id)) {
 			$Query .="LEFT JOIN ".mnlTABLE_FRM_GRP_REF." ON ".mnlTABLE_FRM.".id = ".mnlTABLE_FRM_GRP_REF.".frm_id";
 		}
-		$Query .=" WHERE ".mnlTABLE_FRM.".siteid='".$mnl_siteid."'";
+		$Query .=" WHERE ".mnlTABLE_FRM.".siteid='".MNL_SITEID."'";
 		if ($group_id!=0) {
-			$Query .=" AND ".mnlTABLE_FRM_GRP_REF.".siteid='".$mnl_siteid."'
+			$Query .=" AND ".mnlTABLE_FRM_GRP_REF.".siteid='".MNL_SITEID."'
 						  AND ".mnlTABLE_FRM_GRP_REF.".grp_id='".$group_id."'
 						";
 		}
-						//achtung, durch AND adr_details.siteid='".$mnl_siteid."' werden nur die eintraege angezeigt die auch eien detaildatensatz haben!!!
+						//achtung, durch AND adr_details.siteid='".MNL_SITEID."' werden nur die eintraege angezeigt die auch eien detaildatensatz haben!!!
 		if (check_dbid($id)) {
 			$Query .= " AND ".mnlTABLE_FRM.".id='".$id."'";
 		}
@@ -112,11 +111,10 @@ class mnlFRM {
 	}//getForm
 
 	function setAktiv($id=0,$aktiv=1) {
-		global $mnl_siteid;
 		$Return=false;
 		if (check_dbid($id)) {
 			$DB=new ConnectDB();
-			$Query ="UPDATE ".mnlTABLE_FRM." SET aktiv='".$aktiv."' WHERE id='".$id."' AND siteid='".$mnl_siteid."'";
+			$Query ="UPDATE ".mnlTABLE_FRM." SET aktiv='".$aktiv."' WHERE id='".$id."' AND siteid='".MNL_SITEID."'";
 			if ($DB->Query($Query)) {
 				$Return=true;
 			}
@@ -125,7 +123,7 @@ class mnlFRM {
 	}//setAktiv
 	
 	function copyForm($id) {
-		global $mnl_siteid, $_SERVER;
+		global $_SERVER;//, $mnl_siteid
 	
 		$Return=false;
 		if (check_dbid($id)) {
@@ -188,12 +186,11 @@ class mnlFRM {
 	}//copyForm
 
 	function delForm($id) {
-		global $mnl_siteid;
 		$Return=false;
 		if (check_dbid($id)) {
 			$DB=new ConnectDB();
 			//referenzen loeschen
-			$Query ="DELETE FROM ".mnlTABLE_FRM_GRP_REF." WHERE siteid='".$mnl_siteid."' AND frm_id='".$id."'";
+			$Query ="DELETE FROM ".mnlTABLE_FRM_GRP_REF." WHERE siteid='".MNL_SITEID."' AND frm_id='".$id."'";
 			if ($DB->Query($Query)) {
 				$Return=true;
 			} else {
@@ -201,7 +198,7 @@ class mnlFRM {
 				return $Return;			
 			}
 			//subscriptions loeschen
-			$Query ="DELETE FROM ".mnlTABLE_FRM_S." WHERE siteid='".$mnl_siteid."' AND frm_id='".$id."'";
+			$Query ="DELETE FROM ".mnlTABLE_FRM_S." WHERE siteid='".MNL_SITEID."' AND frm_id='".$id."'";
 			if ($DB->Query($Query)) {
 				$Return=true;
 			} else {
@@ -210,7 +207,7 @@ class mnlFRM {
 			}
 	
 			//formular loeschen
-			$Query ="DELETE FROM ".mnlTABLE_FRM." WHERE siteid='".$mnl_siteid."' AND id='".$id."'";
+			$Query ="DELETE FROM ".mnlTABLE_FRM." WHERE siteid='".MNL_SITEID."' AND id='".$id."'";
 			if ($DB->Query($Query)) {
 				$Return=true;
 			} else {
@@ -222,7 +219,7 @@ class mnlFRM {
 	}//delForm
 	
 	function addForm($frm,$grp) {
-		global $mnl_siteid, $mnl_formpath, $mnl_tplpath, $mnl_URL;
+		global $mnl_formpath, $mnl_tplpath, $mnl_URL;//, $mnl_siteid
 		$Return=false;
 		$DB=new ConnectDB();
 		//neues Formular speichern
@@ -237,7 +234,7 @@ class mnlFRM {
 					) 
 					VALUES 
 					(
-					'".$frm["name"]."', '".$frm["descr"]."', '".$frm["aktiv"]."', '".$frm["author"]."', '".$frm["created"]."', '".$frm["author"]."', '".$frm["created"]."', '".$frm["double_optin"]."', 0, '".$mnl_siteid."',
+					'".$frm["name"]."', '".$frm["descr"]."', '".$frm["aktiv"]."', '".$frm["author"]."', '".$frm["created"]."', '".$frm["author"]."', '".$frm["created"]."', '".$frm["double_optin"]."', 0, '".MNL_SITEID."',
 					'".$frm["f0"]."',
 					'".$frm["f1"]."',
 					'".$frm["f2"]."',
@@ -290,7 +287,7 @@ class mnlFRM {
 					WHERE name='".$frm["name"]."'
 					AND descr='".$frm["descr"]."'
 					AND aktiv='".$frm["aktiv"]."'
-					AND siteid='".$mnl_siteid."'
+					AND siteid='".MNL_SITEID."'
 					ORDER BY id desc LIMIT 1
 					";//es muessen nicht alle felder abgefragt werden, order by id desc limit 1 liefert uns den letzten eintrag ;)
 		if ($DB->Query($Query)) {
@@ -306,7 +303,7 @@ class mnlFRM {
 			//gruppen eintragen
 			$acg=count($grp);
 			for ($accg=0;$accg<$acg;$accg++) {
-				$Query="INSERT INTO ".mnlTABLE_FRM_GRP_REF." (frm_id,grp_id,siteid) VALUES ('".$new_frm_id."','".$grp[$accg]."','".$mnl_siteid."')";
+				$Query="INSERT INTO ".mnlTABLE_FRM_GRP_REF." (frm_id,grp_id,siteid) VALUES ('".$new_frm_id."','".$grp[$accg]."','".MNL_SITEID."')";
 				if ($DB->Query($Query)) {
 					$Return=true;
 				} else {
@@ -357,7 +354,7 @@ class mnlFRM {
 	}//addForm
 	
 	function updateForm($frm,$grp) {
-		global $mnl_siteid, $mnl_formpath, $mnl_URL;
+		global $mnl_formpath, $mnl_URL;//, $mnl_siteid
 		$Return=false;
 		if (check_dbid($frm['id'])) {
 			$DB=new ConnectDB();
@@ -406,7 +403,7 @@ class mnlFRM {
 						f7_value='".$frm["f7_value"]."',
 						f8_value='".$frm["f8_value"]."',
 						f9_value='".$frm["f9_value"]."'
-						 WHERE siteid='".$mnl_siteid."' AND id='".$frm["id"]."'";
+						 WHERE siteid='".MNL_SITEID."' AND id='".$frm["id"]."'";
 			if ($DB->Query($Query)) {
 				$Return=true;
 			} else {
@@ -414,7 +411,7 @@ class mnlFRM {
 				return $Return;			
 			}
 			//alle refs loeschen
-			$Query ="DELETE FROM ".mnlTABLE_FRM_GRP_REF." WHERE siteid='".$mnl_siteid."' AND frm_id='".$frm['id']."'";
+			$Query ="DELETE FROM ".mnlTABLE_FRM_GRP_REF." WHERE siteid='".MNL_SITEID."' AND frm_id='".$frm['id']."'";
 			if ($DB->Query($Query)) {
 				$Return=true;
 			} else {
@@ -425,7 +422,7 @@ class mnlFRM {
 			$acg=count($grp);
 			//print_r($grp);
 			for ($accg=0;$accg<$acg;$accg++) {
-				$Query="INSERT INTO ".mnlTABLE_FRM_GRP_REF." (frm_id,grp_id,siteid) VALUES ('".$frm['id']."','".$grp[$accg]."','".$mnl_siteid."')";
+				$Query="INSERT INTO ".mnlTABLE_FRM_GRP_REF." (frm_id,grp_id,siteid) VALUES ('".$frm['id']."','".$grp[$accg]."','".MNL_SITEID."')";
 				if ($DB->Query($Query)) {
 					$Return=true;
 				} else {
@@ -446,7 +443,6 @@ class mnlFRM {
 
 	//subscriptions zaehlen
 	function addSub($frm_id,$adr_id=0) {
-		global $mnl_siteid;
 		$Return=false;
 		if (check_dbid($frm_id)) {
 			$F=$this->getForm($frm_id);
@@ -456,7 +452,7 @@ class mnlFRM {
 			$DB=new ConnectDB();
 			$Query ="UPDATE ".mnlTABLE_FRM." 
 						SET subscriptions='".$subs."' 
-						WHERE siteid='".$mnl_siteid."' 
+						WHERE siteid='".MNL_SITEID."' 
 						AND id='".$frm_id."'";
 			if ($DB->Query($Query)) {
 				$Return=true;
@@ -473,7 +469,7 @@ class mnlFRM {
 								'".date("Y-m-d H:i:s")."',
 								'".$frm_id."',
 								'".$adr_id."',
-								'".$mnl_siteid."'
+								'".MNL_SITEID."'
 								)";
 				if ($DB->Query($Query)) {
 					$Return=true;

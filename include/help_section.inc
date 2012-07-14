@@ -13,12 +13,12 @@
 /********************************************************************************/
 
 $helpfilename="".$action.".html";
-$helpfile=$mnl_docpath."/".$helpfilename;
+$helpfile=$mnl_docpath."/".$LOGIN->USER['lang']."/".$helpfilename;
 
 if (file_exists($helpfile)) {
 	//new Template
 	$_Tpl_HelpS=new mTemplate();
-	$_Tpl_HelpS->setTemplatePath($mnl_docpath);
+	$_Tpl_HelpS->setTemplatePath($mnl_docpath."/".$LOGIN->USER['lang']);
 	$H_TEXT=$_Tpl_HelpS->renderTemplate($helpfilename);
 
 	$_Tpl_HelpS->setParseValue("H_TEXT", $H_TEXT);

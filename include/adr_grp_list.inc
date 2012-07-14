@@ -12,7 +12,7 @@
 /* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
 /********************************************************************************/
 
-$_MAIN_DESCR="Adressgruppen verwalten";
+$_MAIN_DESCR=___("Adressgruppen verwalten");
 $_MAIN_MESSAGE.="";
 
 $ADDRESS=new mnlADR();
@@ -25,22 +25,22 @@ $doit=getVar("doit");//wird per js an url angefuegt!!! confirm()
 if ($set=="aktiv") {
 	$ADDRESS->setGRPAktiv($adr_grp_id,$val);
 	if ($val==1) { 
-		$_MAIN_MESSAGE.="<br>Eintrag wurde aktiviert.";
+		$_MAIN_MESSAGE.="<br>".___("Eintrag wurde aktiviert.");
 	} else  {
-		$_MAIN_MESSAGE.="<br>Eintrag wurde de-aktiviert.";
+		$_MAIN_MESSAGE.="<br>".___("Eintrag wurde de-aktiviert.");
 	}
 }
 if ($set=="standard") {
 	$ADDRESS->setGRPStd($adr_grp_id,$val);
-	$_MAIN_MESSAGE.="<br>Neue Standardgruppe wurde definiert.";
+	$_MAIN_MESSAGE.="<br>".___("Neue Standardgruppe wurde definiert.");
 }
 if ($set=="delete" && $doit==1) {
 	$ADDRESS->delGRP($adr_grp_id,1,0);
-	$_MAIN_MESSAGE.="<br>Eintrag wurde geloescht.";
+	$_MAIN_MESSAGE.="<br>".___("Eintrag wurde gel&ouml;scht.");
 }
 if ($set=="deleteall" && $doit==1) {
 	$ADDRESS->delGRP($adr_grp_id,0,1);
-	$_MAIN_MESSAGE.="<br>Eintrag und die zugeordneten Adressen wurden geloescht.";
+	$_MAIN_MESSAGE.="<br>".___("Eintrag und die zugeordneten Adressen wurden gel&ouml;scht.");
 }
 $GRP=$ADDRESS->getGroup(0,0,0,1);
 $acg=count($GRP);
@@ -79,11 +79,11 @@ $_MAIN_OUTPUT.= "<thead>
 						<tr>
 						<td><b>&nbsp;</b>
 						</td>
-						<td><b>Name</b>
+						<td><b>".___("Name")."</b>
 						</td>
-						<td><b>Beschreibung</b>
+						<td><b>".___("Beschreibung")."</b>
 						</td>
-						<td><b>Aktiv</b>
+						<td><b>".___("Aktiv")."</b>
 						</td>
 						<td>...</td>
 						</tr>
@@ -130,26 +130,26 @@ for ($accg=0;$accg<$acg;$accg++) {
 
 	//wenn standardgruppe, dann icon anzeigen
 	if ($GRP[$accg]['standard']==1) {
-		$_MAIN_OUTPUT.=  "&nbsp;<img src=\"".$mnl_iconURL."/page_white_lightning.png\" title=\"Diese Gruppe ist die Standardgruppe\" alt=\"Diese Gruppe ist die Standardgruppe\" border=\"0\">";
+		$_MAIN_OUTPUT.=  "&nbsp;<img src=\"".$mnl_iconURL."/page_white_lightning.png\" title=\"".___("Diese Gruppe ist die Standardgruppe")."\" alt=\"".___("Diese Gruppe ist die Standardgruppe")."\" border=\"0\">";
 	}
 	$_MAIN_OUTPUT.= "</td>";
 	$_MAIN_OUTPUT.= "<td onmousemove=\"showToolTip('tt_adr_grp_list_".$GRP[$accg]['id']."')\" onmouseout=\"hideToolTip();\">";
-	$_MAIN_OUTPUT.= "<a href=\"".$mnl_URL."/".$editURLPara_."\"  title=\"Adressgruppe bearbeiten\">".$GRP[$accg]['name']."</a>";
+	$_MAIN_OUTPUT.= "<a href=\"".$mnl_URL."/".$editURLPara_."\"  title=\"".___("Adressgruppe bearbeiten")."\">".$GRP[$accg]['name']."</a>";
 	$_MAIN_OUTPUT.= "<div id=\"tt_adr_grp_list_".$GRP[$accg]['id']."\" class=\"tooltip\">";
 	$_MAIN_OUTPUT.= "ID: ".$GRP[$accg]['id']." ";
 	if ($GRP[$accg]['aktiv']==1) {
 		$_MAIN_OUTPUT.=  "<img src=\"".$mnl_iconURL."/tick.png\" border=\"0\">";
-		$_MAIN_OUTPUT.=  "(aktiv)";
+		$_MAIN_OUTPUT.=  ___("(aktiv)");
 	} else {
 		$_MAIN_OUTPUT.=  "<img src=\"".$mnl_iconURL."/cancel.png\" border=\"0\">";
-		$_MAIN_OUTPUT.=  "(inaktiv)";
+		$_MAIN_OUTPUT.=  ___("(inaktiv)");
 	}
 	//wenn standardgruppe, dann icon anzeigen
 	if ($GRP[$accg]['standard']==1) {
-		$_MAIN_OUTPUT.=  "<br><img src=\"".$mnl_iconURL."/page_white_lightning.png\" titlt=\"Diese Gruppe ist die Standardgruppe\" border=\"0\">Standardgruppe!";
+		$_MAIN_OUTPUT.=  "<br><img src=\"".$mnl_iconURL."/page_white_lightning.png\" title=\"".___("Diese Gruppe ist die Standardgruppe")."\" border=\"0\">".___("Standardgruppe");
 	}
 	$_MAIN_OUTPUT.="<br><b>".$GRP[$accg]['name']."</b><br>";
-	$_MAIN_OUTPUT.=$GRP[$accg]['adr_count']." Adressen<br>";
+	$_MAIN_OUTPUT.=sprintf(___("%s Adressen"),$GRP[$accg]['adr_count'])."<br>";
 	$_MAIN_OUTPUT.= "<font size=\"-1\">".$GRP[$accg]['descr']."</font>";
 	$_MAIN_OUTPUT.= "</div>";
 	$_MAIN_OUTPUT.= "</td>";
@@ -159,7 +159,7 @@ for ($accg=0;$accg<$acg;$accg++) {
 	$_MAIN_OUTPUT.= "<td>";
 	//wenn gruppe keine standardgruppe ist, dann link zum deaktivieren, deaktivierete gruppen koennen naemlich keine standardgruppe sein
 	if ($GRP[$accg]['standard']!=1) {
-		$_MAIN_OUTPUT.= "<a href=\"".$mnl_URL."/".$aktivURLPara_."\" title=\"aktivieren/de-aktivieren\">";
+		$_MAIN_OUTPUT.= "<a href=\"".$mnl_URL."/".$aktivURLPara_."\" title=\"".___("aktivieren/de-aktivieren")."\">";
 	}
 	if ($GRP[$accg]['aktiv']==1) {
 		//aktiv
@@ -174,22 +174,22 @@ for ($accg=0;$accg<$acg;$accg++) {
 	}
 	$_MAIN_OUTPUT.= "</td>";
 	$_MAIN_OUTPUT.= "<td>";
-	$_MAIN_OUTPUT.= "&nbsp;<a href=\"".$mnl_URL."/".$editURLPara_."\" title=\"Adressgruppe bearbeiten\"><img src=\"".$mnl_iconURL."/pencil.png\" border=\"0\"></a>";
-	$_MAIN_OUTPUT.= "&nbsp;<a href=\"".$mnl_URL."/".$addadrURLPara_."\" title=\"Neue Adresse in dieser Gruppe anlegen\"><img src=\"".$mnl_iconURL."/vcard_add.png\" border=\"0\"></a>";
-	$_MAIN_OUTPUT.= "&nbsp;<a href=\"".$mnl_URL."/".$showadrURLPara_."\" title=\"alle Adressen in dieser Gruppe anzeigen\"><img src=\"".$mnl_iconURL."/group_go.png\" border=\"0\">&nbsp;".$GRP[$accg]['adr_count']."</a>";
-	$_MAIN_OUTPUT.=  "&nbsp;<a href=\"".$mnl_URL."/".$statURLPara_."\" title=\"Statistik anzeigen\"><img src=\"".$mnl_iconURL."/chart_pie.png\" border=\"0\"></a>";
+	$_MAIN_OUTPUT.= "&nbsp;<a href=\"".$mnl_URL."/".$editURLPara_."\" title=\"".___("Adressgruppe bearbeiten")."\"><img src=\"".$mnl_iconURL."/pencil.png\" border=\"0\"></a>";
+	$_MAIN_OUTPUT.= "&nbsp;<a href=\"".$mnl_URL."/".$addadrURLPara_."\" title=\"".___("Neue Adresse in dieser Gruppe anlegen")."\"><img src=\"".$mnl_iconURL."/vcard_add.png\" border=\"0\"></a>";
+	$_MAIN_OUTPUT.= "&nbsp;<a href=\"".$mnl_URL."/".$showadrURLPara_."\" title=\"".___("Alle Adressen in dieser Gruppe anzeigen")."\"><img src=\"".$mnl_iconURL."/group_go.png\" border=\"0\">&nbsp;".$GRP[$accg]['adr_count']."</a>";
+	$_MAIN_OUTPUT.=  "&nbsp;<a href=\"".$mnl_URL."/".$statURLPara_."\" title=\"".___("Statistik anzeigen")."\"><img src=\"".$mnl_iconURL."/chart_pie.png\" border=\"0\"></a>";
 	if ($GRP[$accg]['standard']==1) {
 		//wenn gruppe standard ist, dann bildchen anzeigen, wird auch neben id angezeigt
 		//$_MAIN_OUTPUT.=  "&nbsp;<img src=\"".$mnl_iconURL."/page_white_lightning.png\" border=\"0\">";
 	} else {
 		//wenn gruppe aktiv ist, dann darf man sie als standard definieren
 		if ($GRP[$accg]['aktiv']==1) {
-			$_MAIN_OUTPUT.=  "&nbsp;<a href=\"".$mnl_URL."/".$stdURLPara_."\" onclick=\"return confirmLink(this, 'Adressgruppe ".$GRP[$accg]['name']." als Standard definieren')\" title=\"Diese Addressgruppe als Standardgruppe\"><img src=\"".$mnl_iconURL."/page_white_go.png\" border=\"0\"></a>";
+			$_MAIN_OUTPUT.=  "&nbsp;<a href=\"".$mnl_URL."/".$stdURLPara_."\" onclick=\"return confirmLink(this, '".sprintf(___("Adressgruppe %s als Standard definieren."),$GRP[$accg]['name'])."')\" title=\"".___("Diese Adressgruppe als Standardgruppe")."\"><img src=\"".$mnl_iconURL."/page_white_go.png\" border=\"0\"></a>";
 		}
 		//loeschen
-		$_MAIN_OUTPUT.= "&nbsp;<a href=\"".$mnl_URL."/".$delURLPara_."\" onclick=\"return confirmLink(this, 'Adressgruppe ".$GRP[$accg]['name']." loeschen und Adressen dieser Gruppe der Standardgruppe zuordnen und Verknuepfungen zu Formularen aufheben?')\" title=\"Addressgruppe loeschen\"><img src=\"".$mnl_iconURL."/cross.png\" border=\"0\"></a>";
-		//bomb! gruppe UND Addressen loeschen!!!
-		$_MAIN_OUTPUT.= "&nbsp;<a href=\"".$mnl_URL."/".$delallURLPara_."\" onclick=\"return confirmLink(this, 'Adressgruppe ".$GRP[$accg]['name']." UND Addressen dieser Gruppe loeschen?')\" title=\"Addressgruppe und Adressen loeschen\"><img src=\"".$mnl_iconURL."/bomb.png\" border=\"0\"></a>";
+		$_MAIN_OUTPUT.= "&nbsp;<a href=\"".$mnl_URL."/".$delURLPara_."\" onclick=\"return confirmLink(this, '".sprintf(___("Adressgruppe %s loeschen und Adressen dieser Gruppe der Standardgruppe zuordnen und Verknuepfungen zu Formularen aufheben?"),$GRP[$accg]['name'])."')\" title=\"".___("Adressgruppe loeschen")."\"><img src=\"".$mnl_iconURL."/cross.png\" border=\"0\"></a>";
+		//bomb! gruppe UND Adressen loeschen!!!
+		$_MAIN_OUTPUT.= "&nbsp;<a href=\"".$mnl_URL."/".$delallURLPara_."\" onclick=\"return confirmLink(this, '".sprintf(___("Adressgruppe %s UND Adressen dieser Gruppe loeschen?"),$GRP[$accg]['name'])."')\" title=\"".___("Adressgruppe und Adressen loeschen")."\"><img src=\"".$mnl_iconURL."/bomb.png\" border=\"0\"></a>";
 
 	}
 	$_MAIN_OUTPUT.= "</td>";

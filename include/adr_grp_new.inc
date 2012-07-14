@@ -12,7 +12,7 @@
 /* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
 /********************************************************************************/
 
-$_MAIN_DESCR="neue Adressgruppe erstellen";
+$_MAIN_DESCR=___("neue Adressgruppe erstellen");
 $_MAIN_MESSAGE.="";
 
 $set=getVar("set");
@@ -33,11 +33,11 @@ $$InputName_Aktiv=getVar($InputName_Aktiv);
 $check=true;
 if ($set=="save") {
 	//checkinput
-	if (empty($name)) {$check=false;$_MAIN_MESSAGE.="<br>Name der Gruppe sollte nicht leer sein.";}
+	if (empty($name)) {$check=false;$_MAIN_MESSAGE.="<br>".___("Name der Gruppe sollte nicht leer sein.");}
 	if ($check) {
 		$ADDRESS=new mnlAdr();
 		$ADDRESS->addGrp(Array("name"=>$name, "descr"=>$descr, "aktiv"=>$aktiv));
-		$_MAIN_MESSAGE.="<br>Neue Addressgruppe '<b>".$name."</b>' wurde erstellt.";
+		$_MAIN_MESSAGE.="<br>".sprintf(___("Neue Addressgruppe %s wurde erstellt."),"'<b>".$name."</b>'");
 		$action="adr_grp_list";
 		include_once ($mnl_includepath."/adr_grp_list.inc");
 	} else {

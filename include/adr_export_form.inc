@@ -21,7 +21,7 @@ $FormularName="adr_import";
 //make new Form
 $Form->new_Form($FormularName,$_SERVER["PHP_SELF"],"post","_self");
 //add a Description
-$Form->set_FormDesc($FormularName,"Addressen aus CSV-Datei importieren");
+$Form->set_FormDesc($FormularName,___("Adressen in eine CSV-Datei exportieren"));
 $Form->set_FormType($FormularName,"multipart/form-data");
 //variable content aus menu als hidden field!
 //$Form->new_Input($FormularName,"type", "hidden", $content);
@@ -34,7 +34,7 @@ $Form->new_Input($FormularName,"set", "hidden", "export");
 //Gruppe
 $Form->new_Input($FormularName,$InputName_Group,"select", "");
 $Form->set_InputStyleClass($FormularName,$InputName_Group,"mFormSelect","mFormSelectFocus");
-$Form->set_InputDesc($FormularName,$InputName_Group,"Gruppen waehlen, STRG/CTRL gedrueckt halten und klicken f. Mehrfachauswahl");
+$Form->set_InputDesc($FormularName,$InputName_Group,___("Gruppen waehlen, STRG/CTRL gedrueckt halten und klicken f. Mehrfachauswahl"));
 $Form->set_InputReadonly($FormularName,$InputName_Group,false);
 $Form->set_InputOrder($FormularName,$InputName_Group,6);
 $Form->set_InputLabel($FormularName,$InputName_Group,"");
@@ -53,7 +53,7 @@ for ($accg=0; $accg<$acg; $accg++)
 $Form->new_Input($FormularName,$InputName_Status,"select", "");
 $Form->set_InputDefault($FormularName,$InputName_Status,0);
 $Form->set_InputStyleClass($FormularName,$InputName_Status,"mFormSelect","mFormSelectFocus");
-$Form->set_InputDesc($FormularName,$InputName_Status,"Nur Adressen mit diesem Status exportieren");
+$Form->set_InputDesc($FormularName,$InputName_Status,___("Nur Adressen mit diesem Status exportieren"));
 $Form->set_InputReadonly($FormularName,$InputName_Status,false);
 $Form->set_InputOrder($FormularName,$InputName_Status,6);
 $Form->set_InputLabel($FormularName,$InputName_Status,"");
@@ -95,13 +95,13 @@ $_MAIN_OUTPUT.= $Form->INPUT[$FormularName]['set']['html'];
 $_MAIN_OUTPUT.= "<table>";
 $_MAIN_OUTPUT.= "<tr>";
 $_MAIN_OUTPUT.= "<td valign=top>";
-$_MAIN_OUTPUT.= "Gruppe:<br>";
+$_MAIN_OUTPUT.= ___("Gruppe:")."<br>";
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Group]['html'];
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "</tr>";
 $_MAIN_OUTPUT.= "<tr>";
 $_MAIN_OUTPUT.= "<td valign=top>";
-$_MAIN_OUTPUT.= "Adressen mit folgendem Status:<br>";
+$_MAIN_OUTPUT.= ___("Adressen mit folgendem Status:")."<br>";
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Status]['html'];
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "</tr>";

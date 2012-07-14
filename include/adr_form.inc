@@ -24,7 +24,7 @@ $Form->new_Form($FormularName,$_SERVER["PHP_SELF"],"post","_self");
 ////$Form->set_FormStyleClass($FormularName,"mForm");
 ////$Form->set_FormInputStyleClass($FormularName,"mFormText","mFormTextFocus");
 //add a Description
-$Form->set_FormDesc($FormularName,"neue Adresse erstellen");
+$Form->set_FormDesc($FormularName,___("Neue Adresse erstellen"));
 //variable content aus menu als hidden field!
 //$Form->new_Input($FormularName,"type", "hidden", $content);
 $Form->new_Input($FormularName,"act", "hidden", $action);
@@ -37,7 +37,7 @@ $Form->new_Input($FormularName,"adr_id", "hidden", $adr_id);
 $Form->new_Input($FormularName,$InputName_Name,"text", $$InputName_Name);
 $Form->set_InputStyleClass($FormularName,$InputName_Name,"mFormText","mFormTextFocus");
 $Form->set_InputSize($FormularName,$InputName_Name,48,256);
-$Form->set_InputDesc($FormularName,$InputName_Name,"e-Mail");
+$Form->set_InputDesc($FormularName,$InputName_Name,___("E-Mail"));
 $Form->set_InputReadonly($FormularName,$InputName_Name,false);
 $Form->set_InputOrder($FormularName,$InputName_Name,1);
 $Form->set_InputLabel($FormularName,$InputName_Name,"");
@@ -47,7 +47,7 @@ $Form->set_InputLabel($FormularName,$InputName_Name,"");
 	$Form->set_InputDefault($FormularName,$InputName_Aktiv,$$InputName_Aktiv);
 	$Form->set_InputStyleClass($FormularName,$InputName_Aktiv,"mFormCheckbox","mFormCheckboxFocus");
 	$Form->set_InputSize($FormularName,$InputName_Aktiv,1,1);
-	$Form->set_InputDesc($FormularName,$InputName_Aktiv,"Aktiv");
+	$Form->set_InputDesc($FormularName,$InputName_Aktiv,___("Aktiv"));
 	$Form->set_InputReadonly($FormularName,$InputName_Aktiv,false);
 	$Form->set_InputOrder($FormularName,$InputName_Aktiv,2);
 	$Form->set_InputLabel($FormularName,$InputName_Aktiv,"");
@@ -56,7 +56,7 @@ $Form->set_InputLabel($FormularName,$InputName_Name,"");
 $Form->new_Input($FormularName,$InputName_Group,"select", "");
 //$Form->set_InputDefault($FormularName,$InputName_Group,$adr_grp);
 $Form->set_InputStyleClass($FormularName,$InputName_Group,"mFormSelect","mFormSelectFocus");
-$Form->set_InputDesc($FormularName,$InputName_Group,"Gruppen waehlen, STRG/CTRL gedrueckt halten und klicken f. Mehrfachauswahl");
+$Form->set_InputDesc($FormularName,$InputName_Group,___("Gruppen waehlen, STRG/CTRL gedrueckt halten und klicken f. Mehrfachauswahl"));
 $Form->set_InputReadonly($FormularName,$InputName_Group,false);
 $Form->set_InputOrder($FormularName,$InputName_Group,6);
 $Form->set_InputLabel($FormularName,$InputName_Group,"");
@@ -76,7 +76,7 @@ for ($accg=0; $accg<$acg; $accg++)
 $Form->new_Input($FormularName,$InputName_Status,"select", "");
 $Form->set_InputDefault($FormularName,$InputName_Status,$status);
 $Form->set_InputStyleClass($FormularName,$InputName_Status,"mFormSelect","mFormSelectFocus");
-$Form->set_InputDesc($FormularName,$InputName_Status,"Status");
+$Form->set_InputDesc($FormularName,$InputName_Status,___("Status"));
 $Form->set_InputReadonly($FormularName,$InputName_Status,false);
 $Form->set_InputOrder($FormularName,$InputName_Status,6);
 $Form->set_InputLabel($FormularName,$InputName_Status,"");
@@ -183,7 +183,7 @@ $Form->set_InputLabel($FormularName,$InputName_F9,"");
 
 
 //submit button 
-$Form->new_Input($FormularName,$InputName_Submit,"submit","Speichern");
+$Form->new_Input($FormularName,$InputName_Submit,"submit",___("Speichern"));
 $Form->set_InputStyleClass($FormularName,$InputName_Submit,"mFormSubmit","mFormSubmitFocus");
 $Form->set_InputDesc($FormularName,$InputName_Submit,"");
 $Form->set_InputReadonly($FormularName,$InputName_Submit,false);
@@ -191,9 +191,9 @@ $Form->set_InputOrder($FormularName,$InputName_Submit,998);
 $Form->set_InputLabel($FormularName,$InputName_Submit,"");
 
 //a reset button
-$Form->new_Input($FormularName,$InputName_Reset,"reset","Reset");
+$Form->new_Input($FormularName,$InputName_Reset,"reset",___("Reset"));
 $Form->set_InputStyleClass($FormularName,$InputName_Reset,"mFormReset","mFormResetFocus");
-$Form->set_InputDesc($FormularName,$InputName_Reset,"Reset");
+$Form->set_InputDesc($FormularName,$InputName_Reset,___("Reset"));
 $Form->set_InputReadonly($FormularName,$InputName_Reset,false);
 $Form->set_InputOrder($FormularName,$InputName_Reset,999);
 $Form->set_InputLabel($FormularName,$InputName_Reset,"");
@@ -213,21 +213,21 @@ $_MAIN_OUTPUT.= "<table border=0>";
 
 $_MAIN_OUTPUT.= "<tr>";
 $_MAIN_OUTPUT.= "<td valign=top>";
-$_MAIN_OUTPUT.= "e-Mail";
+$_MAIN_OUTPUT.= ___("E-Mail");
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "<td valign=top>";
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Name]['html'];
 $_MAIN_OUTPUT.= "</td>";
 
 $_MAIN_OUTPUT.= "<td valign=top rowspan=13 align=left>";
-$_MAIN_OUTPUT.= "Gruppen<br>";
+$_MAIN_OUTPUT.= ___("Gruppen")."<br>";
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Group]['html'];
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "</tr>";
 
 $_MAIN_OUTPUT.= "<tr>";
 $_MAIN_OUTPUT.= "<td valign=top>";
-$_MAIN_OUTPUT.= "Aktiv";
+$_MAIN_OUTPUT.= ___("Aktiv");
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "<td valign=top 	align=left>";
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Aktiv]['html'];
@@ -236,7 +236,7 @@ $_MAIN_OUTPUT.= "</tr>";
 
 $_MAIN_OUTPUT.= "<tr>";
 $_MAIN_OUTPUT.= "<td valign=top>";
-$_MAIN_OUTPUT.= "Status";
+$_MAIN_OUTPUT.= ___("Status");
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "<td valign=top 	align=left>";
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Status]['html'];

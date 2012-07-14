@@ -12,7 +12,7 @@
 /* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
 /********************************************************************************/
 
-$_MAIN_DESCR="Newslettergruppen verwalten";
+$_MAIN_DESCR=___("Newslettergruppen verwalten");
 $_MAIN_MESSAGE.="";
 
 $NEWSLETTER=new mnlNL();
@@ -25,18 +25,18 @@ $doit=getVar("doit");//wird per js an url angefuegt!!! confirm()
 if ($set=="aktiv") {
 	$NEWSLETTER->setGRPAktiv($nl_grp_id,$val);
 	if ($val==1) { 
-		$_MAIN_MESSAGE.="<br>Eintrag wurde aktiviert.";
+		$_MAIN_MESSAGE.="<br>".___("Eintrag wurde aktiviert.");
 	} else  {
-		$_MAIN_MESSAGE.="<br>Eintrag wurde de-aktiviert.";
+		$_MAIN_MESSAGE.="<br>".___("Eintrag wurde de-aktiviert.");
 	}
 }
 if ($set=="standard") {
 	$NEWSLETTER->setGRPStd($nl_grp_id,$val);
-	$_MAIN_MESSAGE.="<br>Neue Standardgruppe wurde definiert.";
+	$_MAIN_MESSAGE.="<br>".___("Neue Standardgruppe wurde definiert.");
 }
 if ($set=="delete" && $doit==1) {
 	$NEWSLETTER->delGRP($nl_grp_id);
-	$_MAIN_MESSAGE.="<br>Eintrag wurde geloescht.";
+	$_MAIN_MESSAGE.="<br>".___("Eintrag wurde gel&ouml;scht.");
 }
 
 
@@ -73,11 +73,11 @@ $_MAIN_OUTPUT.= "<thead>
 						<tr>
 						<td><b>&nbsp;</b>
 						</td>
-						<td><b>Name</b>
+						<td><b>".___("Name")."</b>
 						</td>
-						<td><b>Beschreibung</b>
+						<td><b>".___("Beschreibung")."</b>
 						</td>
-						<td><b>Aktiv</b>
+						<td><b>".___("Aktiv")."</b>
 						</td>
 						<td>...</td>
 						</tr>
@@ -123,26 +123,26 @@ for ($nccg=0;$nccg<$ncg;$nccg++) {
 */
 	//wenn standardgruppe, dann icon anzeigen
 	if ($GRP[$nccg]['standard']==1) {
-		$_MAIN_OUTPUT.=  "&nbsp;<img src=\"".$mnl_iconURL."/page_white_lightning.png\" titlt=\"Diese Gruppe ist die Standardgruppe\" border=\"0\">";
+		$_MAIN_OUTPUT.=  "&nbsp;<img src=\"".$mnl_iconURL."/page_white_lightning.png\" title=\"".___("Diese Gruppe ist die Standardgruppe")."\" border=\"0\">";
 	}
 	$_MAIN_OUTPUT.= "</td>";
 	$_MAIN_OUTPUT.= "<td onmousemove=\"showToolTip('tt_adr_grp_list_".$GRP[$nccg]['id']."')\" onmouseout=\"hideToolTip();\">";
-	$_MAIN_OUTPUT.= "<a href=\"".$mnl_URL."/".$editURLPara_."\" title=\"Newslettergruppe bearbeiten\">".$GRP[$nccg]['name']."</a>";
+	$_MAIN_OUTPUT.= "<a href=\"".$mnl_URL."/".$editURLPara_."\" title=\"".___("Newslettergruppe bearbeiten")."\">".$GRP[$nccg]['name']."</a>";
 	$_MAIN_OUTPUT.= "<div id=\"tt_adr_grp_list_".$GRP[$nccg]['id']."\" class=\"tooltip\">";
 	$_MAIN_OUTPUT.= "ID: ".$GRP[$nccg]['id']." ";
 	if ($GRP[$nccg]['aktiv']==1) {
 		$_MAIN_OUTPUT.=  "<img src=\"".$mnl_iconURL."/tick.png\" border=\"0\">";
-		$_MAIN_OUTPUT.=  "(aktiv)";
+		$_MAIN_OUTPUT.=  ___("(aktiv)");
 	} else {
 		$_MAIN_OUTPUT.=  "<img src=\"".$mnl_iconURL."/cancel.png\" border=\"0\">";
-		$_MAIN_OUTPUT.=  "(inaktiv)";
+		$_MAIN_OUTPUT.=  ___("(inaktiv)");
 	}
 	//wenn standardgruppe, dann icon anzeigen
 	if ($GRP[$nccg]['standard']==1) {
-		$_MAIN_OUTPUT.=  "<br><img src=\"".$mnl_iconURL."/page_white_lightning.png\" title=\"Diese Gruppe ist die Standardgruppe\" alt=\"Diese Gruppe ist die Standardgruppe\" border=\"0\">Standardgruppe!";
+		$_MAIN_OUTPUT.=  "<br><img src=\"".$mnl_iconURL."/page_white_lightning.png\" title=\"".___("Diese Gruppe ist die Standardgruppe")."\" alt=\"".___("Diese Gruppe ist die Standardgruppe")."\" border=\"0\">".___("Standardgruppe");
 	}
 	$_MAIN_OUTPUT.="<br><b>".$GRP[$nccg]['name']."</b><br>";
-	$_MAIN_OUTPUT.=$GRP[$nccg]['nl_count']." Newsletter<br>";
+	$_MAIN_OUTPUT.=$GRP[$nccg]['nl_count']." ".___("Newsletter")."<br>";
 	$_MAIN_OUTPUT.= "<font size=\"-1\">".$GRP[$nccg]['descr']."</font>";
 	$_MAIN_OUTPUT.= "</div>";
 	$_MAIN_OUTPUT.= "</td>";
@@ -152,7 +152,7 @@ for ($nccg=0;$nccg<$ncg;$nccg++) {
 	$_MAIN_OUTPUT.= "<td>";
 	//wenn gruppe keine standardgruppe ist, dann link zum deaktivieren, deaktivierete gruppen koennen naemlich keine standardgruppe sein
 	if ($GRP[$nccg]['standard']!=1) {
-		$_MAIN_OUTPUT.= "<a href=\"".$mnl_URL."/".$aktivURLPara_."\" title=\"aktivieren/de-aktivieren\">";
+		$_MAIN_OUTPUT.= "<a href=\"".$mnl_URL."/".$aktivURLPara_."\" title=\"".___("aktivieren/de-aktivieren")."\">";
 	}
 	if ($GRP[$nccg]['aktiv']==1) {
 		//aktiv
@@ -167,9 +167,9 @@ for ($nccg=0;$nccg<$ncg;$nccg++) {
 	}
 	$_MAIN_OUTPUT.= "</td>";
 	$_MAIN_OUTPUT.= "<td>";
-	$_MAIN_OUTPUT.= "<a href=\"".$mnl_URL."/".$editURLPara_."\" title=\"Newslettergruppe bearbeiten\"><img src=\"".$mnl_iconURL."/pencil.png\" border=\"0\"></a>";
-	$_MAIN_OUTPUT.= "&nbsp;<a href=\"".$mnl_URL."/".$addnlURLPara_."\" title=\"neuen Newsletter in dieser Gruppe erstellen\"><img src=\"".$mnl_iconURL."/newspaper_add.png\" border=\"0\"></a>";	
-	$_MAIN_OUTPUT.= "&nbsp;<a href=\"".$mnl_URL."/".$shownlURLPara_."\" title=\"alle Newsletter in dieser Gruppe anzeigen\"><img src=\"".$mnl_iconURL."/newspaper_go.png\" border=\"0\">&nbsp;".$GRP[$nccg]['nl_count']."</a>";
+	$_MAIN_OUTPUT.= "<a href=\"".$mnl_URL."/".$editURLPara_."\" title=\"".___("Newslettergruppe bearbeiten")."\"><img src=\"".$mnl_iconURL."/pencil.png\" border=\"0\"></a>";
+	$_MAIN_OUTPUT.= "&nbsp;<a href=\"".$mnl_URL."/".$addnlURLPara_."\" title=\"".___("Neuen Newsletter in dieser Gruppe erstellen")."\"><img src=\"".$mnl_iconURL."/newspaper_add.png\" border=\"0\"></a>";	
+	$_MAIN_OUTPUT.= "&nbsp;<a href=\"".$mnl_URL."/".$shownlURLPara_."\" title=\"".___("Alle Newsletter in dieser Gruppe anzeigen")."\"><img src=\"".$mnl_iconURL."/newspaper_go.png\" border=\"0\">&nbsp;".$GRP[$nccg]['nl_count']."</a>";
 	//$_MAIN_OUTPUT.=  "&nbsp;<a href=\"".$mnl_URL."/".$statURLPara_."\" title=\"Statistik anzeigen\"><img src=\"".$mnl_iconURL."/chart_pie.png\" border=\"0\"></a>";
 	if ($GRP[$nccg]['standard']==1) {
 		//wenn gruppe standard ist, dann bildchen anzeigen, wird auch neben id angezeigt
@@ -177,10 +177,10 @@ for ($nccg=0;$nccg<$ncg;$nccg++) {
 	} else {
 		//wenn gruppe aktiv ist, dann darf man sie als standard definieren
 		if ($GRP[$nccg]['aktiv']==1) {
-			$_MAIN_OUTPUT.=  "&nbsp;<a href=\"".$mnl_URL."/".$stdURLPara_."\" onclick=\"return confirmLink(this, 'Newslettergruppe ".$GRP[$nccg]['name']." als Standard definieren')\" title=\"Diese Newslettergruppe als Standardgruppe\"><img src=\"".$mnl_iconURL."/page_white_go.png\" border=\"0\"></a>";
+			$_MAIN_OUTPUT.=  "&nbsp;<a href=\"".$mnl_URL."/".$stdURLPara_."\" onclick=\"return confirmLink(this, '".sprintf(___("Newslettergruppe %s als Standard definieren"),$GRP[$nccg]['name'])."')\" title=\"".___("Diese Newslettergruppe als Standardgruppe")."\"><img src=\"".$mnl_iconURL."/page_white_go.png\" border=\"0\"></a>";
 		}
 		//loeschen
-		$_MAIN_OUTPUT.= "&nbsp;<a href=\"".$mnl_URL."/".$delURLPara_."\" onclick=\"return confirmLink(this, 'Newslettergruppe ".$GRP[$nccg]['name']." loeschen und Newsletter dieser Gruppe der Standardgruppe zuordnen?')\" title=\"Newslettergruppe loeschen\"><img src=\"".$mnl_iconURL."/cross.png\" border=\"0\"></a>";
+		$_MAIN_OUTPUT.= "&nbsp;<a href=\"".$mnl_URL."/".$delURLPara_."\" onclick=\"return confirmLink(this, '".sprintf(___("Newslettergruppe %s loeschen und Newsletter dieser Gruppe der Standardgruppe zuordnen?"),$GRP[$nccg]['name'])."')\" title=\"".___("Newslettergruppe loeschen")."\"><img src=\"".$mnl_iconURL."/cross.png\" border=\"0\"></a>";
 	}
 	$_MAIN_OUTPUT.= "</td>";
 	$_MAIN_OUTPUT.= "</tr>";

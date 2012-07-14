@@ -39,7 +39,7 @@ $Mail=$Bounce->filterBounces($Mail,1,1,$bounce);//$Messages , checkHeader=1, che
 
 $mc=count($Mail);					
 
-$_MAIN_OUTPUT .= "<br>Gesamt: ".$Mailer->count_msg." Mails";
+$_MAIN_OUTPUT .= "<br>".sprintf(___("Gesamt: %s Mails"),$Mailer->count_msg);
 //$_MAIN_OUTPUT .= "<br>Angezeigt werden max. $limit / $mc Mails.";
 
 if ($mc>0) {
@@ -50,9 +50,9 @@ if ($mc>0) {
 							<tr>
 							<td style=\"width:80px;\">&nbsp;
 							</td>
-							<td style=\"width:240px;\"><b>Betreff / Text</b>
+							<td style=\"width:240px;\"><b>".___("Betreff / Text")."</b>
 							</td>
-							<td><b>Adressen</b>
+							<td><b>".___("Adressen")."</b>
 							</td>
 							</tr>
 							</thead>
@@ -85,10 +85,10 @@ if ($mc>0) {
 		$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Mail]['html'];
 		$_MAIN_OUTPUT.= $Mail[$mcc]['no'].".";
 		if ($Mail[$mcc]['to']==$ReturnPath) {
-			$_MAIN_OUTPUT.= "<img src=\"".$mnl_iconURL."/status_offline.png\" border=\"0\" title=\"Return Mail\">";
+			$_MAIN_OUTPUT.= "<img src=\"".$mnl_iconURL."/status_offline.png\" border=\"0\" title=\"".___("Return Mail")."\">";
 		}
 		if ($Mail[$mcc]['is_bouncemail']==1) {
-			$_MAIN_OUTPUT.= "<img src=\"".$mnl_iconURL."/sport_soccer.png\" border=\"0\" title=\"Bounce Mail erkannt\">";
+			$_MAIN_OUTPUT.= "<img src=\"".$mnl_iconURL."/sport_soccer.png\" border=\"0\" title=\"".___("Bounce Mail erkannt")."\">";
 		}
 		$_MAIN_OUTPUT.= "<div id=\"tt_bouncemail_list_".$mcc."\" class=\"tooltip\">";
 		$_MAIN_OUTPUT.= "NR  <b>".$Mail[$mcc]['no']."</b>";
@@ -102,7 +102,7 @@ if ($mc>0) {
 	
 		$_MAIN_OUTPUT.= "<td valign=\"top\">";
 		$_MAIN_OUTPUT.= "<div>";		
-		$_MAIN_OUTPUT.= "<a href=\"javascript:switchSection('tt_bouncemail_text_".$mcc."')\" title=\"Text und Details anzeigen\"><img src=\"".$mnl_iconURL."/page.png\" border=\"0\"></a>";
+		$_MAIN_OUTPUT.= "<a href=\"javascript:switchSection('tt_bouncemail_text_".$mcc."')\" title=\"".___("Text und Details anzeigen")."\"><img src=\"".$mnl_iconURL."/page.png\" border=\"0\"></a>";
 		$_MAIN_OUTPUT.= "<font size=-1>";
 		$_MAIN_OUTPUT.= "".$Mail[$mcc]['subject']."";
 		$_MAIN_OUTPUT.= "</font>";
@@ -123,7 +123,7 @@ if ($mc>0) {
 		//wenn bounces .....
 		if (count($Mail[$mcc]['bounce'])) {
 			$_MAIN_OUTPUT.= "<div>";		
-			$_MAIN_OUTPUT.= "<a href=\"javascript:switchSection('tt_bouncemail_adr_".$mcc."')\" title=\"Adressen anzeigen\"><img src=\"".$mnl_iconURL."/user_orange.png\" border=\"0\"></a>";
+			$_MAIN_OUTPUT.= "<a href=\"javascript:switchSection('tt_bouncemail_adr_".$mcc."')\" title=\"".___("Adressen anzeigen")."\"><img src=\"".$mnl_iconURL."/user_orange.png\" border=\"0\"></a>";
 			$_MAIN_OUTPUT.= "</div>";
 			//div fuer adressen
 			$_MAIN_OUTPUT.= "<div id=\"tt_bouncemail_adr_".$mcc."\">";
@@ -142,7 +142,7 @@ if ($mc>0) {
 	
 	$_MAIN_OUTPUT.= "<tr>";
 	$_MAIN_OUTPUT.= "<td colspan=4>";
-	$_MAIN_OUTPUT.= "<a href=\"javascript:checkAllForm('".$FormularName."');\" title=\"Markierung fuer alle angezeigten e-Mails umkehren\">Alle auswaehlen / Markierung fuer alle angezeigten e-Mails umkehren</a>";
+	$_MAIN_OUTPUT.= "<a href=\"javascript:checkAllForm('".$FormularName."');\" title=\"".___("Markierung fuer alle angezeigten E-Mails umkehren")."\">".___("Alle ausw&auml;hlen / Markierung f&uuml;r alle angezeigten E-Mails umkehren")."</a>";
 	//$_MAIN_OUTPUT.= "<a href=\"javascript:checkByID('".$InputName_Mail."');\">alle auswaehlen</a><br>";
 	//$_MAIN_OUTPUT.= "<a href=\"javascript:checkAll();\">alle auswaehlen</a><br>";
 	$_MAIN_OUTPUT.= "</td>";
@@ -154,10 +154,9 @@ if ($mc>0) {
 	$bctotal=count($Bounces);
 	$Bounces=unify_array($Bounces);
 	$bc=count($Bounces);		
-	$_MAIN_OUTPUT.="<br>Es wurden $mc Mails durchsucht. 
-								<br>$bcmatch Mails ergaben einen Treffer. 
-								<br>Es wurden aus $bctotal Adressen $bc potentiell Fehlerhafte Adressen erkannt.
-								";
+	$_MAIN_OUTPUT.="<br>".sprintf(___("Es wurden %s Mails durchsucht."),$mc)." 
+								<br>".sprintf(___("%s Mails ergaben einen Treffer."),$bcmatch)." 
+								<br>".sprintf(___("Es wurden aus %s Adressen %s potentiell Fehlerhafte Adressen erkannt."),$bctotal,$bc);
 	
 }//mc>0
 

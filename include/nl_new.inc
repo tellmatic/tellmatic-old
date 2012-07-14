@@ -12,7 +12,7 @@
 /* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
 /********************************************************************************/
 
-$_MAIN_DESCR="neuen Newsletter erstellen";
+$_MAIN_DESCR=___("Neuen Newsletter erstellen");
 $_MAIN_MESSAGE.="";
 
 $set=getVar("set");
@@ -52,7 +52,7 @@ $$InputName_Group=getVar($InputName_Group);
 $check=true;
 if ($set=="save") {
 	//checkinput
-	if (empty($subject)) {$check=false;$_MAIN_MESSAGE.="<br>Betreff sollte nicht leer sein.";}
+	if (empty($subject)) {$check=false;$_MAIN_MESSAGE.="<br>".___("Betreff sollte nicht leer sein.");}
 
 	//upload ?!
 	include_once ($mnl_includepath."/nl_upload.inc");
@@ -74,12 +74,12 @@ if ($set=="save") {
 									"attm"=>$attach_ext
 									)
 								);
-		$_MAIN_MESSAGE.="<br>Neuer Newsletter '<b>".$subject."</b>' wurde erstellt.";
-		$_MAIN_MESSAGE.= "<br>Der Newsletter wurde gespeichert unter:
+		$_MAIN_MESSAGE.="<br>".sprintf(___("Neuer Newsletter %s wurde erstellt."),"'<b>".$subject."</b>'");
+		$_MAIN_MESSAGE.= "<br>".___("Der Newsletter wurde gespeichert unter:")."
 				<ul>
-				Template: <a href=\"".$mnl_nldir."/".$NL_Filename_N."\" target=\"_preview\">".$mnl_nldir."/".$NL_Filename_N."</a>
+				".___("Template:")." <a href=\"".$mnl_nldir."/".$NL_Filename_N."\" target=\"_preview\">".$mnl_nldir."/".$NL_Filename_N."</a>
 				<br>
-				Online: <a href=\"".$mnl_nldir."/".$NL_Filename_P."\"  target=\"_preview\">".$mnl_nldir."/".$NL_Filename_P."</a>
+				".___("Online:")." <a href=\"".$mnl_nldir."/".$NL_Filename_P."\"  target=\"_preview\">".$mnl_nldir."/".$NL_Filename_P."</a>
 				</ul>
 				";
 		$action="nl_list";

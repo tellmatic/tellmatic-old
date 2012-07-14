@@ -22,7 +22,7 @@ $FormularName="unsubscribe";
 //$Form->new_Form($FormularName,$mnl_URL."/unsubscribe.php","post","_self");
 $Form->new_Form($FormularName,$_SERVER["PHP_SELF"],"post","_self");
 //add a Description
-$Form->set_FormDesc($FormularName,"");
+$Form->set_FormDesc($FormularName,"unsubscribe");
 $Form->new_Input($FormularName,"set", "hidden", "unsubscribe");
 $Form->new_Input($FormularName,"a_id", "hidden", $a_id);
 $Form->new_Input($FormularName,"h_id", "hidden", $h_id);

@@ -23,7 +23,7 @@ $FormularName="subscribe".$FRM[0]['id'];
 $Form->new_Form($FormularName,$_SERVER["PHP_SELF"],"post","_self");
 
 //add a Description
-$Form->set_FormDesc($FormularName,"");
+$Form->set_FormDesc($FormularName,"subscribe");
 $Form->new_Input($FormularName,"set", "hidden", "save");
 $Form->new_Input($FormularName,"fid", "hidden", $frm_id);
 $Form->new_Input($FormularName,"cpt", "hidden", $captcha_code);

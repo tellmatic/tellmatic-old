@@ -12,7 +12,7 @@
 /* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
 /********************************************************************************/
 
-$_MAIN_DESCR="Adresse bearbeiten";
+$_MAIN_DESCR=___("Adresse bearbeiten");
 $_MAIN_MESSAGE.="";
 
 $set=getVar("set");
@@ -61,9 +61,9 @@ $$InputName_F9=getVar($InputName_F9);
 $check=true;
 if ($set=="save") {
 	//checkinput
-	if (empty($email)) {$check=false;$_MAIN_MESSAGE.="<br>e-Mail darf nicht leer sein.";}
+	if (empty($email)) {$check=false;$_MAIN_MESSAGE.="<br>".___("E-Mail darf nicht leer sein.");}
 	//email auf gueltigkeit pruefen
-	if (!checkemailadr($email,$EMailcheck_Intern)) {$check=false;$_MAIN_MESSAGE.="<br>e-Mail ist nicht korrekt oder Domain ist nicht gueltig.";}
+	if (!checkemailadr($email,$EMailcheck_Intern)) {$check=false;$_MAIN_MESSAGE.="<br>".___("E-Mail ist nicht korrekt oder Domain ist nicht g&uuml;tig.");}
 	if ($check) {
 		$ADDRESS=new mnlADR();
 		$ADDRESS->updateAdr(Array(
@@ -86,7 +86,7 @@ if ($set=="save") {
 				$adr_grp);
 		$ADDRESS->setStatus($adr_id,$status);
 
-		$_MAIN_MESSAGE.="<br>Adresse '<b>".$email."</b>' wurde bearbeitet.";
+		$_MAIN_MESSAGE.="<br>".sprintf(___("Adresse %s wurde bearbeitet."),"<b>".$email."</b>");
 		$action="adr_list";
 		include_once ("adr_list.inc");
 	} else {

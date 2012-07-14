@@ -13,6 +13,11 @@
 /********************************************************************************/
 
 /**functions**/
+
+function ___($s) {
+	return _($s);
+}
+
 function date_convert_to_string($date) {
 	//ersetzt leerzeichen etc, damit wir das datum in den dateinamen einbauen koennen...
 	$date=str_replace(".","",$date);

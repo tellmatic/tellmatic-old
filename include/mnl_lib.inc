@@ -19,7 +19,7 @@ if (!isset($mnl_config)) {
 if (!$mnl_config) {
 
 	//siteid //achtung, siteid aendern heisst komplett neuer datenstamm... es muessen auch user angelegt werden.... oehm... nicht aendern!!!
-	$mnl_siteid="mnl";
+	define("MNL_SITEID","mnl");
 
 	///////////////////////////////
 	//////////////STOP/////////////
@@ -32,7 +32,7 @@ if (!$mnl_config) {
 	///////////////////////////////
 	
 
-	//dirty hack for php5! wil be fixed soon! for now we use this dirty hack until i cleaned up the messy code to work with php5.... * no comments ;-)
+	//hacks for php5
 	if (version_compare(phpversion(), "5.0", ">=")) {   $usePhp5=true; } else {  $usePhp5=false; }
 	define("PHP5",$usePhp5);
 	if (PHP5) ini_set('zend.ze1_compatibility_mode', '1');
@@ -138,16 +138,31 @@ if (!$mnl_config) {
 	//funktionen
 	require_once ($mnl_includepath."/Functions.inc");
 	
-	//compress output
-	m_obstart();
-	
+
+	// define constants for phpgettext
+	define("PROJECT_DIR", $mnl_path);
+	define("LOCALE_DIR", PROJECT_DIR .'/locale');
+	define("DEFAULT_LOCALE", 'unknown');//de
+	//phpgettext	
+	require_once ($mnl_includepath."/gettext/gettext.inc");
+	require_once($mnl_includepath."/gettext/streams.php");
+	require_once($mnl_includepath."/gettext/gettext.php");
+
+	//gettext!
+	$LANGUAGES=Array(	'lang' => Array('de','en','es','fr','it',),
+										'text' => Array('Deutsch','English','Espanol (not translated yet)','France (not translated yet)','Italiano (not translated yet)',),
+									);
+	$supported_locales = $LANGUAGES['lang'];//array('en', 'de');
+
 	//klassen
 	require_once ($mnl_includepath."/Classes.inc");
 
+	$encoding = 'UTF-8';
+	header("Content-type: text/html; charset=$encoding");
 
 	//config aus db holen
 	$CONFIG=new mnlCFG();
-	$C=$CONFIG->getCFG($mnl_siteid);
+	$C=$CONFIG->getCFG(MNL_SITEID);
 
 	$send_notification_subscribe=$C[0]['notify_subscribe'];
 	$send_notification_unsubscribe=$C[0]['notify_unsubscribe'];
@@ -185,37 +200,38 @@ if (!$mnl_config) {
 	$EMAILCHECK['subscribe'][2]="Syntax + MX/DNS";
 	$EMAILCHECK['subscribe'][3]="Syntax, MX/DNS + Validate";
 
+
 	//STATUSCODES
 	//statuscodes der adressen und bilder dazu
 	//$STATUS['adr']['status'][0]="--";
 	 
 	//achtung!!! wenn neuer status dann auch beim versenden beachten......... und evtll. anfuegen an if abfrage, send.inc
-	$STATUS['adr']['status'][1]="Neu";
-	$STATUS['adr']['status'][2]="OK";
-	$STATUS['adr']['status'][3]="Bestaetigt";
-	$STATUS['adr']['status'][4]="View";
-	$STATUS['adr']['status'][5]="Warten";
+	$STATUS['adr']['status'][1]=___("Neu");
+	$STATUS['adr']['status'][2]=___("OK");
+	$STATUS['adr']['status'][3]=___("Bestaetigt");
+	$STATUS['adr']['status'][4]=___("Angezeigt");
+	$STATUS['adr']['status'][5]=___("Warten");
 	$STATUS['adr']['status'][6]="6";
 	$STATUS['adr']['status'][7]="7";
-	$STATUS['adr']['status'][8]="Fehler C";
-	$STATUS['adr']['status'][9]="Fehler A";
-	$STATUS['adr']['status'][10]="Fehler S";
-	$STATUS['adr']['status'][11]="unsubscribed";
-	$STATUS['adr']['status'][12]="touch";
+	$STATUS['adr']['status'][8]=___("Fehler C");
+	$STATUS['adr']['status'][9]=___("Fehler A");
+	$STATUS['adr']['status'][10]=___("Fehler S");
+	$STATUS['adr']['status'][11]=___("Abgemeldet");
+	$STATUS['adr']['status'][12]=___("Touch");
 	
 	
-	$STATUS['adr']['descr'][1]="Neuanmeldung";
-	$STATUS['adr']['descr'][2]="manuell Eingetragen, Syntax Geprueft, Senden OK";
-	$STATUS['adr']['descr'][3]="Bestaetigt, Double Opt-In";
-	$STATUS['adr']['descr'][4]="Rechecked, NL/Blindimage angezeigt";
-	$STATUS['adr']['descr'][5]="Warten auf Bestaetigung (Double-Opt-IN)";
-	$STATUS['adr']['descr'][6]="undefiniert";
-	$STATUS['adr']['descr'][7]="undefiniert";
-	$STATUS['adr']['descr'][8]="Fehler beim versenden, Status/Aktiv wurde geaendert vor dem versenden!";
-	$STATUS['adr']['descr'][9]="Fehlerhafte Adresse o. Ruecklaeufer";
-	$STATUS['adr']['descr'][10]="Fehler beim versenden, neuer Versuch";
-	$STATUS['adr']['descr'][11]="Abgemeldet";
-	$STATUS['adr']['descr'][12]="1st-Touch-Opt-In";
+	$STATUS['adr']['descr'][1]=___("Neuanmeldung");
+	$STATUS['adr']['descr'][2]=___("manuell Eingetragen, Syntax Gepr&uuml;ft, Senden OK");
+	$STATUS['adr']['descr'][3]=___("Best&auml;tigt, Double-Opt-In");
+	$STATUS['adr']['descr'][4]=___("Rechecked, NL/Blindimage angezeigt");
+	$STATUS['adr']['descr'][5]=___("Warten auf Best&auml;tigung (Double-Opt-IN)");
+	$STATUS['adr']['descr'][6]=___("undefiniert");
+	$STATUS['adr']['descr'][7]=___("undefiniert");
+	$STATUS['adr']['descr'][8]=___("Fehler beim versenden, Status/Aktiv wurde ge&auml;ndert vor dem versenden!");
+	$STATUS['adr']['descr'][9]=___("Fehlerhafte Adresse o. Rueckl&auml;ufer");
+	$STATUS['adr']['descr'][10]=___("Fehler beim versenden, neuer Versuch");
+	$STATUS['adr']['descr'][11]=___("Abgemeldet");
+	$STATUS['adr']['descr'][12]=___("1st-Touch-Opt-In");
 	 
 	$STATUS['adr']['statimg'][0]="bullet_black.png";
 	$STATUS['adr']['statimg'][1]="new.png";
@@ -232,19 +248,19 @@ if (!$mnl_config) {
 	$STATUS['adr']['statimg'][12]="user_add.png";//bullet_delete
 	
 	 //statuscodes der newsletter und bilder dazu
-	$STATUS['nl']['status'][1]="Neu";
-	$STATUS['nl']['status'][2]="Queued";
-	$STATUS['nl']['status'][3]="Versand";
-	$STATUS['nl']['status'][4]="Gesendet";
-	$STATUS['nl']['status'][5]="Archiv";
-	$STATUS['nl']['status'][6]="Warten";
+	$STATUS['nl']['status'][1]=___("Neu");
+	$STATUS['nl']['status'][2]=___("Queued");
+	$STATUS['nl']['status'][3]=___("Versand");
+	$STATUS['nl']['status'][4]=___("Gesendet");
+	$STATUS['nl']['status'][5]=___("Archiv");
+	$STATUS['nl']['status'][6]=___("Warten");
 	
-	$STATUS['nl']['descr'][1]="keine Versandauftraege oder Historie f. dieses Newsletter";
-	$STATUS['nl']['descr'][2]="in der Warteschlange";
-	$STATUS['nl']['descr'][3]="Versand gestartet";
-	$STATUS['nl']['descr'][4]="Versendet";
-	$STATUS['nl']['descr'][5]="Archiviert - Qs wurden geloescht";
-	$STATUS['nl']['descr'][6]="Versand vorbereitet, Warten auf Versand (terminiert)";
+	$STATUS['nl']['descr'][1]=___("Keine Versandauftr&auml;ge oder Historie f. dieses Newsletter");
+	$STATUS['nl']['descr'][2]=___("In der Warteschlange");
+	$STATUS['nl']['descr'][3]=___("Versand gestartet");
+	$STATUS['nl']['descr'][4]=___("Versendet");
+	$STATUS['nl']['descr'][5]=___("Archiviert - Qs wurden gel&ouml;scht");
+	$STATUS['nl']['descr'][6]=___("Versand vorbereitet, Warten auf Versand (terminiert)");
 	
 	$STATUS['nl']['statimg'][1]="new.png";
 	$STATUS['nl']['statimg'][2]="clock_orange.png";
@@ -254,17 +270,17 @@ if (!$mnl_config) {
 	$STATUS['nl']['statimg'][6]="clock.png";
 	
 	//statuscodes der Q und bilder dazu
-	$STATUS['q']['status'][1]="Neu";
-	$STATUS['q']['status'][2]="Gestartet";
-	$STATUS['q']['status'][3]="Running";
-	$STATUS['q']['status'][4]="Fertig";
-	$STATUS['q']['status'][5]="Angehalten";
+	$STATUS['q']['status'][1]=___("Neu");
+	$STATUS['q']['status'][2]=___("Gestartet");
+	$STATUS['q']['status'][3]=___("Running");
+	$STATUS['q']['status'][4]=___("Fertig");
+	$STATUS['q']['status'][5]=___("Angehalten");
 	 
 	$STATUS['q']['descr'][1]="";
-	$STATUS['q']['descr'][2]="Wird versendet";
-	$STATUS['q']['descr'][3]="In Arbeit";
-	$STATUS['q']['descr'][4]="Versendet";
-	$STATUS['q']['descr'][5]="Angehalten";
+	$STATUS['q']['descr'][2]=___("Wird versendet");
+	$STATUS['q']['descr'][3]=___("In Arbeit");
+	$STATUS['q']['descr'][4]=___("Versendet");
+	$STATUS['q']['descr'][5]=___("Angehalten");
 	
 	$STATUS['q']['statimg'][1]="new.png";
 	$STATUS['q']['statimg'][2]="clock_orange.png";
@@ -273,19 +289,19 @@ if (!$mnl_config) {
 	$STATUS['q']['statimg'][5]="stop.png";
 	
 	//statuscodes der History und bilder dazu
-	$STATUS['h']['status'][1]="Neu";
-	$STATUS['h']['status'][2]="Fertig";
-	$STATUS['h']['status'][3]="View";
-	$STATUS['h']['status'][4]="Fehler";//
-	$STATUS['h']['status'][5]="Versand";//wird in diesem moment versendet!!!
-	$STATUS['h']['status'][6]="Abbruch";//
+	$STATUS['h']['status'][1]=___("Neu");
+	$STATUS['h']['status'][2]=___("Fertig");
+	$STATUS['h']['status'][3]=___("View");
+	$STATUS['h']['status'][4]=___("Fehler");//
+	$STATUS['h']['status'][5]=___("Versand");//wird in diesem moment versendet!!!
+	$STATUS['h']['status'][6]=___("Abbruch");//
 	 
-	$STATUS['h']['descr'][1]="Warten auf Versand";
-	$STATUS['h']['descr'][2]="Versendet, OK";
-	$STATUS['h']['descr'][3]="Versendet, angezeigt";
-	$STATUS['h']['descr'][4]="Versendet, Fehler";
-	$STATUS['h']['descr'][5]="Wird in diesem Moment versendet!!!";//wird in diesem moment versendet!!!
-	$STATUS['h']['descr'][6]="Abgebrochen, Q geloescht";
+	$STATUS['h']['descr'][1]=___("Warten auf Versand");
+	$STATUS['h']['descr'][2]=___("Versendet, OK");
+	$STATUS['h']['descr'][3]=___("Versendet, angezeigt");
+	$STATUS['h']['descr'][4]=___("Versendet, Fehler");
+	$STATUS['h']['descr'][5]=___("Wird in diesem Moment versendet!!!");
+	$STATUS['h']['descr'][6]=___("Abgebrochen, Q gel&ouml;scht");
 
 	$STATUS['h']['statimg'][1]="new.png";
 	$STATUS['h']['statimg'][2]="bullet_green.png";
@@ -297,10 +313,14 @@ if (!$mnl_config) {
 //////////////////////////////////	
 
 	$ApplicationName="tellmatic";
-	$ApplicationVersion="1.02 mNL";
-	$ApplicationDescr="the newsletter machine";
+	$ApplicationVersion="1.0.3 mNL";
+	$ApplicationDescr=___("the newsletter machine");
 	$ApplicationUrl="www.tellmatic.de";
 	$ApplicationText=$ApplicationName." v".$ApplicationVersion." - ".$ApplicationDescr." (".$ApplicationUrl.")";
+	
+	//compress output
+	m_obstart();
+
 	$mnl_config=true;
 	
 }

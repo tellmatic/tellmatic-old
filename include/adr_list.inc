@@ -12,7 +12,7 @@
 /* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
 /********************************************************************************/
 
-$_MAIN_DESCR="Adressen verwalten";
+$_MAIN_DESCR=___("Adressen verwalten");
 $_MAIN_MESSAGE.="";
 
 if (!isset($offset)) {
@@ -57,14 +57,14 @@ include ("adr_search.inc");
 if ($set=="aktiv") {
 	$ADDRESS->setAktiv($adr_id,$val);
 	if ($val==1) { 
-		$_MAIN_MESSAGE.="<br>Eintrag wurde aktiviert.";
+		$_MAIN_MESSAGE.="<br>".___("Eintrag wurde aktiviert.");
 	} else  {
-		$_MAIN_MESSAGE.="<br>Eintrag wurde de-aktiviert.";
+		$_MAIN_MESSAGE.="<br>".___("Eintrag wurde de-aktiviert.");
 	}
 }
 if ($set=="delete" && $doit==1) {
 	$ADDRESS->delAdr($adr_id);
-	$_MAIN_MESSAGE.="<br>Eintrag wurde geloescht.";
+	$_MAIN_MESSAGE.="<br>".___("Eintrag wurde gel&ouml;scht.");
 }
 
 
@@ -72,7 +72,7 @@ if ($adr_grp_id>0)
 {
 	$ADR=$ADDRESS->getAdr(0,$offset,$limit,$adr_grp_id,$search,$sortIndex,$sortType);//id,offset,limit,group,$search_array
 	$adr_grp=$ADDRESS->getGroup($adr_grp_id);
-	$_MAIN_MESSAGE.="<br>gewaehlte Gruppe: <b>".$adr_grp[0]['name']."</b>";
+	$_MAIN_MESSAGE.="<br>".sprintf(___("gew&auml;hlte Gruppe: %s"),"<b>".$adr_grp[0]['name']."</b>");
 } else {
 	$ADR=$ADDRESS->getAdr(0,$offset,$limit,0,$search,$sortIndex,$sortType);//id,offset,limit,group,$search_array
 }
@@ -153,11 +153,11 @@ include($mnl_includepath."/pager.inc");
 $_MAIN_OUTPUT.="<table border=\"0\" cellpadding=\"1\" cellspacing=\"1\" width=100%>";
 $_MAIN_OUTPUT.= "<thead>
 						<tr>
-						<!--td><b>ID/Detail_ID</b>
+						<!--td><b>".___("ID/Detail_ID")."</b>
 						<a href=\"".$mnl_URL."/".$sortURLPara_."&si=id&st=0\">".$img_arrowup."</a>
 						<a href=\"".$mnl_URL."/".$sortURLPara_."&si=id&st=1\">".$img_arrowdown."</a>
 						</td-->
-						<td><b>e-Mail</b>
+						<td><b>".___("E-Mail")."</b>
 						<a href=\"".$mnl_URL."/".$sortURLPara_."&si=email&st=0\">".$img_arrowup."</a>
 						<a href=\"".$mnl_URL."/".$sortURLPara_."&si=email&st=1\">".$img_arrowdown."</a>
 						</td>
@@ -203,13 +203,12 @@ $_MAIN_OUTPUT.= "<thead>
 						<a href=\"".$mnl_URL."/".$sortURLPara_."&si=f9&st=1\">".$img_arrowdown."</a>
 						</td>
 -->
-						<td><b>Status</b>
+						<td><b>".___("Status")."</b>
 						<a href=\"".$mnl_URL."/".$sortURLPara_."&si=status&st=0\">".$img_arrowup."</a>
 						<a href=\"".$mnl_URL."/".$sortURLPara_."&si=status&st=1\">".$img_arrowdown."</a>
 						</td>
-						<td>Gruppen
-						</td>
-						<td><b>Aktiv</b>
+						<td>".___("Gruppen")."</td>
+						<td><b>".___("Aktiv")."</b>
 						<a href=\"".$mnl_URL."/".$sortURLPara_."&si=aktiv&st=0\">".$img_arrowup."</a>
 						<a href=\"".$mnl_URL."/".$sortURLPara_."&si=aktiv&st=1\">".$img_arrowdown."</a>
 						</td>
@@ -271,13 +270,13 @@ for ($acc=0;$acc<$ac;$acc++) {
 	$_MAIN_OUTPUT.= "ID: ".$ADR[$acc]['id']." / ".$ADR[$acc]['d_id']." ";
 	if ($ADR[$acc]['aktiv']==1) {
 		$_MAIN_OUTPUT.=  "<img src=\"".$mnl_iconURL."/tick.png\" border=\"0\">";
-		$_MAIN_OUTPUT.=  "(aktiv)";
+		$_MAIN_OUTPUT.=  ___("(aktiv)");
 	} else {
 		$_MAIN_OUTPUT.=  "<img src=\"".$mnl_iconURL."/cancel.png\" border=\"0\">";
-		$_MAIN_OUTPUT.=  "(inaktiv)";
+		$_MAIN_OUTPUT.=  ___("(inaktiv)");
 	}
 
-	$_MAIN_OUTPUT.= " Status: <img src=\"".$mnl_iconURL."/".$STATUS['adr']['statimg'][$ADR[$acc]['status']]."\" border=\"0\">".$STATUS['adr']['status'][$ADR[$acc]['status']];
+	$_MAIN_OUTPUT.= sprintf(___("Status: %s"),"<img src=\"".$mnl_iconURL."/".$STATUS['adr']['statimg'][$ADR[$acc]['status']]."\" border=\"0\">".$STATUS['adr']['status'][$ADR[$acc]['status']]);
 	
 	$_MAIN_OUTPUT.= "<br><b>".$ADR[$acc]['email']."</b>
 							<br>CODE: ".$ADR[$acc]['code']." &nbsp;
@@ -291,15 +290,15 @@ for ($acc=0;$acc<$ac;$acc++) {
 							<br>".$ADR[$acc]['f7']." &nbsp;
 							<br>".$ADR[$acc]['f8']." &nbsp;
 							<br>".$ADR[$acc]['f9']." &nbsp;-->
-							<br>erstellt am: ".$created_date." von ".$author."
-							<br>bearbeitet am: ".$updated_date." von ".$editor."
-							<br>Newsletter Aktuell: ".$nlc." 
-							<br>Newsletter Gesamt: ".$ADR[$acc]['newsletter']." 
-							<br>Views: ".$ADR[$acc]['views']."
-							<br>Clicks: ".$ADR[$acc]['clicks']."
-							<br>Sendefehler: ".$ADR[$acc]['errors']." &nbsp;
+							<br>".sprintf(___("erstellt am: %s von: %s"),$created_date,$author)."
+							<br>".sprintf(___("bearbeitet am: %s von %s"),$updated_date,$editor)."
+							<br>".sprintf(___("Newsletter Aktuell: %s"),$nlc)." 
+							<br>".sprintf(___("Newsletter Gesamt: %s"),$ADR[$acc]['newsletter'])." 
+							<br>".sprintf(___("Views: %s"),$ADR[$acc]['views'])."
+							<br>".sprintf(___("Clicks: %s"),$ADR[$acc]['clicks'])."
+							<br>".sprintf(___("Sendefehler: %s"),$ADR[$acc]['errors'])." &nbsp;
 							";
-	$_MAIN_OUTPUT.= "<br>Mitglied in den Gruppen: ";
+	$_MAIN_OUTPUT.= "<br>".___("Mitglied in den Gruppen:");
 	$_MAIN_OUTPUT.= "<ul>";
 	$GRP=$ADDRESS->getGroup(0,$ADR[$acc]['id']);
 	$acg=count($GRP);
@@ -322,7 +321,7 @@ for ($acc=0;$acc<$ac;$acc++) {
 	}
 	$_MAIN_OUTPUT.= "</td>";
 	$_MAIN_OUTPUT.= "<td>";
-	$_MAIN_OUTPUT.= "<a href=\"".$mnl_URL."/".$aktivURLPara_."\" title=\"aktivieren/de-aktivieren\">";
+	$_MAIN_OUTPUT.= "<a href=\"".$mnl_URL."/".$aktivURLPara_."\" title=\"".___("aktivieren/de-aktivieren")."\">";
 	if ($ADR[$acc]['aktiv']==1) {
 		$_MAIN_OUTPUT.=  "<img src=\"".$mnl_iconURL."/tick.png\" border=\"0\">";
 	} else {
@@ -331,9 +330,9 @@ for ($acc=0;$acc<$ac;$acc++) {
 	$_MAIN_OUTPUT.= "</a>";
 	$_MAIN_OUTPUT.= "</td>";
 	$_MAIN_OUTPUT.= "<td>";
-	$_MAIN_OUTPUT.= "<a href=\"".$mnl_URL."/".$editURLPara_."\" title=\"Adresse bearbeiten\"><img src=\"".$mnl_iconURL."/pencil.png\" border=\"0\"></a>";
-	$_MAIN_OUTPUT.=  "&nbsp;<a href=\"".$mnl_URL."/".$statURLPara_."\" title=\"Statistik anzeigen\"><img src=\"".$mnl_iconURL."/chart_pie.png\" border=\"0\"></a>";
-	$_MAIN_OUTPUT.= "&nbsp;<a href=\"".$mnl_URL."/".$delURLPara_."\" onclick=\"return confirmLink(this, 'Adresse loeschen')\" title=\"Adresse loeschen\"><img src=\"".$mnl_iconURL."/cross.png\" border=\"0\"></a>";
+	$_MAIN_OUTPUT.= "<a href=\"".$mnl_URL."/".$editURLPara_."\" title=\"".___("Adresse bearbeiten")."\"><img src=\"".$mnl_iconURL."/pencil.png\" border=\"0\"></a>";
+	$_MAIN_OUTPUT.=  "&nbsp;<a href=\"".$mnl_URL."/".$statURLPara_."\" title=\"".___("Statistik anzeigen")."\"><img src=\"".$mnl_iconURL."/chart_pie.png\" border=\"0\"></a>";
+	$_MAIN_OUTPUT.= "&nbsp;<a href=\"".$mnl_URL."/".$delURLPara_."\" onclick=\"return confirmLink(this, '".___("Adresse loeschen")."')\" title=\"".___("Adresse loeschen")."\"><img src=\"".$mnl_iconURL."/cross.png\" border=\"0\"></a>";
 	$_MAIN_OUTPUT.= "</td>";
 	$_MAIN_OUTPUT.= "</tr>";
 }

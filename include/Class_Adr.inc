@@ -18,11 +18,9 @@ class mnlADR {
 	var $GRP=Array();
   
 	function getAdr($id=0,$offset=0,$limit=0,$group_id=0,$search=Array(),$sortIndex="",$sortType=0) {
-		global $mnl_siteid;
 		$this->ADR=Array();
 		$DB=new ConnectDB();
-		$Query ="
-						SELECT ".mnlTABLE_ADR.".id, ".mnlTABLE_ADR.".email, ".mnlTABLE_ADR.".aktiv, ".mnlTABLE_ADR.".created, ".mnlTABLE_ADR.".updated, ".mnlTABLE_ADR.".author, ".mnlTABLE_ADR.".editor, ".mnlTABLE_ADR.".status, ".mnlTABLE_ADR.".errors, ".mnlTABLE_ADR.".code, ".mnlTABLE_ADR.".clicks, ".mnlTABLE_ADR.".views, ".mnlTABLE_ADR.".newsletter,
+		$Query ="						SELECT ".mnlTABLE_ADR.".id, ".mnlTABLE_ADR.".email, ".mnlTABLE_ADR.".aktiv, ".mnlTABLE_ADR.".created, ".mnlTABLE_ADR.".updated, ".mnlTABLE_ADR.".author, ".mnlTABLE_ADR.".editor, ".mnlTABLE_ADR.".status, ".mnlTABLE_ADR.".errors, ".mnlTABLE_ADR.".code, ".mnlTABLE_ADR.".clicks, ".mnlTABLE_ADR.".views, ".mnlTABLE_ADR.".newsletter,
 								".mnlTABLE_ADR_DETAILS.".id as d_id, ".mnlTABLE_ADR_DETAILS.".f0, ".mnlTABLE_ADR_DETAILS.".f1, ".mnlTABLE_ADR_DETAILS.".f2, ".mnlTABLE_ADR_DETAILS.".f3, ".mnlTABLE_ADR_DETAILS.".f4, ".mnlTABLE_ADR_DETAILS.".f5, ".mnlTABLE_ADR_DETAILS.".f6, ".mnlTABLE_ADR_DETAILS.".f7, ".mnlTABLE_ADR_DETAILS.".f8, ".mnlTABLE_ADR_DETAILS.".f9
 						FROM ".mnlTABLE_ADR." 
 						LEFT JOIN ".mnlTABLE_ADR_DETAILS." ON ".mnlTABLE_ADR.".id = ".mnlTABLE_ADR_DETAILS.".adr_id
@@ -33,12 +31,12 @@ class mnlADR {
 		if (check_dbid($group_id)) {
 			$Query .="LEFT JOIN ".mnlTABLE_ADR_GRP_REF." ON ".mnlTABLE_ADR.".id = ".mnlTABLE_ADR_GRP_REF.".adr_id";
 		}
-		$Query .=" WHERE ".mnlTABLE_ADR.".siteid='".$mnl_siteid."'
+		$Query .=" WHERE ".mnlTABLE_ADR.".siteid='".MNL_SITEID."'
 					";
-//					  AND ".mnlTABLE_ADR_DETAILS.".siteid='".$mnl_siteid."'
-					//achtung, durch AND ".mnlTABLE_ADR_DETAILS.".siteid='".$mnl_siteid."' werden nur die eintraege angezeigt die auch eien detaildatensatz haben!!!
+//					  AND ".mnlTABLE_ADR_DETAILS.".siteid='".MNL_SITEID."'
+					//achtung, durch AND ".mnlTABLE_ADR_DETAILS.".siteid='".MNL_SITEID."' werden nur die eintraege angezeigt die auch eien detaildatensatz haben!!!
 		if (check_dbid($group_id)) {
-			$Query .=" AND ".mnlTABLE_ADR_GRP_REF.".siteid='".$mnl_siteid."'
+			$Query .=" AND ".mnlTABLE_ADR_GRP_REF.".siteid='".MNL_SITEID."'
 						  AND ".mnlTABLE_ADR_GRP_REF.".grp_id='".$group_id."'
 						";
 		}
@@ -122,7 +120,6 @@ class mnlADR {
 	//keine suche ueber f0_9 !!!!! da wir speicher sparen wollen... nur ids!
 	//bzw neue query testen!
 		
-		global $mnl_siteid;
 		$ADRID=Array();
 		$DB=new ConnectDB();
 		$Query ="
@@ -135,10 +132,10 @@ class mnlADR {
 		if (check_dbid($group_id)) {
 			$Query .="LEFT JOIN ".mnlTABLE_ADR_GRP_REF." ON ".mnlTABLE_ADR.".id = ".mnlTABLE_ADR_GRP_REF.".adr_id";
 		}
-		$Query .=" WHERE ".mnlTABLE_ADR.".siteid='".$mnl_siteid."'
+		$Query .=" WHERE ".mnlTABLE_ADR.".siteid='".MNL_SITEID."'
 					";
 		if (check_dbid($group_id)) {
-			$Query .=" AND ".mnlTABLE_ADR_GRP_REF.".siteid='".$mnl_siteid."'
+			$Query .=" AND ".mnlTABLE_ADR_GRP_REF.".siteid='".MNL_SITEID."'
 						  AND ".mnlTABLE_ADR_GRP_REF.".grp_id='".$group_id."'
 						";
 		}
@@ -162,7 +159,6 @@ class mnlADR {
 	//keine suche ueber f0_9 !!!!! da wir speicher sparen wollen... nur ids!
 	//bzw neue query testen!
 		
-		global $mnl_siteid;
 		$this->ADR=Array();
 		$DB=new ConnectDB();
 		$Query ="
@@ -175,10 +171,10 @@ class mnlADR {
 		if (check_dbid($group_id)) {
 			$Query .="LEFT JOIN ".mnlTABLE_ADR_GRP_REF." ON ".mnlTABLE_ADR.".id = ".mnlTABLE_ADR_GRP_REF.".adr_id";
 		}
-		$Query .=" WHERE ".mnlTABLE_ADR.".siteid='".$mnl_siteid."'
+		$Query .=" WHERE ".mnlTABLE_ADR.".siteid='".MNL_SITEID."'
 					";
 		if (check_dbid($group_id)) {
-			$Query .=" AND ".mnlTABLE_ADR_GRP_REF.".siteid='".$mnl_siteid."'
+			$Query .=" AND ".mnlTABLE_ADR_GRP_REF.".siteid='".MNL_SITEID."'
 						  AND ".mnlTABLE_ADR_GRP_REF.".grp_id='".$group_id."'
 						";
 		}
@@ -200,13 +196,12 @@ class mnlADR {
 
 
 	function getGroup($id=0,$adr_id=0,$frm_id=0,$count=0) {
-		global $mnl_siteid;
 		$this->GRP=Array();
 		$DB=new ConnectDB();
 		$Query ="
 			SELECT ".mnlTABLE_ADR_GRP.".id, ".mnlTABLE_ADR_GRP.".name, ".mnlTABLE_ADR_GRP.".descr, ".mnlTABLE_ADR_GRP.".aktiv, ".mnlTABLE_ADR_GRP.".standard
 			FROM ".mnlTABLE_ADR_GRP." 
-			WHERE ".mnlTABLE_ADR_GRP.".siteid='".$mnl_siteid."'
+			WHERE ".mnlTABLE_ADR_GRP.".siteid='".MNL_SITEID."'
 			";
 		if (check_dbid($id)) {
 			$Query .= " AND ".mnlTABLE_ADR_GRP.".id='".$id."'";
@@ -217,8 +212,8 @@ class mnlADR {
 				SELECT DISTINCT ".mnlTABLE_ADR_GRP.".id, ".mnlTABLE_ADR_GRP.".name, ".mnlTABLE_ADR_GRP.".descr, ".mnlTABLE_ADR_GRP.".aktiv, ".mnlTABLE_ADR_GRP.".standard
 				FROM ".mnlTABLE_ADR_GRP.", ".mnlTABLE_ADR_GRP_REF."
 				WHERE ".mnlTABLE_ADR_GRP.".id=".mnlTABLE_ADR_GRP_REF.".grp_id
-				AND ".mnlTABLE_ADR_GRP.".siteid='".$mnl_siteid."'
-				AND ".mnlTABLE_ADR_GRP_REF.".siteid='".$mnl_siteid."'
+				AND ".mnlTABLE_ADR_GRP.".siteid='".MNL_SITEID."'
+				AND ".mnlTABLE_ADR_GRP_REF.".siteid='".MNL_SITEID."'
 				AND ".mnlTABLE_ADR_GRP_REF.".adr_id='".$adr_id."'
 			";
 		}
@@ -228,8 +223,8 @@ class mnlADR {
 				SELECT DISTINCT ".mnlTABLE_ADR_GRP.".id, ".mnlTABLE_ADR_GRP.".name, ".mnlTABLE_ADR_GRP.".descr, ".mnlTABLE_ADR_GRP.".aktiv, ".mnlTABLE_ADR_GRP.".standard
 				FROM ".mnlTABLE_ADR_GRP.", ".mnlTABLE_FRM_GRP_REF." 
 				WHERE ".mnlTABLE_ADR_GRP.".id=".mnlTABLE_FRM_GRP_REF.".grp_id
-				AND ".mnlTABLE_ADR_GRP.".siteid='".$mnl_siteid."'
-				AND ".mnlTABLE_FRM_GRP_REF.".siteid='".$mnl_siteid."'
+				AND ".mnlTABLE_ADR_GRP.".siteid='".MNL_SITEID."'
+				AND ".mnlTABLE_FRM_GRP_REF.".siteid='".MNL_SITEID."'
 				AND ".mnlTABLE_FRM_GRP_REF.".frm_id='".$frm_id."'
 			";
 		}
@@ -266,10 +261,9 @@ class mnlADR {
 
 	function setAktiv($id=0,$aktiv=1) {
 		$Return=false;
-		global $mnl_siteid;
 		if (check_dbid($id)) {
 			$DB=new ConnectDB();
-			$Query ="UPDATE ".mnlTABLE_ADR." SET aktiv='".$aktiv."' WHERE id='".$id."' AND siteid='".$mnl_siteid."'";
+			$Query ="UPDATE ".mnlTABLE_ADR." SET aktiv='".$aktiv."' WHERE id='".$id."' AND siteid='".MNL_SITEID."'";
 			if ($DB->Query($Query)) {
 				$Return=true;
 			}
@@ -278,11 +272,10 @@ class mnlADR {
 	}//setAktiv
 
 	function setGrpAktiv($id=0,$aktiv=1) {
-		global $mnl_siteid;
 		$Return=false;
 		if (check_dbid($id)) {
 			$DB=new ConnectDB();
-			$Query ="UPDATE ".mnlTABLE_ADR_GRP." SET aktiv='".$aktiv."' WHERE id='".$id."' AND siteid='".$mnl_siteid."'";
+			$Query ="UPDATE ".mnlTABLE_ADR_GRP." SET aktiv='".$aktiv."' WHERE id='".$id."' AND siteid='".MNL_SITEID."'";
 			if ($DB->Query($Query)) {
 				$Return=true;
 			}
@@ -291,18 +284,17 @@ class mnlADR {
 	}//setGrpAktiv
 	
 	function setGrpStd($id=0) {
-		global $mnl_siteid;
 		$Return=false;
 		if (check_dbid($id)) {
 			$DB=new ConnectDB();
-			$Query ="UPDATE ".mnlTABLE_ADR_GRP." SET standard=0 WHERE standard=1 AND siteid='".$mnl_siteid."'";
+			$Query ="UPDATE ".mnlTABLE_ADR_GRP." SET standard=0 WHERE standard=1 AND siteid='".MNL_SITEID."'";
 			if ($DB->Query($Query)) {
 				$Return=true;
 			} else {
 				$Return=false;
 				return $Return;
 			}
-			$Query ="UPDATE ".mnlTABLE_ADR_GRP." SET standard=1 WHERE id='".$id."' AND siteid='".$mnl_siteid."'";
+			$Query ="UPDATE ".mnlTABLE_ADR_GRP." SET standard=1 WHERE id='".$id."' AND siteid='".MNL_SITEID."'";
 			if ($DB->Query($Query)) {
 				$Return=true;
 			} else {
@@ -314,10 +306,9 @@ class mnlADR {
 	}//setGrpStd
 	
 	function addGrp($group) {
-		global $mnl_siteid;
 		$Return=false;
 		$DB=new ConnectDB();
-		$Query ="INSERT INTO ".mnlTABLE_ADR_GRP." (name,descr,aktiv,standard,siteid) VALUES ('".$group["name"]."', '".$group["descr"]."', '".$group["aktiv"]."', 0, '".$mnl_siteid."')";
+		$Query ="INSERT INTO ".mnlTABLE_ADR_GRP." (name,descr,aktiv,standard,siteid) VALUES ('".$group["name"]."', '".$group["descr"]."', '".$group["aktiv"]."', 0, '".MNL_SITEID."')";
 		if ($DB->Query($Query)) {
 			$Return=true;
 		}
@@ -325,11 +316,10 @@ class mnlADR {
 	}//addGrp
 
 	function updateGrp($group) {
-		global $mnl_siteid;
 		$Return=false;
 		if (isset($group['id']) && check_dbid($group['id'])) {
 			$DB=new ConnectDB();
-			$Query ="UPDATE ".mnlTABLE_ADR_GRP." SET name='".$group["name"]."', descr='".$group["descr"]."', aktiv='".$group["aktiv"]."' WHERE siteid='".$mnl_siteid."' AND id='".$group["id"]."'";
+			$Query ="UPDATE ".mnlTABLE_ADR_GRP." SET name='".$group["name"]."', descr='".$group["descr"]."', aktiv='".$group["aktiv"]."' WHERE siteid='".MNL_SITEID."' AND id='".$group["id"]."'";
 			if ($DB->Query($Query)) {
 				$Return=true;
 			}
@@ -338,7 +328,6 @@ class mnlADR {
 	}//updateGrp
 	
 	function delGrp($id,$reorg=1,$deleteAdr=0) {
-		global $mnl_siteid;
 		$Return=false;
 		if (check_dbid($id)) {
 			$DB=new ConnectDB();
@@ -347,7 +336,7 @@ class mnlADR {
 			//andernfalls, auch adressen loeschen?
 			//standard gruppe suchen
 			if ($reorg==1) {
-				$Query ="SELECT id FROM ".mnlTABLE_ADR_GRP." WHERE siteid='".$mnl_siteid."' AND standard=1";
+				$Query ="SELECT id FROM ".mnlTABLE_ADR_GRP." WHERE siteid='".MNL_SITEID."' AND standard=1";
 				if ($DB->Query($Query)) {
 					$Return=true;
 				} else {
@@ -364,7 +353,7 @@ class mnlADR {
 					//referenzen zur Standardgruppe dieser adressen suchen und aufloesen:
 					$ac=count($adr);
 					for ($acc=0;$acc<$ac;$acc++) {
-						$Query ="SELECT ".mnlTABLE_ADR_GRP_REF.".id FROM ".mnlTABLE_ADR_GRP_REF." WHERE siteid='".$mnl_siteid."' AND adr_id='".$adr[$acc]['id']."' AND grp_id='".$stdGrpID."'";
+						$Query ="SELECT ".mnlTABLE_ADR_GRP_REF.".id FROM ".mnlTABLE_ADR_GRP_REF." WHERE siteid='".MNL_SITEID."' AND adr_id='".$adr[$acc]['id']."' AND grp_id='".$stdGrpID."'";
 						if ($DB->Query($Query)) {
 							$Return=true;
 						} else {
@@ -373,7 +362,7 @@ class mnlADR {
 						}
 						if ($DB->next_record()) {
 							//  ist adr mit standardgruppe verknuepft, dann alte referenz loeschen
-							$Query ="DELETE FROM ".mnlTABLE_ADR_GRP_REF."  WHERE siteid='".$mnl_siteid."' AND adr_id='".$adr[$acc]['id']."' AND grp_id='".$id."'";
+							$Query ="DELETE FROM ".mnlTABLE_ADR_GRP_REF."  WHERE siteid='".MNL_SITEID."' AND adr_id='".$adr[$acc]['id']."' AND grp_id='".$id."'";
 							if ($DB->Query($Query)) {
 								$Return=true;
 							} else {
@@ -383,7 +372,7 @@ class mnlADR {
 						} else {	//oder 
 							//  ist adr NICHT mit standardgruppe verknuepft, dann alte referenz mit stdgruppe updaten
 							//update der verknuepfung zur alten Gruppe mit der neuen Gruppe...
-							$Query ="UPDATE ".mnlTABLE_ADR_GRP_REF." SET grp_id='".$stdGrpID."' WHERE siteid='".$mnl_siteid."' AND grp_id='".$id."'";
+							$Query ="UPDATE ".mnlTABLE_ADR_GRP_REF." SET grp_id='".$stdGrpID."' WHERE siteid='".MNL_SITEID."' AND grp_id='".$id."'";
 							if ($DB->Query($Query)) {
 								$Return=true;
 							} else {
@@ -404,7 +393,7 @@ class mnlADR {
 				for ($acc=0;$acc<$ac;$acc++) {
 					$this->delAdr($ADR[$acc]['id']);
 				}
-				$Query ="DELETE FROM ".mnlTABLE_ADR_GRP_REF."  WHERE siteid='".$mnl_siteid."' AND grp_id='".$id."'";
+				$Query ="DELETE FROM ".mnlTABLE_ADR_GRP_REF."  WHERE siteid='".MNL_SITEID."' AND grp_id='".$id."'";
 				if ($DB->Query($Query)) {
 					$Return=true;
 				} else {
@@ -415,7 +404,7 @@ class mnlADR {
 			
 			/* nein historie nicht loeschen! nur wenn nl oder adresse geloescht wird!
 			//versandliste, history h loeschen
-			$Query ="DELETE FROM nl_h WHERE siteid='".$mnl_siteid."' AND grp_id='".$id."'";
+			$Query ="DELETE FROM nl_h WHERE siteid='".MNL_SITEID."' AND grp_id='".$id."'";
 				if ($DB->Query($Query)) {
 					$Return=true;
 				} else {
@@ -427,7 +416,7 @@ class mnlADR {
 			
 			//aber die q muss geloescht werden!!!
 			//q loeschen
-			$Query ="DELETE FROM ".mnlTABLE_NL_Q." WHERE siteid='".$mnl_siteid."' AND grp_id='".$id."'";
+			$Query ="DELETE FROM ".mnlTABLE_NL_Q." WHERE siteid='".MNL_SITEID."' AND grp_id='".$id."'";
 			if ($DB->Query($Query)) {
 				$Return=true;
 			} else {
@@ -435,7 +424,7 @@ class mnlADR {
 				return $Return;
 			}
 			//verknuepfung zu formularen loeschen
-			$Query ="DELETE FROM ".mnlTABLE_FRM_GRP_REF."  WHERE siteid='".$mnl_siteid."' AND grp_id='".$id."'";
+			$Query ="DELETE FROM ".mnlTABLE_FRM_GRP_REF."  WHERE siteid='".MNL_SITEID."' AND grp_id='".$id."'";
 			if ($DB->Query($Query)) {
 				$Return=true;
 			} else {
@@ -443,7 +432,7 @@ class mnlADR {
 				return $Return;
 			}
 			//gruppe loeschen
-			$Query ="DELETE FROM ".mnlTABLE_ADR_GRP."  WHERE siteid='".$mnl_siteid."' AND id='".$id."'";
+			$Query ="DELETE FROM ".mnlTABLE_ADR_GRP."  WHERE siteid='".MNL_SITEID."' AND id='".$id."'";
 			if ($DB->Query($Query)) {
 				$Return=true;
 			} else {
@@ -455,13 +444,12 @@ class mnlADR {
 	}//delGrp
 
 	function delAdr($id) {
-		global $mnl_siteid;
 		$Return=false;
 		if (check_dbid($id)) {
 			$DB=new ConnectDB();
 			//versandliste, history h loeschen	
 			//ok jetzt historie loeschen! aber nicht wenn adr_grp oder q!
-			$Query ="DELETE FROM ".mnlTABLE_NL_H." WHERE siteid='".$mnl_siteid."' AND adr_id='".$id."'";
+			$Query ="DELETE FROM ".mnlTABLE_NL_H." WHERE siteid='".MNL_SITEID."' AND adr_id='".$id."'";
 				if ($DB->Query($Query)) {
 					$Return=true;
 				} else {
@@ -469,7 +457,7 @@ class mnlADR {
 					return $Return;
 				}		
 			//referenzen loeschen
-			$Query ="DELETE FROM ".mnlTABLE_ADR_GRP_REF." WHERE siteid='".$mnl_siteid."' AND adr_id='".$id."'";
+			$Query ="DELETE FROM ".mnlTABLE_ADR_GRP_REF." WHERE siteid='".MNL_SITEID."' AND adr_id='".$id."'";
 				if ($DB->Query($Query)) {
 					$Return=true;
 				} else {
@@ -477,7 +465,7 @@ class mnlADR {
 					return $Return;
 				}
 			//details loeschen
-			$Query ="DELETE FROM ".mnlTABLE_ADR_DETAILS." WHERE siteid='".$mnl_siteid."' AND adr_id='".$id."'";
+			$Query ="DELETE FROM ".mnlTABLE_ADR_DETAILS." WHERE siteid='".MNL_SITEID."' AND adr_id='".$id."'";
 				if ($DB->Query($Query)) {
 					$Return=true;
 				} else {
@@ -485,7 +473,7 @@ class mnlADR {
 					return $Return;
 				}
 			//subscriptions loeschen
-			$Query ="DELETE FROM ".mnlTABLE_FRM_S." WHERE siteid='".$mnl_siteid."' AND adr_id='".$id."'";
+			$Query ="DELETE FROM ".mnlTABLE_FRM_S." WHERE siteid='".MNL_SITEID."' AND adr_id='".$id."'";
 			if ($DB->Query($Query)) {
 				$Return=true;
 			} else {
@@ -493,7 +481,7 @@ class mnlADR {
 				return $Return;			
 			}
 			//adresse loeschen
-			$Query ="DELETE FROM ".mnlTABLE_ADR." WHERE siteid='".$mnl_siteid."' AND id='".$id."'";
+			$Query ="DELETE FROM ".mnlTABLE_ADR." WHERE siteid='".MNL_SITEID."' AND id='".$id."'";
 			if ($DB->Query($Query)) {
 				$Return=true;
 			} else {
@@ -505,13 +493,12 @@ class mnlADR {
 	}//delAdr
 	
 	function addAdr($adr,$grp) {
-		global $mnl_siteid;
 		$Return=false;
 		$DB=new ConnectDB();
 		//neues Formular speichern
 		$Query ="INSERT INTO ".mnlTABLE_ADR." (email,aktiv,status,code,author,created,editor,updated,clicks,views,newsletter,siteid) 
 					VALUES ('".$adr["email"]."', '".$adr["aktiv"]."', 
-								'".$adr["status"]."', '".$adr["code"]."', '".$adr["author"]."', '".$adr["created"]."', '".$adr["author"]."', '".$adr["created"]."', 0, 0, 0, '".$mnl_siteid."'
+								'".$adr["status"]."', '".$adr["code"]."', '".$adr["author"]."', '".$adr["created"]."', '".$adr["author"]."', '".$adr["created"]."', 0, 0, 0, '".MNL_SITEID."'
 								)";
 		if ($DB->Query($Query)) {
 			$Return=true;
@@ -527,7 +514,7 @@ class mnlADR {
 					AND code='".$adr["code"]."'
 					AND aktiv='".$adr["aktiv"]."'
 					AND created='".$adr["created"]."'
-					AND siteid='".$mnl_siteid."'
+					AND siteid='".MNL_SITEID."'
 					ORDER BY id desc LIMIT 1
 					";//es muessen nicht alle felder abgefragt werden, order by id desc limit 1 liefert uns den letzten eintrag ;)
 		if ($DB->Query($Query)) {
@@ -542,7 +529,7 @@ class mnlADR {
 			$new_adr_id=$DB->Record['id'];
 			//detaildaten eintragen
 				$Query="INSERT INTO ".mnlTABLE_ADR_DETAILS." (adr_id,siteid,f0,f1,f2,f3,f4,f5,f6,f7,f8,f9) 
-							VALUES ('".$new_adr_id."','".$mnl_siteid."',
+							VALUES ('".$new_adr_id."','".MNL_SITEID."',
 										'".$adr['f0']."',
 										'".$adr['f1']."',
 										'".$adr['f2']."',
@@ -564,7 +551,7 @@ class mnlADR {
 			//gruppen eintragen
 			$acg=count($grp);
 			for ($accg=0;$accg<$acg;$accg++) {
-				$Query="INSERT INTO ".mnlTABLE_ADR_GRP_REF." (adr_id,grp_id,siteid) VALUES ('".$new_adr_id."','".$grp[$accg]."','".$mnl_siteid."')";
+				$Query="INSERT INTO ".mnlTABLE_ADR_GRP_REF." (adr_id,grp_id,siteid) VALUES ('".$new_adr_id."','".$grp[$accg]."','".MNL_SITEID."')";
 				if ($DB->Query($Query)) {
 					$Return=true;
 				} else {
@@ -578,14 +565,13 @@ class mnlADR {
 	}//addAdr
 	
 	function addRef($adr_id,$grp) {
-		global $mnl_siteid;
 		$Return=false;
 		if (check_dbid($adr_id)) {
 			$DB=new ConnectDB();
 			//gruppen eintragen
 			$acg=count($grp);
 			for ($accg=0;$accg<$acg;$accg++) {
-				$Query="INSERT INTO ".mnlTABLE_ADR_GRP_REF." (adr_id,grp_id,siteid) VALUES ('".$adr_id."','".$grp[$accg]."','".$mnl_siteid."')";
+				$Query="INSERT INTO ".mnlTABLE_ADR_GRP_REF." (adr_id,grp_id,siteid) VALUES ('".$adr_id."','".$grp[$accg]."','".MNL_SITEID."')";
 				if ($DB->Query($Query)) {
 					$Return=true;
 				} else {
@@ -598,12 +584,11 @@ class mnlADR {
 	}
 	
 	function setStatus($id,$status) {
-		global $mnl_siteid;
 		$Return=false;
 		if (check_dbid($id)) {
 			$DB=new ConnectDB();
 			$Query ="UPDATE ".mnlTABLE_ADR." SET status='".$status."'
-						 WHERE siteid='".$mnl_siteid."' AND id='".$id."'";
+						 WHERE siteid='".MNL_SITEID."' AND id='".$id."'";
 			if ($DB->Query($Query)) {
 				$Return=true;
 			} else {
@@ -615,12 +600,11 @@ class mnlADR {
 	}
 	
 	function unsubscribe($id,$author) {
-		global $mnl_siteid;
 		$Return=false;
 		if (check_dbid($id)) {
 			$DB=new ConnectDB();
 			$Query ="UPDATE ".mnlTABLE_ADR." SET updated='".date("Y-m-d H:i:s")."', status=11, editor='".$author."'
-						 WHERE siteid='".$mnl_siteid."' AND id='".$id."'";
+						 WHERE siteid='".MNL_SITEID."' AND id='".$id."'";
 			if ($DB->Query($Query)) {
 				$Return=true;
 			}
@@ -631,12 +615,11 @@ class mnlADR {
 	}
 
 	function updateAdr($adr,$grp) {
-		global $mnl_siteid;
 		$Return=false;
 		if (isset($adr['id']) && check_dbid($adr['id'])) {
 			$DB=new ConnectDB();
 			$Query ="UPDATE ".mnlTABLE_ADR." SET email='".$adr["email"]."', aktiv='".$adr["aktiv"]."', editor='".$adr["author"]."', updated='".$adr["created"]."'
-						 WHERE siteid='".$mnl_siteid."' AND id='".$adr["id"]."'";
+						 WHERE siteid='".MNL_SITEID."' AND id='".$adr["id"]."'";
 			if ($DB->Query($Query)) {
 				$Return=true;
 			} else {
@@ -655,7 +638,7 @@ class mnlADR {
 						f7='".$adr["f7"]."',
 						f8='".$adr["f8"]."',
 						f9='".$adr["f9"]."'
-						 WHERE siteid='".$mnl_siteid."' AND adr_id='".$adr["id"]."'";
+						 WHERE siteid='".MNL_SITEID."' AND adr_id='".$adr["id"]."'";
 			if ($DB->Query($Query)) {
 				$Return=true;
 			} else {
@@ -664,7 +647,7 @@ class mnlADR {
 			}
 	
 			//alle refs loeschen
-			$Query ="DELETE FROM ".mnlTABLE_ADR_GRP_REF." WHERE siteid='".$mnl_siteid."' AND adr_id='".$adr['id']."'";
+			$Query ="DELETE FROM ".mnlTABLE_ADR_GRP_REF." WHERE siteid='".MNL_SITEID."' AND adr_id='".$adr['id']."'";
 			if ($DB->Query($Query)) {
 				$Return=true;
 			} else {
@@ -675,7 +658,7 @@ class mnlADR {
 			$acg=count($grp);
 			//print_r($grp);
 			for ($accg=0;$accg<$acg;$accg++) {
-				$Query="INSERT INTO ".mnlTABLE_ADR_GRP_REF." (adr_id,grp_id,siteid) VALUES ('".$adr['id']."','".$grp[$accg]."','".$mnl_siteid."')";
+				$Query="INSERT INTO ".mnlTABLE_ADR_GRP_REF." (adr_id,grp_id,siteid) VALUES ('".$adr['id']."','".$grp[$accg]."','".MNL_SITEID."')";
 				if ($DB->Query($Query)) {
 					$Return=true;
 				} else {
@@ -688,12 +671,11 @@ class mnlADR {
 	}//updateAdr
 
 	function setAError($id,$errors) {
-		global $mnl_siteid;
 		$Return=false;
 		if (check_dbid($id)) {
 			$DB=new ConnectDB();
 			$Query ="UPDATE ".mnlTABLE_ADR." SET errors='".$errors."'
-						 WHERE siteid='".$mnl_siteid."' AND id='".$id."'";
+						 WHERE siteid='".MNL_SITEID."' AND id='".$id."'";
 			if ($DB->Query($Query)) {
 				$Return=true;
 			} else {
@@ -705,7 +687,6 @@ class mnlADR {
 	}
 
 	function addClick($adr_id) {
-		global $mnl_siteid;
 		$Return=false;
 		if (check_dbid($adr_id)) {
 			$ADR=$this->getADR($adr_id);
@@ -713,7 +694,7 @@ class mnlADR {
 			$clicks++;
 			
 			$DB=new ConnectDB();
-			$Query ="UPDATE ".mnlTABLE_ADR." SET clicks='".$clicks."' WHERE siteid='".$mnl_siteid."' AND id='".$adr_id."'";
+			$Query ="UPDATE ".mnlTABLE_ADR." SET clicks='".$clicks."' WHERE siteid='".MNL_SITEID."' AND id='".$adr_id."'";
 			if ($DB->Query($Query)) {
 				$Return=true;
 			}
@@ -722,7 +703,6 @@ class mnlADR {
 	}//addClick
 
 	function addView($adr_id) {
-		global $mnl_siteid;
 		$Return=false;
 		if (check_dbid($adr_id)) {
 			$ADR=$this->getADR($adr_id);
@@ -730,7 +710,7 @@ class mnlADR {
 			$views++;
 			
 			$DB=new ConnectDB();
-			$Query ="UPDATE ".mnlTABLE_ADR." SET views='".$views."' WHERE siteid='".$mnl_siteid."' AND id='".$adr_id."'";
+			$Query ="UPDATE ".mnlTABLE_ADR." SET views='".$views."' WHERE siteid='".MNL_SITEID."' AND id='".$adr_id."'";
 			if ($DB->Query($Query)) {
 				$Return=true;
 			}
@@ -739,7 +719,6 @@ class mnlADR {
 	}//addView
 
 	function addNL($adr_id) {
-		global $mnl_siteid;
 		$Return=false;
 		if (check_dbid($adr_id)) {
 			$ADR=$this->getADR($adr_id);
@@ -747,7 +726,7 @@ class mnlADR {
 			$nl++;
 		
 			$DB=new ConnectDB();
-			$Query ="UPDATE ".mnlTABLE_ADR." SET newsletter='".$nl."' WHERE siteid='".$mnl_siteid."' AND id='".$adr_id."'";
+			$Query ="UPDATE ".mnlTABLE_ADR." SET newsletter='".$nl."' WHERE siteid='".MNL_SITEID."' AND id='".$adr_id."'";
 			if ($DB->Query($Query)) {
 				$Return=true;
 			}

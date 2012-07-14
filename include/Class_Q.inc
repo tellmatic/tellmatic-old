@@ -19,14 +19,13 @@ class mnlQ {
 	var $Q=Array();
   
 	function getQ($id=0,$offset=0,$limit=0,$nl_id=0,$grp_id=0,$status=0) {
-		global $mnl_siteid;
 		$this->Q=Array();
 		$DB=new ConnectDB();
 		$Query ="
 						SELECT ".mnlTABLE_NL_Q.".id, ".mnlTABLE_NL_Q.".nl_id, ".mnlTABLE_NL_Q.".grp_id, ".mnlTABLE_NL_Q.".created, ".mnlTABLE_NL_Q.".author, ".mnlTABLE_NL_Q.".status, ".mnlTABLE_NL_Q.".send_at, ".mnlTABLE_NL_Q.".sent
 						FROM ".mnlTABLE_NL_Q."
 					";
-		$Query .=" WHERE ".mnlTABLE_NL_Q.".siteid='".$mnl_siteid."'
+		$Query .=" WHERE ".mnlTABLE_NL_Q.".siteid='".MNL_SITEID."'
 					";
 		if (check_dbid($nl_id)) {
 			$Query .=" AND ".mnlTABLE_NL_Q.".nl_id='".$nl_id."'	";
@@ -62,14 +61,13 @@ class mnlQ {
 	}//getQ
 
 	function countQ($nl_id=0,$grp_id=0,$status=0) {
-		global $mnl_siteid;
 		$this->Q=Array();
 		$DB=new ConnectDB();
 		$Query ="
 						SELECT count(id) as c
 						FROM ".mnlTABLE_NL_Q."
 					";
-		$Query .=" WHERE siteid='".$mnl_siteid."'
+		$Query .=" WHERE siteid='".MNL_SITEID."'
 					";
 		if (check_dbid($nl_id)) {
 			$Query .=" AND nl_id='".$nl_id."'	";
@@ -90,7 +88,6 @@ class mnlQ {
 
 	
 	function getQtoSend($id=0,$offset=0,$limit=0,$nl_id=0,$grp_id=0) {
-		global $mnl_siteid;
 		$this->Q=Array();
 		$DB=new ConnectDB();
 
@@ -100,7 +97,7 @@ class mnlQ {
 						SELECT ".mnlTABLE_NL_Q.".id, ".mnlTABLE_NL_Q.".nl_id, ".mnlTABLE_NL_Q.".grp_id, ".mnlTABLE_NL_Q.".created, ".mnlTABLE_NL_Q.".author, ".mnlTABLE_NL_Q.".status, ".mnlTABLE_NL_Q.".send_at
 						FROM ".mnlTABLE_NL_Q."
 					";
-		$Query .=" WHERE ".mnlTABLE_NL_Q.".siteid='".$mnl_siteid."'";
+		$Query .=" WHERE ".mnlTABLE_NL_Q.".siteid='".MNL_SITEID."'";
 
 		$Query .=" AND (
 							".mnlTABLE_NL_Q.".status=2 OR ".mnlTABLE_NL_Q.".status=3 OR ".mnlTABLE_NL_Q.".status=6 
@@ -146,14 +143,13 @@ class mnlQ {
 
 
 	function getQID($nl_id=0, $grp_id=0, $status=0) {
-		global $mnl_siteid;
 		$this->Q=Array();
 		$DB=new ConnectDB();
 		$Query ="
 						SELECT ".mnlTABLE_NL_Q.".id
 						FROM ".mnlTABLE_NL_Q."
 					";
-		$Query .=" WHERE ".mnlTABLE_NL_Q.".siteid='".$mnl_siteid."'
+		$Query .=" WHERE ".mnlTABLE_NL_Q.".siteid='".MNL_SITEID."'
 					";
 		if (check_dbid($nl_id)) {
 			$Query .=" AND ".mnlTABLE_NL_Q.".nl_id='".$nl_id."'	";
@@ -178,13 +174,12 @@ class mnlQ {
 
 
 	function getH($id=0,$offset=0,$limit=0,$q_id=0,$nl_id=0,$grp_id=0,$adr_id=0,$status=0) {
-		global $mnl_siteid;
 		$this->H=Array();
 		$DB=new ConnectDB();
 		$Query ="
 						SELECT ".mnlTABLE_NL_H.".id, ".mnlTABLE_NL_H.".q_id, ".mnlTABLE_NL_H.".nl_id, ".mnlTABLE_NL_H.".grp_id, ".mnlTABLE_NL_H.".adr_id, ".mnlTABLE_NL_H.".created, ".mnlTABLE_NL_H.".status, ".mnlTABLE_NL_H.".sent
 						FROM ".mnlTABLE_NL_H."	";
-		$Query .=" WHERE ".mnlTABLE_NL_H.".siteid='".$mnl_siteid."'
+		$Query .=" WHERE ".mnlTABLE_NL_H.".siteid='".MNL_SITEID."'
 					";
 		if (check_dbid($q_id)) {
 			$Query .=" AND ".mnlTABLE_NL_H.".q_id='".$q_id."'	";
@@ -229,14 +224,13 @@ class mnlQ {
 
 	function getHtoSend($id=0,$offset=0,$limit=0,$q_id=0,$nl_id=0,$grp_id=0,$adr_id=0) {
 		//liefert nur zu sendende eintarege zurueck!!! status==1 !!!
-		global $mnl_siteid;
 		$this->H=Array();
 		$DB=new ConnectDB();
 		$Query ="
 						SELECT ".mnlTABLE_NL_H.".id, ".mnlTABLE_NL_H.".q_id, ".mnlTABLE_NL_H.".nl_id, ".mnlTABLE_NL_H.".grp_id, ".mnlTABLE_NL_H.".adr_id, ".mnlTABLE_NL_H.".created, ".mnlTABLE_NL_H.".status, ".mnlTABLE_NL_H.".sent
 						FROM ".mnlTABLE_NL_H."
 					";
-		$Query .=" WHERE ".mnlTABLE_NL_H.".siteid='".$mnl_siteid."'";
+		$Query .=" WHERE ".mnlTABLE_NL_H.".siteid='".MNL_SITEID."'";
 		//!!!!
 		$Query .=" AND ".mnlTABLE_NL_H.".status=1 ";
 
@@ -282,14 +276,13 @@ class mnlQ {
 	}//getHtoSend
 
 	function countH($q_id=0,$nl_id=0,$grp_id=0,$adr_id=0,$status=0) {
-		global $mnl_siteid;
 		$count=0;
 		$DB=new ConnectDB();
 		$Query ="
 						SELECT count(".mnlTABLE_NL_H.".id) as c
 						FROM ".mnlTABLE_NL_H."
 					";
-		$Query .=" WHERE ".mnlTABLE_NL_H.".siteid='".$mnl_siteid."'
+		$Query .=" WHERE ".mnlTABLE_NL_H.".siteid='".MNL_SITEID."'
 					";
 		if (check_dbid($q_id)) {
 			$Query .=" AND ".mnlTABLE_NL_H.".q_id='".$q_id."'	";
@@ -317,12 +310,11 @@ class mnlQ {
 
 
 	function delQ($id) {
-		global $mnl_siteid;
 		$Return=false;
 		if (check_dbid($id)) {
 			$DB=new ConnectDB();
 			//q loeschen
-			$Query ="DELETE FROM ".mnlTABLE_NL_Q." WHERE siteid='".$mnl_siteid."' AND id='".$id."'";
+			$Query ="DELETE FROM ".mnlTABLE_NL_Q." WHERE siteid='".MNL_SITEID."' AND id='".$id."'";
 				if ($DB->Query($Query)) {
 					$Return=true;
 				} else {
@@ -358,7 +350,6 @@ class mnlQ {
 	}//delAdr
 	
 	function addQ($q,$grp) {
-		global $mnl_siteid;
 		$Return=false;
 		$DB=new ConnectDB();
 		//neue Q speichern fuer jede gewaehlte Gruppe
@@ -368,7 +359,7 @@ class mnlQ {
 			if (check_dbid($q['nl_id'])) {
 				$Query ="INSERT INTO ".mnlTABLE_NL_Q." (nl_id,grp_id,status,send_at,author,created,siteid)
 							VALUES ('".$q["nl_id"]."', '".$grp[$gcc]."', 
-										'".$q["status"]."', '".$q["send_at"]."', '".$q["author"]."', '".$q["created"]."', '".$mnl_siteid."'
+										'".$q["status"]."', '".$q["send_at"]."', '".$q["author"]."', '".$q["created"]."', '".MNL_SITEID."'
 										)";
 				if ($DB->Query($Query)) {
 					$Return=true;
@@ -382,7 +373,6 @@ class mnlQ {
 	}//addQ
 	
 	function addH($h) {
-		global $mnl_siteid;
 		$Return=false;
 		if (check_dbid($h['q_id']) && check_dbid($h['nl_id']) && check_dbid($h['grp_id']) &&	check_dbid($h['adr_id'])	) {
 			$DB=new ConnectDB();
@@ -395,7 +385,7 @@ class mnlQ {
 									'".$h["status"]."',
 									'".$h["created"]."',
 									'',
-									'".$mnl_siteid."'
+									'".MNL_SITEID."'
 										)";
 			if ($DB->Query($Query)) {
 				$Return=true;
@@ -405,12 +395,11 @@ class mnlQ {
 	}//addH
 	
 	function setHStatus($id,$status) {
-		global $mnl_siteid;
 		$Return=false;
 		if (check_dbid($id)) {
 			$DB=new ConnectDB();
 			$Query ="UPDATE ".mnlTABLE_NL_H." SET status='".$status."'
-						 WHERE siteid='".$mnl_siteid."' AND id='".$id."'";
+						 WHERE siteid='".MNL_SITEID."' AND id='".$id."'";
 			if ($DB->Query($Query)) {
 				$Return=true;
 			}
@@ -419,12 +408,11 @@ class mnlQ {
 	}
 	
 	function setHSentDate($id,$created) {
-		global $mnl_siteid;
 		$Return=false;
 		if (check_dbid($id)) {
 			$DB=new ConnectDB();
 			$Query ="UPDATE ".mnlTABLE_NL_H." SET sent='".$created."'
-						 WHERE siteid='".$mnl_siteid."' AND id='".$id."'";
+						 WHERE siteid='".MNL_SITEID."' AND id='".$id."'";
 			if ($DB->Query($Query)) {
 				$Return=true;
 			}
@@ -433,12 +421,11 @@ class mnlQ {
 	}
 	
 	function setStatus($id,$status) {
-		global $mnl_siteid;
 		$Return=false;
 		if (check_dbid($id)) {
 			$DB=new ConnectDB();
 			$Query ="UPDATE ".mnlTABLE_NL_Q." SET status='".$status."'
-						 WHERE siteid='".$mnl_siteid."' AND id='".$id."'";
+						 WHERE siteid='".MNL_SITEID."' AND id='".$id."'";
 			if ($DB->Query($Query)) {
 				$Return=true;
 			}
@@ -447,12 +434,11 @@ class mnlQ {
 	}
 
 	function setSentDate($id,$date) {
-		global $mnl_siteid;
 		$Return=false;
 		if (check_dbid($id)) {
 			$DB=new ConnectDB();
 			$Query ="UPDATE ".mnlTABLE_NL_Q." SET sent='".$date."'
-						 WHERE siteid='".$mnl_siteid."' AND id='".$id."'";
+						 WHERE siteid='".MNL_SITEID."' AND id='".$id."'";
 			if ($DB->Query($Query)) {
 				$Return=true;
 			}

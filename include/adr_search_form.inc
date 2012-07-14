@@ -24,7 +24,7 @@ $Form->new_Form($FormularName,$_SERVER["PHP_SELF"],"post","_self");
 ////$Form->set_FormStyleClass($FormularName,"mForm");
 ////$Form->set_FormInputStyleClass($FormularName,"mFormText","mFormTextFocus");
 //add a Description
-$Form->set_FormDesc($FormularName,"neue Adresse erstellen");
+$Form->set_FormDesc($FormularName,___("Adressen suchen und filtern"));
 //variable content aus menu als hidden field!
 //$Form->new_Input($FormularName,"type", "hidden", $content);
 $Form->new_Input($FormularName,"act", "hidden", $action);
@@ -37,7 +37,7 @@ $Form->new_Input($FormularName,"set", "hidden", "search");
 $Form->new_Input($FormularName,$InputName_Name,"text", $$InputName_Name);
 $Form->set_InputStyleClass($FormularName,$InputName_Name,"mFormText","mFormTextFocus");
 $Form->set_InputSize($FormularName,$InputName_Name,12,256);
-$Form->set_InputDesc($FormularName,$InputName_Name,"Suche nach e-Mail");
+$Form->set_InputDesc($FormularName,$InputName_Name,___("Suche nach e-Mail"));
 $Form->set_InputReadonly($FormularName,$InputName_Name,false);
 $Form->set_InputOrder($FormularName,$InputName_Name,1);
 $Form->set_InputLabel($FormularName,$InputName_Name,"e-Mail<br>");
@@ -46,7 +46,7 @@ $Form->set_InputLabel($FormularName,$InputName_Name,"e-Mail<br>");
 $Form->new_Input($FormularName,$InputName_F,"text", $$InputName_F);
 $Form->set_InputStyleClass($FormularName,$InputName_F,"mFormText","mFormTextFocus");
 $Form->set_InputSize($FormularName,$InputName_F,12,256);
-$Form->set_InputDesc($FormularName,$InputName_F,"Such in den Feldern F0-F9");
+$Form->set_InputDesc($FormularName,$InputName_F,___("Suche in den Feldern F0-F9"));
 $Form->set_InputReadonly($FormularName,$InputName_F,false);
 $Form->set_InputOrder($FormularName,$InputName_F,1);
 $Form->set_InputLabel($FormularName,$InputName_F,"F0-F9<br>");
@@ -56,7 +56,7 @@ $Form->set_InputLabel($FormularName,$InputName_F,"F0-F9<br>");
 $Form->new_Input($FormularName,$InputName_Group,"select", "");
 $Form->set_InputDefault($FormularName,$InputName_Group,$adr_grp_id);
 $Form->set_InputStyleClass($FormularName,$InputName_Group,"mFormSelect","mFormSelectFocus");
-$Form->set_InputDesc($FormularName,$InputName_Group,"Suche nach Gruppenzugehoerigkeit");
+$Form->set_InputDesc($FormularName,$InputName_Group,___("Suche nach Gruppenzugehoerigkeit"));
 $Form->set_InputReadonly($FormularName,$InputName_Group,false);
 $Form->set_InputOrder($FormularName,$InputName_Group,6);
 $Form->set_InputLabel($FormularName,$InputName_Group,"Gruppe<br>");
@@ -78,10 +78,10 @@ for ($accg=0; $accg<$acg; $accg++)
 $Form->new_Input($FormularName,$InputName_Author,"select", "");
 $Form->set_InputDefault($FormularName,$InputName_Author,$author);
 $Form->set_InputStyleClass($FormularName,$InputName_Author,"mFormSelect","mFormSelectFocus");
-$Form->set_InputDesc($FormularName,$InputName_Author,"Author, angemeldet ueber Formular");
+$Form->set_InputDesc($FormularName,$InputName_Author,___("Author, angemeldet ueber Formular"));
 $Form->set_InputReadonly($FormularName,$InputName_Author,false);
 $Form->set_InputOrder($FormularName,$InputName_Author,6);
-$Form->set_InputLabel($FormularName,$InputName_Author,"angemeldet ueber<br>");
+$Form->set_InputLabel($FormularName,$InputName_Author,___("angemeldet ueber")."<br>");
 //$Form->set_InputValue($FormularName,$InputName_Author,"");
 $Form->set_InputSize($FormularName,$InputName_Author,0,1);
 $Form->set_InputMultiple($FormularName,$InputName_Author,false);
@@ -101,16 +101,16 @@ for ($fccg=0; $fccg<$fcg; $fccg++)
 $Form->new_Input($FormularName,$InputName_Status,"select", "");
 $Form->set_InputDefault($FormularName,$InputName_Status,$status);
 $Form->set_InputStyleClass($FormularName,$InputName_Status,"mFormSelect","mFormSelectFocus");
-$Form->set_InputDesc($FormularName,$InputName_Status,"Suche nach Adress-Status");
+$Form->set_InputDesc($FormularName,$InputName_Status,___("Suche nach Adress-Status"));
 $Form->set_InputReadonly($FormularName,$InputName_Status,false);
 $Form->set_InputOrder($FormularName,$InputName_Status,6);
-$Form->set_InputLabel($FormularName,$InputName_Status,"Status<br>");
+$Form->set_InputLabel($FormularName,$InputName_Status,___("Status")."<br>");
 $Form->set_InputSize($FormularName,$InputName_Status,0,1);
 $Form->set_InputMultiple($FormularName,$InputName_Status,false);
 //add Data
 $sc=count($STATUS['adr']['status']);
 
-$Form->add_InputOption($FormularName,$InputName_Status,"","-- egal");
+$Form->add_InputOption($FormularName,$InputName_Status,"","-- ".___("Egal"));
 for ($scc=1; $scc<=$sc; $scc++)//0
 {
 	$Form->add_InputOption($FormularName,$InputName_Status,$scc,$STATUS['adr']['status'][$scc]);
@@ -121,22 +121,22 @@ for ($scc=1; $scc<=$sc; $scc++)//0
 $Form->new_Input($FormularName,$InputName_Limit,"select", "");
 $Form->set_InputDefault($FormularName,$InputName_Limit,$limit);
 $Form->set_InputStyleClass($FormularName,$InputName_Limit,"mFormSelect","mFormSelectFocus");
-$Form->set_InputDesc($FormularName,$InputName_Limit,"Maximale Anzahl Eintraege die auf einmal angezeigt werden.");
+$Form->set_InputDesc($FormularName,$InputName_Limit,___("Maximale Anzahl Eintraege die auf einmal angezeigt werden."));
 $Form->set_InputReadonly($FormularName,$InputName_Limit,false);
 $Form->set_InputOrder($FormularName,$InputName_Limit,6);
-$Form->set_InputLabel($FormularName,$InputName_Limit,"zeige max.<br>");
+$Form->set_InputLabel($FormularName,$InputName_Limit,___("zeige max.")."<br>");
 //$Form->set_InputValue($FormularName,$InputName_Group,"");
 $Form->set_InputSize($FormularName,$InputName_Limit,0,1);
 $Form->set_InputMultiple($FormularName,$InputName_Limit,false);
 //add Data
-$Form->add_InputOption($FormularName,$InputName_Limit,5,"5 Adressen");
-$Form->add_InputOption($FormularName,$InputName_Limit,10,"10 Adressen");
-$Form->add_InputOption($FormularName,$InputName_Limit,25,"25 Adressen");
-$Form->add_InputOption($FormularName,$InputName_Limit,50,"50 Adressen");
-$Form->add_InputOption($FormularName,$InputName_Limit,100,"100 Adressen");
+$Form->add_InputOption($FormularName,$InputName_Limit,5,"5 ".___("Adressen"));
+$Form->add_InputOption($FormularName,$InputName_Limit,10,"10 ".___("Adressen"));
+$Form->add_InputOption($FormularName,$InputName_Limit,25,"25 ".___("Adressen"));
+$Form->add_InputOption($FormularName,$InputName_Limit,50,"50 ".___("Adressen"));
+$Form->add_InputOption($FormularName,$InputName_Limit,100,"100 ".___("Adressen"));
 
 //submit button 
-$Form->new_Input($FormularName,$InputName_Submit,"submit","Suchen");
+$Form->new_Input($FormularName,$InputName_Submit,"submit",___("Suchen"));
 $Form->set_InputStyleClass($FormularName,$InputName_Submit,"mFormSubmit","mFormSubmitFocus");
 $Form->set_InputDesc($FormularName,$InputName_Submit,"");
 $Form->set_InputReadonly($FormularName,$InputName_Submit,false);
@@ -144,9 +144,9 @@ $Form->set_InputOrder($FormularName,$InputName_Submit,998);
 $Form->set_InputLabel($FormularName,$InputName_Submit,"");
 
 //a reset button
-$Form->new_Input($FormularName,$InputName_Reset,"reset","Reset");
+$Form->new_Input($FormularName,$InputName_Reset,"reset",___("Reset"));
 $Form->set_InputStyleClass($FormularName,$InputName_Reset,"mFormReset","mFormResetFocus");
-$Form->set_InputDesc($FormularName,$InputName_Reset,"Reset");
+$Form->set_InputDesc($FormularName,$InputName_Reset,___("Reset"));
 $Form->set_InputReadonly($FormularName,$InputName_Reset,false);
 $Form->set_InputOrder($FormularName,$InputName_Reset,999);
 $Form->set_InputLabel($FormularName,$InputName_Reset,"");

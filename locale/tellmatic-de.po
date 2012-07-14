@@ -1,0 +1,1882 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR Free Software Foundation, Inc.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid	""
+msgstr	"Project-Id-Version: PACKAGE VERSION\n"
+	"POT-Creation-Date: 2007-03-24 19:05+0100\n"
+	"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+	"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+	"Language-Team: LANGUAGE <LL@li.org>\n"
+	"MIME-Version: 1.0\n"
+	"Content-Type: text/plain; charset=CHARSET\n"
+	"Content-Transfer-Encoding: ENCODING\n"
+
+msgid	"Systemeinstellungen aendern"
+msgstr	"Systemeinstellungen ändern"
+
+msgid	"Erscheint als Absender-name in der E-Mail"
+msgstr	"Erscheint als Absender-name in der E-Mail"
+
+msgid	"Erscheint als Absender-E-Mail-Adresse in der E-Mail"
+msgstr	"Erscheint als Absender-E-Mail-Adresse in der E-Mail"
+
+msgid	"Nachricht bei Anmeldung"
+msgstr	"Nachricht bei Anmeldung"
+
+msgid	"Nachricht bei Abmeldung"
+msgstr	"Nachricht bei Abmeldung"
+
+msgid	"E-Mail-Adresse fuer Benachrichtigungen"
+msgstr	"E-Mail-Adresse für Benachrichtigungen"
+
+msgid	"Return-Path, Adresse fuer E-Mail Fehlermeldungen"
+msgstr	"Return-Path, Adresse für E-Mail Fehlermeldungen"
+
+msgid	"SMTP Servername / IP-Adresse"
+msgstr	"SMTP Servername / IP-Adresse"
+
+msgid	"SMTP Benutzername"
+msgstr	"SMTP Benutzername"
+
+msgid	"SMTP Passwort"
+msgstr	"SMTP Passwort"
+
+msgid	"SMTP Domain"
+msgstr	"SMTP Domain"
+
+msgid	"Maximale Anzahl Sendeversuche pro Adresse"
+msgstr	"Maximale Anzahl Sendeversuche pro Adresse"
+
+msgid	"Maximale Anzahl Mails pro Durchgang"
+msgstr	"Maximale Anzahl Mails pro Durchgang"
+
+msgid	"Maximale Anzahl BCC-Adressen pro Mail fuer Massenmailing"
+msgstr	"Maximale Anzahl BCC-Adressen pro Mail für Massenmailing"
+
+msgid	"Speichern"
+msgstr	"Speichern"
+
+msgid	"Reset"
+msgstr	"Reset"
+
+msgid	"Absender- und Antwort-Adresse"
+msgstr	"Absender- und Antwort-Adresse"
+
+msgid	"E-Mail (name@domain.tld)"
+msgstr	"E-Mail (name@domain.tld)"
+
+msgid	"Absender-Name"
+msgstr	"Absender-Name"
+
+msgid	"Return-Path, E-Mail fuer Fehlermeldungen"
+msgstr	"Return-Path, E-Mail für Fehlermeldungen"
+
+msgid	"Pr&uuml;fung der E-Mail-Adressen, Intern + Versand"
+msgstr	"Prüfung der E-Mail-Adressen, Intern + Versand"
+
+msgid	"Pr&uuml;fung der E-Mail-Adressen bei Anmeldung"
+msgstr	"Prüfung der E-Mail-Adressen bei Anmeldung"
+
+msgid	"Benachrichtigung bei Neuanmeldung (subscribe)"
+msgstr	"Benachrichtigung bei Neuanmeldung (subscribe)"
+
+msgid	"Benachrichtigung bei Abmeldung (unsubscribe)"
+msgstr	"Benachrichtigung bei Abmeldung (unsubscribe)"
+
+msgid	"Benachrichtigungen gehen an (name@domain.tld)"
+msgstr	"Benachrichtigungen gehen an (name@domain.tld)"
+
+msgid	"Maximale Versuche pro E-Mail (Gesamt)"
+msgstr	"Maximale Versuche pro E-Mail (Gesamt)"
+
+msgid	"Maximale Anzahl Mails pro Sendevorgang"
+msgstr	"Maximale Anzahl Mails pro Sendevorgang"
+
+msgid	"Maximale Anzahl Adressen pro Mail im BCC-Header f&uuml;r "
+	"Massenmailing"
+msgstr	"Maximale Anzahl Adressen pro Mail im BCC-Header für Massenmailing"
+
+msgid	"Absender-Adresse sollte nicht leer sein"
+msgstr	"Absender-Adresse sollte nicht leer sein"
+
+msgid	"Absender E-Mail hat ein falsches Format oder Domain ist nicht "
+	"g&uuml;ltig"
+msgstr	"Absender E-Mail hat ein falsches Format oder Domain ist nicht gültig"
+
+msgid	"Absender-Name sollte nicht leer sein"
+msgstr	"Absender-Name sollte nicht leer sein"
+
+msgid	"E-Mail f&uuml;r Fehlermeldungen sollte nicht leer sein"
+msgstr	"E-Mail für Fehlermeldungen sollte nicht leer sein"
+
+msgid	"E-Mail f&uuml;r Fehlermeldungen hat ein falsches Format oder Domain "
+	"ist nicht g&uuml;ltig"
+msgstr	"E-Mail für Fehlermeldungen hat ein falsches Format oder Domain ist "
+	"nicht gültig"
+
+msgid	"E-Mail f&uumlr Benachrichtigungen sollte nicht leer sein"
+msgstr	"E-Mail f&uumlr Benachrichtigungen sollte nicht leer sein"
+
+msgid	"E-Mail f&uuml;r Benachrichtigungen bei An-/Abmeldungen hat ein "
+	"falsches Format oder Domain ist nicht g&uuml;ltig"
+msgstr	"E-Mail für Benachrichtigungen bei An-/Abmeldungen hat ein falsches "
+	"Format oder Domain ist nicht gültig"
+
+msgid	"Die Einstellungen wurden gespeichert und sind ab sofort g&uuml;ltig"
+msgstr	"Die Einstellungen wurden gespeichert und sind ab sofort gültig"
+
+msgid	"Serverinfo"
+msgstr	"Serverinfo"
+
+msgid	"Adressdatenbank bereinigen"
+msgstr	"Adressdatenbank bereinigen"
+
+msgid	"Filtern nach E-Mail"
+msgstr	"Filtern nach E-Mail"
+
+msgid	"Gruppe"
+msgstr	"Gruppe"
+
+msgid	"Suche nach Adress-Status"
+msgstr	"Suche nach Adress-Status"
+
+msgid	"Alle fehlerhaften Adressen"
+msgstr	"Alle fehlerhaften Adressen"
+
+msgid	"Aktion"
+msgstr	"Aktion"
+
+msgid	"Loeschen"
+msgstr	"Löschen"
+
+msgid	"Aktion Ausfuehren"
+msgstr	"Aktion Ausführen"
+
+#, c-format
+msgid	"E-Mail (leer = alle! ; wildcard = '*' oder '%'"
+msgstr	"E-Mail (leer = alle! ; wildcard = '*' oder '%'"
+
+msgid	"aus der Gruppe:"
+msgstr	"aus der Gruppe:"
+
+msgid	"mit dem Status:"
+msgstr	"mit dem Status:"
+
+#, c-format
+msgid	"%s Eintr&auml;ge aus der Gruppe %s mit dem Status %s wurden "
+	"gel&ouml;scht."
+msgstr	"%s Einträge aus der Gruppe %s mit dem Status %s wurden gelöscht."
+
+msgid	"&Uuml;bersicht"
+msgstr	"Übersicht"
+
+#, c-format
+msgid	"%s Adressen"
+msgstr	"%s Adressen"
+
+msgid	"Adresse bearbeiten"
+msgstr	"Adresse bearbeiten"
+
+msgid	"E-Mail darf nicht leer sein."
+msgstr	"E-Mail darf nicht leer sein."
+
+msgid	"E-Mail ist nicht korrekt oder Domain ist nicht g&uuml;tig."
+msgstr	"E-Mail ist nicht korrekt oder Domain ist nicht gültig."
+
+#, c-format
+msgid	"Adresse %s wurde bearbeitet."
+msgstr	"Adresse %s wurde bearbeitet."
+
+msgid	"Adressen in eine CSV-Datei exportieren"
+msgstr	"Adressen in eine CSV-Datei exportieren"
+
+msgid	"Gruppen waehlen, STRG/CTRL gedrueckt halten und klicken f. "
+	"Mehrfachauswahl"
+msgstr	"Gruppen wählen, STRG/CTRL gedrückt halten und klicken f. "
+	"Mehrfachauswahl"
+
+msgid	"Nur Adressen mit diesem Status exportieren"
+msgstr	"Nur Adressen mit diesem Status exportieren"
+
+msgid	"Gruppe:"
+msgstr	"Gruppe:"
+
+msgid	"Adressen mit folgendem Status:"
+msgstr	"Adressen mit folgendem Status:"
+
+msgid	"Adressen exportieren (CSV-Export)"
+msgstr	"Adressen exportieren (CSV-Export)"
+
+#, c-format
+msgid	"gew&auml;hlte Gruppe: %s"
+msgstr	"gewählte Gruppe: %s"
+
+#, c-format
+msgid	"Exportiere %s"
+msgstr	"Exportiere %s"
+
+#, c-format
+msgid	"%s Eintr&auml;ge gefunden."
+msgstr	"%s Einträge gefunden."
+
+#, c-format
+msgid	"Datei gespeichert unter: %s"
+msgstr	"Datei gespeichert unter: %s"
+
+msgid	"Neue Adresse erstellen"
+msgstr	"Neue Adresse erstellen"
+
+msgid	"E-Mail"
+msgstr	"E-Mail"
+
+msgid	"Aktiv"
+msgstr	"Aktiv"
+
+msgid	"Status"
+msgstr	"Status"
+
+msgid	"Gruppen"
+msgstr	"Gruppen"
+
+msgid	"Adressgruppe bearbeiten"
+msgstr	"Adressgruppe bearbeiten"
+
+msgid	"Name der Gruppe sollte nicht leer sein."
+msgstr	"Name der Gruppe sollte nicht leer sein."
+
+#, c-format
+msgid	"Adressgruppe %s wurde aktualisiert."
+msgstr	"Adressgruppe %s wurde aktualisiert."
+
+msgid	"Neue Adressgruppe erstellen"
+msgstr	"Neue Adressgruppe erstellen"
+
+msgid	"Name"
+msgstr	"Name"
+
+msgid	"Beschreibung"
+msgstr	"Beschreibung"
+
+msgid	"Diese Gruppe ist die Standardgruppe"
+msgstr	"Diese Gruppe ist die Standardgruppe"
+
+msgid	"Standardgruppe! Kann nicht de-aktiviert werden."
+msgstr	"Standardgruppe! Kann nicht de-aktiviert werden."
+
+msgid	"Adressgruppen verwalten"
+msgstr	"Adressgruppen verwalten"
+
+msgid	"Eintrag wurde aktiviert."
+msgstr	"Eintrag wurde aktiviert."
+
+msgid	"Eintrag wurde de-aktiviert."
+msgstr	"Eintrag wurde de-aktiviert."
+
+msgid	"Neue Standardgruppe wurde definiert."
+msgstr	"Neue Standardgruppe wurde definiert."
+
+msgid	"Eintrag wurde gel&ouml;scht."
+msgstr	"Eintrag wurde gelöscht."
+
+msgid	"Eintrag und die zugeordneten Adressen wurden gel&ouml;scht."
+msgstr	"Eintrag und die zugeordneten Adressen wurden gelöscht."
+
+msgid	"(aktiv)"
+msgstr	"(aktiv)"
+
+msgid	"(inaktiv)"
+msgstr	"(inaktiv)"
+
+msgid	"Standardgruppe"
+msgstr	"Standardgruppe"
+
+msgid	"aktivieren/de-aktivieren"
+msgstr	"aktivieren/de-aktivieren"
+
+msgid	"Neue Adresse in dieser Gruppe anlegen"
+msgstr	"Neue Adresse in dieser Gruppe anlegen"
+
+msgid	"Alle Adressen in dieser Gruppe anzeigen"
+msgstr	"Alle Adressen in dieser Gruppe anzeigen"
+
+msgid	"Statistik anzeigen"
+msgstr	"Statistik anzeigen"
+
+#, c-format
+msgid	"Adressgruppe %s als Standard definieren."
+msgstr	"Adressgruppe %s als Standard definieren."
+
+msgid	"Diese Adressgruppe als Standardgruppe"
+msgstr	"Diese Adressgruppe als Standardgruppe"
+
+#, c-format
+msgid	"Adressgruppe %s loeschen und Adressen dieser Gruppe der "
+	"Standardgruppe zuordnen und Verknuepfungen zu Formularen aufheben?"
+msgstr	"Adressgruppe %s löschen und Adressen dieser Gruppe der "
+	"Standardgruppe zuordnen und Verknüpfungen zu Formularen aufheben?"
+
+msgid	"Adressgruppe loeschen"
+msgstr	"Adressgruppe löschen"
+
+#, c-format
+msgid	"Adressgruppe %s UND Adressen dieser Gruppe loeschen?"
+msgstr	"Adressgruppe %s UND Adressen dieser Gruppe löschen?"
+
+msgid	"Adressgruppe und Adressen loeschen"
+msgstr	"Adressgruppe und Adressen löschen"
+
+msgid	"Legende / Status"
+msgstr	"Legende / Status"
+
+msgid	"Legende"
+msgstr	"Legende"
+
+msgid	"Standardgruppe (kann nicht de-aktiviert und gel&ouml;scht werden)"
+msgstr	"Standardgruppe (kann nicht de-aktiviert und gelöscht werden)"
+
+msgid	"Gruppe ist Aktiv"
+msgstr	"Gruppe ist Aktiv"
+
+msgid	"Gruppe ist Inaktiv"
+msgstr	"Gruppe ist Inaktiv"
+
+msgid	"Gruppe ist Aktiv/Inaktiv (Klick=Deaktivieren/Aktivieren)"
+msgstr	"Gruppe ist Aktiv/Inaktiv (Klick=Deaktivieren/Aktivieren)"
+
+msgid	"Bearbeiten"
+msgstr	"Bearbeiten"
+
+msgid	"Adresse in dieser Gruppe erstellen"
+msgstr	"Adresse in dieser Gruppe erstellen"
+
+msgid	"Adressen dieser Gruppe anzeigen"
+msgstr	"Adressen dieser Gruppe anzeigen"
+
+msgid	"Adressen dieser Gruppe anzeigen, Anzahl der Adressen in dieser Gruppe"
+msgstr	"Adressen dieser Gruppe anzeigen, Anzahl der Adressen in dieser Gruppe"
+
+msgid	"Diese Gruppe als Standardgruppe definieren"
+msgstr	"Diese Gruppe als Standardgruppe definieren"
+
+msgid	"Gruppe loeschen und Adressen der Standardgruppe zuordnen"
+msgstr	"Gruppe löschen und Adressen der Standardgruppe zuordnen"
+
+msgid	"Gruppe l&ouml;schen und Adressen der Standardgruppe zuordnen"
+msgstr	"Gruppe löschen und Adressen der Standardgruppe zuordnen"
+
+msgid	"Gruppe loeschen und Adressen der Gruppe loeschen"
+msgstr	"Gruppe löschen und Adressen der Gruppe löschen"
+
+msgid	"Gruppe l&ouml;schen und Adressen der Gruppe l&ouml;schen (Adressen "
+	"werden komplett gel&ouml;scht und auch aus allen anderen Gruppen "
+	"entfernt!)"
+msgstr	"Gruppe löschen und Adressen der Gruppe löschen (Adressen werden "
+	"komplett gelöscht und auch aus allen anderen Gruppen entfernt!)"
+
+msgid	"neue Adressgruppe erstellen"
+msgstr	"neue Adressgruppe erstellen"
+
+#, c-format
+msgid	"Neue Addressgruppe %s wurde erstellt."
+msgstr	"Neue Addressgruppe %s wurde erstellt."
+
+msgid	"Addressen aus CSV-Datei importieren"
+msgstr	"Addressen aus CSV-Datei importieren"
+
+msgid	"HTML-Vorlage hochladen"
+msgstr	"HTML-Vorlage hochladen"
+
+msgid	"Adress-Status f. neue Adressen"
+msgstr	"Adress-Status f. neue Adressen"
+
+msgid	"Adress-Status f. existierende Adressen"
+msgstr	"Adress-Status f. existierende Adressen"
+
+msgid	"Keine Aenderungen"
+msgstr	"Keine Änderungen"
+
+msgid	"Adressen Importieren"
+msgstr	"Adressen Importieren"
+
+msgid	"Gruppen:"
+msgstr	"Gruppen:"
+
+msgid	"CSV-Datei:"
+msgstr	"CSV-Datei:"
+
+msgid	"Status f. neue Adressen:"
+msgstr	"Status f. neue Adressen:"
+
+msgid	"Status bei Update:"
+msgstr	"Status bei Update:"
+
+msgid	"Adressen importieren (CSV-Import)"
+msgstr	"Adressen importieren (CSV-Import)"
+
+msgid	"CSV-Datei konnte nicht hochgeladen werden."
+msgstr	"CSV-Datei konnte nicht hochgeladen werden."
+
+#, c-format
+msgid	"Die CSV-Datei darf nur eine Gr&ouml;sse von %s Byte besitzen."
+msgstr	"Die CSV-Datei darf nur eine Grösse von %s Byte besitzen."
+
+msgid	"Die CSV-Datei besitzt eine ung&uuml;ltige Endung."
+msgstr	"Die CSV-Datei besitzt eine ungültige Endung."
+
+msgid	"Keine CSV-Datei zum Hochladen angegeben."
+msgstr	"Keine CSV-Datei zum Hochladen angegeben."
+
+msgid	"Status f&uuml;r neue Adressen: "
+msgstr	"Status für neue Adressen: "
+
+msgid	"Status f&uuml;r bestehende Adressen: "
+msgstr	"Status für bestehende Adressen: "
+
+msgid	"Keine &Auml;nderung"
+msgstr	"Keine Änderung"
+
+#, c-format
+msgid	"Importiere Datei %s"
+msgstr	"Importiere Datei %s"
+
+#, c-format
+msgid	"%s Eintr&auml;ge gefunden!"
+msgstr	"%s Einträge gefunden!"
+
+#, c-format
+msgid	"%s existiert nicht!"
+msgstr	"%s existiert nicht!"
+
+#, c-format
+msgid	"Zeile %s: E-Mail %s existiert Bereits und wurde aktualisiert und ggf "
+	"in Neue Gruppen eingetragen."
+msgstr	"Zeile %s: E-Mail %s existiert Bereits und wurde aktualisiert und ggf "
+	"in Neue Gruppen eingetragen."
+
+#, c-format
+msgid	"Zeile %s: E-Mail %s hat ein falsches Format."
+msgstr	"Zeile %s: E-Mail %s hat ein falsches Format."
+
+#, c-format
+msgid	"Es wurden %s von %s Eintr&auml;gen importiert und in die "
+	"gew&auml;hlten Gruppen eingetragen."
+msgstr	"Es wurden %s von %s Einträgen importiert und in die gewählten "
+	"Gruppen eingetragen."
+
+#, c-format
+msgid	"%s Eintr&auml;ge waren Fehlerhaft und wurden NICHT importiert."
+msgstr	"%s Einträge waren Fehlerhaft und wurden NICHT importiert."
+
+#, c-format
+msgid	"%s Eintraege sind bereits vorhanden und wurden aktualisiert."
+msgstr	"%s Einträge sind bereits vorhanden und wurden aktualisiert."
+
+msgid	"Adressen verwalten"
+msgstr	"Adressen verwalten"
+
+#, c-format
+msgid	"Status: %s"
+msgstr	"Status: %s"
+
+msgid	"Mitglied in den Gruppen:"
+msgstr	"Mitglied in den Gruppen:"
+
+msgid	"Adresse loeschen"
+msgstr	"Adresse löschen"
+
+msgid	"Inaktiv"
+msgstr	"Inaktiv"
+
+msgid	"Adresse ist Aktiv/Inaktiv (Klick=Deaktivieren/Aktivieren)"
+msgstr	"Adresse ist Aktiv/Inaktiv (Klick=Deaktivieren/Aktivieren)"
+
+msgid	"Statistik"
+msgstr	"Statistik"
+
+msgid	"Neue Adresse eintragen"
+msgstr	"Neue Adresse eintragen"
+
+msgid	"E-Mail sollte nicht leer sein."
+msgstr	"E-Mail sollte nicht leer sein."
+
+msgid	"E-Mail ist nicht korrekt oder Domain ist nicht g&uuml;ltig."
+msgstr	"E-Mail ist nicht korrekt oder Domain ist nicht gültig."
+
+msgid	"E-Mail existiert bereits. Die Daten wurden aktualisiert."
+msgstr	"E-Mail existiert bereits. Die Daten wurden aktualisiert."
+
+#, c-format
+msgid	"Neue Adresse %s wurde angelegt."
+msgstr	"Neue Adresse %s wurde angelegt."
+
+msgid	"Adressen suchen und filtern"
+msgstr	"Adressen suchen und filtern"
+
+msgid	"Suche nach e-Mail"
+msgstr	"Suche nach e-Mail"
+
+msgid	"Suche in den Feldern F0-F9"
+msgstr	"Suche in den Feldern F0-F9"
+
+msgid	"Suche nach Gruppenzugehoerigkeit"
+msgstr	"Suche nach Gruppenzugehörigkeit"
+
+msgid	"Author, angemeldet ueber Formular"
+msgstr	"Author, angemeldet über Formular"
+
+msgid	"angemeldet ueber"
+msgstr	"angemeldet über"
+
+msgid	"Egal"
+msgstr	"Egal"
+
+msgid	"Maximale Anzahl Eintraege die auf einmal angezeigt werden."
+msgstr	"Maximale Anzahl Einträge die auf einmal angezeigt werden."
+
+msgid	"zeige max."
+msgstr	"zeige max."
+
+msgid	"Adressen"
+msgstr	"Adressen"
+
+msgid	"Suchen"
+msgstr	"Suchen"
+
+#, c-format
+msgid	"Es wurden %s Mails durchsucht."
+msgstr	"Es wurden %s Mails durchsucht."
+
+msgid	"Unbekannt / nicht in der Datenbank"
+msgstr	"Unbekannt / nicht in der Datenbank"
+
+msgid	"Markierung fuer alle angezeigten Adressen umkehren"
+msgstr	"Markierung für alle angezeigten Adressen umkehren"
+
+msgid	"Alle ausw&auml;hlen / Markierung f&uuml;r alle angezeigten Adressen "
+	"umkehren"
+msgstr	"Alle auswählen / Markierung für alle angezeigten Adressen umkehren"
+
+msgid	"Auswaehlen"
+msgstr	"Auswählen"
+
+msgid	"Aktion ausfuehren"
+msgstr	"Aktion ausführen"
+
+msgid	"Mails nicht loeschen"
+msgstr	"Mails nicht löschen"
+
+msgid	"Mails loeschen"
+msgstr	"Mails löschen"
+
+msgid	"Adressen automatisch bearbeiten"
+msgstr	"Adressen automatisch bearbeiten"
+
+msgid	"Adressen als Fehlerhaft markieren"
+msgstr	"Adressen als Fehlerhaft markieren"
+
+msgid	"Adressen abmelden und deaktivieren"
+msgstr	"Adressen abmelden und deaktivieren"
+
+msgid	"Adressen deaktivieren"
+msgstr	"Adressen deaktivieren"
+
+msgid	"Adressen loeschen"
+msgstr	"Adressen löschen"
+
+msgid	"Host waehlen"
+msgstr	"Host wählen"
+
+msgid	"Host auswaehlen"
+msgstr	"Host auswählen"
+
+msgid	"Anzahl Mails die uebersprungen werden."
+msgstr	"Anzahl Mails die übersprungen werden."
+
+msgid	"max. Anzahl Mails die durchsucht/angezeigt werden."
+msgstr	"max. Anzahl Mails die durchsucht/angezeigt werden."
+
+msgid	"Nur Bouncemails anzeigen"
+msgstr	"Nur Bouncemails anzeigen"
+
+msgid	"Nur E-Mails an die Fehleradresse anzeigen"
+msgstr	"Nur E-Mails an die Fehleradresse anzeigen"
+
+msgid	"Verbinden und e-Mails abrufen"
+msgstr	"Verbinden und e-Mails abrufen"
+
+msgid	"Host"
+msgstr	"Host"
+
+msgid	"Offset"
+msgstr	"Offset"
+
+msgid	"Limit"
+msgstr	"Limit"
+
+msgid	"Nur Bouncemails"
+msgstr	"Nur Bouncemails"
+
+msgid	"Nur Returnmails"
+msgstr	"Nur Returnmails"
+
+msgid	"Bounce Management"
+msgstr	"Bounce Management"
+
+#, c-format
+msgid	"Verbindung zum Server %s wird aufgebaut..."
+msgstr	"Verbindung zum Server %s wird aufgebaut..."
+
+#, c-format
+msgid	"Servermeldung: %s"
+msgstr	"Servermeldung: %s"
+
+msgid	"Es wurden keine Mails zum Bearbeiten ausgew&auml;hlt."
+msgstr	"Es wurden keine Mails zum Bearbeiten ausgewählt."
+
+msgid	"L&ouml;sche Mail."
+msgstr	"Lösche Mail."
+
+msgid	"Mailbox aufr&auml;umen, als gel&ouml;scht markierte Mails wurden "
+	"entfernt."
+msgstr	"Mailbox aufräumen, als gelöscht markierte Mails wurden entfernt."
+
+msgid	"Es wurden keine Mails zum L&ouml;schen ausgew&auml;hlt."
+msgstr	"Es wurden keine Mails zum Löschen ausgewählt."
+
+#, c-format
+msgid	"%s Adressen zum Bearbeiten ausgew&auml;hlt."
+msgstr	"%s Adressen zum Bearbeiten ausgewählt."
+
+#, c-format
+msgid	"Die Adresse %s wurde geloescht."
+msgstr	"Die Adresse %s wurde gelöscht."
+
+#, c-format
+msgid	"Die Adresse %s wurde als Fehlerhaft markiert."
+msgstr	"Die Adresse %s wurde als Fehlerhaft markiert."
+
+#, c-format
+msgid	"Die Adresse %s wurde deaktiviert."
+msgstr	"Die Adresse %s wurde deaktiviert."
+
+#, c-format
+msgid	"Die Adresse %s wurde abgemeldet und deaktivert."
+msgstr	"Die Adresse %s wurde abgemeldet und deaktivert."
+
+#, c-format
+msgid	"Fehler: %s von max. %s"
+msgstr	"Fehler: %s von max. %s"
+
+#, c-format
+msgid	"Als fehlerhaft markiert und deaktivert (Sendefehler >%s)"
+msgstr	"Als fehlerhaft markiert und deaktivert (Sendefehler >%s)"
+
+msgid	"ist bereits abgemeldet (unsubscribed)."
+msgstr	"ist bereits abgemeldet (unsubscribed)."
+
+#, c-format
+msgid	"%s ist nicht bekannt."
+msgstr	"%s ist nicht bekannt."
+
+msgid	"Es wurden keine Adressen zum Bearbeiten ausgew&auml;hlt."
+msgstr	"Es wurden keine Adressen zum Bearbeiten ausgewählt."
+
+msgid	"Nach Adressen dursuchen und bearbeiten, Mails loeschen"
+msgstr	"Nach Adressen dursuchen und bearbeiten, Mails löschen"
+
+msgid	"Nach Adressen durchsuchen und bearbeiten"
+msgstr	"Nach Adressen durchsuchen und bearbeiten"
+
+#, c-format
+msgid	"Gesamt: %s Mails"
+msgstr	"Gesamt: %s Mails"
+
+msgid	"Betreff / Text"
+msgstr	"Betreff / Text"
+
+msgid	"Return Mail"
+msgstr	"Return Mail"
+
+msgid	"Bounce Mail erkannt"
+msgstr	"Bounce Mail erkannt"
+
+msgid	"Text und Details anzeigen"
+msgstr	"Text und Details anzeigen"
+
+msgid	"Adressen anzeigen"
+msgstr	"Adressen anzeigen"
+
+msgid	"Markierung fuer alle angezeigten E-Mails umkehren"
+msgstr	"Markierung für alle angezeigten E-Mails umkehren"
+
+msgid	"Alle ausw&auml;hlen / Markierung f&uuml;r alle angezeigten E-Mails "
+	"umkehren"
+msgstr	"Alle auswählen / Markierung für alle angezeigten E-Mails umkehren"
+
+msgid	"Hilfe / Dokumentation"
+msgstr	"Hilfe / Dokumentation"
+
+#, c-format
+msgid	"Benutzer Speicher: %s Byte"
+msgstr	"Benutzer Speicher: %s Byte"
+
+#, c-format
+msgid	"Bearbeitungszeit: %s Sekunden"
+msgstr	"Bearbeitungszeit: %s Sekunden"
+
+#, c-format
+msgid	"Max. Upload: %s Byte"
+msgstr	"Max. Upload: %s Byte"
+
+#, c-format
+msgid	"Speicherlimit: %s"
+msgstr	"Speicherlimit: %s"
+
+#, c-format
+msgid	"Max. POST Data: %s"
+msgstr	"Max. POST Data: %s"
+
+#, c-format
+msgid	"Max. Ausf&uuml;hrungszeit: %s Sekunden"
+msgstr	"Max. Ausführungszeit: %s Sekunden"
+
+#, c-format
+msgid	"%s Mails pro Durchlauf"
+msgstr	"%s Mails pro Durchlauf"
+
+msgid	"Fenster schliessen"
+msgstr	"Fenster schliessen"
+
+msgid	"Formluar bearbeiten"
+msgstr	"Formluar bearbeiten"
+
+msgid	"Name sollte nicht leer sein."
+msgstr	"Name sollte nicht leer sein."
+
+#, c-format
+msgid	"Formular %s wurde bearbeitet."
+msgstr	"Formular %s wurde bearbeitet."
+
+msgid	"neues Formular erstellen"
+msgstr	"neues Formular erstellen"
+
+msgid	"Typ waehlen"
+msgstr	"Typ wählen"
+
+msgid	"Pflichtfeld"
+msgstr	"Pflichtfeld"
+
+msgid	"Werte, (Trennzeichen ; (Semikolon)"
+msgstr	"Werte, (Trennzeichen ; (Semikolon)"
+
+msgid	"Eingaben zuruecksetzen"
+msgstr	"Eingaben zurücksetzen"
+
+msgid	"Double Opt-in"
+msgstr	"Double Opt-in"
+
+msgid	"Gruppe(n)"
+msgstr	"Gruppe(n)"
+
+msgid	"Fn / Pflichtfeld / Typ / Name"
+msgstr	"Fn / Pflichtfeld / Typ / Name"
+
+msgid	" Name "
+msgstr	" Name "
+
+msgid	" Werte "
+msgstr	" Werte "
+
+msgid	"Formulare verwalten"
+msgstr	"Formulare verwalten"
+
+msgid	"Eintrag wurde kopiert."
+msgstr	"Eintrag wurde kopiert."
+
+msgid	"Double-Opt-In"
+msgstr	"Double-Opt-In"
+
+msgid	"Formular bearbeiten"
+msgstr	"Formular bearbeiten"
+
+msgid	"Anmeldungen &uuml;ber dieses Formular werden in die folgenden "
+	"Gruppen eingeordnet:"
+msgstr	"Anmeldungen über dieses Formular werden in die folgenden Gruppen "
+	"eingeordnet:"
+
+#, c-format
+msgid	"Dynamische Onlineversion anzeigen: %s"
+msgstr	"Dynamische Onlineversion anzeigen: %s"
+
+#, c-format
+msgid	"Template anzeigen: %s"
+msgstr	"Template anzeigen: %s"
+
+#, c-format
+msgid	"Statische Onlineversion anzeigen: %s"
+msgstr	"Statische Onlineversion anzeigen: %s"
+
+msgid	"Formular kopieren"
+msgstr	"Formular kopieren"
+
+#, c-format
+msgid	"Formular %s loeschen"
+msgstr	"Formular %s löschen"
+
+msgid	"Formular loeschen"
+msgstr	"Formular löschen"
+
+msgid	"Double-Opt-In aktiviert"
+msgstr	"Double-Opt-In aktiviert"
+
+msgid	"Online"
+msgstr	"Online"
+
+msgid	"Dynamische Onlineversion anzeigen:"
+msgstr	"Dynamische Onlineversion anzeigen:"
+
+msgid	"Template"
+msgstr	"Template"
+
+msgid	"Template anzeigen:"
+msgstr	"Template anzeigen:"
+
+msgid	"Formular ist Aktiv/Inaktiv (Klick=Deaktivieren/Aktivieren)"
+msgstr	"Formular ist Aktiv/Inaktiv (Klick=Deaktivieren/Aktivieren)"
+
+msgid	"Kopieren"
+msgstr	"Kopieren"
+
+msgid	"Formular l&oumlschen"
+msgstr	"Formular l&oumlschen"
+
+msgid	"neues Formluar erstellen"
+msgstr	"neues Formluar erstellen"
+
+#, c-format
+msgid	"Neues Formular %s wurde erstellt."
+msgstr	"Neues Formular %s wurde erstellt."
+
+msgid	"Bitte warten..."
+msgstr	"Bitte warten..."
+
+msgid	"Seite wird geladen"
+msgstr	"Seite wird geladen"
+
+msgid	"Achtung! Ein Abbruch des Ladevorgangs kann zu Datenverlust und "
+	"ungew&uuml;nschten Nebeneffekten f&uuml;hren. Bitte tun Sie dies auf "
+	"Ihr eigenes Risiko."
+msgstr	"Achtung! Ein Abbruch des Ladevorgangs kann zu Datenverlust und "
+	"ungewünschten Nebeneffekten führen. Bitte tun Sie dies auf Ihr "
+	"eigenes Risiko."
+
+msgid	"Bitte geben Sie Ihren Benutzernamen und Passwort ein"
+msgstr	"Bitte geben Sie Ihren Benutzernamen und Passwort ein"
+
+msgid	"Hallo"
+msgstr	"Hallo"
+
+msgid	"Hallo Welt"
+msgstr	"Hallo Welt"
+
+msgid	"Tsch&uuml;ss"
+msgstr	"Tschüss"
+
+msgid	"Bitte aus dem Men&uuml; w&auml;hlen."
+msgstr	"Bitte aus dem Menü wählen."
+
+msgid	"ACHTUNG! /install.php existiert! Die Datei install.php bitte nach "
+	"erfolgreicher Installation verschieben oder l&aouml;schen!"
+msgstr	"ACHTUNG! /install.php existiert! Die Datei install.php bitte nach "
+	"erfolgreicher Installation verschieben oder löschen!"
+
+#, c-format
+msgid	"ACHTUNG! %s ist nicht Schreibgesch&uuml;tzt"
+msgstr	"ACHTUNG! %s ist nicht Schreibgeschützt"
+
+#, c-format
+msgid	"Rechte f&uuml;r %s wurden ge&auml;ndert!"
+msgstr	"Rechte für %s wurden geändert!"
+
+#, c-format
+msgid	"Rechte f&uuml;r %s konnten nicht ge&auml;ndert werden! Bitte "
+	"&auml;ndern Sie diese manuell."
+msgstr	"Rechte für %s konnten nicht geändert werden! Bitte ändern Sie "
+	"diese manuell."
+
+msgid	"Rechte f&uuml;r mnl_config.inc wurden ge&auml;ndert!"
+msgstr	"Rechte für mnl_config.inc wurden geändert!"
+
+msgid	"Rechte f&uuml;r mnl_config.inc konnten nicht ge&auml;ndert werden! "
+	"Bitte &auml;ndern Sie diese manuell."
+msgstr	"Rechte für mnl_config.inc konnten nicht geändert werden! Bitte "
+	"ändern Sie diese manuell."
+
+#, c-format
+msgid	"Keine Schreibrechte f&uuml;r %s"
+msgstr	"Keine Schreibrechte für %s"
+
+#, c-format
+msgid	"ACHTUNG! %s ist nicht Passwortgesch&uuml;tzt"
+msgstr	"ACHTUNG! %s ist nicht Passwortgeschützt"
+
+msgid	"Passwort wurde gespeichert und ist ab sofort g&uuml;ltig!"
+msgstr	"Passwort wurde gespeichert und ist ab sofort gültig!"
+
+msgid	"Aktuelle Meldungen ein-/ausblenden"
+msgstr	"Aktuelle Meldungen ein-/ausblenden"
+
+msgid	"Neu"
+msgstr	"Neu"
+
+msgid	"OK"
+msgstr	"OK"
+
+msgid	"Bestaetigt"
+msgstr	"Bestätigt"
+
+msgid	"Angezeigt"
+msgstr	"Angezeigt"
+
+msgid	"Warten"
+msgstr	"Warten"
+
+msgid	"Fehler C"
+msgstr	"Fehler C"
+
+msgid	"Fehler A"
+msgstr	"Fehler A"
+
+msgid	"Fehler S"
+msgstr	"Fehler S"
+
+msgid	"Abgemeldet"
+msgstr	"Abgemeldet"
+
+msgid	"Touch"
+msgstr	"Touch"
+
+msgid	"Neuanmeldung"
+msgstr	"Neuanmeldung"
+
+msgid	"manuell Eingetragen, Syntax Gepr&uuml;ft, Senden OK"
+msgstr	"manuell Eingetragen, Syntax Geprüft, Senden OK"
+
+msgid	"Best&auml;tigt, Double-Opt-In"
+msgstr	"Bestätigt, Double-Opt-In"
+
+msgid	"Rechecked, NL/Blindimage angezeigt"
+msgstr	"Rechecked, NL/Blindimage angezeigt"
+
+msgid	"Warten auf Best&auml;tigung (Double-Opt-IN)"
+msgstr	"Warten auf Bestätigung (Double-Opt-IN)"
+
+msgid	"undefiniert"
+msgstr	"undefiniert"
+
+msgid	"Fehler beim versenden, Status/Aktiv wurde ge&auml;ndert vor dem "
+	"versenden!"
+msgstr	"Fehler beim versenden, Status/Aktiv wurde geändert vor dem "
+	"versenden!"
+
+msgid	"Fehlerhafte Adresse o. Rueckl&auml;ufer"
+msgstr	"Fehlerhafte Adresse o. Rückläufer"
+
+msgid	"Fehler beim versenden, neuer Versuch"
+msgstr	"Fehler beim versenden, neuer Versuch"
+
+msgid	"1st-Touch-Opt-In"
+msgstr	"1st-Touch-Opt-In"
+
+msgid	"Queued"
+msgstr	"Queued"
+
+msgid	"Versand"
+msgstr	"Versand"
+
+msgid	"Gesendet"
+msgstr	"Gesendet"
+
+msgid	"Archiv"
+msgstr	"Archiv"
+
+msgid	"Keine Versandauftr&auml;ge oder Historie f. dieses Newsletter"
+msgstr	"Keine Versandaufträge oder Historie für diesen Newsletter"
+
+msgid	"In der Warteschlange"
+msgstr	"In der Warteschlange"
+
+msgid	"Versand gestartet"
+msgstr	"Versand gestartet"
+
+msgid	"Versendet"
+msgstr	"Versendet"
+
+msgid	"Archiviert - Qs wurden gel&ouml;scht"
+msgstr	"Archiviert - Qs wurden gelöscht"
+
+msgid	"Versand vorbereitet, Warten auf Versand (terminiert)"
+msgstr	"Versand vorbereitet, Warten auf Versand (terminiert)"
+
+msgid	"Gestartet"
+msgstr	"Gestartet"
+
+msgid	"Running"
+msgstr	"Running"
+
+msgid	"Fertig"
+msgstr	"Fertig"
+
+msgid	"Angehalten"
+msgstr	"Angehalten"
+
+msgid	"Wird versendet"
+msgstr	"Wird versendet"
+
+msgid	"In Arbeit"
+msgstr	"In Arbeit"
+
+msgid	"View"
+msgstr	"View"
+
+msgid	"Fehler"
+msgstr	"Fehler"
+
+msgid	"Abbruch"
+msgstr	"Abbruch"
+
+msgid	"Warten auf Versand"
+msgstr	"Warten auf Versand"
+
+msgid	"Versendet, OK"
+msgstr	"Versendet, OK"
+
+msgid	"Versendet, angezeigt"
+msgstr	"Versendet, angezeigt"
+
+msgid	"Versendet, Fehler"
+msgstr	"Versendet, Fehler"
+
+msgid	"Wird in diesem Moment versendet!!!"
+msgstr	"Wird in diesem Moment versendet!!!"
+
+msgid	"Abgebrochen, Q gel&ouml;scht"
+msgstr	"Abgebrochen, Q gelöscht"
+
+msgid	"the newsletter machine"
+msgstr	"the newsletter machine"
+
+msgid	"Newsletter bearbeiten"
+msgstr	"Newsletter bearbeiten"
+
+msgid	"Betreff sollte nicht leer sein."
+msgstr	"Betreff sollte nicht leer sein."
+
+#, c-format
+msgid	"Newsletter %s wurde aktualisiert."
+msgstr	"Newsletter %s wurde aktualisiert."
+
+msgid	"Der Newsletter wurde gespeichert unter:"
+msgstr	"Der Newsletter wurde gespeichert unter:"
+
+msgid	"Neue Newslettergruppe erstellen"
+msgstr	"Neue Newslettergruppe erstellen"
+
+msgid	"Bild hochladen"
+msgstr	"Bild hochladen"
+
+msgid	"Anhang hochladen"
+msgstr	"Anhang hochladen"
+
+msgid	"Erscheint als Betreff in der e-Mail"
+msgstr	"Erscheint als Betreff in der e-Mail"
+
+msgid	"Link"
+msgstr	"Link"
+
+msgid	"Massenmailing (BCC)"
+msgstr	"Massenmailing (BCC)"
+
+msgid	"Newsletter-Text"
+msgstr	"Newsletter-Text"
+
+msgid	"Newsletter-Gruppe waehlen"
+msgstr	"Newsletter-Gruppe wählen"
+
+msgid	"Betreff"
+msgstr	"Betreff"
+
+msgid	"Bild"
+msgstr	"Bild"
+
+msgid	"HTML"
+msgstr	"HTML"
+
+msgid	"Anhang"
+msgstr	"Anhang"
+
+msgid	"Text"
+msgstr	"Text"
+
+msgid	"Newslettergruppe bearbeiten"
+msgstr	"Newslettergruppe bearbeiten"
+
+#, c-format
+msgid	"Newslettergruppe %s wurde aktualisiert."
+msgstr	"Newslettergruppe %s wurde aktualisiert."
+
+msgid	"Farbe: Auswaehlen und klicken um Farbe zu uebernehmen"
+msgstr	"Farbe: Auswählen und klicken um Farbe zu übernehmen"
+
+msgid	"Newslettergruppen verwalten"
+msgstr	"Newslettergruppen verwalten"
+
+msgid	"Newsletter"
+msgstr	"Newsletter"
+
+msgid	"Neuen Newsletter in dieser Gruppe erstellen"
+msgstr	"Neuen Newsletter in dieser Gruppe erstellen"
+
+msgid	"Alle Newsletter in dieser Gruppe anzeigen"
+msgstr	"Alle Newsletter in dieser Gruppe anzeigen"
+
+#, c-format
+msgid	"Newslettergruppe %s als Standard definieren"
+msgstr	"Newslettergruppe %s als Standard definieren"
+
+msgid	"Diese Newslettergruppe als Standardgruppe"
+msgstr	"Diese Newslettergruppe als Standardgruppe"
+
+#, c-format
+msgid	"Newslettergruppe %s loeschen und Newsletter dieser Gruppe der "
+	"Standardgruppe zuordnen?"
+msgstr	"Newslettergruppe %s löschen und Newsletter dieser Gruppe der "
+	"Standardgruppe zuordnen?"
+
+msgid	"Newslettergruppe loeschen"
+msgstr	"Newslettergruppe löschen"
+
+msgid	"Newsletter in dieser Gruppe erstellen"
+msgstr	"Newsletter in dieser Gruppe erstellen"
+
+msgid	"Newsletter dieser Gruppe anzeigen"
+msgstr	"Newsletter dieser Gruppe anzeigen"
+
+msgid	"Newsletter dieser Gruppe anzeigen, Anzahl der Newsletter in dieser "
+	"Gruppe"
+msgstr	"Newsletter dieser Gruppe anzeigen, Anzahl der Newsletter in dieser "
+	"Gruppe"
+
+msgid	"als Standardgruppe"
+msgstr	"als Standardgruppe"
+
+msgid	"Gruppe l&ouml;schen und Newsletter der Standardgruppe zuordnen"
+msgstr	"Gruppe löschen und Newsletter der Standardgruppe zuordnen"
+
+#, c-format
+msgid	"Neue Newslettergruppe %s wurde erstellt."
+msgstr	"Neue Newslettergruppe %s wurde erstellt."
+
+msgid	"Newsletter verwalten"
+msgstr	"Newsletter verwalten"
+
+msgid	"Bild wurde gel&ouml;scht."
+msgstr	"Bild wurde gelöscht."
+
+msgid	"Bild konnte nicht gel&ouml;scht werden."
+msgstr	"Bild konnte nicht gelöscht werden."
+
+msgid	"HTML Datei wurde gel&ouml;scht."
+msgstr	"HTML Datei wurde gelöscht."
+
+msgid	"HTML Datei konnte nicht gel&ouml;scht werden."
+msgstr	"HTML Datei konnte nicht gelöscht werden."
+
+msgid	"Anhang wurde gel&ouml;scht."
+msgstr	"Anhang wurde gelöscht."
+
+msgid	"Anhang konnte nicht gel&ouml;scht werden."
+msgstr	"Anhang konnte nicht gelöscht werden."
+
+#, c-format
+msgid	"%s Queues fuer diese Newsletter wurden geloescht."
+msgstr	"%s Queues für diesen Newsletter wurden gelöscht."
+
+msgid	"Eintrag und dazugeh&ouml;rige Dateien wurde kopiert."
+msgstr	"Eintrag und dazugehörige Dateien wurde kopiert."
+
+#, c-format
+msgid	"Gew&auml;hlte Gruppe: %s"
+msgstr	"Gewählte Gruppe: %s"
+
+msgid	"Massenmailing"
+msgstr	"Massenmailing"
+
+msgid	"personalisierter Newsletter"
+msgstr	"personalisierter Newsletter"
+
+msgid	"Bearbeiten / Aktionen anzeigen"
+msgstr	"Bearbeiten / Aktionen anzeigen"
+
+msgid	"Neue Q"
+msgstr	"Neue Q"
+
+msgid	"Versandauftrag anlegen"
+msgstr	"Versandauftrag anlegen"
+
+msgid	"Alle Q-Eintraege fuer diesen Newsletter loeschen? Achtung es werden "
+	"auch laufende Sendeauftraege geloescht!"
+msgstr	"Alle Q-Einträge für diesen Newsletter löschen? Achtung es werden "
+	"auch laufende Sendeaufträge gelöscht!"
+
+msgid	"Q fuer dieses Newsletter loeschen"
+msgstr	"Q für dieses Newsletter löschen"
+
+msgid	"Versandauftr&auml;ge l&ouml;schen"
+msgstr	"Versandaufträge löschen"
+
+msgid	"Q fuer dieses Newsletter anzeigen"
+msgstr	"Q für diesen Newsletter anzeigen"
+
+msgid	"Versandauftr&auml;ge anzeigen"
+msgstr	"Versandaufträge anzeigen"
+
+msgid	"Newsletter versenden"
+msgstr	"Newsletter versenden"
+
+msgid	"Versand starten"
+msgstr	"Versand starten"
+
+msgid	"Template des Newsletter anzeigen: "
+msgstr	"Template des Newsletter anzeigen: "
+
+msgid	"Template anzeigen"
+msgstr	"Template anzeigen"
+
+msgid	"Onlineversion des Newsletter anzeigen: "
+msgstr	"Onlineversion des Newsletter anzeigen: "
+
+msgid	"Onlineversion anzeigen"
+msgstr	"Onlineversion anzeigen"
+
+msgid	"Bild fuer diesen Newsletter anzeigen: "
+msgstr	"Bild für diesen Newsletter anzeigen: "
+
+msgid	"Bild anzeigen"
+msgstr	"Bild anzeigen"
+
+msgid	"Bild loeschen"
+msgstr	"Bild löschen"
+
+msgid	"Bild l&ouml;schen"
+msgstr	"Bild löschen"
+
+msgid	"HTML-Datei anzeigen"
+msgstr	"HTML-Datei anzeigen"
+
+msgid	"HTML Datei loeschen"
+msgstr	"HTML Datei löschen"
+
+msgid	"HTML-Datei l&ouml;schen"
+msgstr	"HTML-Datei löschen"
+
+msgid	"Anhang fuer diesen Newsletter laden"
+msgstr	"Anhang für diesen Newsletter laden"
+
+msgid	"Anhang anzeigen"
+msgstr	"Anhang anzeigen"
+
+msgid	"Anhang loeschen"
+msgstr	"Anhang löschen"
+
+msgid	"Anhang l&ouml;schen"
+msgstr	"Anhang löschen"
+
+msgid	"Link anzeigen"
+msgstr	"Link anzeigen"
+
+msgid	"Deaktivieren"
+msgstr	"Deaktivieren"
+
+msgid	"Aktivieren"
+msgstr	"Aktivieren"
+
+msgid	"Newsletter loeschen"
+msgstr	"Newsletter löschen"
+
+msgid	"L&ouml;schen"
+msgstr	"Löschen"
+
+msgid	"Der Newsletter wurde bereits versendet, wollen Sie ihn wirklich "
+	"bearbeiten? Es wird empfohlen eine Kopie zu erstellen und diese zu "
+	"bearbeiten."
+msgstr	"Der Newsletter wurde bereits versendet, wollen Sie ihn wirklich "
+	"bearbeiten? Es wird empfohlen eine Kopie zu erstellen und diese zu "
+	"bearbeiten."
+
+msgid	"Newsletter kopieren"
+msgstr	"Newsletter kopieren"
+
+msgid	"Newsletter und Dateien kopieren"
+msgstr	"Newsletter und Dateien kopieren"
+
+msgid	"Kopieren(+Dateien)"
+msgstr	"Kopieren(+Dateien)"
+
+msgid	"Massenmailing (per BCC:, kein feedback)"
+msgstr	"Massenmailing (per BCC:, kein feedback)"
+
+msgid	"Queue-Eintrag hinzufuegen, zum Versenden vorbereiten"
+msgstr	"Queue-Eintrag hinzufügen, zum Versenden vorbereiten"
+
+msgid	"Queue-Eintrag hinzuf&uuml;gen, zum Versenden vorbereiten"
+msgstr	"Queue-Eintrag hinzufügen, zum Versenden vorbereiten"
+
+msgid	"Alle Queue-Eintraege loeschen"
+msgstr	"Alle Queue-Einträge löschen"
+
+msgid	"Alle Queue-Eintr&auml;ge f&uuml;r diesen Newsletter l&ouml;schen"
+msgstr	"Alle Queue-Einträge für diesen Newsletter l&ouml;schen"
+
+msgid	"Queue-Eintraege fuer Newsletter anzeigen"
+msgstr	"Queue-Einträge für Newsletter anzeigen"
+
+msgid	"Queue-Eintraege f&uuml;r Newsletter anzeigen"
+msgstr	"Queue-Einträge für Newsletter anzeigen"
+
+msgid	"Versenden"
+msgstr	"Versenden"
+
+msgid	"Onlineversion des Newsletter anzeigen"
+msgstr	"Onlineversion des Newsletter anzeigen"
+
+msgid	"verkn&uuml;pftes Bild anzeigen"
+msgstr	"verknüpftes Bild anzeigen"
+
+msgid	"verkn&uuml;pftes Bild l&ouml;schen"
+msgstr	"verknüpftes Bild löschen"
+
+msgid	"verkn&uuml;pfte HTML Datei anzeigen"
+msgstr	"verknüpfte HTML Datei anzeigen"
+
+msgid	"HTML-Datei loeschen"
+msgstr	"HTML-Datei löschen"
+
+msgid	"verkn&uuml;pfte HTML-Datei l&ouml;schen"
+msgstr	"verknüpfte HTML-Datei löschen"
+
+msgid	"verkn&uuml;pften Link anzeigen"
+msgstr	"verknüpften Link anzeigen"
+
+msgid	"Newsletter ist Aktiv/Inaktiv (Klick=Deaktivieren/Aktivieren)"
+msgstr	"Newsletter ist Aktiv/Inaktiv (Klick=Deaktivieren/Aktivieren)"
+
+msgid	"Newsletter kopieren (ohne Dateien)"
+msgstr	"Newsletter kopieren (ohne Dateien)"
+
+msgid	"Newsletter l&ouml;schen"
+msgstr	"Newsletter löschen"
+
+msgid	"Neuen Newsletter erstellen"
+msgstr	"Neuen Newsletter erstellen"
+
+#, c-format
+msgid	"Neuer Newsletter %s wurde erstellt."
+msgstr	"Neuer Newsletter %s wurde erstellt."
+
+msgid	"HTML-Datei erfolgreich hochgeladen."
+msgstr	"HTML-Datei erfolgreich hochgeladen."
+
+msgid	"HTML-Code wurde angef&uuml;gt."
+msgstr	"HTML-Code wurde angefügt."
+
+msgid	"HTML-Datei konnte nicht hochgeladen werden."
+msgstr	"HTML-Datei konnte nicht hochgeladen werden."
+
+#, c-format
+msgid	"Die HTML-Datei darf nur eine Gr&ouml;sse von %s Byte haben."
+msgstr	"Die HTML-Datei darf nur eine Grösse von %s Byte haben."
+
+msgid	"Die HTML-Datei besitzt eine ung&uuml;ltige Endung."
+msgstr	"Die HTML-Datei besitzt eine ungültige Endung."
+
+msgid	"BILD-Datei erfolgreich hochgeladen."
+msgstr	"BILD-Datei erfolgreich hochgeladen."
+
+msgid	"gespeichert unter:"
+msgstr	"gespeichert unter:"
+
+msgid	"BILD-Datei konnte nicht hochgeladen werden."
+msgstr	"BILD-Datei konnte nicht hochgeladen werden."
+
+#, c-format
+msgid	"Die BILD-Datei darf nur eine Gr&ouml;sse von %s Byte besitzen."
+msgstr	"Die BILD-Datei darf nur eine Grösse von %s Byte besitzen."
+
+msgid	"Die BILD-Datei besitzt eine ung&uuml;ltige Endung."
+msgstr	"Die BILD-Datei besitzt eine ungültige Endung."
+
+msgid	"Anhang erfolgreich hochgeladen."
+msgstr	"Anhang erfolgreich hochgeladen."
+
+msgid	"Anhang konnte nicht hochgeladen werden."
+msgstr	"Anhang konnte nicht hochgeladen werden."
+
+#, c-format
+msgid	"Der Anhang Datei darf nur eine Gr&ouml;sse von %s Byte haben."
+msgstr	"Der Anhang Datei darf nur eine Grösse von %s Byte haben."
+
+msgid	"Zurueck"
+msgstr	"Zurück"
+
+#, c-format
+msgid	"Eintrag %s bis %s von %s"
+msgstr	"Eintrag %s bis %s von %s"
+
+msgid	"Vor"
+msgstr	"Vor"
+
+msgid	"neuen Q erstellen"
+msgstr	"neuen Q erstellen"
+
+msgid	"Newsletter waehlen"
+msgstr	"Newsletter wählen"
+
+msgid	"(Massenmailing)"
+msgstr	"(Massenmailing)"
+
+msgid	"(personalisiert)"
+msgstr	"(personalisiert)"
+
+msgid	"Versandliste sofort aktivieren"
+msgstr	"Versandliste sofort aktivieren"
+
+msgid	"Datum des terminierten Versands"
+msgstr	"Datum des terminierten Versands"
+
+msgid	"Stunde"
+msgstr	"Stunde"
+
+msgid	"Minute"
+msgstr	"Minute"
+
+msgid	"versenden an:"
+msgstr	"versenden an:"
+
+msgid	"Versand starten am:"
+msgstr	"Versand starten am:"
+
+msgid	"Versandliste sofort erstellen"
+msgstr	"Versandliste sofort erstellen"
+
+msgid	"Newsletter Warteschlange (Q)"
+msgstr	"Newsletter Warteschlange (Q)"
+
+msgid	"Logfile wurde gel&ouml;scht."
+msgstr	"Logfile wurde gelöscht."
+
+msgid	"Logfile konnte nicht gel&ouml;scht werden."
+msgstr	"Logfile konnte nicht gelöscht werden."
+
+#, c-format
+msgid	"gew&auml;hltes Newsletter: %s"
+msgstr	"gewähltes Newsletter: %s"
+
+msgid	"Newsletter an gewaehlte Gruppe versenden"
+msgstr	"Newsletter an gewählte Gruppe versenden"
+
+#, c-format
+msgid	"Versand startet: %s"
+msgstr	"Versand startet: %s"
+
+#, c-format
+msgid	"Erstellt am: %s"
+msgstr	"Erstellt am: %s"
+
+#, c-format
+msgid	"Versand startet am/um: %s"
+msgstr	"Versand startet am/um: %s"
+
+#, c-format
+msgid	"Erstellt von: %s"
+msgstr	"Erstellt von: %s"
+
+#, c-format
+msgid	"Q ID: %s starten ?"
+msgstr	"Q ID: %s starten ?"
+
+msgid	"Q erneut starten und fortfahren"
+msgstr	"Q erneut starten und fortfahren"
+
+#, c-format
+msgid	"Q ID: %s anhalten und Versand stoppen?"
+msgstr	"Q ID: %s anhalten und Versand stoppen?"
+
+msgid	"Q stoppen"
+msgstr	"Q stoppen"
+
+msgid	"Logfile anzeigen (nicht vollstaendig)"
+msgstr	"Logfile anzeigen (nicht vollständig)"
+
+msgid	"Logfile anzeigen"
+msgstr	"Logfile anzeigen"
+
+#, c-format
+msgid	"Logfile fuer Q %s loeschen?"
+msgstr	"Logfile für Q %s löschen?"
+
+msgid	"Logfile loeschen"
+msgstr	"Logfile löschen"
+
+#, c-format
+msgid	"Q ID: %s loeschen?"
+msgstr	"Q ID: %s löschen?"
+
+msgid	"Q loeschen"
+msgstr	"Q löschen"
+
+msgid	"Logfile l&ouml;schen"
+msgstr	"Logfile löschen"
+
+msgid	"Diesen Eintrag versenden"
+msgstr	"Diesen Eintrag versenden"
+
+msgid	"Anhalten"
+msgstr	"Anhalten"
+
+msgid	"Fortfahren"
+msgstr	"Fortfahren"
+
+msgid	"Q l&ouml;schen"
+msgstr	"Q löschen"
+
+msgid	"Newsletter zur Warteschlange (Q) hinzufuegen"
+msgstr	"Newsletter zur Warteschlange (Q) hinzufügen"
+
+#, c-format
+msgid	"F&uuml;r die Gruppe %s existieren bereits %s neue Eintr&auml;ge. "
+	"Nicht hinzugef&uuml;gt!"
+msgstr	"Für die Gruppe %s existieren bereits %s neue Einträge. Nicht "
+	"hinzugefügt!"
+
+#, c-format
+msgid	"F&uuml;r die Gruppe %s existieren bereits %s gestartete/wartende "
+	"Eintr&auml;ge. Nicht hinzugef&uuml;gt!"
+msgstr	"Für die Gruppe %s existieren bereits %s gestartete/wartende "
+	"Einträge. Nicht hinzugefügt!"
+
+#, c-format
+msgid	"F&uuml;r die Gruppe %s existieren bereits %s laufende Eintr&auml;ge. "
+	"Nicht hinzugef&uuml;gt!"
+msgstr	"Für die Gruppe %s existieren bereits %s laufende Einträge. Nicht "
+	"hinzugefügt!"
+
+#, c-format
+msgid	"In der  Gruppe %s existieren keine g&uuml;ltigen Adressen. Nicht "
+	"hinzugef&uuml;gt!"
+msgstr	"In der  Gruppe %s existieren keine gültigen Adressen. Nicht "
+	"hinzugefügt!"
+
+#, c-format
+msgid	"In der  Gruppe %s existieren %s g&uuml;ltige Adressen. Gruppe "
+	"hinzugef&uuml;gt!"
+msgstr	"In der  Gruppe %s existieren %s gültige Adressen. Gruppe "
+	"hinzugefügt!"
+
+msgid	"Neuer Eintrag wurde erstellt."
+msgstr	"Neuer Eintrag wurde erstellt."
+
+msgid	"Keine Gruppe(n) gew&auml;hlt. Nichts hinzugef&uuml;gt"
+msgstr	"Keine Gruppe(n) gewählt. Nichts hinzugefügt"
+
+msgid	"Empf&auml;ngerliste wird generiert."
+msgstr	"Empfängerliste wird generiert."
+
+msgid	"Der Versand wurde gestartet!"
+msgstr	"Der Versand wurde gestartet!"
+
+#, c-format
+msgid	"Statistik f&uuml;r Newsletter %s"
+msgstr	"Statistik für Newsletter %s"
+
+#, c-format
+msgid	"%s Sendeauftr&auml;ge insgesamt:"
+msgstr	"%s Sendeaufträge insgesamt:"
+
+#, c-format
+msgid	"Versand an insgesamt %s Adressen:"
+msgstr	"Versand an insgesamt %s Adressen:"
+
+msgid	"Details:"
+msgstr	"Details:"
+
+#, c-format
+msgid	"Statistik f&uuml;r Adressgruppe %s"
+msgstr	"Statistik für Adressgruppe %s"
+
+#, c-format
+msgid	"Insgesamt %s Adressen:"
+msgstr	"Insgesamt %s Adressen:"
+
+#, c-format
+msgid	"Statistik fuer Adresse %s"
+msgstr	"Statistik für Adresse %s"
+
+msgid	"Gespeicherte Daten:"
+msgstr	"Gespeicherte Daten:"
+
+msgid	"Status:"
+msgstr	"Status:"
+
+msgid	"Sendeauftr&auml;ge insgesamt:"
+msgstr	"Sendeaufträge insgesamt:"
+
+msgid	"Versand-Details:"
+msgstr	"Versand-Details:"
+
+#, c-format
+msgid	"Q Versand (start): %s"
+msgstr	"Q Versand (start): %s"
+
+#, c-format
+msgid	"Versendet: %s"
+msgstr	"Versendet: %s"
+
+msgid	"Diese Funktion ist leider noch nicht implementiert. Bitte "
+	"unterst&uuml;tzen Sie die Entwicklung von Tellmatic."
+msgstr	"Diese Funktion ist leider noch nicht implementiert. Bitte "
+	"unterstützen Sie die Entwicklung von Tellmatic."
+
+#, c-format
+msgid	"TOP %s"
+msgstr	"TOP %s"
+
+#, c-format
+msgid	"TOP %s - Newsletter"
+msgstr	"TOP %s - Newsletter"
+
+msgid	"Views"
+msgstr	"Views"
+
+msgid	"Klicks"
+msgstr	"Klicks"
+
+#, c-format
+msgid	"TOP %s - Formulare"
+msgstr	"TOP %s - Formulare"
+
+msgid	"Anmeldungen"
+msgstr	"Anmeldungen"
+
+#, c-format
+msgid	"TOP %s - Abonnenten"
+msgstr	"TOP %s - Abonnenten"
+
+msgid	"Anz. empfangene NL"
+msgstr	"Anz. empfangene NL"
+
+msgid	"Gesamtstatus"
+msgstr	"Gesamtstatus"
+
+#, c-format
+msgid	"%s Newsletter"
+msgstr	"%s Newsletter"
+
+#, c-format
+msgid	"%s Gruppen"
+msgstr	"%s Gruppen"
+
+#, c-format
+msgid	"Insgesamt %s Mails im Versand:"
+msgstr	"Insgesamt %s Mails im Versand:"
+
+msgid	"Benutzereinstellungen aendern"
+msgstr	"Benutzereinstellungen ändern"
+
+msgid	"Passwort"
+msgstr	"Passwort"
+
+msgid	"Layout / Style"
+msgstr	"Layout / Style"
+
+msgid	"Sprache"
+msgstr	"Sprache"
+
+#, c-format
+msgid	"Einstellungen fuer Benutzer %s aendern"
+msgstr	"Einstellungen für Benutzer %s ändern"
+
+msgid	"Passwort wiederholen"
+msgstr	"Passwort wiederholen"
+
+msgid	"Benutzereinstellungen &auml;ndern"
+msgstr	"Benutzereinstellungen ändern"
+
+msgid	"Kein Passwort angegeben."
+msgstr	"Kein Passwort angegeben."
+
+#, c-format
+msgid	"Passwort sollte mindestens %s Zeichen haben."
+msgstr	"Passwort sollte mindestens %s Zeichen haben."
+
+msgid	"Bitte geben Sie zweimal das gleiche Passwort an."
+msgstr	"Bitte geben Sie zweimal das gleiche Passwort an."
+
+msgid	"Das Passwort wurde nicht ge&auml;ndert."
+msgstr	"Das Passwort wurde nicht geändert."
+
+#, c-format
+msgid	"Willkommen bei %s"
+msgstr	"Willkommen bei %s"
+
+msgid	"Newsletter-Gruppen anzeigen"
+msgstr	"Newsletter-Gruppen anzeigen"
+
+msgid	"Hier verwalten Sie Ihre Newslettergruppen"
+msgstr	"Hier verwalten Sie Ihre Newslettergruppen"
+
+msgid	"Neue Gruppe"
+msgstr	"Neue Gruppe"
+
+msgid	"Neue Newsletter-Gruppe anlegen"
+msgstr	"Neue Newsletter-Gruppe anlegen"
+
+msgid	"Hier erstellen Sie eine neue Newslettergruppe"
+msgstr	"Hier erstellen Sie eine neue Newslettergruppe"
+
+msgid	"Newsletter anzeigen"
+msgstr	"Newsletter anzeigen"
+
+msgid	"Hier verwalten Sie Ihre Newsletter"
+msgstr	"Hier verwalten Sie Ihre Newsletter"
+
+msgid	"Neuer Newsletter"
+msgstr	"Neuer Newsletter"
+
+msgid	"Neuen Newsletter anlegen"
+msgstr	"Neuen Newsletter anlegen"
+
+msgid	"Hier erstellen Sie einen neuen Newsletter"
+msgstr	"Hier erstellen Sie einen neuen Newsletter"
+
+msgid	"Neue Queue"
+msgstr	"Neue Queue"
+
+msgid	"neuen Newsletter in die Queue / Warteschlange eintragen"
+msgstr	"neuen Newsletter in die Queue / Warteschlange eintragen"
+
+msgid	"Hier bereiten Sie den Versand Ihres Newsletter vor"
+msgstr	"Hier bereiten Sie den Versand Ihres Newsletter vor"
+
+msgid	"Adress-Gruppen anzeigen"
+msgstr	"Adress-Gruppen anzeigen"
+
+msgid	"Hier verwalten Sie Ihre AdressGruppen"
+msgstr	"Hier verwalten Sie Ihre AdressGruppen"
+
+msgid	"Neue Adress-Gruppe anlegen"
+msgstr	"Neue Adress-Gruppe anlegen"
+
+msgid	"Hier erstellen Sie eine neue Adress-Gruppe"
+msgstr	"Hier erstellen Sie eine neue Adress-Gruppe"
+
+msgid	"Hier k&ouml;nnen Sie Ihre Adressen suchen, anzeigen und bearbeiten"
+msgstr	"Hier können Sie Ihre Adressen suchen, anzeigen und bearbeiten"
+
+msgid	"Neue Adresse"
+msgstr	"Neue Adresse"
+
+msgid	"Neue Adresse anlegen"
+msgstr	"Neue Adresse anlegen"
+
+msgid	"Hier erfassen Sie Adressen manuell"
+msgstr	"Hier erfassen Sie Adressen manuell"
+
+msgid	"CSV-Import"
+msgstr	"CSV-Import"
+
+msgid	"Adressen aus einer CSV-Datei importieren"
+msgstr	"Adressen aus einer CSV-Datei importieren"
+
+msgid	"Importieren Sie Ihre Adressbest&auml;nde aus einer CSV-Datei"
+msgstr	"Importieren Sie Ihre Adressbestände aus einer CSV-Datei"
+
+msgid	"CSV-Export"
+msgstr	"CSV-Export"
+
+msgid	"Exportieren Sie Ihre Adressbest&uuml;nde in eine CSV-Datei"
+msgstr	"Exportieren Sie Ihre Adressbestände in eine CSV-Datei"
+
+msgid	"Bounce-Management"
+msgstr	"Bounce-Management"
+
+msgid	"Verwalten Sie fehlgeschlagene E-Mails und R&uuml;ckl&auml;ufer"
+msgstr	"Verwalten Sie fehlgeschlagene E-Mails und Rückläufer"
+
+msgid	"Datenbank bereinigen"
+msgstr	"Datenbank bereinigen"
+
+msgid	"Datenbank aufr&auml;umen und Adressbest&auml;nde s&auml;ubern"
+msgstr	"Datenbank aufräumen und Adressbestände säubern"
+
+msgid	"Formulare"
+msgstr	"Formulare"
+
+msgid	"Formulare anzeigen"
+msgstr	"Formulare anzeigen"
+
+msgid	"Hier verwalten Sie Ihre Anmeldeformulare"
+msgstr	"Hier verwalten Sie Ihre Anmeldeformulare"
+
+msgid	"Neues Formular"
+msgstr	"Neues Formular"
+
+msgid	"Neues Formular erstellen"
+msgstr	"Neues Formular erstellen"
+
+msgid	"Aktueller Status"
+msgstr	"Aktueller Status"
+
+msgid	"Hier sehen Sie den aktuellen Status"
+msgstr	"Hier sehen Sie den aktuellen Status"
+
+msgid	"Einstellungen"
+msgstr	"Einstellungen"
+
+msgid	"Grundeinstellungen"
+msgstr	"Grundeinstellungen"
+
+msgid	"Globale Einstellungen f&uuml;r Tellmatic"
+msgstr	"Globale Einstellungen für Tellmatic"
+
+msgid	"Hier sehen Sie einige zus&auml;tzliche Informationen"
+msgstr	"Hier sehen Sie einige zusätzliche Informationen"
+
+msgid	"manueller Versand"
+msgstr	"manueller Versand"
+
+msgid	"Hier versenden Sie Ihre Newsletter manuell"
+msgstr	"Hier versenden Sie Ihre Newsletter manuell"
+
+msgid	"Abmelden"
+msgstr	"Abmelden"
+
+msgid	"Abmeldeformular"
+msgstr	"Abmeldeformular"
+
+msgid	"Hier gelangen Sie zum Abmeldeformular"
+msgstr	"Hier gelangen Sie zum Abmeldeformular"
+
+msgid	"Dokumentation"
+msgstr	"Dokumentation"
+
+msgid	"Hier wird Ihnen geholfen"
+msgstr	"Hier wird Ihnen geholfen"
+
+msgid	"Benutzereinstellungen"
+msgstr	"Benutzereinstellungen"
+
+msgid	"Hier &auml;ndern Sie Ihre pers&ouml;nlichen Einstellungen"
+msgstr	"Hier ändern Sie Ihre persönlichen Einstellungen"

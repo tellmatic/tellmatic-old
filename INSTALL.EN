@@ -1,0 +1,72 @@
+/********************************************************************************/
+/* this file is part of: / diese Datei ist ein Teil von:                        */
+/* tellmatic, the newslettermachine                                             */
+/* tellmatic, die Newslettermaschine                                            */
+/* 2006/7 by Volker Augustin, multi.art.studio Hanau                            */
+/* Contact/Kontakt: mnl@multiartstudio.com                                      */
+/* Homepage: www.tellmatic.de                                                   */
+/* leave this header in file!                                                   */
+/* diesen Header nicht loeschen!                                                */
+/* check Homepage for Updates and more Infos                                    */
+/* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
+/********************************************************************************/
+
+INSTALL
+
+Update:
+	See UPDATE
+
+Notes:
+
+	imap_open(): The function imap_open() must be supported by PHP. If not, you cannot use bouncemanagement. please call your provider.
+
+	PHP is running as CGI: 	HTTP-AUTH doesnt work with php running as cgi!
+			Change Index.inc::Line 22:
+				from $LOGIN->Login... 
+				to #$LOGIN->Login...
+			and in database set username to '':
+				UPDATE `[prefix_]user` SET name='';
+
+						
+Installation:
+
+	Unpack the archive file to your local harddisc. Copy the directory tellmatic-[xxx] or the content of this directory completely to your server via ftp into a directory of your choice.
+	
+	The directory where you install Tellmatic and the 'include' directory must be writeable by the webserver - use chmod function of your ftp programm and set permissions to 0775 or 0777
+	
+	Now call install.php via your famous Browser and enter your data.
+	All fields are required
+	The values for SMTP/POP3 are not checked, make sure theire valid!
+
+	Tellmatic is now installed, the directories are created, the configurationfile include/mnl_config.inc is written and database tables gets created
+
+	The following directories will be created:
+	
+		files/
+		files/forms
+		files/logs
+		files/import_export
+		files/newsletter
+		files/newsletter/images
+		files/attachements
+
+	If there occurs some error, please follow the instructions.
+
+	Please delete, move or rename install.php after successfull installation
+	Remove write permissions for the include directory
+
+		INFO:
+	
+			install.php creates a file called .htusers, it includes username and crypted password for acces to the restricted directories
+
+	Please edit path to mnl_config.inc in include/send_it.php, sunbscribe.php and unsubscribe.php - enter complete path here
+	
+	To send via cronjob, call [user:passwort]@http://[domain]/[tellmatic-installdir]/include/send_it.php with wget (add username and pw), or use php cli
+		*/1 * * * * /path/to/php-cli-binary /pfad/zu/include/send_it.php
+
+	call index.php, enter username and password, ready, enjoy newslettering
+
+
+For questions and suggestions please visit www.tellmatic.de or wrote an e-mail.
+
+EOF

@@ -1,5 +1,5 @@
 #
-# Tabellenstruktur fr Tabelle `adr`
+# Tabellenstruktur für Tabelle `adr`
 #
 
 CREATE TABLE adr (
@@ -28,7 +28,7 @@ CREATE TABLE adr (
 # --------------------------------------------------------
 
 #
-# Tabellenstruktur fr Tabelle `adr_details`
+# Tabellenstruktur für Tabelle `adr_details`
 #
 
 CREATE TABLE adr_details (
@@ -54,7 +54,7 @@ CREATE TABLE adr_details (
 # --------------------------------------------------------
 
 #
-# Tabellenstruktur fr Tabelle `adr_grp`
+# Tabellenstruktur für Tabelle `adr_grp`
 #
 
 CREATE TABLE adr_grp (
@@ -75,7 +75,7 @@ CREATE TABLE adr_grp (
 # --------------------------------------------------------
 
 #
-# Tabellenstruktur fr Tabelle `adr_grp_ref`
+# Tabellenstruktur für Tabelle `adr_grp_ref`
 #
 
 CREATE TABLE adr_grp_ref (
@@ -92,7 +92,7 @@ CREATE TABLE adr_grp_ref (
 # --------------------------------------------------------
 
 #
-# Tabellenstruktur fr Tabelle `config`
+# Tabellenstruktur für Tabelle `config`
 #
 
 CREATE TABLE config (
@@ -121,7 +121,7 @@ CREATE TABLE config (
 # --------------------------------------------------------
 
 #
-# Tabellenstruktur fr Tabelle `frm`
+# Tabellenstruktur für Tabelle `frm`
 #
 
 CREATE TABLE frm (
@@ -185,7 +185,7 @@ CREATE TABLE frm (
 # --------------------------------------------------------
 
 #
-# Tabellenstruktur fr Tabelle `frm_grp_ref`
+# Tabellenstruktur für Tabelle `frm_grp_ref`
 #
 
 CREATE TABLE frm_grp_ref (
@@ -202,7 +202,7 @@ CREATE TABLE frm_grp_ref (
 # --------------------------------------------------------
 
 #
-# Tabellenstruktur fr Tabelle `frm_s`
+# Tabellenstruktur für Tabelle `frm_s`
 #
 
 CREATE TABLE frm_s (
@@ -218,7 +218,7 @@ CREATE TABLE frm_s (
 # --------------------------------------------------------
 
 #
-# Tabellenstruktur fr Tabelle `log`
+# Tabellenstruktur für Tabelle `log`
 #
 
 CREATE TABLE log (
@@ -233,7 +233,7 @@ CREATE TABLE log (
 # --------------------------------------------------------
 
 #
-# Tabellenstruktur fr Tabelle `nl`
+# Tabellenstruktur für Tabelle `nl`
 #
 
 CREATE TABLE nl (
@@ -264,7 +264,7 @@ CREATE TABLE nl (
 # --------------------------------------------------------
 
 #
-# Tabellenstruktur fr Tabelle `nl_grp`
+# Tabellenstruktur für Tabelle `nl_grp`
 #
 
 CREATE TABLE nl_grp (
@@ -285,7 +285,7 @@ CREATE TABLE nl_grp (
 # --------------------------------------------------------
 
 #
-# Tabellenstruktur fr Tabelle `nl_h`
+# Tabellenstruktur für Tabelle `nl_h`
 #
 
 CREATE TABLE nl_h (
@@ -311,7 +311,7 @@ CREATE TABLE nl_h (
 # --------------------------------------------------------
 
 #
-# Tabellenstruktur fr Tabelle `nl_q`
+# Tabellenstruktur für Tabelle `nl_q`
 #
 
 CREATE TABLE nl_q (
@@ -333,7 +333,7 @@ CREATE TABLE nl_q (
 # --------------------------------------------------------
 
 #
-# Tabellenstruktur fr Tabelle `user`
+# Tabellenstruktur für Tabelle `user`
 #
 
 CREATE TABLE user (
@@ -343,7 +343,10 @@ CREATE TABLE user (
   aktiv smallint(6) NOT NULL default '1',
   admin smallint(6) NOT NULL default '0',
   style varchar(64) NOT NULL default 'default',
+  lang varchar(8) NOT NULL default 'de',
   siteid varchar(64) NOT NULL default '',
   PRIMARY KEY  (id),
-  KEY name (name,passwd,aktiv,siteid)
+  KEY name (name,passwd,aktiv,siteid),
+  KEY lang (lang)
 ) TYPE=MyISAM;
+    

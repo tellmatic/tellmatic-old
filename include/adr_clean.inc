@@ -12,7 +12,7 @@
 /* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
 /********************************************************************************/
 
-$_MAIN_DESCR="Adressdatenbank bereinigen";
+$_MAIN_DESCR=___("Adressdatenbank bereinigen");
 $_MAIN_MESSAGE.="";
 //$search_array=Array();
 $ADDRESS=new mnlADR();
@@ -51,7 +51,7 @@ if ($set=="delete" && $status!="delete_all") {
 		$ADDRESS->delAdr($ADR[$acc]);
 		//$_MAIN_MESSAGE.=$ADR[$acc]."<br>";
 	}
-	$_MAIN_MESSAGE.="<br><b>$ac</b> Eintraege aus der Gruppe <b>".$GRP[0]['name']."</b> mit dem Status  <b>".$STATUS['adr']['status'][$status]."</b> wurden geloescht.";
+	$_MAIN_MESSAGE.="<br>".sprintf(___("%s Eintr&auml;ge aus der Gruppe %s mit dem Status %s wurden gel&ouml;scht."),"<b>".$ac."</b>","<b>".$GRP[0]['name']."</b>","<b>".$STATUS['adr']['status'][$search['status']]."</b>");
 }
 
 
@@ -67,7 +67,7 @@ if ($set=="delete" && $status=="delete_all") { // && $doit==1
 		$ADDRESS->delAdr($ADR[$acc]);
 		//$_MAIN_MESSAGE.=$ADR[$acc]."<br>";
 	}
-	$_MAIN_MESSAGE.="<br><b>$ac</b> Eintraege aus der Gruppe <b>".$GRP[0]['name']."</b> mit dem Status  <b>".$STATUS['adr']['status'][$search['status']]."</b> wurden geloescht.";
+	$_MAIN_MESSAGE.="<br>".sprintf(___("%s Eintr&auml;ge aus der Gruppe %s mit dem Status %s wurden gel&ouml;scht."),"<b>".$ac."</b>","<b>".$GRP[0]['name']."</b>","<b>".$STATUS['adr']['status'][$search['status']]."</b>");
 	//	9
 	$search['status']=9;
 	$ADR=$ADDRESS->getAdrID($adr_grp_id,$search);
@@ -76,7 +76,7 @@ if ($set=="delete" && $status=="delete_all") { // && $doit==1
 		$ADDRESS->delAdr($ADR[$acc]);
 		//$_MAIN_MESSAGE.=$ADR[$acc]."<br>";
 	}
-	$_MAIN_MESSAGE.="<br><b>$ac</b> Eintraege aus der Gruppe <b>".$GRP[0]['name']."</b> mit dem Status  <b>".$STATUS['adr']['status'][$search['status']]."</b> wurden geloescht.";
+	$_MAIN_MESSAGE.="<br>".sprintf(___("%s Eintr&auml;ge aus der Gruppe %s mit dem Status %s wurden gel&ouml;scht."),"<b>".$ac."</b>","<b>".$GRP[0]['name']."</b>","<b>".$STATUS['adr']['status'][$search['status']]."</b>");
 	/*
 	//	10
 	$search['status']=10;
@@ -86,7 +86,7 @@ if ($set=="delete" && $status=="delete_all") { // && $doit==1
 		$ADDRESS->delAdr($ADR[$acc]);
 		//$_MAIN_MESSAGE.=$ADR[$acc]."<br>";
 	}
-	$_MAIN_MESSAGE.="<br><b>$ac</b> Eintraege aus der Gruppe <b>".$GRP[0]['name']."</b> mit dem Status  <b>".$STATUS['adr']['status'][$search['status']]."</b> wurden geloescht.";
+	$_MAIN_MESSAGE.="<br>".sprintf(___("%s Eintr&auml;ge aus der Gruppe %s mit dem Status %s wurden gel&ouml;scht."),"<b>".$ac."</b>","<b>".$GRP[0]['name']."</b>","<b>".$STATUS['adr']['status'][$search['status']]."</b>");
 	*/
 	//	11
 	$search['status']=11;
@@ -96,7 +96,7 @@ if ($set=="delete" && $status=="delete_all") { // && $doit==1
 		$ADDRESS->delAdr($ADR[$acc]);
 		//$_MAIN_MESSAGE.=$ADR[$acc]."<br>";
 	}
-	$_MAIN_MESSAGE.="<br><b>$ac</b> Eintraege aus der Gruppe <b>".$GRP[0]['name']."</b> mit dem Status  <b>".$STATUS['adr']['status'][$search['status']]."</b> wurden geloescht.";
+	$_MAIN_MESSAGE.="<br>".sprintf(___("%s Eintr&auml;ge aus der Gruppe %s mit dem Status %s wurden gel&ouml;scht."),"<b>".$ac."</b>","<b>".$GRP[0]['name']."</b>","<b>".$STATUS['adr']['status'][$search['status']]."</b>");
 
 
 }
@@ -105,14 +105,14 @@ if ($set=="delete" && $status=="delete_all") { // && $doit==1
 
 //uebersicht anzeigen!
 	//adr_grp_id
-	$_MAIN_OUTPUT.="<b>Uebersicht:</b><br><br>";
+	$_MAIN_OUTPUT.="<b>".___("&Uuml;bersicht").":</b><br><br>";
 	$AG=$ADDRESS->getGroup();
 	$agc=count($AG);
 	for ($agcc=0;$agcc<$agc;$agcc++) {
 		$_MAIN_OUTPUT.="<b>".$AG[$agcc]['name']."</b>: ";
 		//Gesamtstatus, anzahl per adr-status
 		$ac=$ADDRESS->countADR($AG[$agcc]['id']);
-		$_MAIN_OUTPUT.="&nbsp;<b>".$ac."</b> Adressen";
+		$_MAIN_OUTPUT.=sprintf(___("%s Adressen"),"<b>".$ac."</b>");
 		//per adr status:
 		$asc=count($STATUS['adr']['status']);
 		for ($ascc=1; $ascc<=$asc; $ascc++) {
@@ -132,10 +132,5 @@ if ($set=="delete" && $status=="delete_all") { // && $doit==1
 
 	}
 
-
-
 include_once ($mnl_includepath."/adr_clean_form.inc");
-
-
-
 ?>

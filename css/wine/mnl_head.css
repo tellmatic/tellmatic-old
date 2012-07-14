@@ -2,14 +2,14 @@
 		font-family : Arial,Helvetica; 
 		font-size : 10pt;
 		color: #000000;
-		position:absolute;
+		position:fixed;
 		top: 0px;
 		left: 0px;
 		width:983px; 
 		height:86px;
 		background-color:#660000;
-	-moz-border-radius:0 2em 0 0 ;
-		background-image:url(../../img/head_wine.png); background-repeat:no-repeat;
+		z-index:10;
+		background-image:url(img/head.png); background-repeat:no-repeat;
 }
 
 

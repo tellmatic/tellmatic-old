@@ -12,7 +12,7 @@
 /* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
 /********************************************************************************/
 
-$_MAIN_DESCR="neues Formluar erstellen";
+$_MAIN_DESCR=___("neues Formluar erstellen");
 $_MAIN_MESSAGE.="";
 
 $set=getVar("set");
@@ -128,7 +128,7 @@ $$InputName_F9_value=getVar($InputName_F9_value);
 $check=true;
 if ($set=="save") {
 	//checkinput
-	if (empty($name)) {$check=false;$_MAIN_MESSAGE.="Name sollte nicht leer sein.";}
+	if (empty($name)) {$check=false;$_MAIN_MESSAGE.=___("Name sollte nicht leer sein.");}
 	if ($check) {
 		$FORMULAR=new mnlFRM();
 		$FORMULAR->addForm(Array(
@@ -180,7 +180,7 @@ if ($set=="save") {
 				"f9_value"=>$f9_value
 				),
 				$adr_grp);
-		$_MAIN_MESSAGE.="<br>Neues Formular '<b>".$name."</b>' wurde erstellt.";
+		$_MAIN_MESSAGE.="<br>".sprintf(___("Neues Formular %s wurde erstellt."),"'<b>".$name."</b>'");
 		$action="form_list";
 		include_once ($mnl_includepath."/form_list.inc");
 	} else {

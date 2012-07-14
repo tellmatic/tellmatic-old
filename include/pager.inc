@@ -22,17 +22,17 @@ $_MAIN_OUTPUT.= "<br><center>";
 
 //1. seite zurueck
 if ($offset>0) {
-	$_MAIN_OUTPUT.= "<a href=\"".$mnl_URL."/".$prevURLPara_."\" title=\"Zurueck\"><img src=\"".$mnl_iconURL."/resultset_previous.png\" border=\"0\"></a>";
+	$_MAIN_OUTPUT.= "<a href=\"".$mnl_URL."/".$prevURLPara_."\" title=\"".___("Zurueck")."\"><img src=\"".$mnl_iconURL."/resultset_previous.png\" border=\"0\"></a>";
 }
 
 //
 //$_MAIN_OUTPUT.= "&nbsp;".($offset+1)." - ".($offset+$limit)."&nbsp;";
-$_MAIN_OUTPUT.= "&nbsp;Eintraege &nbsp;".($offset+1)." - ".($offset+$entrys)."&nbsp;von&nbsp;".$entrys_total."&nbsp;";
+$_MAIN_OUTPUT.= "&nbsp;".sprintf(___("Eintrag %s bis %s von %s"),($offset+1),($offset+$entrys),$entrys_total);
 //
 
 //1 seite vor
 if ($limit < ($entrys+1)) {
-	$_MAIN_OUTPUT.= "<a href=\"".$mnl_URL."/".$nextURLPara_."\" title=\"Vor\"><img src=\"".$mnl_iconURL."/resultset_next.png\" border=\"0\"></a>";
+	$_MAIN_OUTPUT.= "<a href=\"".$mnl_URL."/".$nextURLPara_."\" title=\"".___("Vor")."\"><img src=\"".$mnl_iconURL."/resultset_next.png\" border=\"0\"></a>";
 }
 //ans ende
 //$_MAIN_OUTPUT.= "<!--a href=\"".$mnl_URL."/".$lastURLPara_."\" title=\"Ende\"><img src=\"".$mnl_iconURL."/resultset_last.png\" border=\"0\"></a-->";

@@ -12,7 +12,7 @@
 /* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
 /********************************************************************************/
 
-$_MAIN_HELP="Willkommen bei ".$ApplicationText;
+$_MAIN_HELP=sprintf(___("Willkommen bei %s"),$ApplicationText);
 //new Template
 $_Tpl_Welcome=new mTemplate();
 $_Tpl_Welcome->setTemplatePath($mnl_tplpath);

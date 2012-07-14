@@ -12,7 +12,7 @@
 /* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
 /********************************************************************************/
 
-$_MAIN_DESCR="Newslettergruppe bearbeiten";
+$_MAIN_DESCR=___("Newslettergruppe bearbeiten");
 $_MAIN_MESSAGE.="";
 
 $set=getVar("set");
@@ -37,11 +37,11 @@ $InputName_ColorView="color_view";//nur anzeige....
 $check=true;
 if ($set=="save") {
 	//checkinput
-	if (empty($name)) {$check=false;$_MAIN_MESSAGE.="<br>Name der Gruppe sollte nicht leer sein.";}
+	if (empty($name)) {$check=false;$_MAIN_MESSAGE.="<br>".___("Name der Gruppe sollte nicht leer sein.");}
 	if ($check) {
 		$NEWSLETTER=new mnlNL();
 		$NEWSLETTER->updateGrp(Array("id"=>$nl_grp_id, "name"=>$name, "descr"=>$descr, "aktiv"=>$aktiv));
-		$_MAIN_MESSAGE.="<br>Newslettergruppe '<b>".$name."</b>' wurde aktualisiert.";
+		$_MAIN_MESSAGE.="<br>".sprintf(___("Newslettergruppe %s wurde aktualisiert."),"'<b>".$name."</b>'");
 		$action="nl_grp_list";
 		include_once ($mnl_includepath."/nl_grp_list.inc");
 	} else {

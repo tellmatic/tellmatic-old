@@ -44,24 +44,24 @@
 			if($_FILES["file"]["size"] <= $max_upload_size) {
 				// Alles OK -> Datei kopieren
 				if($check && copy($_FILES["file"]["tmp_name"], $mnl_nlpath."/".$NL_Filename)) { //$_FILES["file"]["name"]
-					$_MAIN_MESSAGE.= "<br>HTML-Datei erfolgreich hochgeladen!";
+					$_MAIN_MESSAGE.= "<br>".___("HTML-Datei erfolgreich hochgeladen.");
 					$_MAIN_MESSAGE.= "<ul>".$_FILES["file"]["name"];
 					$_MAIN_MESSAGE.= " / ".$_FILES["file"]["size"]." Byte";
 					$_MAIN_MESSAGE.= ", ".$_FILES["file"]["type"];
-					$_MAIN_MESSAGE.= "<br>HTML-Code wurde angefuegt
-											<br>Datei gespeichert unter: <a href=\"".$mnl_nldir."/".$NL_Filename."\" target=\"_preview\">".$mnl_nldir."/".$NL_Filename."</a>";
+					$_MAIN_MESSAGE.= "<br>".___("HTML-Code wurde angef&uuml;gt.")."
+											<br>".___("Datei gespeichert unter:")." <a href=\"".$mnl_nldir."/".$NL_Filename."\" target=\"_preview\">".$mnl_nldir."/".$NL_Filename."</a>";
 					$_MAIN_MESSAGE.= "</ul>";
 					$uploaded_html=true;
 				} else {
-					$_MAIN_MESSAGE.= "<br>HTML-Datei konnte nicht hochgeladen werden.";
+					$_MAIN_MESSAGE.= "<br>".___("HTML-Datei konnte nicht hochgeladen werden.");
 					$check=false;
 				}//copy
 			} else {
-				$_MAIN_MESSAGE.= "<br>Die HTML-Datei darf nur eine Groesse von " . $max_byte_size . " Byte besitzen.";
+				$_MAIN_MESSAGE.= "<br>".sprintf(___("Die HTML-Datei darf nur eine Gr&ouml;sse von %s Byte haben."),$max_byte_size);
 				$check=false;
 			}//max size
 		} else {
-			$_MAIN_MESSAGE.= "<br>Die HTML-Datei besitzt eine ungueltige Endung.";
+			$_MAIN_MESSAGE.= "<br>".___("Die HTML-Datei besitzt eine ung&uuml;ltige Endung.");
 			$check=false;
 		}//extension
 	} else {
@@ -79,23 +79,23 @@
 			if($_FILES["image1"]["size"] <= $max_upload_size) {
 				// Alles OK -> Datei kopieren
 				if($check && copy($_FILES["image1"]["tmp_name"], $mnl_nlimgpath."/".$NL_Imagename1)) { //$_FILES["image"]["name"]
-					$_MAIN_MESSAGE.= "<br>BILD-Datei erfolgreich hochgeladen!";
+					$_MAIN_MESSAGE.= "<br>".___("BILD-Datei erfolgreich hochgeladen.");
 					$_MAIN_MESSAGE.= "<ul>".$_FILES["image1"]["name"];
 					$_MAIN_MESSAGE.= " / ".$_FILES["image1"]["size"]." Byte";
 					$_MAIN_MESSAGE.= ", ".$_FILES["image1"]["type"];
-					$_MAIN_MESSAGE.= "<br>gespeichert unter: <a href=\"".$mnl_nlimgdir."/".$NL_Imagename1."\"  target=\"_preview\">".$mnl_nlimgdir."/".$NL_Imagename1."</a>";
+					$_MAIN_MESSAGE.= "<br>".___("gespeichert unter:")." <a href=\"".$mnl_nlimgdir."/".$NL_Imagename1."\"  target=\"_preview\">".$mnl_nlimgdir."/".$NL_Imagename1."</a>";
 					$_MAIN_MESSAGE.= "</ul>";
 					$uploaded_image1=true;
 				} else {
-					$_MAIN_MESSAGE.= "<br>BILD-Datei konnte nicht hochgeladen werden.";
+					$_MAIN_MESSAGE.= "<br>".___("BILD-Datei konnte nicht hochgeladen werden.");
 					$check=false;
 				}//copy
 			} else {
-				$_MAIN_MESSAGE.= "<br>Die BILD-Datei darf nur eine Groesse von " . $max_byte_size . " Byte besitzen.";
+				$_MAIN_MESSAGE.= "<br>".sprintf(___("Die BILD-Datei darf nur eine Gr&ouml;sse von %s Byte besitzen."),$max_byte_size);
 				$check=false;
 			}//max size
 		} else {
-			$_MAIN_MESSAGE.= "<br>Die BILD-Datei besitzt eine ungueltige Endung.";
+			$_MAIN_MESSAGE.= "<br>".___("Die BILD-Datei besitzt eine ung&uuml;ltige Endung.");
 			$check=false;
 		}//extension
 	} else {
@@ -122,30 +122,29 @@
 				$NL_Attachname1.=$attach_ext;
 
 				if($check && copy($_FILES["attach1"]["tmp_name"], $mnl_nlattachpath."/".$NL_Attachname1)) { //$_FILES["image"]["name"]
-
-					$_MAIN_MESSAGE.= "<br>Datei erfolgreich hochgeladen!";
+					$_MAIN_MESSAGE.= "<br>".___("Anhang erfolgreich hochgeladen.");
 					$_MAIN_MESSAGE.= "<ul>".$_FILES["attach1"]["name"];
 					$_MAIN_MESSAGE.= " / ".$_FILES["attach1"]["size"]." Byte";
 					$_MAIN_MESSAGE.= ", ".$_FILES["attach1"]["type"];
-					$_MAIN_MESSAGE.= "<br>gespeichert unter: <a href=\"".$mnl_nlattachdir."/".$NL_Attachname1."\"  target=\"_preview\">".$mnl_nlattachdir."/".$NL_Attachname1."</a>";
+					$_MAIN_MESSAGE.= "<br>".___("gespeichert unter:")." <a href=\"".$mnl_nlattachdir."/".$NL_Attachname1."\"  target=\"_preview\">".$mnl_nlattachdir."/".$NL_Attachname1."</a>";
 					$_MAIN_MESSAGE.= "</ul>";
 					$uploaded_attach1=true;
 				} else {
-					$_MAIN_MESSAGE.= "<br>Anhang konnte nicht hochgeladen werden.";
+					$_MAIN_MESSAGE.= "<br>".___("Anhang konnte nicht hochgeladen werden.");
 					$check=false;
 				}//copy
 			} else {
-				$_MAIN_MESSAGE.= "<br>Die Datei darf nur eine Groesse von " . $max_byte_size . " Byte besitzen.";
+				$_MAIN_MESSAGE.= "<br>".sprintf(___("Der Anhang Datei darf nur eine Gr&ouml;sse von %s Byte haben."),$max_byte_size);
 				$check=false;
 			}//max size
 		/*
 		} else {
-			$_MAIN_MESSAGE.= "<br>Die Datei besitzt eine ungueltige Endung.";
+			$_MAIN_MESSAGE.= "<br>".___("Der Anhang besitzt eine ung&uuml;tige Endung.");
 			$check=false;
 		}//extension
 		*/
 	} else {
-		//$_MAIN_MESSAGE.= "Keine Datei zum Hochladen angegeben.";
+		//$_MAIN_MESSAGE.= ___("Keine Datei zum Hochladen angegeben.");
 	}//no file
 
 	

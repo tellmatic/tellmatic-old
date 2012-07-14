@@ -178,8 +178,8 @@ class mTemplate{
   
   # welche Variablen ersetzen
   function setParseValue($r_str, $v_str){
-      $this->replace_str[] = $r_str;
-      $this->value[] = $v_str;
+      $this->replace_str[$r_str] = $r_str;
+      $this->value[$r_str] = $v_str;
   }
   
   # Template anzeigen
@@ -195,8 +195,8 @@ class mTemplate{
   	        $buffer = fgets($handle, 4096);
   	        $output .= $buffer;
   	    }
-  	    for($arr_end = 0; $arr_end < count($this->value); $arr_end++){
-  	        $output = str_replace('{'.$this->replace_str[$arr_end].'}', $this->value[$arr_end], $output);
+  	    foreach($this->replace_str as $val){
+  	        $output = str_replace('{'.$this->replace_str[$val].'}', $this->value[$val], $output);
   	    }
   	    fclose ($handle);
   	   }

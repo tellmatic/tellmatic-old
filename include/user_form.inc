@@ -24,7 +24,7 @@ $Form->new_Form($FormularName,$_SERVER["PHP_SELF"],"post","_self");
 ////$Form->set_FormStyleClass($FormularName,"mForm");
 ////$Form->set_FormInputStyleClass($FormularName,"mFormText","mFormTextFocus");
 //add a Description
-$Form->set_FormDesc($FormularName,"Benutzereinstellungen aendern");
+$Form->set_FormDesc($FormularName,___("Benutzereinstellungen aendern"));
 //$Form->set_FormType($FormularName,"multipart/form-data");
 
 //variable content aus menu als hidden field!
@@ -35,27 +35,29 @@ $Form->new_Input($FormularName,"set", "hidden", "save");
 //add inputfields and buttons....
 //////////////////
 
-
+//passwd
 $Form->new_Input($FormularName,$InputName_Pass,"password", "");
 $Form->set_InputStyleClass($FormularName,$InputName_Pass,"mFormText","mFormTextFocus");
 $Form->set_InputSize($FormularName,$InputName_Pass,48,256);
-$Form->set_InputDesc($FormularName,$InputName_Pass,"Passwort");
+$Form->set_InputDesc($FormularName,$InputName_Pass,___("Passwort"));
 $Form->set_InputReadonly($FormularName,$InputName_Pass,false);
 $Form->set_InputOrder($FormularName,$InputName_Pass,1);
 $Form->set_InputLabel($FormularName,$InputName_Pass,"");
 
+//passwd 2
 $Form->new_Input($FormularName,$InputName_Pass2,"password", "");
 $Form->set_InputStyleClass($FormularName,$InputName_Pass2,"mFormText","mFormTextFocus");
 $Form->set_InputSize($FormularName,$InputName_Pass2,48,256);
-$Form->set_InputDesc($FormularName,$InputName_Pass2,"Passwort");
+$Form->set_InputDesc($FormularName,$InputName_Pass2,___("Passwort"));
 $Form->set_InputReadonly($FormularName,$InputName_Pass2,false);
 $Form->set_InputOrder($FormularName,$InputName_Pass2,1);
 $Form->set_InputLabel($FormularName,$InputName_Pass2,"");
 
+//Style
 $Form->new_Input($FormularName,$InputName_Style,"select", "");
 $Form->set_InputDefault($FormularName,$InputName_Style,$$InputName_Style);
 $Form->set_InputStyleClass($FormularName,$InputName_Style,"mFormSelect","mFormSelectFocus");
-$Form->set_InputDesc($FormularName,$InputName_Style,"Layout / Style");
+$Form->set_InputDesc($FormularName,$InputName_Style,___("Layout / Style"));
 $Form->set_InputReadonly($FormularName,$InputName_Style,false);
 $Form->set_InputOrder($FormularName,$InputName_Style,6);
 $Form->set_InputLabel($FormularName,$InputName_Style,"");
@@ -63,11 +65,29 @@ $Form->set_InputSize($FormularName,$InputName_Style,0,1);
 $Form->set_InputMultiple($FormularName,$InputName_Style,false);
 //add Data
 $Form->add_InputOption($FormularName,$InputName_Style,"default","Tellmatic");
-#$Form->add_InputOption($FormularName,$InputName_Style,"grey","Grossstadt");
+$Form->add_InputOption($FormularName,$InputName_Style,"cadillac","Weisser Cadillac");
 $Form->add_InputOption($FormularName,$InputName_Style,"wine","Rotwein");
 
+//lang
+$Form->new_Input($FormularName,$InputName_Lang,"select", "");
+$Form->set_InputDefault($FormularName,$InputName_Lang,$$InputName_Lang);
+$Form->set_InputStyleClass($FormularName,$InputName_Lang,"mFormSelect","mFormSelectFocus");
+$Form->set_InputDesc($FormularName,$InputName_Lang,___("Sprache"));
+$Form->set_InputReadonly($FormularName,$InputName_Lang,false);
+$Form->set_InputOrder($FormularName,$InputName_Lang,6);
+$Form->set_InputLabel($FormularName,$InputName_Lang,"");
+$Form->set_InputSize($FormularName,$InputName_Lang,0,1);
+$Form->set_InputMultiple($FormularName,$InputName_Lang,false);
+//add Data
+$lc=count($LANGUAGES['lang']);
+for ($lcc=0;$lcc<$lc;$lcc++) {
+	$Form->add_InputOption($FormularName,$InputName_Lang,$LANGUAGES['lang'][$lcc],$LANGUAGES['text'][$lcc]);
+}
+
+
+
 //submit button 
-$Form->new_Input($FormularName,$InputName_Submit,"submit","Einstellungen fuer '".$_SERVER['PHP_AUTH_USER']."' aendern");
+$Form->new_Input($FormularName,$InputName_Submit,"submit",sprintf(___("Einstellungen fuer Benutzer %s aendern"),$_SERVER['PHP_AUTH_USER']));
 $Form->set_InputStyleClass($FormularName,$InputName_Submit,"mFormSubmit","mFormSubmitFocus");
 $Form->set_InputDesc($FormularName,$InputName_Submit,"");
 $Form->set_InputReadonly($FormularName,$InputName_Submit,false);
@@ -75,9 +95,9 @@ $Form->set_InputOrder($FormularName,$InputName_Submit,998);
 $Form->set_InputLabel($FormularName,$InputName_Submit,"");
 
 //a reset button
-$Form->new_Input($FormularName,$InputName_Reset,"reset","Reset");
+$Form->new_Input($FormularName,$InputName_Reset,"reset",___("Reset"));
 $Form->set_InputStyleClass($FormularName,$InputName_Reset,"mFormReset","mFormResetFocus");
-$Form->set_InputDesc($FormularName,$InputName_Reset,"Reset");
+$Form->set_InputDesc($FormularName,$InputName_Reset,___("Reset"));
 $Form->set_InputReadonly($FormularName,$InputName_Reset,false);
 $Form->set_InputOrder($FormularName,$InputName_Reset,999);
 $Form->set_InputLabel($FormularName,$InputName_Reset,"");
@@ -96,7 +116,26 @@ $_MAIN_OUTPUT.= "<table>";
 
 $_MAIN_OUTPUT.= "<tr>";
 $_MAIN_OUTPUT.= "<td valign=top>";
-$_MAIN_OUTPUT.= "Passwort";
+$_MAIN_OUTPUT.= ___("Sprache");
+$_MAIN_OUTPUT.= "</td>";
+$_MAIN_OUTPUT.= "<td valign=top>";
+$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Lang]['html'];
+$_MAIN_OUTPUT.= "<br><a href=\"http://www.tellmatic.de\" target=\"_blank\">Please help translating Tellmatic</a>";
+$_MAIN_OUTPUT.= "</td>";
+$_MAIN_OUTPUT.= "</tr>";
+
+$_MAIN_OUTPUT.= "<tr>";
+$_MAIN_OUTPUT.= "<td valign=top>";
+$_MAIN_OUTPUT.= ___("Layout / Style");
+$_MAIN_OUTPUT.= "</td>";
+$_MAIN_OUTPUT.= "<td valign=top>";
+$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Style]['html'];
+$_MAIN_OUTPUT.= "</td>";
+$_MAIN_OUTPUT.= "</tr>";
+
+$_MAIN_OUTPUT.= "<tr>";
+$_MAIN_OUTPUT.= "<td valign=top>";
+$_MAIN_OUTPUT.= ___("Passwort");
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "<td valign=top>";
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Pass]['html'];
@@ -105,19 +144,10 @@ $_MAIN_OUTPUT.= "</tr>";
 
 $_MAIN_OUTPUT.= "<tr>";
 $_MAIN_OUTPUT.= "<td valign=top>";
-$_MAIN_OUTPUT.= "Passwort wiederholen";
+$_MAIN_OUTPUT.= ___("Passwort wiederholen");
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "<td valign=top>";
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Pass2]['html'];
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top>";
-$_MAIN_OUTPUT.= "Layout / Style";
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "<td valign=top>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Style]['html'];
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "</tr>";
 

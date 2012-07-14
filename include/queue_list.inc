@@ -12,7 +12,7 @@
 /* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
 /********************************************************************************/
 
-$_MAIN_DESCR="Newsletter Warteschlange (Q)";
+$_MAIN_DESCR=___("Newsletter Warteschlange (Q)");
 $_MAIN_MESSAGE.="";
 
 $QUEUE=new mnlQ();
@@ -34,12 +34,12 @@ if (!empty($q_id)) {
 }
 if ($set=="stop" && $doit==1 && !empty($q_id)) {
 	$QUEUE->setStatus($q_id,5);
-	$LOG="<br>\n\n".date("d-m-Y H:i:s")." ---- Q ID $q_id wurde angehalten.\n\n<br>";
+	$LOG="<br>\n\n".date("d-m-Y H:i:s")." ---- Q ID $q_id halted.\n\n<br>";
 	update_file($mnl_logpath,$logfilename,$LOG);
 }
 if ($set=="continue" && $doit==1 && !empty($q_id)) {
 	$QUEUE->setStatus($q_id,2);
-	$LOG="<br>\n\n".date("d-m-Y H:i:s")." ---- Q ID $q_id wird fortgesetzt.\n\n<br>";
+	$LOG="<br>\n\n".date("d-m-Y H:i:s")." ---- Q ID $q_id continues.\n\n<br>";
 	update_file($mnl_logpath,$logfilename,$LOG);
 }
 
@@ -65,22 +65,22 @@ if ($set=="delete" && $doit==1 && !empty($q_id)) {
 	}
 	//q loeschen
 	$QUEUE->delQ($q_id);
-	$_MAIN_MESSAGE.="<br>Eintrag wurde geloescht.";
+	$_MAIN_MESSAGE.="<br>".___("Eintrag wurde gel&ouml;scht.");
 }
 
 if ($set=="delete_log" && $doit==1) {
 	$Q=$QUEUE->getQ($q_id);
 	if (@unlink($mnl_logpath."/".$logfilename)) {
-		$_MAIN_MESSAGE.="<br>Logfile wurde geloescht.";
+		$_MAIN_MESSAGE.="<br>".___("Logfile wurde gel&ouml;scht.");
 	} else {
-		$_MAIN_MESSAGE.="<br>Logfile konnte nicht geloescht werden.";
+		$_MAIN_MESSAGE.="<br>".___("Logfile konnte nicht gel&ouml;scht werden.");
 	}
 }
 
 //q f. liste holen
 if ($nl_id>0) {
 	$NL=$NEWSLETTER->getNL($nl_id);
-	$_MAIN_MESSAGE.="<br>gewaehltes Newsletter: <b>".$NL[0]['subject']."</b>";
+	$_MAIN_MESSAGE.="<br>".sprintf(___("gew&auml;hltes Newsletter: %s")," <b>".$NL[0]['subject']."</b>");
 	$Q=$QUEUE->getQ(0,0,0,$nl_id);//id offset limit nl_id
 } else {
 	$Q=$QUEUE->getQ(0,0,0,0);//id offset limit nl_id
@@ -121,13 +121,13 @@ $statURLPara->addParam("set","queue");
 $_MAIN_OUTPUT="<table border=\"0\" cellpadding=\"1\" cellspacing=\"1\" width=100%>";
 $_MAIN_OUTPUT.= "<thead>
 						<tr>
-						<td><b>Datum</b>
+						<td><b>".___("Datum")."</b>
 						</td>
-						<td><b>Newsletter</b>
+						<td><b>".___("Newsletter")."</b>
 						</td>
-						<td><b>Adressgruppe</b>
+						<td><b>".___("Adressgruppe")."</b>
 						</td>
-						<td><b>Status</b>
+						<td><b>".___("Status")."</b>
 						</td>
 						<td>...</td>
 						</tr>
@@ -144,9 +144,6 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 	//dann holen wir uns die daten fuer die q eintraege! vorher ist eh null... :)
 	if ($Q[$qcc]['status']>1) {
 		//wenn status > neu, also gestartet, versendet etc, dann summary anzeigen....
-		/*
-		countH($q_id=0,$nl_id=0,$grp_id=0,$adr_id=0,$status=0)
-		*/
 		$hc=$QUEUE->countH($Q[$qcc]['id']);
 		$hc_new=$QUEUE->countH($Q[$qcc]['id'],0,0,0,1);
 		$hc_ok=$QUEUE->countH($Q[$qcc]['id'],0,0,0,2);
@@ -157,7 +154,6 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 	$GRP=$ADDRESS->getGroup($Q[$qcc]['grp_id']);
 	$NL=$NEWSLETTER->getNL($Q[$qcc]['nl_id']);
 	$send_at=$Q[$qcc]['send_at'];//ist datetime feld!!! deswegen keine umformatierung!
-	//$created_date=strftime("%d-%m-%Y %H:%M:%S",mk_microtime($Q[$qcc]['created']));
 	$created_date=$Q[$qcc]['created'];
 	$sent_date="--";
 	if (!empty($Q[$qcc]['sent'])) {
@@ -194,23 +190,17 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 
 
 	$_MAIN_OUTPUT.= "<tr id=\"row_".$qcc."\"  bgcolor=\"".$bgcolor."\"  onmouseover=\"setBGColor('row_".$qcc."','".$row_bgcolor_hilite."');\" onmouseout=\"setBGColor('row_".$qcc."','".$bgcolor."');\">";
-	// onmouseover="setPointer(this, 1, 'over', '#E5E5E5', '#CCFFCC', '#FFCC99');" onmouseout="setPointer(this, 1, 'out', '#E5E5E5', '#CCFFCC', '#FFCC99');" 
 	
 	$_MAIN_OUTPUT.= "<td onmousemove=\"showToolTip('tt_q_list_".$Q[$qcc]['id']."')\" onmouseout=\"hideToolTip();\">";
 	//$_MAIN_OUTPUT.=$created_date;
 
-	//wenn q running der fertig, history daten anzeigen
-	if ($Q[$qcc]['status']>1) {
-		// $_MAIN_OUTPUT .="<br>&nbsp; Q:".$hc." Wait:".$hc_new." Sent: ".$hc_ok." View:".$hc_view." Err:".$hc_fail;
-	}
 
 	//wenn status q ok, =1 , neu, und newsletter aktiv, dann einzelnen sendebutton anzeigen!
 	if ($Q[$qcc]['status']==1 && $NL[0]['aktiv']==1) {
-		$_MAIN_OUTPUT.= "&nbsp;<a href=\"".$mnl_URL."/".$sendURLPara_."\" title=\"Newsletter an gewaehlte Gruppe versenden\"><img src=\"".$mnl_iconURL."/email_go.png\" border=\"0\"></a>";
+		$_MAIN_OUTPUT.= "&nbsp;<a href=\"".$mnl_URL."/".$sendURLPara_."\" title=\"".___("Newsletter an gewaehlte Gruppe versenden")."\"><img src=\"".$mnl_iconURL."/email_go.png\" border=\"0\"></a>";
 	}
-	//$_MAIN_OUTPUT.="&nbsp;(".$author.")";
 	
-	$_MAIN_OUTPUT.="Versand startet: <b>".$send_at."</b>";
+	$_MAIN_OUTPUT.=sprintf(___("Versand startet: %s"),"<b>".$send_at."</b>");
 	//wenn versendet
 	if ($Q[$qcc]['status']==4) {
 		//$_MAIN_OUTPUT.="<br>versendet: ".$sent_date."</b>";
@@ -231,17 +221,17 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 	$_MAIN_OUTPUT.= "<br><img src=\"".$mnl_iconURL."/".$STATUS['q']['statimg'][$Q[$qcc]['status']]."\" border=\"0\">&nbsp;".$STATUS['q']['status'][$Q[$qcc]['status']];
 	$_MAIN_OUTPUT.="<br><b>".$NL[0]['subject']."</b>";
 	$_MAIN_OUTPUT.="<br><b>".$GRP[0]['name']."</b>";
-	$_MAIN_OUTPUT.="<br>erstellt am: ".$created_date."</b>";
-	$_MAIN_OUTPUT.="<br>Versand startet: <b>".$send_at."</b>";
-	$_MAIN_OUTPUT.="<br>von: ".$author."</b>";
+	$_MAIN_OUTPUT.="<br>".sprintf(___("Erstellt am: %s"),"<b>".$created_date."</b>");
+	$_MAIN_OUTPUT.="<br>".sprintf(___("Versand startet am/um: %s"),"<b>".$send_at."</b>");
+	$_MAIN_OUTPUT.="<br>".sprintf(___("Erstellt von: %s"),"<b>".$Q[$qcc]['author']."</b>");
 	if ($Q[$qcc]['status']>1) {
 		$_MAIN_OUTPUT .="<br><ul>
-								Adressen:".$hc." 
-								<br>Wartend:".$hc_new." 
-								<br>Gesendet: ".$hc_ok."
-								<br>Fehler:".$hc_fail."
-								<br>versendet am: ".$sent_date."
-								<br>Angezeigt:".$hc_view."
+								".___("Adressen: ").$hc." 
+								<br>".___("Wartend: ").$hc_new." 
+								<br>".___("Gesendet: ").$hc_ok."
+								<br>".___("Fehler: ").$hc_fail."
+								<br>".___("versendet am: ").$sent_date."
+								<br>".___("Angezeigt: ").$hc_view."
 								</ul>
 								";
 	}
@@ -261,32 +251,29 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 
 	$_MAIN_OUTPUT.= "</td>";
 	$_MAIN_OUTPUT.= "<td>";
-	if ($Q[$qcc]['status']==4) {
-//		$_MAIN_OUTPUT.=  "&nbsp;<a href=\"".$mnl_URL."/".$statURLPara_."\" title=\"Statistik anzeigen\"><img src=\"".$mnl_iconURL."/chart_pie.png\" border=\"0\"></a>";
-	}
 
 //anhalten, weitermachen
 	if ($Q[$qcc]['status']==5) {
 		//angehalten, weitermachen
-		$_MAIN_OUTPUT.= "&nbsp;<a href=\"".$mnl_URL."/".$continueURLPara_."\" onclick=\"return confirmLink(this, 'Q ID: ".$Q[$qcc]['id']." starten ?')\" title=\"Q erneut starten und fortfahren\"><img src=\"".$mnl_iconURL."/control_play.png\" border=\"0\"></a>";
+		$_MAIN_OUTPUT.= "&nbsp;<a href=\"".$mnl_URL."/".$continueURLPara_."\" onclick=\"return confirmLink(this, '".sprintf(___("Q ID: %s starten ?"),$Q[$qcc]['id'])."')\" title=\"".___("Q erneut starten und fortfahren")."\"><img src=\"".$mnl_iconURL."/control_play.png\" border=\"0\"></a>";
 	}
 	if ($Q[$qcc]['status']==2 || $Q[$qcc]['status']==3) { //gestartet oder running!
 		//q laeuft, anhalten
-		$_MAIN_OUTPUT.= "&nbsp;<a href=\"".$mnl_URL."/".$stopURLPara_."\" onclick=\"return confirmLink(this, 'Q ID: ".$Q[$qcc]['id']." anhalten und Versand stoppen? ?')\" title=\"Q stoppen\"><img src=\"".$mnl_iconURL."/control_stop.png\" border=\"0\"></a>";
+		$_MAIN_OUTPUT.= "&nbsp;<a href=\"".$mnl_URL."/".$stopURLPara_."\" onclick=\"return confirmLink(this, '".sprintf(___("Q ID: %s anhalten und Versand stoppen?"),$Q[$qcc]['id'])."')\" title=\"".___("Q stoppen")."\"><img src=\"".$mnl_iconURL."/control_stop.png\" border=\"0\"></a>";
 	}
 
 
 	if (file_exists($logfile)) {
 		if ($Q[$qcc]['status']==3) {
-			$_MAIN_OUTPUT.= "&nbsp;<a href=\"".$logfileURL."\" target=\"_blank\" title=\"Logfile anzeigen, nicht vollstaendig\"><img src=\"".$mnl_iconURL."/script_lightning.png\" border=\"0\"></a>";
+			$_MAIN_OUTPUT.= "&nbsp;<a href=\"".$logfileURL."\" target=\"_blank\" title=\"".___("Logfile anzeigen (nicht vollstaendig)")."\"><img src=\"".$mnl_iconURL."/script_lightning.png\" border=\"0\"></a>";
 		} else {		
-			$_MAIN_OUTPUT.= "&nbsp;<a href=\"".$logfileURL."\" target=\"_blank\" title=\"Logfile anzeigen\"><img src=\"".$mnl_iconURL."/script.png\" border=\"0\"></a>";
-			$_MAIN_OUTPUT.= "&nbsp;<a href=\"".$mnl_URL."/".$dellogURLPara_."\" onclick=\"return confirmLink(this, 'Logfile fuer Q ".$Q[$qcc]['id']." loeschen ?')\"  title=\"Logfile loeschen\"><img src=\"".$mnl_iconURL."/script_delete.png\" border=\"0\"></a>";
+			$_MAIN_OUTPUT.= "&nbsp;<a href=\"".$logfileURL."\" target=\"_blank\" title=\"".___("Logfile anzeigen")."\"><img src=\"".$mnl_iconURL."/script.png\" border=\"0\"></a>";
+			$_MAIN_OUTPUT.= "&nbsp;<a href=\"".$mnl_URL."/".$dellogURLPara_."\" onclick=\"return confirmLink(this, '".sprintf(___("Logfile fuer Q %s loeschen?"),$Q[$qcc]['id'])."')\"  title=\"".___("Logfile loeschen")."\"><img src=\"".$mnl_iconURL."/script_delete.png\" border=\"0\"></a>";
 		}
 	}
 
 	//loeschen
-	$_MAIN_OUTPUT.= "&nbsp;<a href=\"".$mnl_URL."/".$delURLPara_."\" onclick=\"return confirmLink(this, 'Q ID: ".$Q[$qcc]['id']." loeschen ?')\" title=\"Q loeschen\"><img src=\"".$mnl_iconURL."/cross.png\" border=\"0\"></a>";
+	$_MAIN_OUTPUT.= "&nbsp;<a href=\"".$mnl_URL."/".$delURLPara_."\" onclick=\"return confirmLink(this, '".sprintf(___("Q ID: %s loeschen?"),$Q[$qcc]['id'])."')\" title=\"".___("Q loeschen")."\"><img src=\"".$mnl_iconURL."/cross.png\" border=\"0\"></a>";
 
 	$_MAIN_OUTPUT.= "</td>";
 	$_MAIN_OUTPUT.= "</tr>";

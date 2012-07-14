@@ -56,7 +56,7 @@ $mnl_includepath=$mnl_path."/".$mnl_includedir;
 require_once ($mnl_includepath."/Errorhandling.inc");
 require_once ($mnl_includepath."/Class_mSimpleForm.inc");
 require_once ($mnl_includepath."/Functions.inc");
-$mnl_siteid="mnl"; //ist so auch fest in lib.inc
+define("MNL_SITEID","mnl");
 
 $set=getVar("set");
 $check=false;
@@ -475,9 +475,11 @@ CREATE TABLE ".$mnl_tablePrefix."user (
   aktiv smallint(6) NOT NULL default '1',
   admin smallint(6) NOT NULL default '0',
   style varchar(64) NOT NULL default 'default',
+  lang VARCHAR( 8 ) NOT NULL DEFAULT 'de',
   siteid varchar(64) NOT NULL default '',
   PRIMARY KEY  (id),
-  KEY name (name,passwd,aktiv,siteid)
+  KEY name (name,passwd,aktiv,siteid),
+  KEY lang (lang)
 ) TYPE=MyISAM
 ";
 
@@ -550,16 +552,17 @@ CREATE TABLE ".$mnl_tablePrefix."frm_s (
 		
 			$CONFIG=new mnlCFG();
 			$CONFIG->addUSER(Array(
-				"siteid"=>$mnl_siteid,
+				"siteid"=>MNL_SITEID,
 				"name"=>$name,
 				"passwd"=>$pass,
 				"aktiv"=>1,
 				"admin"=>1,
-				"style"=>"default"
+				"style"=>"default",
+				"lang"=>"de"
 				));
 			$MESSAGE.="<br>...Benutzer '$name' wurde angelegt.";
 			$CONFIG->addCFG(Array(
-				"siteid"=>$mnl_siteid,
+				"siteid"=>MNL_SITEID,
 				"name"=>"mNL_0",
 				"sender_name"=>"mNL Newsletter",
 				"sender_email"=>$email,

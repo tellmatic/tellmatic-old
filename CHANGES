@@ -11,7 +11,21 @@
 /* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
 /********************************************************************************/
 
+*+*+*+*+*+*+*+*+*+*+*+ CHANGES V1.0.3  +*+*+*+*+*+*+*+*+*+*+*+*
+	24.03.2007
+	changes, new features and enhancements:
+		- Internationalization support via GNU gettext was added (php-gettext emulation functions - also works if gettext is not suppported by php!)
+		- created/translated gettext phrases (about ~570) to german and english. tellmatic is now available in german and english.
+		- translated quickhelp files to english. (each language now hgas its own directory depending on the selected language)
+		- if a user unsubscribed, and subscribes again, status is set to 'new' , otherwise status doesnt change for already registered users on update!
+		- Charset switched to UTF-8 for mails and webinterface! I need feedback here.
+		- $mnl_siteid is now a constant MNL_SITEID, defined in mnl_lib.inc
+		- ntlm sasl client was missing in Class_SMTP.inc, added.
+		- Menu.inc was reweritten from Scratch, now using templates and an array for menuentries		
+		- fixed some non critical 'bugs'
+		
 *+*+*+*+*+*+*+*+*+*+*+ CHANGES V1.0.2  +*+*+*+*+*+*+*+*+*+*+*+*
+	18.03.2007 voa
 	bugs fixed:
 		- workaround for php5, using compatibility mode ..... no comment... see README
 		- all password fields are now type 'password'
@@ -33,6 +47,7 @@
 		- added style 'wine', a mixture of red and grey , please try it :) , and if your a 'Master of CSS' - send me your update ;-)
 		
 *+*+*+*+*+*+*+*+*+*+*+ CHANGES V1.0.1  +*+*+*+*+*+*+*+*+*+*+*+*
+	13.03.2007 voa
 	bugs fixed: 
 		- message id not exists for pop3 connections
 		- install.php : link to index.php startpage contains \n

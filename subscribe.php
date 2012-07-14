@@ -42,19 +42,19 @@ if ($doptin==1 && !empty($c) && !empty($email)) { // && checkemailadr($email,$EM
 	$_Tpl_FRM->setTemplatePath($mnl_formpath);
 
 	if (checkemailadr($email,$EMailcheck_Subscribe)) {
-	//double optin bestaetigung:
-	//adr suchen, code vergleichen, wenn ok, weiter, sonst ...... leere seite! -?
-	$ADDRESS=new mnlADR();
-	$search['email']=$email;
-	$search['code']=$c;
-	//harte pruefung, nur wenn noch nicht bestaetigt:	$search['status']=5;
-	//limit=1: adr holen
-	$ADR=$ADDRESS->getAdr(0,0,1,0,$search);
-//	print_r($ADR);
-	if (!empty($ADR[0]['id']) && $ADR[0]['code']==$c) {
-		//ja, code muesste man nicht nochmal pruefen, wird ja in search bereits in der db gesucht....
-		//setstatus adr_id = 3
-		$ADDRESS->setStatus($ADR[0]['id'],3);
+		//double optin bestaetigung:
+		//adr suchen, code vergleichen, wenn ok, weiter, sonst ...... leere seite! -?
+		$ADDRESS=new mnlADR();
+		$search['email']=$email;
+		$search['code']=$c;
+		//harte pruefung, nur wenn noch nicht bestaetigt:	$search['status']=5;
+		//limit=1: adr holen
+		$ADR=$ADDRESS->getAdr(0,0,1,0,$search);
+	//	print_r($ADR);
+		if (!empty($ADR[0]['id']) && $ADR[0]['code']==$c) {
+			//ja, code muesste man nicht nochmal pruefen, wird ja in search bereits in der db gesucht....
+			//setstatus adr_id = 3
+			$ADDRESS->setStatus($ADR[0]['id'],3);
 			if (!empty($frm_id)) {
 				$FORMULAR=new mnlFRM();
 				/*
@@ -217,6 +217,13 @@ if ($frm_id>0 && $doptin!=1) {
 						"f9"=>$f9
 						),
 						$all_adr_grp);
+
+					//wenn user abgemeldet und sich wieder anmelden will... dann status aendern, sonst bleibt alles wie es ist...:
+					//update status wenn unsubscribed (11)! -- status: 1 , neu
+					if ($ADR[0]['status'] ==11) {
+						$ADDRESS->setStatus($ADR[0]['id'],1);
+					}
+					
 					//
 					//und neue referenzen zu neuen gruppen hinzufuegen
 					//$ADDRESS->addRef($ADR[0]['id'],$new_adr_grp);

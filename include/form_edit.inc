@@ -12,7 +12,7 @@
 /* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
 /********************************************************************************/
 
-$_MAIN_DESCR="Formluar bearbeiten";
+$_MAIN_DESCR=___("Formluar bearbeiten");
 $_MAIN_MESSAGE.="";
 
 $set=getVar("set");
@@ -127,7 +127,7 @@ $$InputName_F9_value=getVar($InputName_F9_value);
 $check=true;
 if ($set=="save") {
 	//checkinput
-	if (empty($name)) {$check=false;$_MAIN_MESSAGE.="<br>Name sollte nicht leer sein.";}
+	if (empty($name)) {$check=false;$_MAIN_MESSAGE.="<br>".___("Name sollte nicht leer sein.");}
 	if ($check) {
 		$FORMULAR=new mnlFRM();
 		$FORMULAR->updateForm(Array(
@@ -180,7 +180,7 @@ if ($set=="save") {
 				"f9_value"=>$f9_value
 				),
 				$adr_grp);
-		$_MAIN_MESSAGE.="<br>Formular '<b>".$name."</b>' wurde bearbeitet.";
+		$_MAIN_MESSAGE.="<br>".sprintf(___("Formular %s wurde bearbeitet."),"'<b>".$name."</b>'");
 		$action="form_list";
 		include_once ($mnl_includepath."/form_list.inc");
 	} else {

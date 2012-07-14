@@ -13,14 +13,15 @@
 /********************************************************************************/
 
 ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=ISO-8859-15">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">
 <meta name="application" content="<?php echo $ApplicationText; ?>">
 <meta name="author" content="Volker">
 <meta name="Publisher" content="multi.art.studio Hanau">
 <meta name="Copyright" content="2007 Volker Augustin - multi.art.studio Hanau">
-<meta name="Description" content="tellmatic - Die Newslettermaschine - www.tellmatic.de">
+<meta name="Description" content="tellmatic - the newslettermaschine - www.tellmatic.de">
 <meta name="Page-topic" content="Newsletter">
 <meta name="Audience" content="all">
 <meta name="Content-language" content="DE">
@@ -65,17 +66,26 @@
 <br><b>
 </b>
 <center>
-<b>Bitte warten...<br>Seite wird geladen<br><img src="http://www.erdtrabant.de/plugins/counter.gif" norder=0></b>
+<b>
+<?php
+echo ___("Bitte warten...")."<br>".___("Seite wird geladen");
+?>
+</b>
 <br>
-<font size=-1>Achtung! Ein Abbruch des Ladevorgangs kann zu Datenverlust und ungewuenschten Nebeneffekten fuehren. 
-Bitte tun Sie dies auf Ihr eigenes Risiko</font><br>
+<img src="http://www.erdtrabant.de/plugins/counter.gif" norder=0></b>
+<br>
+<font size=-1>
+<?php
+echo ___("Achtung! Ein Abbruch des Ladevorgangs kann zu Datenverlust und ungew&uuml;nschten Nebeneffekten f&uuml;hren. Bitte tun Sie dies auf Ihr eigenes Risiko.");
+?>
+</font><br>
 </center>
 <br>
 	<center>
 	<div id="ld" align="left" style="display:block;background-color:#ff0000;padding:0;">
 	<table id="lpc" bgcolor="#ffcc00" height="10" cellpadding=0 cellspacing=0><tr><td>
-	<div id="lt" style="background-color:#33ff33; color:#ffffff; font-size=4px; padding:0;">
-			<div id="ltt" style="background-color:#eeeeee; color:#ff0000; font-size=4px; padding:0;"><b>loading&nbsp;.......</b></div>
+	<div id="lt" style="background-color:#33ff33; color:#ffffff; font-size:4px; padding:0;">
+			<div id="ltt" style="background-color:#eeeeee; color:#ff0000; font-size:4px; padding:0;"><b>loading&nbsp;.......</b></div>
 	</div>
 	</td></tr></table>
 	</div>

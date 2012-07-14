@@ -12,7 +12,7 @@
 /* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
 /********************************************************************************/
 
-$_MAIN_DESCR="Bounce Management";
+$_MAIN_DESCR=___("Bounce Management");
 $_MAIN_MESSAGE.="";
 
 $set=getVar("set");
@@ -84,11 +84,11 @@ if ($set=="connect") {
 		$search_mail['to']=$ReturnPath;
 	}
 	
-	$_MAIN_OUTPUT .= "<br>Verbindung zum Server $SMTPHost wird aufgebaut...";
+	$_MAIN_OUTPUT .= "<br>".sprintf(___("Verbindung zum Server %s wird aufgebaut..."),$SMTPHost);
 	$Mailer->Connect($SMTPHost, $SMTPUser, $SMTPPasswd);
 	//$folders = imap_listmailbox ($Mailer->mbox, "{".$Mailer->Srv."}INBOX", "*");
 	if (!empty($Mailer->Error)) {
-		$_MAIN_MESSAGE .= "<br><b>Servermeldung:</b><ul>".$Mailer->Error."</ul>";
+		$_MAIN_MESSAGE .= "<br><b>".sprintf(___("Servermeldung: %s"),"<ul>".$Mailer->Error."</ul>")."</b>";
 	}
 	
 	//Mails auslesen
@@ -102,7 +102,7 @@ if ($set=="connect") {
 			include_once ($mnl_includepath."/bounce_filter_adr_list.inc");//liste der aressen mit checkboxen
 			include_once ($mnl_includepath."/bounce_filter_form.inc");//render formular! aktion waehlen etc
 		} else {
-			$_MAIN_MESSAGE.= "<br>Es wurden keine Mails zum Bearbeiten ausgewaehlt.";
+			$_MAIN_MESSAGE.= "<br>".___("Es wurden keine Mails zum Bearbeiten ausgew&auml;hlt.");
 			$val="list";
 		}
 	}
@@ -111,19 +111,19 @@ if ($set=="connect") {
 	if ($val=="delete" || $val=="filter_delete") {
 		$mc=count($mailno);
 		if ($mc>0) {
-			$_MAIN_MESSAGE .= "<br>Loesche Mail: ";
+			$_MAIN_MESSAGE .= "<br>".___("L&ouml;sche Mail.");
 			for ($mcc=0;$mcc<$mc;$mcc++) {
 				$_MAIN_MESSAGE .= "".$mailno[$mcc]." ";
 				$Mailer->delete($mailno[$mcc]);
 			}
 			//mailbox aufraeumen
-			$_MAIN_MESSAGE .= "<br>Mailbox aufraeumen, als geloescht markierte Mails wurden entfernt.";
+			$_MAIN_MESSAGE .= "<br>".___("Mailbox aufr&auml;umen, als gel&ouml;scht markierte Mails wurden entfernt.");
 			$Mailer->expunge();
 			//todo: reconnect! damit bekommen wir aktuelle servermeldungen etc.
 			//Mails neu auslesen
 			$Mail=$Mailer->getMail(0,$offset,$limit,$search_mail);
 		} else {
-			$_MAIN_MESSAGE.= "<br>Es wurden keine Mails zum Loeschen ausgewaehlt.";
+			$_MAIN_MESSAGE.= "<br>".___("Es wurden keine Mails zum L&ouml;schen ausgew&auml;hlt.");
 			$val="list";
 		}
 		//nur bei delete die liste wieder anzeigen, bei filter oder filter_delete setzen wir es hinterher im hiddenfield auf list, bzw zeigen vorher noch das adressformular an!
@@ -139,7 +139,7 @@ if ($set=="connect") {
 		$ac=count($adr);
 
 		if ($ac>0) {
-			$_MAIN_MESSAGE.= "<br>$ac Adressen zum Bearbeiten ausgewaehlt.";
+			$_MAIN_MESSAGE.= "<br>".sprintf(___("%s Adressen zum Bearbeiten ausgew&auml;hlt."),$ac);
 
 			for ($acc=0;$acc<$ac;$acc++) {
 				$search['email']=$adr[$acc];
@@ -148,23 +148,23 @@ if ($set=="connect") {
 				
 					if ($val2 == "delete") {
 						$ADDRESS->delAdr($A[0]['id']);
-						$_MAIN_MESSAGE.= "<br>".$A[0]['email']." wurde geloescht.";
+						$_MAIN_MESSAGE.= "<br>".sprintf(___("Die Adresse %s wurde geloescht."),$A[0]['email']);
 					}
 					
 					if ($val2 == "error") {
 						$ADDRESS->setStatus($A[0]['id'],9);
-						$_MAIN_MESSAGE.= "<br>".$A[0]['email']." wurde als Fehlerhaft markiert.";
+						$_MAIN_MESSAGE.= "<br>".sprintf(___("Die Adresse %s wurde als Fehlerhaft markiert."),$A[0]['email']);
 					}
 
 					if ($val2 == "aktiv") {
 						$ADDRESS->setAktiv($A[0]['id'],0);
-						$_MAIN_MESSAGE.= "<br>".$A[0]['email']." wurde deaktiviert.";
+						$_MAIN_MESSAGE.= "<br>".sprintf(___("Die Adresse %s wurde deaktiviert."),$A[0]['email']);
 					}
 
 					if ($val2 == "unsubscribe") {
 						$ADDRESS->unsubscribe($A[0]['id'],"Bounce");
 						$ADDRESS->setAktiv($A[0]['id'],0);
-						$_MAIN_MESSAGE.= "<br>".$A[0]['email']." wurde als abgemeldet und deaktivert.";
+						$_MAIN_MESSAGE.= "<br>".sprintf(___("Die Adresse %s wurde abgemeldet und deaktivert."),$A[0]['email']);
 					}
 					if ($val2 == "auto") {
 						$_MAIN_MESSAGE.= "<br>".$A[0]['email'].": ";
@@ -172,7 +172,7 @@ if ($set=="connect") {
 						//if ($A[0]['errors'] <= $max_mails_retry) {
 							//fehler zaehlen
 							$ADDRESS->setAError($A[0]['id'],($A[0]['errors']+1));
-							$_MAIN_MESSAGE.= " -- Fehler: ".($A[0]['errors']+1)." von max.".$max_mails_retry;
+							$_MAIN_MESSAGE.= " -- ".sprintf(___("Fehler: %s von max. %s"),($A[0]['errors']+1),$max_mails_retry);
 
 							//wenn adresse noch nicht abgemeldet!!!!! 
 							if ($A[0]['status']!=11) {
@@ -181,7 +181,7 @@ if ($set=="connect") {
 									//unsubscribe und deaktivieren
 									$ADDRESS->setStatus($A[0]['id'],9);
 									$ADDRESS->setAktiv($A[0]['id'],0);
-									$_MAIN_MESSAGE.= " -- als fehlerhaft markiert und deaktivert (sendefehler >".$max_mails_retry.").";
+									$_MAIN_MESSAGE.= " -- ".sprintf(___("Als fehlerhaft markiert und deaktivert (Sendefehler >%s)"),$max_mails_retry);
 								} else {
 									//wenn errors limit noch nicht ueberschritten
 									//dann als sendefehler markieren
@@ -192,27 +192,19 @@ if ($set=="connect") {
 									}
 								}
 							} else {
-								$_MAIN_MESSAGE.= " -- ist bereits abgemeldet (unsubscribed).";// und wurde geloescht
+								$_MAIN_MESSAGE.= " -- ".___("ist bereits abgemeldet (unsubscribed).");// und wurde geloescht
 								//$ADDRESS->delAdr($A[0]['id']);
 							}// if status !=11
 						//} // else {}
-			
-
 					}
-					
 				} else { //isset A
-					$_MAIN_MESSAGE.= "<br>".$adr[$acc]." ist nicht bekannt.";
+					$_MAIN_MESSAGE.= "<br>".sprintf(___("%s ist nicht bekannt."),$adr[$acc]);
 				}//isset A
 			}//for $acc
 		} else { //$ac>0
-			$_MAIN_MESSAGE.= "<br>Es wurden keine Adressen zum Bearbeiten ausgewaehlt.";
+			$_MAIN_MESSAGE.= "<br>".___("Es wurden keine Adressen zum Bearbeiten ausgew&auml;hlt.");
 		}//$ac>0
 	}//if !empty val2
-
-
-
-
-
 
 	//Liste der Mails anzeigen
 	if ($val=="list") {
@@ -225,5 +217,4 @@ if ($set=="connect") {
 } else {
 	//include_once ($mnl_includepath."/bounce_host_form.inc");
 }
-
 ?>

@@ -12,7 +12,7 @@
 /* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
 /********************************************************************************/
 
-$_MAIN_DESCR="Newsletter zur Warteschlange (Q) hinzufuegen";
+$_MAIN_DESCR=___("Newsletter zur Warteschlange (Q) hinzufuegen");
 $_MAIN_MESSAGE.="";
 
 $set=getVar("set");
@@ -76,19 +76,19 @@ if ($set=="save") {
 			$qc_new=count($Qnew);
 			if ($qc_new!=0) { //gefunden ? nicht hinzufuegen
 				unset($adr_grp[$gcc]);
-				$_MAIN_MESSAGE.="<br>Fuer die Gruppe ".$GRP[0]['name']." existieren bereits ".$qc_new." neue Eintraege. Nicht hinzugefuegt!";
+				$_MAIN_MESSAGE.="<br>".sprintf(___("F&uuml;r die Gruppe %s existieren bereits %s neue Eintr&auml;ge. Nicht hinzugef&uuml;gt!"),$GRP[0]['name'],$qc_new);
 			} else {//qnew!=0
 				$Qwait=$QUEUE->getQ(0,0,0,$nl_id,$grp_id,2);
 				$qc_wait=count($Qwait);
 				if ($qc_wait!=0) { //
 					unset($adr_grp[$gcc]);
-					$_MAIN_MESSAGE.="<br>Fuer die Gruppe ".$GRP[0]['name']." existieren bereits ".$qc_wait." gestartete/wartende Eintraege. Nicht hinzugefuegt!";
+					$_MAIN_MESSAGE.="<br>".sprintf(___("F&uuml;r die Gruppe %s existieren bereits %s gestartete/wartende Eintr&auml;ge. Nicht hinzugef&uuml;gt!"),$GRP[0]['name'],$qc_wait);
 				} else {//qwait!=0		
 					$Qrun=$QUEUE->getQ(0,0,0,$nl_id,$grp_id,3);
 					$qc_run=count($Qrun);
 					if ($qc_run!=0) { //
 						unset($adr_grp[$gcc]);
-						$_MAIN_MESSAGE.="<br>Fuer die Gruppe ".$GRP[0]['name']." existieren bereits ".$qc_run." laufende Eintraege. Nicht hinzugefuegt!";
+						$_MAIN_MESSAGE.="<br>".sprintf(___("F&uuml;r die Gruppe %s existieren bereits %s laufende Eintr&auml;ge. Nicht hinzugef&uuml;gt!"),$GRP[0]['name'],$qc_run);
 					}//qrun!=0
 				}
 			}//$qnew=0		
@@ -115,9 +115,9 @@ if ($set=="save") {
 			//keine benutzbaren adressen gefunden 
 			if ($ac==0) {
 				unset($adr_grp[$gcc]);
-				$_MAIN_MESSAGE.="<br>In der  Gruppe ".$GRP[0]['name']." existieren keine gueltigen Adressen. Nicht hinzugefuegt!";
+				$_MAIN_MESSAGE.="<br>".sprintf(___("In der  Gruppe %s existieren keine g&uuml;ltigen Adressen. Nicht hinzugef&uuml;gt!"),$GRP[0]['name']);
 			} else {
-				$_MAIN_MESSAGE.="<br>In der  Gruppe ".$GRP[0]['name']." existieren $ac gueltige Adressen. Gruppe hinzugefuegt!";
+				$_MAIN_MESSAGE.="<br>".sprintf(___("In der  Gruppe %s existieren %s g&uuml;ltige Adressen. Gruppe hinzugef&uuml;gt!"),$GRP[0]['name'],$ac);
 			}
 			//
 		}//for gcc
@@ -144,14 +144,14 @@ if ($set=="save") {
 			//nl auf status queued setzen =2/6=terminiert
 			$NEWSLETTER=new mnlNL();
 			$NEWSLETTER->setStatus($nl_id,6);//war 2, ist 6 fuer terminierten versand!!
-			$_MAIN_MESSAGE.="<br>Neuer Eintrag wurde erstellt.";
+			$_MAIN_MESSAGE.="<br>".___("Neuer Eintrag wurde erstellt.");
 			$action="queue_list";
 			if ($send_now==1) {
 				include_once ($mnl_includepath."/queue_send.inc");				
 			}
 			include_once ($mnl_includepath."/nl_list.inc");
 		} else {// $gc>0
-			$_MAIN_MESSAGE.="<br>Keine Gruppe(n) gewaehlt. Nichts hinzugefuegt";
+			$_MAIN_MESSAGE.="<br>".___("Keine Gruppe(n) gew&auml;hlt. Nichts hinzugef&uuml;gt");
 			include_once ($mnl_includepath."/queue_form.inc");
 		}
 	} else {

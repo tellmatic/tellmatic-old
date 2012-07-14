@@ -12,7 +12,7 @@
 /* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
 /********************************************************************************/
 
-$_MAIN_DESCR="Adressgruppe bearbeiten";
+$_MAIN_DESCR=___("Adressgruppe bearbeiten");
 $_MAIN_MESSAGE.="";
 
 $set=getVar("set");
@@ -32,11 +32,11 @@ $$InputName_Aktiv=getVar($InputName_Aktiv);
 $check=true;
 if ($set=="save") {
 	//checkinput
-	if (empty($name)) {$check=false;$_MAIN_MESSAGE.="<br>Name der Gruppe sollte nicht leer sein.";}
+	if (empty($name)) {$check=false;$_MAIN_MESSAGE.="<br>".___("Name der Gruppe sollte nicht leer sein.");}
 	if ($check) {
 		$ADDRESS=new mnlAdr();
 		$ADDRESS->updateGrp(Array("id"=>$adr_grp_id, "name"=>$name, "descr"=>$descr, "aktiv"=>$aktiv));
-		$_MAIN_MESSAGE.="<br>Addressgruppe '<b>".$name."</b>' wurde aktualisiert.";
+		$_MAIN_MESSAGE.="<br>".sprintf(___("Adressgruppe %s wurde aktualisiert."),"'<b>".$name."</b>'");
 		$action="adr_grp_list";
 		include_once ($mnl_includepath."/adr_grp_list.inc");
 	} else {

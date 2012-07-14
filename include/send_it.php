@@ -62,16 +62,17 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 			$LOG.=  "\n q status =2, sending mail to admin";
 			$G=$ADDRESS->getGroup($Q[$qcc]['grp_id']);
 			//report an sender....
-			$ReportMail_Subject="mNL: Versand gestartet (QId: ".$Q[$qcc]['id']." / ".$Q[$qcc]['created'].") ".$NL[0]['subject']." an ".$G[0]['name'];
+			$ReportMail_Subject="Tellmatic: Start sending Newsletter (QId: ".$Q[$qcc]['id']." / ".$Q[$qcc]['created'].") ".$NL[0]['subject']." an ".$G[0]['name'];
 			$ReportMail_HTML="";
 			//$created_date=strftime("%d-%m-%Y %H:%M:%S",mk_microtime($Q[$qcc]['created']));
 			$created_date=$Q[$qcc]['created'];
 			$ReportMail_HTML.="<br><b>".$created_date."</b>
 									<br>Der Versand des Newsletter <b>".$NL[0]['subject']."</b> an die Gruppe <b>".$G[0]['name']."</b> wurde gestartet.
+									<br>The Mailing for Newsletter <b>".$NL[0]['subject']."</b> to Group <b>".$G[0]['name']."</b> started.
 									<br>
-									<br>Erstellt (nur versand vorbereitet): ".$created_date."
-									<br>Versand terminiert fuer: ".$Q[$qcc]['send_at']."
-									<br>Gestartet ".date("Y-m-d H:i:s")."
+									<br>erstellt (nur versand vorbereitet): /created (prepared): ".$created_date."
+									<br>Versand terminiert fuer: / Send at: ".$Q[$qcc]['send_at']."
+									<br>Gestartet: / Started: ".date("Y-m-d H:i:s")."
 									<br>Logfile: ".$mnl_URL."/".$mnl_logdir."/".$logfilename."
 									";
 			@SendMail($From,$From,$From,$From,$ReportMail_Subject,clear_text($ReportMail_HTML),$ReportMail_HTML);
@@ -133,6 +134,7 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 
 		//emailobjekt vorbereiten, wird dann kopiert, hier globale einstellungen
 		$email_obj=new smtp_message_class;
+		$email_obj->default_charset="UTF-8";
 		$email_obj->authentication_mechanism="LOGIN";
 		$email_obj->localhost=$SMTPDomain;
 		$email_obj->smtp_host=$SMTPHost;
@@ -220,6 +222,7 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 			//link zu unsubscribe
 			$UNSUBSCRIBE="<a href=\"".$UNSUBSCRIBE_URL."\" target=\"_blank\">";
 			$LOG.=  "\n   Unsubscribe: ".$UNSUBSCRIBE_URL;
+			
 			
 			if (!empty($NL[0]['link'])) {
 				$LINK1_URL=$mnl_URL."/click.php?nl_id=".$Q[$qcc]['nl_id'];
@@ -589,7 +592,7 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 			}
 			//report an sender....
 			$G=$ADDRESS->getGroup($Q[$qcc]['grp_id']);
-			$ReportMail_Subject="mNL: Versand abgeschlossen (QId: ".$Q[$qcc]['id']." / ".$Q[$qcc]['created'].") ".$NL[0]['subject']." an ".$G[0]['name'];
+			$ReportMail_Subject="Tellmatic: Q finished (QId: ".$Q[$qcc]['id']." / ".$Q[$qcc]['created'].") ".$NL[0]['subject']." an ".$G[0]['name'];
 			$ReportMail_HTML="";
 			//$NL=$NEWSLETTER->getNL($Q[$qcc]['nl_id']);
 			/*
@@ -616,13 +619,18 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 
 	$LOG.=  "\n\n".($qcc+1)." of $qc Qs \nend\n";
 	$LOG.=  "</pre>\n";
+	$LOG.= "\n\n\n\nwrite Log to ".$mnl_URL."/".$mnl_logdir."/".$logfilename;
 
-	echo $LOG;
-
-	echo "\n\n\n\nwrite Log to ".$mnl_URL."/".$mnl_logdir."/".$logfilename;
 	update_file($mnl_logpath,$logfilename,$LOG);
 
+	//a http refresh may work
+	echo "<html><head><META HTTTP-EQUIV=\"Refresh\" CONTENT=\"33; URL=".$mnl_Domain.$_SERVER["PHP_SELF"]."\"></head><body bgcolor=\"#ffffff\">Die Seite wird in 33 Sekunden automatisch neu geladen<br>";
+	echo $LOG;
+	echo "<html>";
 }//$qcc
-if ($qc==0) {echo "nothing to do";}
+if ($qc==0) {
+	echo "<html><head><META HTTTP-EQUIV=\"Refresh\" CONTENT=\"33; URL=".$mnl_Domain.$_SERVER["PHP_SELF"]."\"></head><body bgcolor=\"#ffffff\">Die Seite wird in 33 Sekunden automatisch neu geladen<br>";
+	echo "<html>";
+}
 
 ?>

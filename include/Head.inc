@@ -12,7 +12,7 @@
 /* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
 /********************************************************************************/
 
-$_SITEID=$mnl_siteid;
+$_SITEID=MNL_SITEID;
 $_USER=$_SERVER["PHP_AUTH_USER"];
 
 //new Template

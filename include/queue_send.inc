@@ -12,7 +12,7 @@
 /* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
 /********************************************************************************/
 
-$_MAIN_DESCR="Newsletter versenden";
+$_MAIN_DESCR=___("Newsletter versenden");
 $_MAIN_MESSAGE.="";
 
 $set=getVar("set");
@@ -43,7 +43,7 @@ if ($nl_id>0) {
 
 $qc=count($q_arr);//wieviel q eintraege gibt es?
 
-$_MAIN_MESSAGE.="<br>Empfaengerliste wird generiert.";
+$_MAIN_MESSAGE.="<br>".___("Empf&auml;ngerliste wird generiert.");
 
 for ($qcc=0;$qcc<$qc;$qcc++) {
 	//queue eintraege auslesen
@@ -94,11 +94,11 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 				}//adr aktiv
 			}//for, adressen
 			$_MAIN_MESSAGE.="<br>&nbsp;&nbsp;&nbsp;&nbsp;
-				Es wurden ".$ac_ok." Adressen aus der Gruppe ".$GRP[0]['name']." eingetragen";
+				".sprintf(___("Es wurden %s Adressen aus der Gruppe %s eingetragen"),$ac_ok,$GRP[0]['name']);
 			$_MAIN_MESSAGE.="<br>&nbsp;&nbsp;&nbsp;&nbsp;
-				".$ac_fail." Adressen wurden uebersprungen (inaktiv, abgemeldet, fehlerhaft).";
+				".sprintf(___("%s Adressen wurden uebersprungen (inaktiv, abgemeldet, fehlerhaft)."),$ac_fail);
 			$_MAIN_MESSAGE.="<br>&nbsp;&nbsp;&nbsp;&nbsp;
-				".$ac_double." Adressen wurden uebersprungen (bereits eingetragen).";
+				".sprintf(___("%s Adressen wurden uebersprungen (bereits eingetragen)."),$ac_double);
 			//status der Q und NL auf gestartet setzen!
 			$NEWSLETTER->setStatus($Q[0]['nl_id'],6);
 			$QUEUE->setStatus($q_arr[$qcc],2);
@@ -106,7 +106,7 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 	}//q status=1
 	
 }//for qcc, queues
-$_MAIN_MESSAGE.="<br>Der Versand wurde gestartet!";
+$_MAIN_MESSAGE.="<br>".___("Der Versand wurde gestartet!");
 $action="nl_list";
 include_once ($mnl_includepath."/nl_list.inc");
 ?>

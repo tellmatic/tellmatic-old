@@ -1,0 +1,41 @@
+/********************************************************************************/
+/* this file is part of: / diese Datei ist ein Teil von:                        */
+/* tellmatic, the newslettermachine                                             */
+/* tellmatic, die Newslettermaschine                                            */
+/* 2006/7 by Volker Augustin, multi.art.studio Hanau                            */
+/* Contact/Kontakt: mnl@multiartstudio.com                                      */
+/* Homepage: www.tellmatic.de                                                   */
+/* leave this header in file!                                                   */
+/* diesen Header nicht loeschen!                                                */
+/* check Homepage for Updates and more Infos                                    */
+/* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
+/********************************************************************************/
+
+UPDATE
+
+Update to 1.0.3:
+	
+	Erstellen Sie eine Sicherheitskopie ihrer aktuellen Installation!
+	Please make a backup of your current installation!
+	
+	Kopieren Sie Tellmatic 1.0.3 auf Ihren Server. Sie koennen die vorhandene Installation ueberschreiben. 
+	Sollten Sie bereits die Templates fuer Formulare angepasst haben, kopieren Sie diese Dateien nicht.
+	Please copy Tellmatic-1.0.3 to your server.
+	If you already edited some of the Templates for your needs, please dont copy over.
+	
+	Bitte legen Sie das Feld mit dem Namen 'lang' in der Benutzertabelle von Tellmatic an:
+	Please add field 'lang' to the tellmatic usertable:
+	SQL:
+		ALTER TABLE `[prefix_]user` ADD `lang` VARCHAR( 8 ) DEFAULT 'de' NOT NULL AFTER `style` ; 
+		ALTER TABLE `user` ADD INDEX ( `lang` ) ;
+	
+	Danach aktualisieren Sie die Felder mit dem Standardwert:
+	After adding the field, please update your default-value for users:
+		UPDATE `[prefix_]user` SET lang='de';
+		
+		international users may use:
+		UPDATE `[prefix_]user` SET lang='en';
+
+	done.
+
+EOF

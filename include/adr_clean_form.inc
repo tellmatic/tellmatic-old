@@ -25,7 +25,7 @@ $Form->new_Form($FormularName,$_SERVER["PHP_SELF"],"post","_self");
 ////$Form->set_FormStyleClass($FormularName,"mForm");
 ////$Form->set_FormInputStyleClass($FormularName,"mFormText","mFormTextFocus");
 //add a Description
-$Form->set_FormDesc($FormularName,"Adressdatenbank bereinigen");
+$Form->set_FormDesc($FormularName,___("Adressdatenbank bereinigen"));
 //variable content aus menu als hidden field!
 //$Form->new_Input($FormularName,"type", "hidden", $content);
 $Form->new_Input($FormularName,"act", "hidden", $action);
@@ -37,7 +37,7 @@ $Form->new_Input($FormularName,"act", "hidden", $action);
 $Form->new_Input($FormularName,$InputName_Name,"text", $$InputName_Name);
 $Form->set_InputStyleClass($FormularName,$InputName_Name,"mFormText","mFormTextFocus");
 $Form->set_InputSize($FormularName,$InputName_Name,48,256);
-$Form->set_InputDesc($FormularName,$InputName_Name,"Filtern nach e-Mail");
+$Form->set_InputDesc($FormularName,$InputName_Name,___("Filtern nach E-Mail"));
 $Form->set_InputReadonly($FormularName,$InputName_Name,false);
 $Form->set_InputOrder($FormularName,$InputName_Name,1);
 $Form->set_InputLabel($FormularName,$InputName_Name,"");
@@ -46,7 +46,7 @@ $Form->set_InputLabel($FormularName,$InputName_Name,"");
 $Form->new_Input($FormularName,$InputName_Group,"select", "");
 $Form->set_InputDefault($FormularName,$InputName_Group,$adr_grp_id);
 $Form->set_InputStyleClass($FormularName,$InputName_Group,"mFormSelect","mFormSelectFocus");
-$Form->set_InputDesc($FormularName,$InputName_Group,"Gruppe");
+$Form->set_InputDesc($FormularName,$InputName_Group,___("Gruppe"));
 $Form->set_InputReadonly($FormularName,$InputName_Group,false);
 $Form->set_InputOrder($FormularName,$InputName_Group,6);
 $Form->set_InputLabel($FormularName,$InputName_Group,"");
@@ -65,7 +65,7 @@ for ($accg=0; $accg<$acg; $accg++)
 $Form->new_Input($FormularName,$InputName_GroupDst,"select", "");
 $Form->set_InputDefault($FormularName,$InputName_GroupDst,$adr_grp_id_dst);
 $Form->set_InputStyleClass($FormularName,$InputName_GroupDst,"mFormSelect","mFormSelectFocus");
-$Form->set_InputDesc($FormularName,$InputName_GroupDst,"Gruppe");
+$Form->set_InputDesc($FormularName,$InputName_GroupDst,___("Gruppe"));
 $Form->set_InputReadonly($FormularName,$InputName_GroupDst,false);
 $Form->set_InputOrder($FormularName,$InputName_GroupDst,6);
 $Form->set_InputLabel($FormularName,$InputName_GroupDst,"");
@@ -86,7 +86,7 @@ for ($accg=0; $accg<$acg; $accg++)
 $Form->new_Input($FormularName,$InputName_Status,"select", "");
 $Form->set_InputDefault($FormularName,$InputName_Status,$status);
 $Form->set_InputStyleClass($FormularName,$InputName_Status,"mFormSelect","mFormSelectFocus");
-$Form->set_InputDesc($FormularName,$InputName_Status,"Suche nach Adress-Status");
+$Form->set_InputDesc($FormularName,$InputName_Status,___("Suche nach Adress-Status"));
 $Form->set_InputReadonly($FormularName,$InputName_Status,false);
 $Form->set_InputOrder($FormularName,$InputName_Status,6);
 $Form->set_InputLabel($FormularName,$InputName_Status,"");
@@ -95,7 +95,7 @@ $Form->set_InputMultiple($FormularName,$InputName_Status,false);
 //add Data
 $sc=count($STATUS['adr']['status']);
 
-$Form->add_InputOption($FormularName,$InputName_Status,"delete_all","alle fehlerhaften Adressen!");
+$Form->add_InputOption($FormularName,$InputName_Status,"delete_all",___("Alle fehlerhaften Adressen"));
 for ($scc=$sc; $scc>7; $scc--)//>0 , array beginnt bei 1! 
 {
 	$Form->add_InputOption($FormularName,$InputName_Status,$scc,$STATUS['adr']['status'][$scc]." (".$STATUS['adr']['descr'][$scc].")");
@@ -107,14 +107,14 @@ for ($scc=$sc; $scc>7; $scc--)//>0 , array beginnt bei 1!
 $Form->new_Input($FormularName,$InputName_Set,"select", "");
 $Form->set_InputDefault($FormularName,$InputName_Set,$set);
 $Form->set_InputStyleClass($FormularName,$InputName_Set,"mFormSelect","mFormSelectFocus");
-$Form->set_InputDesc($FormularName,$InputName_Set,"Maximale Anzahl Eintraege die auf einmal angezeigt werden.");
+$Form->set_InputDesc($FormularName,$InputName_Set,___("Aktion"));
 $Form->set_InputReadonly($FormularName,$InputName_Set,false);
 $Form->set_InputOrder($FormularName,$InputName_Set,6);
 $Form->set_InputLabel($FormularName,$InputName_Set,"");
 $Form->set_InputSize($FormularName,$InputName_Set,0,1);
 $Form->set_InputMultiple($FormularName,$InputName_Set,false);
 //add Data
-$Form->add_InputOption($FormularName,$InputName_Set,"delete","Loeschen");
+$Form->add_InputOption($FormularName,$InputName_Set,"delete",___("Loeschen"));
 //$Form->add_InputOption($FormularName,$InputName_Set,"move",">> Verschieben");
 
 
@@ -122,7 +122,7 @@ $Form->add_InputOption($FormularName,$InputName_Set,"delete","Loeschen");
 
 //onclick=\"return confirmLink(this, 'Adresse loeschen')\"
 
-$Form->new_Input($FormularName,$InputName_Submit,"submit","Aktion Ausfuehren");
+$Form->new_Input($FormularName,$InputName_Submit,"submit",___("Aktion Ausfuehren"));
 $Form->set_InputStyleClass($FormularName,$InputName_Submit,"mFormSubmit","mFormSubmitFocus");
 $Form->set_InputDesc($FormularName,$InputName_Submit,"");
 $Form->set_InputReadonly($FormularName,$InputName_Submit,false);
@@ -148,14 +148,14 @@ $_MAIN_OUTPUT.= $Form->FORM[$FormularName]['head'];
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName]['act']['html'];
 $_MAIN_OUTPUT.= "<table border=0>";
 $_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top>e-Mail (leer = alle! ; wildcard = '*' oder '%')<br>";
+$_MAIN_OUTPUT.= "<td valign=top>".___("E-Mail (leer = alle! ; wildcard = '*' oder '%'")."<br>";
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Name]['html'];
 $_MAIN_OUTPUT.= "</td>";
 
 $_MAIN_OUTPUT.= "</tr>";
 $_MAIN_OUTPUT.= "<tr>";
 
-$_MAIN_OUTPUT.= "<td valign=top colspan=1>aus der Gruppe<br>";
+$_MAIN_OUTPUT.= "<td valign=top colspan=1>".___("aus der Gruppe:")."<br>";
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Group]['html'];
 //$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_GroupDst]['html'];
 $_MAIN_OUTPUT.= "</td>";
@@ -163,7 +163,7 @@ $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "</tr>";
 $_MAIN_OUTPUT.= "<tr>";
 
-$_MAIN_OUTPUT.= "<td valign=top>mit Status<br>";
+$_MAIN_OUTPUT.= "<td valign=top>".___("mit dem Status:")."<br>";
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Status]['html'];
 $_MAIN_OUTPUT.= "</td>";
 

@@ -18,7 +18,6 @@ class mnlNL {
 	var $GRP=Array();
   
 	function getNL($id=0,$offset=0,$limit=0,$group_id=0,$return_content=0,$sortIndex="",$sortType=0) {
-		global $mnl_siteid;
 		$this->NL=Array();
 		$DB=new ConnectDB();
 		$Query ="
@@ -28,7 +27,7 @@ class mnlNL {
 						link, status, massmail, clicks, views, attm,
 						grp_id, aktiv
 						FROM ".mnlTABLE_NL."
-						WHERE ".mnlTABLE_NL.".siteid='".$mnl_siteid."'
+						WHERE ".mnlTABLE_NL.".siteid='".MNL_SITEID."'
 					";
 		if (check_dbid($group_id)) {
 			$Query .=" AND grp_id='".$group_id."'
@@ -79,14 +78,13 @@ class mnlNL {
 
 
 	function countNL($group_id=0) {
-		global $mnl_siteid;
 		$count=0;
 		$this->NL=Array();
 		$DB=new ConnectDB();
 		$Query ="
 						SELECT count(id) as c
 						FROM ".mnlTABLE_NL."
-						WHERE siteid='".$mnl_siteid."'
+						WHERE siteid='".MNL_SITEID."'
 					";
 		if (check_dbid($group_id)) { 
 			$Query .=" AND grp_id='".$group_id."'	";
@@ -99,14 +97,13 @@ class mnlNL {
 	}//counNL
 
 	function getNLID($group_id=0) {
-		global $mnl_siteid;
 		$this->NL=Array();
 		if (check_dbid($group_id)) {
 			$DB=new ConnectDB();
 			$Query ="
 							SELECT id
 							FROM ".mnlTABLE_NL."
-							WHERE siteid='".$mnl_siteid."'
+							WHERE siteid='".MNL_SITEID."'
 						";
 			if ($group_id!=0) {
 				$Query .=" AND grp_id='".$group_id."'
@@ -125,13 +122,12 @@ class mnlNL {
 
 
 	function getGroup($id=0,$nl_id=0,$count=0) {
-		global $mnl_siteid;
 		$this->GRP=Array();
 		$DB=new ConnectDB();
 		$Query ="
 			SELECT ".mnlTABLE_NL_GRP.".id, ".mnlTABLE_NL_GRP.".name, ".mnlTABLE_NL_GRP.".descr, ".mnlTABLE_NL_GRP.".aktiv, ".mnlTABLE_NL_GRP.".standard
 			FROM ".mnlTABLE_NL_GRP."
-			WHERE ".mnlTABLE_NL_GRP.".siteid='".$mnl_siteid."'
+			WHERE ".mnlTABLE_NL_GRP.".siteid='".MNL_SITEID."'
 			";
 		if (check_dbid($id)) {
 			$Query .= " AND ".mnlTABLE_NL_GRP.".id='".$id."'";
@@ -142,8 +138,8 @@ class mnlNL {
 				SELECT DISTINCT ".mnlTABLE_NL_GRP.".id, ".mnlTABLE_NL_GRP.".name, ".mnlTABLE_NL_GRP.".descr, ".mnlTABLE_NL_GRP.".aktiv, ".mnlTABLE_NL_GRP.".standard
 				FROM ".mnlTABLE_NL_GRP.", ".mnlTABLE_NL."
 				WHERE ".mnlTABLE_NL_GRP.".id=".mnlTABLE_NL.".grp_id
-				AND ".mnlTABLE_NL_GRP.".siteid='".$mnl_siteid."'
-				AND ".mnlTABLE_NL.".siteid='".$mnl_siteid."'
+				AND ".mnlTABLE_NL_GRP.".siteid='".MNL_SITEID."'
+				AND ".mnlTABLE_NL.".siteid='".MNL_SITEID."'
 				AND ".mnlTABLE_NL.".id='".$nl_id."'
 			";
 		}
@@ -165,13 +161,12 @@ class mnlNL {
 	}//getGroup
 
 	function getGroupID() {
-		global $mnl_siteid;
 		$this->NL=Array();
 		$DB=new ConnectDB();
 		$Query ="
 						SELECT id
 						FROM ".mnlTABLE_NL_GRP."
-						WHERE siteid='".$mnl_siteid."'
+						WHERE siteid='".MNL_SITEID."'
 					";
 		$DB->Query($Query);
 		$ac=0;
@@ -184,14 +179,13 @@ class mnlNL {
 
 
 	function setAktiv($id=0,$aktiv=1) {
-		global $mnl_siteid;
 		$Return=false;
 		if (check_dbid($id)) {
 			$DB=new ConnectDB();
 			$Query ="UPDATE ".mnlTABLE_NL." 
 						SET aktiv='".$aktiv."' 
 						WHERE id='".$id."' 
-						AND siteid='".$mnl_siteid."'";
+						AND siteid='".MNL_SITEID."'";
 			if ($DB->Query($Query)) {
 				$Return=true;
 			}
@@ -200,7 +194,7 @@ class mnlNL {
 	}//setAktiv
 
 	function copyNL($id,$copyfiles=1) {
-		global $mnl_siteid, $mnl_nlpath, $mnl_nlimgpath, $mnl_nlattachpath, $_SERVER;
+		global $mnl_nlpath, $mnl_nlimgpath, $mnl_nlattachpath, $_SERVER;//, $mnl_siteid
 		$Return=false;
 		if (check_dbid($id)) {
 			$created=date("Y-m-d H:i:s");
@@ -257,14 +251,13 @@ class mnlNL {
 	}//copyNL
 
 	function setGrpAktiv($id=0,$aktiv=1) {
-		global $mnl_siteid;
 		$Return=false;
 		if (check_dbid($id)) {
 			$DB=new ConnectDB();
 			$Query ="UPDATE ".mnlTABLE_NL_GRP." 
 						SET aktiv='".$aktiv."' 
 						WHERE id='".$id."' 
-						AND siteid='".$mnl_siteid."'";
+						AND siteid='".MNL_SITEID."'";
 			if ($DB->Query($Query)) {
 				$Return=true;
 			}
@@ -273,14 +266,13 @@ class mnlNL {
 	}//setGrpAktiv
 	
 	function setGrpStd($id=0) {
-		global $mnl_siteid;
 		$Return=false;
 		if (check_dbid($id)) {
 			$DB=new ConnectDB();
 			$Query ="UPDATE ".mnlTABLE_NL_GRP." 
 						SET standard=0 
 						WHERE standard=1 
-						AND siteid='".$mnl_siteid."'";
+						AND siteid='".MNL_SITEID."'";
 			if ($DB->Query($Query)) {
 				$Return=true;
 			} else {
@@ -290,7 +282,7 @@ class mnlNL {
 			$Query ="UPDATE ".mnlTABLE_NL_GRP." 
 						SET standard=1 
 						WHERE id='".$id."' 
-						AND siteid='".$mnl_siteid."'";
+						AND siteid='".MNL_SITEID."'";
 			if ($DB->Query($Query)) {
 				$Return=true;
 			} else {
@@ -302,7 +294,6 @@ class mnlNL {
 	}//setGrpStd
 	
 	function addGrp($group) {
-		global $mnl_siteid;
 		$Return=false;
 		$DB=new ConnectDB();
 		$Query ="INSERT INTO ".mnlTABLE_NL_GRP." 
@@ -313,7 +304,7 @@ class mnlNL {
 					VALUES 
 					(
 					'".$group["name"]."', '".$group["descr"]."',
-					'".$group["aktiv"]."', 0, '".$mnl_siteid."'
+					'".$group["aktiv"]."', 0, '".MNL_SITEID."'
 					)";
 		if ($DB->Query($Query)) {
 			$Return=true;
@@ -322,7 +313,6 @@ class mnlNL {
 	}//addGrp
 
 	function updateGrp($group) {
-		global $mnl_siteid;
 		$Return=false;
 		if (check_dbid($group['id'])) {
 			$DB=new ConnectDB();
@@ -330,7 +320,7 @@ class mnlNL {
 						SET name='".$group["name"]."', 
 						descr='".$group["descr"]."', 
 						aktiv='".$group["aktiv"]."' 
-						WHERE siteid='".$mnl_siteid."' 
+						WHERE siteid='".MNL_SITEID."' 
 						AND id='".$group["id"]."'";
 			if ($DB->Query($Query)) {
 				$Return=true;
@@ -340,14 +330,13 @@ class mnlNL {
 	}//updateGrp
 
 	function delGrp($id) {
-		global $mnl_siteid;
 		$Return=false;
 		if (check_dbid($id)) {
 			$DB=new ConnectDB();
 			//standard gruppe suchen
 			$Query ="SELECT id 
 					FROM ".mnlTABLE_NL_GRP." 
-					WHERE siteid='".$mnl_siteid."' 
+					WHERE siteid='".MNL_SITEID."' 
 					AND standard=1";
 			if ($DB->Query($Query)) {
 				$Return=true;
@@ -360,7 +349,7 @@ class mnlNL {
 				//newsletter der stdgruppe neu zuordnen
 				$Query ="UPDATE ".mnlTABLE_NL." SET 
 							grp_id='".$stdGrpID."' 
-							WHERE siteid='".$mnl_siteid."' 
+							WHERE siteid='".MNL_SITEID."' 
 							AND grp_id='".$id."'";
 				if ($DB->Query($Query)) {
 					$Return=true;
@@ -370,7 +359,7 @@ class mnlNL {
 				}
 				//gruppe loeschen
 				$Query ="DELETE FROM ".mnlTABLE_NL_GRP." 
-							WHERE siteid='".$mnl_siteid."' 
+							WHERE siteid='".MNL_SITEID."' 
 							AND id='".$id."'";
 				if ($DB->Query($Query)) {
 					$Return=true;
@@ -386,7 +375,6 @@ class mnlNL {
 	}//delGrp
 
 	function delNL($id) {
-		global $mnl_siteid;
 		$Return=false;
 		if (check_dbid($id)) {
 			$DB=new ConnectDB();
@@ -394,7 +382,7 @@ class mnlNL {
 			
 			//ok historie loeschen!
 			$Query ="DELETE FROM ".mnlTABLE_NL_H." 
-						WHERE siteid='".$mnl_siteid."' 
+						WHERE siteid='".MNL_SITEID."' 
 						AND nl_id='".$id."'";
 				if ($DB->Query($Query)) {
 					$Return=true;
@@ -404,7 +392,7 @@ class mnlNL {
 				}
 			//q loeschen
 			$Query ="DELETE FROM ".mnlTABLE_NL_Q." 
-						WHERE siteid='".$mnl_siteid."' 
+						WHERE siteid='".MNL_SITEID."' 
 						AND nl_id='".$id."'";
 			if ($DB->Query($Query)) {
 				$Return=true;
@@ -414,7 +402,7 @@ class mnlNL {
 			}
 			//nl loecshen
 			$Query ="DELETE FROM ".mnlTABLE_NL." 
-						WHERE siteid='".$mnl_siteid."' 
+						WHERE siteid='".MNL_SITEID."' 
 						AND id='".$id."'";
 			if ($DB->Query($Query)) {
 				$Return=true;
@@ -427,7 +415,6 @@ class mnlNL {
 	}//delNL
 
 	function addNL($nl) {
-		global $mnl_siteid;
 		$Return=false;
 		$DB=new ConnectDB();
 		$Query ="INSERT INTO ".mnlTABLE_NL." 
@@ -444,7 +431,7 @@ class mnlNL {
 						'".$nl["created"]."', '".$nl["author"]."', '".$nl["created"]."', '".$nl["author"]."',
 						'".$nl["link"]."','".$nl["grp_id"]."','".$nl["status"]."', '".$nl["attm"]."',
 						'".$nl["massmail"]."', 0, 0,
-						'".$mnl_siteid."'
+						'".MNL_SITEID."'
 						)";
 		if ($DB->Query($Query)) {
 			$Return=true;
@@ -453,12 +440,11 @@ class mnlNL {
 	}//addNL
 
 	function setStatus($id,$status) {
-		global $mnl_siteid;
 		$Return=false;
 		if (check_dbid($id)) {
 			$DB=new ConnectDB();
 			$Query ="UPDATE ".mnlTABLE_NL." SET status='".$status."'
-						 WHERE siteid='".$mnl_siteid."' AND id='".$id."'";
+						 WHERE siteid='".MNL_SITEID."' AND id='".$id."'";
 			if ($DB->Query($Query)) {
 				$Return=true;
 			} else {
@@ -470,7 +456,6 @@ class mnlNL {
 	}
 	
 	function updateNL($nl) {
-		global $mnl_siteid;
 		$Return=false;
 		if (check_dbid($nl['id'])) {
 			$DB=new ConnectDB();
@@ -484,7 +469,7 @@ class mnlNL {
 						massmail='".$nl["massmail"]."', 
 						link='".$nl["link"]."', 
 						grp_id='".$nl["grp_id"]."' 
-						WHERE siteid='".$mnl_siteid."' 
+						WHERE siteid='".MNL_SITEID."' 
 						AND id='".$nl["id"]."'";
 			if ($DB->Query($Query)) {
 				$Return=true;
@@ -494,7 +479,6 @@ class mnlNL {
 	}//updateNL
 
 	function addClick($nl_id) {
-		global $mnl_siteid;
 		$Return=false;
 		if (check_dbid($nl_id)) {
 			$NL=$this->getNL($nl_id);
@@ -504,7 +488,7 @@ class mnlNL {
 			$DB=new ConnectDB();
 			$Query ="UPDATE ".mnlTABLE_NL." 
 						SET clicks='".$clicks."' 
-						WHERE siteid='".$mnl_siteid."' 
+						WHERE siteid='".MNL_SITEID."' 
 						AND id='".$nl_id."'";
 			if ($DB->Query($Query)) {
 				$Return=true;
@@ -514,7 +498,6 @@ class mnlNL {
 	}//addClick
 
 	function addView($nl_id) {
-		global $mnl_siteid;
 		$Return=false;
 		if (check_dbid($nl_id)) {
 			$NL=$this->getNL($nl_id);
@@ -524,7 +507,7 @@ class mnlNL {
 			$DB=new ConnectDB();
 			$Query ="UPDATE ".mnlTABLE_NL." 
 						SET views='".$views."' 
-						WHERE siteid='".$mnl_siteid."' 
+						WHERE siteid='".MNL_SITEID."' 
 						AND id='".$nl_id."'";
 			if ($DB->Query($Query)) {
 				$Return=true;

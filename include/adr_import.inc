@@ -12,7 +12,7 @@
 /* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
 /********************************************************************************/
 
-$_MAIN_DESCR="Adressen importieren (CSV-Import)";
+$_MAIN_DESCR=___("Adressen importieren (CSV-Import)");
 $set=getVar("set");
 
 //status f. neue adr
@@ -47,37 +47,37 @@ if ($set=="import") {
 					$_MAIN_MESSAGE.= "<ul>".$_FILES["file"]["name"];
 					$_MAIN_MESSAGE.= " / ".$_FILES["file"]["size"]." Byte";
 					$_MAIN_MESSAGE.= ", ".$_FILES["file"]["type"];
-					$_MAIN_MESSAGE.= "<br>Datei gespeichert unter: <a href=\"".$mnl_datadir."/".$CSV_Filename."\" target=\"_preview\">".$mnl_datadir."/".$CSV_Filename."</a>";
+					$_MAIN_MESSAGE.= "<br>".sprintf(___("Datei gespeichert unter: %s"),"<a href=\"".$mnl_datadir."/".$CSV_Filename."\" target=\"_preview\">".$mnl_datadir."/".$CSV_Filename."</a>");
 					$_MAIN_MESSAGE.= "</ul>";
 					$check=true;
 				} else {
-					$_MAIN_MESSAGE.= "<br>CSV-Datei konnte nicht hochgeladen werden.";
+					$_MAIN_MESSAGE.= "<br>".___("CSV-Datei konnte nicht hochgeladen werden.");
 					$check=false;
 				}//copy
 			} else {
-				$_MAIN_MESSAGE.= "<br>Die CSV-Datei darf nur eine Groesse von " . $max_byte_size . " Byte besitzen.";
+				$_MAIN_MESSAGE.= "<br>".sprintf(___("Die CSV-Datei darf nur eine Gr&ouml;sse von %s Byte besitzen."),$max_byte_size);
 				$check=false;
 			}//max size
 		} else {
-			$_MAIN_MESSAGE.= "<br>Die CSV-Datei besitzt eine ungueltige Endung.";
+			$_MAIN_MESSAGE.= "<br>".___("Die CSV-Datei besitzt eine ung&uuml;ltige Endung.");
 			$check=false;
 		}//extension
 	} else {
-		$_MAIN_MESSAGE.= "<br>Keine CSV-Datei zum Hochladen angegeben.";
+		$_MAIN_MESSAGE.= "<br>".___("Keine CSV-Datei zum Hochladen angegeben.");
 		$check=false;
 	}//no file
 	//ende upload 
 
-	$_MAIN_MESSAGE.="<br>Status fuer neue Adressen: ";	
+	$_MAIN_MESSAGE.="<br>".___("Status f&uuml;r neue Adressen: ");	
 	$_MAIN_MESSAGE.= "<img src=\"".$mnl_iconURL."/".$STATUS['adr']['statimg'][$status_new]."\" border=\"0\"   title=\"".$STATUS['adr']['descr'][$status_new]."\" alt=\"".$STATUS['adr']['descr'][$status_new]."\">";
 	$_MAIN_MESSAGE.= "  ".$STATUS['adr']['status'][$status_new]."  (".$STATUS['adr']['descr'][$status_new].")";
 
-	$_MAIN_MESSAGE.="<br>Status fuer bestehende Adressen: ";	
+	$_MAIN_MESSAGE.="<br>".___("Status f&uuml;r bestehende Adressen: ");	
 	if ($status_ex>0) {
 		$_MAIN_MESSAGE.= "<img src=\"".$mnl_iconURL."/".$STATUS['adr']['statimg'][$status_ex]."\" border=\"0\"   title=\"".$STATUS['adr']['descr'][$status_ex]."\" alt=\"".$STATUS['adr']['descr'][$status_ex]."\">";
 		$_MAIN_MESSAGE.= "  ".$STATUS['adr']['status'][$status_ex]."  (".$STATUS['adr']['descr'][$status_ex].")";
 	} else {
-		$_MAIN_MESSAGE.= " keine Aenderung ";
+		$_MAIN_MESSAGE.= " ".___("Keine &Auml;nderung");
 	}
 
 //datei einlesen
@@ -90,7 +90,7 @@ if ($set=="import") {
 		  $uf=fopen($mnl_datapath."/".$CSV_Filename,"r");
 		  if ($uf)
 		  {
-		  	$_MAIN_MESSAGE.= "<br>Importiere <b>".$CSV_Filename."</b><br>";
+		  	$_MAIN_MESSAGE.= "<br>".sprintf(___("Importiere Datei %s"),"<b>".$CSV_Filename."</b>")."<br>";
 		   while(!feof($uf))
 	 		{
 				$row=fgets($uf, 255);
@@ -151,9 +151,9 @@ if ($set=="import") {
 		      }
 		      $lines++;
 	     }
-		     $_MAIN_MESSAGE.= "<br>".$lines." Eintraege gefunden!";
+		     $_MAIN_MESSAGE.="<br>".sprintf(___("%s Eintr&auml;ge gefunden!"),$lines);
 	    } else {
-			$_MAIN_MESSAGE.= "<br>".$mnl_datapath."/".$CSV_Filename." existiert nicht!";
+			$_MAIN_MESSAGE.= "<br>".sprintf(___("%s existiert nicht!"),$mnl_datapath."/".$CSV_Filename);
 		}
 	}
 	
@@ -224,7 +224,7 @@ if ($set=="import") {
 							),
 							$all_adr_grp);
 
-							$_MAIN_MESSAGE.="<br>Zeile ".($i+1).": e-Mail <em>".$addr[$i]['email']."</em> existiert Bereits und wurde aktualisiert und ggf in Neue Gruppen eingetragen.";
+							$_MAIN_MESSAGE.="<br>".sprintf(___("Zeile %s: E-Mail %s existiert Bereits und wurde aktualisiert und ggf in Neue Gruppen eingetragen."),($i+1),"<em>".$addr[$i]['email']."</em>");
 
 							//wenn status_ex >0 dann aendern!
 							if ($status_ex>0) {
@@ -263,14 +263,14 @@ if ($set=="import") {
 						$iok++;
 					}//adr exists
 				} else {//emailcheck
-					$_MAIN_MESSAGE.="<br>Zeile ".($i+1).": e-Mail <em>".$addr[$i]['email']."</em> hat ein falsches Format.";
+					$_MAIN_MESSAGE.="<br>".sprintf(___("Zeile %s: E-Mail %s hat ein falsches Format."),($i+1),"<em>".$addr[$i]['email']."</em>");
 					$ifail++;
 				}//emailcheck
 			}//isset email
 		}//for
-		$_MAIN_MESSAGE.= "<br><br>Es wurden ".$iok." von ".($i-1)." Eintraegen importiert und in die gewaehlten Gruppen eingetragen.";
-		$_MAIN_MESSAGE.= "<br>".$ifail." Eintraege waren Fehlerhaft und wurden NICHT importiert.";
-		$_MAIN_MESSAGE.= "<br>".$idouble." Eintraege sind bereits vorhanden und wurden aktualisiert.";
+		$_MAIN_MESSAGE.= "<br><br>".sprintf(___("Es wurden %s von %s Eintr&auml;gen importiert und in die gew&auml;hlten Gruppen eingetragen."),$iok,($i-1));
+		$_MAIN_MESSAGE.= "<br>".sprintf(___("%s Eintr&auml;ge waren Fehlerhaft und wurden NICHT importiert."),$ifail);
+		$_MAIN_MESSAGE.= "<br>".sprintf(___("%s Eintraege sind bereits vorhanden und wurden aktualisiert."),$idouble);
 		$action="adr_import";
 		//include_once ("adr_list.inc");
 		include_once ($mnl_includepath."/adr_import_form.inc");

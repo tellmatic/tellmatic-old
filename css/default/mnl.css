@@ -14,7 +14,7 @@ BODY {
 }
 
 .widget{
-	width: 280;
+	width: 280px;
 	min-height: 50px;
 	border: 1px solid #CACACA;
 	background-color: #FFFFEA;
@@ -58,8 +58,8 @@ BODY {
 		position: absolute;
 		left: 200px;
 		top:200px;
-		width:400;
-		height:100;
+		width:400px;
+		height:100px;
 		background-color:#ffffff;
 }	
 

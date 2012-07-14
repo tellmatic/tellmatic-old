@@ -13,19 +13,18 @@
 /********************************************************************************/
 
 //Legende
-$_MAIN_OUTPUT.="<br><b><a href=\"javascript:switchSection('legende')\"><img src=\"".$mnl_iconURL."/rainbow.png\" border=\"0\">&nbsp;Legende / Status</a></b>";
+$_MAIN_OUTPUT.="<br><b><a href=\"javascript:switchSection('legende')\"><img src=\"".$mnl_iconURL."/rainbow.png\" border=\"0\">&nbsp;".___("Legende / Status")."</a></b>";
 $_MAIN_OUTPUT.= "<div id=\"legende\" class=\"legende\">";
 
-$_MAIN_OUTPUT.= "<h3>Legende</h3>";
-$_MAIN_OUTPUT.= "<img src=\"".$mnl_iconURL."/script.png\" border=\"0\" title=\"Logfile anzeigen\" alt=\"Logfile anzeigen\"> <img src=\"".$mnl_iconURL."/script_lightning.png\" border=\"0\" title=\"Logfile anzeigen\" alt=\"Logfile anzeigen\">  Logfile anzeigen<br>";
-$_MAIN_OUTPUT.= "<img src=\"".$mnl_iconURL."/script_delete.png\" border=\"0\" title=\"Logfile loeschen\" alt=\"Logfile loeschen\"> Logfile loeschen<br>";
-$_MAIN_OUTPUT.= "<img src=\"".$mnl_iconURL."/email_go.png\" border=\"0\" title=\"Diesen Eintrag versenden\" alt=\"Diesen Eintrag versenden\">  Diesen Eintrag versenden<br>";
-//$_MAIN_OUTPUT.= "<img src=\"".$mnl_iconURL."/chart_pie.png\" border=\"0\" title=\"Statistik anzeigen\" alt=\"Statistik anzeigen\">  Statistik anzeigen<br>";
-$_MAIN_OUTPUT.= "<img src=\"".$mnl_iconURL."/control_stop.png\" border=\"0\" title=\"Anhalten\" alt=\"Anhalten\"> Anhalten<br>";
-$_MAIN_OUTPUT.= "<img src=\"".$mnl_iconURL."/control_play.png\" border=\"0\" title=\"Fortfahren\" alt=\"Fortfahren\"> Fortfahren<br>";
-$_MAIN_OUTPUT.= "<img src=\"".$mnl_iconURL."/cross.png\" border=\"0\" title=\"Loeschen\" alt=\"Loeschen\">  Q loeschen<br>";
+$_MAIN_OUTPUT.= "<h3>".___("Legende")."</h3>";
+$_MAIN_OUTPUT.= "<img src=\"".$mnl_iconURL."/script.png\" border=\"0\" title=\"".___("Logfile anzeigen")."\" alt=\"".___("Logfile anzeigen")."\"> <img src=\"".$mnl_iconURL."/script_lightning.png\" border=\"0\" title=\"".___("Logfile anzeigen")."\" alt=\"".___("Logfile anzeigen")."\">&nbsp;".___("Logfile anzeigen")."<br>";
+$_MAIN_OUTPUT.= "<img src=\"".$mnl_iconURL."/script_delete.png\" border=\"0\" title=\"".___("Logfile loeschen")."\" alt=\"".___("Logfile loeschen")."\">&nbsp;".___("Logfile l&ouml;schen")."<br>";
+$_MAIN_OUTPUT.= "<img src=\"".$mnl_iconURL."/email_go.png\" border=\"0\" title=\"".___("Diesen Eintrag versenden")."\" alt=\"".___("Diesen Eintrag versenden")."\">&nbsp;".___("Diesen Eintrag versenden")."<br>";
+$_MAIN_OUTPUT.= "<img src=\"".$mnl_iconURL."/control_stop.png\" border=\"0\" title=\"".___("Anhalten")."\" alt=\"".___("Anhalten")."\">&nbsp;".___("Anhalten")."<br>";
+$_MAIN_OUTPUT.= "<img src=\"".$mnl_iconURL."/control_play.png\" border=\"0\" title=\"".___("Fortfahren")."\" alt=\"".___("Fortfahren")."\">&nbsp;".___("Fortfahren")."<br>";
+$_MAIN_OUTPUT.= "<img src=\"".$mnl_iconURL."/cross.png\" border=\"0\" title=\"".___("Loeschen")."\" alt=\"".___("Loeschen")."\">&nbsp;".___("Q l&ouml;schen")."<br>";
 
-$_MAIN_OUTPUT.= "<h3>Status</h3>";
+$_MAIN_OUTPUT.= "<h3>".___("Status")."</h3>";
 
 $sc=count($STATUS['q']['status']);
 for ($scc=1; $scc<=$sc; $scc++)//0

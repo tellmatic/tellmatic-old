@@ -12,7 +12,7 @@
 /* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
 /********************************************************************************/
 
-$_MAIN_DESCR="Systemeinstellungen aendern";
+$_MAIN_DESCR=___("Systemeinstellungen aendern");
 $_MAIN_MESSAGE.="";
 
 $set=getVar("set");
@@ -73,13 +73,13 @@ $CONFIG=new mnlCFG();
 $check=true;
 if ($set=="save") {
 	//checkinput
-	if (empty($sender_email)) {$check=false;$_MAIN_MESSAGE.="<br>Absender Adresse sollte nicht leer sein.";}
-	if (!checkemailadr($sender_email,$EMailcheck_Intern)) {$check=false;$_MAIN_MESSAGE.="<br>Absender e-Mail hat ein falsches Format oder Domain ist nicht gueltig.";}
-	if (empty($sender_name)) {$check=false;$_MAIN_MESSAGE.="<br>Absender Name sollte nicht leer sein.";}
-	if (empty($return_mail)) {$check=false;$_MAIN_MESSAGE.="<br>e-Mail fuer Bounce Messages sollte nicht leer sein.";}
-	if (!empty($return_mail) && !checkemailadr($return_mail,$EMailcheck_Intern)) {$check=false;$_MAIN_MESSAGE.="<br>e-Mail fuer Bounce Messages hat ein falsches Format oder Domain ist nicht gueltig.";}
-	if (($notify_subscribe==1 || $notify_unsubscribe==1) && empty($notify_mail)) {$check=false;$_MAIN_MESSAGE.="<br>e-Mail fuer Benachrichtigungen sollte nicht leer sein.";}
-	if (!empty($notify_mail) && !checkemailadr($notify_mail,$EMailcheck_Intern)) {$check=false;$_MAIN_MESSAGE.="<br>e-Mail fuer Benachrichtigungen bei An-/Abmeldungen hat ein falsches Format oder Domain ist nicht gueltig.";}
+	if (empty($sender_email)) {$check=false;$_MAIN_MESSAGE.="<br>".___("Absender-Adresse sollte nicht leer sein").".";}
+	if (!checkemailadr($sender_email,$EMailcheck_Intern)) {$check=false;$_MAIN_MESSAGE.="<br>".___("Absender E-Mail hat ein falsches Format oder Domain ist nicht g&uuml;ltig").".";}
+	if (empty($sender_name)) {$check=false;$_MAIN_MESSAGE.="<br>".___("Absender-Name sollte nicht leer sein").".";}
+	if (empty($return_mail)) {$check=false;$_MAIN_MESSAGE.="<br>".___("E-Mail f&uuml;r Fehlermeldungen sollte nicht leer sein").".";}
+	if (!empty($return_mail) && !checkemailadr($return_mail,$EMailcheck_Intern)) {$check=false;$_MAIN_MESSAGE.="<br>".___("E-Mail f&uuml;r Fehlermeldungen hat ein falsches Format oder Domain ist nicht g&uuml;ltig").".";}
+	if (($notify_subscribe==1 || $notify_unsubscribe==1) && empty($notify_mail)) {$check=false;$_MAIN_MESSAGE.="<br>".___("E-Mail f&uumlr Benachrichtigungen sollte nicht leer sein").".";}
+	if (!empty($notify_mail) && !checkemailadr($notify_mail,$EMailcheck_Intern)) {$check=false;$_MAIN_MESSAGE.="<br>".___("E-Mail f&uuml;r Benachrichtigungen bei An-/Abmeldungen hat ein falsches Format oder Domain ist nicht g&uuml;ltig").".";}
 
 	//check smtp/pop3 connection .... and maybe give a warning message, dont fail :)
 	//still to do , connect doesnt work here, need a testfunction........
@@ -88,7 +88,7 @@ if ($set=="save") {
 	if ($check) {
 
 		$CONFIG->updateCFG(Array(
-				"siteid"=>$mnl_siteid,
+				"siteid"=>MNL_SITEID,
 				"name"=>$name,
 				"sender_name"=>$sender_name,
 				"sender_email"=>$sender_email,
@@ -106,7 +106,7 @@ if ($set=="save") {
 				"emailcheck_intern"=>$emailcheck_intern,
 				"emailcheck_subscribe"=>$emailcheck_subscribe
 				));
-		$_MAIN_MESSAGE.="<br>Einstellungen wurden gespeichert und sind ab sofort gueltig!";
+		$_MAIN_MESSAGE.="<br>".___("Die Einstellungen wurden gespeichert und sind ab sofort g&uuml;ltig")."!";
 		$action="adm_set";
 //
 	} else {
@@ -115,7 +115,7 @@ if ($set=="save") {
 	
 } else {	
 
-	$C=$CONFIG->getCFG($mnl_siteid);
+	$C=$CONFIG->getCFG(MNL_SITEID);
 	$$InputName_Name=$C[0]['name'];//
 	$$InputName_SenderName=$C[0]['sender_name'];//
 	$$InputName_SenderEMail=$C[0]['sender_email'];//
@@ -136,7 +136,7 @@ if ($set=="save") {
 	
 	include_once ($mnl_includepath."/adm_set_form.inc");
 	
-	$_MAIN_OUTPUT.="<br><br><a href=\"javascript:switchSection('div_debug');\"><img src=\"".$mnl_iconURL."/information.png\" border=\"0\">&nbsp;Serverinfo</a>";
+	$_MAIN_OUTPUT.="<br><br><a href=\"javascript:switchSection('div_debug');\"><img src=\"".$mnl_iconURL."/information.png\" border=\"0\">&nbsp;".___("Serverinfo")."</a>";
 	
 }
 ?>

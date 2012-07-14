@@ -12,7 +12,7 @@
 /* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
 /********************************************************************************/
 
-$_MAIN_DESCR="neue Adresse eintragen";
+$_MAIN_DESCR=___("Neue Adresse eintragen");
 $_MAIN_MESSAGE.="";
 
 $set=getVar("set");
@@ -61,9 +61,9 @@ $$InputName_F9=getVar($InputName_F9);
 $check=true;
 if ($set=="save") {
 	//checkinput
-	if (empty($email)) {$check=false;$_MAIN_MESSAGE.="<br>e-Mail sollte nicht leer sein.";}
+	if (empty($email)) {$check=false;$_MAIN_MESSAGE.="<br>".___("E-Mail sollte nicht leer sein.");}
 	//email auf gueltigkeit pruefen
-	if (!checkemailadr($email,$EMailcheck_Intern)) {$check=false;$_MAIN_MESSAGE.="<br>e-Mail ist nicht korrekt oder Domain ist nicht gueltig.";}
+	if (!checkemailadr($email,$EMailcheck_Intern)) {$check=false;$_MAIN_MESSAGE.="<br>".___("E-Mail ist nicht korrekt oder Domain ist nicht g&uuml;ltig.");}
 	if ($check) {
 
 		$ADDRESS=new mnlADR();	
@@ -123,7 +123,7 @@ if ($set=="save") {
 			//$ADDRESS->addRef($ADR[0]['id'],$new_adr_grp);
 			// ^^^ nur fuer den fall das daten nicht geupdated werden!!! sondern nur referenzen hinzugefuegt!
 			//optional nachzuruesten und in den settings einstellbar :)
-			$_MAIN_MESSAGE.="<br>e-Mail existiert bereits. Die Daten wurden aktualisiert.";
+			$_MAIN_MESSAGE.="<br>".___("E-Mail existiert bereits. Die Daten wurden aktualisiert.");
 		} else {
 			//wenn adresse noch nicht existiert , neu anlegen	
 			srand((double)microtime()*1000000); 
@@ -148,17 +148,11 @@ if ($set=="save") {
 					"f9"=>$f9 
 					),
 					$new_adr_grp);
-			$_MAIN_MESSAGE.="<br>Neue Adresse '<b>".$email."</b>' wurde angelegt.";
+			$_MAIN_MESSAGE.="<br>".sprintf(___("Neue Adresse %s wurde angelegt."),"'<b>".$email."</b>'");
 		}
 
 		$action="adr_list";
 		include_once ($mnl_includepath."/adr_list.inc");
-		
-		
-
-
-
-
 
 	} else {
 		include_once ($mnl_includepath."/adr_form.inc");

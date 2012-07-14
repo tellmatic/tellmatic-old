@@ -38,14 +38,13 @@ class mnlCFG {
 	}
 
 	function checkUserLogin($name,$passwd,$checkadmin=0) {
-		global $mnl_siteid;
 		$DB = new ConnectDB(); 
 		$Query="
 				SELECT name,aktiv,admin FROM ".mnlTABLE_USER."
 				WHERE name='".$name."'
 				AND passwd='".$passwd."'
 				AND aktiv='1'
-				AND siteid='".$mnl_siteid."'
+				AND siteid='".MNL_SITEID."'
 				ORDER by name
 				";
 		$DB->Query($Query);
@@ -67,7 +66,7 @@ class mnlCFG {
 
 	function authenticate($msg) 
 	{ 
-		Header("WWW-authenticate: basic realm=$msg");
+		Header("WWW-Authenticate: Basic realm=$msg");
 		Header("HTTP/1.0 401 Unauthorized");
 		echo "<html><head></head><body>$msg<br>Sie sind nicht angemeldet! You are not logged in!<br><b>Zugriff verweigert! Access denied!</b><br>";
 		echo "</body></html>";
@@ -75,24 +74,27 @@ class mnlCFG {
 	} 
 
 	function getUser($user) {
-		global $mnl_siteid;
 		$this->USER=Array();
 		$DB=new ConnectDB();
 		$Query ="
 						SELECT id,
 							name,
+							passwd,
 							admin,
-							style
+							style,
+							lang
 						FROM ".mnlTABLE_USER."
-						WHERE siteid='".$mnl_siteid."'
+						WHERE siteid='".MNL_SITEID."'
 						LIMIT 1
 					";
 		$DB->Query($Query);
 		if ($DB->next_record()) {
 			$this->USER['id']=$DB->Record['id'];
 			$this->USER['name']=$DB->Record['name'];
+			$this->USER['passwd']=$DB->Record['passwd'];
 			$this->USER['admin']=$DB->Record['admin'];
 			$this->USER['style']=$DB->Record['style'];
+			$this->USER['lang']=$DB->Record['lang'];
 		} 
 		return $this->USER;
 	}//getUserSettings
@@ -209,9 +211,9 @@ class mnlCFG {
 		$DB=new ConnectDB();
 		$Query ="INSERT INTO
 						".mnlTABLE_USER."
-					(name,passwd,aktiv,admin,style,siteid)
+					(name,passwd,aktiv,admin,style,lang,siteid)
 					VALUES
-					('".$user['name']."','".$user['passwd']."','".$user['aktiv']."','".$user['admin']."','".$user['style']."','".$user['siteid']."')
+					('".$user['name']."','".$user['passwd']."','".$user['aktiv']."','".$user['admin']."','".$user['style']."','".$user['lang']."','".$user['siteid']."')
 					";
 		if ($DB->Query($Query)) {
 			$Return=true;
@@ -252,10 +254,9 @@ class mnlCFG {
 	}//updateCFG
 	
 	function setPasswd($user,$passwd) {
-		global $mnl_siteid;
 		$Return=false;
 		$DB=new ConnectDB();
-		$Query ="UPDATE ".mnlTABLE_USER." SET passwd='".$passwd."' WHERE siteid='".$mnl_siteid."' AND name='".$user."'";
+		$Query ="UPDATE ".mnlTABLE_USER." SET passwd='".$passwd."' WHERE siteid='".MNL_SITEID."' AND name='".$user."'";
 		if ($DB->Query($Query)) {
 			$Return=true;
 		}
@@ -263,10 +264,20 @@ class mnlCFG {
 	}//setPasswd
 	
 	function setStyle($user,$style="default") {
-		global $mnl_siteid;
 		$Return=false;
 		$DB=new ConnectDB();
-		$Query ="UPDATE ".mnlTABLE_USER." SET style='".$style."' WHERE siteid='".$mnl_siteid."'	AND name='".$user."'";
+		$Query ="UPDATE ".mnlTABLE_USER." SET style='".$style."' WHERE siteid='".MNL_SITEID."'	AND name='".$user."'";
+		if ($DB->Query($Query)) {
+			$Return=true;
+		}
+		return $Return;
+	}//setStyle
+	
+	function setLang($user,$lang="de") {
+		#global $mnl_siteid;
+		$Return=false;
+		$DB=new ConnectDB();
+		$Query ="UPDATE ".mnlTABLE_USER." SET `lang`='".$lang."' WHERE siteid='".MNL_SITEID."' AND name='".$user."'";
 		if ($DB->Query($Query)) {
 			$Return=true;
 		}

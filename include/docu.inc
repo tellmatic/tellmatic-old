@@ -12,7 +12,7 @@
 /* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
 /********************************************************************************/
 
-$_MAIN_DESCR="Hilfe / Dokumentation";
+$_MAIN_DESCR=___("Hilfe / Dokumentation");
 $_MAIN_MESSAGE.="";//<br>Hier wird Ihnen hoffentlich geholfen :)";
 
 //new Template

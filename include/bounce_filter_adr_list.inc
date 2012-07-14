@@ -29,10 +29,9 @@ $bctotal=count($Bounces);
 $Bounces=unify_array($Bounces);
 $bc=count($Bounces);
 
-	$_MAIN_OUTPUT.="<br>Es wurden $mc Mails durchsucht. 
-									<br>$bcmatch Mails ergaben einen Treffer. 
-									<br>Es wurden aus $bctotal Adressen $bc (eindeutige) potentiell fehlerhafte Adressen erkannt.
-									";
+$_MAIN_OUTPUT.="<br>".sprintf(___("Es wurden %s Mails durchsucht."),$mc)." 
+								<br>".sprintf(___("%s Mails ergaben einen Treffer."),$bcmatch)." 
+								<br>".sprintf(___("Es wurden aus %s Adressen %s (eindeutige) potentiell fehlerhafte Adressen erkannt."),$bctotal,$bc);
 if ($bc) { //bc>0
 
 	
@@ -40,8 +39,8 @@ if ($bc) { //bc>0
 	$_MAIN_OUTPUT.= "<thead>
 							<tr>
 							<td></td>
-							<td>Adresse</td>
-							<td>Details</td>
+							<td>".___("Adresse")."</td>
+							<td>".___("Details")."</td>
 							</thead>
 							<tbody>
 							";
@@ -66,21 +65,21 @@ if ($bc) { //bc>0
 		if (isset($ADR[0]['id'])) {
 			$_MAIN_OUTPUT.= "<br>ID: ".$ADR[0]['id']." / ".$ADR[0]['d_id']."&nbsp;&nbsp;<br>";
 			if ($ADR[0]['aktiv']==1) {
-				$_MAIN_OUTPUT.=  "<img src=\"".$mnl_iconURL."/tick.png\" border=\"0\" title=\"Aktiv\">";
-	//			$_MAIN_OUTPUT.=  "(aktiv)";
+				$_MAIN_OUTPUT.=  "<img src=\"".$mnl_iconURL."/tick.png\" border=\"0\" title=\"".___("Aktiv")."\">";
+	//			$_MAIN_OUTPUT.=  ___("(aktiv)");
 			} else {
-				$_MAIN_OUTPUT.=  "<img src=\"".$mnl_iconURL."/cancel.png\" border=\"0\" title=\"Inaktiv\">";
-	//			$_MAIN_OUTPUT.=  "(inaktiv)";
+				$_MAIN_OUTPUT.=  "<img src=\"".$mnl_iconURL."/cancel.png\" border=\"0\" title=\"".___("Inaktiv")."\">";
+	//			$_MAIN_OUTPUT.=  ___("(inaktiv)");
 			}
 			$_MAIN_OUTPUT.= "<br><img src=\"".$mnl_iconURL."/".$STATUS['adr']['statimg'][$ADR[0]['status']]."\" border=\"0\" title=\"".$STATUS['adr']['status'][$ADR[0]['status']]."\">&nbsp;".$STATUS['adr']['status'][$ADR[0]['status']];
 			$_MAIN_OUTPUT.= "<br>
-								<br>Newsletter Gesamt: ".$ADR[0]['newsletter']." 
-								<br>Views: ".$ADR[0]['views']."
-								<br>Clicks: ".$ADR[0]['clicks']."
-								<br>Sendefehler: ".$ADR[0]['errors']." &nbsp;
+								<br>".sprintf(___("Newsletter Gesamt: %s"),$ADR[0]['newsletter'])." 
+								<br>".sprintf(___("Views: %s"),$ADR[0]['views'])."
+								<br>".sprintf(___("Clicks: %s"),$ADR[0]['clicks'])."
+								<br>".sprintf(___("Sendefehler: %s"),$ADR[0]['errors'])." &nbsp;
 								";
 		} else {
-			$_MAIN_OUTPUT.= "<br>Unbekannt / nicht in der Datenbank";
+			$_MAIN_OUTPUT.= "<br>".___("Unbekannt / nicht in der Datenbank");
 		}
 	
 	
@@ -96,15 +95,15 @@ if ($bc) { //bc>0
 		if (isset($ADR[0]['id'])) {
 			$_MAIN_OUTPUT.= "ID: ".$ADR[0]['id']." / ".$ADR[0]['d_id']."&nbsp;&nbsp;";
 			if ($ADR[0]['aktiv']==1) {
-				$_MAIN_OUTPUT.=  "<img src=\"".$mnl_iconURL."/tick.png\" border=\"0\" title=\"Aktiv\">";
+				$_MAIN_OUTPUT.=  "<img src=\"".$mnl_iconURL."/tick.png\" border=\"0\" title=\"".___("Aktiv")."\">";
 	//			$_MAIN_OUTPUT.=  "(aktiv)";
 			} else {
-				$_MAIN_OUTPUT.=  "<img src=\"".$mnl_iconURL."/cancel.png\" border=\"0\" title=\"Inaktiv\">";
+				$_MAIN_OUTPUT.=  "<img src=\"".$mnl_iconURL."/cancel.png\" border=\"0\" title=\"".___("Inaktiv")."\">";
 	//			$_MAIN_OUTPUT.=  "(inaktiv)";
 			}
 			$_MAIN_OUTPUT.= "&nbsp;<img src=\"".$mnl_iconURL."/".$STATUS['adr']['statimg'][$ADR[0]['status']]."\" border=\"0\" title=\"".$STATUS['adr']['status'][$ADR[0]['status']]."\">&nbsp;".$STATUS['adr']['status'][$ADR[0]['status']];
 		} else {
-			$_MAIN_OUTPUT.= "&nbsp;Unbekannt / nicht in der Datenbank";
+			$_MAIN_OUTPUT.= "&nbsp;".___("Unbekannt / nicht in der Datenbank");
 		}
 		$_MAIN_OUTPUT.= "</td>";
 	
@@ -112,7 +111,7 @@ if ($bc) { //bc>0
 	}
 		$_MAIN_OUTPUT.= "<tr>";
 		$_MAIN_OUTPUT.= "<td colspan=3>";
-		$_MAIN_OUTPUT.= "<a href=\"javascript:checkAllForm('".$FormularName."');\" title=\"Markierung fuer alle angezeigten Adressen umkehren\">Alle auswaehlen / Markierung fuer alle angezeigten Adressen umkehren</a><br><br>";
+		$_MAIN_OUTPUT.= "<a href=\"javascript:checkAllForm('".$FormularName."');\" title=\"".___("Markierung fuer alle angezeigten Adressen umkehren")."\">".___("Alle ausw&auml;hlen / Markierung f&uuml;r alle angezeigten Adressen umkehren")."</a><br><br>";
 	//	$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_ActionAdr]['html'];
 		$_MAIN_OUTPUT.= "</td>";
 		$_MAIN_OUTPUT.= "</tr>";

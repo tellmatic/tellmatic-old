@@ -1,4 +1,4 @@
-<?php
+a<?php
 /********************************************************************************/
 /* this file is part of: / diese Datei ist ein Teil von:                        */
 /* tellmatic, the newslettermachine                                             */
@@ -13,38 +13,38 @@
 /********************************************************************************/
 
 //Legende
-$_MAIN_OUTPUT.="<br><b><a href=\"javascript:switchSection('legende')\"><img src=\"".$mnl_iconURL."/rainbow.png\" border=\"0\">&nbsp;Legende / Status</a></b>";
+$_MAIN_OUTPUT.="<br><b><a href=\"javascript:switchSection('legende')\"><img src=\"".$mnl_iconURL."/rainbow.png\" border=\"0\">&nbsp;".___("Legende / Status")."</a></b>";
 $_MAIN_OUTPUT.= "<div id=\"legende\" class=\"legende\">";
 
-$_MAIN_OUTPUT.= "<h3>Legende</h3>";
-$_MAIN_OUTPUT.= "<img src=\"".$mnl_iconURL."/lorry.png\" border=\"0\" title=\"Massenmailing\" alt=\"Massenmailing\">  Massenmailing (per BCC:, kein feedback)<br>";
-$_MAIN_OUTPUT.= "<img src=\"".$mnl_iconURL."/user_suit.png\" border=\"0\" title=\"personalisiertes Newsletter\" alt=\"personalisiertes Newsletter\">  personalisiertes Newsletter<br>";
-$_MAIN_OUTPUT.= "<img src=\"".$mnl_iconURL."/hourglass_add.png\" border=\"0\" title=\"Queue-Eintrag hinzufuegen, zum Versenden vorbereiten\" alt=\"Queue-Eintrag hinzufuegen, zum Versenden vorbereiten\">  Queue-Eintrag hinzufuegen, zum Versenden vorbereiten<br>";
-$_MAIN_OUTPUT.= "<img src=\"".$mnl_iconURL."/hourglass_delete.png\" border=\"0\" title=\"Alle Queue-Eintraege loeschen\" alt=\"Alle Queue-Eintraege loeschen\">  Alle Queue-Eintraege fuer diesen Newsletter loeschen<br>";
-$_MAIN_OUTPUT.= "<img src=\"".$mnl_iconURL."/hourglass_go.png\" border=\"0\" title=\"Queue-Eintraege fuer Newsletter anzeigen\" alt=\"Queue-Eintraege fuer Newsletter anzeigen\">  Queue-Eintraege fuer Newsletter anzeigen<br>";
-$_MAIN_OUTPUT.= "<img src=\"".$mnl_iconURL."/email_go.png\" border=\"0\" title=\"Versenden\" alt=\"Versenden\">  Versenden<br>";
+$_MAIN_OUTPUT.= "<h3>".___("Legende")."</h3>";
+$_MAIN_OUTPUT.= "<img src=\"".$mnl_iconURL."/lorry.png\" border=\"0\" title=\"".___("Massenmailing")."\" alt=\"".___("Massenmailing")."\">&nbsp;".___("Massenmailing (per BCC:, kein feedback)")."<br>";
+$_MAIN_OUTPUT.= "<img src=\"".$mnl_iconURL."/user_suit.png\" border=\"0\" title=\"".___("personalisierter Newsletter")."\" alt=\"".___("personalisierter Newsletter")."\">&nbsp;".___("personalisierter Newsletter")."<br>";
+$_MAIN_OUTPUT.= "<img src=\"".$mnl_iconURL."/hourglass_add.png\" border=\"0\" title=\"".___("Queue-Eintrag hinzufuegen, zum Versenden vorbereiten")."\" alt=\"".___("Queue-Eintrag hinzufuegen, zum Versenden vorbereiten")."\">&nbsp;".___("Queue-Eintrag hinzuf&uuml;gen, zum Versenden vorbereiten")."<br>";
+$_MAIN_OUTPUT.= "<img src=\"".$mnl_iconURL."/hourglass_delete.png\" border=\"0\" title=\"".___("Alle Queue-Eintraege loeschen")."\" alt=\"".___("Alle Queue-Eintraege loeschen")."\">&nbsp;".___("Alle Queue-Eintr&auml;ge f&uuml;r diesen Newsletter l&ouml;schen")."<br>";
+$_MAIN_OUTPUT.= "<img src=\"".$mnl_iconURL."/hourglass_go.png\" border=\"0\" title=\"".___("Queue-Eintraege fuer Newsletter anzeigen")."\" alt=\"".___("Queue-Eintraege fuer Newsletter anzeigen")."\">&nbsp;".___("Queue-Eintraege f&uuml;r Newsletter anzeigen")."<br>";
+$_MAIN_OUTPUT.= "<img src=\"".$mnl_iconURL."/email_go.png\" border=\"0\" title=\"".___("Versenden")."\" alt=\"".___("Versenden")."\">&nbsp;".___("Versenden")."<br>";
 
 //link zur geparsten onlineversion!
-$_MAIN_OUTPUT.= "<img src=\"".$mnl_iconURL."/eye.png\" border=\"0\" title=\"Online\" alt=\"Online\">  Onlineversion des Newsletter anzeigen<br>";
+$_MAIN_OUTPUT.= "<img src=\"".$mnl_iconURL."/eye.png\" border=\"0\" title=\"".___("Online")."\" alt=\"".___("Online")."\">&nbsp;".___("Onlineversion des Newsletter anzeigen")."<br>";
 //link zum bild
-$_MAIN_OUTPUT.= "<img src=\"".$mnl_iconURL."/photo.png\" border=\"0\" title=\"Bild\" alt=\"Bild\">  verknuepftes Bild anzeigen<br>";
-$_MAIN_OUTPUT.= "<img src=\"".$mnl_iconURL."/photo_delete.png\" border=\"0\" title=\"Bild\" alt=\"Bild\">  verknuepftes Bild loeschen<br>";
+$_MAIN_OUTPUT.= "<img src=\"".$mnl_iconURL."/photo.png\" border=\"0\" title=\"".___("Bild anzeigen")."\" alt=\"".___("Bild anzeigen")."\">&nbsp;".___("verkn&uuml;pftes Bild anzeigen")."<br>";
+$_MAIN_OUTPUT.= "<img src=\"".$mnl_iconURL."/photo_delete.png\" border=\"0\" title=\"".___("Bild loeschen")."\" alt=\"".___("Bild loeschen")."\">&nbsp;".___("verkn&uuml;pftes Bild l&ouml;schen")."<br>";
 //attachement
-$_MAIN_OUTPUT.= "<img src=\"".$mnl_iconURL."/attach.png\" border=\"0\" title=\"Attachement anzeigen\" alt=\"Attachement\">  Attachement anzeigen<br>";
-$_MAIN_OUTPUT.= "<img src=\"".$mnl_iconURL."/link_break.png\" border=\"0\" title=\"Attachement loeschen\" alt=\"Attachement\">  Attachement loeschen<br>";
+$_MAIN_OUTPUT.= "<img src=\"".$mnl_iconURL."/attach.png\" border=\"0\" title=\"".___("Anhang anzeigen")."\" alt=\"".___("Anhang anzeigen")."\">&nbsp;".___("Anhang anzeigen")."<br>";
+$_MAIN_OUTPUT.= "<img src=\"".$mnl_iconURL."/link_break.png\" border=\"0\" title=\"".___("Anhang loeschen")."\" alt=\"".___("Anhang loeschen")."\">&nbsp;".___("Anhang l&ouml;schen")."<br>";
 //link zur html datei!
-$_MAIN_OUTPUT.= "<img src=\"".$mnl_iconURL."/page_white_world.png\" border=\"0\" title=\"HTML\" alt=\"HTML\">  verknuepfte HTML Datei anzeigen<br>";
-$_MAIN_OUTPUT.= "<img src=\"".$mnl_iconURL."/page_white_delete.png\" border=\"0\" title=\"HTML loeschen \" alt=\"HTML\">  verknuepfte HTML Datei loeschen<br>";
+$_MAIN_OUTPUT.= "<img src=\"".$mnl_iconURL."/page_white_world.png\" border=\"0\" title=\"".___("HTML-Datei anzeigen")."\" alt=\"".___("HTML-Datei anzeigen")."\">&nbsp;".___("verkn&uuml;pfte HTML Datei anzeigen")."<br>";
+$_MAIN_OUTPUT.= "<img src=\"".$mnl_iconURL."/page_white_delete.png\" border=\"0\" title=\"".___("HTML-Datei loeschen")."\" alt=\"".___("HTML-Datei loeschen")."\">&nbsp;".___("verkn&uuml;pfte HTML-Datei l&ouml;schen")."<br>";
 //link zum link
-$_MAIN_OUTPUT.= "<img src=\"".$mnl_iconURL."/page_white_link.png\" border=\"0\" title=\"Link\" alt=\"Link\">  verknuepften Link anzeigen<br>";
+$_MAIN_OUTPUT.= "<img src=\"".$mnl_iconURL."/page_white_link.png\" border=\"0\" title=\"".___("Link")."\" alt=\"".___("Link")."\">&nbsp;".___("verkn&uuml;pften Link anzeigen")."<br>";
 
-$_MAIN_OUTPUT.= "<img src=\"".$mnl_iconURL."/tick.png\" border=\"0\" title=\"Aktiv\" alt=\"Aktiv\">";
-$_MAIN_OUTPUT.= "<img src=\"".$mnl_iconURL."/cancel.png\" border=\"0\" title=\"Inaktiv\" alt=\"Inaktiv\">  Newsletter ist Aktiv/Inaktiv (Click=Deaktivieren/Aktivieren)<br>";
-$_MAIN_OUTPUT.= "<img src=\"".$mnl_iconURL."/pencil.png\" border=\"0\" title=\"Bearbeiten\" alt=\"Bearbeiten\">  Bearbeiten<br>";
-$_MAIN_OUTPUT.= "<img src=\"".$mnl_iconURL."/bullet_add.png\" border=\"0\" title=\"Newsletter kopieren\" alt=\"Newsletter kopieren\">  Newsletter kopieren (ohne Dateien)<br>";
-$_MAIN_OUTPUT.= "<img src=\"".$mnl_iconURL."/add.png\" border=\"0\" title=\"Newsletter und Dateien kopieren\" alt=\"Newsletter und Dateien kopieren\">  Newsletter und Dateien kopieren<br>";
-$_MAIN_OUTPUT.= "<img src=\"".$mnl_iconURL."/chart_pie.png\" border=\"0\" title=\"Statistik\" alt=\"Statistik\">  Statistik anzeigen<br>";
-$_MAIN_OUTPUT.= "<img src=\"".$mnl_iconURL."/cross.png\" border=\"0\" title=\"Loeschen\" alt=\"Loeschen\">  Newsletter loeschen<br>";
+$_MAIN_OUTPUT.= "<img src=\"".$mnl_iconURL."/tick.png\" border=\"0\" title=\"".___("Aktiv")."\" alt=\"".___("Aktiv")."\">";
+$_MAIN_OUTPUT.= "<img src=\"".$mnl_iconURL."/cancel.png\" border=\"0\" title=\"".___("Inaktiv")."\" alt=\"".___("Inaktiv")."\">&nbsp;".___("Newsletter ist Aktiv/Inaktiv (Klick=Deaktivieren/Aktivieren)")."<br>";
+$_MAIN_OUTPUT.= "<img src=\"".$mnl_iconURL."/pencil.png\" border=\"0\" title=\"".___("Bearbeiten")."\" alt=\"".___("Bearbeiten")."\">&nbsp;".___("Bearbeiten")."<br>";
+$_MAIN_OUTPUT.= "<img src=\"".$mnl_iconURL."/bullet_add.png\" border=\"0\" title=\"".___("Newsletter kopieren")."\" alt=\"".___("Newsletter kopieren")."\">&nbsp;".___("Newsletter kopieren (ohne Dateien)")."<br>";
+$_MAIN_OUTPUT.= "<img src=\"".$mnl_iconURL."/add.png\" border=\"0\" title=\"".___("Newsletter und Dateien kopieren")."\" alt=\"".___("Newsletter und Dateien kopieren")."\">&nbsp;".___("Newsletter und Dateien kopieren")."<br>";
+$_MAIN_OUTPUT.= "<img src=\"".$mnl_iconURL."/chart_pie.png\" border=\"0\" title=\"".___("Statistik")."\" alt=\"".___("Statistik")."\">&nbsp;".___("Statistik anzeigen")."<br>";
+$_MAIN_OUTPUT.= "<img src=\"".$mnl_iconURL."/cross.png\" border=\"0\" title=\"".___("Loeschen")."\" alt=\"".___("Loeschen")."\">&nbsp;".___("Newsletter l&ouml;schen")."<br>";
 
 $_MAIN_OUTPUT.= "<h3>Status</h3>";
 

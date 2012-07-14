@@ -24,7 +24,7 @@ $Form->new_Form($FormularName,$_SERVER["PHP_SELF"],"post","_self");
 ////$Form->set_FormStyleClass($FormularName,"mForm");
 ////$Form->set_FormInputStyleClass($FormularName,"mFormText","mFormTextFocus");
 //add a Description
-$Form->set_FormDesc($FormularName,"Host waehlen");
+$Form->set_FormDesc($FormularName,___("Host waehlen"));
 //variable content aus menu als hidden field!
 //$Form->new_Input($FormularName,"type", "hidden", $content);
 $Form->new_Input($FormularName,"act", "hidden", $action);
@@ -41,7 +41,7 @@ $Form->new_Input($FormularName,"set", "hidden", $set);
 $Form->new_Input($FormularName,$InputName_Mail,"checkbox", "");
 $Form->set_InputDefault($FormularName,$InputName_Mail,$$InputName_Mail);
 $Form->set_InputStyleClass($FormularName,$InputName_Mail,"mFormCheckbox","mFormCheckboxFocus");
-$Form->set_InputDesc($FormularName,$InputName_Mail,"auswaehlen");
+$Form->set_InputDesc($FormularName,$InputName_Mail,___("Auswaehlen"));
 $Form->set_InputReadonly($FormularName,$InputName_Mail,false);
 $Form->set_InputOrder($FormularName,$InputName_Mail,1);
 $Form->set_InputLabel($FormularName,$InputName_Mail,"");
@@ -53,20 +53,20 @@ $Form->set_InputMultiple($FormularName,$InputName_Mail,true);
 $Form->new_Input($FormularName,$InputName_Action,"select", "");
 $Form->set_InputDefault($FormularName,$InputName_Action,$$InputName_Action);
 $Form->set_InputStyleClass($FormularName,$InputName_Action,"mFormSelect","mFormSelectFocus");
-$Form->set_InputDesc($FormularName,$InputName_Action,"Aktion ausfuehren");
+$Form->set_InputDesc($FormularName,$InputName_Action,___("Aktion ausfuehren"));
 $Form->set_InputReadonly($FormularName,$InputName_Action,false);
 $Form->set_InputOrder($FormularName,$InputName_Action,1);
 $Form->set_InputLabel($FormularName,$InputName_Action,"");
 $Form->set_InputSize($FormularName,$InputName_Action,0,1);
 $Form->set_InputMultiple($FormularName,$InputName_Action,false);
-//$Form->add_InputOption($FormularName,$InputName_Action,"list","Ansicht aktualisieren");
-$Form->add_InputOption($FormularName,$InputName_Action,"filter_delete","nach Adressen dursuchen und bearbeiten, Mails loeschen");
-$Form->add_InputOption($FormularName,$InputName_Action,"filter","nach Adressen durchsuchen und bearbeiten");
-$Form->add_InputOption($FormularName,$InputName_Action,"delete","loeschen");
+//$Form->add_InputOption($FormularName,$InputName_Action,"list",___("Ansicht aktualisieren"));
+$Form->add_InputOption($FormularName,$InputName_Action,"filter_delete",___("Nach Adressen dursuchen und bearbeiten, Mails loeschen"));
+$Form->add_InputOption($FormularName,$InputName_Action,"filter",___("Nach Adressen durchsuchen und bearbeiten"));
+$Form->add_InputOption($FormularName,$InputName_Action,"delete",___("Loeschen"));
 
 
 //submit button 
-$Form->new_Input($FormularName,$InputName_Submit,"submit","Aktion ausfuehren");
+$Form->new_Input($FormularName,$InputName_Submit,"submit",___("Aktion ausfuehren"));
 $Form->set_InputStyleClass($FormularName,$InputName_Submit,"mFormSubmit","mFormSubmitFocus");
 $Form->set_InputDesc($FormularName,$InputName_Submit,"");
 $Form->set_InputReadonly($FormularName,$InputName_Submit,false);
@@ -74,9 +74,9 @@ $Form->set_InputOrder($FormularName,$InputName_Submit,998);
 $Form->set_InputLabel($FormularName,$InputName_Submit,"");
 
 //a reset button
-$Form->new_Input($FormularName,$InputName_Reset,"reset","Reset");
+$Form->new_Input($FormularName,$InputName_Reset,"reset",___("Reset"));
 $Form->set_InputStyleClass($FormularName,$InputName_Reset,"mFormReset","mFormResetFocus");
-$Form->set_InputDesc($FormularName,$InputName_Reset,"Reset");
+$Form->set_InputDesc($FormularName,$InputName_Reset,___("Reset"));
 $Form->set_InputReadonly($FormularName,$InputName_Reset,false);
 $Form->set_InputOrder($FormularName,$InputName_Reset,999);
 $Form->set_InputLabel($FormularName,$InputName_Reset,"");

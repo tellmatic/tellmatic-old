@@ -12,7 +12,7 @@
 /* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
 /********************************************************************************/
 
-$_MAIN_DESCR="Status";
+$_MAIN_DESCR=___("Status");
 $_MAIN_MESSAGE.="";
 
 $NEWSLETTER=new mnlNL();
@@ -43,11 +43,11 @@ $showgrpURLPara_=$showgrpURLPara->getAllParams();
 
 
 
-$_MAIN_OUTPUT.="<br><center><b>TOP 5</b><br><table border=0 ><tr><td width=50% valign=top align=left>";
+$_MAIN_OUTPUT.="<br><center><b>".sprintf(___("TOP %s"),"5")."</b><br><table border=0 ><tr><td width=50% valign=top align=left>";
 
 //NL Views
-$_MAIN_OUTPUT.="<b>TOP 5 - Newsletter</b>";
-$_MAIN_OUTPUT.="<br><b>Views</b>";
+$_MAIN_OUTPUT.="<b>".sprintf(___("TOP %s - Newsletter"),"5")."</b>";
+$_MAIN_OUTPUT.="<br><b>".___("Views")."</b>";
 $shownlURLPara->addParam("act","statistic");
 $shownlURLPara->addParam("set","nl");
 $NL=$NEWSLETTER->getNL(0,0,5,0,0,"views",1);
@@ -61,7 +61,7 @@ for ($ncc=0;$ncc<$nc;$ncc++) {
 }
 
 //NL - Clicks
-$_MAIN_OUTPUT.="<br><b>Clicks</b>";
+$_MAIN_OUTPUT.="<br><b>".___("Klicks")."</b>";
 $NL=$NEWSLETTER->getNL(0,0,5,0,0,"clicks",1);
 $nc=count($NL);
 for ($ncc=0;$ncc<$nc;$ncc++) {
@@ -74,8 +74,8 @@ for ($ncc=0;$ncc<$nc;$ncc++) {
 
 //FORMS
 
-$_MAIN_OUTPUT.="<br><br><b>TOP 5 - Formulare</b>";
-$_MAIN_OUTPUT.="<br><b>Anmeldungen</b>";
+$_MAIN_OUTPUT.="<b>".sprintf(___("TOP %s - Formulare"),"5")."</b>";
+$_MAIN_OUTPUT.="<br><b>".___("Anmeldungen")."</b>";
 $showformURLPara->addParam("act","statistic");
 $showformURLPara->addParam("set","form");
 $FRM=$FORMULAR->getForm(0,0,5,0,"subscriptions",1);
@@ -92,8 +92,8 @@ for ($fcc=0;$fcc<$fc;$fcc++) {
 //LESER - Views
 $_MAIN_OUTPUT.="</td><td width=50% valign=top align=left>";
 
-$_MAIN_OUTPUT.="<b>TOP 5 - Leser</b>";
-$_MAIN_OUTPUT.="<br><b>Views</b>";
+$_MAIN_OUTPUT.="<b>".sprintf(___("TOP %s - Abonnenten"),"5")."</b>";
+$_MAIN_OUTPUT.="<br><b>".___("Views")."</b>";
 $ADR=$ADDRESS->getAdr(0,0,5,0,Array(),"views",1);
 $ac=count($ADR);
 for ($acc=0;$acc<$ac;$acc++) {
@@ -105,7 +105,7 @@ for ($acc=0;$acc<$ac;$acc++) {
 	}
 }
 //LESER - Clicks
-$_MAIN_OUTPUT.="<br><b>Clicks</b>";
+$_MAIN_OUTPUT.="<br><b>".___("Klicks")."</b>";
 $ADR=$ADDRESS->getAdr(0,0,5,0,Array(),"clicks",1);
 $ac=count($ADR);
 for ($acc=0;$acc<$ac;$acc++) {
@@ -117,7 +117,7 @@ for ($acc=0;$acc<$ac;$acc++) {
 	}
 }
 //LESER - NL
-$_MAIN_OUTPUT.="<br><b>Anz. empfangene NL</b>";
+$_MAIN_OUTPUT.="<br><b>".___("Anz. empfangene NL")."</b>";
 $ADR=$ADDRESS->getAdr(0,0,5,0,Array(),"newsletter",1);
 $ac=count($ADR);
 for ($acc=0;$acc<$ac;$acc++) {
@@ -129,7 +129,7 @@ for ($acc=0;$acc<$ac;$acc++) {
 	}
 }
 $_MAIN_OUTPUT.="</td></tr>
-						<tr><td colspan=2 align=center><font size=-1>(Die TOP 5 Liste  zaehlt auch doppelte clicks und views!)</font></td></tr>
+						<tr><td colspan=2 align=center><font size=-1>(".sprintf(___("Die TOP %s Liste  z&auml;hlt auch doppelte Klicks und Views!"),"5")."</font></td></tr>
 						</table></center>";
 
 
@@ -138,7 +138,7 @@ $_MAIN_OUTPUT.="</td></tr>
 
 $_MAIN_OUTPUT.="<br><br>";
 
-$_MAIN_OUTPUT.="<br><center><b>Gesamtstatus</b><br><table border=0><tr><td width=50% valign=top align=left>";
+$_MAIN_OUTPUT.="<br><center><b>".___("Gesamtstatus")."</b><br><table border=0><tr><td width=50% valign=top align=left>";
 
 //Newsletter:
 $NG=$NEWSLETTER->getGroup();
@@ -150,8 +150,8 @@ $hc=$QUEUE->countH();
 $shownlURLPara->addParam("act","nl_list");
 $shownlURLPara->addParam("set","");
 $shownlURLPara_=$shownlURLPara->getAllParams();
-$_MAIN_OUTPUT.="<a href=\"".$mnl_URL."/".$shownlURLPara_."\">$nlc Newsletter</a> in <a href=\"".$mnl_URL."/".$shownlgURLPara_."\">$nlgc Gruppen</a>";
-$_MAIN_OUTPUT.="<br><br>Insgesamt $hc Mails im Versand:";
+$_MAIN_OUTPUT.="<a href=\"".$mnl_URL."/".$shownlURLPara_."\">".sprintf(___("%s Newsletter"),$nlc)."</a> ::: <a href=\"".$mnl_URL."/".$shownlgURLPara_."\">".sprintf(___("%s Gruppen"),$nlgc)."</a>";
+$_MAIN_OUTPUT.="<br><br>".sprintf(___("Insgesamt %s Mails im Versand:"),$hc);
 $hsc=count($STATUS['h']['status']);
 for ($hscc=1; $hscc<=$hsc; $hscc++)//0
 {
@@ -173,7 +173,7 @@ $showadrURLPara->delParam("email");
 $showadrURLPara->delParam("adr_id");
 $showadrURLPara->addParam("act","adr_list");
 $showadrURLPara_=$showadrURLPara->getAllParams();
-$_MAIN_OUTPUT.="<a href=\"".$mnl_URL."/".$showadrURLPara_."\">$ac Adressen</a> in <a href=\"".$mnl_URL."/".$showgrpURLPara_."\">$agc Gruppen</a>:";
+$_MAIN_OUTPUT.="<a href=\"".$mnl_URL."/".$showadrURLPara_."\">".sprintf(___("%s Newsletter"),$ac)."</a> ::: <a href=\"".$mnl_URL."/".$showgrpURLPara_."\">".sprintf(___("%s Gruppen"),$agc)."</a>";
 $asc=count($STATUS['adr']['status']);
 for ($ascc=1; $ascc<=$asc; $ascc++)//0
 {
@@ -190,8 +190,6 @@ for ($ascc=1; $ascc<=$asc; $ascc++)//0
 $_MAIN_OUTPUT.="</td></tr>
 					</table>
 					</center>";
-
-
 
 $_MAIN_OUTPUT.= "<br><br><br><br>";
 ?>
