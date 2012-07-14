@@ -142,7 +142,7 @@ for ($acc=0;$acc<$ac;$acc++) {
 	$statURLPara_=$statURLPara->getAllParams();
 
 	$_MAIN_OUTPUT.= "<tr id=\"row_".$acc."\"  bgcolor=\"".$bgcolor."\" onmouseover=\"setBGColor('row_".$acc."','".$row_bgcolor_hilite."');\" onmouseout=\"setBGColor('row_".$acc."','".$bgcolor."');\">";
-	$_MAIN_OUTPUT.= "<td onmousemove=\"showToolTip('tt_adr_list_".$FRM[$acc]['id']."')\" onmouseout=\"hideToolTip();\">";
+	$_MAIN_OUTPUT.= "<td onmousemove=\"showToolTip('tt_adr_list_".$FRM[$acc]['id']."')\" onmouseout=\"hideToolTip();\" width=120>";
 	$_MAIN_OUTPUT.= "<b>".$FRM[$acc]['id']."</b>&nbsp;&nbsp;";
 
 	//markierung aktiv bei subscribe
@@ -289,7 +289,7 @@ for ($acc=0;$acc<$ac;$acc++) {
 	}
 	$_MAIN_OUTPUT.= "</a>";
 	$_MAIN_OUTPUT.= "</td>";
-	$_MAIN_OUTPUT.= "<td>";
+	$_MAIN_OUTPUT.= "<td width=140>";
 	//link zur dynamischen onlineversion!
 	$_MAIN_OUTPUT.= "&nbsp;&nbsp;<a href=\"".$tm_URL_FE."/subscribe.php?fid=".$FRM[$acc]['id']."\" target=\"_preview\" title=\"".sprintf(___("Dynamische Onlineversion anzeigen: %s"),"subscribe.php?fid=".$FRM[$acc]['id'])."\">".tm_icon("eye.png",___("Online"))."</a>";
 	//link zum template

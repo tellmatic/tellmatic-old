@@ -25,8 +25,6 @@ if (is_writeable(TM_INCLUDEPATH."/tm_config.inc.php")) {
 	}
 }
 
-if (!is_writeable(TM_PATH."/admin/tmp")) {
-}
 if (!is_writeable($tm_datapath)) {
 	$_MAIN_MESSAGE.="<br><font size=2 color=red><b>".sprintf(___("Keine Schreibrechte für %s"),$tm_datapath)."</b></font>";
 }
@@ -52,8 +50,6 @@ if (!is_writeable($tm_reportpath)) {
 	$_MAIN_MESSAGE.="<br><font size=2 color=red><b>".sprintf(___("Keine Schreibrechte für %s"),$tm_reportpath)."</b></font>";
 }
 
-if (!file_exists(TM_PATH."/admin/tmp/.htaccess")) {
-}
 if (!file_exists(TM_INCLUDEPATH."/.htaccess")) {
 	$_MAIN_MESSAGE.="<br><font size=2 color=red><b>".sprintf(___("ACHTUNG! %s ist nicht Passwortgeschützt"),TM_INCLUDEPATH)."</b></font>";
 }
@@ -79,6 +75,7 @@ if ($logged_in) {
 		default : require_once (TM_INCLUDEPATH."/Welcome.inc.php"); break;
 		case 'Welcome' : require_once (TM_INCLUDEPATH."/Welcome.inc.php"); break;
 		//admin
+		case 'adr_testadressen' : if ($user_is_admin) require_once (TM_INCLUDEPATH."/adr_testadressen.inc.php"); break;
 		case 'adm_set' : if ($user_is_admin) require_once (TM_INCLUDEPATH."/adm_set.inc.php"); break;
 		case 'adm_user_list' :  if ($user_is_admin) require_once (TM_INCLUDEPATH."/adm_user_list.inc.php"); break;
 		case 'adm_user_edit' :  if ($user_is_admin) require_once (TM_INCLUDEPATH."/adm_user_edit.inc.php"); break;
@@ -128,11 +125,16 @@ if ($logged_in) {
 
 	$_MAIN_DESCR.=" (".TM_SITEID.")";
 	//icon hilfe
-	$_MAIN_DESCR="<img src=\"".$tm_iconURL."/help.png\" border=\"0\" onclick=\"javascript:switchSection('main_help');\" alt=\"".___("Hilfe")."\">&nbsp;&nbsp;".$_MAIN_DESCR;
+	$_MAIN_DESCR=tm_icon("help.png",___("Hilfe"),___("Hilfe"),"toggle_help")."&nbsp;".$_MAIN_DESCR;
 	//expertmode, hilfe ausblenden
 	if ($user_is_expert) $_MAIN_OUTPUT.= "
 	<script type=\"text/javascript\">
-		switchSection('main_help');
+		//switchSection('main_help');
+		toggleSlide('toggle_help','main_help',1);
+	</script>";
+	if (!$user_is_expert) $_MAIN_OUTPUT.= "
+	<script type=\"text/javascript\">
+		toggleSlide('toggle_help','main_help',0);
 	</script>";
 
 	//PHP Fehler
@@ -159,12 +161,22 @@ if ($logged_in) {
 
 if (!empty($_MAIN_MESSAGE)) {
 	$_MAIN_MESSAGE="<font size=-1>".
-			"<a href=\"javascript:switchSection('main_info')\">".
-			"<img src=\"".$tm_iconURL."/exclamation.png\" border=\"0\"  alt=\"".___("Hinweise")."\">".
-			"(".___("Informationen ausblenden").")</a>".
-			"</font><br><br>".$_MAIN_MESSAGE;
+			"<!--a href=\"javascript:switchSection('main_info')\"-->".
+			"<a href=\"#\" id=\"toggle_main_info\">".
+			tm_icon("exclamation.png",___("Hinweise"),___("Hinweise")).
+			"&nbsp;".___("Informationen ausblenden")."</a>".
+			"</font><br><br>".
+			"<script language=\"javascript\" type=\"text/javascript\">".
+			"toggleSlide('toggle_main_info','main_info',0);".
+			"</script>".$_MAIN_MESSAGE;
 	$_MAIN_MESSAGE.="<br><br>";
 }
+
+//wichtig, triggerfunction f. menu: id ist "me_0_1"
+$_MAIN_OUTPUT.= "<script language=\"javascript\" type=\"text/javascript\">".
+										"toggleSlide('me_0_1','main_info',0);".
+										"toggleSlide('me_0_2','main_help',0);".
+										"</script>";
 
 $_MAIN_OUTPUT.= '
 <script type="text/javascript">

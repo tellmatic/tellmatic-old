@@ -37,7 +37,7 @@ $Form->set_InputStyleClass($FormularName,$InputName_File,"mFormText","mFormTextF
 $Form->set_InputSize($FormularName,$InputName_File,48,256);
 $Form->set_InputDesc($FormularName,$InputName_File,___("CSV-Datei hochladen und importieren"));
 $Form->set_InputReadonly($FormularName,$InputName_File,false);
-$Form->set_InputOrder($FormularName,$InputName_File,1);
+$Form->set_InputOrder($FormularName,$InputName_File,2);
 $Form->set_InputLabel($FormularName,$InputName_File,"");
 
 //Select existing file
@@ -47,23 +47,21 @@ $Form->set_InputDefault($FormularName,$InputName_FileExisting,$$InputName_FileEx
 $Form->set_InputStyleClass($FormularName,$InputName_FileExisting,"mFormSelect","mFormSelectFocus");
 $Form->set_InputDesc($FormularName,$InputName_FileExisting,___("CSV-Datei auswählen"));
 $Form->set_InputReadonly($FormularName,$InputName_FileExisting,false);
-$Form->set_InputOrder($FormularName,$InputName_FileExisting,6);
+$Form->set_InputOrder($FormularName,$InputName_FileExisting,3);
 $Form->set_InputLabel($FormularName,$InputName_FileExisting,"");
 $Form->set_InputSize($FormularName,$InputName_FileExisting,0,1);
 $Form->set_InputMultiple($FormularName,$InputName_FileExisting,false);
-//add Data
-unset($FileARRAY);
-gen_rec_files_array($tm_datapath);
-//sort array by name:
-foreach ($FileARRAY as $field) {
-	$btsort[]=$field['filename'];
-}
-@array_multisort($btsort, SORT_ASC, $FileARRAY, SORT_ASC);
-$ic= count($FileARRAY);
+//add data
 $Form->add_InputOption($FormularName,$InputName_FileExisting,"","--");
+$Import_Files=getFiles($tm_datapath) ;
+foreach ($Import_Files as $field) {
+	$btsort[]=$field['name'];
+}
+@array_multisort($btsort, SORT_ASC, $Import_Files, SORT_ASC);
+$ic= count($Import_Files);
 for ($icc=0; $icc < $ic; $icc++) {
-	if ($FileARRAY[$icc]['filename'] !="/.htaccess") {
-		$Form->add_InputOption($FormularName,$InputName_FileExisting,$FileARRAY[$icc]['filename'],$FileARRAY[$icc]['filename']);
+	if ($Import_Files[$icc]['name']!=".htaccess" && $Import_Files[$icc]['name']!="index.php" && $Import_Files[$icc]['name']!="index.html") {
+		$Form->add_InputOption($FormularName,$InputName_FileExisting,$Import_Files[$icc]['name'],display($Import_Files[$icc]['name']));
 	}
 }
 
@@ -71,10 +69,10 @@ for ($icc=0; $icc < $ic; $icc++) {
 $Form->new_Input($FormularName,$InputName_Bulk,"textarea", $$InputName_Bulk);
 $Form->set_InputDefault($FormularName,$InputName_Bulk,$$InputName_Bulk);
 $Form->set_InputStyleClass($FormularName,$InputName_Bulk,"mFormText","mFormTextFocus");
-$Form->set_InputSize($FormularName,$InputName_Bulk,80,5);
+$Form->set_InputSize($FormularName,$InputName_Bulk,64,5);
 $Form->set_InputDesc($FormularName,$InputName_Bulk,"");
 $Form->set_InputReadonly($FormularName,$InputName_Bulk,false);
-$Form->set_InputOrder($FormularName,$InputName_Bulk,1);
+$Form->set_InputOrder($FormularName,$InputName_Bulk,4);
 $Form->set_InputLabel($FormularName,$InputName_Bulk,"");
 
 //Gruppe
@@ -83,7 +81,7 @@ $Form->set_InputJS($FormularName,$InputName_Group," onChange=\"flash('submit','#
 $Form->set_InputStyleClass($FormularName,$InputName_Group,"mFormSelect","mFormSelectFocus");
 $Form->set_InputDesc($FormularName,$InputName_Group,___("Gruppen wählen, STRG/CTRL gedrückt halten und klicken f. Mehrfachauswahl"));
 $Form->set_InputReadonly($FormularName,$InputName_Group,false);
-$Form->set_InputOrder($FormularName,$InputName_Group,6);
+$Form->set_InputOrder($FormularName,$InputName_Group,1);
 $Form->set_InputLabel($FormularName,$InputName_Group,"");
 $Form->set_InputSize($FormularName,$InputName_Group,0,8);
 $Form->set_InputMultiple($FormularName,$InputName_Group,true);
@@ -104,7 +102,7 @@ $Form->set_InputStyleClass($FormularName,$InputName_GroupsMerge,"mFormText","mFo
 $Form->set_InputSize($FormularName,$InputName_GroupsMerge,48,256);
 $Form->set_InputDesc($FormularName,$InputName_GroupsMerge,___("Gruppen hinzufügen"));
 $Form->set_InputReadonly($FormularName,$InputName_GroupsMerge,false);
-$Form->set_InputOrder($FormularName,$InputName_GroupsMerge,2);
+$Form->set_InputOrder($FormularName,$InputName_GroupsMerge,14);
 $Form->set_InputLabel($FormularName,$InputName_GroupsMerge,"");
 
 //Status
@@ -114,7 +112,7 @@ $Form->set_InputDefault($FormularName,$InputName_Status,1);
 $Form->set_InputStyleClass($FormularName,$InputName_Status,"mFormSelect","mFormSelectFocus");
 $Form->set_InputDesc($FormularName,$InputName_Status,___("Adress-Status f. neue Adressen"));
 $Form->set_InputReadonly($FormularName,$InputName_Status,false);
-$Form->set_InputOrder($FormularName,$InputName_Status,6);
+$Form->set_InputOrder($FormularName,$InputName_Status,10);
 $Form->set_InputLabel($FormularName,$InputName_Status,"");
 $Form->set_InputSize($FormularName,$InputName_Status,0,1);
 $Form->set_InputMultiple($FormularName,$InputName_Status,false);
@@ -131,7 +129,7 @@ $Form->set_InputDefault($FormularName,$InputName_StatusEx,0);
 $Form->set_InputStyleClass($FormularName,$InputName_StatusEx,"mFormSelect","mFormSelectFocus");
 $Form->set_InputDesc($FormularName,$InputName_StatusEx,___("Adress-Status f. existierende Adressen"));
 $Form->set_InputReadonly($FormularName,$InputName_StatusEx,false);
-$Form->set_InputOrder($FormularName,$InputName_StatusEx,6);
+$Form->set_InputOrder($FormularName,$InputName_StatusEx,12);
 $Form->set_InputLabel($FormularName,$InputName_StatusEx,"");
 $Form->set_InputSize($FormularName,$InputName_StatusEx,0,1);
 $Form->set_InputMultiple($FormularName,$InputName_StatusEx,false);
@@ -151,7 +149,7 @@ $Form->set_InputStyleClass($FormularName,$InputName_AktivNew,"mFormSelect","mFor
 
 $Form->set_InputDesc($FormularName,$InputName_AktivNew,___("Neue Adressen de-/aktivieren"));
 $Form->set_InputReadonly($FormularName,$InputName_AktivNew,false);
-$Form->set_InputOrder($FormularName,$InputName_AktivNew,6);
+$Form->set_InputOrder($FormularName,$InputName_AktivNew,11);
 $Form->set_InputLabel($FormularName,$InputName_AktivNew,"");
 $Form->set_InputSize($FormularName,$InputName_AktivNew,0,1);
 $Form->set_InputMultiple($FormularName,$InputName_AktivNew,false);
@@ -166,7 +164,7 @@ $Form->set_InputDefault($FormularName,$InputName_AktivEx,-1);
 $Form->set_InputStyleClass($FormularName,$InputName_AktivEx,"mFormSelect","mFormSelectFocus");
 $Form->set_InputDesc($FormularName,$InputName_AktivEx,___("Existierende Adressen bei Update de-/aktivieren"));
 $Form->set_InputReadonly($FormularName,$InputName_AktivEx,false);
-$Form->set_InputOrder($FormularName,$InputName_AktivEx,6);
+$Form->set_InputOrder($FormularName,$InputName_AktivEx,13);
 $Form->set_InputLabel($FormularName,$InputName_AktivEx,"");
 $Form->set_InputSize($FormularName,$InputName_AktivEx,0,1);
 $Form->set_InputMultiple($FormularName,$InputName_AktivEx,false);
@@ -182,7 +180,7 @@ $Form->set_InputDefault($FormularName,$InputName_Delimiter,$$InputName_Delimiter
 $Form->set_InputStyleClass($FormularName,$InputName_Delimiter,"mFormSelect","mFormSelectFocus");
 $Form->set_InputDesc($FormularName,$InputName_Delimiter,___("Trennzeichen"));
 $Form->set_InputReadonly($FormularName,$InputName_Delimiter,false);
-$Form->set_InputOrder($FormularName,$InputName_Delimiter,6);
+$Form->set_InputOrder($FormularName,$InputName_Delimiter,18);
 $Form->set_InputLabel($FormularName,$InputName_Delimiter,"");
 $Form->set_InputSize($FormularName,$InputName_Delimiter,0,1);
 $Form->set_InputMultiple($FormularName,$InputName_Delimiter,false);
@@ -199,7 +197,7 @@ $Form->set_InputStyleClass($FormularName,$InputName_Delete,"mFormText","mFormTex
 $Form->set_InputSize($FormularName,$InputName_Delete,48,256);
 $Form->set_InputDesc($FormularName,$InputName_Delete,___("Importierte Adressen löschen"));
 $Form->set_InputReadonly($FormularName,$InputName_Delete,false);
-$Form->set_InputOrder($FormularName,$InputName_Delete,2);
+$Form->set_InputOrder($FormularName,$InputName_Delete,15);
 $Form->set_InputLabel($FormularName,$InputName_Delete,"");
 
 //blacklist
@@ -210,7 +208,7 @@ $Form->set_InputStyleClass($FormularName,$InputName_Blacklist,"mFormText","mForm
 $Form->set_InputSize($FormularName,$InputName_Blacklist,48,256);
 $Form->set_InputDesc($FormularName,$InputName_Blacklist,___("Importierte Adressen in die Blacklist eintragen"));
 $Form->set_InputReadonly($FormularName,$InputName_Blacklist,false);
-$Form->set_InputOrder($FormularName,$InputName_Blacklist,2);
+$Form->set_InputOrder($FormularName,$InputName_Blacklist,16);
 $Form->set_InputLabel($FormularName,$InputName_Blacklist,"");
 
 //Dublettencheck
@@ -221,7 +219,7 @@ $Form->set_InputStyleClass($FormularName,$InputName_DoubleCheck,"mFormText","mFo
 $Form->set_InputSize($FormularName,$InputName_DoubleCheck,48,256);
 $Form->set_InputDesc($FormularName,$InputName_DoubleCheck,___("Auf doppelt vorhandene Adressen prüfen"));
 $Form->set_InputReadonly($FormularName,$InputName_DoubleCheck,false);
-$Form->set_InputOrder($FormularName,$InputName_DoubleCheck,2);
+$Form->set_InputOrder($FormularName,$InputName_DoubleCheck,17);
 $Form->set_InputLabel($FormularName,$InputName_DoubleCheck,"");
 
 
@@ -232,7 +230,7 @@ $Form->set_InputDefault($FormularName,$InputName_ECheckImport,$EMailcheck_Intern
 $Form->set_InputStyleClass($FormularName,$InputName_ECheckImport,"mFormSelect","mFormSelectFocus");
 $Form->set_InputDesc($FormularName,$InputName_ECheckImport,"");
 $Form->set_InputReadonly($FormularName,$InputName_ECheckImport,false);
-$Form->set_InputOrder($FormularName,$InputName_ECheckImport,6);
+$Form->set_InputOrder($FormularName,$InputName_ECheckImport,19);
 $Form->set_InputLabel($FormularName,$InputName_ECheckImport,"");
 $Form->set_InputSize($FormularName,$InputName_ECheckImport,0,1);
 $Form->set_InputMultiple($FormularName,$InputName_ECheckImport,false);
@@ -250,7 +248,7 @@ $Form->set_InputStyleClass($FormularName,$InputName_Offset,"mFormText","mFormTex
 $Form->set_InputSize($FormularName,$InputName_Offset,20,10);
 $Form->set_InputDesc($FormularName,$InputName_Offset,___("Offset: Anzahl der Datensätze die übersprungen werden sollen."));
 $Form->set_InputReadonly($FormularName,$InputName_Offset,false);
-$Form->set_InputOrder($FormularName,$InputName_Offset,4);
+$Form->set_InputOrder($FormularName,$InputName_Offset,20);
 $Form->set_InputLabel($FormularName,$InputName_Offset,"");
 
 //limit
@@ -260,7 +258,7 @@ $Form->set_InputStyleClass($FormularName,$InputName_Limit,"mFormText","mFormText
 $Form->set_InputSize($FormularName,$InputName_Limit,20,10);
 $Form->set_InputDesc($FormularName,$InputName_Limit,___("Limit: Anzahl maximal zu exportierender Datensätze."));
 $Form->set_InputReadonly($FormularName,$InputName_Limit,false);
-$Form->set_InputOrder($FormularName,$InputName_Limit,4);
+$Form->set_InputOrder($FormularName,$InputName_Limit,21);
 $Form->set_InputLabel($FormularName,$InputName_Limit,"");
 
 //submit button
@@ -296,7 +294,7 @@ $_MAIN_OUTPUT.= "</td>";
 
 $_MAIN_OUTPUT.= "<td valign=top>".tm_icon("page_white_gear.png",___("Upload"))."&nbsp;".___("CSV-Upload").":";
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_File]['html'];
-$_MAIN_OUTPUT.= "&nbsp;&nbsp;".tm_icon("disk.png",___("Datei"))."&nbsp;".$Form->INPUT[$FormularName][$InputName_FileExisting]['html'];
+$_MAIN_OUTPUT.= "<br>".tm_icon("disk.png",___("Datei"))."&nbsp;".___("CSV-Datei auswählen").":".$Form->INPUT[$FormularName][$InputName_FileExisting]['html'];
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "</tr>";
 
@@ -355,7 +353,7 @@ $_MAIN_OUTPUT.= "</tr>";
 
 $_MAIN_OUTPUT.= "<tr>";
 $_MAIN_OUTPUT.= "<td style=\"border-top:2px solid grey\" valign=\"top\">";
-$_MAIN_OUTPUT.= tm_icon("contrast.png",___("Löschen"))."&nbsp;".___("In Robinsonliste (Blacklist) eintragen")."";
+$_MAIN_OUTPUT.= tm_icon("ruby.png",___("Blacklist"))."&nbsp;".___("In Blacklist eintragen")."";
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Blacklist]['html'];
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "</tr>";

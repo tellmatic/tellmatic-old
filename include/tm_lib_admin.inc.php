@@ -37,28 +37,30 @@ if (!$tm_config_admin) {
 
 	if ($available_mem==0) {
 		//we have unlimted memory, but set a limit here
-		$adr_row_limit=4000;//4k is enough :) like having 32mb of ram
+		$adr_row_limit=5000;//5k is enough :) like having ~48mb of ram
 	}
 
 	if ($available_mem >= (8*1024*1024)) { //8M
-		$adr_row_limit=1000;
+		$adr_row_limit=750;
 	}
 	if ($available_mem >= (16*1024*1024)) {
-		$adr_row_limit=2000;
+		$adr_row_limit=1500;
 	}
 	if ($available_mem >= (24*1024*1024)) {
-		$adr_row_limit=3000;
+		$adr_row_limit=2500;
 	}
 	if ($available_mem >= (32*1024*1024)) {
 		$adr_row_limit=4000;
 	}
 	if ($available_mem >= (48*1024*1024)) {
-		$adr_row_limit=6000;
+		$adr_row_limit=5000;
 	}
 	if ($available_mem >= (64*1024*1024)) {
-		$adr_row_limit=8000;
+		$adr_row_limit=7500;
 	}
-	
+	if ($available_mem >= (128*1024*1024)) {
+		$adr_row_limit=15000;
+	}
 	
 	$max_execution_time=ini_get("max_execution_time");
 	if ($max_execution_time==0) $max_execution_time=3600;

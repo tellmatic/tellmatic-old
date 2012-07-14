@@ -36,7 +36,7 @@ $Form->set_InputStyleClass($FormularName,$InputName_EMail,"mFormText","mFormText
 $Form->set_InputSize($FormularName,$InputName_EMail,48,256);
 $Form->set_InputDesc($FormularName,$InputName_EMail,___("E-Mail"));
 $Form->set_InputReadonly($FormularName,$InputName_EMail,false);
-$Form->set_InputOrder($FormularName,$InputName_EMail,1);
+$Form->set_InputOrder($FormularName,$InputName_EMail,4);
 $Form->set_InputLabel($FormularName,$InputName_EMail,"");
 
 //passwd
@@ -46,7 +46,7 @@ $Form->set_InputStyleClass($FormularName,$InputName_Pass,"mFormText","mFormTextF
 $Form->set_InputSize($FormularName,$InputName_Pass,48,256);
 $Form->set_InputDesc($FormularName,$InputName_Pass,___("Passwort"));
 $Form->set_InputReadonly($FormularName,$InputName_Pass,false);
-$Form->set_InputOrder($FormularName,$InputName_Pass,1);
+$Form->set_InputOrder($FormularName,$InputName_Pass,5);
 $Form->set_InputLabel($FormularName,$InputName_Pass,"");
 
 //passwd 2
@@ -56,7 +56,7 @@ $Form->set_InputStyleClass($FormularName,$InputName_Pass2,"mFormText","mFormText
 $Form->set_InputSize($FormularName,$InputName_Pass2,48,256);
 $Form->set_InputDesc($FormularName,$InputName_Pass2,___("Passwort"));
 $Form->set_InputReadonly($FormularName,$InputName_Pass2,false);
-$Form->set_InputOrder($FormularName,$InputName_Pass2,1);
+$Form->set_InputOrder($FormularName,$InputName_Pass2,5);
 $Form->set_InputLabel($FormularName,$InputName_Pass2,"");
 
 //Style
@@ -66,7 +66,7 @@ $Form->set_InputDefault($FormularName,$InputName_Style,$$InputName_Style);
 $Form->set_InputStyleClass($FormularName,$InputName_Style,"mFormSelect","mFormSelectFocus");
 $Form->set_InputDesc($FormularName,$InputName_Style,___("Layout / Style"));
 $Form->set_InputReadonly($FormularName,$InputName_Style,false);
-$Form->set_InputOrder($FormularName,$InputName_Style,6);
+$Form->set_InputOrder($FormularName,$InputName_Style,2);
 $Form->set_InputLabel($FormularName,$InputName_Style,"");
 $Form->set_InputSize($FormularName,$InputName_Style,0,1);
 $Form->set_InputMultiple($FormularName,$InputName_Style,false);
@@ -83,7 +83,7 @@ $Form->set_InputDefault($FormularName,$InputName_Lang,$$InputName_Lang);
 $Form->set_InputStyleClass($FormularName,$InputName_Lang,"mFormSelect","mFormSelectFocus");
 $Form->set_InputDesc($FormularName,$InputName_Lang,___("Sprache"));
 $Form->set_InputReadonly($FormularName,$InputName_Lang,false);
-$Form->set_InputOrder($FormularName,$InputName_Lang,6);
+$Form->set_InputOrder($FormularName,$InputName_Lang,1);
 $Form->set_InputLabel($FormularName,$InputName_Lang,"");
 $Form->set_InputSize($FormularName,$InputName_Lang,0,1);
 $Form->set_InputMultiple($FormularName,$InputName_Lang,false);
@@ -101,7 +101,7 @@ $Form->set_InputStyleClass($FormularName,$InputName_Expert,"mFormText","mFormTex
 $Form->set_InputSize($FormularName,$InputName_Expert,48,256);
 $Form->set_InputDesc($FormularName,$InputName_Expert,___("Experten-Modus"));
 $Form->set_InputReadonly($FormularName,$InputName_Expert,false);
-$Form->set_InputOrder($FormularName,$InputName_Expert,2);
+$Form->set_InputOrder($FormularName,$InputName_Expert,3);
 $Form->set_InputLabel($FormularName,$InputName_Expert,"");
 
 //submit button

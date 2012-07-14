@@ -46,7 +46,7 @@ $Form->set_InputDefault($FormularName,$InputName_Group,$adr_grp_id);
 $Form->set_InputStyleClass($FormularName,$InputName_Group,"mFormSelect","mFormSelectFocus");
 $Form->set_InputDesc($FormularName,$InputName_Group,___("Gruppe"));
 $Form->set_InputReadonly($FormularName,$InputName_Group,false);
-$Form->set_InputOrder($FormularName,$InputName_Group,6);
+$Form->set_InputOrder($FormularName,$InputName_Group,2);
 $Form->set_InputLabel($FormularName,$InputName_Group,"");
 $Form->set_InputSize($FormularName,$InputName_Group,0,1);
 $Form->set_InputMultiple($FormularName,$InputName_Group,false);
@@ -65,15 +65,15 @@ $Form->set_InputDefault($FormularName,$InputName_Status,$status);
 $Form->set_InputStyleClass($FormularName,$InputName_Status,"mFormSelect","mFormSelectFocus");
 $Form->set_InputDesc($FormularName,$InputName_Status,___("Suche nach Adress-Status"));
 $Form->set_InputReadonly($FormularName,$InputName_Status,false);
-$Form->set_InputOrder($FormularName,$InputName_Status,6);
+$Form->set_InputOrder($FormularName,$InputName_Status,3);
 $Form->set_InputLabel($FormularName,$InputName_Status,"");
 $Form->set_InputSize($FormularName,$InputName_Status,0,1);
 $Form->set_InputMultiple($FormularName,$InputName_Status,false);
 //add Data
 $sc=count($STATUS['adr']['status']);
 
-$Form->add_InputOption($FormularName,$InputName_Status,"",___(" -- Alle -- "));
-
+$Form->add_InputOption($FormularName,$InputName_Status,0,___(" -- Alle -- "));
+#$Form->add_InputOption($FormularName,$InputName_Status,"delete_all",___(" -- Alle fehlerhaften Adressen -- "));
 for ($scc=$sc; $scc>0; $scc--)//>0 , array beginnt bei 1! //5 und 6 undefiniert //5
 {
 	$Form->add_InputOption($FormularName,$InputName_Status,$scc,$STATUS['adr']['status'][$scc]." (".$STATUS['adr']['descr'][$scc].")");
@@ -106,7 +106,7 @@ $Form->set_InputDefault($FormularName,$InputName_StatusDst,$$InputName_StatusDst
 $Form->set_InputStyleClass($FormularName,$InputName_StatusDst,"mFormSelect","mFormSelectFocus");
 $Form->set_InputDesc($FormularName,$InputName_StatusDst,___("Status"));
 $Form->set_InputReadonly($FormularName,$InputName_StatusDst,false);
-$Form->set_InputOrder($FormularName,$InputName_StatusDst,6);
+$Form->set_InputOrder($FormularName,$InputName_StatusDst,5);
 $Form->set_InputLabel($FormularName,$InputName_StatusDst,"");
 $Form->set_InputSize($FormularName,$InputName_StatusDst,0,1);
 $Form->set_InputMultiple($FormularName,$InputName_StatusDst,false);
@@ -125,7 +125,7 @@ $Form->set_InputDefault($FormularName,$InputName_Set,$set);
 $Form->set_InputStyleClass($FormularName,$InputName_Set,"mFormSelect","mFormSelectFocus");
 $Form->set_InputDesc($FormularName,$InputName_Set,___("Aktion"));
 $Form->set_InputReadonly($FormularName,$InputName_Set,false);
-$Form->set_InputOrder($FormularName,$InputName_Set,6);
+$Form->set_InputOrder($FormularName,$InputName_Set,4);
 $Form->set_InputLabel($FormularName,$InputName_Set,"");
 $Form->set_InputSize($FormularName,$InputName_Set,0,1);
 $Form->set_InputMultiple($FormularName,$InputName_Set,false);
@@ -148,7 +148,7 @@ $Form->set_InputStyleClass($FormularName,$InputName_Blacklist,"mFormText","mForm
 $Form->set_InputSize($FormularName,$InputName_Blacklist,48,256);
 $Form->set_InputDesc($FormularName,$InputName_Blacklist,___("Importierte Adressen in die Blacklist eintragen"));
 $Form->set_InputReadonly($FormularName,$InputName_Blacklist,false);
-$Form->set_InputOrder($FormularName,$InputName_Blacklist,2);
+$Form->set_InputOrder($FormularName,$InputName_Blacklist,7);
 $Form->set_InputLabel($FormularName,$InputName_Blacklist,"");
 //submit button
 $Form->new_Input($FormularName,$InputName_Submit,"submit",___("Aktion Ausführen"));

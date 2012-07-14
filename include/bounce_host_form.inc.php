@@ -65,11 +65,12 @@ $Form->set_InputDefault($FormularName,$InputName_Offset,$$InputName_Offset);
 $Form->set_InputStyleClass($FormularName,$InputName_Offset,"mFormSelect","mFormSelectFocus");
 $Form->set_InputDesc($FormularName,$InputName_Offset,___("Anzahl Mails die übersprungen werden."));
 $Form->set_InputReadonly($FormularName,$InputName_Offset,false);
-$Form->set_InputOrder($FormularName,$InputName_Offset,1);
+$Form->set_InputOrder($FormularName,$InputName_Offset,2);
 $Form->set_InputLabel($FormularName,$InputName_Offset,"");
 $Form->set_InputSize($FormularName,$InputName_Offset,0,1);
 $Form->set_InputMultiple($FormularName,$InputName_Offset,false);
-
+//add data
+$Form->add_InputOption($FormularName,$InputName_Offset,10,"10");
 for ($occ=0;$occ<=500;$occ=$occ+25) {
 	$Form->add_InputOption($FormularName,$InputName_Offset,$occ,$occ." ");
 }
@@ -80,13 +81,17 @@ $Form->set_InputDefault($FormularName,$InputName_Limit,$$InputName_Limit);
 $Form->set_InputStyleClass($FormularName,$InputName_Limit,"mFormSelect","mFormSelectFocus");
 $Form->set_InputDesc($FormularName,$InputName_Limit,___("max. Anzahl Mails die durchsucht/angezeigt werden."));
 $Form->set_InputReadonly($FormularName,$InputName_Limit,false);
-$Form->set_InputOrder($FormularName,$InputName_Limit,1);
+$Form->set_InputOrder($FormularName,$InputName_Limit,3);
 $Form->set_InputLabel($FormularName,$InputName_Limit,"");
 $Form->set_InputSize($FormularName,$InputName_Limit,0,1);
 $Form->set_InputMultiple($FormularName,$InputName_Limit,false);
+//add data
 $Form->add_InputOption($FormularName,$InputName_Limit,"10","10 Mails");
+$Form->add_InputOption($FormularName,$InputName_Limit,"15","15 Mails");
+$Form->add_InputOption($FormularName,$InputName_Limit,"20","20 Mails");
 $Form->add_InputOption($FormularName,$InputName_Limit,"25","25 Mails");
 $Form->add_InputOption($FormularName,$InputName_Limit,"50","50 Mails");
+$Form->add_InputOption($FormularName,$InputName_Limit,"75","75 Mails");
 $Form->add_InputOption($FormularName,$InputName_Limit,"100","100 Mails");
 
 //nur bounces
@@ -97,8 +102,22 @@ $Form->add_InputOption($FormularName,$InputName_Limit,"100","100 Mails");
 	$Form->set_InputSize($FormularName,$InputName_Bounce,48,48);
 	$Form->set_InputDesc($FormularName,$InputName_Bounce,___("Nur Bouncemails anzeigen"));
 	$Form->set_InputReadonly($FormularName,$InputName_Bounce,false);
-	$Form->set_InputOrder($FormularName,$InputName_Bounce,2);
+$Form->set_InputOrder($FormularName,$InputName_Bounce,7);
 	$Form->set_InputLabel($FormularName,$InputName_Bounce,"");
+//bounce method, type: header, body, body&header
+$Form->new_Input($FormularName,$InputName_BounceType,"select", "");
+$Form->set_InputJS($FormularName,$InputName_BounceType," onChange=\"flash('submit','#ff0000');\" ");
+$Form->set_InputDefault($FormularName,$InputName_BounceType,$$InputName_BounceType);
+$Form->set_InputStyleClass($FormularName,$InputName_BounceType,"mFormSelect","mFormSelectFocus");
+$Form->set_InputDesc($FormularName,$InputName_BounceType,___("Was soll durchsucht werden?"));
+$Form->set_InputReadonly($FormularName,$InputName_BounceType,false);
+$Form->set_InputOrder($FormularName,$InputName_BounceType,6);
+$Form->set_InputLabel($FormularName,$InputName_BounceType,"");
+$Form->set_InputSize($FormularName,$InputName_BounceType,0,1);
+$Form->set_InputMultiple($FormularName,$InputName_BounceType,false);
+$Form->add_InputOption($FormularName,$InputName_BounceType,"header",___("nur E-MailHeader"));
+$Form->add_InputOption($FormularName,$InputName_BounceType,"body",___("nur E-Mail-Body"));
+$Form->add_InputOption($FormularName,$InputName_BounceType,"headerbody","E-Mail-Header und -Body");
 
 //to adresse filtern nach return path fuer den host
 	$Form->new_Input($FormularName,$InputName_FilterTo,"checkbox", 1);
@@ -108,8 +127,34 @@ $Form->add_InputOption($FormularName,$InputName_Limit,"100","100 Mails");
 	$Form->set_InputSize($FormularName,$InputName_FilterTo,48,48);
 	$Form->set_InputDesc($FormularName,$InputName_FilterTo,___("Nur E-Mails an die Fehleradresse anzeigen"));
 	$Form->set_InputReadonly($FormularName,$InputName_FilterTo,false);
-	$Form->set_InputOrder($FormularName,$InputName_FilterTo,2);
+	$Form->set_InputOrder($FormularName,$InputName_FilterTo,4);
 	$Form->set_InputLabel($FormularName,$InputName_FilterTo,"");
+//Preselect TO from ReturnPath from SMTP Servers
+$Form->new_Input($FormularName,$InputName_FilterToSMTPReturnPath,"select", "");
+$Form->set_InputJS($FormularName,$InputName_FilterToSMTPReturnPath," onChange=\"flash('submit','#ff0000');\" ");
+$Form->set_InputDefault($FormularName,$InputName_FilterToSMTPReturnPath,$$InputName_FilterToSMTPReturnPath);
+$Form->set_InputStyleClass($FormularName,$InputName_FilterToSMTPReturnPath,"mFormSelect","mFormSelectFocus");
+$Form->set_InputSize($FormularName,$InputName_FilterToSMTPReturnPath,1,1);
+$Form->set_InputDesc($FormularName,$InputName_FilterToSMTPReturnPath,___("Return-Path Adresse auswählen"));
+$Form->set_InputReadonly($FormularName,$InputName_FilterToSMTPReturnPath,false);
+$Form->set_InputOrder($FormularName,$InputName_FilterToSMTPReturnPath,5);
+$Form->set_InputLabel($FormularName,$InputName_FilterToSMTPReturnPath,"");
+$Form->set_InputMultiple($FormularName,$InputName_FilterToSMTPReturnPath,false);
+//smtp hosts
+$HOST_=$HOSTS->getHost(0,Array("type"=>"smtp"));//id,filter
+$hcr=count($HOST_);
+for ($hccr=0; $hccr<$hcr; $hccr++)
+{
+		$Form->add_InputOption($FormularName,$InputName_FilterToSMTPReturnPath,$HOST_[$hccr]['return_mail'],display($HOST_[$hccr]['return_mail']),display($HOST_[$hccr]['name']),"background-color:#aacc00;");
+		if ($HOST_[$hccr]['sender_email'] != $HOST_[$hccr]['return_mail']) {
+			$Form->add_InputOption($FormularName,$InputName_FilterToSMTPReturnPath,$HOST_[$hccr]['sender_email'],display($HOST_[$hccr]['sender_email']),display($HOST_[$hccr]['name']),"background-color:#ffff00;");
+		}
+		if ($HOST_[$hccr]['sender_email'] != $HOST_[$hccr]['return_mail'] &&
+			$HOST_[$hccr]['return_mail'] != $HOST_[$hccr]['reply_to']		
+			) {
+			$Form->add_InputOption($FormularName,$InputName_FilterToSMTPReturnPath,$HOST_[$hccr]['reply_to'],display($HOST_[$hccr]['reply_to']),display($HOST_[$hccr]['name']),"background-color:#ffcc00;");
+		}
+}
 //submit button
 $Form->new_Input($FormularName,$InputName_Submit,"submit",___("Verbinden und e-Mails abrufen"));
 $Form->set_InputStyleClass($FormularName,$InputName_Submit,"mFormSubmit","mFormSubmitFocus");
@@ -139,21 +184,29 @@ $_MAIN_OUTPUT.= $Form->INPUT[$FormularName]['set']['html'];
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName]['val']['html'];
 $_MAIN_OUTPUT.= "<table border=0>";
 $_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top>".tm_icon("computer.png",___("Host"))."&nbsp;".___("Host")."<br>";
+$_MAIN_OUTPUT.= "<td valign=top>".tm_icon("computer.png",___("Host"))."&nbsp;".___("Host").":&nbsp;";
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Host]['html'];
-$_MAIN_OUTPUT.= "</td>";
-
-$_MAIN_OUTPUT.= "<td valign=top colspan=1>".tm_icon("control_fastforward.png",___("Offset"))."&nbsp;".___("Offset")."<br>";
+$_MAIN_OUTPUT.= "&nbsp;".tm_icon("control_fastforward.png",___("Offset"))."&nbsp;".___("Offset").":&nbsp;";
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Offset]['html'];
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "<td valign=top colspan=1>".tm_icon("control_end.png",___("Limit"))."&nbsp;".___("Limit")."<br>";
+$_MAIN_OUTPUT.= "&nbsp;".tm_icon("control_end.png",___("Limit"))."&nbsp;".___("Limit").":&nbsp;";
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Limit]['html'];
 $_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "<td valign=top colspan=1><br>";
-$_MAIN_OUTPUT.= tm_icon("sport_soccer.png",___("Bouncemails"))."&nbsp;".___("Nur Bouncemails")." ".$Form->INPUT[$FormularName][$InputName_Bounce]['html'];
-$_MAIN_OUTPUT.= "&nbsp;".tm_icon("status_offline.png",___("Returnmails"))."&nbsp;".___("Nur Returnmails")." ".$Form->INPUT[$FormularName][$InputName_FilterTo]['html'];
+$_MAIN_OUTPUT.= "</tr>";
+$_MAIN_OUTPUT.= "<tr>";
+$_MAIN_OUTPUT.= "<td valign=top colspan=3>";
+$_MAIN_OUTPUT.= tm_icon("status_offline.png",___("Returnmails"))."&nbsp;".___("Nur Returnmails")."&nbsp;".$Form->INPUT[$FormularName][$InputName_FilterTo]['html']."&nbsp;";
+$_MAIN_OUTPUT.= ___("TO:")."&nbsp;".$Form->INPUT[$FormularName][$InputName_FilterToSMTPReturnPath]['html'];
 $_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "<td valign=bottom colspan=1><br>";
+$_MAIN_OUTPUT.= "</tr>";
+$_MAIN_OUTPUT.= "<tr>";
+$_MAIN_OUTPUT.= "<td valign=top colspan=3>";
+$_MAIN_OUTPUT.= tm_icon("sport_soccer.png",___("Bouncemails"))."&nbsp;";
+$_MAIN_OUTPUT.= ___("Adressen suchen in:")."&nbsp;".$Form->INPUT[$FormularName][$InputName_BounceType]['html'];
+$_MAIN_OUTPUT.= ___("Nur Bouncemails anzeigen")."&nbsp;".$Form->INPUT[$FormularName][$InputName_Bounce]['html']."&nbsp;";
+$_MAIN_OUTPUT.= "</td>";
+$_MAIN_OUTPUT.= "</tr>";
+$_MAIN_OUTPUT.= "<tr>";
+$_MAIN_OUTPUT.= "<td valign=bottom colspan=3>";
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Submit]['html'];
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "</tr>";

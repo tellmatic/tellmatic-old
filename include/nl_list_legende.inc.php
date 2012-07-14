@@ -13,7 +13,7 @@
 /********************************************************************************/
 
 //Legende
-$_MAIN_OUTPUT.="<br><b><a href=\"javascript:switchSection('legende')\" title=\"".___("Legende / Status ein-ausblenden")."\">".tm_icon("rainbow.png",___("Legende / Status"))."&nbsp;".___("Legende / Status")."</a></b>";
+$_MAIN_OUTPUT.="<br><b><a href=\"#\" title=\"".___("Legende / Status ein-ausblenden")."\" id=\"toggle_legende\">".tm_icon("rainbow.png",___("Legende / Status"))."&nbsp;".___("Legende / Status")."</a></b>";
 $_MAIN_OUTPUT.= "<div id=\"legende\" class=\"legende\">";
 
 $_MAIN_OUTPUT.= "<h3>".___("Legende")."</h3>";
@@ -27,7 +27,7 @@ $_MAIN_OUTPUT.= "<br><strong>".___("Aktionen")."</strong><br>";
 $_MAIN_OUTPUT.= tm_icon("hourglass_add.png",___("Queue-Eintrag hinzufügen, zum Versenden vorbereiten"))."&nbsp;".___("Queue-Eintrag hinzufügen, zum Versenden vorbereiten")."<br>";
 $_MAIN_OUTPUT.= tm_icon("hourglass_delete.png",___("Alle Queue-Einträge löschen"))."&nbsp;".___("Alle Queue-Einträge für diesen Newsletter löschen")."<br>";
 $_MAIN_OUTPUT.= tm_icon("hourglass_go.png",___("Queue-Einträge für Newsletter anzeigen"))."&nbsp;".___("Queue-Einträge für Newsletter anzeigen")."<br>";
-$_MAIN_OUTPUT.= tm_icon("email_go.png",___("Versenden"))."&nbsp;".___("Versenden")."<br>";
+$_MAIN_OUTPUT.= tm_icon("bullet_star.png",___("Versenden"),"","","","email_go.png")."&nbsp;".___("Versenden")."<br>";
 //link zur geparsten onlineversion!
 $_MAIN_OUTPUT.= tm_icon("eye.png",___("Online"))."&nbsp;".___("Onlineversion des Newsletter anzeigen")."<br>";
 //link zum testpart template!
@@ -42,15 +42,14 @@ $_MAIN_OUTPUT.= tm_icon("page_white_delete.png",___("HTML-Datei löschen"))."&nb
 $_MAIN_OUTPUT.= tm_icon("page_white_link.png",___("Link"))."&nbsp;".___("verknüpften Link anzeigen")."<br>";
 $_MAIN_OUTPUT.= tm_icon("tick.png",___("Aktiv"));
 $_MAIN_OUTPUT.= tm_icon("cancel.png",___("Inaktiv"))."&nbsp;".___("Newsletter ist Aktiv/Inaktiv (Klick=Deaktivieren/Aktivieren)")."<br>";
+$_MAIN_OUTPUT.= tm_icon("cross.png",___("Löschen"))."&nbsp;".___("Newsletter löschen")."<br>";
 $_MAIN_OUTPUT.= tm_icon("pencil.png",___("Bearbeiten"))."&nbsp;".___("Newsletter bearbeiten")."<br>";
 $_MAIN_OUTPUT.= tm_icon("bullet_add.png",___("Newsletter kopieren"))."&nbsp;".___("Newsletter kopieren (ohne Dateien)")."<br>";
 $_MAIN_OUTPUT.= tm_icon("add.png",___("Newsletter und Dateien kopieren"))."&nbsp;".___("Newsletter und Dateien kopieren")."<br>";
 $_MAIN_OUTPUT.= tm_icon("chart_pie.png",___("Statistik"))."&nbsp;".___("Statistik anzeigen")."<br>";
 $_MAIN_OUTPUT.= tm_icon("chart_bar_delete.png",___("Historie löschen"))."&nbsp;".___("Historie löschen")."<br>";
-$_MAIN_OUTPUT.= tm_icon("cross.png",___("Löschen"))."&nbsp;".___("Newsletter löschen")."<br>";
-
+$_MAIN_OUTPUT.= tm_icon("arrow_switch.png",___("Adressen nachfassen / Empfängerliste aktualisieren"),"","","","email_go.png")."&nbsp;".___("Adressen nachfassen / Empfängerliste aktualisieren")."<br>";
 $_MAIN_OUTPUT.= "<br><strong>".___("Status")."</strong><br>";
-
 $sc=count($STATUS['nl']['status']);
 for ($scc=1; $scc<=$sc; $scc++)//0
 {
@@ -58,12 +57,17 @@ for ($scc=1; $scc<=$sc; $scc++)//0
 	$_MAIN_OUTPUT.= tm_icon($STATUS['nl']['statimg'][$scc],$STATUS['nl']['descr'][$scc]);
 	$_MAIN_OUTPUT.= "  ".$STATUS['nl']['status'][$scc]."  (".$STATUS['nl']['descr'][$scc].")<br>";
 }
-
 $_MAIN_OUTPUT.= "</div><br><br>";
-if ($user_is_expert) $_MAIN_OUTPUT.= "
-<script type=\"text/javascript\">
-	switchSection('legende');
-</script>";
-
-
+$_MAIN_OUTPUT.= "<script type=\"text/javascript\">";
+if ($user_is_expert) {
+	$_MAIN_OUTPUT.= "
+		//switchSection('legende');
+		toggleSlide('toggle_legende','legende',1);
+		";
+} else {
+	$_MAIN_OUTPUT.= "
+		toggleSlide('toggle_legende','legende',0);
+		";
+}
+$_MAIN_OUTPUT.= "</script>";
 ?>

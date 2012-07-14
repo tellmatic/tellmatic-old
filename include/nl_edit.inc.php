@@ -29,7 +29,8 @@ $InputName_Attach1="attach1";
 pt_register("POST","attach1");
 
 $InputName_AttachExisting="attach_existing";// auswahl anhang
-pt_register("POST","attach_existing");
+$$InputName_AttachExisting=Array();
+pt_register("POST",$InputName_AttachExisting);
 $InputName_Name="subject";
 $$InputName_Name=getVar($InputName_Name);
 
@@ -86,12 +87,6 @@ if ($set=="save") {
 	}
 
 	if ($check) {
-		//da wir das attachement anhand seiner endung identifizieren muessen, attm nur aktualisieren wenn auch was hochgeladen wurde,
-		if (!$uploaded_attach1) {
-			//also wenn kein upload... dann endung beibehalten
-			$NL=$NEWSLETTER->getNL($nl_id);
-			$attach_ext=$NL[0]['attm'];
-		}
 		$NEWSLETTER->updateNL(
 							Array(
 									"id"=>$nl_id,
@@ -104,7 +99,6 @@ if ($set=="save") {
 									"created"=>$updated,
 									"author"=>$author,
 									"grp_id"=>$nl_grp_id,
-									"attm"=>"",
 									"content_type"=>$content_type,
 									"track_image"=>$track_image,
 									"rcpt_name"=>$rcpt_name,
@@ -131,7 +125,7 @@ if ($set=="save") {
 } else {
 	$NL=$NEWSLETTER->getNL($nl_id,0,0,0,1);
 	$subject=$NL[0]['subject'];
-	$body=strtr($NL[0]['body'], $trans);
+	$body=$NL[0]['body'];
 	$body_text=$NL[0]['body_text'];
 	$aktiv=$NL[0]['aktiv'];
 	$massmail=$NL[0]['massmail'];
@@ -142,6 +136,7 @@ if ($set=="save") {
 	$$InputName_TrackImageExisting=$NL[0]['track_image'];
 	//array umwandeln, der array aus get sieht anders aus als der fuer update und new!!!
 	$atc=0;
+	$attach_existing=Array();
 	$attachements=$NL[0]['attachements'];
 	foreach ($attachements as $attachfile) {
 		$attach_existing[$atc]=$attachfile['file'];

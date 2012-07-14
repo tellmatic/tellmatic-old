@@ -68,7 +68,7 @@ Installation:
 	
 	call admin/index.php, enter username and password at login page, ready, enjoy mailing :)
 
-	To send via cronjob, call [user:passwort]@http://[domain]/[tellmatic-installdir]/include/send_it.php with wget (add username and pw), or use php cli (recommended!)
+	To send via cronjob, call http://[user:passwort]@[domain]/[tellmatic-installdir]/include/send_it.php with wget (add username and pw), or use php cli (recommended!)
 		*/1 * * * * /path/to/php-cli-binary /path/to/include/send_it.php
 
 For questions and suggestions please visit www.tellmatic.org and read doc and faq or write to the public forum.

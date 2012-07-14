@@ -46,7 +46,7 @@ $Form->set_InputStyleClass($FormularName,$InputName_ActionUrl,"mFormText","mForm
 $Form->set_InputSize($FormularName,$InputName_ActionUrl,48,1024);
 $Form->set_InputDesc($FormularName,$InputName_ActionUrl,___("URL"));
 $Form->set_InputReadonly($FormularName,$InputName_ActionUrl,false);
-$Form->set_InputOrder($FormularName,$InputName_ActionUrl,1);
+$Form->set_InputOrder($FormularName,$InputName_ActionUrl,2);
 $Form->set_InputLabel($FormularName,$InputName_ActionUrl,"");
 
 
@@ -58,7 +58,7 @@ $Form->set_InputLabel($FormularName,$InputName_ActionUrl,"");
 	$Form->set_InputSize($FormularName,$InputName_Aktiv,48,1024);
 	$Form->set_InputDesc($FormularName,$InputName_Aktiv,___("Aktiv"));
 	$Form->set_InputReadonly($FormularName,$InputName_Aktiv,false);
-	$Form->set_InputOrder($FormularName,$InputName_Aktiv,2);
+	$Form->set_InputOrder($FormularName,$InputName_Aktiv,3);
 	$Form->set_InputLabel($FormularName,$InputName_Aktiv,"");
 
 //Subscribed Adresses Aktiv
@@ -69,7 +69,7 @@ $Form->set_InputLabel($FormularName,$InputName_ActionUrl,"");
 	$Form->set_InputSize($FormularName,$InputName_SubAktiv,48,1024);
 	$Form->set_InputDesc($FormularName,$InputName_SubAktiv,___("Anmeldungen sind aktiv/inaktiv"));
 	$Form->set_InputReadonly($FormularName,$InputName_SubAktiv,false);
-	$Form->set_InputOrder($FormularName,$InputName_SubAktiv,2);
+	$Form->set_InputOrder($FormularName,$InputName_SubAktiv,10);
 	$Form->set_InputLabel($FormularName,$InputName_SubAktiv,"");
 
 //Check Blacklist
@@ -78,9 +78,9 @@ $Form->set_InputLabel($FormularName,$InputName_ActionUrl,"");
 	$Form->set_InputDefault($FormularName,$InputName_Blacklist,$$InputName_Blacklist);
 	$Form->set_InputStyleClass($FormularName,$InputName_Blacklist,"mFormText","mFormTextFocus");
 	$Form->set_InputSize($FormularName,$InputName_Blacklist,48,1024);
-	$Form->set_InputDesc($FormularName,$InputName_Blacklist,___("Aktiv"));
+	$Form->set_InputDesc($FormularName,$InputName_Blacklist,___("Blacklist"));
 	$Form->set_InputReadonly($FormularName,$InputName_Blacklist,false);
-	$Form->set_InputOrder($FormularName,$InputName_Blacklist,2);
+	$Form->set_InputOrder($FormularName,$InputName_Blacklist,8);
 	$Form->set_InputLabel($FormularName,$InputName_Blacklist,"");
 
 
@@ -91,7 +91,7 @@ $Form->set_InputLabel($FormularName,$InputName_ActionUrl,"");
 	$Form->set_InputStyleClass($FormularName,$InputName_UseCaptcha,"mFormText","mFormTextFocus");
 	$Form->set_InputDesc($FormularName,$InputName_UseCaptcha,___("Captcha prüfen"));
 	$Form->set_InputReadonly($FormularName,$InputName_UseCaptcha,false);
-	$Form->set_InputOrder($FormularName,$InputName_UseCaptcha,2);
+	$Form->set_InputOrder($FormularName,$InputName_UseCaptcha,5);
 	$Form->set_InputLabel($FormularName,$InputName_UseCaptcha,"");
 
 //DigitsCaptcha
@@ -123,7 +123,7 @@ $Form->add_InputOption($FormularName,$InputName_DigitsCaptcha,10,"10");
 	$Form->set_InputSize($FormularName,$InputName_DoubleOptin,0,1);
 	$Form->set_InputDesc($FormularName,$InputName_DoubleOptin,___("Aktiv"));
 	$Form->set_InputReadonly($FormularName,$InputName_DoubleOptin,false);
-	$Form->set_InputOrder($FormularName,$InputName_DoubleOptin,2);
+	$Form->set_InputOrder($FormularName,$InputName_DoubleOptin,4);
 	$Form->set_InputLabel($FormularName,$InputName_DoubleOptin,"");
 
 //Beschreibung
@@ -133,7 +133,7 @@ $Form->set_InputStyleClass($FormularName,$InputName_Descr,"mFormTextarea","mForm
 $Form->set_InputSize($FormularName,$InputName_Descr,20,3);
 $Form->set_InputDesc($FormularName,$InputName_Descr,___("Beschreibung"));
 $Form->set_InputReadonly($FormularName,$InputName_Descr,false);
-$Form->set_InputOrder($FormularName,$InputName_Descr,3);
+$Form->set_InputOrder($FormularName,$InputName_Descr,11);
 $Form->set_InputLabel($FormularName,$InputName_Descr,"");
 
 //Gruppe
@@ -142,7 +142,7 @@ $Form->set_InputJS($FormularName,$InputName_Group," onChange=\"flash('submit','#
 $Form->set_InputStyleClass($FormularName,$InputName_Group,"mFormSelect","mFormSelectFocus");
 $Form->set_InputDesc($FormularName,$InputName_Group,___("Gruppen wählen, STRG/CTRL gedrückt halten und klicken f. Mehrfachauswahl"));
 $Form->set_InputReadonly($FormularName,$InputName_Group,false);
-$Form->set_InputOrder($FormularName,$InputName_Group,6);
+$Form->set_InputOrder($FormularName,$InputName_Group,12);
 $Form->set_InputLabel($FormularName,$InputName_Group,"");
 $Form->set_InputSize($FormularName,$InputName_Group,0,5);
 $Form->set_InputMultiple($FormularName,$InputName_Group,true);
@@ -164,7 +164,7 @@ $Form->set_InputJS($FormularName,$InputName_GroupPub," onChange=\"flash('submit'
 $Form->set_InputStyleClass($FormularName,$InputName_GroupPub,"mFormSelect","mFormSelectFocus");
 $Form->set_InputDesc($FormularName,$InputName_GroupPub,___("Gruppen wählen, STRG/CTRL gedrückt halten und klicken f. Mehrfachauswahl"));
 $Form->set_InputReadonly($FormularName,$InputName_GroupPub,false);
-$Form->set_InputOrder($FormularName,$InputName_GroupPub,6);
+$Form->set_InputOrder($FormularName,$InputName_GroupPub,13);
 $Form->set_InputLabel($FormularName,$InputName_GroupPub,"");
 //$Form->set_InputValue($FormularName,$InputName_GroupPub,"");
 $Form->set_InputSize($FormularName,$InputName_GroupPub,0,5);
@@ -189,7 +189,7 @@ $Form->set_InputStyleClass($FormularName,$InputName_SubmitValue,"mFormText","mFo
 $Form->set_InputSize($FormularName,$InputName_SubmitValue,32,255);
 $Form->set_InputDesc($FormularName,$InputName_SubmitValue,"");
 $Form->set_InputReadonly($FormularName,$InputName_SubmitValue,false);
-$Form->set_InputOrder($FormularName,$InputName_SubmitValue,1);
+$Form->set_InputOrder($FormularName,$InputName_SubmitValue,300);
 $Form->set_InputLabel($FormularName,$InputName_SubmitValue,"");
 
 //ResetValue
@@ -199,7 +199,7 @@ $Form->set_InputStyleClass($FormularName,$InputName_ResetValue,"mFormText","mFor
 $Form->set_InputSize($FormularName,$InputName_ResetValue,32,255);
 $Form->set_InputDesc($FormularName,$InputName_ResetValue,"");
 $Form->set_InputReadonly($FormularName,$InputName_ResetValue,false);
-$Form->set_InputOrder($FormularName,$InputName_ResetValue,1);
+$Form->set_InputOrder($FormularName,$InputName_ResetValue,301);
 $Form->set_InputLabel($FormularName,$InputName_ResetValue,"");
 
 
@@ -210,7 +210,7 @@ $Form->set_InputStyleClass($FormularName,$InputName_email,"mFormText","mFormText
 $Form->set_InputSize($FormularName,$InputName_email,32,255);
 $Form->set_InputDesc($FormularName,$InputName_email,"email");
 $Form->set_InputReadonly($FormularName,$InputName_email,false);
-$Form->set_InputOrder($FormularName,$InputName_email,1);
+$Form->set_InputOrder($FormularName,$InputName_email,21);
 $Form->set_InputLabel($FormularName,$InputName_email,"");
 
 //F, FName, f0-f9 new:
@@ -222,7 +222,7 @@ for ($fc=0;$fc<=9;$fc++) {
 	$Form->set_InputSize($FormularName,$$FInputName,32,1024);
 	$Form->set_InputDesc($FormularName,$$FInputName,"F".$fc);
 	$Form->set_InputReadonly($FormularName,$$FInputName,false);
-	$Form->set_InputOrder($FormularName,$$FInputName,1);
+	$Form->set_InputOrder($FormularName,$$FInputName,100+($fc*10)+2);
 	$Form->set_InputLabel($FormularName,$$FInputName,"");
 }
 
@@ -237,7 +237,7 @@ for ($fc=0;$fc<=9;$fc++) {
 	$Form->set_InputStyleClass($FormularName,$$FInputName,"mFormSelect","mFormSelectFocus");
 	$Form->set_InputDesc($FormularName,$$FInputName,___("Typ wählen"));
 	$Form->set_InputReadonly($FormularName,$$FInputName,false);
-	$Form->set_InputOrder($FormularName,$$FInputName,6);
+	$Form->set_InputOrder($FormularName,$$FInputName,100+($fc*10)+1);
 	$Form->set_InputLabel($FormularName,$$FInputName,"");
 	//$Form->set_InputValue($FormularName,$$FInputName,"");
 	$Form->set_InputSize($FormularName,$$FInputName,0,1);
@@ -247,7 +247,6 @@ for ($fc=0;$fc<=9;$fc++) {
 	$Form->add_InputOption($FormularName,$$FInputName,"checkbox","CHECKBOX");
 	$Form->add_InputOption($FormularName,$$FInputName,"select","SELECT");
 }
-
 
 /////////////////////////// f required
 //required, new, f0-f9
@@ -259,7 +258,7 @@ for ($fc=0;$fc<=9;$fc++) {
 	$Form->set_InputStyleClass($FormularName,$$FInputName,"mFormText","mFormTextFocus");
 	$Form->set_InputDesc($FormularName,$$FInputName,___("Pflichtfeld"));
 	$Form->set_InputReadonly($FormularName,$$FInputName,false);
-	$Form->set_InputOrder($FormularName,$$FInputName,2);
+	$Form->set_InputOrder($FormularName,$$FInputName,100+($fc*10)+0);
 	$Form->set_InputLabel($FormularName,$$FInputName,"");
 }
 
@@ -273,7 +272,7 @@ for ($fc=0;$fc<=9;$fc++) {
 	$Form->set_InputSize($FormularName,$$FInputName,32,8192);
 	$Form->set_InputDesc($FormularName,$$FInputName,___("Werte, (Trennzeichen ; (Semikolon)"));
 	$Form->set_InputReadonly($FormularName,$$FInputName,false);
-	$Form->set_InputOrder($FormularName,$$FInputName,1);
+	$Form->set_InputOrder($FormularName,$$FInputName,100+($fc*10)+3);
 	$Form->set_InputLabel($FormularName,$$FInputName,"");
 }
 ////////////////////////////////// error messages
@@ -284,7 +283,7 @@ $Form->set_InputStyleClass($FormularName,$InputName_email_errmsg,"mFormText","mF
 $Form->set_InputSize($FormularName,$InputName_email_errmsg,32,255);
 $Form->set_InputDesc($FormularName,$InputName_email_errmsg,___("Fehlermeldung"));
 $Form->set_InputReadonly($FormularName,$InputName_email_errmsg,false);
-$Form->set_InputOrder($FormularName,$InputName_email_errmsg,1);
+$Form->set_InputOrder($FormularName,$InputName_email_errmsg,22);
 $Form->set_InputLabel($FormularName,$InputName_email_errmsg,"");
 
 //Captcha ErrMsg
@@ -294,7 +293,7 @@ $Form->set_InputStyleClass($FormularName,$InputName_captcha_errmsg,"mFormText","
 $Form->set_InputSize($FormularName,$InputName_captcha_errmsg,32,255);
 $Form->set_InputDesc($FormularName,$InputName_captcha_errmsg,___("Fehlermeldung"));
 $Form->set_InputReadonly($FormularName,$InputName_captcha_errmsg,false);
-$Form->set_InputOrder($FormularName,$InputName_captcha_errmsg,1);
+$Form->set_InputOrder($FormularName,$InputName_captcha_errmsg,7);
 $Form->set_InputLabel($FormularName,$InputName_captcha_errmsg,"");
 
 //Blacklist ErrMsg
@@ -304,7 +303,7 @@ $Form->set_InputStyleClass($FormularName,$InputName_Blacklist_errmsg,"mFormText"
 $Form->set_InputSize($FormularName,$InputName_Blacklist_errmsg,32,255);
 $Form->set_InputDesc($FormularName,$InputName_Blacklist_errmsg,___("Fehlermeldung"));
 $Form->set_InputReadonly($FormularName,$InputName_Blacklist_errmsg,false);
-$Form->set_InputOrder($FormularName,$InputName_Blacklist_errmsg,1);
+$Form->set_InputOrder($FormularName,$InputName_Blacklist_errmsg,9);
 $Form->set_InputLabel($FormularName,$InputName_Blacklist_errmsg,"");
 
 /////////////////////////////////////////
@@ -317,10 +316,9 @@ for ($fc=0;$fc<=9;$fc++) {
 	$Form->set_InputSize($FormularName,$$FInputName,32,255);
 	$Form->set_InputDesc($FormularName,$$FInputName,___("Fehlermeldung"));
 	$Form->set_InputReadonly($FormularName,$$FInputName,false);
-	$Form->set_InputOrder($FormularName,$$FInputName,1);
+	$Form->set_InputOrder($FormularName,$$FInputName,100+($fc*10)+4);
 	$Form->set_InputLabel($FormularName,$$FInputName,"");
 }
-
 
 ////////////////////////////////////
 
@@ -333,12 +331,11 @@ for ($fc=0;$fc<=9;$fc++) {
 	$Form->set_InputSize($FormularName,$$FInputName,32,255);
 	$Form->set_InputDesc($FormularName,$$FInputName,___("Regulärer Ausdruck"));
 	$Form->set_InputReadonly($FormularName,$$FInputName,false);
-	$Form->set_InputOrder($FormularName,$$FInputName,1);
+	$Form->set_InputOrder($FormularName,$$FInputName,100+($fc*10)+5);
 	$Form->set_InputLabel($FormularName,$$FInputName,"");
 }
 
 /////////////////////////////////////
-
 
 //submit button
 $Form->new_Input($FormularName,$InputName_Submit,"submit",___("Speichern"));

@@ -112,7 +112,6 @@ if ($set=="save") {
 				"aktiv"=>$aktiv,
 				"created"=>$created,
 				"author"=>$author,
-				"memo"=>$memo,
 				"f0"=>$f0,
 				"f1"=>$f1,
 				"f2"=>$f2,
@@ -125,12 +124,15 @@ if ($set=="save") {
 				"f9"=>$f9
 				),
 				$all_adr_grp);
+			//hier newmemo benutzen da memo sonst doppelt!
+			$ADDRESS->newMemo($ADR[0]['id'],$memo);
 			//
 			//und neue referenzen zu neuen gruppen hinzufügen
 			//$ADDRESS->addRef($ADR[0]['id'],$new_adr_grp);
 			// ^^^ nur fuer den fall das daten nicht geupdated werden!!! sondern nur referenzen hinzugefuegt!
 			//optional nachzuruesten und in den settings einstellbar :)
 			$_MAIN_MESSAGE.="<br>".___("Diese E-Mail-Adresse existiert bereits. Die Daten wurden aktualisiert.");
+			$_MAIN_MESSAGE.="<br>".___("Der Status der Adresse wurde nicht verändert!");
 		} else {
 			//wenn adresse noch nicht existiert , neu anlegen
 			srand((double)microtime()*1000000);

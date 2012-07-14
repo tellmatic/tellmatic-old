@@ -145,7 +145,7 @@ class tm_SimpleForm {
 		return $Return;
 	}
 //set Style
-	function set_FormStyle($formname,$style)
+	function set_FormStyle($formname,$style="")
 	{
 		$Return=false;
 		if($this->check_FormExists($formname))
@@ -167,7 +167,7 @@ class tm_SimpleForm {
 		return $Return;
 	}
 //set Default Input Style 
-	function set_FormInputStyle($formname,$style,$activestyle="")
+	function set_FormInputStyle($formname,$style="",$activestyle="")
 	{
 		$Return=false;
 		if (empty($activestyle))
@@ -248,7 +248,7 @@ class tm_SimpleForm {
 		return $Return;
 	}
 	//add INPUT OPTION radio&select
-	function add_InputOption($formname,$name,$value,$desc="",$group="")
+	function add_InputOption($formname,$name,$value,$desc="",$group="",$style="")
 	{
 		$Return=false;
 		if($this->check_FormExists($formname) && ($this->INPUT[$formname][$name]['type']=="select" || $this->INPUT[$formname][$name]['type']=="radio"))
@@ -267,6 +267,7 @@ class tm_SimpleForm {
 			$this->OPTION[$formname][$name][$count]['value']=$value;
 			$this->OPTION[$formname][$name][$count]['desc']=$desc;
 			$this->OPTION[$formname][$name][$count]['group']=$group;
+			$this->OPTION[$formname][$name][$count]['style']=$style;
 			$Return=true;
 		}
 		return $Return;
@@ -363,7 +364,7 @@ class tm_SimpleForm {
 		}
 		return $Return;
 	}
-	function set_InputStyle($formname,$name,$style,$activestyle="")
+	function set_InputStyle($formname,$name,$style="",$activestyle="")
 	{
 		$Return=false;
 		if (empty($activestyle))
@@ -740,10 +741,13 @@ class tm_SimpleForm {
 							$this->INPUT[$formname][$name]['html'] .=	" selected=\"selected\"";
 						}
 				}
+				if (!empty($this->OPTION[$formname][$name][$counter]['style'])) {
+					$this->INPUT[$formname][$name]['html'] .=" style=\"".$this->OPTION[$formname][$name][$counter]['style']."\"";
+				}
 				$this->INPUT[$formname][$name]['html'] .=	">".$this->OPTION[$formname][$name][$counter]['desc']."</option>\n";
 				if (!empty($this->OPTION[$formname][$name][$counter]['group']) && $group_open)
 					{
-						if (($this->OPTION[$formname][$name][($counter+1)]['group'] != $this->OPTION[$formname][$name][$counter]['group']))
+						if (!isset($this->OPTION[$formname][$name][($counter+1)]) || ($this->OPTION[$formname][$name][($counter+1)]['group'] != $this->OPTION[$formname][$name][$counter]['group']))
 						{
 						//$counter == 0 || ($counter >= 1 &&  )
 							$this->INPUT[$formname][$name]['html'] .= "</optgroup>\n";

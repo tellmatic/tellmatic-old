@@ -48,7 +48,7 @@ if (checkid($nl_id)) {
 			$ADDRESS->addClick($a_id);	//click
 			//save memo
 			$created=date("Y-m-d H:i:s");
-			$memo="\n".$created.": clicked (".$NL[0]['subject'].") ".$NL[0]['link'];
+			$memo="clicked (".$NL[0]['subject'].") ".$NL[0]['link'];
 			$ADDRESS->addMemo($a_id,$memo);
 		}
 		//header...

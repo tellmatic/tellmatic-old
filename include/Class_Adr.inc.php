@@ -62,7 +62,7 @@ class tm_ADR {
 			$Query .=" LEFT JOIN ".TM_TABLE_ADR_DETAILS." ON ".TM_TABLE_ADR.".id = ".TM_TABLE_ADR_DETAILS.".adr_id";
 
 		if (isset($search['group']) && !empty($search['group'])) {
-			$group_id=$search['group'];
+			$group_id=checkset_int($search['group']);
 		}
 		if (check_dbid($group_id)) {
 			$Query .=" LEFT JOIN ".TM_TABLE_ADR_GRP_REF." ON ".TM_TABLE_ADR.".id = ".TM_TABLE_ADR_GRP_REF.".adr_id";
@@ -72,7 +72,7 @@ class tm_ADR {
 
 		if (check_dbid($group_id)) {
 			$Query .=" AND ".TM_TABLE_ADR_GRP_REF.".siteid='".TM_SITEID."'
-						  AND ".TM_TABLE_ADR_GRP_REF.".grp_id='".dbesc($group_id)."'";
+						  AND ".TM_TABLE_ADR_GRP_REF.".grp_id=".checkset_int($group_id);
 		}
 
 		if (isset($search['email']) && !empty($search['email'])) {
@@ -86,7 +86,7 @@ class tm_ADR {
 			$Query .= " AND ".TM_TABLE_ADR.".author like '".dbesc($search['author'])."'";
 		}
 		if (isset($search['status']) && !empty($search['status'])) {
-			$Query .= " AND ".TM_TABLE_ADR.".status = '".dbesc($search['status'])."'";
+			$Query .= " AND ".TM_TABLE_ADR.".status = ".checkset_int($search['status']);
 		}
 		if (isset($search['code']) && !empty($search['code'])) {
 			$Query .= " AND ".TM_TABLE_ADR.".code = '".dbesc($search['code'])."'";
@@ -108,7 +108,7 @@ class tm_ADR {
 		}//if
 
 		if (check_dbid($id)) {
-			$Query .= " AND ".TM_TABLE_ADR.".id='".$id."'";
+			$Query .= " AND ".TM_TABLE_ADR.".id=".checkset_int($id);
 		}
 
 		if (!empty($sortIndex)) {
@@ -122,7 +122,7 @@ class tm_ADR {
 		}
 
 		if ($limit >0 and $offset>=0) {
-			$Query .= " LIMIT ".dbesc($offset)." ,".dbesc($limit);
+			$Query .= " LIMIT ".checkset_int($offset)." ,".checkset_int($limit);
 		}
 		$this->DB->Query($Query);
 		$ac=0;
@@ -172,23 +172,21 @@ class tm_ADR {
 						FROM ".TM_TABLE_ADR."
 					";
 		if (isset($search['group']) && !empty($search['group'])) {
-			$group_id=$search['group'];
+			$group_id=checkset_int($search['group']);
 		}
 		if (check_dbid($group_id)) {
 			$Query .="LEFT JOIN ".TM_TABLE_ADR_GRP_REF." ON ".TM_TABLE_ADR.".id = ".TM_TABLE_ADR_GRP_REF.".adr_id";
 		}
-		$Query .=" WHERE ".TM_TABLE_ADR.".siteid='".TM_SITEID."'
-					";
+		$Query .=" WHERE ".TM_TABLE_ADR.".siteid='".TM_SITEID."'";
 		if (check_dbid($group_id)) {
 			$Query .=" AND ".TM_TABLE_ADR_GRP_REF.".siteid='".TM_SITEID."'
-						  AND ".TM_TABLE_ADR_GRP_REF.".grp_id='".dbesc($group_id)."'
-						";
+						  AND ".TM_TABLE_ADR_GRP_REF.".grp_id=".checkset_int($group_id);
 		}
 		if (isset($search['email']) && !empty($search['email'])) {
 			$Query .= " AND lcase(".TM_TABLE_ADR.".email) like lcase('".dbesc($search['email'])."')";
 		}
 		if (isset($search['status']) && !empty($search['status'])) {
-			$Query .= " AND ".TM_TABLE_ADR.".status = '".dbesc($search['status'])."'";
+			$Query .= " AND ".TM_TABLE_ADR.".status = ".checkset_int($search['status']);
 		}
 		$DB->Query($Query);
 		$ac=0;
@@ -205,7 +203,7 @@ class tm_ADR {
 						FROM ".TM_TABLE_ADR."
 					";
 		if (isset($search['group']) && !empty($search['group'])) {
-			$group_id=$search['group'];
+			$group_id=checkset_int($search['group']);
 		}
 		if (check_dbid($group_id)) {
 			$Query .="LEFT JOIN ".TM_TABLE_ADR_GRP_REF." ON ".TM_TABLE_ADR.".id = ".TM_TABLE_ADR_GRP_REF.".adr_id";
@@ -214,17 +212,16 @@ class tm_ADR {
 					";
 		if (check_dbid($group_id)) {
 			$Query .=" AND ".TM_TABLE_ADR_GRP_REF.".siteid='".TM_SITEID."'
-						  AND ".TM_TABLE_ADR_GRP_REF.".grp_id='".dbesc($group_id)."'
-						";
+						  AND ".TM_TABLE_ADR_GRP_REF.".grp_id = ".checkset_int($group_id);
 		}
 		if (isset($search['email']) && !empty($search['email'])) {
 			$Query .= " AND lcase(".TM_TABLE_ADR.".email) like lcase('".dbesc($search['email'])."')";
 		}
 		if (isset($search['status']) && !empty($search['status'])) {
-			$Query .= " AND ".TM_TABLE_ADR.".status = '".dbesc($search['status'])."'";
+			$Query .= " AND ".TM_TABLE_ADR.".status = ".checkset_int($search['status']);
 		}
 		if (isset($search['aktiv']) && !empty($search['aktiv'])) {
-			$Query .= " AND ".TM_TABLE_ADR.".aktiv = '".dbesc($search['aktiv'])."'";
+			$Query .= " AND ".TM_TABLE_ADR.".aktiv = ".checkset_int($search['aktiv']);
 		}
 		$this->DB2->Query($Query);
 		if ($this->DB2->next_record()) {
@@ -232,6 +229,45 @@ class tm_ADR {
 		}
 		return $count;
 	}//countADR
+
+	function countValidADR($group_id=0) {
+		global $C;
+		$count=0;
+		if (check_dbid($group_id)) {
+			$Query ="
+						SELECT count(".TM_TABLE_ADR.".id) as c
+						FROM ".TM_TABLE_ADR."
+							INNER JOIN ".TM_TABLE_ADR_GRP_REF." 
+								ON ".TM_TABLE_ADR.".id = ".TM_TABLE_ADR_GRP_REF.".adr_id 
+							INNER JOIN ".TM_TABLE_ADR_GRP." 
+								ON ".TM_TABLE_ADR_GRP_REF.".grp_id = ".TM_TABLE_ADR_GRP.".id
+						WHERE 
+						".TM_TABLE_ADR.".aktiv=1
+						AND ".TM_TABLE_ADR.".siteid='".TM_SITEID."'
+						AND (
+								".TM_TABLE_ADR.".errors<=".(checkset_int($C[0]['max_mails_retry']))."
+								OR ".TM_TABLE_ADR.".errors IS NULL
+								)
+						AND (
+								 ".TM_TABLE_ADR.".status=1 
+								OR ".TM_TABLE_ADR.".status=2 
+								OR ".TM_TABLE_ADR.".status=3 
+								OR ".TM_TABLE_ADR.".status=4 
+								OR ".TM_TABLE_ADR.".status=10 
+								OR ".TM_TABLE_ADR.".status=12 
+								)
+						AND ".TM_TABLE_ADR.".siteid='".TM_SITEID."'
+						AND ".TM_TABLE_ADR_GRP.".siteid='".TM_SITEID."'
+						AND ".TM_TABLE_ADR_GRP_REF.".siteid='".TM_SITEID."'
+						AND ".TM_TABLE_ADR_GRP.".id='".checkset_int($group_id)."'
+						";
+			$this->DB2->Query($Query);
+			if ($this->DB2->next_record()) {
+				$count=$this->DB2->Record['c'];
+			}
+		}
+		return $count;
+	}//countValidADR
 
 
 	function getGroup($id=0,$adr_id=0,$frm_id=0,$count=0,$search=Array()) {
@@ -252,7 +288,7 @@ class tm_ADR {
 			WHERE ".TM_TABLE_ADR_GRP.".siteid='".TM_SITEID."'
 			";
 		if (check_dbid($id)) {
-			$Query .= " AND ".TM_TABLE_ADR_GRP.".id='".$id."'";
+			$Query .= " AND ".TM_TABLE_ADR_GRP.".id=".checkset_int($id);
 		}
 		if ($adr_id >0) {
 			$Query ="";
@@ -272,8 +308,7 @@ class tm_ADR {
 				WHERE ".TM_TABLE_ADR_GRP.".id=".TM_TABLE_ADR_GRP_REF.".grp_id
 				AND ".TM_TABLE_ADR_GRP.".siteid='".TM_SITEID."'
 				AND ".TM_TABLE_ADR_GRP_REF.".siteid='".TM_SITEID."'
-				AND ".TM_TABLE_ADR_GRP_REF.".adr_id='".dbesc($adr_id)."'
-			";
+				AND ".TM_TABLE_ADR_GRP_REF.".adr_id=".checkset_int($adr_id);
 		}
 		if (check_dbid($frm_id)) {
 			$Query ="";
@@ -294,25 +329,24 @@ class tm_ADR {
 				WHERE ".TM_TABLE_ADR_GRP.".id=".TM_TABLE_FRM_GRP_REF.".grp_id
 				AND ".TM_TABLE_ADR_GRP.".siteid='".TM_SITEID."'
 				AND ".TM_TABLE_FRM_GRP_REF.".siteid='".TM_SITEID."'
-				AND ".TM_TABLE_FRM_GRP_REF.".frm_id='".dbesc($frm_id)."'
-			";
+				AND ".TM_TABLE_FRM_GRP_REF.".frm_id=".checkset_int($frm_id);
 			//nur opublic groups? 0/1
 			if ( isset($search['public']) ) {
 				$Query .= "
-				AND ".TM_TABLE_ADR_GRP.".public=".$search['public']."
+				AND ".TM_TABLE_ADR_GRP.".public=".checkset_int($search['public'])."
 				";
 			}
 			//nur pub groups references
 			if ( isset($search['public_frm_ref']) ) {
 				$Query .= "
-				AND ".TM_TABLE_FRM_GRP_REF.".public=".$search['public_frm_ref']."
+				AND ".TM_TABLE_FRM_GRP_REF.".public=".checkset_int($search['public_frm_ref'])."
 				";
 			
 			}
 		}
 		
 		if (isset($search['aktiv'])) {
-			$Query .= " AND ".TM_TABLE_ADR_GRP.".aktiv='".$search['aktiv']."'";
+			$Query .= " AND ".TM_TABLE_ADR_GRP.".aktiv=".checkset_int($search['aktiv']);
 		}
 		$Query .= "	ORDER BY ".TM_TABLE_ADR_GRP.".name";
 		$this->DB->Query($Query);
@@ -333,7 +367,7 @@ class tm_ADR {
 				$this->GRP[$ac]['public_frm_ref']=$this->DB->Record['public_frm_ref'];
 			}
 			if ($count==1) {
-				$this->GRP[$ac]['adr_count']=$this->countADR($this->GRP[$ac]['id']);
+				$this->GRP[$ac]['adr_count']=$this->countADR(checkset_int($this->GRP[$ac]['id']));
 			}
 			$ac++;
 		}
@@ -356,7 +390,7 @@ class tm_ADR {
 	function setAktiv($id=0,$aktiv=1) {
 		$Return=false;
 		if (check_dbid($id)) {
-			$Query ="UPDATE ".TM_TABLE_ADR." SET aktiv='".dbesc($aktiv)."' WHERE id='".$id."' AND siteid='".TM_SITEID."'";
+			$Query ="UPDATE ".TM_TABLE_ADR." SET aktiv=".checkset_int($aktiv)." WHERE id=".checkset_int($id)." AND siteid='".TM_SITEID."'";
 			if ($this->DB->Query($Query)) {
 				$Return=true;
 			}
@@ -367,7 +401,7 @@ class tm_ADR {
 	function setGrpAktiv($id=0,$aktiv=1) {
 		$Return=false;
 		if (check_dbid($id)) {
-			$Query ="UPDATE ".TM_TABLE_ADR_GRP." SET aktiv='".dbesc($aktiv)."' WHERE id='".$id."' AND siteid='".TM_SITEID."'";
+			$Query ="UPDATE ".TM_TABLE_ADR_GRP." SET aktiv=".checkset_int($aktiv)." WHERE id=".checkset_int($id)." AND siteid='".TM_SITEID."'";
 			if ($this->DB->Query($Query)) {
 				$Return=true;
 			}
@@ -385,7 +419,7 @@ class tm_ADR {
 				$Return=false;
 				return $Return;
 			}
-			$Query ="UPDATE ".TM_TABLE_ADR_GRP." SET standard=1 WHERE id='".$id."' AND siteid='".TM_SITEID."'";
+			$Query ="UPDATE ".TM_TABLE_ADR_GRP." SET standard=1 WHERE id=".checkset_int($id)." AND siteid='".TM_SITEID."'";
 			if ($this->DB->Query($Query)) {
 				$Return=true;
 			} else {
@@ -407,10 +441,10 @@ class tm_ADR {
 					)
 					VALUES (
 					'".dbesc($group["name"])."',
-					'".dbesc($group["public"])."',
+					".checkset_int($group["public"]).",
 					'".dbesc($group["public_name"])."',
 					'".dbesc($group["descr"])."',
-					'".dbesc($group["aktiv"])."', 0,
+					".checkset_int($group["aktiv"]).", 0,
 					'".dbesc($group["created"])."', '".dbesc($group["author"])."',
 					'".dbesc($group["created"])."', '".dbesc($group["author"])."',
 					'".TM_SITEID."')";
@@ -426,13 +460,13 @@ class tm_ADR {
 			$Query ="UPDATE ".TM_TABLE_ADR_GRP."
 					SET
 					name='".dbesc($group["name"])."',
-					public='".dbesc($group["public"])."',
+					public=".checkset_int($group["public"]).",
 					public_name='".dbesc($group["public_name"])."',
 					descr='".dbesc($group["descr"])."',
-					aktiv='".dbesc($group["aktiv"])."',
+					aktiv=".checkset_int($group["aktiv"]).",
 					updated='".dbesc($group["created"])."',
 					editor='".dbesc($group["author"])."'
-					WHERE siteid='".TM_SITEID."' AND id='".dbesc($group["id"])."'";
+					WHERE siteid='".TM_SITEID."' AND id=".checkset_int($group["id"]);
 			if ($this->DB->Query($Query)) {
 				$Return=true;
 			}
@@ -447,8 +481,17 @@ class tm_ADR {
 				$Query ="UPDATE ".TM_TABLE_ADR." LEFT JOIN ".TM_TABLE_ADR_GRP_REF.
 								" ON ".TM_TABLE_ADR.".id = ".TM_TABLE_ADR_GRP_REF.".adr_id".
 								" SET ".TM_TABLE_ADR.".clean=1".
-								" WHERE ".TM_TABLE_ADR.".status='".$search['status']."'".
-								" AND ".TM_TABLE_ADR_GRP_REF.".grp_id='".$search['group']."'";
+								" WHERE ".
+								TM_TABLE_ADR_GRP_REF.".grp_id=".checkset_int($search['group']).
+								" AND ".TM_TABLE_ADR_GRP_REF.".siteid='".TM_SITEID."'".
+								" AND ".TM_TABLE_ADR.".siteid='".TM_SITEID."'";
+				if (isset($search['email']) && !empty($search['email'])) {
+					$Query .= " AND lcase(".TM_TABLE_ADR.".email) like lcase('".dbesc($search['email'])."')";
+				}
+				if (isset($search['status']) && $search['status']>0) {
+					$Query .=" 
+								AND ".TM_TABLE_ADR.".status=".checkset_int($search['status']);
+				}
 				if ($this->DB->Query($Query)) {
 					$Return=true;
 				} else {
@@ -463,10 +506,16 @@ class tm_ADR {
 								" LEFT JOIN ".TM_TABLE_ADR_GRP_REF." ON ".TM_TABLE_ADR.".id = ".TM_TABLE_ADR_GRP_REF.".adr_id".
 								" WHERE ".TM_TABLE_ADR.".siteid='".TM_SITEID."'".
 								" AND ".TM_TABLE_ADR.".clean=1".
-								" AND ".TM_TABLE_ADR.".status='".$search['status']."'".
 								" AND ".TM_TABLE_ADR_DETAILS.".siteid='".TM_SITEID."'".
 								" AND ".TM_TABLE_ADR_GRP_REF.".siteid='".TM_SITEID."'".
-								" AND ".TM_TABLE_ADR_GRP_REF.".grp_id='".$search['group']."'";
+								" AND ".TM_TABLE_ADR_GRP_REF.".grp_id=".checkset_int($search['group']);
+				if (isset($search['email']) && !empty($search['email'])) {
+					$Query .= " AND lcase(".TM_TABLE_ADR.".email) like lcase('".dbesc($search['email'])."')";
+				}
+				if (isset($search['status']) && $search['status']>0) {
+					$Query .="
+								AND ".TM_TABLE_ADR.".status=".checkset_int($search['status']);
+				}
 				if ($this->DB->Query($Query)) {
 					$Return=true;
 				} else {
@@ -480,11 +529,16 @@ class tm_ADR {
 				$Query ="DELETE ".TM_TABLE_ADR_GRP_REF." FROM ".TM_TABLE_ADR_GRP_REF."  ".
 								" LEFT JOIN ".TM_TABLE_ADR." ON ".TM_TABLE_ADR.".id = ".TM_TABLE_ADR_GRP_REF.".adr_id".
 								" WHERE ".TM_TABLE_ADR.".siteid='".TM_SITEID."'".
-								" AND ".TM_TABLE_ADR.".status='".$search['status']."'".
 								" AND ".TM_TABLE_ADR.".clean=1".
 								" AND ".TM_TABLE_ADR_GRP_REF.".siteid='".TM_SITEID."'".
-								" AND ".TM_TABLE_ADR_GRP_REF.".grp_id='".$search['group']."'";
-
+								" AND ".TM_TABLE_ADR_GRP_REF.".grp_id=".checkset_int($search['group']);
+				if (isset($search['email']) && !empty($search['email'])) {
+					$Query .= " AND lcase(".TM_TABLE_ADR.".email) like lcase('".dbesc($search['email'])."')";
+				}
+				if (isset($search['status']) && $search['status']>0) {
+					$Query .="
+								AND ".TM_TABLE_ADR.".status=".checkset_int($search['status']);
+				}
 				if ($this->DB->Query($Query)) {
 					$Return=true;
 				} else {
@@ -500,8 +554,14 @@ class tm_ADR {
 				/**/
 				$Query ="DELETE FROM ".TM_TABLE_ADR."  ".
 								" WHERE ".TM_TABLE_ADR.".siteid='".TM_SITEID."'".
-								" AND ".TM_TABLE_ADR.".status='".$search['status']."'";
 								" AND ".TM_TABLE_ADR.".clean=1";
+				if (isset($search['email']) && !empty($search['email'])) {
+					$Query .= " AND lcase(".TM_TABLE_ADR.".email) like lcase('".dbesc($search['email'])."')";
+				}
+				if (isset($search['status']) && $search['status']>0) {
+					$Query .="
+								AND ".TM_TABLE_ADR.".status=".checkset_int($search['status']);
+				}
 				if ($this->DB->Query($Query)) {
 					$Return=true;
 				} else {
@@ -545,10 +605,10 @@ class tm_ADR {
 						$ac=count($adr);
 						//schleife drumherum mit adr_row_limit
 						for ($acc=0;$acc<$ac;$acc++) {
-							$Query ="SELECT ".TM_TABLE_ADR_GRP_REF.".id FROM ".TM_TABLE_ADR_GRP_REF
-											." WHERE siteid='".TM_SITEID
-											."' AND adr_id='".$adr[$acc]['id']
-											."' AND grp_id='".$stdGrpID."'";
+							$Query ="SELECT ".TM_TABLE_ADR_GRP_REF.".id FROM ".TM_TABLE_ADR_GRP_REF.
+											" WHERE siteid='".TM_SITEID.
+											"' AND adr_id=".checkset_int($adr[$acc]['id']).
+											" AND grp_id=".checkset_int($stdGrpID);
 							if ($this->DB->Query($Query)) {
 								$Return=true;
 							} else {
@@ -557,7 +617,7 @@ class tm_ADR {
 							}
 							if ($this->DB->next_record()) {
 								//  ist adr mit standardgruppe verknuepft, dann alte referenz loeschen
-								$Query ="DELETE FROM ".TM_TABLE_ADR_GRP_REF."  WHERE siteid='".TM_SITEID."' AND adr_id='".$adr[$acc]['id']."' AND grp_id='".$id."'";
+								$Query ="DELETE FROM ".TM_TABLE_ADR_GRP_REF."  WHERE siteid='".TM_SITEID."' AND adr_id=".checkset_int($adr[$acc]['id'])." AND grp_id=".checkset_int($id);
 								if ($this->DB->Query($Query)) {
 									$Return=true;
 								} else {
@@ -567,7 +627,7 @@ class tm_ADR {
 							} else {	//oder
 								//  ist adr NICHT mit standardgruppe verknuepft, dann alte referenz mit stdgruppe updaten
 								//update der verknuepfung zur alten Gruppe mit der neuen Gruppe...
-								$Query ="UPDATE ".TM_TABLE_ADR_GRP_REF." SET grp_id='".$stdGrpID."' WHERE siteid='".TM_SITEID."' AND grp_id='".$id."'";
+								$Query ="UPDATE ".TM_TABLE_ADR_GRP_REF." SET grp_id=".checkset_int($stdGrpID)." WHERE siteid='".TM_SITEID."' AND grp_id=".checkset_int($id);
 								if ($this->DB->Query($Query)) {
 									$Return=true;
 								} else {
@@ -591,7 +651,7 @@ class tm_ADR {
 				$Query .=" WHERE ".TM_TABLE_ADR.".siteid='".TM_SITEID."'";
 				$Query .=" AND ".TM_TABLE_ADR_DETAILS.".siteid='".TM_SITEID."'
 							AND ".TM_TABLE_ADR_GRP_REF.".siteid='".TM_SITEID."'
-						  AND ".TM_TABLE_ADR_GRP_REF.".grp_id='".$id."'";
+						  AND ".TM_TABLE_ADR_GRP_REF.".grp_id=".checkset_int($id);
 				if ($this->DB->Query($Query)) {
 					$Return=true;
 				} else {
@@ -605,7 +665,7 @@ class tm_ADR {
 				$Query .="LEFT JOIN ".TM_TABLE_ADR_GRP_REF." ON ".TM_TABLE_ADR_GRP_REF.".adr_id = ".TM_TABLE_ADR.".id";
 				$Query .=" WHERE ".TM_TABLE_ADR.".siteid='".TM_SITEID."'";
 				$Query .=" AND ".TM_TABLE_ADR_GRP_REF.".siteid='".TM_SITEID."'
-						  AND ".TM_TABLE_ADR_GRP_REF.".grp_id='".$id."'";
+						  AND ".TM_TABLE_ADR_GRP_REF.".grp_id=".checkset_int($id);
 				if ($this->DB->Query($Query)) {
 					$Return=true;
 				} else {
@@ -615,7 +675,7 @@ class tm_ADR {
 				/**/
 				//referenzen loeschen
 				/**/
-				$Query ="DELETE FROM ".TM_TABLE_ADR_GRP_REF."  WHERE siteid='".TM_SITEID."' AND grp_id='".$id."'";
+				$Query ="DELETE FROM ".TM_TABLE_ADR_GRP_REF."  WHERE siteid='".TM_SITEID."' AND grp_id=".checkset_int($id);
 				if ($this->DB->Query($Query)) {
 					$Return=true;
 				} else {
@@ -630,12 +690,9 @@ class tm_ADR {
 					return $Return;
 				}
 			}
-			/* nein historie nicht loeschen! nur wenn nl oder adresse geloescht wird!
-			//versandliste, history h loeschen
-			*/
 			//aber die q muss geloescht werden!!!
 			//q loeschen
-			$Query ="DELETE FROM ".TM_TABLE_NL_Q." WHERE siteid='".TM_SITEID."' AND grp_id='".$id."'";
+			$Query ="DELETE FROM ".TM_TABLE_NL_Q." WHERE siteid='".TM_SITEID."' AND grp_id=".checkset_int($id);
 			if ($this->DB->Query($Query)) {
 				$Return=true;
 			} else {
@@ -643,7 +700,7 @@ class tm_ADR {
 				return $Return;
 			}
 			//verknuepfung zu formularen loeschen
-			$Query ="DELETE FROM ".TM_TABLE_FRM_GRP_REF."  WHERE siteid='".TM_SITEID."' AND grp_id='".$id."'";
+			$Query ="DELETE FROM ".TM_TABLE_FRM_GRP_REF."  WHERE siteid='".TM_SITEID."' AND grp_id=".checkset_int($id);
 			if ($this->DB->Query($Query)) {
 				$Return=true;
 			} else {
@@ -651,7 +708,7 @@ class tm_ADR {
 				return $Return;
 			}
 			//gruppe loeschen
-			$Query ="DELETE FROM ".TM_TABLE_ADR_GRP."  WHERE siteid='".TM_SITEID."' AND id='".$id."'";
+			$Query ="DELETE FROM ".TM_TABLE_ADR_GRP."  WHERE siteid='".TM_SITEID."' AND id=".checkset_int($id);
 			if ($this->DB->Query($Query)) {
 				$Return=true;
 			} else {
@@ -667,7 +724,7 @@ class tm_ADR {
 		if (check_dbid($id)) {
 			//versandliste, history h loeschen
 			//ok jetzt historie loeschen! aber nicht wenn adr_grp oder q!
-			$Query ="DELETE FROM ".TM_TABLE_NL_H." WHERE siteid='".TM_SITEID."' AND adr_id='".$id."'";
+			$Query ="DELETE FROM ".TM_TABLE_NL_H." WHERE siteid='".TM_SITEID."' AND adr_id=".checkset_int($id);
 				if ($this->DB->Query($Query)) {
 					$Return=true;
 				} else {
@@ -675,7 +732,7 @@ class tm_ADR {
 					return $Return;
 				}
 			//referenzen loeschen
-			$Query ="DELETE FROM ".TM_TABLE_ADR_GRP_REF." WHERE siteid='".TM_SITEID."' AND adr_id='".$id."'";
+			$Query ="DELETE FROM ".TM_TABLE_ADR_GRP_REF." WHERE siteid='".TM_SITEID."' AND adr_id=".checkset_int($id);
 				if ($this->DB->Query($Query)) {
 					$Return=true;
 				} else {
@@ -683,7 +740,7 @@ class tm_ADR {
 					return $Return;
 				}
 			//details loeschen
-			$Query ="DELETE FROM ".TM_TABLE_ADR_DETAILS." WHERE siteid='".TM_SITEID."' AND adr_id='".$id."'";
+			$Query ="DELETE FROM ".TM_TABLE_ADR_DETAILS." WHERE siteid='".TM_SITEID."' AND adr_id=".checkset_int($id);
 				if ($this->DB->Query($Query)) {
 					$Return=true;
 				} else {
@@ -691,7 +748,7 @@ class tm_ADR {
 					return $Return;
 				}
 			//subscriptions loeschen
-			$Query ="DELETE FROM ".TM_TABLE_FRM_S." WHERE siteid='".TM_SITEID."' AND adr_id='".$id."'";
+			$Query ="DELETE FROM ".TM_TABLE_FRM_S." WHERE siteid='".TM_SITEID."' AND adr_id=".checkset_int($id);
 			if ($this->DB->Query($Query)) {
 				$Return=true;
 			} else {
@@ -699,7 +756,7 @@ class tm_ADR {
 				return $Return;
 			}
 			//adresse loeschen
-			$Query ="DELETE FROM ".TM_TABLE_ADR." WHERE siteid='".TM_SITEID."' AND id='".$id."'";
+			$Query ="DELETE FROM ".TM_TABLE_ADR." WHERE siteid='".TM_SITEID."' AND id=".checkset_int($id);
 			if ($this->DB->Query($Query)) {
 				$Return=true;
 			} else {
@@ -713,10 +770,35 @@ class tm_ADR {
 	function addAdr($adr,$grp) {
 		$Return=false;
 		//neue Adresse speichern
-		$Query ="INSERT INTO ".TM_TABLE_ADR." (email,aktiv,status,code,author,created,editor,updated,clicks,views,newsletter,siteid)
-					VALUES (lcase('".dbesc($adr["email"])."'), '".dbesc($adr["aktiv"])."',
-								'".dbesc($adr["status"])."', '".dbesc($adr["code"])."', '".dbesc($adr["author"])."', '".dbesc($adr["created"])."', '".dbesc($adr["author"])."', '".dbesc($adr["created"])."', 0, 0, 0, '".TM_SITEID."'
-								)";
+		$Query ="INSERT INTO ".
+						TM_TABLE_ADR.
+						" (
+							email,
+							aktiv,
+							status,
+							code,
+							author,
+							created,
+							editor,
+							updated,
+							clicks,
+							views,
+							newsletter,
+							siteid
+						)
+					VALUES 
+						(
+						lcase('".dbesc($adr["email"])."'),
+						".checkset_int($adr["aktiv"]).",
+						".checkset_int($adr["status"]).",
+						'".dbesc($adr["code"])."',
+						'".dbesc($adr["author"])."',
+						'".dbesc($adr["created"])."',
+						'".dbesc($adr["author"])."',
+						'".dbesc($adr["created"])."',
+						0, 0, 0,
+						'".TM_SITEID."'
+						)";
 		if ($this->DB->Query($Query)) {
 			$Return=true;
 		} else {
@@ -725,15 +807,14 @@ class tm_ADR {
 		}
 		//Abfragen! und ID suchen, die brauchen wir fuer die Verknuepfung zu den Adressgruppen
 		//search for new id:
-		//neu:
 		//neu, use lastinsertid!!!:
 		if ($this->DB->LastInsertID != 0) {
 		//neu
 			$new_adr_id=$this->DB->LastInsertID;
 			//detaildaten eintragen
-				$Query="INSERT INTO ".TM_TABLE_ADR_DETAILS." (adr_id,memo,siteid,f0,f1,f2,f3,f4,f5,f6,f7,f8,f9)
-							VALUES ('".$new_adr_id."',
-										'".dbesc($adr['memo'])."',
+			$Query="INSERT INTO ".TM_TABLE_ADR_DETAILS." (adr_id,siteid,f0,f1,f2,f3,f4,f5,f6,f7,f8,f9)
+							VALUES ('".
+										checkset_int($new_adr_id)."',
 										'".TM_SITEID."',
 										'".dbesc($adr['f0'])."',
 										'".dbesc($adr['f1'])."',
@@ -752,7 +833,9 @@ class tm_ADR {
 					$Return=false;
 					return $Return;
 				}//if query
-
+			//memo eintragen
+			//wenn memo expliziot gesetzt wurde, hier anfuegen, ansonsten muss das script selbst addMemo() oder newMemo() aufrufen!
+			if (isset($adr['memo']) && !empty($adr['memo'])) $this->newMemo($new_adr_id,$adr['memo']); // neue memo!
 			//gruppen eintragen
 			//use internal method addref instead:
 			$this->addRef($new_adr_id,$grp);
@@ -772,7 +855,7 @@ class tm_ADR {
 			if ($acg>0) {
 				for ($accg=0;$accg<$acg;$accg++) {
 					if (isset($grp[$accg])) {
-						$Query="INSERT INTO ".TM_TABLE_ADR_GRP_REF." (adr_id,grp_id,siteid) VALUES ('".$adr_id."','".$grp[$accg]."','".TM_SITEID."')";
+						$Query="INSERT INTO ".TM_TABLE_ADR_GRP_REF." (adr_id,grp_id,siteid) VALUES (".checkset_int($adr_id).",".checkset_int($grp[$accg]).",'".TM_SITEID."')";
 						if ($this->DB->Query($Query)) {
 							$Return=true;
 						} else {
@@ -789,8 +872,8 @@ class tm_ADR {
 	function setStatus($id,$status) {
 		$Return=false;
 		if (check_dbid($id)) {
-			$Query ="UPDATE ".TM_TABLE_ADR." SET status='".$status."'
-						 WHERE siteid='".TM_SITEID."' AND id='".$id."'";
+			$Query ="UPDATE ".TM_TABLE_ADR." SET status=".checkset_int($status)."
+						 WHERE siteid='".TM_SITEID."' AND id=".checkset_int($id);
 			if ($this->DB->Query($Query)) {
 				$Return=true;
 			} else {
@@ -805,7 +888,7 @@ class tm_ADR {
 		$Return=false;
 		if (check_dbid($id)) {
 			$Query ="UPDATE ".TM_TABLE_ADR." SET updated='".date("Y-m-d H:i:s")."', status=11, editor='".dbesc($author)."'
-						 WHERE siteid='".TM_SITEID."' AND id='".$id."'";
+						 WHERE siteid='".TM_SITEID."' AND id=".checkset_int($id);
 			if ($this->DB->Query($Query)) {
 				$Return=true;
 			}
@@ -818,10 +901,10 @@ class tm_ADR {
 		if (isset($adr['id']) && check_dbid($adr['id'])) {
 			$Query ="UPDATE ".TM_TABLE_ADR." SET
 							email=lcase('".dbesc($adr["email"])."'),
-							aktiv='".dbesc($adr["aktiv"])."',
+							aktiv=".checkset_int($adr["aktiv"]).",
 							editor='".dbesc($adr["author"])."',
 							updated='".dbesc($adr["created"])."'
-						 WHERE siteid='".TM_SITEID."' AND id='".$adr["id"]."'";
+						 WHERE siteid='".TM_SITEID."' AND id=".checkset_int($adr["id"]);
 			if ($this->DB->Query($Query)) {
 				$Return=true;
 			} else {
@@ -830,7 +913,6 @@ class tm_ADR {
 			}
 			//details
 			$Query ="UPDATE ".TM_TABLE_ADR_DETAILS." SET
-						memo='".dbesc($adr['memo'])."',
 						f0='".dbesc($adr["f0"])."',
 						f1='".dbesc($adr["f1"])."',
 						f2='".dbesc($adr["f2"])."',
@@ -841,7 +923,7 @@ class tm_ADR {
 						f7='".dbesc($adr["f7"])."',
 						f8='".dbesc($adr["f8"])."',
 						f9='".dbesc($adr["f9"])."'
-						 WHERE siteid='".TM_SITEID."' AND adr_id='".$adr["id"]."'";
+						 WHERE siteid='".TM_SITEID."' AND adr_id=".checkset_int($adr["id"]);
 			if ($this->DB->Query($Query)) {
 				$Return=true;
 			} else {
@@ -861,14 +943,13 @@ function setGroup($adr_id,$new_grp,$old_grp=Array(),$merge=0) {
 		$Return=false;
 		if (isset($adr_id) && check_dbid($adr_id)) {
 			//alle refs loeschen
-			$Query ="DELETE FROM ".TM_TABLE_ADR_GRP_REF." WHERE siteid='".TM_SITEID."' AND adr_id='".$adr_id."'";
+			$Query ="DELETE FROM ".TM_TABLE_ADR_GRP_REF." WHERE siteid='".TM_SITEID."' AND adr_id=".checkset_int($adr_id);
 			if ($this->DB->Query($Query)) {
 				$Return=true;
 			} else {
 				$Return=false;
 				return $Return;
 			}
-
 			if ($merge==0) {
 				//set only new groups!
 				//do nothing special, default
@@ -902,8 +983,8 @@ function mergeGroups($grp1,$grp2) {
 	function setAError($id,$errors) {
 		$Return=false;
 		if (check_dbid($id)) {
-			$Query ="UPDATE ".TM_TABLE_ADR." SET errors='".dbesc($errors)."'
-						 WHERE siteid='".TM_SITEID."' AND id='".$id."'";
+			$Query ="UPDATE ".TM_TABLE_ADR." SET errors=".checkset_int($errors)."
+						 WHERE siteid='".TM_SITEID."' AND id=".checkset_int($id);
 			if ($this->DB->Query($Query)) {
 				$Return=true;
 			} else {
@@ -920,7 +1001,7 @@ function mergeGroups($grp1,$grp2) {
 			$ADR=$this->getADR($adr_id);
 			$clicks=$ADR[0]['clicks'];
 			$clicks++;
-			$Query ="UPDATE ".TM_TABLE_ADR." SET clicks='".$clicks."' WHERE siteid='".TM_SITEID."' AND id='".$adr_id."'";
+			$Query ="UPDATE ".TM_TABLE_ADR." SET clicks=".checkset_int($clicks)." WHERE siteid='".TM_SITEID."' AND id=".checkset_int($adr_id);
 			if ($this->DB->Query($Query)) {
 				$Return=true;
 			}
@@ -934,7 +1015,7 @@ function mergeGroups($grp1,$grp2) {
 			$ADR=$this->getADR($adr_id);
 			$views=$ADR[0]['views'];
 			$views++;
-			$Query ="UPDATE ".TM_TABLE_ADR." SET views='".$views."' WHERE siteid='".TM_SITEID."' AND id='".$adr_id."'";
+			$Query ="UPDATE ".TM_TABLE_ADR." SET views=".checkset_int($views)." WHERE siteid='".TM_SITEID."' AND id=".checkset_int($adr_id);
 			if ($this->DB->Query($Query)) {
 				$Return=true;
 			}
@@ -948,7 +1029,7 @@ function mergeGroups($grp1,$grp2) {
 			$ADR=$this->getADR($adr_id);
 			$nl=$ADR[0]['newsletter'];
 			$nl++;
-			$Query ="UPDATE ".TM_TABLE_ADR." SET newsletter='".$nl."' WHERE siteid='".TM_SITEID."' AND id='".$adr_id."'";
+			$Query ="UPDATE ".TM_TABLE_ADR." SET newsletter=".checkset_int($nl)." WHERE siteid='".TM_SITEID."' AND id=".checkset_int($adr_id);
 			if ($this->DB->Query($Query)) {
 				$Return=true;
 			}
@@ -956,18 +1037,28 @@ function mergeGroups($grp1,$grp2) {
 		return $Return;
 	}//addNL
 
+	function newMemo($adr_id,$memo) {
+		$Return=false;
+		if (check_dbid($adr_id)) {
+			$memo=date("Y-m-d H:i:s").": ".$memo;
+			$Query ="UPDATE ".TM_TABLE_ADR_DETAILS." SET memo='".dbesc($memo)."' WHERE siteid='".TM_SITEID."' AND adr_id=".checkset_int($adr_id);
+			if ($this->DB->Query($Query)) {
+				$Return=true;
+			}
+		}
+		return $Return;
+	}//newMemo
 	function addMemo($adr_id,$memo) {
 		$Return=false;
 		if (check_dbid($adr_id)) {
 			$ADR=$this->getADR($adr_id);
-			$memo=$ADR[0]['memo'].$memo;
-			$Query ="UPDATE ".TM_TABLE_ADR_DETAILS." SET memo='".dbesc($memo)."' WHERE siteid='".TM_SITEID."' AND adr_id='".$adr_id."'";
+			$memo=date("Y-m-d H:i:s").": ".$memo."\n\n".$ADR[0]['memo'];
+			$Query ="UPDATE ".TM_TABLE_ADR_DETAILS." SET memo='".dbesc($memo)."' WHERE siteid='".TM_SITEID."' AND adr_id=".checkset_int($adr_id);
 			if ($this->DB->Query($Query)) {
 				$Return=true;
 			}
 		}
 		return $Return;
 	}//addMemo
-
-}  //class
+}//class
 ?>

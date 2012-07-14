@@ -36,7 +36,7 @@ class tm_BLACKLIST {
 		$Query .=" WHERE ".TM_TABLE_BLACKLIST.".siteid='".TM_SITEID."'";
 
 		if (check_dbid($id)) {
-			$Query .= " AND ".TM_TABLE_BLACKLIST.".id='".$id."'";
+			$Query .= " AND ".TM_TABLE_BLACKLIST.".id=".checkset_int($id);
 		}
 		if (isset($search['type']) && !empty($search['type'])) {
 			$Query .= " AND ".TM_TABLE_BLACKLIST.".type='".dbesc($search['type'])."'";
@@ -45,10 +45,10 @@ class tm_BLACKLIST {
 			$Query .= " AND ".TM_TABLE_BLACKLIST.".expr='".dbesc($search['expr'])."'";
 		}
 		if (isset($search['aktiv'])) {
-			$Query .= " AND ".TM_TABLE_BLACKLIST.".type='".dbesc($search['aktiv'])."'";
+			$Query .= " AND ".TM_TABLE_BLACKLIST.".type=".checkset_int($search['aktiv']);
 		}
 		if ($limit >0 and $offset>=0) {
-			$Query .= " LIMIT ".dbesc($offset)." ,".dbesc($limit);
+			$Query .= " LIMIT ".checkset_int($offset)." ,".checkset_int($limit);
 		}
 
 		$this->DB->Query($Query);
@@ -67,7 +67,7 @@ class tm_BLACKLIST {
 	function setAktiv($id=0,$aktiv=1) {
 		$Return=false;
 		if (check_dbid($id)) {
-			$Query ="UPDATE ".TM_TABLE_BLACKLIST." SET aktiv='".dbesc($aktiv)."' WHERE id='".$id."' AND siteid='".TM_SITEID."'";
+			$Query ="UPDATE ".TM_TABLE_BLACKLIST." SET aktiv=".checkset_int($aktiv)." WHERE id=".checkset_int($id)." AND siteid='".TM_SITEID."'";
 			if ($this->DB->Query($Query)) {
 				$Return=true;
 			}
@@ -84,7 +84,7 @@ class tm_BLACKLIST {
 					)
 					VALUES (
 					'".dbesc($blacklist["type"])."', '".dbesc($blacklist["expr"])."',
-					'".dbesc($blacklist["aktiv"])."',
+					".checkset_int($blacklist["aktiv"]).",
 					'".TM_SITEID."')";
 		if ($this->DB->Query($Query)) {
 			$Return=true;
@@ -98,8 +98,8 @@ class tm_BLACKLIST {
 			$Query ="UPDATE ".TM_TABLE_BLACKLIST."
 					SET
 					type='".dbesc($blacklist["type"])."', expr='".dbesc($blacklist["expr"])."',
-					aktiv='".dbesc($blacklist["aktiv"])."'
-					WHERE siteid='".TM_SITEID."' AND id='".dbesc($blacklist["id"])."'";
+					aktiv=".checkset_int($blacklist["aktiv"])."
+					WHERE siteid='".TM_SITEID."' AND id=".checkset_int($blacklist["id"]);
 			if ($this->DB->Query($Query)) {
 				$Return=true;
 			}
@@ -110,7 +110,7 @@ class tm_BLACKLIST {
 	function delBL($id) {
 		$Return=false;
 		if (check_dbid($id)) {
-			$Query ="DELETE FROM ".TM_TABLE_BLACKLIST." WHERE siteid='".TM_SITEID."' AND id='".$id."'";
+			$Query ="DELETE FROM ".TM_TABLE_BLACKLIST." WHERE siteid='".TM_SITEID."' AND id=".checkset_int($id);
 				if ($this->DB->Query($Query)) {
 					$Return=true;
 				} else {
@@ -136,7 +136,7 @@ class tm_BLACKLIST {
 			$Query .= " AND ".TM_TABLE_BLACKLIST.".expr='".dbesc($search['expr'])."'";
 		}
 		if (isset($search['aktiv']) && !empty($search['aktiv'])) {
-			$Query .= " AND ".TM_TABLE_BLACKLIST.".aktiv = '".dbesc($search['aktiv'])."'";
+			$Query .= " AND ".TM_TABLE_BLACKLIST.".aktiv = ".checkset_int($search['aktiv']);
 		}
 		$this->DB2->Query($Query);
 		if ($this->DB2->next_record()) {

@@ -17,21 +17,22 @@ $_MAIN_MESSAGE.="";
 
 $QUEUE=new tm_Q();
 $HOSTS=new tm_HOST();
+$ADDRESS=new tm_ADR();
+$NEWSLETTER=new tm_NL();
 
 $set=getVar("set");
 $val=getVar("val");
 $q_id=getVar("q_id");
 $nl_id=getVar("nl_id");
+$grp_id=getVar("grp_id");
 $doit=getVar("doit");//wird per js an url angefuegt!!! confirm()
-
-$ADDRESS=new tm_ADR();
-$NEWSLETTER=new tm_NL();
-
-
 
 if (!empty($q_id)) {
 	$Q=$QUEUE->getQ($q_id);
-	$logfilename="q_".$Q[0]['id']."_".$Q[0]['grp_id']."_".date_convert_to_string($Q[0]['created']).".log.html";
+	$logfilename="q_.log.html";
+	if (isset($Q[0]['id']))	{
+		$logfilename="q_".$Q[0]['id']."_".$Q[0]['grp_id']."_".date_convert_to_string($Q[0]['created']).".log.html";
+	}
 }
 if ($set=="stop" && $doit==1 && !empty($q_id)) {
 	$QUEUE->setStatus($q_id,5);
@@ -49,6 +50,7 @@ if ( ($set=="delete" || $set=="delete_all") && $doit==1 && !empty($q_id)) {
 	//nl auf status queued setzen =2
 	//Q holen
 	$Q=$QUEUE->getQ($q_id);
+	if (isset($Q[0]['id']))	{
 	//und q fuer newsletter aus aktueller q holen
 	//eintraege zaehlen, wieviele qs fuer newsletter dieser q
 	$QNL=$QUEUE->getQ(0,0,0,$Q[0]['nl_id']);
@@ -69,25 +71,31 @@ if ( ($set=="delete" || $set=="delete_all") && $doit==1 && !empty($q_id)) {
 		if (!DEMO) $QUEUE->delQ($q_id,1);//, 1delH=1, auch historie loeschen
 		$_MAIN_MESSAGE.="<br>".___("Q Eintrag und Historie wurde gelöscht.");
 	}
-
-}
+	}//isset Q[id]
+}//delete |< delete_all && doit
 if ($set=="delete_log" && $doit==1) {
 	$Q=$QUEUE->getQ($q_id);
+	if (isset($Q[0]['id']))	{
 	if (!DEMO && @unlink($tm_logpath."/".$logfilename)) {
 		$_MAIN_MESSAGE.="<br>".___("Logfile wurde gelöscht.");
 	} else {
 		$_MAIN_MESSAGE.="<br>".___("Logfile konnte nicht gelöscht werden.");
 	}
+	}//isset Q[id]
 }
 
 //q f. liste holen
 if ($nl_id>0) {
 	$NL=$NEWSLETTER->getNL($nl_id);
 	$_MAIN_MESSAGE.="<br>".sprintf(___("gewähltes Newsletter: %s")," <b>".display($NL[0]['subject'])."</b>");
-	$Q=$QUEUE->getQ(0,0,0,$nl_id);//id offset limit nl_id
-} else {
-	$Q=$QUEUE->getQ(0,0,0,0);//id offset limit nl_id
 }
+
+if ($grp_id>0) {
+	$GRP=$ADDRESS->getGroup($grp_id);
+	$_MAIN_MESSAGE.="<br>".sprintf(___("gewählte Gruppe: %s")," <b>".display($GRP[0]['name'])."</b>");
+}
+
+$Q=$QUEUE->getQ($id=0,$offset=0,$limit=0,$nl_id,$grp_id,$status=0,$search=Array());
 $qc=count($Q);
 
 $reloadURLPara=$mSTDURL;
@@ -96,11 +104,18 @@ $reloadURLPara->addParam("nl_id",$nl_id);
 
 $showhistURLPara=$mSTDURL;
 $showhistURLPara->addParam("act","queue_list");
+$showhistURLPara->addParam("nl_id",$nl_id);
 
-$sendURLPara=$mSTDURL;
-$sendURLPara->addParam("act","queue_send");
-$sendURLPara->addParam("set","q");
 
+$sendFastURLPara=$mSTDURL;
+$sendFastURLPara->addParam("act","queue_send");
+$sendFastURLPara->addParam("set","q");
+$sendFastURLPara->addParam("nl_id",$nl_id);
+$sendFastURLPara->addParam("startq",1);
+$refreshRCPTListURLPara=$mSTDURL;
+$refreshRCPTListURLPara->addParam("act","queue_send");
+$refreshRCPTListURLPara->addParam("set","q");
+$refreshRCPTListURLPara->addParam("nl_id",$nl_id);
 $delURLPara=$mSTDURL;
 $delURLPara->addParam("act","queue_list");
 $delURLPara->addParam("set","delete");
@@ -108,6 +123,7 @@ $delURLPara->addParam("nl_id",$nl_id);
 
 $delAllURLPara=$delURLPara;
 $delAllURLPara->addParam("set","delete_all");
+$delAllURLPara->addParam("nl_id",$nl_id);
 
 $dellogURLPara=$mSTDURL;
 $dellogURLPara->addParam("act","queue_list");
@@ -155,22 +171,20 @@ $_MAIN_OUTPUT.= "<thead>".
 
 for ($qcc=0;$qcc<$qc;$qcc++) {
 	if ($qcc%2==0) {$bgcolor=$row_bgcolor;} else {$bgcolor=$row_bgcolor2;}
-
+	$hc_new=0;
 	$HOST=$HOSTS->getHost($Q[$qcc]['host_id']);
 	if (!isset($HOST[0]) || $HOST[0]['aktiv']!=1) {
 		$bgcolor=$row_bgcolor_inactive;
 	}
-
+	$valid_adr_c=$ADDRESS->countValidADR($Q[$qcc]['grp_id']);
 	//wenn q status=2 or 3 // run oder fertig
 	//dann holen wir uns die daten fuer die q eintraege! vorher ist eh null... :)
-	if ($Q[$qcc]['status']>1) {
 		//wenn status > neu, also gestartet, versendet etc, dann summary anzeigen....
 		$hc=$QUEUE->countH($Q[$qcc]['id']);
 		$hc_new=$QUEUE->countH($Q[$qcc]['id'],0,0,0,1);
 		$hc_ok=$QUEUE->countH($Q[$qcc]['id'],0,0,0,2);
 		$hc_view=$QUEUE->countH($Q[$qcc]['id'],0,0,0,3);
 		$hc_fail=$QUEUE->countH($Q[$qcc]['id'],0,0,0,4);
-	}
 
 	$GRP=$ADDRESS->getGroup($Q[$qcc]['grp_id']);
 	$NL=$NEWSLETTER->getNL($Q[$qcc]['nl_id']);
@@ -187,8 +201,11 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 	$logfile=$tm_logpath."/".$logfilename;
 	$logfileURL=$tm_URL_FE."/".$tm_logdir."/".$logfilename;
 
-	$sendURLPara->addParam("q_id",$Q[$qcc]['id']);
-	$sendURLPara_=$sendURLPara->getAllParams();
+	$sendFastURLPara->addParam("q_id",$Q[$qcc]['id']);
+	$sendFastURLPara_=$sendFastURLPara->getAllParams();
+
+	$refreshRCPTListURLPara->addParam("q_id",$Q[$qcc]['id']);
+	$refreshRCPTListURLPara_=$refreshRCPTListURLPara->getAllParams();
 
 	$showhistURLPara->addParam("q_id",$Q[$qcc]['id']);
 	$showhistURLPara_=$showhistURLPara->getAllParams();
@@ -213,9 +230,20 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 
 
 	$_MAIN_OUTPUT.= "<tr id=\"row_".$qcc."\"  bgcolor=\"".$bgcolor."\"  onmouseover=\"setBGColor('row_".$qcc."','".$row_bgcolor_hilite."');\" onmouseout=\"setBGColor('row_".$qcc."','".$bgcolor."');\">";
-	$_MAIN_OUTPUT.= "<td>";
+	$_MAIN_OUTPUT.= "<td width=50>";
 	if ($Q[$qcc]['check_blacklist']==1) {
 		$_MAIN_OUTPUT.=  "&nbsp;".tm_icon("ruby.png",___("Blacklist"));
+	}
+	if ($Q[$qcc]['autogen']==1) {
+		if ($Q[$qcc]['status']==1) {
+			$_MAIN_OUTPUT.=  "&nbsp;".tm_icon("bullet_green.png",___("Empfängerliste automatisch erstellen / aktualisieren  und Q starten"),"","","","cog.png");
+		}
+		if ($Q[$qcc]['status']==2) {
+			$_MAIN_OUTPUT.=  "&nbsp;".tm_icon("bullet_star.png",___("Empfängerliste automatisch erstellen / aktualisieren  und Q starten"),"","","","cog.png");
+		}
+		if ($Q[$qcc]['status']>2) {
+			$_MAIN_OUTPUT.=  "&nbsp;".tm_icon("bullet_black.png",___("Empfängerliste automatisch erstellen / aktualisieren  und Q starten"),"","","","cog.png");
+		}
 	}
 	$_MAIN_OUTPUT.= "</td>";
 
@@ -244,6 +272,7 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 	$_MAIN_OUTPUT.= "<div id=\"tt_q_list_".$Q[$qcc]['id']."\" class=\"tooltip\">";
 	$_MAIN_OUTPUT.="<b>".display($NL[0]['subject'])."</b>";
 	$_MAIN_OUTPUT.="<br>".sprintf(___("An Gruppe: %s"),"<b>".display($GRP[0]['name'])."</b>");
+	$_MAIN_OUTPUT.="&nbsp (".sprintf(___("%s gültige Adressen"),"<b>".display($valid_adr_c)."</b>").")";
 	$_MAIN_OUTPUT.= "<br>ID: ".$Q[$qcc]['id']." ";
 	$_MAIN_OUTPUT.= "<br>".tm_icon($STATUS['q']['statimg'][$Q[$qcc]['status']],$STATUS['q']['status'][$Q[$qcc]['status']])."&nbsp;".$STATUS['q']['status'][$Q[$qcc]['status']];
 	$_MAIN_OUTPUT.="<br>".sprintf(___("Erstellt am: %s"),"<b>".display($created_date)."</b>");
@@ -259,7 +288,6 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 	} else {
 			$_MAIN_OUTPUT.= "<br><font color=\"red\">".___("Mail-Server wurde gelöscht!")."</font>";
 	}
-	if ($Q[$qcc]['status']>1) {
 		$_MAIN_OUTPUT .="<br>".
 								___("Adressen: ").$hc.
 								"<br>".___("Wartend: ").$hc_new.
@@ -268,7 +296,6 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 								"<br>".___("versendet am: ").$sent_date.
 								"<br>".___("Angezeigt: ").$hc_view.
 								"";
-	}
 	$_MAIN_OUTPUT.= "</div>";
 
 	$_MAIN_OUTPUT.= "</td>";
@@ -306,11 +333,16 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 	$_MAIN_OUTPUT.= "<td>";
 	//wenn status q ok, =1 , neu, und newsletter aktiv, dann einzelnen sendebutton anzeigen!
 	if ($Q[$qcc]['status']==1 && $NL[0]['aktiv']==1  && isset($HOST[0]) && $HOST[0]['aktiv']==1) {
-		$_MAIN_OUTPUT.= "&nbsp;<a href=\"".$tm_URL."/".$sendURLPara_."\" title=\"".___("Newsletter an gewählte Gruppe versenden")."\">".tm_icon("email_go.png",___("Senden"))."</a>";
+		$_MAIN_OUTPUT.= "&nbsp;<a href=\"".$tm_URL."/".$sendFastURLPara_."\" title=\"".___("Newsletter an gewählte Gruppe versenden")."\">".tm_icon("bullet_star.png",___("Senden"),"","","","email_go.png")."</a>";
 	}
 
-	if ($Q[$qcc]['status']==4) {
+//adressen nachfassen!
+//status 2,5, mehr adr in countvalidadr fuer grp_id als gezaehlte f.d. gruppe
+if ($hc_new < $valid_adr_c) {
+	if (($Q[$qcc]['status']==2 || $Q[$qcc]['status']==5) && isset($HOST[0]) && $HOST[0]['aktiv']==1) {
+		$_MAIN_OUTPUT.= "&nbsp;<a href=\"".$tm_URL."/".$refreshRCPTListURLPara_."\" title=\"".___("Adressen nachfassen / Empfängerliste aktualisieren")."\">".tm_icon("arrow_switch.png",___("Adressen nachfassen / Empfängerliste aktualisieren"),"","","","email_go.png")."</a>";
 	}
+}
 
 //anhalten, weitermachen
 	if ($Q[$qcc]['status']==5 && isset($HOST[0]) && $HOST[0]['aktiv']==1) {

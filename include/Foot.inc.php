@@ -25,7 +25,6 @@ $_FOOT.= "<br>".sprintf(___("Max. Upload: %s"),ini_get("upload_max_filesize"));
 $_FOOT.= "<br>".sprintf(___("Speicherlimit: %s"),ini_get("memory_limit"))."";
 $_FOOT.= "<br>".sprintf(___("Max. POST Data: %s"),ini_get("post_max_size"));
 $_FOOT.= "<br>".sprintf(___("Max. Ausführungszeit: %s Sekunden"),ini_get("max_execution_time"));
-$_FOOT.= "<br>".sprintf(___("%s Mails pro Durchlauf"),$max_mails_atonce);
 $real_path=realpath("./index.php");
 $path_info=pathinfo($real_path);
 $doc_root=$_SERVER["DOCUMENT_ROOT"];

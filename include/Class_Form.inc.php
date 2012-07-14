@@ -43,12 +43,12 @@ class tm_FRM {
 		$Query .=" WHERE ".TM_TABLE_FRM.".siteid='".TM_SITEID."'";
 		if ($group_id!=0) {
 			$Query .=" AND ".TM_TABLE_FRM_GRP_REF.".siteid='".TM_SITEID."'
-						  AND ".TM_TABLE_FRM_GRP_REF.".grp_id='".$group_id."'
+						  AND ".TM_TABLE_FRM_GRP_REF.".grp_id=".checkset_int($group_id)."
 						";
 		}
 						//achtung, durch AND adr_details.siteid='".TM_SITEID."' werden nur die eintraege angezeigt die auch eien detaildatensatz haben!!!
 		if (check_dbid($id)) {
-			$Query .= " AND ".TM_TABLE_FRM.".id='".$id."'";
+			$Query .= " AND ".TM_TABLE_FRM.".id=".checkset_int($id);
 		}
 		if (!empty($sortIndex)) {
 			$Query .= " ORDER BY ".dbesc($sortIndex);
@@ -60,7 +60,7 @@ class tm_FRM {
 			}
 		}
 		if ($limit >0 and $offset>=0) {
-			$Query .= " LIMIT ".dbesc($offset)." ,".dbesc($limit);
+			$Query .= " LIMIT ".checkset_int($offset)." ,".checkset_int($limit);
 		}
 		$this->DB->Query($Query);
 		$ac=0;
@@ -155,7 +155,7 @@ class tm_FRM {
 		$Return=false;
 		if (check_dbid($id)) {
 			#$DB=new tm_DB();
-			$Query ="UPDATE ".TM_TABLE_FRM." SET aktiv='".dbesc($aktiv)."' WHERE id='".$id."' AND siteid='".TM_SITEID."'";
+			$Query ="UPDATE ".TM_TABLE_FRM." SET aktiv=".checkset_int($aktiv)." WHERE id=".checkset_int($id)." AND siteid='".TM_SITEID."'";
 			if ($this->DB->Query($Query)) {
 				$Return=true;
 			}
@@ -190,7 +190,7 @@ class tm_FRM {
 		if (check_dbid($id)) {
 			#$DB=new tm_DB();
 			//referenzen loeschen
-			$Query ="DELETE FROM ".TM_TABLE_FRM_GRP_REF." WHERE siteid='".TM_SITEID."' AND frm_id='".$id."'";
+			$Query ="DELETE FROM ".TM_TABLE_FRM_GRP_REF." WHERE siteid='".TM_SITEID."' AND frm_id=".checkset_int($id);
 			if ($this->DB->Query($Query)) {
 				$Return=true;
 			} else {
@@ -198,7 +198,7 @@ class tm_FRM {
 				return $Return;
 			}
 			//subscriptions loeschen
-			$Query ="DELETE FROM ".TM_TABLE_FRM_S." WHERE siteid='".TM_SITEID."' AND frm_id='".$id."'";
+			$Query ="DELETE FROM ".TM_TABLE_FRM_S." WHERE siteid='".TM_SITEID."' AND frm_id=".checkset_int($id);
 			if ($this->DB->Query($Query)) {
 				$Return=true;
 			} else {
@@ -206,7 +206,7 @@ class tm_FRM {
 				return $Return;
 			}
 			//formular loeschen
-			$Query ="DELETE FROM ".TM_TABLE_FRM." WHERE siteid='".TM_SITEID."' AND id='".$id."'";
+			$Query ="DELETE FROM ".TM_TABLE_FRM." WHERE siteid='".TM_SITEID."' AND id=".checkset_int($id);
 			if ($this->DB->Query($Query)) {
 				$Return=true;
 			} else {
@@ -235,9 +235,9 @@ class tm_FRM {
 					)
 					VALUES
 					(
-					'".dbesc($frm["name"])."', '".dbesc($frm["action_url"])."', '".dbesc($frm["descr"])."', '".dbesc($frm["aktiv"])."', '".dbesc($frm["author"])."', '".dbesc($frm["created"])."', '".dbesc($frm["author"])."', '".dbesc($frm["created"])."',
-					'".dbesc($frm["double_optin"])."', 0, '".dbesc($frm["use_captcha"])."',
-					'".dbesc($frm["digits_captcha"])."', '".dbesc($frm["subscribe_aktiv"])."', '".dbesc($frm["check_blacklist"])."',
+					'".dbesc($frm["name"])."', '".dbesc($frm["action_url"])."', '".dbesc($frm["descr"])."', ".checkset_int($frm["aktiv"]).", '".dbesc($frm["author"])."', '".dbesc($frm["created"])."', '".dbesc($frm["author"])."', '".dbesc($frm["created"])."',
+					".checkset_int($frm["double_optin"]).", 0, ".checkset_int($frm["use_captcha"]).",
+					".checkset_int($frm["digits_captcha"]).", ".checkset_int($frm["subscribe_aktiv"]).", ".checkset_int($frm["check_blacklist"]).",
 					'".dbesc($frm["submit_value"])."', '".dbesc($frm["reset_value"])."',
 					'".TM_SITEID."',
 					'".dbesc($frm["email"])."',
@@ -261,16 +261,16 @@ class tm_FRM {
 					'".dbesc($frm["f7_type"])."',
 					'".dbesc($frm["f8_type"])."',
 					'".dbesc($frm["f9_type"])."',
-					'".dbesc($frm["f0_required"])."',
-					'".dbesc($frm["f1_required"])."',
-					'".dbesc($frm["f2_required"])."',
-					'".dbesc($frm["f3_required"])."',
-					'".dbesc($frm["f4_required"])."',
-					'".dbesc($frm["f5_required"])."',
-					'".dbesc($frm["f6_required"])."',
-					'".dbesc($frm["f7_required"])."',
-					'".dbesc($frm["f8_required"])."',
-					'".dbesc($frm["f9_required"])."',
+					".checkset_int($frm["f0_required"]).",
+					".checkset_int($frm["f1_required"]).",
+					".checkset_int($frm["f2_required"]).",
+					".checkset_int($frm["f3_required"]).",
+					".checkset_int($frm["f4_required"]).",
+					".checkset_int($frm["f5_required"]).",
+					".checkset_int($frm["f6_required"]).",
+					".checkset_int($frm["f7_required"]).",
+					".checkset_int($frm["f8_required"]).",
+					".checkset_int($frm["f9_required"]).",
 					'".dbesc($frm["f0_value"])."',
 					'".dbesc($frm["f1_value"])."',
 					'".dbesc($frm["f2_value"])."',
@@ -312,27 +312,15 @@ class tm_FRM {
 			return $Return;
 		}
 		//Abfragen! und ID suchen, die brauchen wir fuer die Verknuepfung zu den Adressgruppen
-		$Query ="SELECT id FROM ".TM_TABLE_FRM."
-					WHERE name='".dbesc($frm["name"])."'
-					AND descr='".dbesc($frm["descr"])."'
-					AND aktiv='".dbesc($frm["aktiv"])."'
-					AND siteid='".TM_SITEID."'
-					ORDER BY id desc LIMIT 1
-					";//es muessen nicht alle felder abgefragt werden, order by id desc limit 1 liefert uns den letzten eintrag ;)
-		if ($this->DB->Query($Query)) {
-			$Return=true;
-		} else {
-			$Return=false;
-			return $Return;
-		}
+		//use last insert id istead
 		//wenn ein eintrag gefunden wurde....:
-		if ($this->DB->next_record()) {
+		$new_frm_id=$this->DB->LastInsertID;
+		if (check_dbid($new_frm_id)) {
 			//neue id
-			$new_frm_id=$this->DB->Record['id'];
 			//gruppen eintragen
 			$acg=count($grp);
 			for ($accg=0;$accg<$acg;$accg++) {
-				$Query="INSERT INTO ".TM_TABLE_FRM_GRP_REF." (frm_id,grp_id,public,siteid) VALUES ('".$new_frm_id."','".$grp[$accg]."',0,'".TM_SITEID."')";
+				$Query="INSERT INTO ".TM_TABLE_FRM_GRP_REF." (frm_id,grp_id,public,siteid) VALUES (".checkset_int($new_frm_id).",".checkset_int($grp[$accg]).",0,'".TM_SITEID."')";
 				if ($this->DB->Query($Query)) {
 					$Return=true;
 				} else {
@@ -347,7 +335,7 @@ class tm_FRM {
 			$grp_pub=array_values($grp_pub);
 			$acgp=count($grp_pub);
 			for ($accgp=0;$accgp<$acgp;$accgp++) {
-				$Query="INSERT INTO ".TM_TABLE_FRM_GRP_REF." (frm_id,grp_id,public,siteid) VALUES ('".$new_frm_id."','".$grp_pub[$accgp]."',1,'".TM_SITEID."')";
+				$Query="INSERT INTO ".TM_TABLE_FRM_GRP_REF." (frm_id,grp_id,public,siteid) VALUES (".checkset_int($new_frm_id).",".checkset_int($grp_pub[$accgp]).",1,'".TM_SITEID."')";
 				if ($this->DB->Query($Query)) {
 					$Return=true;
 				} else {
@@ -397,14 +385,14 @@ class tm_FRM {
 		if (check_dbid($frm['id'])) {
 			#$DB=new tm_DB();
 			$Query ="UPDATE ".TM_TABLE_FRM." SET
-						name='".dbesc($frm["name"])."', action_url='".dbesc($frm["action_url"])."', descr='".dbesc($frm["descr"])."', aktiv='".dbesc($frm["aktiv"])."',
+						name='".dbesc($frm["name"])."', action_url='".dbesc($frm["action_url"])."', descr='".dbesc($frm["descr"])."', aktiv=".checkset_int($frm["aktiv"]).",
 						updated='".dbesc($frm["created"])."',
 						editor='".dbesc($frm["author"])."',
-						double_optin='".dbesc($frm["double_optin"])."',
-						use_captcha='".dbesc($frm["use_captcha"])."',
-						digits_captcha='".dbesc($frm["digits_captcha"])."',
-						subscribe_aktiv='".dbesc($frm["subscribe_aktiv"])."',
-						check_blacklist='".dbesc($frm["check_blacklist"])."',
+						double_optin=".checkset_int($frm["double_optin"]).",
+						use_captcha=".checkset_int($frm["use_captcha"]).",
+						digits_captcha=".checkset_int($frm["digits_captcha"]).",
+						subscribe_aktiv=".checkset_int($frm["subscribe_aktiv"]).",
+						check_blacklist=".checkset_int($frm["check_blacklist"]).",
 						submit_value='".dbesc($frm["submit_value"])."',
 						reset_value='".dbesc($frm["reset_value"])."',
 						email='".dbesc($frm["email"])."',
@@ -428,16 +416,16 @@ class tm_FRM {
 						f7_type='".dbesc($frm["f7_type"])."',
 						f8_type='".dbesc($frm["f8_type"])."',
 						f9_type='".dbesc($frm["f9_type"])."',
-						f0_required='".dbesc($frm["f0_required"])."',
-						f1_required='".dbesc($frm["f1_required"])."',
-						f2_required='".dbesc($frm["f2_required"])."',
-						f3_required='".dbesc($frm["f3_required"])."',
-						f4_required='".dbesc($frm["f4_required"])."',
-						f5_required='".dbesc($frm["f5_required"])."',
-						f6_required='".dbesc($frm["f6_required"])."',
-						f7_required='".dbesc($frm["f7_required"])."',
-						f8_required='".dbesc($frm["f8_required"])."',
-						f9_required='".dbesc($frm["f9_required"])."',
+						f0_required=".checkset_int($frm["f0_required"]).",
+						f1_required=".checkset_int($frm["f1_required"]).",
+						f2_required=".checkset_int($frm["f2_required"]).",
+						f3_required=".checkset_int($frm["f3_required"]).",
+						f4_required=".checkset_int($frm["f4_required"]).",
+						f5_required=".checkset_int($frm["f5_required"]).",
+						f6_required=".checkset_int($frm["f6_required"]).",
+						f7_required=".checkset_int($frm["f7_required"]).",
+						f8_required=".checkset_int($frm["f8_required"]).",
+						f9_required=".checkset_int($frm["f9_required"]).",
 						f0_value='".dbesc($frm["f0_value"])."',
 						f1_value='".dbesc($frm["f1_value"])."',
 						f2_value='".dbesc($frm["f2_value"])."',
@@ -471,7 +459,7 @@ class tm_FRM {
 						f7_expr='".dbesc($frm["f7_expr"])."',
 						f8_expr='".dbesc($frm["f8_expr"])."',
 						f9_expr='".dbesc($frm["f9_expr"])."'
-						 WHERE siteid='".TM_SITEID."' AND id='".$frm["id"]."'";
+						 WHERE siteid='".TM_SITEID."' AND id=".checkset_int($frm["id"]);
 			if ($this->DB->Query($Query)) {
 				$Return=true;
 			} else {
@@ -479,7 +467,7 @@ class tm_FRM {
 				return $Return;
 			}
 			//alle refs loeschen
-			$Query ="DELETE FROM ".TM_TABLE_FRM_GRP_REF." WHERE siteid='".TM_SITEID."' AND frm_id='".$frm['id']."'";
+			$Query ="DELETE FROM ".TM_TABLE_FRM_GRP_REF." WHERE siteid='".TM_SITEID."' AND frm_id=".checkset_int($frm['id']);
 			if ($this->DB->Query($Query)) {
 				$Return=true;
 			} else {
@@ -489,7 +477,7 @@ class tm_FRM {
 			//neue refs anlegen
 			$acg=count($grp);
 			for ($accg=0;$accg<$acg;$accg++) {
-				$Query="INSERT INTO ".TM_TABLE_FRM_GRP_REF." (frm_id,grp_id,public,siteid) VALUES ('".$frm['id']."','".$grp[$accg]."',0,'".TM_SITEID."')";
+				$Query="INSERT INTO ".TM_TABLE_FRM_GRP_REF." (frm_id,grp_id,public,siteid) VALUES (".checkset_int($frm['id']).",".checkset_int($grp[$accg]).",0,'".TM_SITEID."')";
 				if ($this->DB->Query($Query)) {
 					$Return=true;
 				} else {
@@ -504,7 +492,7 @@ class tm_FRM {
 			$grp_pub=array_values($grp_pub);
 			$acgp=count($grp_pub);
 			for ($accgp=0;$accgp<$acgp;$accgp++) {
-				$Query="INSERT INTO ".TM_TABLE_FRM_GRP_REF." (frm_id,grp_id,public,siteid) VALUES ('".$frm['id']."','".$grp_pub[$accgp]."',1,'".TM_SITEID."')";
+				$Query="INSERT INTO ".TM_TABLE_FRM_GRP_REF." (frm_id,grp_id,public,siteid) VALUES (".checkset_int($frm['id']).",".checkset_int($grp_pub[$accgp]).",1,'".TM_SITEID."')";
 				if ($this->DB->Query($Query)) {
 					$Return=true;
 				} else {
@@ -527,7 +515,7 @@ class tm_FRM {
 			$Query ="UPDATE ".TM_TABLE_FRM."
 						SET subscriptions='".$subs."'
 						WHERE siteid='".TM_SITEID."'
-						AND id='".$frm_id."'";
+						AND id=".checkset_int($frm_id);
 			if ($this->DB->Query($Query)) {
 				$Return=true;
 			} else {
@@ -541,8 +529,8 @@ class tm_FRM {
 								VALUES
 								(
 								'".date("Y-m-d H:i:s")."',
-								'".$frm_id."',
-								'".$adr_id."',
+								".checkset_int($frm_id).",
+								".checkset_int($adr_id).",
 								'".getIP()."',
 								'".TM_SITEID."'
 								)";
@@ -563,7 +551,7 @@ class tm_FRM {
 		$Query ="SELECT count(".TM_TABLE_FRM_S.".id) as c FROM ".TM_TABLE_FRM_S."
 					WHERE siteid='".TM_SITEID."'";
 		if (check_dbid($frm_id)) {
-			$Query .=" AND frm_id='".$frm_id."'";
+			$Query .=" AND frm_id=".checkset_int($frm_id);
 		}
 		if ($this->DB->Query($Query)) {
 			$Return=$this->DB->Record['c'];
@@ -579,7 +567,7 @@ class tm_FRM {
 					WHERE siteid='".TM_SITEID."'";
 		$Query .=" AND ip!='0.0.0.0' AND ip!=''";
 		if (check_dbid($frm_id)) {
-			$Query .=" AND frm_id='".$frm_id."'";
+			$Query .=" AND frm_id=".checkset_int($frm_id);
 		}
 		if ($this->DB->Query($Query)) {
 			$Color1 = imagecolorallocate ($img, 255,255,0);

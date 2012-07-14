@@ -69,7 +69,7 @@ $Form->set_InputJS($FormularName,$InputName_Group," onChange=\"flash('submit','#
 $Form->set_InputStyleClass($FormularName,$InputName_Group,"mFormSelect","mFormSelectFocus");
 $Form->set_InputDesc($FormularName,$InputName_Group,___("Gruppen wählen, STRG/CTRL gedrückt halten und klicken f. Mehrfachauswahl"));
 $Form->set_InputReadonly($FormularName,$InputName_Group,false);
-$Form->set_InputOrder($FormularName,$InputName_Group,6);
+$Form->set_InputOrder($FormularName,$InputName_Group,4);
 $Form->set_InputLabel($FormularName,$InputName_Group,"");
 $Form->set_InputSize($FormularName,$InputName_Group,0,10);
 $Form->set_InputMultiple($FormularName,$InputName_Group,true);
@@ -89,7 +89,7 @@ $Form->set_InputDefault($FormularName,$InputName_Status,$status);
 $Form->set_InputStyleClass($FormularName,$InputName_Status,"mFormSelect","mFormSelectFocus");
 $Form->set_InputDesc($FormularName,$InputName_Status,___("Status"));
 $Form->set_InputReadonly($FormularName,$InputName_Status,false);
-$Form->set_InputOrder($FormularName,$InputName_Status,6);
+$Form->set_InputOrder($FormularName,$InputName_Status,3);
 $Form->set_InputLabel($FormularName,$InputName_Status,"");
 $Form->set_InputSize($FormularName,$InputName_Status,0,1);
 $Form->set_InputMultiple($FormularName,$InputName_Status,false);
@@ -98,7 +98,7 @@ $sc=count($STATUS['adr']['status']);
 
 for ($scc=1; $scc<=$sc; $scc++)//0
 {
-	$Form->add_InputOption($FormularName,$InputName_Status,$scc,$STATUS['adr']['status'][$scc]);
+	$Form->add_InputOption($FormularName,$InputName_Status,$scc,$STATUS['adr']['status'][$scc],"","color:".$STATUS['adr']['textcolor'][$scc]."; background-color:".$STATUS['adr']['color'][$scc].";");
 }
 
 //MEMO
@@ -108,7 +108,7 @@ $Form->set_InputStyleClass($FormularName,$InputName_Memo,"mFormText","mFormTextF
 $Form->set_InputSize($FormularName,$InputName_Memo,80,5);
 $Form->set_InputDesc($FormularName,$InputName_Memo,"");
 $Form->set_InputReadonly($FormularName,$InputName_Memo,false);
-$Form->set_InputOrder($FormularName,$InputName_Memo,1);
+$Form->set_InputOrder($FormularName,$InputName_Memo,888);
 $Form->set_InputLabel($FormularName,$InputName_Memo,"");
 
 //F, neu f0-9
@@ -120,7 +120,7 @@ for ($fc=0;$fc<=9;$fc++) {
 	$Form->set_InputSize($FormularName,$$FInputName,48,256);
 	$Form->set_InputDesc($FormularName,$$FInputName,"F".$fc);
 	$Form->set_InputReadonly($FormularName,$$FInputName,false);
-	$Form->set_InputOrder($FormularName,$$FInputName,1);
+	$Form->set_InputOrder($FormularName,$$FInputName,$fc+100);
 	$Form->set_InputLabel($FormularName,$$FInputName,"");
 }
 
@@ -177,33 +177,33 @@ if (!empty($adr_id)) {
 }
 
 $_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top>";
+$_MAIN_OUTPUT.= "<td valign=\"top\">";
 $_MAIN_OUTPUT.= tm_icon("email.png",___("E-Mail"))."&nbsp;".___("E-Mail");
 $_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "<td valign=top>";
+$_MAIN_OUTPUT.= "<td valign=\"top\">";
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Name]['html'];
 $_MAIN_OUTPUT.= "</td>";
 
-$_MAIN_OUTPUT.= "<td valign=top rowspan=13 align=left>";
+$_MAIN_OUTPUT.= "<td valign=\"top\" rowspan=13 align=left>";
 $_MAIN_OUTPUT.= tm_icon("group.png",___("Gruppen"))."&nbsp;".___("Gruppen")."<br>";
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Group]['html'];
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "</tr>";
 
 $_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top>";
+$_MAIN_OUTPUT.= "<td valign=\"top\">";
 $_MAIN_OUTPUT.= tm_icon("tick.png",___("Aktiv")).tm_icon("cancel.png",___("Inaktiv"))."&nbsp;".___("Aktiv");
 $_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "<td valign=top 	align=left>";
+$_MAIN_OUTPUT.= "<td valign=\"top\" 	align=left>";
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Aktiv]['html'];
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "</tr>";
 
 $_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top>";
+$_MAIN_OUTPUT.= "<td valign=\"top\">";
 $_MAIN_OUTPUT.= tm_icon("lightbulb.png",___("Status"))."&nbsp;".___("Status");
 $_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "<td valign=top 	align=left>";
+$_MAIN_OUTPUT.= "<td valign=\"top\" 	align=left>";
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Status]['html'];
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "</tr>";
@@ -212,10 +212,10 @@ $_MAIN_OUTPUT.= "</tr>";
 for ($fc=0;$fc<=9;$fc++) {
 	$FInputName="InputName_F".$fc;
 	$_MAIN_OUTPUT.= "<tr>";
-	$_MAIN_OUTPUT.= "<td valign=top>";
+	$_MAIN_OUTPUT.= "<td valign=\"top\">";
 	$_MAIN_OUTPUT.= "F".$fc;
 	$_MAIN_OUTPUT.= "</td>";
-	$_MAIN_OUTPUT.= "<td valign=top colspan=1 align=left>";
+	$_MAIN_OUTPUT.= "<td valign=\"top\" colspan=1 align=left>";
 	$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$$FInputName]['html'];
 	$_MAIN_OUTPUT.= "</td>";
 	$_MAIN_OUTPUT.= "</tr>";
@@ -223,17 +223,28 @@ for ($fc=0;$fc<=9;$fc++) {
 }
 
 $_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top>";
+$_MAIN_OUTPUT.= "<td valign=\"top\" colspan=1>";
 $_MAIN_OUTPUT.= tm_icon("layout.png",___("Memo"))."&nbsp;".___("Memo");
 $_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "<td valign=top colspan=2>";
+$_MAIN_OUTPUT.= "<td valign=\"top\" align=\"left\"colspan=2>";
+$_MAIN_OUTPUT.= tm_icon("pencil.png",___("Memo einblenden/bearbeiten"),___("Memo einblenden/bearbeiten"),"toggle_adrmemo")."&nbsp;".___("Memo einblenden/bearbeiten");
+$_MAIN_OUTPUT.= "</td>";
+$_MAIN_OUTPUT.= "</tr>";
+$_MAIN_OUTPUT.= "<tr>";
+$_MAIN_OUTPUT.= "<td valign=\"top\" colspan=3>";
+$_MAIN_OUTPUT.= "<div id=\"adr_memo\">";
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Memo]['html'];
+$_MAIN_OUTPUT.= "</div>";
+$_MAIN_OUTPUT.= "
+	<script type=\"text/javascript\">
+		toggleSlide('toggle_adrmemo','adr_memo',1);
+	</script>";
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "</tr>";
 
 
 $_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top colspan=2>";
+$_MAIN_OUTPUT.= "<td valign=\"top\" colspan=3><br>";
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Submit]['html'];
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "</tr>";

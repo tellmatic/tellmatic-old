@@ -37,7 +37,7 @@ $Form->set_InputDefault($FormularName,$InputName_Group,$$InputName_Group);
 $Form->set_InputStyleClass($FormularName,$InputName_Group,"mFormSelect","mFormSelectFocus");
 $Form->set_InputDesc($FormularName,$InputName_Group,___("Gruppen wählen, STRG/CTRL gedrückt halten und klicken f. Mehrfachauswahl"));
 $Form->set_InputReadonly($FormularName,$InputName_Group,false);
-$Form->set_InputOrder($FormularName,$InputName_Group,6);
+$Form->set_InputOrder($FormularName,$InputName_Group,1);
 $Form->set_InputLabel($FormularName,$InputName_Group,"");
 $Form->set_InputSize($FormularName,$InputName_Group,0,1);
 $Form->set_InputMultiple($FormularName,$InputName_Group,false);
@@ -75,7 +75,7 @@ $Form->set_InputDefault($FormularName,$InputName_Delimiter,$$InputName_Delimiter
 $Form->set_InputStyleClass($FormularName,$InputName_Delimiter,"mFormSelect","mFormSelectFocus");
 $Form->set_InputDesc($FormularName,$InputName_Delimiter,___("Trennzeichen"));
 $Form->set_InputReadonly($FormularName,$InputName_Delimiter,false);
-$Form->set_InputOrder($FormularName,$InputName_Delimiter,3);
+$Form->set_InputOrder($FormularName,$InputName_Delimiter,4);
 $Form->set_InputLabel($FormularName,$InputName_Delimiter,"");
 $Form->set_InputSize($FormularName,$InputName_Delimiter,0,1);
 $Form->set_InputMultiple($FormularName,$InputName_Delimiter,false);
@@ -107,7 +107,7 @@ $Form->set_InputStyleClass($FormularName,$InputName_File,"mFormText","mFormTextF
 $Form->set_InputSize($FormularName,$InputName_File,32,256);
 $Form->set_InputDesc($FormularName,$InputName_File,___("Dateiname"));
 $Form->set_InputReadonly($FormularName,$InputName_File,false);
-$Form->set_InputOrder($FormularName,$InputName_File,4);
+$Form->set_InputOrder($FormularName,$InputName_File,5);
 $Form->set_InputLabel($FormularName,$InputName_File,"");
 
 //offset
@@ -117,7 +117,7 @@ $Form->set_InputStyleClass($FormularName,$InputName_Offset,"mFormText","mFormTex
 $Form->set_InputSize($FormularName,$InputName_Offset,20,10);
 $Form->set_InputDesc($FormularName,$InputName_Offset,___("Offset: Anzahl der Datensätze die übersprungen werden sollen."));
 $Form->set_InputReadonly($FormularName,$InputName_Offset,false);
-$Form->set_InputOrder($FormularName,$InputName_Offset,4);
+$Form->set_InputOrder($FormularName,$InputName_Offset,8);
 $Form->set_InputLabel($FormularName,$InputName_Offset,"");
 
 //limit
@@ -138,7 +138,7 @@ $Form->set_InputStyleClass($FormularName,$InputName_Append,"mFormText","mFormTex
 $Form->set_InputSize($FormularName,$InputName_Append,48,256);
 $Form->set_InputDesc($FormularName,$InputName_Append,___("An bestehende Datei anfügen"));
 $Form->set_InputReadonly($FormularName,$InputName_Append,false);
-$Form->set_InputOrder($FormularName,$InputName_Append,2);
+$Form->set_InputOrder($FormularName,$InputName_Append,7);
 $Form->set_InputLabel($FormularName,$InputName_Append,"");
 
 //Select existing file
@@ -152,19 +152,17 @@ $Form->set_InputOrder($FormularName,$InputName_FileExisting,6);
 $Form->set_InputLabel($FormularName,$InputName_FileExisting,"");
 $Form->set_InputSize($FormularName,$InputName_FileExisting,0,1);
 $Form->set_InputMultiple($FormularName,$InputName_FileExisting,false);
-//add Data
-unset($FileARRAY);
-gen_rec_files_array($tm_datapath);
-//sort array by name:
-foreach ($FileARRAY as $field) {
-	$btsort[]=$field['filename'];
-}
-@array_multisort($btsort, SORT_ASC, $FileARRAY, SORT_ASC);
-$ic= count($FileARRAY);
+//add data
 $Form->add_InputOption($FormularName,$InputName_FileExisting,"","--");
+$Export_Files=getFiles($tm_datapath) ;
+foreach ($Export_Files as $field) {
+	$btsort[]=$field['name'];
+}
+@array_multisort($btsort, SORT_ASC, $Export_Files, SORT_ASC);
+$ic= count($Export_Files);
 for ($icc=0; $icc < $ic; $icc++) {
-	if ($FileARRAY[$icc]['filename'] !="/.htaccess") {
-		$Form->add_InputOption($FormularName,$InputName_FileExisting,$FileARRAY[$icc]['filename'],$FileARRAY[$icc]['filename']);
+	if ($Export_Files[$icc]['name']!=".htaccess" && $Export_Files[$icc]['name']!="index.php" && $Export_Files[$icc]['name']!="index.html") {
+		$Form->add_InputOption($FormularName,$InputName_FileExisting,$Export_Files[$icc]['name'],display($Export_Files[$icc]['name']));
 	}
 }
 

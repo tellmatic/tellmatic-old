@@ -278,7 +278,9 @@
 	$_Tpl_NL->setParseValue("SUBSCRIBE_URL", $SUBSCRIBE_URL);
 
 	$_Tpl_NL->setParseValue("CLOSELINK", "</a>");
+	$_Tpl_NL->setParseValue("DATE", date(TM_NL_DATEFORMAT));
 	$_Tpl_NL->setParseValue("EMAIL","");
+	$_Tpl_NL->setParseValue("CODE","");
 	$_Tpl_NL->setParseValue("F0","");
 	$_Tpl_NL->setParseValue("F1","");
 	$_Tpl_NL->setParseValue("F2","");

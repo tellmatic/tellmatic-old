@@ -24,15 +24,15 @@ function ___($s) {
 	$text=$translated[0];
 	$match=$translated[1];//=0 no match, =1 match, =2 guess
 	if (DEBUG && $match==0) {
-		$text.="(--)";
+		$text.="(-)";
 		$debug_not_translated[]=$s;
 	}
 	if (DEBUG && $match==1) {
-		$text.="(++)";
+		$text.="(+)";
 		$debug_translated[]=$s." ==&gt; ".$translated[0];
 	}
 	if (DEBUG && $match==2) {
-		$text.="(~~)";
+		$text.="(~)";
 		$debug_same_translated[]=$s." ==&gt; ".$translated[0];
 	}
 	$return=display($text);
@@ -93,13 +93,16 @@ function tm_icon($iconname,$title="",$alt="",$id="",$bgcolor="",$bgimage="") {
 	if (empty($iconname)) $iconname="asterisk_orange.png";
 	if (empty($title)) $title=___("Kein Titel");
 	if (empty($alt)) $alt=$title;
+	if (empty($id)) $id="icon_".rand(111111,999999);
 	$Return="";
 	$Return.=  "<img src=\"".$tm_iconURL."/".$iconname."\" title=\"".$title."\" border=\"0\" alt=\"Icon: ".$alt."\"";
-	if (!empty($id)) $Return.=" id=\"".$id."\"";
+	$Return.=" id=\"".$id."\"";
 	if (!empty($bgcolor) || !empty($bgimage)) $Return.=" style=\"";
 	if (!empty($bgcolor)) $Return.=" background-color:".$bgcolor.";";
 	if (!empty($bgimage)) $Return.=" background-image: url(".$tm_iconURL."/".$bgimage.");";
 	if (!empty($bgcolor) || !empty($bgimage)) $Return.="\"";
+	//bubble+fader
+	$Return.=" onmouseover=\"switchSection('sprechblase');doc_writer('sprechblase_text','".$title."');\" onmouseout=\"switchSection('sprechblase');\" ";
 	$Return.=">";
 	return $Return;
 }
@@ -439,7 +442,7 @@ function check_flag($value) {
 //pruefen auf gueltige dbid, >0, numerisch und nicht "" etc.
 function check_dbid($value) {
 	$return=false;
-	if (isset($value) && is_numeric($value)) {
+	if (isset($value) && is_numeric($value) && (int)$value==$value) {
 		if (($value>=0) && $value!="") {
 			$return=true;
 //			$return=$value;
@@ -448,11 +451,11 @@ function check_dbid($value) {
 	return $return;
 }
 
-function checkset_int($int,$default=0) {
-	if (!isset($int) || empty($int) || $int=='') {
-		return $default;
+function checkset_int($val,$default=0) {
+	if (isset($val) && !empty($val) && is_numeric( $val ) && (int)$val == $val) {
+		return $val;
 	} else {
-		return $int;
+		return $default;
 	}
 }
 
@@ -616,15 +619,15 @@ function strip_specialchar($x) {
 }
 
 
-function SendMail($from_address,$from_name,$to_address,$to_name,$subject,$text,$html,$AttmFiles=Array()){
-	global $use_SMTPmail;
+function SendMail($from_address,$from_name,$to_address,$to_name,$subject,$text,$html,$AttmFiles=Array(),$HOST=Array()){
+	global $use_SMTPmail;//tm_lib!
 	$return=false;
 	//Name darf nicht = email sein und auch kein komma enthalten, plaintext!
 	$to_name=str_replace($to_address,"",$to_name);
 	$to_name=clear_text($to_name);
 	$to_name=str_replace(",","",$to_name);
 	if ($use_SMTPmail) {
-	 	if (SendMail_smtp($from_address,$from_name,$to_address,$to_name,$subject,$text,$html,$AttmFiles)) {
+	 	if (SendMail_smtp($from_address,$from_name,$to_address,$to_name,$subject,$text,$html,$AttmFiles,$HOST)) {
 	 		$return=true;
 	 	}
 	 } else {
@@ -635,64 +638,64 @@ function SendMail($from_address,$from_name,$to_address,$to_name,$subject,$text,$
  	return $return;
 }
 
-
-function SendMail_smtp($from_address,$from_name,$to_address,$to_name,$subject,$text,$html,$AttmFiles) {
+function SendMail_smtp($from_address,$from_name,$to_address,$to_name,$subject,$text,$html,$AttmFiles,$HOST=Array()) {
 	global $ApplicationText;
 	global $encoding;//use default encoding
-	global $C;//site config array
 	$return=false;
-
+	if (!isset($HOST[0])) {
+		$HOSTS=new tm_HOST();
+		$HOST=$HOSTS->getStdSMTPHost();
+	}
 	//using http://www.phpclasses.org/trackback/browse/package/9.html http://www.phpclasses.org/browse/package/14.html http://www.phpclasses.org/trackback/browse/package/14.html
 	//Class: MIME E-mail message composing and sending
 	//thx to Manuel Lemos <mlemos at acm dot org>
 	//look at: http://freshmeat.net/projects/mimemessageclass/
 	require_once("Class_SMTP.inc.php");
-
-	$reply_name=$from_name;
-	$reply_address=$from_address;
-	$reply_address=$from_address;
-	$error_delivery_name=$from_name;
-	$error_delivery_address=$from_address;
 	$email_message=new smtp_message_class;
 	$email_message->default_charset=$encoding;
-	$email_message->authentication_mechanism=$C[0]['smtp_auth'];;
+	$email_message->authentication_mechanism=$HOST[0]['smtp_auth'];;
 	/* This computer address */
-	$email_message->localhost=$C[0]['smtp_domain'];;
+	$email_message->localhost=$HOST[0]['smtp_domain'];;
+	$email_message->ssl=$HOST[0]['smtp_ssl'];
 	/* SMTP server address, probably your ISP address */
-	$email_message->smtp_host=$C[0]['smtp_host'];
-	$email_message->smtp_port=$C[0]['smtp_port'];
+	$email_message->smtp_host=$HOST[0]['host'];
+	$email_message->smtp_port=$HOST[0]['port'];
 	/* authentication user name */
-	$email_message->smtp_user=$C[0]['smtp_user'];
+	$email_message->smtp_user=$HOST[0]['user'];
 	/* authentication realm or Windows domain when using NTLM authentication */
 	$email_message->smtp_realm="";
 	/* authentication workstation name when using NTLM authentication */
 	$email_message->smtp_workstation="";
 	/* authentication password */
-	$email_message->smtp_password=$C[0]['smtp_pass'];
+	$email_message->smtp_password=$HOST[0]['pass'];
 	/* if you need POP3 authetntication before SMTP delivery,
 	 * specify the host name here. The smtp_user and smtp_password above
 	 * should set to the POP3 user and password*/
 	$email_message->smtp_pop3_auth_host="";
-	if ($SMTPPopB4SMTP==1)
-	{
-		$email_message->smtp_pop3_auth_host=$C[0]['smtp_host'];
-	}
 	/* Output dialog with SMTP server */
-	$email_message->smtp_debug=0;
+	$email_message->smtp_html_debug=0;
 	/* if smtp_debug is 1,
 	 * set this to 1 to make the debug output appear in HTML */
+		if (DEBUG_SMTP) {
+			$email_message->smtp_debug=1;
+		} else {
+			$email_message->smtp_debug=0;
+			$email_message->smtp_html_debug=0;
+		}
 	$email_message->mailer=$ApplicationText." using smtp";
-	$email_message->smtp_html_debug=1;
 	$email_message->SetEncodedEmailHeader("To",$to_address,$to_name);
-	$email_message->SetEncodedEmailHeader("From",$from_address,$from_name);
-	$email_message->SetEncodedEmailHeader("Reply-To",$reply_address,$reply_name);
-	$email_message->SetHeader("Return-Path",$error_delivery_address);
-	$email_message->SetEncodedEmailHeader("Errors-To",$error_delivery_address,$error_delivery_name);
+	$email_message->SetEncodedEmailHeader("From",$HOST[0]['sender_email'],$HOST[0]['sender_name']);
+	$email_message->SetEncodedEmailHeader("Reply-To",$HOST[0]['reply_to'],$HOST[0]['sender_name']);
+	$email_message->SetHeader("Return-Path",$HOST[0]['return_mail']);
+	$email_message->SetEncodedEmailHeader("Errors-To",$HOST[0]['return_mail'],$HOST[0]['sender_name']);
 	$email_message->SetEncodedHeader("Subject",$subject);
-	$email_message->AddQuotedPrintableHtmlPart($html);
-	//$email_message->WrapText($message)
-	$email_message->AddQuotedPrintableTextPart($text);
-	//$email_message->WrapText($Text)
+	$partids=array();//array of partnumbers, returned by reference from createpart etc
+	//we want mixed multipart, with alternative text/html and attachements, inlineimages and all that
+	//text part must be the first one!!!	//only add part
+	$email_message->CreateQuotedPrintableTextPart($text,"",$partids[]);
+	$email_message->CreateQuotedPrintableHtmlPart($html,"",$partids[]);
+	//AddAlternativeMultiparts
+	$email_message->AddAlternativeMultipart($partids);
 	//attachements
 	//filenames stored in Array $AttmFiles
 	if($AttmFiles){
@@ -824,7 +827,7 @@ function configure_me() {
 	return true;
 }
 
-function checkEmailAdr($email,$level=2) {
+function checkEmailAdr($email,$level=1) {
 	$Return[0]=true;//ok, weil mit level=0 oder >3 pruefung ausgeschaltet werden kann.....
 	$Return[1]="";
 	//default level ist 2, mx dns und sytax!
@@ -843,24 +846,23 @@ function checkEmailAdr($email,$level=2) {
 	if ($level>=2) {
 		//split array
 		list($userName, $mailDomain) = split("@", $email);
-		//mx
+		//unter beruecksichtigung der rfc darf es bei fehlendem mx zu keinem fehler kommen....
+		//check mx+dns
+		//true if mx is found, if no mx is found check ANY dns entry
 		$mx=getmxrr($mailDomain,$mxhosts);//print_r($mxhosts);
 		if($mx==1) {
 			$Return[0]=true;
-		} else {
-			$Return[0]=false;
-			$Return[1]=___("Kein MX Eintrag");
-			return $Return;
-		}
-		//dns
-		$dns=checkdnsrr($mailDomain, "MX");
-		if ($dns==1) {
-			$Return[0]=true;
-		} else {
-			$Return[0]=false;
-			$Return[1]=___("MX DNS Problem");
-			return $Return;
-		}
+		} else {//if mx
+			#$Return[1]=___("Kein MX Eintrag");
+			$dns=checkdnsrr($mailDomain, "ANY");
+			if ($dns==1) {
+				$Return[0]=true;
+			} else {
+				$Return[0]=false;
+				$Return[1]=___("MX DNS Problem");
+				return $Return;
+			}//if dns
+		}//if mx
 	}
 
 	//validate()
@@ -1016,31 +1018,50 @@ function getDirectories($path) {
 	$dc=0;
 	$handle=opendir($path);
 	while (($file = readdir($handle))!==false) {
-		if (($file != ".")) {//&& ($file != "..")) 
 			if (opendir($path."/".$file)) { //is_dir is false for some reasons for some directories!
-				$Return[$dc]=$file;
+				$Return[$dc]['name']=$file;
+				$Return[$dc]['files']=0;
 				$dc++;
 				closedir($path."/".$file);
 			}
-		}
 	}
 	@closedir($handle);
 	return $Return;
 }//getDirectories
 
 function getFiles($path) {
+	clearstatcache();
 	$Return=Array();
 	$fc=0;
+	if (is_dir($path)) {
 	$handle=opendir($path);
 	while (($file = readdir($handle))!==false) {
 		if (($file != ".") && ($file != "..") && is_file($path."/".$file)) {
-			$Return[$fc]=$file;
+				$Return[$fc]['name']=$file;
+				$Return[$fc]['size']=filesize($path."/".$file);
+				$Return[$fc]['ext']="";
 			$fc++;
 		}//is file
 	}//readdir
 	@closedir($handle);
+	}//is_dir path	
 	return $Return;
 }//getFiles
+//formats readable ouput to display filesizes in Byte/KByte or MByte dpepending on the size
+function formatFileSize($val) {
+	$Return=0;
+	if ($val<1024) {
+		$Return=$val." Byte";
+	}
+	//1048576=1M
+	if ($val>=1024 && $val<1048576)	{
+		$Return=number_format(($val/1024),2,".","")." KB";
+	}
+	if ($val>=(1048576))	{
+		$Return=number_format(($val/1048576),2,".","")." MB";
+	}
+	return $Return;
+}
 
  function getMime($file,$host='',$port=80)  { 
  	global $ApplicationText;

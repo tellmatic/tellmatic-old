@@ -129,7 +129,7 @@ class tm_CFG {
 			$Query .=" AND name='".dbesc($user)."'";
 		}
 		if (check_dbid($id)) {
-			$Query .=" AND id='".$id."'";
+			$Query .=" AND id=".checkset_int($id);
 		}
 		if (!empty($user) || check_dbid($id)) {
 			$Query .=" LIMIT 1";
@@ -163,7 +163,7 @@ class tm_CFG {
 						".TM_TABLE_USER."
 					(name,passwd,crypt,email,last_login,aktiv,admin,manager,style,lang,expert,siteid)
 					VALUES
-					('".dbesc($user['name'])."','".dbesc($user['passwd'])."','".dbesc($user['crypt'])."','".dbesc($user['email'])."',0,'".dbesc($user['aktiv'])."','".dbesc($user['admin'])."','".dbesc($user['manager'])."','".dbesc($user['style'])."','".dbesc($user['lang'])."','".dbesc($user['expert'])."','".dbesc($user['siteid'])."')
+					('".dbesc($user['name'])."','".dbesc($user['passwd'])."','".dbesc($user['crypt'])."','".dbesc($user['email'])."',0,".checkset_int($user['aktiv']).",".checkset_int($user['admin']).",".checkset_int($user['manager']).",'".dbesc($user['style'])."','".dbesc($user['lang'])."',".checkset_int($user['expert']).",'".dbesc($user['siteid'])."')
 					";
 		if ($DB->Query($Query)) {
 			$Return=true;
@@ -185,7 +185,7 @@ class tm_CFG {
 					lang='".dbesc($user["lang"])."',
 					expert='".dbesc($user["expert"])."',
 					aktiv='".dbesc($user["aktiv"])."'
-					WHERE id='".$user['id']."' AND siteid='".TM_SITEID."'";
+					WHERE id=".checkset_int($user['id'])." AND siteid='".TM_SITEID."'";
 			if ($DB->Query($Query)) {
 				$Return=true;
 			}
@@ -197,7 +197,7 @@ class tm_CFG {
 		$Return=false;
 		if (check_dbid($id)) {
 			$DB=new tm_DB();
-			$Query ="DELETE FROM ".TM_TABLE_USER." WHERE id='".$id."' AND admin!='1' AND siteid='".TM_SITEID."'";
+			$Query ="DELETE FROM ".TM_TABLE_USER." WHERE id=".checkset_int($id)." AND admin!='1' AND siteid='".TM_SITEID."'";
 			if ($DB->Query($Query)) {
 				$Return=true;
 			}
@@ -271,7 +271,7 @@ class tm_CFG {
 		$Return=false;
 		if (check_dbid($id)) {
 			$DB=new tm_DB();
-			$Query ="UPDATE ".TM_TABLE_USER." SET aktiv='".dbesc($aktiv)."' WHERE id='".$id."' AND admin!='1' AND siteid='".TM_SITEID."'";
+			$Query ="UPDATE ".TM_TABLE_USER." SET aktiv=".checkset_int($aktiv)." WHERE id=".checkset_int($id)." AND admin!='1' AND siteid='".TM_SITEID."'";
 			if ($DB->Query($Query)) {
 				$Return=true;
 			}
@@ -283,7 +283,7 @@ class tm_CFG {
 		$Return=false;
 		if (check_dbid($id)) {
 			$DB=new tm_DB();
-			$Query ="UPDATE ".TM_TABLE_USER." SET `admin`='".dbesc($admin)."' WHERE siteid='".TM_SITEID."' AND id='".dbesc($id)."' ";
+			$Query ="UPDATE ".TM_TABLE_USER." SET `admin`=".checkset_int($admin)." WHERE siteid='".TM_SITEID."' AND id=".checkset_int($id);
 			if ($DB->Query($Query)) {
 				$Return=true;
 			}
@@ -295,7 +295,7 @@ class tm_CFG {
 		$Return=false;
 		if (check_dbid($id)) {
 			$DB=new tm_DB();
-			$Query ="UPDATE ".TM_TABLE_USER." SET `manager`='".dbesc($manager)."' WHERE siteid='".TM_SITEID."' AND id='".dbesc($id)."' ";
+			$Query ="UPDATE ".TM_TABLE_USER." SET `manager`=".checkset_int($manager)." WHERE siteid='".TM_SITEID."' AND id=".checkset_int($id);
 			if ($DB->Query($Query)) {
 				$Return=true;
 			}
@@ -329,22 +329,11 @@ class tm_CFG {
 		$Query ="
 						SELECT id,
 							name,
-							smtp_host,
-							smtp_port,
-							smtp_domain,
-							smtp_auth,
-							smtp_user,
-							smtp_pass,
-							sender_name,
-							sender_email,
-							return_mail,
 							notify_mail,
 							notify_subscribe,
 							notify_unsubscribe,
 							emailcheck_intern,
 							emailcheck_subscribe,
-							max_mails_atonce,
-							max_mails_bcc,
 							max_mails_retry,
 							check_version,
 							track_image,
@@ -360,22 +349,11 @@ class tm_CFG {
 			$this->C[$cc]['name']=$DB->Record['name'];
 			#$this->C[$cc]['siteid']=$siteid;
 			$this->C[$cc]['siteid']=TM_SITEID;
-			$this->C[$cc]['smtp_host']=$DB->Record['smtp_host'];
-			$this->C[$cc]['smtp_port']=$DB->Record['smtp_port'];
-			$this->C[$cc]['smtp_domain']=$DB->Record['smtp_domain'];
-			$this->C[$cc]['smtp_auth']=$DB->Record['smtp_auth'];
-			$this->C[$cc]['smtp_user']=$DB->Record['smtp_user'];
-			$this->C[$cc]['smtp_pass']=$DB->Record['smtp_pass'];
-			$this->C[$cc]['sender_name']=$DB->Record['sender_name'];
-			$this->C[$cc]['sender_email']=$DB->Record['sender_email'];
-			$this->C[$cc]['return_mail']=$DB->Record['return_mail'];
 			$this->C[$cc]['notify_mail']=$DB->Record['notify_mail'];
 			$this->C[$cc]['notify_subscribe']=$DB->Record['notify_subscribe'];
 			$this->C[$cc]['notify_unsubscribe']=$DB->Record['notify_unsubscribe'];
 			$this->C[$cc]['emailcheck_intern']=$DB->Record['emailcheck_intern'];
 			$this->C[$cc]['emailcheck_subscribe']=$DB->Record['emailcheck_subscribe'];
-			$this->C[$cc]['max_mails_atonce']=$DB->Record['max_mails_atonce'];
-			$this->C[$cc]['max_mails_bcc']=$DB->Record['max_mails_bcc'];
 			$this->C[$cc]['max_mails_retry']=$DB->Record['max_mails_retry'];
 			$this->C[$cc]['check_version']=$DB->Record['check_version'];
 			$this->C[$cc]['track_image']=$DB->Record['track_image'];
@@ -393,24 +371,13 @@ class tm_CFG {
 						".TM_TABLE_CONFIG."
 					(
 					name,
-					sender_name,
-					sender_email,
-					return_mail,
 					notify_mail,
 					notify_subscribe,
 					notify_unsubscribe,
 					emailcheck_intern,
 					emailcheck_subscribe,
 					check_version,
-					max_mails_atonce,
-					max_mails_bcc,
 					max_mails_retry,
-					smtp_host,
-					smtp_port,
-					smtp_user,
-					smtp_pass,
-					smtp_domain,
-					smtp_auth,
 					track_image,
 					rcpt_name,
 					siteid
@@ -418,24 +385,13 @@ class tm_CFG {
 					VALUES
 					(
 					'".dbesc($cfg["name"])."',
-					'".dbesc($cfg["sender_name"])."',
-					'".dbesc($cfg["sender_email"])."',
-					'".dbesc($cfg["return_mail"])."',
 					'".dbesc($cfg["notify_mail"])."',
-					'".dbesc($cfg["notify_subscribe"])."',
-					'".dbesc($cfg["notify_unsubscribe"])."',
-					'".dbesc($cfg["emailcheck_intern"])."',
-					'".dbesc($cfg["emailcheck_subscribe"])."',
-					'".dbesc($cfg["check_version"])."',
-					'".dbesc($cfg["max_mails_atonce"])."',
-					'".dbesc($cfg["max_mails_bcc"])."',
-					'".dbesc($cfg["max_mails_retry"])."',
-					'".dbesc($cfg["smtp_host"])."',
-					'".dbesc($cfg["smtp_port"])."',
-					'".dbesc($cfg["smtp_user"])."',
-					'".dbesc($cfg["smtp_pass"])."',
-					'".dbesc($cfg["smtp_domain"])."',
-					'".dbesc($cfg["smtp_auth"])."',
+					".checkset_int($cfg["notify_subscribe"]).",
+					".checkset_int($cfg["notify_unsubscribe"]).",
+					".checkset_int($cfg["emailcheck_intern"]).",
+					".checkset_int($cfg["emailcheck_subscribe"]).",
+					".checkset_int($cfg["check_version"]).",
+					".checkset_int($cfg["max_mails_retry"]).",
 					'".dbesc($cfg["track_image"])."',
 					'".dbesc($cfg["rcpt_name"])."',
 					'".dbesc($cfg["siteid"])."'
@@ -456,24 +412,13 @@ class tm_CFG {
 		$Query ="UPDATE ".TM_TABLE_CONFIG."
 					SET
 					name='".dbesc($cfg["name"])."',
-					sender_name='".dbesc($cfg["sender_name"])."',
-					sender_email='".dbesc($cfg["sender_email"])."',
-					return_mail='".dbesc($cfg["return_mail"])."',
 					notify_mail='".dbesc($cfg["notify_mail"])."',
-					notify_subscribe='".dbesc($cfg["notify_subscribe"])."',
-					notify_unsubscribe='".dbesc($cfg["notify_unsubscribe"])."',
-					emailcheck_intern='".dbesc($cfg["emailcheck_intern"])."',
-					emailcheck_subscribe='".dbesc($cfg["emailcheck_subscribe"])."',
-					check_version='".dbesc($cfg["check_version"])."',
-					max_mails_atonce='".dbesc($cfg["max_mails_atonce"])."',
-					max_mails_bcc='".dbesc($cfg["max_mails_bcc"])."',
-					max_mails_retry='".dbesc($cfg["max_mails_retry"])."',
-					smtp_host='".dbesc($cfg["smtp_host"])."',
-					smtp_port='".dbesc($cfg["smtp_port"])."',
-					smtp_user='".dbesc($cfg["smtp_user"])."',
-					smtp_pass='".dbesc($cfg["smtp_pass"])."',
-					smtp_domain='".dbesc($cfg["smtp_domain"])."',
-					smtp_auth='".dbesc($cfg["smtp_auth"])."',
+					notify_subscribe=".checkset_int($cfg["notify_subscribe"]).",
+					notify_unsubscribe=".checkset_int($cfg["notify_unsubscribe"]).",
+					emailcheck_intern=".checkset_int($cfg["emailcheck_intern"]).",
+					emailcheck_subscribe=".checkset_int($cfg["emailcheck_subscribe"]).",
+					check_version=".checkset_int($cfg["check_version"]).",
+					max_mails_retry=".checkset_int($cfg["max_mails_retry"]).",
 					track_image='".dbesc($cfg["track_image"])."',
 					rcpt_name='".dbesc($cfg["rcpt_name"])."'
 					WHERE siteid='".dbesc($cfg["siteid"])."'

@@ -361,7 +361,10 @@ include(TM_INCLUDEPATH."/pager.inc.php");
 $_MAIN_OUTPUT.="<table border=\"0\" cellpadding=\"1\" cellspacing=\"1\" width=\"100%\">";
 $_MAIN_OUTPUT.= "<thead>".
 						"<tr>".
-						"<td>&nbsp;</td>".
+						"<td><b>".___("ID")."</b>".
+						"<a href=\"".$tm_URL."/".$sortURLPara_."&amp;si=id&amp;st=0\">".$img_arrowup."</a>".
+						"<a href=\"".$tm_URL."/".$sortURLPara_."&amp;si=id&amp;st=1\">".$img_arrowdown."</a>".
+						"</td>".
 						"<td><b>".___("E-Mail")."</b>".
 						"<a href=\"".$tm_URL."/".$sortURLPara_."&amp;si=email&amp;st=0\">".$img_arrowup."</a>".
 						"<a href=\"".$tm_URL."/".$sortURLPara_."&amp;si=email&amp;st=1\">".$img_arrowdown."</a>".
@@ -451,7 +454,7 @@ for ($acc=0;$acc<$ac;$acc++) {
 	if ($BLACKLIST->isBlacklisted($ADR[$acc]['email'])) {
 		$_MAIN_OUTPUT.=  "&nbsp;".tm_icon("ruby.png",___("Blacklist"));
 	} else {
-		$_MAIN_OUTPUT.=  "&nbsp;".tm_icon("bullet_white.png","--");
+		$_MAIN_OUTPUT.=  "&nbsp;".tm_icon("bullet_white.png","Blacklisting nicht aktiv");
 	}
 
 	//zeigt an ob adresse geblacklisted ist und welchen typs:
@@ -517,12 +520,13 @@ for ($acc=0;$acc<$ac;$acc++) {
 
 	$_MAIN_OUTPUT.= "<td onmousemove=\"showToolTip('tt_adr_list_".$ADR[$acc]['id']."')\" onmouseout=\"setBGColor('row_".$acc."','".$bgcolor."');hideToolTip();\">";
 	$_MAIN_OUTPUT.= "<a href=\"".$tm_URL."/".$editURLPara_."\">".$ADR[$acc]['email']."</a>";
+	if ($ADR[$acc]['errors']>=($C[0]['max_mails_retry']-1)) {
+		$_MAIN_OUTPUT.=  "&nbsp;".tm_icon("bullet_error.png",sprintf(___("Adresse hat mindestens %s Sendefehler!"),($C[0]['max_mails_retry']-1)));
+	}
 	$_MAIN_OUTPUT.= "<div id=\"tt_adr_list_".$ADR[$acc]['id']."\" class=\"tooltip\">";
 
 	$_MAIN_OUTPUT.= "<b>".$ADR[$acc]['email']."</b>";
-	$_MAIN_OUTPUT.= "<br><font size=-1>".$ADR[$acc]['f0'].",&nbsp;".$ADR[$acc]['f1'].",&nbsp;".$ADR[$acc]['f2'].",&nbsp;".$ADR[$acc]['f3'].",&nbsp;".$ADR[$acc]['f4'].",&nbsp;".$ADR[$acc]['f5'].",&nbsp;";
-	$_MAIN_OUTPUT.= "<br>".$ADR[$acc]['f6'].",&nbsp;".$ADR[$acc]['f7'].",&nbsp;".$ADR[$acc]['f8'].",&nbsp;".$ADR[$acc]['f9']."</font>";
-
+	$_MAIN_OUTPUT.= "<br><font size=-1>".$ADR[$acc]['f0'].", ".$ADR[$acc]['f1'].", ".$ADR[$acc]['f2'].", ".$ADR[$acc]['f3'].", ".$ADR[$acc]['f4'].", ".$ADR[$acc]['f5'].", ".$ADR[$acc]['f6'].", ".$ADR[$acc]['f7'].", ".$ADR[$acc]['f8'].", ".$ADR[$acc]['f9']."</font>";
 	$_MAIN_OUTPUT.= "<br>ID: ".$ADR[$acc]['id']." / ".$ADR[$acc]['d_id']." ";
 	if ($ADR[$acc]['aktiv']==1) {
 		$_MAIN_OUTPUT.=  "<br>".tm_icon("tick.png",___("Aktiv"))."&nbsp;";
@@ -541,8 +545,8 @@ for ($acc=0;$acc<$ac;$acc++) {
 							"<br>".sprintf(___("Newsletter Gesamt: %s"),$ADR[$acc]['newsletter']).
 							"<br>".sprintf(___("Views: %s"),$ADR[$acc]['views']).
 							"<br>".sprintf(___("Clicks: %s"),$ADR[$acc]['clicks']).
-							"<br>".sprintf(___("Sendefehler: %s"),$ADR[$acc]['errors']).
-							"<br>".___("Memo:")."<font size=\"-1\">".$ADR[$acc]['memo']."</font>";
+							"<br>".sprintf(___("Sendefehler: %s"),$ADR[$acc]['errors']);
+
 	$_MAIN_OUTPUT.= "<br>".___("Mitglied in den Gruppen:");
 	$_MAIN_OUTPUT.= "<ul>";
 	$GRP=$ADDRESS->getGroup(0,$ADR[$acc]['id']);
@@ -551,7 +555,7 @@ for ($acc=0;$acc<$ac;$acc++) {
 		$_MAIN_OUTPUT.= "<li>".$GRP[$accg]['name']."</li>";
 	}
 	$_MAIN_OUTPUT.= "</ul>";
-
+	$_MAIN_OUTPUT.= "<br>".___("Memo:")."<font size=\"1\">".str_replace("\n","<br>",display($ADR[$acc]['memo']))."</font>";
 	$_MAIN_OUTPUT.= "</div>";
 	$_MAIN_OUTPUT.= "</td>";
 

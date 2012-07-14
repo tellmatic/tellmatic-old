@@ -68,7 +68,7 @@ if ($set=="save") {
 	} else {
 		$usr_message.="<br>".___("Das Passwort wurde nicht geändert.");
 	}
-	$USER->setEMail($LOGIN->USER['name'],$email);
+	if (!DEMO) $USER->setEMail($LOGIN->USER['name'],$email);
 	$USER->setStyle($LOGIN->USER['name'],$style);
 	$USER->setLang($LOGIN->USER['name'],$lang);
 	$USER->setExpert($LOGIN->USER['name'],$expert);

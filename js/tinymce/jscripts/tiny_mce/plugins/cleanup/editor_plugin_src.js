@@ -1,5 +1,5 @@
 /**
- * $Id: editor_plugin_src.js,v 1.1.1.1 2007/11/21 22:59:36 mcms09 Exp $
+ * $Id: editor_plugin_src.js,v 1.2 2009/01/29 15:21:06 mcms09 Exp $
  *
  * Experimental plugin for new Cleanup routine, this logic will be moved into the core ones it's stable enougth.
  *

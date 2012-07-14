@@ -13,26 +13,22 @@
 /********************************************************************************/
 
 $Bounces=Array();
+$Mail=Array();
 $bcmatch=0;
 for ($mcc=0;$mcc<$mc;$mcc++) {
-	$Mail=$Mailer->getMail($mailno[$mcc]);
-	$Mail=$Bounce->filterBounces($Mail,1,1);
+	$Mail=$Bounce->filterBounces($Mailer->getMail($mailno[$mcc]),$checkHeader,$checkBody);//$Messages , checkHeader=1, checkBody, returnOnlyBounces..., filter to:
 	if (!empty($Mail[0]['bounce'])) {
 		$Bounces = array_merge($Bounces,$Mail[0]['bounce']);
 		$bcmatch++;
 	}
-
 }
 $bctotal=count($Bounces);
 $Bounces=unify_array($Bounces);
 $bc=count($Bounces);
-
 $_MAIN_OUTPUT.="<br>".sprintf(___("Es wurden %s Mails durchsucht."),$mc).
 								"<br>".sprintf(___("%s Mails ergaben einen Treffer."),$bcmatch).
 								"<br>".sprintf(___("Es wurden aus %s Adressen %s (eindeutige) potentiell fehlerhafte Adressen erkannt."),$bctotal,$bc);
 if ($bc) { //bc>0
-
-
 	$_MAIN_OUTPUT.="<table border=\"0\" cellpadding=\"1\" cellspacing=\"1\" width=100%>";
 	$_MAIN_OUTPUT.= "<thead>".
 							"<tr>".
@@ -42,15 +38,12 @@ if ($bc) { //bc>0
 							"</thead>".
 							"<tbody>";
 	for ($bcc=0;$bcc<$bc;$bcc++) {
-
 		$search['email']=$Bounces[$bcc];
 		$search['email_exact_match']=true;
 		$ADR=$ADDRESS->getAdr(0,0,0,0,$search,"",0,0);
-
 		if ($bcc%2==0) {$bgcolor=$row_bgcolor;} else {$bgcolor=$row_bgcolor2;}
 		$_MAIN_OUTPUT.= "<tr id=\"row2_".$bcc."\" bgcolor=\"".$bgcolor."\" onmousemove=\"showToolTip('tt_bouncemail_adr_list_".$bcc."')\" onmouseover=\"setBGColor('row2_".$bcc."','".$row_bgcolor_hilite."');\" onmouseout=\"setBGColor('row2_".$bcc."','".$bgcolor."');hideToolTip();\">";
 		$_MAIN_OUTPUT.= "<td>";
-
 		$Form->set_InputValue($FormularName,$InputName_Adr,$Bounces[$bcc]);
 		if (isset($ADR[0]['id'])) {
 			$Form->set_InputDefault($FormularName,$InputName_Adr,$Bounces[$bcc]);

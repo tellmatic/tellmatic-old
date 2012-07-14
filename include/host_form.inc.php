@@ -48,7 +48,7 @@ $Form->set_InputStyleClass($FormularName,$InputName_Host,"mFormText","mFormTextF
 $Form->set_InputSize($FormularName,$InputName_Host,48,256);
 $Form->set_InputDesc($FormularName,$InputName_Host,___("Hostname / IP-Adresse"));
 $Form->set_InputReadonly($FormularName,$InputName_Host,false);
-$Form->set_InputOrder($FormularName,$InputName_Host,1);
+$Form->set_InputOrder($FormularName,$InputName_Host,3);
 $Form->set_InputLabel($FormularName,$InputName_Host,"");
 
 //Port
@@ -58,7 +58,7 @@ $Form->set_InputStyleClass($FormularName,$InputName_Port,"mFormText","mFormTextF
 $Form->set_InputSize($FormularName,$InputName_Port,8,8);
 $Form->set_InputDesc($FormularName,$InputName_Port,___("Port"));
 $Form->set_InputReadonly($FormularName,$InputName_Port,false);
-$Form->set_InputOrder($FormularName,$InputName_Port,1);
+$Form->set_InputOrder($FormularName,$InputName_Port,5);
 $Form->set_InputLabel($FormularName,$InputName_Port,"");
 
 //Options
@@ -68,7 +68,7 @@ $Form->set_InputStyleClass($FormularName,$InputName_Options,"mFormText","mFormTe
 $Form->set_InputSize($FormularName,$InputName_Options,48,256);
 $Form->set_InputDesc($FormularName,$InputName_Options,___("Options"));
 $Form->set_InputReadonly($FormularName,$InputName_Options,false);
-$Form->set_InputOrder($FormularName,$InputName_Options,1);
+$Form->set_InputOrder($FormularName,$InputName_Options,8);
 $Form->set_InputLabel($FormularName,$InputName_Options,"");
 
 //SMTP-AuthType
@@ -78,7 +78,7 @@ $Form->set_InputDefault($FormularName,$InputName_SMTPAuth,$$InputName_SMTPAuth);
 $Form->set_InputStyleClass($FormularName,$InputName_SMTPAuth,"mFormSelect","mFormSelectFocus");
 $Form->set_InputDesc($FormularName,$InputName_SMTPAuth,___("SMTP-Auth"));
 $Form->set_InputReadonly($FormularName,$InputName_SMTPAuth,false);
-$Form->set_InputOrder($FormularName,$InputName_SMTPAuth,6);
+$Form->set_InputOrder($FormularName,$InputName_SMTPAuth,13);
 $Form->set_InputLabel($FormularName,$InputName_SMTPAuth,"");
 $Form->set_InputSize($FormularName,$InputName_SMTPAuth,0,1);
 $Form->set_InputMultiple($FormularName,$InputName_SMTPAuth,false);
@@ -96,7 +96,7 @@ $Form->set_InputStyleClass($FormularName,$InputName_SMTPDomain,"mFormText","mFor
 $Form->set_InputSize($FormularName,$InputName_SMTPDomain,48,256);
 $Form->set_InputDesc($FormularName,$InputName_SMTPDomain,___("SMTP-Domain"));
 $Form->set_InputReadonly($FormularName,$InputName_SMTPDomain,false);
-$Form->set_InputOrder($FormularName,$InputName_SMTPDomain,1);
+$Form->set_InputOrder($FormularName,$InputName_SMTPDomain,14);
 $Form->set_InputLabel($FormularName,$InputName_SMTPDomain,"");
 
 
@@ -107,7 +107,7 @@ $Form->set_InputDefault($FormularName,$InputName_Type,$$InputName_Type);
 $Form->set_InputStyleClass($FormularName,$InputName_Type,"mFormSelect","mFormSelectFocus");
 $Form->set_InputDesc($FormularName,$InputName_Type,___("Typ"));
 $Form->set_InputReadonly($FormularName,$InputName_Type,false);
-$Form->set_InputOrder($FormularName,$InputName_Type,6);
+$Form->set_InputOrder($FormularName,$InputName_Type,4);
 $Form->set_InputLabel($FormularName,$InputName_Type,"");
 $Form->set_InputSize($FormularName,$InputName_Type,0,1);
 $Form->set_InputMultiple($FormularName,$InputName_Type,false);
@@ -118,12 +118,12 @@ $Form->add_InputOption($FormularName,$InputName_Type,"imap","IMAP4");
 
 //User
 $Form->new_Input($FormularName,$InputName_User,"text", display($$InputName_User));
-$Form->set_InputJS($FormularName,$InputName_User," onChange=\"flash('submit','#ff0000');\" onkeyup=\"RemoveInvalidChars(this, '[^A-Za-z0-9\_\.\-\@]');\"");
+$Form->set_InputJS($FormularName,$InputName_User," onChange=\"flash('submit','#ff0000');\" onkeyup=\"RemoveInvalidChars(this, '[^A-Za-z0-9\_\.\-\@-]');\"");
 $Form->set_InputStyleClass($FormularName,$InputName_User,"mFormText","mFormTextFocus");
 $Form->set_InputSize($FormularName,$InputName_User,48,256);
 $Form->set_InputDesc($FormularName,$InputName_User,___("Benutzername"));
 $Form->set_InputReadonly($FormularName,$InputName_User,false);
-$Form->set_InputOrder($FormularName,$InputName_User,1);
+$Form->set_InputOrder($FormularName,$InputName_User,6);
 $Form->set_InputLabel($FormularName,$InputName_User,"");
 
 //passwd
@@ -133,10 +133,54 @@ $Form->set_InputStyleClass($FormularName,$InputName_Pass,"mFormText","mFormTextF
 $Form->set_InputSize($FormularName,$InputName_Pass,48,256);
 $Form->set_InputDesc($FormularName,$InputName_Pass,___("Passwort"));
 $Form->set_InputReadonly($FormularName,$InputName_Pass,false);
-$Form->set_InputOrder($FormularName,$InputName_Pass,1);
+$Form->set_InputOrder($FormularName,$InputName_Pass,7);
 $Form->set_InputLabel($FormularName,$InputName_Pass,"");
 
+//Mails at once
+$Form->new_Input($FormularName,$InputName_MaxMails,"select", "");
+$Form->set_InputJS($FormularName,$InputName_MaxMails," onChange=\"flash('submit','#ff0000');\" ");
+$Form->set_InputDefault($FormularName,$InputName_MaxMails,$$InputName_MaxMails);
+$Form->set_InputStyleClass($FormularName,$InputName_MaxMails,"mFormSelect","mFormSelectFocus");
+$Form->set_InputDesc($FormularName,$InputName_MaxMails,___("Maximale Anzahl Mails pro Durchgang"));
+$Form->set_InputReadonly($FormularName,$InputName_MaxMails,false);
+$Form->set_InputOrder($FormularName,$InputName_MaxMails,17);
+$Form->set_InputLabel($FormularName,$InputName_MaxMails,"");
+$Form->set_InputSize($FormularName,$InputName_MaxMails,0,1);
+$Form->set_InputMultiple($FormularName,$InputName_MaxMails,false);
+//add Data
+$Form->add_InputOption($FormularName,$InputName_MaxMails,5,"  5 - very low");
+$Form->add_InputOption($FormularName,$InputName_MaxMails,10," 10 - low Traffic");
+$Form->add_InputOption($FormularName,$InputName_MaxMails,25," 25 - small Newsletter");
+$Form->add_InputOption($FormularName,$InputName_MaxMails,35," 35 - normal *");
+$Form->add_InputOption($FormularName,$InputName_MaxMails,50," 50 - bulk mail");
+$Form->add_InputOption($FormularName,$InputName_MaxMails,75," 75 - fast");
+$Form->add_InputOption($FormularName,$InputName_MaxMails,100,"100 - fast");
+$Form->add_InputOption($FormularName,$InputName_MaxMails,150,"150 - high");
+$Form->add_InputOption($FormularName,$InputName_MaxMails,250,"250 - very high");
+$Form->add_InputOption($FormularName,$InputName_MaxMails,500,"500 - too much");
+$Form->add_InputOption($FormularName,$InputName_MaxMails,1000,"1000 - 2fast4u");
+//Mails Bcc
+$Form->new_Input($FormularName,$InputName_MaxMailsBcc,"select", "");
+$Form->set_InputJS($FormularName,$InputName_MaxMailsBcc," onChange=\"flash('submit','#ff0000');\" ");
+$Form->set_InputDefault($FormularName,$InputName_MaxMailsBcc,$$InputName_MaxMailsBcc);
+$Form->set_InputStyleClass($FormularName,$InputName_MaxMailsBcc,"mFormSelect","mFormSelectFocus");
+$Form->set_InputDesc($FormularName,$InputName_MaxMailsBcc,___("Maximale Anzahl BCC-Adressen pro Mail für Massenmailing"));
+$Form->set_InputReadonly($FormularName,$InputName_MaxMailsBcc,false);
+$Form->set_InputOrder($FormularName,$InputName_MaxMailsBcc,18);
+$Form->set_InputLabel($FormularName,$InputName_MaxMailsBcc,"");
+$Form->set_InputSize($FormularName,$InputName_MaxMailsBcc,0,1);
+$Form->set_InputMultiple($FormularName,$InputName_MaxMailsBcc,false);
+//add Data
+$Form->add_InputOption($FormularName,$InputName_MaxMailsBcc,5,"  5");
+$Form->add_InputOption($FormularName,$InputName_MaxMailsBcc,10," 10");
+$Form->add_InputOption($FormularName,$InputName_MaxMailsBcc,25," 25");
+$Form->add_InputOption($FormularName,$InputName_MaxMailsBcc,50," 50");
+$Form->add_InputOption($FormularName,$InputName_MaxMailsBcc,75," 75");
+$Form->add_InputOption($FormularName,$InputName_MaxMailsBcc,100,"100");
 //Aktiv
+if ($standard==1) {
+	$Form->new_Input($FormularName,$InputName_Aktiv, "hidden", 1);
+} else {
 $Form->new_Input($FormularName,$InputName_Aktiv,"checkbox", 1);
 $Form->set_InputJS($FormularName,$InputName_Aktiv," onChange=\"flash('submit','#ff0000');\" ");
 $Form->set_InputDefault($FormularName,$InputName_Aktiv,$$InputName_Aktiv);
@@ -146,6 +190,71 @@ $Form->set_InputDesc($FormularName,$InputName_Aktiv,___("Aktiv"));
 $Form->set_InputReadonly($FormularName,$InputName_Aktiv,false);
 $Form->set_InputOrder($FormularName,$InputName_Aktiv,2);
 $Form->set_InputLabel($FormularName,$InputName_Aktiv,"");
+}
+//SMTP SSL
+$Form->new_Input($FormularName,$InputName_SMTPSSL,"checkbox", 1);
+$Form->set_InputJS($FormularName,$InputName_SMTPSSL," onChange=\"flash('submit','#ff0000');\" ");
+$Form->set_InputDefault($FormularName,$InputName_SMTPSSL,$$InputName_SMTPSSL);
+$Form->set_InputStyleClass($FormularName,$InputName_SMTPSSL,"mFormText","mFormTextFocus");
+$Form->set_InputSize($FormularName,$InputName_SMTPSSL,48,256);
+$Form->set_InputDesc($FormularName,$InputName_SMTPSSL,___("SSL"));
+$Form->set_InputReadonly($FormularName,$InputName_SMTPSSL,false);
+$Form->set_InputOrder($FormularName,$InputName_SMTPSSL,15);
+$Form->set_InputLabel($FormularName,$InputName_SMTPSSL,"");
+//Type
+$Form->new_Input($FormularName,$InputName_SMTPMaxRcpt,"select", $$InputName_SMTPMaxRcpt);
+$Form->set_InputJS($FormularName,$InputName_SMTPMaxRcpt," onChange=\"flash('submit','#ff0000');checkHostType();\" ");
+$Form->set_InputDefault($FormularName,$InputName_SMTPMaxRcpt,$$InputName_SMTPMaxRcpt);
+$Form->set_InputStyleClass($FormularName,$InputName_SMTPMaxRcpt,"mFormSelect","mFormSelectFocus");
+$Form->set_InputDesc($FormularName,$InputName_SMTPMaxRcpt,___("max. rcpt to"));
+$Form->set_InputReadonly($FormularName,$InputName_SMTPMaxRcpt,false);
+$Form->set_InputOrder($FormularName,$InputName_SMTPMaxRcpt,16);
+$Form->set_InputLabel($FormularName,$InputName_SMTPMaxRcpt,"");
+$Form->set_InputSize($FormularName,$InputName_SMTPMaxRcpt,0,1);
+$Form->set_InputMultiple($FormularName,$InputName_SMTPMaxRcpt,false);
+//add Data
+$Form->add_InputOption($FormularName,$InputName_SMTPMaxRcpt,1,"1");
+$Form->add_InputOption($FormularName,$InputName_SMTPMaxRcpt,5,"5");
+$Form->add_InputOption($FormularName,$InputName_SMTPMaxRcpt,10,"10");
+$Form->add_InputOption($FormularName,$InputName_SMTPMaxRcpt,25,"25");
+$Form->add_InputOption($FormularName,$InputName_SMTPMaxRcpt,50,"50");
+$Form->add_InputOption($FormularName,$InputName_SMTPMaxRcpt,100,"100");
+//sender_name, email etc
+$Form->new_Input($FormularName,$InputName_SenderName,"text", $$InputName_SenderName);
+$Form->set_InputJS($FormularName,$InputName_SenderName," onChange=\"flash('submit','#ff0000');\" ");
+$Form->set_InputStyleClass($FormularName,$InputName_SenderName,"mFormText","mFormTextFocus");
+$Form->set_InputSize($FormularName,$InputName_SenderName,48,256);
+$Form->set_InputDesc($FormularName,$InputName_SenderName,___("Erscheint als Absender-Name in der E-Mail"));
+$Form->set_InputReadonly($FormularName,$InputName_SenderName,false);
+$Form->set_InputOrder($FormularName,$InputName_SenderName,10);
+$Form->set_InputLabel($FormularName,$InputName_SenderName,"");
+//sender_name, email etc
+$Form->new_Input($FormularName,$InputName_SenderEMail,"text", $$InputName_SenderEMail);
+$Form->set_InputJS($FormularName,$InputName_SenderEMail," onChange=\"flash('submit','#ff0000');\" onkeyup=\"RemoveInvalidChars(this, '[^A-Za-z0-9\_\@\.\-]'); ForceLowercase(this);\"");
+$Form->set_InputStyleClass($FormularName,$InputName_SenderEMail,"mFormText","mFormTextFocus");
+$Form->set_InputSize($FormularName,$InputName_SenderEMail,48,256);
+$Form->set_InputDesc($FormularName,$InputName_SenderEMail,___("Erscheint als Absender-E-Mail-Adresse in der E-Mail"));
+$Form->set_InputReadonly($FormularName,$InputName_SenderEMail,false);
+$Form->set_InputOrder($FormularName,$InputName_SenderEMail,9);
+$Form->set_InputLabel($FormularName,$InputName_SenderEMail,"");
+//reply_to
+$Form->new_Input($FormularName,$InputName_ReplyTo,"text", $$InputName_ReplyTo);
+$Form->set_InputJS($FormularName,$InputName_ReplyTo," onChange=\"flash('submit','#ff0000');\" onkeyup=\"RemoveInvalidChars(this, '[^A-Za-z0-9\_\@\.\-]'); ForceLowercase(this);\"");
+$Form->set_InputStyleClass($FormularName,$InputName_ReplyTo,"mFormText","mFormTextFocus");
+$Form->set_InputSize($FormularName,$InputName_ReplyTo,48,256);
+$Form->set_InputDesc($FormularName,$InputName_ReplyTo,___("Reply-to, Adresse für E-Mail Antworten"));
+$Form->set_InputReadonly($FormularName,$InputName_ReplyTo,false);
+$Form->set_InputOrder($FormularName,$InputName_ReplyTo,11);
+$Form->set_InputLabel($FormularName,$InputName_ReplyTo,"");
+//return_mail etc
+$Form->new_Input($FormularName,$InputName_ReturnMail,"text", $$InputName_ReturnMail);
+$Form->set_InputJS($FormularName,$InputName_ReturnMail," onChange=\"flash('submit','#ff0000');\" onkeyup=\"RemoveInvalidChars(this, '[^A-Za-z0-9\_\@\.\-]'); ForceLowercase(this);\"");
+$Form->set_InputStyleClass($FormularName,$InputName_ReturnMail,"mFormText","mFormTextFocus");
+$Form->set_InputSize($FormularName,$InputName_ReturnMail,48,256);
+$Form->set_InputDesc($FormularName,$InputName_ReturnMail,___("Return-Path, Adresse für E-Mail Fehlermeldungen"));
+$Form->set_InputReadonly($FormularName,$InputName_ReturnMail,false);
+$Form->set_InputOrder($FormularName,$InputName_ReturnMail,12);
+$Form->set_InputLabel($FormularName,$InputName_ReturnMail,"");
 
 //submit button
 $Form->new_Input($FormularName,$InputName_Submit,"submit",___("Speichern"));
@@ -177,11 +286,22 @@ $_MAIN_OUTPUT.= $Form->INPUT[$FormularName]['h_id']['html'];
 $_MAIN_OUTPUT.= "<table>";
 
 $_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top width=\"200\">".tm_icon("sum.png",___("Name"))."&nbsp;";
+$_MAIN_OUTPUT.= "<td valign=top width=\"180\">".tm_icon("sum.png",___("Name"))."&nbsp;";
 $_MAIN_OUTPUT.= ___("Name");
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "<td valign=top>";
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Name]['html'];
+$_MAIN_OUTPUT.= "</td>";
+$_MAIN_OUTPUT.= "</tr>";
+$_MAIN_OUTPUT.= "<tr>";
+$_MAIN_OUTPUT.= "<td valign=top>".tm_icon("tick.png",___("Aktiv")).tm_icon("cancel.png",___("Aktiv"))."&nbsp;";
+$_MAIN_OUTPUT.= ___("Aktiv");
+$_MAIN_OUTPUT.= "</td>";
+$_MAIN_OUTPUT.= "<td valign=top>";
+$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Aktiv]['html'];
+	if ($standard==1) {
+		$_MAIN_OUTPUT.=  tm_icon("lightning.png",___("Standard SMTP Host"),"","","","server_compressed.png")."&nbsp;".___("Standard SMTP-Host! Kann nicht de-aktiviert werden.");
+	}
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "</tr>";
 
@@ -214,11 +334,78 @@ $_MAIN_OUTPUT.= "</tr>";
 
 $_MAIN_OUTPUT.= "<tr>";
 $_MAIN_OUTPUT.= "<td style=\"border-top:1px dashed grey\" valign=\"top\">";
+$_MAIN_OUTPUT.= "".tm_icon("user_gray.png",___("Benutzername"))."&nbsp;";
+$_MAIN_OUTPUT.= ___("Benutzername");
+$_MAIN_OUTPUT.= "</td>";
+$_MAIN_OUTPUT.= "<td style=\"border-top:1px dashed grey\" valign=\"top\">";
+$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_User]['html'];
+$_MAIN_OUTPUT.= "</td>";
+$_MAIN_OUTPUT.= "</tr>";
+
+$_MAIN_OUTPUT.= "<tr>";
+$_MAIN_OUTPUT.= "<td valign=top>".tm_icon("pilcrow.png",___("Passwort"))."&nbsp;";
+$_MAIN_OUTPUT.= ___("Passwort");
+$_MAIN_OUTPUT.= "</td>";
+$_MAIN_OUTPUT.= "<td valign=top>";
+$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Pass]['html'];
+$_MAIN_OUTPUT.= "</td>";
+$_MAIN_OUTPUT.= "</tr>";
+
+$_MAIN_OUTPUT.= "<tr>";
+$_MAIN_OUTPUT.= "<td style=\"border-top:1px solid black\" valign=\"top\" colspan=2>";
+$_MAIN_OUTPUT.= "<strong>".___("POP3/IMAP")."</strong>";
+$_MAIN_OUTPUT.= "</td>";
+$_MAIN_OUTPUT.= "</tr>";
+
+$_MAIN_OUTPUT.= "<tr>";
+$_MAIN_OUTPUT.= "<td style=\"border-top:1px dashed grey\" valign=\"top\">";
 $_MAIN_OUTPUT.= "".tm_icon("server_lightning.png",___("Optionen"))."&nbsp;";
 $_MAIN_OUTPUT.= ___("POP3/IMAP Optionen");
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "<td style=\"border-top:1px dashed grey\" valign=\"top\">";
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Options]['html'];
+$_MAIN_OUTPUT.= "</td>";
+$_MAIN_OUTPUT.= "</tr>";
+
+$_MAIN_OUTPUT.= "<tr>";
+$_MAIN_OUTPUT.= "<td style=\"border-top:1px solid black\" valign=\"top\" colspan=2>";
+$_MAIN_OUTPUT.= "<strong>".___("SMTP")."</strong>";
+$_MAIN_OUTPUT.= "</td>";
+$_MAIN_OUTPUT.= "</tr>";
+
+$_MAIN_OUTPUT.= "<tr>";
+$_MAIN_OUTPUT.= "<td valign=top>";
+$_MAIN_OUTPUT.= tm_icon("email.png",___("E-Mail"))."&nbsp;".___("Absender-Adresse")."<br>".___("E-Mail (name@domain.tld)");
+$_MAIN_OUTPUT.= "</td>";
+$_MAIN_OUTPUT.= "<td valign=top>";
+$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_SenderEMail]['html'];
+$_MAIN_OUTPUT.= "</td>";
+$_MAIN_OUTPUT.= "</tr>";
+
+$_MAIN_OUTPUT.= "<tr>";
+$_MAIN_OUTPUT.= "<td valign=top>";
+$_MAIN_OUTPUT.= tm_icon("user_gray.png",___("Name"))."&nbsp;".___("Absender-Name");
+$_MAIN_OUTPUT.= "</td>";
+$_MAIN_OUTPUT.= "<td valign=top>";
+$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_SenderName]['html'];
+$_MAIN_OUTPUT.= "</td>";
+$_MAIN_OUTPUT.= "</tr>";
+
+$_MAIN_OUTPUT.= "<tr>";
+$_MAIN_OUTPUT.= "<td valign=top>";
+$_MAIN_OUTPUT.= tm_icon("email.png",___("E-Mail"))."&nbsp;".___("Reply-to, E-Mail für Antworten");
+$_MAIN_OUTPUT.= "</td>";
+$_MAIN_OUTPUT.= "<td valign=top>";
+$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_ReplyTo]['html'];
+$_MAIN_OUTPUT.= "</td>";
+$_MAIN_OUTPUT.= "</tr>";
+
+$_MAIN_OUTPUT.= "<tr>";
+$_MAIN_OUTPUT.= "<td valign=top>";
+$_MAIN_OUTPUT.= tm_icon("email_error.png",___("E-Mail"))."&nbsp;".___("Return-Path, E-Mail für Fehlermeldungen");
+$_MAIN_OUTPUT.= "</td>";
+$_MAIN_OUTPUT.= "<td valign=top>";
+$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_ReturnMail]['html'];
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "</tr>";
 
@@ -244,34 +431,44 @@ $_MAIN_OUTPUT.= "</tr>";
 
 $_MAIN_OUTPUT.= "<tr>";
 $_MAIN_OUTPUT.= "<td style=\"border-top:1px dashed grey\" valign=\"top\">";
-$_MAIN_OUTPUT.= "".tm_icon("user_gray.png",___("Benutzername"))."&nbsp;";
-$_MAIN_OUTPUT.= ___("Benutzername");
+$_MAIN_OUTPUT.= "".tm_icon("lock.png",___("SSL"))."&nbsp;";
+$_MAIN_OUTPUT.= ___("SSL");
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "<td style=\"border-top:1px dashed grey\" valign=\"top\">";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_User]['html'];
+$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_SMTPSSL]['html'];
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "</tr>";
 
 $_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top>".tm_icon("pilcrow.png",___("Passwort"))."&nbsp;";
-$_MAIN_OUTPUT.= ___("Passwort");
+$_MAIN_OUTPUT.= "<td style=\"border-top:1px dashed grey\" valign=\"top\">";
+$_MAIN_OUTPUT.= "".tm_icon("group.png",___("max. rcpt to"))."&nbsp;";
+$_MAIN_OUTPUT.= ___("max. rcpt to");
 $_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "<td valign=top>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Pass]['html'];
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top>".tm_icon("tick.png",___("Aktiv")).tm_icon("cancel.png",___("Aktiv"))."&nbsp;";
-$_MAIN_OUTPUT.= ___("Aktiv");
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "<td valign=top>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Aktiv]['html'];
+$_MAIN_OUTPUT.= "<td style=\"border-top:1px dashed grey\" valign=\"top\">";
+$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_SMTPMaxRcpt]['html'];
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "</tr>";
 
 $_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top colspan=2>";
+$_MAIN_OUTPUT.= "<td style=\"border-top:1px dashed grey\" valign=\"top\">";
+$_MAIN_OUTPUT.= tm_icon("cog.png",___("Maximale Anzahl Mails"))."&nbsp;".___("Maximale Anzahl Mails pro Sendevorgang");
+$_MAIN_OUTPUT.= "</td>";
+$_MAIN_OUTPUT.= "<td style=\"border-top:1px dashed grey\" valign=\"top\">";
+$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_MaxMails]['html'];
+$_MAIN_OUTPUT.= "</td>";
+$_MAIN_OUTPUT.= "</tr>";
+
+$_MAIN_OUTPUT.= "<tr>";
+$_MAIN_OUTPUT.= "<td style=\"border-top:1px dashed grey\" valign=\"top\">";
+$_MAIN_OUTPUT.= tm_icon("cog.png",___("Maximale Anzahl Mails für BCC"))."&nbsp;".___("Maximale Anzahl Adressen pro Mail im BCC-Header für Massenmailing");
+$_MAIN_OUTPUT.= "</td>";
+$_MAIN_OUTPUT.= "<td style=\"border-top:1px dashed grey\" valign=\"top\">";
+$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_MaxMailsBcc]['html'];
+$_MAIN_OUTPUT.= "</td>";
+$_MAIN_OUTPUT.= "</tr>";
+
+$_MAIN_OUTPUT.= "<tr>";
+$_MAIN_OUTPUT.= "<td style=\"border-top:1px solid black\" valign=\"top\" colspan=2>";
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Submit]['html'];
 //$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Reset]['html'];
 $_MAIN_OUTPUT.= "</td>";

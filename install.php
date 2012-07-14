@@ -15,7 +15,7 @@
 //configure
 /***********************************************************/
 //guess path to config and include
-require_once(dirname(__FILE__)."/include/install/install_conf.inc.php");
+require_once(realpath(dirname(__FILE__))."/include/install/install_conf.inc.php");
 
 /***********************************************************/
 //load header

@@ -42,9 +42,14 @@ $_HEAD_HTML='<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "htt
 	<script type="text/javascript" src="'.$tm_URL_FE.'/js/tellmatic.js"></script>
 	<script type="text/javascript" src="'.$tm_URL_FE.'/js/tellmatic_cookie.js"></script>
 	<script type="text/javascript" src="'.$tm_URL_FE.'/js/jsFormValidation/jsFormValidation.js"></script>
+	<!--calendar-->
 	<script type="text/javascript" src="'.$tm_URL_FE.'/js/cal/calendar.js"></script>
 	<script type="text/javascript" src="'.$tm_URL_FE.'/js/cal/lang/calendar-en.js"></script>
 	<script type="text/javascript" src="'.$tm_URL_FE.'/js/cal/calendar-setup.js"></script>
+	<!--mootools-->
+	<script type="text/javascript" src="'.$tm_URL_FE.'/js/mootools/mootools.js"></script>
+	<script type="text/javascript" src="'.$tm_URL_FE.'/js/mootools/mootools-more.js"></script>
+	<script type="text/javascript" src="'.$tm_URL_FE.'/js/tellmatic_mootools.js"></script>
 
 	<script type="text/javascript">
 		window.onload = countdown;

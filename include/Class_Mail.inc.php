@@ -115,10 +115,6 @@ Class tm_Mail {
 				//$limit++; //limit um 1 erhoehen wenn filter gesetzt und nichts gefunden! damit wir immer $limit ergebnisse bekommen , maximal!
 				// kann aber zu einer komischen schleife fuehren, liefert mehr ergebnisse als limit ist... :)
 				//pruefen ob max nazahl mails ueberschritten, wenn ja, schleife abbrechen!
-				$limit++; // limit um 1 erhoehen!
-				if (($offset+$limit)>$this->count_msg) {
-					$i=$this->count_msg;
-				}
 			}
 			//imap_setflag_full($this->mbox, $i, "\\SEEN"); 
 			//nur imap!!! imap_setflag_full($this->mbox, imap_uid($this->mbox, $i), "\\Seen", ST_UID);

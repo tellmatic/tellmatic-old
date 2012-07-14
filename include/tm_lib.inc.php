@@ -36,6 +36,15 @@ if (!$tm_config) {
 
 
 	/***********************************************************/
+	//
+	//Dateformat for Newsletters to parse {DATE}
+	/***********************************************************/
+	define ("TM_NL_DATEFORMAT","d.m.Y");
+	//en: Y-m-d
+	//de: d.m.Y
+	//see: www.php.net/date
+
+	/***********************************************************/
 	//siteid
 	//siteid wird aber zukuenftig variabel sein, bzw default-siteid vergeben werden.
 	/***********************************************************/
@@ -45,8 +54,10 @@ if (!$tm_config) {
 	/***********************************************************/
 	//demomode und debugmode
 	/***********************************************************/
-	define ("DEMO", FALSE);
-	define ("DEBUG", FALSE);
+	define ("DEMO", FALSE);//use demo mode
+	define ("DEBUG", FALSE);//printout useful infos
+	define ("DEBUG_SQL", FALSE);//Warning! this will print out all sql queries!!!
+	define ("DEBUG_SMTP", FALSE);//Warning! this will print out all smtp messages and communication with server
 
 	/***********************************************************/
 	//old httpd auth login +php-cgi
@@ -267,8 +278,8 @@ if (!$tm_config) {
 //array mit verfuegbaren sprachen
 /***********************************************************/
 
-	$LANGUAGES=Array(	'lang' => Array('de','en','es','it'),
-										'text' => Array('Deutsch','English','Espana','Italiano'),
+	$LANGUAGES=Array(	'lang' => Array('de','en','es','it','nl','pt'),
+										'text' => Array('Deutsch','English','Espana','Italiano','Dutch','Poruguese (BR)'),
 									);
 	$supported_locales = $LANGUAGES['lang'];//array('en', 'de');
 
@@ -285,10 +296,6 @@ if (!$tm_config) {
 /***********************************************************/
 	$CONFIG=new tm_CFG();
 	$C=$CONFIG->getCFG(TM_SITEID);
-
-	$max_mails_atonce=$C[0]['max_mails_atonce'];
-	$max_mails_bcc=$C[0]['max_mails_bcc'];
-	$max_mails_retry=$C[0]['max_mails_retry'];
 
 	//eMail prueflevel!
 	$EMailcheck_Intern=$C[0]['emailcheck_intern'];

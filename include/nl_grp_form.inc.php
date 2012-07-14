@@ -126,7 +126,7 @@ $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "<td valign=top>";
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Aktiv]['html'];
 	if ($standard==1) {
-		$_MAIN_OUTPUT.=  "<img src=\"".$tm_iconURL."/page_white_lightning.png\" title=\"".___("Diese Gruppe ist die Standardgruppe")."\" border=\"0\">".___("Standardgruppe! Kann nicht de-aktiviert werden.");
+		$_MAIN_OUTPUT.=  tm_icon("page_white_lightning.png",___("Diese Gruppe ist die Standardgruppe"))."&nbsp;".___("Standardgruppe! Kann nicht de-aktiviert werden.");
 	}
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "</tr>";

@@ -1,3 +1,1232 @@
+2009-01-30 Friday 21:26  tag r-1-0-8-4
+
+2009-01-30 Friday 21:26  mcms09
+
+	Changed:
+		ChangeLog (1.8), "Exp", lines: +22 -0
+
+	...
+
+2009-01-30 Friday 19:57  mcms09
+
+	Changed:
+		include/Class_Q.inc.php (1.8), "Exp", lines: +1 -1
+
+	oops :)
+
+2009-01-30 Friday 16:44  mcms09
+
+	Changed:
+		include/nl_edit.inc.php (1.8), "Exp", lines: +2 -7
+		include/nl_new.inc.php (1.9), "Exp", lines: +2 -2
+
+	finally fix undefined var attach_existing
+
+2009-01-30 Friday 14:32  mcms09
+
+	Changed:
+		ChangeLog (1.7), "Exp", lines: +34 -3
+
+	1.0.8.4
+
+2009-01-30 Friday 14:31  mcms09
+
+	Changed:
+		include/install/install_conf_sql.inc.php (1.16), "Exp", lines: +1 -0
+
+	add standard to hosts
+
+2009-01-30 Friday 14:30  mcms09
+
+	Changed:
+		include/bounce.inc.php (1.9), "Exp", lines: +1 -0
+
+	fix T_ELSE :>
+
+2009-01-30 Friday 14:29  mcms09
+
+	Changed:
+		include/Class_Host.inc.php (1.3), "Exp", lines: +1 -1
+
+	add forgotten comma to insert hosts statement
+
+2009-01-30 Friday 14:29  mcms09
+
+	Changed:
+		include/Class_DB.inc.php (1.5), "Exp", lines: +2 -1
+
+	define DEBUG_SQL as FALSE if not defined yet
+
+2009-01-30 Friday 13:49  mcms09
+
+	Changed:
+		ChangeLog (1.6), "Exp", lines: +32 -0
+
+	1084
+
+2009-01-30 Friday 12:49  mcms09
+
+	Changed:
+		include/Menu.inc.php (1.7), "Exp", lines: +1 -5
+
+	do not hide menuentries for experienced users, uses slide in now
+
+2009-01-30 Friday 12:48  mcms09
+
+	Changed:
+		include/Class_mSimpleForm.inc.php (1.4), "Exp", lines: +4 -4
+
+	set default style empty in functions
+
+2009-01-30 Friday 12:48  mcms09
+
+	Changed:
+		include/bounce.inc.php (1.8), "Exp", lines: +2 -0
+
+	more warnings and checks
+
+2009-01-30 Friday 02:22  mcms09
+
+	Changed:
+		ChangeLog (1.5), "Exp", lines: +1135 -0
+
+	1.0.8.4
+
+2009-01-30 Friday 02:20  mcms09
+
+	Changed:
+		include/Functions.inc.php (1.16), "Exp", lines: +0 -1
+
+	--
+
+2009-01-30 Friday 02:19  mcms09
+
+	Changed:
+		include/Class_mSimpleForm.inc.php (1.3), "Exp", lines: +4 -0
+
+	styles for options
+
+2009-01-30 Friday 02:18  mcms09
+
+	Changed:
+		css/default/tellmatic_form.css (1.2), "Exp", lines: +5 -4
+
+	width and height of textareas
+
+2009-01-30 Friday 02:18  mcms09
+
+	Changed:
+		doc/de/adm_set.html (1.2), "Exp", lines: +20 -1
+
+	some more text
+
+2009-01-30 Friday 02:17  mcms09
+
+	Added:
+		js/tinymce/jscripts/tiny_mce/langs/es.js (1.1)
+		js/tinymce/jscripts/tiny_mce/langs/nl.js (1.1)
+		js/tinymce/jscripts/tiny_mce/langs/pt.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/advhr/langs/en_dlg.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/advhr/langs/es_dlg.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/advhr/langs/it_dlg.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/advhr/langs/nl_dlg.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/advhr/langs/pt_dlg.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/advimage/langs/en_dlg.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/advimage/langs/es_dlg.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/advimage/langs/it_dlg.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/advimage/langs/nl_dlg.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/advimage/langs/pt_dlg.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/advlink/langs/en_dlg.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/advlink/langs/es_dlg.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/advlink/langs/it_dlg.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/advlink/langs/nl_dlg.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/advlink/langs/pt_dlg.js (1.1)
+
+	more langs for tinymce
+
+2009-01-30 Friday 02:16  mcms09
+
+	Changed:
+		include/bounce_host_form.inc.php (1.4), "Exp", lines: +7 -2
+
+	select more addresses
+
+2009-01-30 Friday 02:15  mcms09
+
+	Changed:
+		include/adr_list.inc.php (1.6), "Exp", lines: +6 -3
+
+	sort by id
+
+2009-01-30 Friday 02:14  mcms09
+
+	Changed:
+		include/nl_form.inc.php (1.8), "Exp", lines: +0 -1
+		include/nl_grp_list.inc.php (1.3), "Exp", lines: +0 -1
+		include/Index.inc.php (1.4), "Exp", lines: +6 -3
+
+	--
+
+2009-01-30 Friday 02:13  mcms09
+
+	Changed:
+		include/nl_edit.inc.php (1.7), "Exp", lines: +1 -1
+
+	do not strtr bodytext
+
+2009-01-30 Friday 02:12  mcms09
+
+	Changed:
+		include/adr_form.inc.php (1.5), "Exp", lines: +24 -13
+
+	statuscolor
+
+2009-01-30 Friday 02:12  mcms09
+
+	Changed:
+		include/adr_search_form.inc.php (1.3), "Exp", lines: +6 -8
+
+	icons
+
+2009-01-30 Friday 02:11  mcms09
+
+	Changed:
+		include/tm_lib.inc.php (1.17), "Exp", lines: +2 -2
+
+	new langugages nl/pt
+
+2009-01-30 Friday 02:10  mcms09
+
+	Changed:
+		include/install/install_conf.inc.php (1.9), "Exp", lines: +2 -1
+
+	quotes
+
+2009-01-30 Friday 02:09  mcms09
+
+	Changed:
+		js/tellmatic.js (1.6), "Exp", lines: +33 -1
+
+	show/hide function
+
+2009-01-30 Friday 02:09  mcms09
+
+	Changed:
+		include/Stats.inc.php (1.4), "Exp", lines: +22 -7
+
+	textcolor for adr status
+
+2009-01-30 Friday 02:08  mcms09
+
+	Changed:
+		CHANGES (1.13), "Exp", lines: +131 -0
+		UPDATE (1.14), "Exp", lines: +61 -0
+
+	updated for 1.0.8.4
+
+2009-01-29 Thursday 16:22  mcms09
+
+	Added:
+		js/tinymce/jscripts/tiny_mce/plugins/style/langs/en_dlg.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/style/langs/es_dlg.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/style/langs/it_dlg.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/style/langs/nl_dlg.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/style/langs/pt_dlg.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/table/langs/en_dlg.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/table/langs/es_dlg.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/table/langs/it_dlg.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/table/langs/nl_dlg.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/table/langs/pt_dlg.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/template/langs/en_dlg.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/template/langs/es_dlg.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/template/langs/it_dlg.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/template/langs/nl_dlg.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/template/langs/pt_dlg.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/xhtmlxtras/langs/en_dlg.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/xhtmlxtras/langs/es_dlg.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/xhtmlxtras/langs/it_dlg.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/xhtmlxtras/langs/nl_dlg.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/xhtmlxtras/langs/pt_dlg.js (1.1)
+		js/tinymce/jscripts/tiny_mce/themes/simple/langs/en.js (1.1)
+		js/tinymce/jscripts/tiny_mce/themes/simple/langs/es.js (1.1)
+		js/tinymce/jscripts/tiny_mce/themes/simple/langs/it.js (1.1)
+		js/tinymce/jscripts/tiny_mce/themes/simple/langs/nl.js (1.1)
+		js/tinymce/jscripts/tiny_mce/themes/simple/langs/pt.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/emotions/langs/en_dlg.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/emotions/langs/es_dlg.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/emotions/langs/it_dlg.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/emotions/langs/nl_dlg.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/emotions/langs/pt_dlg.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/fullpage/langs/en_dlg.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/fullpage/langs/es_dlg.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/fullpage/langs/it_dlg.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/fullpage/langs/nl_dlg.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/fullpage/langs/pt_dlg.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/media/langs/en_dlg.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/media/langs/es_dlg.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/media/langs/it_dlg.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/media/langs/nl_dlg.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/media/langs/pt_dlg.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/paste/langs/en_dlg.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/paste/langs/es_dlg.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/paste/langs/it_dlg.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/paste/langs/nl_dlg.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/paste/langs/pt_dlg.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/searchreplace/langs/en_dlg.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/searchreplace/langs/es_dlg.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/searchreplace/langs/it_dlg.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/searchreplace/langs/nl_dlg.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/searchreplace/langs/pt_dlg.js (1.1)
+
+	new languages for tinymce
+
+2009-01-29 Thursday 16:20  mcms09
+
+	Added:
+		js/tinymce/jscripts/tiny_mce/themes/advanced/langs/en_dlg.js (1.1)
+		js/tinymce/jscripts/tiny_mce/themes/advanced/langs/es.js (1.1)
+		js/tinymce/jscripts/tiny_mce/themes/advanced/langs/es_dlg.js (1.1)
+		js/tinymce/jscripts/tiny_mce/themes/advanced/langs/it_dlg.js (1.1)
+		js/tinymce/jscripts/tiny_mce/themes/advanced/langs/nl.js (1.1)
+		js/tinymce/jscripts/tiny_mce/themes/advanced/langs/nl_dlg.js (1.1)
+		js/tinymce/jscripts/tiny_mce/themes/advanced/langs/pt.js (1.1)
+		js/tinymce/jscripts/tiny_mce/themes/advanced/langs/pt_dlg.js (1.1)
+
+	new languages files for tinymce
+
+2009-01-29 Thursday 16:18  mcms09
+
+	Changed:
+		js/tinymce/jscripts/tiny_mce/themes/simple/editor_template_src.js (1.2), "Exp", lines: +0 -0
+		js/tinymce/jscripts/tiny_mce/themes/advanced/editor_template_src.js (1.2), "Exp", lines: +0 -0
+		js/tinymce/jscripts/tiny_mce/themes/advanced/langs/en.js (1.2), "Exp", lines: +62 -91
+		js/tinymce/jscripts/tiny_mce/themes/advanced/langs/it.js (1.2), "Exp", lines: +62 -98
+		js/tinymce/jscripts/tiny_mce/langs/en.js (1.2), "Exp", lines: +154 -41
+		js/tinymce/jscripts/tiny_mce/langs/it.js (1.2), "Exp", lines: +154 -49
+		js/tinymce/jscripts/tiny_mce/plugins/_template/editor_plugin_src.js (1.2), "Exp", lines: +0 -0
+		js/tinymce/jscripts/tiny_mce/plugins/advhr/editor_plugin_src.js (1.2), "Exp", lines: +0 -0
+		js/tinymce/jscripts/tiny_mce/plugins/advimage/editor_plugin_src.js (1.2), "Exp", lines: +0 -0
+		js/tinymce/jscripts/tiny_mce/plugins/advlink/editor_plugin_src.js (1.2), "Exp", lines: +0 -0
+		js/tinymce/jscripts/tiny_mce/plugins/autosave/editor_plugin_src.js (1.2), "Exp", lines: +0 -0
+		js/tinymce/jscripts/tiny_mce/plugins/cleanup/editor_plugin_src.js (1.2), "Exp", lines: +0 -0
+		js/tinymce/jscripts/tiny_mce/plugins/contextmenu/editor_plugin_src.js (1.2), "Exp", lines: +0 -0
+		js/tinymce/jscripts/tiny_mce/plugins/devkit/editor_plugin_src.js (1.2), "Exp", lines: +0 -0
+		js/tinymce/jscripts/tiny_mce/plugins/directionality/editor_plugin_src.js (1.2), "Exp", lines: +0 -0
+		js/tinymce/jscripts/tiny_mce/plugins/emotions/editor_plugin_src.js (1.2), "Exp", lines: +0 -0
+		js/tinymce/jscripts/tiny_mce/plugins/flash/editor_plugin_src.js (1.2), "Exp", lines: +0 -0
+		js/tinymce/jscripts/tiny_mce/plugins/fullpage/editor_plugin_src.js (1.2), "Exp", lines: +0 -0
+		js/tinymce/jscripts/tiny_mce/plugins/fullscreen/editor_plugin_src.js (1.2), "Exp", lines: +0 -0
+		js/tinymce/jscripts/tiny_mce/plugins/iespell/editor_plugin_src.js (1.2), "Exp", lines: +0 -0
+		js/tinymce/jscripts/tiny_mce/plugins/inlinepopups/editor_plugin_src.js (1.2), "Exp", lines: +0 -0
+		js/tinymce/jscripts/tiny_mce/plugins/inlinepopups/jscripts/mcwindows.js (1.2), "Exp", lines: +0 -0
+		js/tinymce/jscripts/tiny_mce/plugins/insertdatetime/editor_plugin_src.js (1.2), "Exp", lines: +0 -0
+		js/tinymce/jscripts/tiny_mce/plugins/layer/editor_plugin_src.js (1.2), "Exp", lines: +0 -0
+		js/tinymce/jscripts/tiny_mce/plugins/media/editor_plugin_src.js (1.2), "Exp", lines: +0 -0
+		js/tinymce/jscripts/tiny_mce/plugins/nonbreaking/editor_plugin_src.js (1.2), "Exp", lines: +0 -0
+		js/tinymce/jscripts/tiny_mce/plugins/noneditable/editor_plugin_src.js (1.2), "Exp", lines: +0 -0
+		js/tinymce/jscripts/tiny_mce/plugins/paste/editor_plugin_src.js (1.2), "Exp", lines: +0 -0
+		js/tinymce/jscripts/tiny_mce/plugins/preview/editor_plugin_src.js (1.2), "Exp", lines: +0 -0
+		js/tinymce/jscripts/tiny_mce/plugins/print/editor_plugin_src.js (1.2), "Exp", lines: +0 -0
+		js/tinymce/jscripts/tiny_mce/plugins/save/editor_plugin_src.js (1.2), "Exp", lines: +0 -0
+		js/tinymce/jscripts/tiny_mce/plugins/searchreplace/editor_plugin_src.js (1.2), "Exp", lines: +0 -0
+		js/tinymce/jscripts/tiny_mce/plugins/spellchecker/editor_plugin_src.js (1.2), "Exp", lines: +0 -0
+		js/tinymce/jscripts/tiny_mce/plugins/spellchecker/tinyspell.php (1.2), "Exp", lines: +0 -0
+		js/tinymce/jscripts/tiny_mce/plugins/style/editor_plugin_src.js (1.2), "Exp", lines: +0 -0
+		js/tinymce/jscripts/tiny_mce/plugins/table/editor_plugin_src.js (1.2), "Exp", lines: +0 -0
+		js/tinymce/jscripts/tiny_mce/plugins/template/editor_plugin_src.js (1.2), "Exp", lines: +0 -0
+		js/tinymce/jscripts/tiny_mce/plugins/visualchars/editor_plugin_src.js (1.2), "Exp", lines: +0 -0
+		js/tinymce/jscripts/tiny_mce/plugins/xhtmlxtras/editor_plugin_src.js (1.2), "Exp", lines: +0 -0
+		js/tinymce/jscripts/tiny_mce/plugins/xhtmlxtras/jscripts/abbr.js (1.2), "Exp", lines: +0 -0
+		js/tinymce/jscripts/tiny_mce/plugins/xhtmlxtras/jscripts/acronym.js (1.2), "Exp", lines: +0 -0
+		js/tinymce/jscripts/tiny_mce/plugins/xhtmlxtras/jscripts/attributes.js (1.2), "Exp", lines: +0 -0
+		js/tinymce/jscripts/tiny_mce/plugins/xhtmlxtras/jscripts/cite.js (1.2), "Exp", lines: +0 -0
+		js/tinymce/jscripts/tiny_mce/plugins/xhtmlxtras/jscripts/del.js (1.2), "Exp", lines: +0 -0
+		js/tinymce/jscripts/tiny_mce/plugins/xhtmlxtras/jscripts/element_common.js (1.2), "Exp", lines: +0 -0
+		js/tinymce/jscripts/tiny_mce/plugins/xhtmlxtras/jscripts/ins.js (1.2), "Exp", lines: +0 -0
+		js/tinymce/jscripts/tiny_mce/plugins/zoom/editor_plugin_src.js (1.2), "Exp", lines: +0 -0
+
+	upd
+
+2009-01-29 Thursday 16:16  mcms09
+
+	Changed:
+		tpl/default/Main.html (1.2), "Exp", lines: +0 -7
+
+	css check
+
+2009-01-29 Thursday 16:15  mcms09
+
+	Changed:
+		locale/mkpo.sh (1.3), "Exp", lines: +1 -1
+
+	new languages nl/pt
+
+2009-01-29 Thursday 16:14  mcms09
+
+	Changed:
+		include/tellmatic.sql (1.3), "Exp", lines: +40 -40
+
+	updated for 1.0.8.4
+
+2009-01-29 Thursday 16:14  mcms09
+
+	Added:
+		locale/tellmatic-nl.po (1.1)
+		locale/tellmatic-pt.po (1.1)
+
+	new languages: dutch and portuguese for 1.0.8.4
+
+2009-01-29 Thursday 16:11  mcms09
+
+	Changed:
+		locale/tellmatic-de.po (1.3), "Exp", lines: +7325 -3662
+		locale/tellmatic-en.po (1.4), "Exp", lines: +7327 -3683
+		locale/tellmatic-it.po (1.3), "Exp", lines: +7325 -3683
+		locale/tellmatic-es.po (1.3), "Exp", lines: +7325 -3683
+
+	updated for 1.0.8.4
+
+2008-11-14 Friday 22:13  mcms09
+
+	Changed:
+		include/Class_Mail.inc.php (1.6), "Exp", lines: +0 -4
+
+	fix bug with limit
+
+2008-11-14 Friday 22:10  mcms09
+
+	Changed:
+		tpl/cadillac/Menu_head.html (1.2), "Exp", lines: +2 -1
+		tpl/default/Menu_head.html (1.2), "Exp", lines: +2 -1
+		tpl/energy_safe/Menu_head.html (1.2), "Exp", lines: +2 -1
+		tpl/wine/Menu_head.html (1.2), "Exp", lines: +2 -1
+
+	use mootools slide with id instead of switchsection
+
+2008-11-14 Friday 22:08  mcms09
+
+	Changed:
+		tpl/Form_0_os.html (1.4), "Exp", lines: +1 -1
+
+	title is not parsed here
+
+2008-11-14 Friday 22:08  mcms09
+
+	Changed:
+		api_example.php (1.2), "Exp", lines: +28 -12
+
+	update
+
+2008-11-14 Friday 22:07  mcms09
+
+	Changed:
+		README (1.2), "Exp", lines: +51 -0
+
+	requirements and features
+
+2008-11-14 Friday 22:07  mcms09
+
+	Changed:
+		install.php (1.6), "Exp", lines: +1 -1
+
+	another try to guess correct path... use realpath(_FILE...
+
+2008-11-14 Friday 22:06  mcms09
+
+	Changed:
+		INSTALL.DE (1.6), "Exp", lines: +1 -1
+		INSTALL.EN (1.5), "Exp", lines: +1 -1
+
+	fixed typo
+
+2008-11-14 Friday 22:04  mcms09
+
+	Changed:
+		include/send_it.php (1.16), "Exp", lines: +168 -63
+
+	autogen/autostart and prepare queues, refresh rcpt list, parse
+	{DATE}/{CODE}, use host settings, check if attachments exists, ...
+
+2008-11-14 Friday 21:56  mcms09
+
+	Added:
+		js/mootools/mootools-more.js (1.1)
+		js/mootools/mootools.js (1.1)
+
+	added mootools js
+
+2008-11-14 Friday 21:54  mcms09
+
+	Changed:
+		js/tellmatic.js (1.5), "Exp", lines: +52 -36
+
+	add function checkFormSettings()
+
+2008-11-14 Friday 21:53  mcms09
+
+	Changed:
+		include/wysiwyg.inc.php (1.8), "Exp", lines: +12 -3
+
+	automatig create language list
+
+2008-11-14 Friday 21:51  mcms09
+
+	Changed:
+		include/user.inc.php (1.3), "Exp", lines: +1 -1
+
+	do not set email if DEMO
+
+2008-11-14 Friday 21:51  mcms09
+
+	Changed:
+		include/user_form.inc.php (1.2), "Exp", lines: +6 -6
+
+	corrected tabindexes
+
+2008-11-14 Friday 21:50  mcms09
+
+	Changed:
+		include/unsubscribe.inc.php (1.3), "Exp", lines: +1 -1
+
+	no newline in memo
+
+2008-11-14 Friday 21:49  mcms09
+
+	Changed:
+		include/tm_version.inc.php (1.5), "Exp", lines: +1 -1
+
+	jump to 1.0.8.4
+
+2008-11-14 Friday 21:49  mcms09
+
+	Changed:
+		include/tm_lib.inc.php (1.16), "Exp", lines: +13 -6
+
+	set dateformat for {DATE}, add DEBUG_SMTP/SQL/SMTP, removed
+	max_mails_xxx - use C[] instead or hostsettings
+
+2008-11-14 Friday 21:47  mcms09
+
+	Changed:
+		include/tm_lib_admin.inc.php (1.5), "Exp", lines: +9 -7
+
+	adjusted limits
+
+2008-11-14 Friday 21:46  mcms09
+
+	Changed:
+		include/tinymce_il.php (1.2), "Exp", lines: +35 -15
+
+	use getFiles instead of gen_rec_files_arry()
+
+2008-11-14 Friday 21:45  mcms09
+
+	Changed:
+		include/subscribe.inc.php (1.4), "Exp", lines: +4 -4
+
+	no newline in memo
+
+2008-11-14 Friday 21:43  mcms09
+
+	Changed:
+		include/subscribe_form.inc.php (1.5), "Exp", lines: +3 -3
+
+	corrected tabindexes
+
+2008-11-14 Friday 21:43  mcms09
+
+	Changed:
+		include/status.inc.php (1.4), "Exp", lines: +93 -23
+
+	use table layout
+
+2008-11-14 Friday 21:40  mcms09
+
+	Changed:
+		include/queue_vars.inc.php (1.5), "Exp", lines: +0 -2
+
+	n oneed for fastmode var, always use fastmode
+
+2008-11-14 Friday 21:39  mcms09
+
+	Changed:
+		include/queue_send.inc.php (1.8), "Exp", lines: +80 -119
+
+	check for nlid/qid/grpid, always use fastmode
+
+2008-11-14 Friday 21:37  mcms09
+
+	Changed:
+		include/queue_new.inc.php (1.8), "Exp", lines: +39 -42
+
+	check for nlid, add autogen, use countValidAdr()
+
+2008-11-14 Friday 21:11  mcms09
+
+	Changed:
+		include/queue_list_legende.inc.php (1.5), "Exp", lines: +19 -9
+
+	use mootools slide in out, new icons
+
+2008-11-14 Friday 21:08  mcms09
+
+	Changed:
+		include/queue_list.inc.php (1.7), "Exp", lines: +57 -25
+
+	check autogen, add link to refresh rcpt list, always use fastmode,
+	additional check for qid, count valid addresses
+
+2008-11-14 Friday 21:04  mcms09
+
+	Changed:
+		include/queue_form.inc.php (1.5), "Exp", lines: +43 -34
+
+	add autogen, corrected tabindexes
+
+2008-11-14 Friday 21:02  mcms09
+
+	Changed:
+		include/pager.inc.php (1.3), "Exp", lines: +1 -1
+
+	added check to not show empty last page
+
+2008-11-14 Friday 21:01  mcms09
+
+	Changed:
+		include/nl_upload.inc.php (1.5), "Exp", lines: +2 -0
+
+	parse {DATE}
+
+2008-11-14 Friday 21:00  mcms09
+
+	Changed:
+		include/nl_new.inc.php (1.8), "Exp", lines: +0 -1
+
+	removed attm
+
+2008-11-14 Friday 20:59  mcms09
+
+	Changed:
+		include/nl_list_legende.inc.php (1.6), "Exp", lines: +16 -12
+
+	use mootools slide in out, new icons
+
+2008-11-14 Friday 20:58  mcms09
+
+	Changed:
+		include/nl_list.inc.php (1.7), "Exp", lines: +82 -54
+
+	delete_history only for not running queues queue_delete: do not set
+	status of newsletter to 1=new url: stdurl has parameters for offset,
+	limit, sorting always use new fastmnode addHQ method to
+	create/update rcpt list add link to recreate rcpt list for new or
+	sterted queues show attachments in a table, summarize size use
+	mootools slie in/out
+
+2008-11-14 Friday 20:49  mcms09
+
+	Changed:
+		include/nl_grp_list_legende.inc.php (1.3), "Exp", lines: +13 -6
+
+	use mootools slide in out
+
+2008-11-14 Friday 20:48  mcms09
+
+	Changed:
+		include/nl_grp_form.inc.php (1.4), "Exp", lines: +1 -1
+
+	use tm_icon
+
+2008-11-14 Friday 20:48  mcms09
+
+	Changed:
+		include/nl_grp_edit.inc.php (1.3), "Exp", lines: +5 -7
+
+	check for std group before including form
+
+2008-11-14 Friday 20:46  mcms09
+
+	Changed:
+		include/nl_form.inc.php (1.7), "Exp", lines: +71 -48
+
+	corrected tabindexes, use mootools slide in/out, use subdirs (1
+	level) for attachements and group by subdir, use getFiles() for
+	existing trackimages instead of gen_rec_files_arry
+
+2008-11-14 Friday 20:43  mcms09
+
+	Changed:
+		include/nl_edit.inc.php (1.6), "Exp", lines: +1 -1
+
+	removed attm
+
+2008-11-14 Friday 20:42  mcms09
+
+	Changed:
+		include/bounce_mail_list.inc.php (1.4), "Exp", lines: +9 -5
+
+	filter bounces
+
+2008-11-14 Friday 20:40  mcms09
+
+	Changed:
+		include/bounce_mail_form_head.inc.php (1.3), "Exp", lines: +13 -7
+
+	add hiddenfields for bouncetype
+
+2008-11-14 Friday 19:11  mcms09
+
+	Changed:
+		include/bounce_host_form.inc.php (1.3), "Exp", lines: +63 -15
+
+	added bouncetype, added return-path selectbox, corrected tabindexes
+
+2008-11-14 Friday 19:09  mcms09
+
+	Changed:
+		include/bounce_filter_form_head.inc.php (1.3), "Exp", lines: +13 -2
+
+	add hiddenfields for bouncetype, add actiopn --none--
+
+2008-11-14 Friday 19:08  mcms09
+
+	Changed:
+		include/bounce_filter_adr_list.inc.php (1.2), "Exp", lines: +2 -9
+
+	check bouncetype, header and or body
+
+2008-11-14 Friday 19:06  mcms09
+
+	Changed:
+		include/bounce.inc.php (1.7), "Exp", lines: +37 -15
+
+	check bouncetype, check header and or body, filter for return-path
+
+2008-11-14 Friday 19:02  mcms09
+
+	Changed:
+		include/news_blank.png.inc.php (1.3), "Exp", lines: +1 -1
+
+	no blankline in memo
+
+2008-11-14 Friday 19:01  mcms09
+
+	Changed:
+		include/Menu.inc.php (1.6), "Exp", lines: +149 -79
+
+	check for aktiv=1 (to disable single menu entries set aktiv to 0),
+	add entry to show/hide help, new section for delivery
+
+2008-11-14 Friday 18:57  mcms09
+
+	Changed:
+		include/Main.inc.php (1.6), "Exp", lines: +22 -10
+
+	removed orphans, include testadressen.inc.php, use mootools slide
+	in/out
+
+2008-11-14 Friday 18:54  mcms09
+
+	Changed:
+		include/Login.inc.php (1.3), "Exp", lines: +11 -4
+
+	DEBUG Messages
+
+2008-11-14 Friday 18:52  mcms09
+
+	Changed:
+		include/host_test.inc.php (1.4), "Exp", lines: +32 -10
+
+	use new smtp settings, check if DEMO
+
+2008-11-14 Friday 18:51  mcms09
+
+	Changed:
+		include/host_new.inc.php (1.2), "Exp", lines: +45 -1
+
+	save new smtp settings
+
+2008-11-14 Friday 18:50  mcms09
+
+	Changed:
+		include/host_list_legende.inc.php (1.3), "Exp", lines: +16 -6
+
+	use mootols slide in/out, new icons
+
+2008-11-14 Friday 18:49  mcms09
+
+	Changed:
+		include/host_list.inc.php (1.2), "Exp", lines: +93 -23
+
+	show new smtp settings, check if DEMO, if DEMO do not show sensitive
+	data
+
+2008-11-14 Friday 18:48  mcms09
+
+	Changed:
+		include/host_form.inc.php (1.5), "Exp", lines: +219 -22
+
+	add new smtp settings
+
+2008-11-14 Friday 18:46  mcms09
+
+	Changed:
+		include/host_edit.inc.php (1.2), "Exp", lines: +90 -5
+
+	add new smtp settings, check if DEMO, do not show sensitive data if
+	DEMO is enabled
+
+2008-11-14 Friday 18:45  mcms09
+
+	Changed:
+		include/Header.inc.php (1.3), "Exp", lines: +5 -0
+
+	load mootools js
+
+2008-11-14 Friday 18:43  mcms09
+
+	Changed:
+		include/Functions.inc.php (1.15), "Exp", lines: +15 -0
+
+	add function formatfilesize to display human readable and formatted
+	filesizes
+
+2008-11-14 Friday 18:42  mcms09
+
+	Changed:
+		include/Functions.inc.php (1.14), "Exp", lines: +6 -1
+
+	getFiles: check if path exists, return filesize
+
+2008-11-14 Friday 18:41  mcms09
+
+	Changed:
+		include/Functions.inc.php (1.13), "Exp", lines: +3 -4
+
+	getDirectories(): do not check for . or .., that should be done in
+	the script or filter
+
+2008-11-14 Friday 18:39  mcms09
+
+	Changed:
+		include/Functions.inc.php (1.12), "Exp", lines: +15 -16
+
+	checkEmailAdr() default level set to 1=syntax only, MX Check was in
+	conflict with RFC, should be ok now, check for ANY if no MX is found
+	(RFC says if no MX exists, a default DNS entry is enough and used
+	as fallback, RFC 2821)
+
+2008-11-14 Friday 18:32  mcms09
+
+	Changed:
+		include/Functions.inc.php (1.11), "Exp", lines: +32 -31
+
+	sendmail_smtp() use host settings from Host-Array or default smtp
+	host, add propper text and html parts
+
+2008-11-14 Friday 18:29  mcms09
+
+	Changed:
+		include/Functions.inc.php (1.10), "Exp", lines: +5 -5
+
+	checkset_int() + check_dbid() now checks for valid integer value
+
+2008-11-14 Friday 18:28  mcms09
+
+	Changed:
+		include/Functions.inc.php (1.9), "Exp", lines: +4 -1
+
+	gen random id for icons in tm_icon if no id is set, add js for
+	bubble
+
+2008-11-14 Friday 18:27  mcms09
+
+	Changed:
+		include/Functions.inc.php (1.8), "Exp", lines: +3 -3
+
+	change marks for DEBUG in translation function ___, made trouble
+	with html comments etc
+
+2008-11-14 Friday 18:23  mcms09
+
+	Changed:
+		include/form_list_legende.inc.php (1.4), "Exp", lines: +13 -7
+
+	use mootols slide in/out
+
+2008-11-14 Friday 18:22  mcms09
+
+	Changed:
+		include/form_list.inc.php (1.5), "Exp", lines: +2 -2
+
+	adjust column width
+
+2008-11-14 Friday 18:21  mcms09
+
+	Changed:
+		include/form_form.inc.php (1.4), "Exp", lines: +22 -25
+
+	revied and corrected tabindexes, fix typo
+
+2008-11-14 Friday 18:19  mcms09
+
+	Changed:
+		include/Foot.inc.php (1.4), "Exp", lines: +0 -1
+
+	remove max_mails_at_once: per host
+
+2008-11-14 Friday 18:18  mcms09
+
+	Changed:
+		include/filemanager.inc.php (1.3), "Exp", lines: +2 -2
+
+	if DEMO, deactivate fm
+
+2008-11-14 Friday 18:17  mcms09
+
+	Changed:
+		include/click.inc.php (1.2), "Exp", lines: +1 -1
+
+	memo doesnt need newline anymore
+
+2008-11-14 Friday 18:16  mcms09
+
+	Changed:
+		include/Class_Q.inc.php (1.7), "Exp", lines: +166 -78
+
+	remove quotes around integers in sql, use checkset_int() to validate
+	integer values add autogen, autopmagical start q and create list if
+	1 add search array to getQ search for send_at using
+	search[send_after|send_before] add method getQtoPrepare() add
+	method setAutogen()
+
+2008-11-14 Friday 17:01  mcms09
+
+	Changed:
+		include/Class_Q.inc.php (1.6), "Exp", lines: +118 -0
+
+	add method addHQ() which uses sql to create rcpt list, this sql does
+	what php did before and needs a lot of time and memory! speeds up
+	creating the rcpt list  baout 1000x
+
+2008-11-14 Friday 16:57  mcms09
+
+	Changed:
+		include/Class_NL.inc.php (1.7), "Exp", lines: +50 -53
+
+	remove quotes around integers in sql, use checkset_int() to validate
+	integer values, removed attm
+
+2008-11-14 Friday 16:53  mcms09
+
+	Changed:
+		include/Class_mSimpleForm.inc.php (1.2), "Exp", lines: +1 -1
+
+	check if option value for nect entry is set, used to create groups
+	in select
+
+2008-11-14 Friday 16:52  mcms09
+
+	Changed:
+		include/Class_Host.inc.php (1.2), "Exp", lines: +83 -19
+
+	remove quotes around integers in sqluse checkset_int to validate
+	integer values add smtp settings which are removed from configtable
+	add smtp_ssl add reply_to add method to select standard smtp host
+	use lastinsertid add method to set standard smtp host
+
+2008-11-14 Friday 16:47  mcms09
+
+	Changed:
+		include/Class_Form.inc.php (1.6), "Exp", lines: +50 -62
+
+	remove quotes around integers in sql, use checkset_int() to validate
+	integer values, use lastinsertid
+
+2008-11-14 Friday 16:44  mcms09
+
+	Changed:
+		include/Class_DB.inc.php (1.4), "Exp", lines: +2 -1
+
+	print out query if DEBUG_SQL is true
+
+2008-11-14 Friday 16:06  mcms09
+
+	Changed:
+		include/Class_CFG.inc.php (1.4), "Exp", lines: +19 -74
+
+	remove quotes around integers, use checkset_int() to validate
+	integer values, removed smtp settings
+
+2008-11-14 Friday 16:03  mcms09
+
+	Changed:
+		include/Class_Bounce.inc.php (1.2), "Exp", lines: +127 -106
+
+	added methods check_for_emails() and removeInvalidEails(), updated
+	method checkHeader and checkBody, checkHeader now checks for
+	multiple predefined headers, also multiline headers and guess
+	emails
+
+2008-11-14 Friday 15:59  mcms09
+
+	Changed:
+		include/Class_Blacklist.inc.php (1.2), "Exp", lines: +9 -9
+
+	remove quotes around integers, use checkset_int() to validate
+	integer values
+
+2008-11-14 Friday 15:58  mcms09
+
+	Changed:
+		include/Class_Adr.inc.php (1.6), "Exp", lines: +122 -31
+
+	added method countValidAdr(), check for email filter in cleanAdr(),
+	new method newMemo(), Memo saves date etc
+
+2008-11-14 Friday 14:19  mcms09
+
+	Changed:
+		include/Class_Adr.inc.php (1.5), "Exp", lines: +58 -58
+
+	remove quotes around integers, use checkset_int() to validate
+	integer values
+
+2008-11-14 Friday 13:51  mcms09
+
+	Changed:
+		include/bl_form.inc.php (1.2), "Exp", lines: +3 -3
+
+	adjusted tabindex
+
+2008-11-14 Friday 13:50  mcms09
+
+	Changed:
+		include/adr_new.inc.php (1.3), "Exp", lines: +3 -1
+
+	use newMemo()
+
+2008-11-14 Friday 13:49  mcms09
+
+	Changed:
+		include/adr_list_legende.inc.php (1.4), "Exp", lines: +13 -6
+		include/bl_list_legende.inc.php (1.3), "Exp", lines: +13 -6
+
+	use mootols slide in/out
+
+2008-11-14 Friday 13:48  mcms09
+
+	Changed:
+		include/adr_list.inc.php (1.5), "Exp", lines: +6 -5
+
+	show memo in details, mark errorness emails >=max errors-1
+
+2008-11-14 Friday 13:46  mcms09
+
+	Changed:
+		include/adr_import.inc.php (1.7), "Exp", lines: +3 -3
+
+	memo
+
+2008-11-14 Friday 13:44  mcms09
+
+	Changed:
+		include/adr_import_form.inc.php (1.3), "Exp", lines: +28 -30
+
+	use getFiles() instead of gen_rec_files_array(), adjusted tabindex,
+	fixed typo
+
+2008-11-14 Friday 13:09  mcms09
+
+	Changed:
+		include/adr_grp_list_legende.inc.php (1.4), "Exp", lines: +15 -6
+
+	new icons show q / refresh rcpt list, use mootols slide in/out
+
+2008-11-14 Friday 13:08  mcms09
+
+	Changed:
+		include/adr_grp_list.inc.php (1.4), "Exp", lines: +31 -8
+
+	check for valid addresses, check for running queues, add link to
+	show active qs and recreate rcpt-list for new or started queues, use
+	display()
+
+2008-11-14 Friday 13:05  mcms09
+
+	Changed:
+		include/adr_grp_form.inc.php (1.3), "Exp", lines: +4 -4
+
+	adjusted tabindex, use tm_icon()
+
+2008-11-14 Friday 13:04  mcms09
+
+	Changed:
+		include/adr_grp_edit.inc.php (1.4), "Exp", lines: +4 -6
+
+	check group before including form
+
+2008-11-14 Friday 13:03  mcms09
+
+	Changed:
+		include/adr_form.inc.php (1.4), "Exp", lines: +4 -4
+
+	reviewed and correct tabindex
+
+2008-11-14 Friday 13:02  mcms09
+
+	Changed:
+		include/adr_export_form.inc.php (1.3), "Exp", lines: +14 -16
+
+	use getFiles() instead of gen_rec_files_array(), adjusted tabindex
+
+2008-11-14 Friday 12:58  mcms09
+
+	Changed:
+		include/adr_edit.inc.php (1.3), "Exp", lines: +1 -1
+
+	use method newMemo()
+
+2008-11-14 Friday 12:57  mcms09
+
+	Changed:
+		include/adr_clean.inc.php (1.4), "Exp", lines: +2 -1
+
+	new message for delete
+
+2008-11-14 Friday 12:55  mcms09
+
+	Changed:
+		include/adr_clean_form.inc.php (1.4), "Exp", lines: +2 -2
+
+	set value for --all-- to 0
+
+2008-11-14 Friday 12:53  mcms09
+
+	Changed:
+		include/adm_user_list_legende.inc.php (1.4), "Exp", lines: +13 -6
+
+	use mootools slide in/out
+
+2008-11-14 Friday 12:52  mcms09
+
+	Changed:
+		include/adm_user_form.inc.php (1.5), "Exp", lines: +9 -9
+		include/adr_clean_form.inc.php (1.3), "Exp", lines: +5 -5
+
+	reviewed and correct tabindex
+
+2008-11-14 Friday 12:51  mcms09
+
+	Changed:
+		include/adm_set.inc.php (1.7), "Exp", lines: +1 -77
+
+	removed smtp settings
+
+2008-11-14 Friday 12:48  mcms09
+
+	Changed:
+		include/adm_set_form.inc.php (1.5), "Exp", lines: +18 -263
+
+	reviewed and correct tabindex and removed smtp settings
+
+2008-11-14 Friday 12:44  mcms09
+
+	Changed:
+		include/install/install_install.inc.php (1.10), "Exp", lines: +22 -16
+
+	adjusted hosts: new smtp settings, set default host, dont create
+	.htaccess in nl-attachement directory
+
+2008-11-14 Friday 12:42  mcms09
+
+	Changed:
+		include/install/install_form.inc.php (1.4), "Exp", lines: +5 -0
+
+	added note for changing hosts after install
+
+2008-11-14 Friday 12:40  mcms09
+
+	Changed:
+		include/install/install_examples.inc.php (1.6), "Exp", lines: +7 -8
+
+	adjusted examples
+
+2008-11-14 Friday 12:39  mcms09
+
+	Changed:
+		include/install/install_conf_sql.inc.php (1.15), "Exp", lines: +10 -14
+
+	sql changes: nl: remove attm config: remove stmp host settings,
+	moved to hosts table q: added flag autogen for autogenerate rcpt
+	list and start queue host: added smtp_ssl, smtp_max_rcpt_count,
+	max_mails_atonce, max_mails_bcc, sender_name and _email, return
+	path email and reply to address
+
+2008-11-14 Friday 12:32  mcms09
+
+	Changed:
+		css/tellmatic.css (1.2), "Exp", lines: +7 -1
+
+	added class list_edit
+
+2008-11-14 Friday 12:30  mcms09
+
+	Changed:
+		css/energy_safe/tellmatic_main.css (1.2), "Exp", lines: +3 -3
+		css/energy_safe/tellmatic_menu.css (1.2), "Exp", lines: +3 -3
+		css/wine/tellmatic_main.css (1.2), "Exp", lines: +3 -3
+		css/wine/tellmatic_menu.css (1.2), "Exp", lines: +3 -3
+
+	removed bgcolor, adjusted menu width
+
+2008-11-14 Friday 12:27  mcms09
+
+	Changed:
+		css/cadillac/tellmatic_main.css (1.2), "Exp", lines: +3 -3
+		css/cadillac/tellmatic_menu.css (1.2), "Exp", lines: +2 -2
+		css/default/tellmatic_main.css (1.2), "Exp", lines: +5 -4
+		css/default/tellmatic_menu.css (1.2), "Exp", lines: +3 -3
+
+	removed bgcolor, adjusted menu width
+
+2008-11-14 Friday 12:24  mcms09
+
+	Added:
+		js/tellmatic_mootools.js (1.1)
+
+	use mootools for slide in and out some divs
+
+2008-11-14 Friday 12:24  mcms09
+
+	Added:
+		include/adr_testadressen.inc.php (1.1)
+
+	example script to generate some testaddresses
+
+2008-11-14 Friday 12:23  mcms09
+
+	Added:
+		reset_pw.php (1.1)
+
+	example script to reset password
+
+2008-10-17 Friday 12:32  mcms09
+
+	Changed:
+		tpl/Form_0_os.html (1.3), "Exp", lines: +19 -0
+
+	needed
+
+2008-10-16 Thursday 12:54  tag r-1-0-8-2
+
+2008-10-16 Thursday 12:54  mcms09
+
+	Changed:
+		ChangeLog (1.4), "Exp", lines: +241 -0
+
+	changelog for 1.0.8.2
+
 2008-10-16 Thursday 12:52  mcms09
 
 	Changed:

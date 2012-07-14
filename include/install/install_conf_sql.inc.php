@@ -129,23 +129,12 @@ $sql[4]['sql']="
 CREATE TABLE ".$tm_tablePrefix."config (
   id int NOT NULL auto_increment,
   name varchar(255) collate utf8_bin NOT NULL default '',
-  smtp_host varchar(255) collate utf8_bin NOT NULL default '',
-  smtp_port smallint NOT NULL default '25',
-  smtp_domain varchar(255) collate utf8_bin NOT NULL default '',
-  smtp_user varchar(255) collate utf8_bin NOT NULL default '',
-  smtp_pass varchar(255) collate utf8_bin NOT NULL default '',
-  smtp_auth varchar(32) collate utf8_bin NOT NULL default '',
-  sender_name varchar(255) collate utf8_bin NOT NULL default '',
-  sender_email varchar(255) collate utf8_bin NOT NULL default '',
-  return_mail varchar(128) collate utf8_bin NOT NULL default '',
   siteid varchar(64) collate utf8_bin NOT NULL default '',
   notify_mail varchar(128) collate utf8_bin default NULL,
   notify_subscribe tinyint NOT NULL default '1',
   notify_unsubscribe tinyint NOT NULL default '1',
   emailcheck_intern tinyint NOT NULL default '2',
   emailcheck_subscribe tinyint NOT NULL default '2',
-  max_mails_atonce smallint NOT NULL default '25',
-  max_mails_bcc smallint NOT NULL default '50',
   max_mails_retry tinyint NOT NULL default '5',
   check_version tinyint NOT NULL default '1',
   track_image varchar(255) collate utf8_bin NOT NULL default '',
@@ -154,7 +143,6 @@ CREATE TABLE ".$tm_tablePrefix."config (
   KEY siteid (siteid)
 ) ENGINE=".$db_type."  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 ";
-
 $sql[5]['name']=___("Tabelle")." '".$tm_tablePrefix."frm' ".___("Formulare");
 $sql[5]['sql']="
 CREATE TABLE ".$tm_tablePrefix."frm (
@@ -284,7 +272,6 @@ CREATE TABLE ".$tm_tablePrefix."nl (
   editor varchar(64) collate utf8_bin default NULL,
   grp_id int NOT NULL default '0',
   content_type varchar(12) collate utf8_bin NOT NULL default 'html',
-  attm varchar(255) collate utf8_bin default NULL,
   track_image varchar(255) collate utf8_bin NOT NULL default '_global',
   siteid varchar(64) collate utf8_bin NOT NULL default '',
   PRIMARY KEY  (id),
@@ -296,7 +283,7 @@ CREATE TABLE ".$tm_tablePrefix."nl (
 ) ENGINE=".$db_type."  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 ";
 
-$sql[8]['name']=___("Tabelle")." '".$tm_tablePrefix."nl_grp' ".___("Newsleter - Gruppen");
+$sql[8]['name']=___("Tabelle")." '".$tm_tablePrefix."nl_grp' ".___("Newsletter - Gruppen");
 $sql[8]['sql']="
 CREATE TABLE ".$tm_tablePrefix."nl_grp (
   id int NOT NULL auto_increment,
@@ -361,6 +348,7 @@ CREATE TABLE ".$tm_tablePrefix."nl_q (
   created datetime default NULL,
   send_at datetime default NULL,
   check_blacklist tinyint NOT NULL default '1',
+  autogen tinyint NOT NULL default '0',
   sent datetime default NULL,
   author varchar(64) collate utf8_bin default NULL,
   siteid varchar(64) collate utf8_bin NOT NULL default '',
@@ -416,14 +404,23 @@ CREATE TABLE ".$tm_tablePrefix."hosts (
   id int NOT NULL auto_increment,
   name varchar(255) collate utf8_bin NOT NULL default '',
   aktiv tinyint(1) NOT NULL default '1',
+  standard tinyint(1) NOT NULL default '0',  
   host varchar(255) collate utf8_bin NOT NULL default '',
   port smallint(6) NOT NULL default '0',
   type enum('smtp','pop3','imap') collate utf8_bin NOT NULL default 'smtp',
   options varchar(255) collate utf8_bin NOT NULL default '',
   smtp_auth varchar(32) collate utf8_bin NOT NULL default '',
   smtp_domain varchar(255) collate utf8_bin NOT NULL default '',
+  smtp_ssl tinyint(1) NOT NULL default '0',
+  smtp_max_piped_rcpt smallint NOT NULL default '1',
   user varchar(64) collate utf8_bin default NULL,
   pass varchar(64) collate utf8_bin default NULL,
+  max_mails_atonce smallint NOT NULL default '25',
+  max_mails_bcc smallint NOT NULL default '50',
+  sender_name varchar(255) collate utf8_bin NOT NULL default '',
+  sender_email varchar(255) collate utf8_bin NOT NULL default '',
+  return_mail varchar(128) collate utf8_bin NOT NULL default '',
+  reply_to varchar(128) collate utf8_bin NOT NULL default '',
   siteid varchar(64) collate utf8_bin NOT NULL default '',
   PRIMARY KEY  (id),
   KEY aktiv (aktiv),

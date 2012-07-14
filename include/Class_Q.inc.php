@@ -26,7 +26,7 @@ class tm_Q {
 		//wichtig! hier darf kein fehler passieren indem man db un db2 verwechselt! sonst stimmen die ergebnisse nicht mehr!!!!
   }
 
-	function getQ($id=0,$offset=0,$limit=0,$nl_id=0,$grp_id=0,$status=0) {
+	function getQ($id=0,$offset=0,$limit=0,$nl_id=0,$grp_id=0,$status=0,$search=Array()) {
 		$this->Q=Array();
 		$Query ="SELECT ".TM_TABLE_NL_Q.".id, "
 											.TM_TABLE_NL_Q.".nl_id, "
@@ -37,26 +37,39 @@ class tm_Q {
 											.TM_TABLE_NL_Q.".status, "
 											.TM_TABLE_NL_Q.".send_at, "
 											.TM_TABLE_NL_Q.".check_blacklist, "
+											.TM_TABLE_NL_Q.".autogen, "
 											.TM_TABLE_NL_Q.".sent
 						FROM ".TM_TABLE_NL_Q."
 					";
 		$Query .=" WHERE ".TM_TABLE_NL_Q.".siteid='".TM_SITEID."'";
 		if (check_dbid($nl_id)) {
-			$Query .=" AND ".TM_TABLE_NL_Q.".nl_id='".$nl_id."'	";
+			$Query .=" AND ".TM_TABLE_NL_Q.".nl_id=".checkset_int($nl_id)." ";
 		}
 		if (check_dbid($grp_id)) {
-			$Query .=" AND ".TM_TABLE_NL_Q.".grp_id='".$grp_id."'	";
+			$Query .=" AND ".TM_TABLE_NL_Q.".grp_id=".checkset_int($grp_id)." ";
 		}
 		if ($status>0) {
-			$Query .=" AND ".TM_TABLE_NL_Q.".status='".dbesc($status)."'	";
+			$Query .=" AND ".TM_TABLE_NL_Q.".status=".checkset_int($status)." ";
 		}
 		if (check_dbid($id)) {
-			$Query .=" AND ".TM_TABLE_NL_Q.".id='".$id."'	";
+			$Query .=" AND ".TM_TABLE_NL_Q.".id=".checkset_int($id);
 		}
-		if ($limit >0 and $offset>=0) {
-			$Query .= " LIMIT ".dbesc($offset)." ,".dbesc($limit);
+		//nur vor datum
+		if (isset($search['send_before'])) {
+			$Query .=" AND ".TM_TABLE_NL_Q.".send_at <  '".dbesc($search['send_before'])."'";
+		}
+		//nur nach datum
+		if (isset($search['send_after'])) {
+			$Query .=" AND ".TM_TABLE_NL_Q.".send_at >  '".dbesc($search['send_after'])."'";
+		}
+		//autogen
+		if (isset($search['autogen'])) {
+			$Query .=" AND ".TM_TABLE_NL_Q.".autogen =".checkset_int($search['autogen']);
 		}
 		$Query .=" ORDER BY ".TM_TABLE_NL_Q.".created desc	";
+		if ($limit >0 and $offset>=0) {
+			$Query .= " LIMIT ".checkset_int($offset)." ,".checkset_int($limit);
+		}
 
 		$this->DB->Query($Query);
 		$ac=0;
@@ -67,6 +80,7 @@ class tm_Q {
 			$this->Q[$ac]['status']=$this->DB->Record['status'];
 			$this->Q[$ac]['send_at']=$this->DB->Record['send_at'];
 			$this->Q[$ac]['check_blacklist']=$this->DB->Record['check_blacklist'];
+			$this->Q[$ac]['autogen']=$this->DB->Record['autogen'];
 			$this->Q[$ac]['sent']=$this->DB->Record['sent'];
 			$this->Q[$ac]['nl_id']=$this->DB->Record['nl_id'];
 			$this->Q[$ac]['grp_id']=$this->DB->Record['grp_id'];
@@ -82,13 +96,13 @@ class tm_Q {
 						FROM ".TM_TABLE_NL_Q;
 		$Query .=" WHERE siteid='".TM_SITEID."'";
 		if (check_dbid($nl_id)) {
-			$Query .=" AND nl_id='".$nl_id."'	";
+			$Query .=" AND nl_id=".checkset_int($nl_id)." ";
 		}
 		if (check_dbid($grp_id)) {
-			$Query .=" AND grp_id='".$grp_id."'	";
+			$Query .=" AND grp_id=".checkset_int($grp_id)." ";
 		}
 		if ($status>0) {
-			$Query .=" AND status='".dbesc($status)."'	";
+			$Query .=" AND status=".checkset_int($status)."";
 		}
 		$this->DB->Query($Query);
 		$count=0;
@@ -99,10 +113,41 @@ class tm_Q {
 	}//countQ
 
 
-	function getQtoSend($id=0,$offset=0,$limit=0,$nl_id=0,$grp_id=0) {
-		$this->Q=Array();
-		$send_at=date("Y-m-d H:i:s");
+	function getQtoPrepare($search=Array()) {
+		//q status=1, qid liefern zwischen jetzt und etwas spaeter :)
+		//function getQ($id=0,$offset=0,$limit=0,$nl_id=0,$grp_id=0,$status=0,$search=Array())
+		//search['send_before' | 'send_after']
+		$search['send_before']=date("Y-m-d H:i:s",strtotime("+6 hours"));//zwischen jetzt vor x stunden
+		$search['autogen']=1;//auto refresh/regenerate
+		$status=1;
+		$limit=1;//standardmaessig nur 1 eintrag zurueckgeben...
+		if (isset($search['limit'])) $limit=$search['limit'];
+		$Return=$this->getQ($id=0,$offset=0,$limit,$nl_id=0,$grp_id=0,$status,$search);
+		return $Return;
+		/*
+		date("Y-m-d H:i:s",strtotime("-6 hour")); // Same applies for months e.g. "-1 months" - 1 days etc
+		The unit of time displacement may be selected by the string ‘year’ or ‘month’ for moving by whole years or months. 
+		These are fuzzy units, as years and months are not all of equal duration. 
+		More precise units are ‘fortnight’ which is worth 14 days, ‘week’ worth 7 days, ‘day’ worth 24 hours, ‘hour’ worth 60 minutes, ‘minute’ or ‘min’ worth 60 seconds, and ‘second’ or ‘sec’ worth one second. 
+		An ‘s’ suffix on these units is accepted and ignored.
+		*/
 
+	}
+	function setAutogen($id=0,$autogen=1) {
+		$Return=false;
+		if (check_dbid($id)) {
+			$Query ="UPDATE ".TM_TABLE_NL_Q." SET autogen=".checkset_int($autogen)." WHERE id=".checkset_int($id)." AND siteid='".TM_SITEID."'";
+			if ($this->DB->Query($Query)) {
+				$Return=true;
+			}
+		}
+		return $Return;
+	}//setAktiv
+	function getQtoSend($id=0,$offset=0,$limit=0,$nl_id=0,$grp_id=0,$search=Array()) {
+		$this->Q=Array();
+		if (!isset($search['send_at'])) {
+		$send_at=date("Y-m-d H:i:s");
+		}
 		$Query ="SELECT ".TM_TABLE_NL_Q.".id, "
 											.TM_TABLE_NL_Q.".nl_id, "
 											.TM_TABLE_NL_Q.".grp_id, "
@@ -111,6 +156,7 @@ class tm_Q {
 											.TM_TABLE_NL_Q.".author, "
 											.TM_TABLE_NL_Q.".status, "
 											.TM_TABLE_NL_Q.".check_blacklist, "
+											.TM_TABLE_NL_Q.".autogen, "
 											.TM_TABLE_NL_Q.".send_at
 						FROM ".TM_TABLE_NL_Q."
 					";
@@ -120,25 +166,22 @@ class tm_Q {
 							".TM_TABLE_NL_Q.".status=2 OR ".TM_TABLE_NL_Q.".status=3 OR ".TM_TABLE_NL_Q.".status=6
 							)
 							";
-
 		//terminierter versand!!!!
 		$Query .=" AND ".TM_TABLE_NL_Q.".send_at <  '".dbesc($send_at)."'";
-
-
 		if (check_dbid($id)) {
-			$Query .=" AND ".TM_TABLE_NL_Q.".id='".$id."'	";
+			$Query .=" AND ".TM_TABLE_NL_Q.".id=".checkset_int($id)." ";
 		}
 		if (check_dbid($nl_id)) {
-			$Query .=" AND ".TM_TABLE_NL_Q.".nl_id='".$nl_id."'	";
+			$Query .=" AND ".TM_TABLE_NL_Q.".nl_id=".checkset_int($nl_id)." ";
 		}
 		if (check_dbid($grp_id)) {
-			$Query .=" AND ".TM_TABLE_NL_Q.".grp_id='".$grp_id."'	";
+			$Query .=" AND ".TM_TABLE_NL_Q.".grp_id=".checkset_int($grp_id)." ";
 		}
 
 		$Query .=" ORDER BY ".TM_TABLE_NL_Q.".send_at asc,".TM_TABLE_NL_Q.".status asc	";
 
 		if ($limit >0 and $offset>=0) {
-			$Query .= " LIMIT ".dbesc($offset)." ,".dbesc($limit);
+			$Query .= " LIMIT ".checkset_int($offset)." ,".checkset_int($limit);
 		}
 
 		$this->DB->Query($Query);
@@ -150,6 +193,7 @@ class tm_Q {
 			$this->Q[$qc]['status']=$this->DB->Record['status'];
 			$this->Q[$qc]['send_at']=$this->DB->Record['send_at'];
 			$this->Q[$qc]['check_blacklist']=$this->DB->Record['check_blacklist'];
+			$this->Q[$qc]['autogen']=$this->DB->Record['autogen'];
 			$this->Q[$qc]['nl_id']=$this->DB->Record['nl_id'];
 			$this->Q[$qc]['grp_id']=$this->DB->Record['grp_id'];
 			$this->Q[$qc]['host_id']=$this->DB->Record['host_id'];
@@ -165,13 +209,13 @@ class tm_Q {
 						FROM ".TM_TABLE_NL_Q;
 		$Query .=" WHERE ".TM_TABLE_NL_Q.".siteid='".TM_SITEID."'";
 		if (check_dbid($nl_id)) {
-			$Query .=" AND ".TM_TABLE_NL_Q.".nl_id='".$nl_id."'	";
+			$Query .=" AND ".TM_TABLE_NL_Q.".nl_id=".checkset_int($nl_id)." ";
 		}
 		if (check_dbid($grp_id)) {
-			$Query .=" AND ".TM_TABLE_NL_Q.".grp_id='".$grp_id."'	";
+			$Query .=" AND ".TM_TABLE_NL_Q.".grp_id=".checkset_int($grp_id)." ";
 		}
 		if ($status>0) {
-			$Query .=" AND ".TM_TABLE_NL_Q.".status='".dbesc($status)."'	";
+			$Query .=" AND ".TM_TABLE_NL_Q.".status=".checkset_int($status)." ";
 		}
 
 		$Query .=" ORDER BY ".TM_TABLE_NL_Q.".created desc ";
@@ -200,25 +244,25 @@ class tm_Q {
 						FROM ".TM_TABLE_NL_H."	";
 		$Query .=" WHERE ".TM_TABLE_NL_H.".siteid='".TM_SITEID."'";
 		if (check_dbid($q_id)) {
-			$Query .=" AND ".TM_TABLE_NL_H.".q_id='".$q_id."'	";
+			$Query .=" AND ".TM_TABLE_NL_H.".q_id=".checkset_int($q_id)." ";
 		}
 		if (check_dbid($nl_id)) {
-			$Query .=" AND ".TM_TABLE_NL_H.".nl_id='".$nl_id."'	";
+			$Query .=" AND ".TM_TABLE_NL_H.".nl_id=".checkset_int($nl_id)." ";
 		}
 		if (check_dbid($grp_id)) {
-			$Query .=" AND ".TM_TABLE_NL_H.".grp_id='".$grp_id."'	";
+			$Query .=" AND ".TM_TABLE_NL_H.".grp_id=".checkset_int($grp_id)." ";
 		}
 		if (check_dbid($adr_id)) {
-			$Query .=" AND ".TM_TABLE_NL_H.".adr_id='".$adr_id."'	";
+			$Query .=" AND ".TM_TABLE_NL_H.".adr_id=".checkset_int($adr_id)." ";
 		}
 		if ($status>0) {
-			$Query .=" AND ".TM_TABLE_NL_H.".status='".dbesc($status)."'	";
+			$Query .=" AND ".TM_TABLE_NL_H.".status=".checkset_int($status)." ";
 		}
 		if (check_dbid($id)) {
-			$Query .=" AND ".TM_TABLE_NL_H.".id='".$id."'	";
+			$Query .=" AND ".TM_TABLE_NL_H.".id=".checkset_int($id)." ";
 		}
 		if ($limit >0 and $offset>=0) {
-			$Query .= " LIMIT ".dbesc($offset)." ,".dbesc($limit);
+			$Query .= " LIMIT ".checkset_int($offset)." ,".checkset_int($limit);
 		}
 		$Query .=" ORDER BY ".TM_TABLE_NL_H.".created desc	";
 
@@ -258,30 +302,25 @@ class tm_Q {
 		$Query .=" WHERE ".TM_TABLE_NL_H.".siteid='".TM_SITEID."'";
 		//!!!!
 		$Query .=" AND ".TM_TABLE_NL_H.".status=1 ";
-
 		if (check_dbid($q_id)) {
-			$Query .=" AND ".TM_TABLE_NL_H.".q_id='".$q_id."' ";
+			$Query .=" AND ".TM_TABLE_NL_H.".q_id=".checkset_int($q_id)." ";
 		}
 		if (check_dbid($nl_id)) {
-			$Query .=" AND ".TM_TABLE_NL_H.".nl_id='".$nl_id."' ";
+			$Query .=" AND ".TM_TABLE_NL_H.".nl_id=".checkset_int($nl_id)."";
 		}
 		if (check_dbid($grp_id)) {
-			$Query .=" AND ".TM_TABLE_NL_H.".grp_id='".$grp_id."' ";
+			$Query .=" AND ".TM_TABLE_NL_H.".grp_id=".checkset_int($grp_id)." ";
 		}
 		if (check_dbid($adr_id)) {
-			$Query .=" AND ".TM_TABLE_NL_H.".adr_id='".$adr_id."' ";
+			$Query .=" AND ".TM_TABLE_NL_H.".adr_id=".checkset_int($adr_id)." ";
 		}
-
 		if (check_dbid($id)) {
-			$Query .=" AND ".TM_TABLE_NL_H.".id='".$id."' ";
+			$Query .=" AND ".TM_TABLE_NL_H.".id=".checkset_int($id)." ";
 		}
 		$Query .=" ORDER BY ".TM_TABLE_NL_H.".created asc, status asc";
-
 		if ($limit >0 and $offset>=0) {
-			$Query .= " LIMIT ".dbesc($offset)." ,".dbesc($limit);
+			$Query .= " LIMIT ".checkset_int($offset)." ,".checkset_int($limit);
 		}
-
-
 		$this->DB->Query($Query);
 		$ac=0;
 		while ($this->DB->next_record()) {
@@ -308,19 +347,19 @@ class tm_Q {
 		$Query .=" WHERE ".TM_TABLE_NL_H.".siteid='".TM_SITEID."'
 					";
 		if (check_dbid($q_id)) {
-			$Query .=" AND ".TM_TABLE_NL_H.".q_id='".$q_id."'	";
+			$Query .=" AND ".TM_TABLE_NL_H.".q_id=".checkset_int($q_id)." ";
 		}
 		if (check_dbid($nl_id)) {
-			$Query .=" AND ".TM_TABLE_NL_H.".nl_id='".$nl_id."'	";
+			$Query .=" AND ".TM_TABLE_NL_H.".nl_id=".checkset_int($nl_id)." ";
 		}
 		if (check_dbid($grp_id)) {
-			$Query .=" AND ".TM_TABLE_NL_H.".grp_id='".$grp_id."'	";
+			$Query .=" AND ".TM_TABLE_NL_H.".grp_id=".checkset_int($grp_id)." ";
 		}
 		if (check_dbid($adr_id)) {
-			$Query .=" AND ".TM_TABLE_NL_H.".adr_id='".$adr_id."'	";
+			$Query .=" AND ".TM_TABLE_NL_H.".adr_id=".checkset_int($adr_id)." ";
 		}
 		if ($status>0) {
-			$Query .=" AND ".TM_TABLE_NL_H.".status='".dbesc($status)."'	";
+			$Query .=" AND ".TM_TABLE_NL_H.".status=".checkset_int($status)." ";
 		}
 		$Query .=" ORDER BY ".TM_TABLE_NL_H.".created desc	";
 
@@ -337,7 +376,7 @@ class tm_Q {
 		if (check_dbid($id)) {
 			//q loeschen
 			$Query ="DELETE FROM ".TM_TABLE_NL_Q
-							." WHERE siteid='".TM_SITEID."' AND id='".$id."'";
+							." WHERE siteid='".TM_SITEID."' AND id=".checkset_int($id);
 				if ($this->DB->Query($Query)) {
 					$Return=true;
 				} else {
@@ -355,7 +394,7 @@ class tm_Q {
 				$Query ="UPDATE ".TM_TABLE_NL_H."
 								SET status=6
 								WHERE siteid='".TM_SITEID."'
-								AND q_id='".$id."'
+								AND q_id=".checkset_int($id)."
 								AND ( status=1 or status=5 )
 						";
 				if ($this->DB->Query($Query)) {
@@ -370,30 +409,36 @@ class tm_Q {
 	}//delQ
 
 	function addQ($q,$grp) {
-		$Return=false;
+		$qc=0;
 		//neue Q speichern fuer jede gewaehlte Gruppe
 		$gc=count($grp);
+		if (check_dbid($q['nl_id'])) {
 		for ($gcc=0;$gcc<$gc;$gcc++) {
-			if (check_dbid($q['nl_id'])) {
 				$Query ="INSERT INTO ".TM_TABLE_NL_Q." (nl_id,grp_id,host_id,status,send_at,check_blacklist,author,created,siteid)
-									VALUES ('".$q["nl_id"]."', '"
-													.dbesc($grp[$gcc])."', '"
-													.dbesc($q["host_id"])."', '"
-													.dbesc($q["status"])."', '"
-													.dbesc($q["send_at"])."', '"
-													.dbesc($q["check_blacklist"])."', '"
+									VALUES (".checkset_int($q["nl_id"]).","
+													.checkset_int($grp[$gcc]).","
+													.checkset_int($q["host_id"]).","
+													.checkset_int($q["status"]).", '"
+													.dbesc($q["send_at"])."',"
+													.checkset_int($q["check_blacklist"]).", '"
 													.dbesc($q["author"])."', '"
 													.dbesc($q["created"])."', '"
 													.TM_SITEID."'
 										)";
 				if ($this->DB->Query($Query)) {
-					$Return=true;
+					$Return[$qc]['result']=true;
+					$Return[$qc]['id']=$this->DB->LastInsertID;
+					if (isset($q['autogen'])) {
+						$this->setAutogen($Return[$qc]['id'], checkset_int($q['autogen']));
+					}//if autogen
 				} else {
-					$Return=false;
+					$Return[$qc]['result']=false;
+					$Return[$qc]['id']=0;
 					return $Return;
-				}
-			}
-		}
+				}//if query
+				$qc++;
+			}//for gcc
+		}//check dbid nl_id
 		return $Return;
 	}//addQ
 
@@ -402,12 +447,12 @@ class tm_Q {
 		if (check_dbid($h['q_id']) && check_dbid($h['nl_id']) && check_dbid($h['grp_id']) &&	check_dbid($h['adr_id'])	) {
 			//neue History, Versandliste
 			$Query ="INSERT INTO ".TM_TABLE_NL_H." (q_id,nl_id,grp_id,adr_id,host_id,status,created,sent,siteid)
-						VALUES ( '".$h["q_id"]."',
-									'".$h["nl_id"]."',
-									'".$h["grp_id"]."',
-									'".$h["adr_id"]."',
-									'".$h["host_id"]."',
-									'".dbesc($h["status"])."',
+						VALUES ( ".checkset_int($h["q_id"]).",
+									".checkset_int($h["nl_id"]).",
+									".checkset_int($h["grp_id"]).",
+									".checkset_int($h["adr_id"]).",
+									".checkset_int($h["host_id"]).",
+									".checkset_int($h["status"]).",
 									'".dbesc($h["created"])."',
 									'',
 									'".TM_SITEID."'
@@ -422,8 +467,8 @@ class tm_Q {
 	function setHStatus($id,$status) {
 		$Return=false;
 		if (check_dbid($id)) {
-			$Query ="UPDATE ".TM_TABLE_NL_H." SET status='".dbesc($status)."'
-						 WHERE siteid='".TM_SITEID."' AND id='".$id."'";
+			$Query ="UPDATE ".TM_TABLE_NL_H." SET status=".checkset_int($status)."
+						 WHERE siteid='".TM_SITEID."' AND id=".checkset_int($id);
 			if ($this->DB->Query($Query)) {
 				$Return=true;
 			}
@@ -435,7 +480,7 @@ class tm_Q {
 		$Return=false;
 		if (check_dbid($id)) {
 			$Query ="UPDATE ".TM_TABLE_NL_H." SET sent='".dbesc($created)."'
-						 WHERE siteid='".TM_SITEID."' AND id='".$id."'";
+						 WHERE siteid='".TM_SITEID."' AND id=".checkset_int($id);
 			if ($this->DB->Query($Query)) {
 				$Return=true;
 			}
@@ -447,7 +492,7 @@ class tm_Q {
 		$Return=false;
 		if (check_dbid($id)) {
 			$Query ="UPDATE ".TM_TABLE_NL_H." SET ip='".dbesc($ip)."'
-						 WHERE siteid='".TM_SITEID."' AND id='".$id."'";
+						 WHERE siteid='".TM_SITEID."' AND id=".checkset_int($id);
 			if ($this->DB->Query($Query)) {
 				$Return=true;
 			}
@@ -458,8 +503,8 @@ class tm_Q {
 	function setStatus($id,$status) {
 		$Return=false;
 		if (check_dbid($id)) {
-			$Query ="UPDATE ".TM_TABLE_NL_Q." SET status='".dbesc($status)."'
-						 WHERE siteid='".TM_SITEID."' AND id='".$id."'";
+			$Query ="UPDATE ".TM_TABLE_NL_Q." SET status=".checkset_int($status)."
+						 WHERE siteid='".TM_SITEID."' AND id=".checkset_int($id);
 			if ($this->DB->Query($Query)) {
 				$Return=true;
 			}
@@ -471,7 +516,7 @@ class tm_Q {
 		$Return=false;
 		if (check_dbid($id)) {
 			$Query ="UPDATE ".TM_TABLE_NL_Q." SET sent='".dbesc($date)."'
-						 WHERE siteid='".TM_SITEID."' AND id='".$id."'";
+						 WHERE siteid='".TM_SITEID."' AND id=".checkset_int($id);
 			if ($this->DB->Query($Query)) {
 				$Return=true;
 			}
@@ -489,13 +534,16 @@ class tm_Q {
 			) {
 				$Query ="DELETE FROM ".TM_TABLE_NL_H." WHERE siteid='".TM_SITEID."'";
 				if (isset($search['adr_id'])) {
-					$Query .=" AND adr_id='".$search['adr_id']."'";
+					$Query .=" AND adr_id=".checkset_int($search['adr_id']);
 				}
 				if (isset($search['nl_id'])) {
-					$Query .=" AND nl_id='".$search['nl_id']."'";
+					$Query .=" AND nl_id=".checkset_int($search['nl_id']);
 				}
 				if (isset($search['q_id'])) {
-					$Query .=" AND q_id='".$search['q_id']."'";
+					$Query .=" AND q_id=".checkset_int($search['q_id']);
+				}
+				if (isset($search['not_running']) && $search['not_running']==1) {
+					$Query .=" AND status!=1 AND status!=5 ";//nicht status 1 neu und 5 versand
 				}
 				if ($this->DB->Query($Query)) {
 					$Return=true;
@@ -512,7 +560,7 @@ class tm_Q {
 					WHERE siteid='".TM_SITEID."'";
 		$Query .=" AND ip!='0.0.0.0' AND ip!=''";
 		if (check_dbid($q_id)) {
-			$Query .=" AND q_id='".$q_id."'";
+			$Query .=" AND q_id=".checkset_int($q_id);
 		}
 		if ($this->DB->Query($Query)) {
 			$Color1 = imagecolorallocate ($img, 255,255,0);
@@ -534,7 +582,7 @@ class tm_Q {
 					WHERE siteid='".TM_SITEID."'";
 		$Query .=" AND ip!='0.0.0.0' AND ip!=''";
 		if (check_dbid($q_id)) {
-			$Query .=" AND q_id='".$q_id."'";
+			$Query .=" AND q_id=".checkset_int($q_id);
 		}
 		#$Query .=" Limit 10000";
 		if ($this->DB->Query($Query)) {
@@ -570,7 +618,7 @@ class tm_Q {
 		$DB2=new tm_DB();
 		$Query ="SELECT id FROM ".TM_TABLE_NL_H."
 					WHERE siteid='".TM_SITEID."'";
-		$Query .=" AND ip='0.0.0.0' LIMIT ".$limit;
+		$Query .=" AND ip='0.0.0.0' LIMIT ".checkset_int($limit);
 		if ($this->DB->Query($Query)) {
 			while ($this->DB->next_Record()) {
 				srand((double)microtime()*30000);
@@ -580,6 +628,164 @@ class tm_Q {
 			}//while
 		}//if query
 	}//makeRandomIP
+
+	function addHQ($h) {
+		//neue History, Versandliste
+		global $C;//config! fuer $C[0]['max_mails_retry']
+		if (DEBUG) global $_MAIN_MESSAGE;
+		$Return=Array();
+		//Return: 0=result:true|false, 1=num_rows, 2=affected_rows, or index? 'result', 'num_rows', 'affected_rows'
+		if (check_dbid($h['q_id']) && check_dbid($h['nl_id']) && check_dbid($h['grp_id']) && check_dbid($h['host_id'])) {
+			if (DEBUG) $_MAIN_MESSAGE.="<br>q_id: ".$h['q_id'].", nl_id: ".$h['nl_id'].", grp_id: ".$h['grp_id'].", host_id: ".$h['host_id'];
+			//temporary tablename nl_h._.microseconds.q_id to make it unique
+			$tmp_code=rand(111,999); 
+			$tmp_tablename = TM_TABLE_NL_H."_tmp_".TM_SITEID."_".$h['q_id']."_".$h['nl_id']."_".$h['grp_id']."_".$tmp_code;
+			$Query_TempTable ="
+			#temporary tablename: $tmp_tablename
+			/*
+			select into new table: $tmp_tablename
+			all entries from nl_h nl_h table that have status=1 and 
+			addresses (adr_id) found in adr and are member in the selected group
+			(group in nl_h doesnt matter, only group from adr_ref table)
+			dont care of adr.status, aktiv etc. we want all entries with status new (nl_h.status=1)
+			for current siteid!
+			*/
+			CREATE TEMPORARY TABLE
+				".$tmp_tablename." 
+				(
+					adr_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+					siteid varchar(64)
+				)
+			SELECT 
+				/*select adr_id from recipients list nl_h*/
+				".TM_TABLE_NL_H.".adr_id as adr_id,
+				/*with siteid*/
+				'".TM_SITEID."' as siteid
+			FROM ".TM_TABLE_NL_H."
+				/* join with addresstable */
+				INNER JOIN ".TM_TABLE_ADR." ON ".TM_TABLE_NL_H.".adr_id = ".TM_TABLE_ADR.".id
+			WHERE 
+				/* with siteid */
+				".TM_TABLE_ADR.".siteid='".TM_SITEID."'
+				AND ".TM_TABLE_NL_H.".siteid='".TM_SITEID."'
+				/* for selected newsletter */
+				AND ".TM_TABLE_NL_H.".nl_id=".checkset_int($h['nl_id'])."
+				/* with status=1=new */
+				AND ".TM_TABLE_NL_H.".status=1
+				/* group by adr id and siteid */
+				GROUP BY ".TM_TABLE_ADR.".id, ".TM_TABLE_ADR.".siteid
+			";//Query_TempTable
+			$Query_SelectInto="
+			/* insert new adr_id for selected newsletter in newsletter history */
+			/* adresses can refer to multiple groups adr_grp.id via adr_grp_ref.adr_id and adr_grp_ref.grp_id (inner join) */
+			INSERT INTO 
+				".TM_TABLE_NL_H." 
+				(
+					q_id, #qeue id
+					#".checkset_int($h["q_id"])." AS q_id,
+					host_id, #host id
+					#".checkset_int($h["host_id"])." AS host_id,
+					nl_id, #newsletter id
+					#".checkset_int($h["nl_id"])." AS nl_id,
+					grp_id, #adress group id
+					adr_id, #adress id
+					status, #history status (1=new)
+					created, #creation date
+					sent, #send date
+					siteid #the siteid
+				)
+			SELECT 
+				/* we also could use prefined values from php array h, but we use matches */
+				/* q_id, host_id from q, nl_id from nl.id, adr_id from adr.id, and grp_id from grp.id */
+				/* status, created is taken from array, sent is empty (not sent yet) and siteid as defined in Tellmatic */
+				".TM_TABLE_NL_Q.".id AS q_id,
+				".TM_TABLE_NL_Q.".host_id AS host_id,
+				".TM_TABLE_NL.".id AS nl_id,
+				".TM_TABLE_ADR_GRP.".id AS grp_id,
+				".TM_TABLE_ADR.".id AS adr_id,
+				".checkset_int($h["status"])." AS status,
+				'".dbesc($h["created"])."' AS created,
+				'' as sent,
+				'".TM_SITEID."' as siteid
+			FROM ".TM_TABLE_ADR." 
+				/* join adresstable adr.id with groups references table adr_grp_ref.adr_id */
+				INNER JOIN ".TM_TABLE_ADR_GRP_REF." 
+					ON ".TM_TABLE_ADR.".id = ".TM_TABLE_ADR_GRP_REF.".adr_id 
+				/* join groupstable adr_grp.id with groups references table adr_grp_ref.grp_id  */
+				INNER JOIN ".TM_TABLE_ADR_GRP." 
+					ON ".TM_TABLE_ADR_GRP_REF.".grp_id = ".TM_TABLE_ADR_GRP.".id
+				/* join newsletter nl.id with queuetable nl_q.nl_id */
+				INNER JOIN ".TM_TABLE_NL." 
+					ON ".TM_TABLE_NL_Q.".nl_id = ".TM_TABLE_NL.".id
+				/* join newsletterqueue nl_q.grp_id with groupstable adr_grp.id */
+				INNER JOIN ".TM_TABLE_NL_Q." 
+					ON ".TM_TABLE_ADR_GRP.".id = ".TM_TABLE_NL_Q.".grp_id
+				/* left join now adresstable adr.id with temporary historytable/recipientstable $tmp_tablename.adr_id */
+				LEFT JOIN ".$tmp_tablename." ON ".TM_TABLE_ADR.".id = ".$tmp_tablename.".adr_id 
+			WHERE 
+				/* Address is active */
+				".TM_TABLE_ADR.".aktiv=1
+				/* for siteid */
+				AND ".TM_TABLE_ADR.".siteid='".TM_SITEID."'
+				AND (
+							/* less errors */
+							".TM_TABLE_ADR.".errors<=".checkset_int($C[0]['max_mails_retry'])."
+							/* or NULL */
+							OR ".TM_TABLE_ADR.".errors IS NULL
+						)
+				AND (
+							/* filter adr with status */
+							 ".TM_TABLE_ADR.".status=1 
+							OR ".TM_TABLE_ADR.".status=2 
+							OR ".TM_TABLE_ADR.".status=3 
+							OR ".TM_TABLE_ADR.".status=4 
+							OR ".TM_TABLE_ADR.".status=10 
+							OR ".TM_TABLE_ADR.".status=12 
+						)
+				/* for selected group */
+				AND ".TM_TABLE_ADR_GRP.".id=".checkset_int($h['grp_id'])."
+				AND ".TM_TABLE_ADR_GRP_REF.".grp_id=".checkset_int($h['grp_id'])."
+				AND ".TM_TABLE_NL_Q.".grp_id=".checkset_int($h['grp_id'])."
+				AND (
+						/* q status must be 1 new or 2 started */
+						".TM_TABLE_NL_Q.".status=1
+						OR ".TM_TABLE_NL_Q.".status=2
+						)
+				/* group must be active */
+				AND ".TM_TABLE_ADR_GRP.".aktiv=1
+				/* for selected newsletter */
+				AND ".TM_TABLE_NL.".id=".checkset_int($h['nl_id'])."
+				AND ".TM_TABLE_NL_Q.".nl_id=".checkset_int($h['nl_id'])."
+				/* for siteid */
+				AND ".TM_TABLE_ADR_GRP.".siteid='".TM_SITEID."'
+				AND ".TM_TABLE_ADR_GRP_REF.".siteid='".TM_SITEID."'
+				AND ".TM_TABLE_NL.".siteid='".TM_SITEID."'
+				AND ".TM_TABLE_NL_Q.".siteid='".TM_SITEID."'
+				AND
+				/* only addresses not included in temporary table */
+				".$tmp_tablename.".adr_id IS NULL
+				";
+			if (DEBUG) $_MAIN_MESSAGE.="<br><strong>Create temporary Table ".$tmp_tablename."</strong><br><pre><font size=1>".$Query_TempTable."</font></pre>";
+			if ($this->DB->Query($Query_TempTable)) {
+				$Return[0]=TRUE;
+				$Return[1]=$this->DB->num_rows();
+				$Return[2]=$this->DB->affected_rows();
+				if (DEBUG) $_MAIN_MESSAGE.="<br><strong>Select into nl_h</strong><br><pre><font size=1>".$Query_SelectInto."</font></pre>";
+				if ($this->DB->Query($Query_SelectInto)) {
+					$Return[0]=TRUE;
+					$Return[1]=$this->DB->num_rows();
+					$Return[2]=$this->DB->affected_rows();
+				} else {
+					$Return[0]=FALSE;
+					return $Return;
+				}
+			} else {
+				$Return[0]=FALSE;
+				return $Return;
+			}
+		}
+		return $Return;
+	}//addHQ
 
 }  //class
 

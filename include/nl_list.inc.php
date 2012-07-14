@@ -39,11 +39,10 @@ if ($set=="delete" && $doit==1) {
 }
 
 if ($user_is_manager  && $set=="delete_history" && $doit==1) {
-	if (!DEMO) $QUEUE->clearH(Array("nl_id"=>$nl_id));
+	if (!DEMO) $QUEUE->clearH(Array("nl_id"=>$nl_id,"not_running"=>1));
 	$_MAIN_MESSAGE.="<br>".___("Historie wurde gelöscht.");
 	//und nun wie unten bei delete_queue:
 	//aber stattdessen setzen wir einfach set auf =queue_delete
-	$set="queue_delete";
 	//deswegen MUSS das vor queue_delete stehen!!!
 }//del history single
 
@@ -70,7 +69,6 @@ if ($set=="queue_delete" && $doit==1) {
 	for ($qdcc=0;$qdcc<$qdc;$qdcc++) {
 		$QUEUE->delQ($QDel[$qdcc]);
 	}
-	$NEWSLETTER->setStatus($nl_id,1);
 	$_MAIN_MESSAGE.="<br>".sprintf(___("%s Queues für diese Newsletter wurden gelöscht."),$qdc);
 }
 if ($set=="copy" && $doit==1) {
@@ -116,35 +114,32 @@ $entrys=$nc; // fuer pager.inc!!!
 $entrys_total=$NEWSLETTER->countNL($nl_grp_id);
 
 $NL=sort_array($NL,$sortIndex,$sortType);
-
+//defaults
 $mSTDURL->addParam("act","nl_list");
+$mSTDURL->addParam("offset",$offset);
+$mSTDURL->addParam("limit",$limit);
+$mSTDURL->addParam("st",$sortType);
+$mSTDURL->addParam("si",$sortIndex);
 
 $firstURLPara=$mSTDURL;
 $firstURLPara->addParam("nl_grp_id",$nl_grp_id);
 $firstURLPara->addParam("offset",0);
-$firstURLPara->addParam("limit",$limit);
-$firstURLPara->addParam("st",$sortType);
-$firstURLPara->addParam("si",$sortIndex);
 $firstURLPara_=$firstURLPara->getAllParams();
 
 $nextURLPara=$mSTDURL;
 $nextURLPara->addParam("nl_grp_id",$nl_grp_id);
 $nextURLPara->addParam("offset",($offset+$limit));
-$nextURLPara->addParam("limit",$limit);
-$nextURLPara->addParam("st",$sortType);
-$nextURLPara->addParam("si",$sortIndex);
 $nextURLPara_=$nextURLPara->getAllParams();
 
 $prevURLPara=$mSTDURL;
 $prevURLPara->addParam("nl_grp_id",$nl_grp_id);
 $prevURLPara->addParam("offset",($offset-$limit));
-$prevURLPara->addParam("limit",$limit);
-$prevURLPara->addParam("st",$sortType);
-$prevURLPara->addParam("si",$sortIndex);
 $prevURLPara_=$prevURLPara->getAllParams();
 
 $sortURLPara=$mSTDURL;
 $sortURLPara->addParam("nl_grp_id","$nl_grp_id");
+$sortURLPara->delparam("st");
+$sortURLPara->delparam("si");
 $sortURLPara_=$sortURLPara->getAllParams();
 
 $editURLPara=$mSTDURL;
@@ -155,54 +150,50 @@ $addqURLPara=$mSTDURL;
 $addqURLPara->addParam("act","queue_new");
 
 $delqURLPara=$mSTDURL;
-$delqURLPara->addParam("act","nl_list");
 $delqURLPara->addParam("set","queue_delete");
+$delqURLPara->addParam("nl_grp_id","$nl_grp_id");
 
 $delHistoryURLPara=$mSTDURL;
-$delHistoryURLPara->addParam("act","nl_list");
 $delHistoryURLPara->addParam("set","delete_history");
+$delHistoryURLPara->addParam("nl_grp_id","$nl_grp_id");
 
 $showqURLPara=$mSTDURL;
 $showqURLPara->addParam("act","queue_list");
+//vars loeschen da q liste sonst bei limit offset sort etc beeintraechtigt wird.
+$showqURLPara->delParam("offset");
+$showqURLPara->delParam("limit");
+$showqURLPara->delParam("st");
+$showqURLPara->delParam("si");
 
 $aktivURLPara=$mSTDURL;
 $aktivURLPara->addParam("nl_grp_id",$nl_grp_id);
-$aktivURLPara->addParam("act","nl_list");
 $aktivURLPara->addParam("set","aktiv");
 
-$sendURLPara=$mSTDURL;
-$sendURLPara->addParam("act","queue_send");
-$sendURLPara->addParam("set","nl");
-
-
+$sendFastURLPara=$mSTDURL;
+$sendFastURLPara->addParam("act","queue_send");
+$sendFastURLPara->addParam("set","nl");
+$sendFastURLPara->addParam("startq",1);
+$refreshRCPTListURLPara=$mSTDURL;
+$refreshRCPTListURLPara->addParam("act","queue_send");
+$refreshRCPTListURLPara->addParam("set","nl");
 $delURLPara=$mSTDURL;
 $delURLPara->addParam("nl_grp_id",$nl_grp_id);
-$delURLPara->addParam("act","nl_list");
 $delURLPara->addParam("set","delete");
 
 $delimgURLPara=$mSTDURL;
 $delimgURLPara->addParam("nl_grp_id",$nl_grp_id);
-$delimgURLPara->addParam("act","nl_list");
 $delimgURLPara->addParam("set","delete_img");
 
 $delhtmlURLPara=$mSTDURL;
 $delhtmlURLPara->addParam("nl_grp_id",$nl_grp_id);
-$delhtmlURLPara->addParam("act","nl_list");
 $delhtmlURLPara->addParam("set","delete_html");
-
-$delattmURLPara=$mSTDURL;
-$delattmURLPara->addParam("nl_grp_id",$nl_grp_id);
-$delattmURLPara->addParam("act","nl_list");
-$delattmURLPara->addParam("set","delete_attm");
 
 $copyURLPara=$mSTDURL;
 $copyURLPara->addParam("nl_grp_id",$nl_grp_id);
-$copyURLPara->addParam("act","nl_list");
 $copyURLPara->addParam("set","copy");
 
 $copyallURLPara=$mSTDURL;
 $copyallURLPara->addParam("nl_grp_id",$nl_grp_id);
-$copyallURLPara->addParam("act","nl_list");
 $copyallURLPara->addParam("set","copyall");
 
 $statURLPara=$mSTDURL;
@@ -270,8 +261,12 @@ for ($ncc=0;$ncc<$nc;$ncc++) {
 	$showqURLPara->addParam("nl_id",$NL[$ncc]['id']);
 	$showqURLPara_=$showqURLPara->getAllParams();
 
-	$sendURLPara->addParam("nl_id",$NL[$ncc]['id']);
-	$sendURLPara_=$sendURLPara->getAllParams();
+
+	$sendFastURLPara->addParam("nl_id",$NL[$ncc]['id']);
+	$sendFastURLPara_=$sendFastURLPara->getAllParams();
+
+	$refreshRCPTListURLPara->addParam("nl_id",$NL[$ncc]['id']);
+	$refreshRCPTListURLPara_=$refreshRCPTListURLPara->getAllParams();
 
 	$aktivURLPara->addParam("nl_id",$NL[$ncc]['id']);
 	$aktivURLPara->addParam("val",$new_aktiv);
@@ -285,9 +280,6 @@ for ($ncc=0;$ncc<$nc;$ncc++) {
 
 	$delhtmlURLPara->addParam("nl_id",$NL[$ncc]['id']);
 	$delhtmlURLPara_=$delhtmlURLPara->getAllParams();
-
-	$delattmURLPara->addParam("nl_id",$NL[$ncc]['id']);
-	$delattmURLPara_=$delattmURLPara->getAllParams();
 
 	$copyURLPara->addParam("nl_id",$NL[$ncc]['id']);
 	$copyURLPara_=$copyURLPara->getAllParams();
@@ -422,17 +414,16 @@ for ($ncc=0;$ncc<$nc;$ncc++) {
 
 	$_MAIN_OUTPUT.= "<td>\n";
 	//link fuer aktionen / bearbeiten menue:
-	$_MAIN_OUTPUT.= "<a  class=\"list_edit_entry_head\" href=\"javascript:switchSection('list_edit_".$ncc."')\" title=\"".___("Bearbeiten / Aktionen anzeigen")."\">".tm_icon("wrench_orange.png",___("Aktionen anzeigen"))."...</a>\n";
+	$_MAIN_OUTPUT.= "<a  class=\"list_edit_entry_head\" id=\"toggle_nlentry_".$ncc."\" href=\"#\" title=\"".___("Bearbeiten / Aktionen anzeigen")."\">".tm_icon("wrench_orange.png",___("Aktionen anzeigen"))."...</a>\n";
 	$_MAIN_OUTPUT.= "</td>\n";
 	$_MAIN_OUTPUT.= "</tr>\n";
 
 	$_MAIN_OUTPUT.= "<tr onmouseover=\"setBGColor('row_".$ncc."','".$row_bgcolor_hilite."');\" onmouseout=\"setBGColor('row_".$ncc."','".$bgcolor."');\">\n";
-	$_MAIN_OUTPUT.= "<td colspan=5>\n";
+	$_MAIN_OUTPUT.= "<td colspan=6>\n";
 
 	//div fuer aktionen etc
 		$_MAIN_OUTPUT.= "<div id=\"list_edit_".$ncc."\" class=\"list_edit\">\n";//align=\"right\"
 		$_MAIN_OUTPUT.= "<font size=-1>\n";
-		//
 		//q hinzufügen
 		if ($NL[$ncc]['aktiv']==1) {
 			if (file_exists($tm_nlpath."/nl_".date_convert_to_string($NL[$ncc]['created'])."_n.html")) {
@@ -453,13 +444,10 @@ for ($ncc=0;$ncc<$nc;$ncc++) {
 		//queued? senden button anzeigen // status =2 oder 3 oder 4
 		//	if (($NL[$ncc]['status']==2  || $NL[$ncc]['status']==3 || $NL[$ncc]['status']==4) && $NL[$ncc]['aktiv']==1) {
 		if ($qc_new>0 && $NL[$ncc]['aktiv']==1) {
-			$_MAIN_OUTPUT.= "<a class=\"list_edit_entry\" href=\"".$tm_URL."/".$sendURLPara_."\" title=\"".___("Newsletter versenden")."\">".tm_icon("email_go.png",___("Newsletter versenden"))."&nbsp;";
+			$_MAIN_OUTPUT.= "<a class=\"list_edit_entry\" href=\"".$tm_URL."/".$sendFastURLPara_."\" title=\"".___("Newsletter versenden")."\">".tm_icon("bullet_star.png",___("Newsletter versenden"),"","","","email_go.png")."&nbsp;";
 			if (!$user_is_expert) $_MAIN_OUTPUT.=___("Versand starten");
 			$_MAIN_OUTPUT.= "</a>\n";
 		}
-		//
-
-		//
 		//link zum Template!
 		if (file_exists($tm_nlpath."/nl_".date_convert_to_string($NL[$ncc]['created'])."_n.html")) {
 			$_MAIN_OUTPUT.= "<a class=\"list_edit_entry\" href=\"".$tm_URL_FE."/".$tm_nldir."/nl_".date_convert_to_string($NL[$ncc]['created'])."_n.html\" target=\"_preview\" title=\"".___("Template des Newsletter anzeigen: ").$tm_nldir."/nl_".date_convert_to_string($NL[$ncc]['created'])."_n.html\">".tm_icon("eye.png",___("Template anzeigen"))."&nbsp;";
@@ -534,7 +522,7 @@ for ($ncc=0;$ncc<$nc;$ncc++) {
 		$_MAIN_OUTPUT.= "<a class=\"list_edit_entry\" href=\"".$tm_URL."/".$copyallURLPara_."\" onclick=\"return confirmLink(this, '".___("Newsletter und Dateien kopieren")."')\" title=\"".___("Newsletter und Dateien kopieren")."\">".tm_icon("add.png",___("Newsletter und Dateien kopieren"))."&nbsp;";
 		if (!$user_is_expert) $_MAIN_OUTPUT.=___("Kopieren(+Dateien)");
 		$_MAIN_OUTPUT.= "</a>\n";
-		if ($NL[$ncc]['status']>2) {
+		if ($hc>0 && $NL[$ncc]['status']!=2  && $NL[$ncc]['status']!=3) {
 			$_MAIN_OUTPUT.= "<a class=\"list_edit_entry\" href=\"".$tm_URL."/".$statURLPara_."\" title=\"".___("Statistik anzeigen")."\">".tm_icon("chart_pie.png",___("Statistik anzeigen"))."&nbsp;";
 			if (!$user_is_expert) $_MAIN_OUTPUT.=___("Statistik");
 			$_MAIN_OUTPUT.= "</a>\n";
@@ -544,23 +532,63 @@ for ($ncc=0;$ncc<$nc;$ncc++) {
 				$_MAIN_OUTPUT.= "</a>\n";
 			}
 		}
+	#ok, aber nur fuer queues die noch nicht versendet wurden etc pp, und die noch nich gestartet wurden etc.
+	if (($QUEUE->countQ($NL[$ncc]['id'],0,$status=2) + $QUEUE->countQ($NL[$ncc]['id'],0,$status=5)) > 0) {
+		$_MAIN_OUTPUT.= "<a class=\"list_edit_entry\" href=\"".$tm_URL."/".$refreshRCPTListURLPara_."\" title=\"".___("Adressen nachfassen / Empfängerliste aktualisieren")."\">".tm_icon("arrow_switch.png",___("Adressen nachfassen / Empfängerliste aktualisieren"),"","","","email_go.png")."&nbsp;";
+		if (!$user_is_expert) $_MAIN_OUTPUT.=___("Nachfassen");
+		$_MAIN_OUTPUT.= "</a>\n";
+	}
+		//attachements schoen anzeigen :)
+		#$attachements=$NEWSLETTER->getAttm($NL[$ncc]['id']);
 		$attachements=$NL[$ncc]['attachements'];
-		if (count($attachements)>0) {
-			$_MAIN_OUTPUT.= "<br>".tm_icon("disk.png",___("Anhänge"))."&nbsp;".___("Anhänge").":\n<br>\n";
+		$attm_c=count($attachements);
+		if ($attm_c>0) {
+			$attmsize_total=0;
+			$_MAIN_OUTPUT.= "<table border=0 width= \"400\">\n";
+			$_MAIN_OUTPUT.= "<thead>";
+			$_MAIN_OUTPUT.= "<tr><td colspan=2 align=\"left\">".tm_icon("disk.png",___("Anhänge"))."&nbsp;".$attm_c."&nbsp;".___("Anhänge")."</td></tr>\n";
+			$_MAIN_OUTPUT.= "<tr><td align=\"left\">".___("Dateiname:")."</td><td align=\"right\">".___("Grösse:")."</td></tr></thead>\n";
 			foreach ($attachements as $file) {
-				$_MAIN_OUTPUT.= "<a class=\"list_edit_entry\" href=\"".$tm_URL_FE."/".$tm_nlattachdir."/".$file['file']."\" target=\"_preview\" title=\"".___("Anhang für diesen Newsletter laden").": ".$tm_nlattachdir."/".$file['file']."\">".tm_icon("attach.png",___("Anhang laden"))."&nbsp;";
-				$_MAIN_OUTPUT.=$file['file'];
-				$_MAIN_OUTPUT.= "</a><br>\n";
-			}
-		}
+				$_MAIN_OUTPUT.= "<tr>";
+				//pruefen ob datei vorhanden ist...
+				if (file_exists($tm_nlattachpath."/".$file['file'])) {
+					$attmsize=filesize($tm_nlattachpath."/".$file['file']);
+					$attmsize_total +=$attmsize;
+					$_MAIN_OUTPUT.= "<td align=\"left\">";
+					$_MAIN_OUTPUT.= "<a class=\"list_edit_entry\" href=\"".$tm_URL_FE."/".$tm_nlattachdir."/".$file['file']."\" target=\"_preview\" title=\"".___("Anhang für diesen Newsletter laden").": ".$tm_nlattachdir."/".$file['file']."\">".tm_icon("attach.png",___("Anhang laden"))."&nbsp;";
+					$_MAIN_OUTPUT.=$file['file'];
+					$_MAIN_OUTPUT.= "</a>"; 
+					$_MAIN_OUTPUT.= "</td>";
+					$_MAIN_OUTPUT.= "<td align=\"right\">";
+					$_MAIN_OUTPUT.= formatFileSize($attmsize);
+					$_MAIN_OUTPUT.= "</td>\n";
+				} else {
+					$_MAIN_OUTPUT.= "<td align=\"left\">";
+					$_MAIN_OUTPUT.= tm_icon("bullet_delete.png",___("Datei existiert nicht!"))."&nbsp;<font color=\"#ff0000\">".$file['file']."</font>\n";
+					$_MAIN_OUTPUT.= "</td>";
+					$_MAIN_OUTPUT.= "<td align=\"right\">&nbsp;--&nbsp;</td>";
+				}//file_exists
+				$_MAIN_OUTPUT.= "</tr>";
+			}//foreach
+			//gesamtgroesse anzeigen
+			$_MAIN_OUTPUT.= "<tr><td align=\"right\">".___("Total")."</td><td align=\"right\" style=\"border-top:2px solid #aaaaaa;\"><strong>".formatFileSize($attmsize_total)."</strong></td></tr>\n";
+			$_MAIN_OUTPUT.="</table>";
+		}//count
+		//ende attachements
 		$_MAIN_OUTPUT.= "\n</font><br>\n";
 		$_MAIN_OUTPUT.= "</div>\n";
-		$_MAIN_OUTPUT.= "<script type=\"text/javascript\">switchSection('list_edit_".$ncc."');</script>\n";
-
 		$_MAIN_OUTPUT.= "</td>\n";
 		$_MAIN_OUTPUT.= "</tr>\n";
 }//for
-$_MAIN_OUTPUT.= "<tr><td colspan=5>&nbsp;</td></tr>\n";
+
+$_MAIN_OUTPUT.= "<script language=\"javascript\" type=\"text/javascript\">";
+for ($ncc=0;$ncc<$nc;$ncc++) {
+		$_MAIN_OUTPUT.= "toggleSlide('toggle_nlentry_".$ncc."','list_edit_".$ncc."',1);";
+}
+
+$_MAIN_OUTPUT.= "</script>	";
+$_MAIN_OUTPUT.= "<tr><td colspan=5>&nbsp;";
+$_MAIN_OUTPUT.= "</td></tr>\n";
 $_MAIN_OUTPUT.= "</tbody></table>\n";
 include(TM_INCLUDEPATH."/pager.inc.php");
 include(TM_INCLUDEPATH."/nl_list_legende.inc.php");

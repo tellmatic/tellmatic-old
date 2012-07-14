@@ -57,7 +57,7 @@ if ($check_mail[0] && $set=="unsubscribe") {
 				}
 				$created=date("Y-m-d H:i:s");
 				//im memo speichern wir den namen des newsletter etc.
-				$memo="\n".$created.": unsubscribed";
+				$memo="unsubscribed";
 				$NEWSLETTER=new tm_NL();
 				$NL=$NEWSLETTER->getNL($nl_id);
 				if (count($NL)>0) {

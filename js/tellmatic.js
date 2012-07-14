@@ -10,28 +10,65 @@
 /* check Homepage for Updates and more Infos                                    */
 /* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
 /********************************************************************************/
-
-function checkHostType() {
-	form=document.getElementById('edit_host');
-	field=document.getElementById('type');
-	if (field.value=='smtp')  {
-		var changefield=document.getElementById('smtp_auth');
-	    changefield.disabled = false;
-		var changefield=document.getElementById('smtp_domain');
-	    changefield.disabled = false;
-		var changefield=document.getElementById('options');
-	    changefield.disabled = true;
+function makeVis(divID) {
+	document.getElementById(divID).style.visibility = "visible";
+}
+function checkFormSettings(form_id,items_match,items_nomatch,check_id,check_value) {
+	//voa 11/008
+	//check for value and enable/disable items with item_ids
+	//function checkFormSettings(form_id,item_ids,check_id,check_value)
+	//form_id: id of form to check
+	//items: array of items and bool to disable item[N][0]=item_id | [1]=disabled:true|false]
+	//check_id: id of item to check for check_value
+	//check_value: value of item with check_id 
+	form=document.getElementById(form_id);
+	field=document.getElementById(check_id);
+	if (field.value==check_value)  {
+		for (var f = 0; f < items_match.length; ++f) {
+			var changefield=document.getElementById(items_match[f][0]);
+		    changefield.disabled = items_match[f][1];
+		}
 	} else {
-		var changefield=document.getElementById('smtp_auth');
-	    changefield.disabled = true;
-		var changefield=document.getElementById('smtp_domain');
-	    changefield.disabled = true;
-		var changefield=document.getElementById('options');
-	    changefield.disabled = false;
+		for (var f = 0; f < items_nomatch.length; ++f) {
+			var changefield=document.getElementById(items_nomatch[f][0]);
+		    changefield.disabled = items_nomatch[f][1];
+		}
 	}
 }
 
-// bei import und delete diverse felder deaktivieren:
+function checkHostType() {
+	form_id='edit_host';
+	check_id='type';
+	check_value='smtp';
+	items_match=[	['smtp_auth',false], 
+								['smtp_domain',false], 
+								['smtp_auth',false], 
+								['smtp_ssl',false], 
+								['sender_name',false], 
+								['sender_email',false], 
+								['return_mail',false],
+								['reply_to',false],
+								['max_mails_atonce',false],
+								['max_mails_bcc',false],
+								['smtp_max_piped_rcpt',false],
+								['options',true],
+							];
+	items_nomatch=[	['smtp_auth',true], 
+								['smtp_domain',true], 
+								['smtp_auth',true], 
+								['smtp_ssl',true], 
+								['sender_name',true], 
+								['sender_email',true], 
+								['return_mail',true], 
+								['reply_to',true],
+								['max_mails_atonce',true],
+								['max_mails_bcc',true],
+								['smtp_max_piped_rcpt',true],
+								['options',false],
+							];
+	checkFormSettings(form_id,items_match,items_nomatch,check_id,check_value);
+}
+
 function checkImport() {
 	form=document.getElementById('adr_import');
 	field=document.getElementById('delete');
@@ -71,25 +108,36 @@ function checkImport() {
 	}
 }
 
-function checkQNewLimitOffset() {
-	form=document.getElementById('queue_new');
-	field=document.getElementById('send_now');
-	if (field.checked)  {
-		var changefield=document.getElementById('usr_limit');
-	    changefield.disabled = false;
-		var changefield=document.getElementById('usr_offset');
-	    changefield.disabled = false;
-		var changefield=document.getElementById('fastmode');
-	    changefield.disabled = false;
-	} else {
-		var changefield=document.getElementById('usr_limit');
-	    changefield.disabled = true;
-		var changefield=document.getElementById('usr_offset');
-	    changefield.disabled = true;
-		var changefield=document.getElementById('fastmode');
-	    changefield.disabled = true;
-	}
+// bei import und delete diverse felder deaktivieren:
+function checkImport_X() {
+	//leider geht dat nich da value=1 nicht funzt, field.checked waere das richtige......
+	form_id='adr_import';
+	items_match=[	['merge_groups',true], 
+								['adr_grp',true], 
+								['status_new',true], 
+								['status_exists',true], 
+								['aktiv_new',true], 
+								['aktiv_existing',true], 
+								['check_double',true]
+							];
+	items_nomatch=[	['merge_groups',false], 
+								['adr_grp',false], 
+								['status_new',false], 
+								['status_exists',false], 
+								['aktiv_new',false], 
+								['aktiv_existing',false], 
+								['check_double',false]
+							];
+
+	check_id='delete';
+	check_value='1';
+	checkFormSettings(form_id,items_match,items_nomatch,check_id,check_value);
+
+	check_id='blacklist';
+	check_value='1';
+	checkFormSettings(form_id,items_match,items_nomatch,check_id,check_value);
 }
+
 
 
 //flash element

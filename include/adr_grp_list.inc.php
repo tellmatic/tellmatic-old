@@ -16,7 +16,7 @@ $_MAIN_DESCR=___("Adressgruppen verwalten");
 $_MAIN_MESSAGE.="";
 
 $ADDRESS=new tm_ADR();
-
+$QUEUE=new tm_Q();
 $adr_grp_id=getVar("adr_grp_id");
 $set=getVar("set");
 $val=getVar("val");
@@ -90,6 +90,17 @@ $statURLPara->addParam("set","adrg");
 $sortURLPara=$mSTDURL;
 $sortURLPara->addParam("act","adr_grp_list");
 $sortURLPara_=$sortURLPara->getAllParams();
+$refreshRCPTListURLPara=$mSTDURL;
+$refreshRCPTListURLPara->addParam("act","queue_send");
+$refreshRCPTListURLPara->addParam("set","adrg");
+
+$showqURLPara=$mSTDURL;
+$showqURLPara->addParam("act","queue_list");
+//vars loeschen da q liste sonst bei limit offset sort etc beeintraechtigt wird.
+$showqURLPara->delParam("offset");
+$showqURLPara->delParam("limit");
+$showqURLPara->delParam("st");
+$showqURLPara->delParam("si");
 
 $_MAIN_OUTPUT="<table border=\"0\" cellpadding=\"1\" cellspacing=\"1\" width=\"100%\">";
 $_MAIN_OUTPUT.= "<thead>".
@@ -129,6 +140,8 @@ for ($accg=0;$accg<$acg;$accg++) {
 	} else {
 		$new_aktiv=0;
 	}
+	//anz. gueltige adressen
+	$valid_adr_c=$ADDRESS->countValidADR($GRP[$accg]['id']);
 
 	$editURLPara->addParam("adr_grp_id",$GRP[$accg]['id']);
 	$editURLPara_=$editURLPara->getAllParams();
@@ -154,6 +167,11 @@ for ($accg=0;$accg<$acg;$accg++) {
 
 	$statURLPara->addParam("adr_grp_id",$GRP[$accg]['id']);
 	$statURLPara_=$statURLPara->getAllParams();
+	$refreshRCPTListURLPara->addParam("grp_id",$GRP[$accg]['id']);
+	$refreshRCPTListURLPara_=$refreshRCPTListURLPara->getAllParams();
+	
+	$showqURLPara->addParam("grp_id",$GRP[$accg]['id']);
+	$showqURLPara_=$showqURLPara->getAllParams();
 
 	$_MAIN_OUTPUT.= "<tr id=\"row_".$accg."\"  bgcolor=\"".$bgcolor."\" onmouseover=\"setBGColor('row_".$accg."','".$row_bgcolor_hilite."');\" onmouseout=\"setBGColor('row_".$accg."','".$bgcolor."');\">";
 	$_MAIN_OUTPUT.= "<td onmousemove=\"showToolTip('tt_adr_grp_list_".$GRP[$accg]['id']."')\" onmouseout=\"hideToolTip();\">";
@@ -188,9 +206,10 @@ for ($accg=0;$accg<$acg;$accg++) {
 	if ($GRP[$accg]['standard']==1) {
 		$_MAIN_OUTPUT.=  "<br>".tm_icon("page_white_lightning.png",___("Diese Gruppe ist die Standardgruppe"))."&nbsp;".___("Standardgruppe");
 	}
-	$_MAIN_OUTPUT.="<br>".sprintf(___("%s Adressen"),$GRP[$accg]['adr_count']).
-									"<br>".sprintf(___("Erstellt am: %s von %s"),$GRP[$accg]['created'],$GRP[$accg]['author']).
-									"<br>".sprintf(___("Bearbeitet am: %s von %s"),$GRP[$accg]['updated'],$GRP[$accg]['editor']).
+	$_MAIN_OUTPUT.="<br>".sprintf(___("%s Adressen"),display($GRP[$accg]['adr_count'])).
+									"&nbsp (".sprintf(___("%s gültige Adressen"),"<b>".display($valid_adr_c)."</b>").")".
+									"<br>".sprintf(___("Erstellt am: %s von %s"),display($GRP[$accg]['created']),display($GRP[$accg]['author'])).
+									"<br>".sprintf(___("Bearbeitet am: %s von %s"),display($GRP[$accg]['updated']),display($GRP[$accg]['editor'])).
 									"";
 
 	$_MAIN_OUTPUT.= "</div>";
@@ -202,7 +221,7 @@ for ($accg=0;$accg<$acg;$accg++) {
 	$_MAIN_OUTPUT.= display($GRP[$accg]['descr']);
 	$_MAIN_OUTPUT.= "</td>";
 	$_MAIN_OUTPUT.= "<td>";
-	$_MAIN_OUTPUT.= display($GRP[$accg]['adr_count']);
+	$_MAIN_OUTPUT.= display($GRP[$accg]['adr_count'])." / <b>".display($valid_adr_c)."</b>";
 	$_MAIN_OUTPUT.= "</td>";
 	$_MAIN_OUTPUT.= "<td>";
 	//wenn gruppe keine standardgruppe ist, dann link zum deaktivieren, deaktivierete gruppen koennen naemlich keine standardgruppe sein
@@ -225,11 +244,8 @@ for ($accg=0;$accg<$acg;$accg++) {
 	$_MAIN_OUTPUT.= "&nbsp;<a href=\"".$tm_URL."/".$editURLPara_."\" title=\"".___("Adressgruppe bearbeiten")."\">".tm_icon("pencil.png",___("Adressgruppe bearbeiten"))."</a>";
 	$_MAIN_OUTPUT.= "&nbsp;<a href=\"".$tm_URL."/".$addadrURLPara_."\" title=\"".___("Neue Adresse in dieser Gruppe anlegen")."\">".tm_icon("vcard_add.png",___("Neue Adresse in dieser Gruppe anlegen"))."</a>";
 	$_MAIN_OUTPUT.= "&nbsp;<a href=\"".$tm_URL."/".$showadrURLPara_."\" title=\"".___("Alle Adressen in dieser Gruppe anzeigen")."\">".tm_icon("group_go.png",___("Alle Adressen in dieser Gruppe anzeigen"))."</a>";;
-	#."&nbsp;".$GRP[$accg]['adr_count']."</a>";
 	$_MAIN_OUTPUT.=  "&nbsp;<a href=\"".$tm_URL."/".$statURLPara_."\" title=\"".___("Statistik anzeigen")."\">".tm_icon("chart_pie.png",___("Statistik anzeigen"))."</a>";
 	if ($GRP[$accg]['standard']==1) {
-		//wenn gruppe standard ist, dann bildchen anzeigen, wird auch neben id angezeigt
-		//$_MAIN_OUTPUT.=  "&nbsp;<img src=\"".$tm_iconURL."/page_white_lightning.png\" border=\"0\">";
 	} else {
 		//wenn gruppe aktiv ist, dann darf man sie als standard definieren
 		if ($GRP[$accg]['aktiv']==1) {
@@ -240,6 +256,13 @@ for ($accg=0;$accg<$acg;$accg++) {
 		//bomb! gruppe UND Adressen loeschen!!!
 		$_MAIN_OUTPUT.= "&nbsp;<a href=\"".$tm_URL."/".$delallURLPara_."\" onclick=\"return confirmLink(this, '".sprintf(___("Adressgruppe %s UND Adressen dieser Gruppe löschen?"),display($GRP[$accg]['name']))."')\" title=\"".___("Adressgruppe und Adressen löschen")."\">".tm_icon("bomb.png",___("Adressgruppe und Adressen löschen"))."</a>";
 
+	}
+	if ($QUEUE->countQ($nl_id=0,$GRP[$accg]['id']) >0) {
+				$_MAIN_OUTPUT.= "<a href=\"".$tm_URL."/".$showqURLPara_."\" title=\"".___("Q für diese Gruppe anzeigen")."\">".tm_icon("hourglass_go.png",___("Q für diese Gruppe anzeigen"))."&nbsp;";
+	}
+	if (($QUEUE->countQ($nl_id=0,$GRP[$accg]['id'],$status=2) + $QUEUE->countQ($nl_id=0,$GRP[$accg]['id'],$status=5)) > 0) {
+		#$_MAIN_OUTPUT.= "&nbsp;<a href=\"".$tm_URL."/".$sendFastURLPara_."\" title=\"".___("Adressen nachfassen / Empfängerliste aktualisieren")."\">".tm_icon("arrow_switch.png",___("Adressen nachfassen / Empfängerliste aktualisieren"),"","","","email_go.png")."</a>";
+		$_MAIN_OUTPUT.= "&nbsp;<a href=\"".$tm_URL."/".$refreshRCPTListURLPara_."\" title=\"".___("Adressen nachfassen / Empfängerliste aktualisieren")."\">".tm_icon("arrow_switch.png",___("Adressen nachfassen / Empfängerliste aktualisieren"),"","","","email_go.png")."</a>";
 	}
 	$_MAIN_OUTPUT.= "</td>";
 	$_MAIN_OUTPUT.= "</tr>";

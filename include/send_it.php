@@ -25,16 +25,78 @@ $BLACKLIST=new tm_BLACKLIST();
 $T=new Timer();//zeitmessung
 
 $LOG="";
+$skip_send=FALSE;//if true, skip sending routine// is true after new q has been prepared
 
 function send_log($text) {
 	global $LOG;
 	$LOG.=$text;
 }
+//Q's vorbereiten // status=1, autogen=1, startet zwischen jetzt und +xx stunden!
+$QP=$QUEUE->getQtoPrepare(Array("limit"=>1));
+$qpc=count($QP);//wieviel zu sendende q eintraege gibt es?
+//Schleife Qs
+for ($qpcc=0;$qpcc<$qpc;$qpcc++) {
+	$skip_send=TRUE;
+	$logfilename="q_".$QP[$qpcc]['id']."_".$QP[$qpcc]['grp_id']."_".date_convert_to_string($QP[$qpcc]['created']).".log.html";
+	send_log("<pre>\n".date("Y-m-d H:i:s").": Preparing ".($qpcc+1)." of $qpc Qs\nbegin\n");
+	send_log( "\n".date("Y-m-d H:i:s").": QID=".$QP[$qpcc]['id']);
+	send_log(  "\n".date("Y-m-d H:i:s").": Status=".$QP[$qpcc]['status']);
+	send_log(  "\n".date("Y-m-d H:i:s").": nl_id=".$QP[$qpcc]['nl_id']);
+	send_log(  "\n".date("Y-m-d H:i:s").": grp_id=".$QP[$qpcc]['grp_id']);
+	send_log(  "\n".date("Y-m-d H:i:s").": host_id=".$QP[$qpcc]['host_id']);
+	send_log(  "\n".date("Y-m-d H:i:s").": send_at=".$QP[$qpcc]['send_at']);
+	send_log(  "\n".date("Y-m-d H:i:s").": autogen=".$QP[$qpcc]['autogen']);
+	$ReportMail_HTML="";
+	$G=$ADDRESS->getGroup($QP[$qpcc]['grp_id']);
+	$NL=$NEWSLETTER->getNL($QP[$qpcc]['nl_id']);
+	$HOST=$HOSTS->getHost($QP[$qpcc]['host_id'],Array("aktiv"=>1,"type"=>"smtp"));
+	send_log(  "\n".date("Y-m-d H:i:s").": q status=1, q autogen =1, creating recipients list:");
+	$h_refresh=$QUEUE->addHQ( Array ( 'nl_id' => $QP[$qpcc]['nl_id'],
+																				'q_id' => $QP[$qpcc]['id'],
+																				'grp_id' =>$QP[$qpcc]['grp_id'],
+																				'host_id' =>$QP[$qpcc]['host_id'],
+																				'status' => 1,
+																				'created' => date("Y-m-d H:i:s")
+																				)
+																		);
+		if ($h_refresh[0]) {
+			$ReportMail_HTML.="<br>AutoGen=1";
+			$ReportMail_HTML.="<br>Die Empfängerliste wurde automatisch erzeugt! Es wurden ".$h_refresh[2]." Adressen für Gruppe ".$G[0]['name']." eingetragen.";
+			$ReportMail_HTML.="<br>The recipientslist has been automagical created, ".$h_refresh[2]." adresses for group ".$G[0]['name']." inserted.";
+			$ReportMail_HTML.="<br>SMTP-Mailserver: ".$HOST[0]['name']." / ".$HOST[0]['user'].":[pass]@".$HOST[0]['host'].":".$HOST[0]['port'];
+			send_log(  "\n".date("Y-m-d H:i:s").":    ".$h_refresh[2]." adresses for group ".$G[0]['name']." inserted in recipients list");
+			send_log(  "\n".date("Y-m-d H:i:s").": set q status=2, started!");
+			$QUEUE->setStatus($QP[$qpcc]['id'],2);//gestartet
+		} else {
+			$ReportMail_HTML.="<br>Feher beim aktualisieren der Empfängerliste.".
+			$ReportMail_HTML.="<br>Error refreshing the recipients list.".
+			send_log(  "\n".date("Y-m-d H:i:s").":     Error refreshing recipients list!");
+		}
+	send_log(  "\n".date("Y-m-d H:i:s").": q status =1, new status=2, sending mail to admin");
+	//report an sender....
+	$ReportMail_Subject="Tellmatic: Prepare recipients list (QId: ".$QP[$qpcc]['id']." / ".$QP[$qpcc]['created'].") ".display($NL[0]['subject'])." an ".display($G[0]['name']);
+	//$created_date=strftime("%d-%m-%Y %H:%M:%S",mk_microtime($QP[$qpcc]['created']));
+	$created_date=$QP[$qpcc]['created'];
+	$ReportMail_HTML.="<br><b>".$created_date."</b>".
+									"<br>Der Versand des Newsletter <b>".display($NL[0]['subject'])."</b> an die Gruppe <b>".display($G[0]['name'])."</b> wurde vorbereitet.".
+									"<br>The Mailing for Newsletter <b>".display($NL[0]['subject'])."</b> to Group <b>".display($G[0]['name'])."</b> prepared.".
+									"<br>".
+									"<br>Versand terminiert fuer: / Send at: ".$QP[$qpcc]['send_at'].
+									"<br>Logfile: ".$tm_URL_FE."/".$tm_logdir."/".$logfilename;
+	if (!DEMO) @SendMail($HOST[0]['sender_email'],$HOST[0]['sender_name'],$HOST[0]['sender_email'],$HOST[0]['sender_name'],$ReportMail_Subject,clear_text($ReportMail_HTML),$ReportMail_HTML,Array(),$HOST);
+	send_log(  "</pre>\n");
+	send_log( "\n\n\n\n".date("Y-m-d H:i:s").": write Log to ".$tm_URL_FE."/".$tm_logdir."/".$logfilename);
+	update_file($tm_logpath,$logfilename,$LOG);
+}//for qpc
 
+//jetzt aktuelle q's zum versenden holen...:
 
 //Q holen
 $limitQ=1;//nur ein q eintrag bearbeiten!
-$Q=$QUEUE->getQtoSend(0,0,$limitQ,0);//id offset limit nl-id
+$Q=Array();
+if (!$skip_send) {
+	$Q=$QUEUE->getQtoSend(0,0,$limitQ,0);//id offset limit nl-id
+}
 $qc=count($Q);//wieviel zu sendende q eintraege gibt es?
 
 //Schleife Qs
@@ -49,6 +111,8 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 		send_log(  "\n".date("Y-m-d H:i:s").": nl_id=".$Q[$qcc]['nl_id']);
 		send_log(  "\n".date("Y-m-d H:i:s").": grp_id=".$Q[$qcc]['grp_id']);
 		send_log(  "\n".date("Y-m-d H:i:s").": host_id=".$Q[$qcc]['host_id']);
+		send_log(  "\n".date("Y-m-d H:i:s").": send_at=".$Q[$qcc]['send_at']);
+		send_log(  "\n".date("Y-m-d H:i:s").": autogen=".$Q[$qcc]['autogen']);
 	if (!isset($HOST[0]))	{ //wenn kein gueltiger smtp host, filter: aktiv=1 und typ=smtp
 		send_log(  "\n".date("Y-m-d H:i:s").": host id:".$Q[$qcc]['host_id']." inactive / not from type smtp or does not exist! skipping!");
 		$QUEUE->setStatus($Q[$qcc]['id'],5);//stopped
@@ -58,9 +122,9 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 	if (isset($HOST[0]))	{ //wenn gueltiger smtp host, filter: aktiv=1 und typ=smtp
 		send_log(  "\n".date("Y-m-d H:i:s").":     hostname/ip=".$HOST[0]['name']."(".$HOST[0]['host'].":".$HOST[0]['port'].")");
 
-		//set status = running =3
-		send_log(  "\n".date("Y-m-d H:i:s").": set q status=3");
-		$QUEUE->setStatus($Q[$qcc]['id'],3);//running
+		$max_mails_atonce=$HOST[0]['max_mails_atonce'];
+		$max_mails_bcc=$HOST[0]['max_mails_bcc'];
+		if ($HOST[0]['smtp_ssl']) send_log(  "\n".date("Y-m-d H:i:s").":     use SSL");
 
 		//Newsletter holen
 		send_log(  "\n".date("Y-m-d H:i:s").": get nl");
@@ -73,24 +137,52 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 
 
 		//wenn q status==2, neu... dann mail an admin das versenden gestartet wurde....
-		if ($Q[$qcc]['status']==2) {
-			send_log(  "\n".date("Y-m-d H:i:s").": q status =2, sending mail to admin");
+		if ($Q[$qcc]['status']==2) {//ist status=2, neu und in aktueller getQtosend-liste!  //neuer status ist schon 3 running!!! wurde oben bereits gemacht
+			$ReportMail_HTML="";
 			$G=$ADDRESS->getGroup($Q[$qcc]['grp_id']);
+			//hier adressen nachfassen! fuer status=2, q_id und grp_id etc.
+			if ($Q[$qcc]['autogen']==1) {
+				//adressen nachfassen
+				send_log(  "\n".date("Y-m-d H:i:s").": q status=2, q autogen =1, refreshing recipients list:");
+				$h_refresh=$QUEUE->addHQ( Array ( 'nl_id' => $Q[$qcc]['nl_id'],
+																				'q_id' => $Q[$qcc]['id'],
+																				'grp_id' =>$Q[$qcc]['grp_id'],
+																				'host_id' =>$Q[$qcc]['host_id'],
+																				'status' => 1,
+																				'created' => date("Y-m-d H:i:s")
+																				)
+																		);
+				if ($h_refresh[0]) {
+					$ReportMail_HTML.="<br>AutoGen=1".
+					$ReportMail_HTML.="<br>Die Empfängerliste wurde automatisch aktualisiert! Es wurden ".$h_refresh[2]." neue Adressen für Gruppe ".$G[0]['name']." eingetragen.".
+					$ReportMail_HTML.="<br>The recipientslist has been automagical refreshed, ".$h_refresh[2]." new adresses for group ".$G[0]['name']." inserted.".
+					send_log(  "\n".date("Y-m-d H:i:s").":    ".$h_refresh[2]." new adresses for group ".$G[0]['name']." inserted in recipients list");
+				} else {
+					$ReportMail_HTML.="<br>Fehler beim aktualisieren der Empfängerliste.";
+					$ReportMail_HTML.="<br>Error refreshing the recipients list.";
+					send_log(  "\n".date("Y-m-d H:i:s").":     Error refreshing recipients list!");
+				}
+			}
+			send_log(  "\n".date("Y-m-d H:i:s").": q status =2, new status=3, sending mail to admin");
 			//report an sender....
 			$ReportMail_Subject="Tellmatic: Start sending Newsletter (QId: ".$Q[$qcc]['id']." / ".$Q[$qcc]['created'].") ".display($NL[0]['subject'])." an ".display($G[0]['name']);
-			$ReportMail_HTML="";
 			$created_date=$Q[$qcc]['created'];
 			$ReportMail_HTML.="<br><b>".$created_date."</b>".
 									"<br>Der Versand des Newsletter <b>".display($NL[0]['subject'])."</b> an die Gruppe <b>".display($G[0]['name'])."</b> wurde gestartet.".
 									"<br>The Mailing for Newsletter <b>".display($NL[0]['subject'])."</b> to Group <b>".display($G[0]['name'])."</b> started.".
 									"<br>".
+									"<br>SMTP-Mailserver: ".$HOST[0]['name']." / ".$HOST[0]['user'].":[pass]@".$HOST[0]['host'].":".$HOST[0]['port'].
 									"<br>erstellt (nur versand vorbereitet): /created (prepared): ".$created_date.
 									"<br>Versand terminiert fuer: / Send at: ".$Q[$qcc]['send_at'].
 									"<br>Gestartet: / Started: ".date("Y-m-d H:i:s").
 									"<br>Logfile: ".$tm_URL_FE."/".$tm_logdir."/".$logfilename;
-			if (!DEMO) @SendMail($C[0]['sender_email'],$C[0]['sender_name'],$C[0]['sender_email'],$C[0]['sender_name'],$ReportMail_Subject,clear_text($ReportMail_HTML),$ReportMail_HTML);
+			if (!DEMO) @SendMail($HOST[0]['sender_email'],$HOST[0]['sender_name'],$HOST[0]['sender_email'],$HOST[0]['sender_name'],$ReportMail_Subject,clear_text($ReportMail_HTML),$ReportMail_HTML,Array(),$HOST);
 		}
 
+		//set status = running =3
+		//erst hier, da addHQ den status 1 oder 2 verlangt! und es schon 3 waere wenn wir dat oben machen
+		send_log(  "\n".date("Y-m-d H:i:s").": set q status=3");
+		$QUEUE->setStatus($Q[$qcc]['id'],3);//running
 		//filenames zusammensetzen
 		//html datei//template fuer html parts
 		$NL_Filename_N="nl_".date_convert_to_string($NL[0]['created'])."_n.html";
@@ -136,13 +228,14 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 		//blindimage ist auch personalisiert
 
 		send_log(  "\n".date("Y-m-d H:i:s").": prepare E-Mail-Object");
-		send_log(  "\n".date("Y-m-d H:i:s").": From $FromName ($From)");
+		send_log(  "\n".date("Y-m-d H:i:s").": From ".$HOST[0]['sender_email']." (".$HOST[0]['sender_name'].")");
 		send_log(  "\n".date("Y-m-d H:i:s").": Subject".display($NL[0]['subject']));
 
 		//emailobjekt vorbereiten, wird dann kopiert, hier globale einstellungen
 		$email_obj=new smtp_message_class;//use SMTP!
 		$email_obj->default_charset=$encoding;
 		$email_obj->authentication_mechanism=$HOST[0]['smtp_auth'];
+		$email_obj->ssl=$HOST[0]['smtp_ssl'];
 		$email_obj->localhost=$HOST[0]['smtp_domain'];
 		$email_obj->smtp_host=$HOST[0]['host'];
 		$email_obj->smtp_port=$HOST[0]['port'];
@@ -152,14 +245,10 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 		$email_obj->smtp_password=$HOST[0]['pass'];
 		$email_obj->smtp_pop3_auth_host="";
 		//important! max 1 rcpt to before waiting for ok, tarpiting!
-		$email_obj->maximum_piped_recipients=1;//sends only XX rcpt to before waiting for ok from server!
-		
-		if ($SMTPPopB4SMTP==1)
-		{
-			$email_obj->smtp_pop3_auth_host=$SMTPHost;
-		}
+		$email_obj->maximum_piped_recipients=$HOST[0]['smtp_max_piped_rcpt'];//sends only XX rcpt to before waiting for ok from server!
+		#if ($SMTPPopB4SMTP==1)	$email_obj->smtp_pop3_auth_host=$HOST[0]['host'];
 		//debug
-		if (DEBUG) {
+		if (DEBUG_SMTP) {
 			$email_obj->smtp_debug=1;
 			$email_obj->smtp_html_debug=0;
 		} else {
@@ -169,10 +258,11 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 
 		$email_obj->SetBulkMail=1;
 		$email_obj->mailer=$ApplicationText;
-		$email_obj->SetEncodedEmailHeader("From",$C[0]['sender_email'],$C[0]['sender_name']);
-		$email_obj->SetEncodedEmailHeader("Reply-To",$C[0]['sender_email'],$C[0]['sender_name']);
-		$email_obj->SetHeader("Return-Path",$C[0]['return_mail']);
-		$email_obj->SetEncodedEmailHeader("Errors-To",$C[0]['return_mail'],$C[0]['return_mail']);
+		$email_obj->SetEncodedEmailHeader("From",$HOST[0]['sender_email'],$HOST[0]['sender_name']);
+		$email_obj->SetEncodedEmailHeader("Reply-To",$HOST[0]['reply_to'],$HOST[0]['sender_name']);
+		$email_obj->SetHeader("Return-Path",$HOST[0]['return_mail']);
+		$email_obj->SetEncodedEmailHeader("Errors-To",$HOST[0]['return_mail'],$HOST[0]['return_mail']);
+
 
 		//H holen
 
@@ -208,23 +298,31 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 
 		$time=$T->MidResult();
 		send_log(  "\n".date("Y-m-d H:i:s").": time: ".$time);
-
 		send_log(  "\n".date("Y-m-d H:i:s").": working on total $max_mails addresses in $max_mails_atonce mails with $max_mails_bcc recipients for each mail");
-
 		//wenn massenmailing, body hier schon parsen!!!
 		if ($massmail) {
 			//to fuer massenmailing
 			send_log(  "\n".date("Y-m-d H:i:s").": prepare Massmail");
-
-			$email_obj->SetEncodedHeader("Subject",$NL[0]['subject']);
-			
+			//parse {DATE}
+			$SUBJ_search = array("{DATE}");
+			$SUBJ_replace = array(date(TM_NL_DATEFORMAT));
+			$SUBJ = str_replace($SUBJ_search, $SUBJ_replace, $NL[0]['subject']);
+			send_log(  "\n".date("Y-m-d H:i:s").": subject=".$NL[0]['subject']." | parsed: ".$SUBJ);
+			$email_obj->SetEncodedHeader("Subject",$SUBJ);
 			//argh, this class forces us to add a to header which is definitely not needed if we have bcc or cc!!!
-			$To=$From;
-			$ToName=$NL[0]['rcpt_name'];
-			send_log(  "\n".date("Y-m-d H:i:s").": rcpt_name=".$NL[0]['rcpt_name']);
+			$To=$HOST[0]['sender_email'];//wird $HOST!
+			if (!empty($NL[0]['rcpt_name'])) {
+					$ToName=$NL[0]['rcpt_name'];
+			} else {
+				if (!empty($C[0]['rcpt_name'])) {
+					$ToName=$C[0]['rcpt_name'];
+				} else {
+					$ToName="Tellmatic Newsletter";
+				}
+			}
+			send_log(  "\n".date("Y-m-d H:i:s").": rcpt_name=".$NL[0]['rcpt_name']."   ToName=".$ToName);
 			send_log(  "\n".date("Y-m-d H:i:s").":  TO: NOT SET, USING BCC");
 			//dont add to: header in massmails, only use bcc! but:
-
 			send_log(  "\n".date("Y-m-d H:i:s").": prepare Template Vars for Massmail");
 			$BLINDIMAGE_URL=$tm_URL_FE."/news_blank.png.php?nl_id=".$Q[$qcc]['nl_id'];
 			$UNSUBSCRIBE_URL=$tm_URL_FE."/unsubscribe.php?nl_id=".$Q[$qcc]['nl_id'];
@@ -262,8 +360,9 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 			$_Tpl_NL->setParseValue("BLINDIMAGE_URL", $BLINDIMAGE_URL);
 			$_Tpl_NL->setParseValue("UNSUBSCRIBE_URL", $UNSUBSCRIBE_URL);
 			$_Tpl_NL->setParseValue("SUBSCRIBE_URL", $SUBSCRIBE_URL);
-
+			$_Tpl_NL->setParseValue("DATE", date(TM_NL_DATEFORMAT));
 			$_Tpl_NL->setParseValue("EMAIL","");
+			$_Tpl_NL->setParseValue("CODE","");
 			$_Tpl_NL->setParseValue("F0","");
 			$_Tpl_NL->setParseValue("F1","");
 			$_Tpl_NL->setParseValue("F2","");
@@ -382,7 +481,7 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 							//email pruefen
 							$check_mail=checkEmailAdr($ADR[0]['email'],$EMailcheck_Intern);
 							//if !a_error auch abfragen wegen blacklist pruefung oben!
-							if (!$a_error && $check_mail[0] && $ADR[0]['errors']<=$max_mails_retry) {
+							if (!$a_error && $check_mail[0] && $ADR[0]['errors']<=$C[0]['max_mails_retry']) {
 								send_log(  "\n".date("Y-m-d H:i:s").":   checkemail: OK");
 								//wenn adresse auch wirklich aktiv etc.
 								if ($ADR[0]['aktiv']==1) {
@@ -416,7 +515,7 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 								$a_error=true;
 								$h_status=4;//fehler
 								$h_error=true;
-								send_log(  "\n".date("Y-m-d H:i:s").": 	ERROR: invalid email: ".$ADR[0]['email']." ".$check_mail[1]." or reached max errors:".$ADR[0]['errors']."/".$max_mails_retry);
+								send_log(  "\n".date("Y-m-d H:i:s").": 	ERROR: invalid email: ".$ADR[0]['email']." ".$check_mail[1]." or reached max errors:".$ADR[0]['errors']."/".$C[0]['max_mails_retry']);
 							}//wenn errors < max errors
 
 							if ($a_error) {
@@ -485,8 +584,10 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 									$_Tpl_NL->setParseValue("UNSUBSCRIBE_URL", $UNSUBSCRIBE_URL);
 									$_Tpl_NL->setParseValue("SUBSCRIBE_URL", $SUBSCRIBE_URL);
 
+									$_Tpl_NL->setParseValue("DATE", date(TM_NL_DATEFORMAT));
 
 									$_Tpl_NL->setParseValue("EMAIL", $ADR[0]['email']);
+									$_Tpl_NL->setParseValue("CODE", $ADR[0]['code']);
 									$_Tpl_NL->setParseValue("F0", $ADR[0]['f0']);
 									$_Tpl_NL->setParseValue("F1", $ADR[0]['f1']);
 									$_Tpl_NL->setParseValue("F2", $ADR[0]['f2']);
@@ -528,18 +629,28 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 								//to etc fuer personalisiertes nl:
 								if (!$massmail) {
 
-									$SUBJ_search = array("{F0}","{F1}","{F2}","{F3}","{F4}","{F5}","{F6}","{F7}","{F8}","{F9}");
-									$SUBJ_replace = array($ADR[0]['f0'], $ADR[0]['f1'], $ADR[0]['f2'], $ADR[0]['f3'], $ADR[0]['f4'], $ADR[0]['f5'], $ADR[0]['f6'], $ADR[0]['f7'], $ADR[0]['f8'], $ADR[0]['f9']);
+									$SUBJ_search = array("{F0}","{F1}","{F2}","{F3}","{F4}","{F5}","{F6}","{F7}","{F8}","{F9}","{EMAIL}","{DATE}","{CODE}");
+									$SUBJ_replace = array($ADR[0]['f0'], $ADR[0]['f1'], $ADR[0]['f2'], $ADR[0]['f3'], $ADR[0]['f4'], $ADR[0]['f5'], $ADR[0]['f6'], $ADR[0]['f7'], $ADR[0]['f8'], $ADR[0]['f9'],$ADR[0]['email'],date(TM_NL_DATEFORMAT),$ADR[0]['code']);
 									$SUBJ = str_replace($SUBJ_search, $SUBJ_replace, $NL[0]['subject']);
 									send_log(  "\n".date("Y-m-d H:i:s").": subject=".$NL[0]['subject']." | parsed: ".$SUBJ);
 									$email_message->SetEncodedHeader("Subject",$SUBJ);
 						
 									send_log(  "\n".date("Y-m-d H:i:s").": personal Mailing, add TO: ");
 									$To=$ADR[0]['email'];
-									$RCPT_Name_search = array("{F0}","{F1}","{F2}","{F3}","{F4}","{F5}","{F6}","{F7}","{F8}","{F9}");
-									$RCPT_Name_replace = array($ADR[0]['f0'], $ADR[0]['f1'], $ADR[0]['f2'], $ADR[0]['f3'], $ADR[0]['f4'], $ADR[0]['f5'], $ADR[0]['f6'], $ADR[0]['f7'], $ADR[0]['f8'], $ADR[0]['f9']);
-									$RCPT_Name = str_replace($RCPT_Name_search, $RCPT_Name_replace, $NL[0]['rcpt_name']);
-									send_log(  "\n".date("Y-m-d H:i:s").": rcpt_name=".$NL[0]['rcpt_name']." | parsed: ".$RCPT_Name);
+									if (!empty($NL[0]['rcpt_name'])) {
+										$RCPT_Name_TMP=$NL[0]['rcpt_name'];
+									} else {
+										if (!empty($C[0]['rcpt_name'])) {
+											$RCPT_Name_TMP=$C[0]['rcpt_name'];
+										} else {
+											$RCPT_Name_TMP="Tellmatic Newsletter";
+										}
+									}
+									$RCPT_Name_search = array("{F0}","{F1}","{F2}","{F3}","{F4}","{F5}","{F6}","{F7}","{F8}","{F9}","CODE");
+									$RCPT_Name_replace = array($ADR[0]['f0'], $ADR[0]['f1'], $ADR[0]['f2'], $ADR[0]['f3'], $ADR[0]['f4'], $ADR[0]['f5'], $ADR[0]['f6'], $ADR[0]['f7'], $ADR[0]['f8'], $ADR[0]['f9'], $ADR[0]['code']);
+									$RCPT_Name = str_replace($RCPT_Name_search, $RCPT_Name_replace, $RCPT_Name_TMP);
+									send_log(  "\n".date("Y-m-d H:i:s").": rcpt_name=".$NL[0]['rcpt_name']." | tmp: ".$RCPT_Name_TMP." | parsed: ".$RCPT_Name);
+									//rcpt name darf nicht leer sein und nicht email!
 									$ToName=$RCPT_Name;
 									$email_message->SetEncodedEmailHeader("To",$To,$ToName);//bei massenmailing tun wir das schon oben
 								}
@@ -613,6 +724,7 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 				if ($atc>0) {
 					send_log(  "\n".date("Y-m-d H:i:s").":    adding ".$atc." Attachements:");
 					foreach ($attachements as $attachfile) {
+						if (file_exists($tm_nlattachpath."/".$attachfile['file'])) {
 						send_log(  "\n".date("Y-m-d H:i:s").":              add Attachement ".$attachfile['file']);
 						$ATTM=array(
 							"FileName"=>$tm_nlattachpath."/".$attachfile['file'],
@@ -620,19 +732,22 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 							"Disposition"=>"attachment"
 						);
 						$email_message->AddFilePart($ATTM);
+						} else {
+							send_log(  "\n".date("Y-m-d H:i:s").":              Attachement ".$attachfile['file']." does not exist.");
+						}
 					}
 				}//if count/atc
-
 				//Versenden
 				send_log(  "\n\n".date("Y-m-d H:i:s").": SEND Mail\n");
-				if (!DEMO) $error=$email_message->Send();
+				$smtp_error="";
+				if (!DEMO) $smtp_error=$email_message->Send();
 
 				if (empty($error)) {
 					$send_ok=true;
 					send_log(  "\n".date("Y-m-d H:i:s").":   OK");
 				} else {
 					$send_ok=false;
-					send_log(  "\n".date("Y-m-d H:i:s").":   ERROR!!!\n $error \n");
+					send_log(  "\n".date("Y-m-d H:i:s").":   ERROR!!!\n ".$smtp_error ."\n");
 				}
 			}//							if (!$a_error && !$h_error)	{
 				//wenn senden ok....fein!
@@ -729,7 +844,7 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 									"<br>erstellt (nur versand vorbereitet)/created (prepared): ".$created_date.
 									"<br>Log: ".$tm_URL_FE."/".$tm_logdir."/".$logfilename.
 									"</ul>";
-			if (!DEMO) @SendMail($C[0]['sender_email'],$C[0]['sender_name'],$C[0]['sender_email'],$C[0]['sender_name'],$ReportMail_Subject,clear_text($ReportMail_HTML),$ReportMail_HTML);
+			if (!DEMO) @SendMail($HOST[0]['sender_email'],$HOST[0]['sender_name'],$HOST[0]['sender_email'],$HOST[0]['sender_name'],$ReportMail_Subject,clear_text($ReportMail_HTML),$ReportMail_HTML,Array(),$HOST);
 		}//hc==0
 //	}//q status 2 o 3
 
@@ -739,36 +854,26 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 	send_log( "\n\n\n\n".date("Y-m-d H:i:s").": write Log to ".$tm_URL_FE."/".$tm_logdir."/".$logfilename);
 
 	update_file($tm_logpath,$logfilename,$LOG);
+}//$qcc
 
 	//a http refresh may work
-	echo "<html>\n".
+$reload_intervall=300;
+echo "<html>\n".
 			"<head>\n".
-			"<meta http-equiv=\"refresh\" content=\"66; URL=".TM_DOMAIN.$_SERVER["PHP_SELF"]."\">\n".
+			"<meta http-equiv=\"refresh\" content=\"".$reload_intervall."; URL=".TM_DOMAIN.$_SERVER["PHP_SELF"]."\">\n".
 			"</head>\n".
-			"<body bgcolor=\"#ffffff\">\n".
-			sprintf(___("Die Seite wird in %s Sekunden automatisch neu geladen."),"66").
-			"<br>\n".
-			___("Klicken Sie auf 'Neu laden' wenn Sie diese Seite erneut aufrufen wollen.").
-			"<a href=\"".TM_DOMAIN.$_SERVER["PHP_SELF"]."\"><br>".
-			___("Neu laden").
-			"</a>";
-	echo $LOG;
-}//$qcc
+			"<body bgcolor=\"#ffffff\">\n";
 if ($qc==0) {
-	echo "<html>\n".
-			"<head>\n".
-			"<meta http-equiv=\"refresh\" content=\"66; URL=".TM_DOMAIN.$_SERVER["PHP_SELF"]."\">\n".
-			"</head>\n".
-			"<body bgcolor=\"#ffffff\">\n".
-			___("Zur Zeit gibt es keine zu verarbeitenden Versandaufträge.").
-			"<br>\n".
-			sprintf(___("Die Seite wird in %s Sekunden automatisch neu geladen."),"66").
+	echo "<br>".___("Zur Zeit gibt es keine zu verarbeitenden Versandaufträge.");
+}
+
+echo	"<br>".sprintf(___("Die Seite wird in %s Sekunden automatisch neu geladen."),$reload_intervall).
 			"<br>\n".
 			___("Klicken Sie auf 'Neu laden' wenn Sie diese Seite erneut aufrufen wollen.").
 			"<a href=\"".TM_DOMAIN.$_SERVER["PHP_SELF"]."\"><br>".
 			___("Neu laden").
 			"</a>";
-}
-	echo "\n</body>\n</html>";
+echo $LOG;
 
+echo "\n</body>\n</html>";
 ?>

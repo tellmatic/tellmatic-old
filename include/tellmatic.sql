@@ -12,8 +12,8 @@ CREATE TABLE adr (
   updated datetime default NULL,
   author varchar(64) collate utf8_bin default NULL,
   editor varchar(64) collate utf8_bin default NULL,
-  status tinyint(1) NOT NULL default '0',
-  errors smallint(1) default NULL,
+  `status` tinyint(1) NOT NULL default '0',
+  `errors` smallint(1) default NULL,
   code varchar(32) collate utf8_bin default '0',
   clicks smallint(1) default '0',
   views smallint(1) default '0',
@@ -22,9 +22,9 @@ CREATE TABLE adr (
   KEY email (email),
   KEY aktiv (aktiv),
   KEY siteid (siteid),
-  KEY status (status),
+  KEY `status` (`status`),
   KEY code (code),
-  KEY adr_siteid_status (siteid,status),
+  KEY adr_siteid_status (siteid,`status`),
   KEY adr_siteid_email (siteid,email),
   KEY adr_siteid_id (id,siteid)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
@@ -111,13 +111,13 @@ CREATE TABLE adr_grp_ref (
 
 CREATE TABLE blacklist (
   id int(11) NOT NULL auto_increment,
-  type enum('email','domain','expr') collate utf8_bin NOT NULL default 'email',
+  `type` enum('email','domain','expr') collate utf8_bin NOT NULL default 'email',
   expr varchar(255) collate utf8_bin NOT NULL default '',
   aktiv tinyint(1) NOT NULL default '1',
   siteid varchar(64) collate utf8_bin NOT NULL default '',
   PRIMARY KEY  (id),
-  KEY type (type),
-  KEY bl_ate (type,expr,aktiv,siteid)
+  KEY `type` (`type`),
+  KEY bl_ate (`type`,expr,aktiv,siteid)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
@@ -129,23 +129,12 @@ CREATE TABLE blacklist (
 CREATE TABLE config (
   id int(11) NOT NULL auto_increment,
   name varchar(255) collate utf8_bin NOT NULL default '',
-  smtp_host varchar(255) collate utf8_bin NOT NULL default '',
-  smtp_port smallint(6) NOT NULL default '25',
-  smtp_domain varchar(255) collate utf8_bin NOT NULL default '',
-  smtp_user varchar(255) collate utf8_bin NOT NULL default '',
-  smtp_pass varchar(255) collate utf8_bin NOT NULL default '',
-  smtp_auth varchar(32) collate utf8_bin NOT NULL default '',
-  sender_name varchar(255) collate utf8_bin NOT NULL default '',
-  sender_email varchar(255) collate utf8_bin NOT NULL default '',
-  return_mail varchar(128) collate utf8_bin NOT NULL default '',
   siteid varchar(64) collate utf8_bin NOT NULL default '',
   notify_mail varchar(128) collate utf8_bin default NULL,
   notify_subscribe tinyint(1) NOT NULL default '1',
   notify_unsubscribe tinyint(1) NOT NULL default '1',
   emailcheck_intern tinyint(1) NOT NULL default '2',
   emailcheck_subscribe tinyint(1) NOT NULL default '2',
-  max_mails_atonce smallint(1) NOT NULL default '25',
-  max_mails_bcc smallint(1) NOT NULL default '50',
   max_mails_retry tinyint(1) NOT NULL default '5',
   check_version tinyint(1) NOT NULL default '1',
   track_image varchar(255) collate utf8_bin NOT NULL default '',
@@ -293,24 +282,34 @@ CREATE TABLE frm_s (
 -- Tabellenstruktur für Tabelle 'hosts'
 --
 
-CREATE TABLE hosts (
+CREATE TABLE `hosts` (
   id int(11) NOT NULL auto_increment,
   name varchar(255) collate utf8_bin NOT NULL default '',
   aktiv tinyint(1) NOT NULL default '1',
+  standard tinyint(1) NOT NULL default '0',
   host varchar(255) collate utf8_bin NOT NULL default '',
   port smallint(6) NOT NULL default '0',
-  type enum('smtp','pop3','imap') collate utf8_bin NOT NULL default 'smtp',
+  `type` enum('smtp','pop3','imap') collate utf8_bin NOT NULL default 'smtp',
   options varchar(255) collate utf8_bin NOT NULL default '',
   smtp_auth varchar(32) collate utf8_bin NOT NULL default 'LOGIN',
   smtp_domain varchar(255) collate utf8_bin default NULL,
-  user varchar(64) collate utf8_bin default NULL,
+  smtp_ssl tinyint(1) NOT NULL default '0',
+  smtp_max_piped_rcpt tinyint(8) NOT NULL default '1',
+  `user` varchar(64) collate utf8_bin default NULL,
   pass varchar(64) collate utf8_bin default NULL,
+  max_mails_atonce smallint(6) NOT NULL default '25',
+  max_mails_bcc smallint(6) NOT NULL default '50',
+  sender_name varchar(255) collate utf8_bin NOT NULL default '',
+  sender_email varchar(255) collate utf8_bin NOT NULL default '',
+  return_mail varchar(255) collate utf8_bin NOT NULL default '',
+  reply_to varchar(255) collate utf8_bin NOT NULL default '',
   siteid varchar(64) collate utf8_bin NOT NULL default '',
   PRIMARY KEY  (id),
   KEY aktiv (aktiv),
   KEY siteid (siteid),
   KEY hosts_aktiv_siteid (aktiv,siteid),
-  KEY smtp_auth (smtp_auth)
+  KEY smtp_auth (smtp_auth),
+  KEY standard (standard)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
@@ -321,11 +320,11 @@ CREATE TABLE hosts (
 
 CREATE TABLE log (
   id int(11) NOT NULL auto_increment,
-  user varchar(64) collate utf8_bin NOT NULL default '',
-  action varchar(255) collate utf8_bin NOT NULL default '',
+  `user` varchar(64) collate utf8_bin NOT NULL default '',
+  `action` varchar(255) collate utf8_bin NOT NULL default '',
   siteid varchar(64) collate utf8_bin NOT NULL default '',
   PRIMARY KEY  (id),
-  KEY user (user,siteid)
+  KEY `user` (`user`,siteid)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
@@ -336,14 +335,14 @@ CREATE TABLE log (
 
 CREATE TABLE nl (
   id int(11) NOT NULL auto_increment,
-  subject varchar(255) collate utf8_bin NOT NULL default '',
+  `subject` varchar(255) collate utf8_bin NOT NULL default '',
   aktiv tinyint(1) NOT NULL default '0',
   body longtext collate utf8_bin,
   body_text longtext collate utf8_bin,
   link tinytext collate utf8_bin,
   created datetime default NULL,
   updated datetime default NULL,
-  status tinyint(1) default '0',
+  `status` tinyint(1) default '0',
   massmail tinyint(1) NOT NULL default '0',
   rcpt_name varchar(255) collate utf8_bin NOT NULL default 'Newsletter',
   clicks smallint(1) default '0',
@@ -352,15 +351,14 @@ CREATE TABLE nl (
   editor varchar(64) collate utf8_bin default NULL,
   grp_id int(11) NOT NULL default '0',
   content_type varchar(12) collate utf8_bin NOT NULL default 'html',
-  attm varchar(255) collate utf8_bin default NULL,
   track_image varchar(255) collate utf8_bin NOT NULL default '_global',
   siteid varchar(64) collate utf8_bin NOT NULL default '',
   PRIMARY KEY  (id),
   KEY aktiv (aktiv),
-  KEY nl_subject (subject),
+  KEY nl_subject (`subject`),
   KEY grp_id (grp_id),
   KEY siteid (siteid),
-  KEY status (status)
+  KEY `status` (`status`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
@@ -372,7 +370,7 @@ CREATE TABLE nl (
 CREATE TABLE nl_attm (
   id int(11) NOT NULL auto_increment,
   nl_id int(11) NOT NULL default '0',
-  file varchar(255) collate utf8_bin NOT NULL default '',
+  `file` varchar(255) collate utf8_bin NOT NULL default '',
   siteid varchar(64) collate utf8_bin NOT NULL default '',
   PRIMARY KEY  (id),
   KEY nl_id (nl_id)
@@ -416,21 +414,21 @@ CREATE TABLE nl_h (
   grp_id int(11) NOT NULL default '0',
   adr_id int(11) NOT NULL default '0',
   host_id int(11) NOT NULL default '0',
-  status tinyint(1) default NULL,
+  `status` tinyint(1) default NULL,
   created datetime default NULL,
-  errors smallint(1) default NULL,
+  `errors` smallint(1) default NULL,
   sent datetime default NULL,
   ip varchar(16) collate utf8_bin NOT NULL default '0.0.0.0',
   siteid varchar(64) collate utf8_bin NOT NULL default '',
   PRIMARY KEY  (id),
   KEY siteid (siteid),
-  KEY status (status),
+  KEY `status` (`status`),
   KEY adr_id (adr_id),
   KEY grp_id (grp_id),
   KEY nl_id (nl_id),
   KEY q_id (q_id),
-  KEY nlh_siteid_status (siteid,status),
-  KEY h_nlid_adrid_stat (status,nl_id,adr_id),
+  KEY nlh_siteid_status (siteid,`status`),
+  KEY h_nlid_adrid_stat (`status`,nl_id,adr_id),
   KEY nlh_siteid_ip (siteid,ip),
   KEY nlh_siteid_qid_ip (siteid,ip,q_id),
   KEY nlh_siteid_ip_grpid (siteid,ip,grp_id),
@@ -449,18 +447,20 @@ CREATE TABLE nl_q (
   nl_id int(11) NOT NULL default '0',
   grp_id int(11) NOT NULL default '0',
   host_id int(11) NOT NULL default '0',
-  status tinyint(1) NOT NULL default '0',
+  `status` tinyint(1) NOT NULL default '0',
   created datetime default NULL,
   send_at datetime default NULL,
   check_blacklist tinyint(4) NOT NULL default '1',
+  autogen tinyint(1) NOT NULL default '0',
   sent datetime default NULL,
   author varchar(64) collate utf8_bin default NULL,
   siteid varchar(64) collate utf8_bin NOT NULL default '',
   PRIMARY KEY  (id),
-  KEY nl_id (nl_id,grp_id,status),
+  KEY nl_id (nl_id,grp_id,`status`),
   KEY siteid (siteid),
   KEY send_at (send_at),
-  KEY host_id (host_id)
+  KEY host_id (host_id),
+  KEY autostart (autogen)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
@@ -469,7 +469,7 @@ CREATE TABLE nl_q (
 -- Tabellenstruktur für Tabelle 'user'
 --
 
-CREATE TABLE user (
+CREATE TABLE `user` (
   id int(11) NOT NULL auto_increment,
   name varchar(64) collate utf8_bin NOT NULL default '',
   passwd varchar(64) collate utf8_bin NOT NULL default '',

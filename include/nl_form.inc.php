@@ -37,7 +37,7 @@ $Form->set_InputStyleClass($FormularName,$InputName_File,"mFormText","mFormTextF
 $Form->set_InputSize($FormularName,$InputName_File,48,48);
 $Form->set_InputDesc($FormularName,$InputName_File,___("HTML-Vorlage hochladen"));
 $Form->set_InputReadonly($FormularName,$InputName_File,false);
-$Form->set_InputOrder($FormularName,$InputName_File,1);
+$Form->set_InputOrder($FormularName,$InputName_File,9);
 $Form->set_InputLabel($FormularName,$InputName_File,"");
 //File 2, image
 $Form->new_Input($FormularName,$InputName_Image1,"file", "");
@@ -46,7 +46,7 @@ $Form->set_InputStyleClass($FormularName,$InputName_Image1,"mFormText","mFormTex
 $Form->set_InputSize($FormularName,$InputName_Image1,48,48);
 $Form->set_InputDesc($FormularName,$InputName_Image1,___("Bild hochladen")." {IMAGE1}");
 $Form->set_InputReadonly($FormularName,$InputName_Image1,false);
-$Form->set_InputOrder($FormularName,$InputName_Image1,1);
+$Form->set_InputOrder($FormularName,$InputName_Image1,8);
 $Form->set_InputLabel($FormularName,$InputName_Image1,"");
 //File 3, Attachement
 $Form->new_Input($FormularName,$InputName_Attach1,"file", "");
@@ -55,7 +55,7 @@ $Form->set_InputStyleClass($FormularName,$InputName_Attach1,"mFormText","mFormTe
 $Form->set_InputSize($FormularName,$InputName_Attach1,8,255);
 $Form->set_InputDesc($FormularName,$InputName_Attach1,___("Anhang hochladen")." {ATTACH1}");
 $Form->set_InputReadonly($FormularName,$InputName_Attach1,false);
-$Form->set_InputOrder($FormularName,$InputName_Attach1,1);
+$Form->set_InputOrder($FormularName,$InputName_Attach1,12);
 $Form->set_InputLabel($FormularName,$InputName_Attach1,"");
 
 //existing attachements
@@ -63,27 +63,43 @@ $Form->new_Input($FormularName,$InputName_AttachExisting,"select", "");
 $Form->set_InputJS($FormularName,$InputName_AttachExisting," onChange=\"flash('submit','#ff0000');\" ");
 $Form->set_InputDefault($FormularName,$InputName_AttachExisting,basename($$InputName_AttachExisting));
 $Form->set_InputStyleClass($FormularName,$InputName_AttachExisting,"mFormSelect","mFormSelectFocus");
-$Form->set_InputDesc($FormularName,$InputName_AttachExisting,___("Anhänge auswählen"));
+$Form->set_InputDesc($FormularName,$InputName_AttachExisting,___("Anhänge auswählen, Strg/Ctrl+Klick f. Mehrfachauswahl"));
 $Form->set_InputReadonly($FormularName,$InputName_AttachExisting,false);
-$Form->set_InputOrder($FormularName,$InputName_AttachExisting,6);
+$Form->set_InputOrder($FormularName,$InputName_AttachExisting,22);
 $Form->set_InputLabel($FormularName,$InputName_AttachExisting,"");
 $Form->set_InputSize($FormularName,$InputName_AttachExisting,0,24);
 $Form->set_InputMultiple($FormularName,$InputName_AttachExisting,true);
 //add Data
-unset($FileARRAY);
-gen_rec_files_array($tm_nlattachpath);
-//sort array by name:
-foreach ($FileARRAY as $field) {
-	$btsort[]=$field['filename'];
+$Attm_Dirs=getDirectories($tm_nlattachpath) ;
+foreach ($Attm_Dirs as $field) {
+	$btsort[]=$field['name'];
 }
-@array_multisort($btsort, SORT_ASC, $FileARRAY, SORT_ASC);
-$ic= count($FileARRAY);
-for ($icc=0; $icc < $ic; $icc++) {
-	$Form->add_InputOption($FormularName,$InputName_AttachExisting,basename($FileARRAY[$icc]['filename']),basename($FileARRAY[$icc]['filename']));
-}
+@array_multisort($btsort, SORT_ASC, $Attm_Dirs, SORT_ASC);
+$dc= count($Attm_Dirs);
+for ($dcc=0; $dcc < $dc; $dcc++) {
+	$a_path=$tm_nlattachpath;
+	if ($Attm_Dirs[$dcc]['name']!="CVS") {
+		if (!empty($Attm_Dirs[$dcc]['name'])) {
+			$a_path.="/".$Attm_Dirs[$dcc]['name'];
+		}
+		$Attm_Files=getFiles($a_path) ;
+		foreach ($Attm_Files as $field) {
+			$btsort[]=$field['name'];
+		}
+		@array_multisort($btsort, SORT_ASC, $Attm_Files, SORT_ASC);
+		$ic= count($Attm_Files);
+		for ($icc=0; $icc < $ic; $icc++) {
+			if ($Attm_Files[$icc]['name']!=".htaccess" && $Attm_Files[$icc]['name']!="index.php" && $Attm_Files[$icc]['name']!="index.html") {
+				$a_file=$Attm_Files[$icc]['name'];
+				if (!empty($Attm_Dirs[$dcc]['name']) && $Attm_Dirs[$dcc]['name']!=".") {
+					$a_file=$Attm_Dirs[$dcc]['name']."/".$Attm_Files[$icc]['name'];
+				}
 
-
-
+				$Form->add_InputOption($FormularName,$InputName_AttachExisting,$a_file,display($Attm_Files[$icc]['name'])." (".formatFileSize($Attm_Files[$icc]['size']).")",display($Attm_Dirs[$dcc]['name']));
+			}//if Attm name
+		}//for  lcc
+	}//if attmdir name
+}//for dcc
 
 //Subject
 $Form->new_Input($FormularName,$InputName_Name,"text", display($$InputName_Name));
@@ -102,7 +118,7 @@ $Form->set_InputStyleClass($FormularName,$InputName_Link,"mFormText","mFormTextF
 $Form->set_InputSize($FormularName,$InputName_Link,48,1024);
 $Form->set_InputDesc($FormularName,$InputName_Link,___("Link")." {LINK1}");
 $Form->set_InputReadonly($FormularName,$InputName_Link,false);
-$Form->set_InputOrder($FormularName,$InputName_Link,1);
+$Form->set_InputOrder($FormularName,$InputName_Link,7);
 $Form->set_InputLabel($FormularName,$InputName_Link,"");
 
 //Aktiv
@@ -113,7 +129,7 @@ $Form->set_InputLabel($FormularName,$InputName_Link,"");
 	$Form->set_InputSize($FormularName,$InputName_Aktiv,48,48);
 	$Form->set_InputDesc($FormularName,$InputName_Aktiv,___("Aktiv"));
 	$Form->set_InputReadonly($FormularName,$InputName_Aktiv,false);
-	$Form->set_InputOrder($FormularName,$InputName_Aktiv,2);
+	$Form->set_InputOrder($FormularName,$InputName_Aktiv,4);
 	$Form->set_InputLabel($FormularName,$InputName_Aktiv,"");
 
 //Massenmail!?
@@ -124,7 +140,7 @@ $Form->set_InputLabel($FormularName,$InputName_Link,"");
 	$Form->set_InputSize($FormularName,$InputName_Massmail,48,48);
 	$Form->set_InputDesc($FormularName,$InputName_Massmail,___("Massenmailing (BCC)"));
 	$Form->set_InputReadonly($FormularName,$InputName_Massmail,false);
-	$Form->set_InputOrder($FormularName,$InputName_Massmail,2);
+	$Form->set_InputOrder($FormularName,$InputName_Massmail,5);
 	$Form->set_InputLabel($FormularName,$InputName_Massmail,"");
 
 //Content
@@ -134,7 +150,7 @@ $Form->set_InputStyleClass($FormularName,$InputName_Descr,"mFormTextarea_Content
 $Form->set_InputSize($FormularName,$InputName_Descr,180,50);
 $Form->set_InputDesc($FormularName,$InputName_Descr,___("Newsletter-Text")." (html)");
 $Form->set_InputReadonly($FormularName,$InputName_Descr,false);
-$Form->set_InputOrder($FormularName,$InputName_Descr,3);
+$Form->set_InputOrder($FormularName,$InputName_Descr,16);
 $Form->set_InputLabel($FormularName,$InputName_Descr,"");
 
 //Content
@@ -144,7 +160,7 @@ $Form->set_InputStyleClass($FormularName,$InputName_DescrText,"mFormTextarea_Con
 $Form->set_InputSize($FormularName,$InputName_DescrText,180,50);
 $Form->set_InputDesc($FormularName,$InputName_DescrText,___("Newsletter-Text")." (text)");
 $Form->set_InputReadonly($FormularName,$InputName_DescrText,false);
-$Form->set_InputOrder($FormularName,$InputName_DescrText,3);
+$Form->set_InputOrder($FormularName,$InputName_DescrText,15);
 $Form->set_InputLabel($FormularName,$InputName_DescrText,"");
 
 //Gruppe
@@ -174,23 +190,23 @@ $Form->set_InputDefault($FormularName,$InputName_TrackImageExisting,basename($$I
 $Form->set_InputStyleClass($FormularName,$InputName_TrackImageExisting,"mFormSelect","mFormSelectFocus");
 $Form->set_InputDesc($FormularName,$InputName_TrackImageExisting,___("Blind-/Tracking-Bild auswählen"));
 $Form->set_InputReadonly($FormularName,$InputName_TrackImageExisting,false);
-$Form->set_InputOrder($FormularName,$InputName_TrackImageExisting,6);
+$Form->set_InputOrder($FormularName,$InputName_TrackImageExisting,10);
 $Form->set_InputLabel($FormularName,$InputName_TrackImageExisting,"");
 $Form->set_InputSize($FormularName,$InputName_TrackImageExisting,0,1);
 $Form->set_InputMultiple($FormularName,$InputName_TrackImageExisting,false);
 //add Data
-unset($FileARRAY);
-gen_rec_files_array($tm_nlimgpath);
-//sort array by name:
-foreach ($FileARRAY as $field) {
-	$btsort[]=$field['filename'];
-}
-@array_multisort($btsort, SORT_ASC, $FileARRAY, SORT_ASC);
-$ic= count($FileARRAY);
 $Form->add_InputOption($FormularName,$InputName_TrackImageExisting,"_global","-- GLOBAL --");
 $Form->add_InputOption($FormularName,$InputName_TrackImageExisting,"_blank","-- BLANK --");
+$TrackImg_Files=getFiles($tm_nlimgpath) ;
+foreach ($TrackImg_Files as $field) {
+	$btsort[]=$field['name'];
+}
+@array_multisort($btsort, SORT_ASC, $TrackImg_Files, SORT_ASC);
+$ic= count($TrackImg_Files);
 for ($icc=0; $icc < $ic; $icc++) {
-	$Form->add_InputOption($FormularName,$InputName_TrackImageExisting,basename($FileARRAY[$icc]['filename']),basename($FileARRAY[$icc]['filename']));
+	if ($TrackImg_Files[$icc]['name']!=".htaccess" && $TrackImg_Files[$icc]['name']!="index.php" && $TrackImg_Files[$icc]['name']!="index.html") {
+		$Form->add_InputOption($FormularName,$InputName_TrackImageExisting,$TrackImg_Files[$icc]['name'],display($TrackImg_Files[$icc]['name']));
+	}
 }
 
 //upload new trackingimage
@@ -200,7 +216,7 @@ $Form->set_InputStyleClass($FormularName,$InputName_TrackImageNew,"mFormText","m
 $Form->set_InputSize($FormularName,$InputName_TrackImageNew,48,48);
 $Form->set_InputDesc($FormularName,$InputName_TrackImageNew,___("neues Bild hochladen")." {IMAGE1}");
 $Form->set_InputReadonly($FormularName,$InputName_TrackImageNew,false);
-$Form->set_InputOrder($FormularName,$InputName_TrackImageNew,1);
+$Form->set_InputOrder($FormularName,$InputName_TrackImageNew,11);
 $Form->set_InputLabel($FormularName,$InputName_TrackImageNew,"");
 
 
@@ -211,7 +227,7 @@ $Form->set_InputDefault($FormularName,$InputName_ContentType,$$InputName_Content
 $Form->set_InputStyleClass($FormularName,$InputName_ContentType,"mFormSelect","mFormSelectFocus");
 $Form->set_InputDesc($FormularName,$InputName_ContentType,___("Format"));
 $Form->set_InputReadonly($FormularName,$InputName_ContentType,false);
-$Form->set_InputOrder($FormularName,$InputName_ContentType,6);
+$Form->set_InputOrder($FormularName,$InputName_ContentType,4);
 $Form->set_InputLabel($FormularName,$InputName_ContentType,"");
 $Form->set_InputSize($FormularName,$InputName_ContentType,0,1);
 $Form->set_InputMultiple($FormularName,$InputName_ContentType,false);
@@ -227,7 +243,7 @@ $Form->set_InputStyleClass($FormularName,$InputName_RCPTName,"mFormText","mFormT
 $Form->set_InputSize($FormularName,$InputName_RCPTName,48,256);
 $Form->set_InputDesc($FormularName,$InputName_RCPTName,___("Erscheint als Empfängername in der E-Mail"));
 $Form->set_InputReadonly($FormularName,$InputName_RCPTName,false);
-$Form->set_InputOrder($FormularName,$InputName_RCPTName,1);
+$Form->set_InputOrder($FormularName,$InputName_RCPTName,2);
 $Form->set_InputLabel($FormularName,$InputName_RCPTName,"");
 
 //submit button
@@ -380,22 +396,25 @@ $_MAIN_OUTPUT.= "</tr>";
 
 $_MAIN_OUTPUT.= "<tr>";
 $_MAIN_OUTPUT.= "<td valign=\"top\" colspan=3 style=\"border: 1px dashed #cccccc;\">";
-$_MAIN_OUTPUT.= tm_icon("page_white_h.png",___("Text"))."&nbsp;".___("HTML-Part")."&nbsp;&nbsp;&nbsp;";
-$_MAIN_OUTPUT.= "(<a href=\"javascript:switchSection('html_part');\" >show/hide</a>)";
-$_MAIN_OUTPUT.= "<div id=\"html_part\">";
-$_MAIN_OUTPUT.= "(<a href=\"javascript:toggleEditor('".$InputName_Descr."');\" >";
-$_MAIN_OUTPUT.= ___("Editor Ein/Aus");
-$_MAIN_OUTPUT.= "&nbsp;".tm_icon("wand.png",___("Editor Ein/Aus"))."</a>)<br>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Descr]['html'];
+$_MAIN_OUTPUT.= tm_icon("page_white_text.png",___("Text"))."&nbsp;".___("Text-Part")."&nbsp;&nbsp;&nbsp;";
+$_MAIN_OUTPUT.= "(<a href=\"javascript:switchSection('text_part');\" >".___("Ein-/Ausblenden")."</a>)";
+$_MAIN_OUTPUT.= "<div id=\"text_part\">";
+$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_DescrText]['html'];
 $_MAIN_OUTPUT.= "</div>";
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "</tr>";
 $_MAIN_OUTPUT.= "<tr>";
 $_MAIN_OUTPUT.= "<td valign=\"top\" colspan=3 style=\"border: 1px dashed #cccccc;\">";
-$_MAIN_OUTPUT.= tm_icon("page_white_text.png",___("Text"))."&nbsp;".___("Text-Part")."&nbsp;&nbsp;&nbsp;";
-$_MAIN_OUTPUT.= "(<a href=\"javascript:switchSection('text_part');\" >show/hide</a>)";
-$_MAIN_OUTPUT.= "<div id=\"text_part\">";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_DescrText]['html'];
+$_MAIN_OUTPUT.= tm_icon("page_white_h.png",___("Text"))."&nbsp;".___("HTML-Part")."&nbsp;&nbsp;&nbsp;";
+$_MAIN_OUTPUT.= "(<a href=\"javascript:switchSection('html_part');\" >".___("Ein-/Ausblenden")."</a>)";
+$_MAIN_OUTPUT.= "<div id=\"html_part\">";
+#$_MAIN_OUTPUT.= "<a href=\"#\" onclick=\"loadWysiwyg();\">";
+#$_MAIN_OUTPUT.= ___("Lade Wysiwyg Editor");
+#$_MAIN_OUTPUT.= "&nbsp;".tm_icon("wand.png",___("Lade Wysiwyg Editor"))."</a>";
+$_MAIN_OUTPUT.= "<a href=\"javascript:toggleEditor('".$InputName_Descr."');\" >";
+$_MAIN_OUTPUT.= tm_icon("wand.png",___("Editor Ein/Aus"))."&nbsp;".___("Wysiwyg Editor Ein/Aus");
+$_MAIN_OUTPUT.= "</a><br>";
+$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Descr]['html'];
 $_MAIN_OUTPUT.= "</div>";
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "</tr>";
@@ -429,12 +448,15 @@ $_MAIN_OUTPUT.= sprintf(___("%s enthält das hochgeladene Bild 'img src' | %s en
 						sprintf(___("%s enthält den kompletten Link 'a href' zum Aktivierungslink ('(1st)-Touch-Opt-In) | %s enthält nur die URL"),"<b>{SUBSCRIBE}</b>","<b>{SUBSCRIBE_URL}</b>")."<br>".
 						"";
 
-include_once (TM_INCLUDEPATH."/wysiwyg.inc.php");
-
 	$_MAIN_OUTPUT.= "
 		<script language=\"javascript\" type=\"text/javascript\">
 		switchSection('html_part');
 		switchSection('text_part');
+		//toggleSlide('toggle_nlbody_text','text_part',1);//trigger function erzeugen: triggerid,divid,toggle
+		//toggleSlide('toggle_nlbody_html','html_part',1);//trigger function erzeugen: triggerid,divid,toggle
 		</script>
 	";
+
+include_once (TM_INCLUDEPATH."/wysiwyg.inc.php");
+
 ?>

@@ -18,7 +18,8 @@ define("DEMO",FALSE);
 /***********************************************************/
 //guess path
 /***********************************************************/
-define(TM_DOCROOT,realpath($_SERVER["DOCUMENT_ROOT"]));
+#so aber gehts auch mit docroot.....
+define("TM_DOCROOT",realpath($_SERVER["DOCUMENT_ROOT"]));
 $protocol = $_SERVER['HTTPS'] ? "https://" : "http://";
 define("TM_DOMAIN",$protocol.$_SERVER["HTTP_HOST"]);
 define("TM_DOMAINNAME",$_SERVER["HTTP_HOST"]);

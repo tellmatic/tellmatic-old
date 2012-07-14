@@ -21,7 +21,6 @@ $ADDRESS=new tm_ADR();
 $QUEUE=new tm_Q();
 $FORMULAR=new tm_FRM();
 
-
 $shownlgURLPara=$mSTDURL;
 $shownlgURLPara->addParam("act","nl_grp_list");
 $shownlgURLPara->addParam("s","s_menu_nl,s_menu_st");
@@ -55,7 +54,7 @@ $showgrpURLPara_=$showgrpURLPara->getAllParams();
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Gesamt nach Status
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-$_MAIN_OUTPUT.="<br><center><table border=0><tr><td valign=top align=left>";// width=50%<h1>".___("Gesamtstatus")."</h1><br>
+$_MAIN_OUTPUT.="<br><center><table border=0><tr><td valign=\"top\" align=\"left\">";// width=50%<h1>".___("Gesamtstatus")."</h1><br>
 
 ////////////////////////////////////////////////////////////////////////////////////////
 //Adressen-Gruppen
@@ -73,23 +72,47 @@ $showadrURLPara->delParam("email");
 $showadrURLPara->delParam("adr_id");
 $showadrURLPara->addParam("act","adr_list");
 $showadrURLPara_=$showadrURLPara->getAllParams();
-$_MAIN_OUTPUT.="<a href=\"".$tm_URL."/".$showadrURLPara_."\"> ".sprintf(___("%s Adressen"),$ac)." (".tm_icon("folder_go.png",___("Liste anzeigen")).")</a> ::: <a href=\"".$tm_URL."/".$showgrpURLPara_."\">".sprintf(___("%s Gruppen"),$agc)." (".tm_icon("folder_go.png",___("Liste anzeigen")).")</a><br>";
-
+$_MAIN_OUTPUT.="<br><center>";
+$_MAIN_OUTPUT.="<table border=0 width=\"100%\" style=\"border:1px solid #eeeeee;\">";
+$_MAIN_OUTPUT.="<thead>";
+$_MAIN_OUTPUT.="<tr>";
+$_MAIN_OUTPUT.="<td valign=\"top\" align=\"left\">";
+$_MAIN_OUTPUT.="<a href=\"".$tm_URL."/".$showgrpURLPara_."\">".sprintf(___("%s Gruppen"),$agc)."&nbsp;".tm_icon("folder_go.png",___("Liste anzeigen"))."</a>";
+$_MAIN_OUTPUT.="</td>";
+$_MAIN_OUTPUT.="<td valign=\"top\" align=\"left\">";
+$_MAIN_OUTPUT.="<a href=\"".$tm_URL."/".$showadrURLPara_."\"> ".sprintf(___("%s Adressen"),$ac)."&nbsp;".tm_icon("folder_go.png",___("Liste anzeigen"))."</a>";
+$_MAIN_OUTPUT.="</td>";
+$_MAIN_OUTPUT.="<td valign=\"top\" align=\"left\">";
+$_MAIN_OUTPUT.=tm_icon("chart_pie.png",___("Statistik anzeigen"));
+$_MAIN_OUTPUT.="</td>";
+$_MAIN_OUTPUT.="</tr>";
+$_MAIN_OUTPUT.="</thead>";
 for ($agcc=0; $agcc<$agc; $agcc++) {
-
+	if ($agcc%2==0) {$bgcolor=$row_bgcolor;} else {$bgcolor=$row_bgcolor2;}
 	$showadrgURLPara->addParam("adr_grp_id",$AG[$agcc]['id']);
 	$showadrgURLPara_=$showadrgURLPara->getAllParams();
-	$_MAIN_OUTPUT.="<a href=\"".$tm_URL."/".$showadrgURLPara_."\">".$AG[$agcc]['name']." (".tm_icon("chart_pie.png",___("Statistik anzeigen")).")</a> :".$AG[$agcc]['adr_count']." ".___("Adressen")."<br>";
+	//create table
+	$_MAIN_OUTPUT.= "<tr id=\"row_g".$agcc."\"  bgcolor=\"".$bgcolor."\"  onmouseover=\"setBGColor('row_g".$agcc."','".$row_bgcolor_hilite."');\" onmouseout=\"setBGColor('row_g".$agcc."','".$bgcolor."');\">";
+	$_MAIN_OUTPUT.="<td valign=\"top\" align=\"left\">";
+	$_MAIN_OUTPUT.=display($AG[$agcc]['name']);
+	$_MAIN_OUTPUT.="</td>";
+	$_MAIN_OUTPUT.="<td valign=\"top\" align=\"left\">";
+	$_MAIN_OUTPUT.=$AG[$agcc]['adr_count']." ".___("Adressen")."<br>";
+	$_MAIN_OUTPUT.="</td>";
+	$_MAIN_OUTPUT.="<td valign=\"top\" align=\"left\">";
+	$_MAIN_OUTPUT.="<a href=\"".$tm_URL."/".$showadrgURLPara_."\">".tm_icon("chart_pie.png",___("Statistik anzeigen"))."</a>";
+	$_MAIN_OUTPUT.="</td>";
+	$_MAIN_OUTPUT.="</tr>";
 //add values to chart
 	$adc_pc=$AG[$agcc]['adr_count']/($ac/100);//anteil in prozent
 	$chart->addPoint(new Point($AG[$agcc]['name']." (".number_format($adc_pc, 2, ',', '')."%)", $AG[$agcc]['adr_count']));
 }
-
-$_MAIN_OUTPUT.="</td></tr><tr><td valign=top align=left>";// width=50%
+$_MAIN_OUTPUT.="</table>";
 
 //create chart
-	$chart->setTitle(___("Adressgruppen ").TM_TODAY);
+$chart->setTitle(___("Adressgruppen")." ".TM_TODAY);
 	$chart->render($tm_reportpath."/status_adrg_total_".TM_TODAY.".png");
+$_MAIN_OUTPUT.="</td></tr><tr><td valign=\"top\" align=\"left\" style=\"border-top:1px solid #000000\">";// width=50%
 
 ////////////////////////////////////////////////////////////////////////////////////////
 //Adressen:
@@ -108,29 +131,53 @@ $showadrURLPara->delParam("adr_id");
 $showadrURLPara->addParam("act","adr_list");
 $showadrURLPara_=$showadrURLPara->getAllParams();
 $asc=count($STATUS['adr']['status']);
+$_MAIN_OUTPUT.="<br><center>";
+$_MAIN_OUTPUT.="<table border=0 width=\"100%\" style=\"border:1px solid #eeeeee;\">";
+$_MAIN_OUTPUT.="<thead>";
+$_MAIN_OUTPUT.="<tr>";
+$_MAIN_OUTPUT.="<td valign=\"top\" align=\"left\">";
+$_MAIN_OUTPUT.=___("Adressen");
+$_MAIN_OUTPUT.="</td>";
+$_MAIN_OUTPUT.="<td valign=\"top\" align=\"left\">";
+$_MAIN_OUTPUT.=___("Status");
+$_MAIN_OUTPUT.="</td>";
+$_MAIN_OUTPUT.="<td valign=\"top\" align=\"left\">";
+$_MAIN_OUTPUT.=tm_icon("folder_go.png",___("Anzeigen"));
+$_MAIN_OUTPUT.="</td>";
+$_MAIN_OUTPUT.="</tr>";
+$_MAIN_OUTPUT.="</thead>";
 for ($ascc=1; $ascc<=$asc; $ascc++)//0
 {
+	if ($ascc%2==0) {$bgcolor=$row_bgcolor;} else {$bgcolor=$row_bgcolor2;}
 	$search['status']=$ascc;
 	$showadrURLPara->addParam("s_status",$ascc);
 	$showadrURLPara_=$showadrURLPara->getAllParams();
 	$adc=$ADDRESS->countADR(0,$search);
-	$_MAIN_OUTPUT.="<br>".
-						"&nbsp;&nbsp;&nbsp;<a href=\"".$tm_URL."/".$showadrURLPara_."\">".$adc."</a>".
-							"&nbsp;".tm_icon($STATUS['adr']['statimg'][$ascc],$STATUS['adr']['status'][$ascc]).
-							"&nbsp;".$STATUS['adr']['status'][$ascc].
-							"&nbsp;(".$STATUS['adr']['descr'][$ascc].")	";
+	$_MAIN_OUTPUT.= "<tr id=\"row_s".$ascc."\"  bgcolor=\"".$bgcolor."\"  onmouseover=\"setBGColor('row_s".$ascc."','".$row_bgcolor_hilite."');\" onmouseout=\"setBGColor('row_s".$ascc."','".$bgcolor."');\">";
+	$_MAIN_OUTPUT.="<td valign=\"top\" align=\"left\">";
+	$_MAIN_OUTPUT.=$adc;
+	$_MAIN_OUTPUT.="</td>";	
+	$_MAIN_OUTPUT.="<td valign=\"top\" align=\"left\">";
+	$_MAIN_OUTPUT.=tm_icon($STATUS['adr']['statimg'][$ascc],$STATUS['adr']['status'][$ascc])."&nbsp;".$STATUS['adr']['status'][$ascc]."&nbsp;(".$STATUS['adr']['descr'][$ascc].")	";
+	$_MAIN_OUTPUT.="</td>";	
+	$_MAIN_OUTPUT.="<td valign=\"top\" align=\"left\">";
+	$_MAIN_OUTPUT.="<a href=\"".$tm_URL."/".$showadrURLPara_."\" title=\"".___("Anzeigen")."\">".tm_icon("folder_go.png",___("Anzeigen"))."</a>";
+	$_MAIN_OUTPUT.="</td>";	
+	$_MAIN_OUTPUT.="</td>";
+	$_MAIN_OUTPUT.="</tr>";
 
 //add values to chart
 	$adc_pc=$adc/($ac/100);//anteil in prozent
 	$chart->addPoint(new Point($STATUS['adr']['status'][$ascc]." (".number_format($adc_pc, 2, ',', '')."%)", $adc));
 }
+$_MAIN_OUTPUT.="</table>";
 //create chart
-	$chart->setTitle(___("Adressen ").TM_TODAY);
+$chart->setTitle(___("Adressen")." ".TM_TODAY);
 	$chart->render($tm_reportpath."/status_adr_total_".TM_TODAY.".png");
 
 ////////////////////////////////////////////////////////////////////////////////////////
 
-$_MAIN_OUTPUT.="</td></tr><tr><td valign=top align=left>";// width=50%
+$_MAIN_OUTPUT.="</td></tr><tr><td valign=\"top\" align=\"left\" style=\"border-top:1px solid #000000\">";// width=50%
 
 ////////////////////////////////////////////////////////////////////////////////////////
 //Newsletter Queue:
@@ -150,23 +197,46 @@ $shownlURLPara->addParam("act","nl_list");
 $shownlURLPara->addParam("set","");
 $shownlURLPara->delParam("nl_id","");
 $shownlURLPara_=$shownlURLPara->getAllParams();
+$hsc=count($STATUS['h']['status']);
+$_MAIN_OUTPUT.="<br><center>";
+$_MAIN_OUTPUT.="<table border=0 width=\"100%\" style=\"border:1px solid #eeeeee;\">";
+$_MAIN_OUTPUT.="<thead>";
+$_MAIN_OUTPUT.="<tr>";
+$_MAIN_OUTPUT.="<td valign=\"top\" align=\"left\" colspan=2>";
 $_MAIN_OUTPUT.="<a href=\"".$tm_URL."/".$shownlURLPara_."\">".sprintf(___("%s Newsletter"),$nlc)." (".tm_icon("folder_go.png",___("Liste anzeigen")).")</a> ::: <a href=\"".$tm_URL."/".$shownlgURLPara_."\">".sprintf(___("%s Gruppen"),$nlgc)." (".tm_icon("folder_go.png",___("Liste anzeigen")).")</a>";
 $_MAIN_OUTPUT.="<br><br><b>".sprintf(___("Insgesamt %s Mails im Versand:"),$hc)."</b>";
-$hsc=count($STATUS['h']['status']);
+$_MAIN_OUTPUT.="</td>";
+$_MAIN_OUTPUT.="</tr>";
+$_MAIN_OUTPUT.="<tr>";
+$_MAIN_OUTPUT.="<td valign=\"top\" align=\"left\">";
+$_MAIN_OUTPUT.=___("Mails");
+$_MAIN_OUTPUT.="</td>";
+$_MAIN_OUTPUT.="<td valign=\"top\" align=\"left\">";
+$_MAIN_OUTPUT.=___("Status");
+$_MAIN_OUTPUT.="</td>";
+$_MAIN_OUTPUT.="</tr>";
+$_MAIN_OUTPUT.="</thead>";
 for ($hscc=1; $hscc<=$hsc; $hscc++)//0
 {
+	if ($hscc%2==0) {$bgcolor=$row_bgcolor;} else {$bgcolor=$row_bgcolor2;}
 	$qc=$QUEUE->countH(0,0,0,0,$hscc);
-	$_MAIN_OUTPUT.="<br>".
-						"&nbsp;&nbsp;&nbsp;".$qc.
-							"&nbsp;".tm_icon($STATUS['h']['statimg'][$hscc],$STATUS['h']['status'][$hscc]).
-							"&nbsp;".$STATUS['h']['status'][$hscc].
-							"&nbsp;(".$STATUS['h']['descr'][$hscc].")";
+	$_MAIN_OUTPUT.= "<tr id=\"row_h".$hscc."\"  bgcolor=\"".$bgcolor."\"  onmouseover=\"setBGColor('row_h".$hscc."','".$row_bgcolor_hilite."');\" onmouseout=\"setBGColor('row_h".$hscc."','".$bgcolor."');\">";
+	$_MAIN_OUTPUT.="<td valign=\"top\" align=\"left\">";
+	$_MAIN_OUTPUT.=$qc;
+	$_MAIN_OUTPUT.="</td>";	
+	$_MAIN_OUTPUT.="<td valign=\"top\" align=\"left\">";
+	$_MAIN_OUTPUT.=tm_icon($STATUS['h']['statimg'][$hscc],$STATUS['h']['status'][$hscc]).
+										"&nbsp;".$STATUS['h']['status'][$hscc].
+										"&nbsp;(".$STATUS['h']['descr'][$hscc].")";
+	$_MAIN_OUTPUT.="</td>";	
+	$_MAIN_OUTPUT.="</tr>";	
 	//add values to chart
 	$qc_pc=$qc/($hc/100);//anteil in prozent
 	$chart->addPoint(new Point($STATUS['h']['status'][$hscc]." (".number_format($qc_pc, 2, ',', '')."%)", $qc));
 }
+$_MAIN_OUTPUT.="</table>";	
 //create chart
-	$chart->setTitle(___("Newsletter Queue ").TM_TODAY);
+$chart->setTitle(___("Newsletter Queue")." ".TM_TODAY);
 	$chart->render($tm_reportpath."/status_q_total_".TM_TODAY.".png");
 ////////////////////////////////////////////////////////////////////////////////////////
 

@@ -3,7 +3,6 @@
 /License_GPL_V2.txt/1.1.1.1/Wed Nov 21 22:57:59 2007//
 /License_LGPL_V2.txt/1.1.1.1/Wed Nov 21 22:57:59 2007//
 /License_LGPL_V21.txt/1.1.1.1/Wed Nov 21 22:58:00 2007//
-/README/1.1.1.1/Wed Nov 21 22:58:00 2007//
 /update.php/1.1.1.1/Wed Nov 21 22:58:00 2007//
 D/admin////
 D/css////
@@ -17,14 +16,16 @@ D/tpl////
 /index.php/1.2/Wed Nov 28 19:45:02 2007//
 /index_example.php/1.1/Wed Nov 21 22:58:00 2007//
 /index.html/1.1/Wed Nov 28 19:45:02 2007//
-/api_example.php/1.1/Thu Nov 29 23:35:40 2007//
-/install.php/1.5/Fri Jan 18 01:00:01 2008//
 /click.php/1.6/Mon Sep 29 13:33:39 2008//
 /news_blank.png.php/1.6/Mon Sep 29 13:34:46 2008//
 /subscribe.php/1.7/Mon Sep 29 13:34:58 2008//
 /unsubscribe.php/1.8/Mon Sep 29 13:35:11 2008//
-/INSTALL.DE/1.5/Tue Sep 30 17:45:04 2008//
-/INSTALL.EN/1.4/Tue Sep 30 17:45:17 2008//
-/CHANGES/1.12/Thu Oct 16 09:42:14 2008//
-/UPDATE/1.13/Wed Oct 15 14:02:33 2008//
-/ChangeLog/1.4/Thu Oct 16 10:53:28 2008//
+/reset_pw.php/1.1/Thu Nov 13 12:28:44 2008//
+/INSTALL.DE/1.6/Fri Nov 14 21:06:04 2008//
+/INSTALL.EN/1.5/Fri Nov 14 21:06:12 2008//
+/install.php/1.6/Fri Nov 14 21:07:17 2008//
+/README/1.2/Fri Nov 14 21:07:59 2008//
+/api_example.php/1.2/Fri Nov 14 21:08:31 2008//
+/CHANGES/1.13/Thu Jan 29 15:38:47 2009//
+/UPDATE/1.14/Thu Jan 29 15:46:18 2009//
+/ChangeLog/1.8/Fri Jan 30 20:22:52 2009//

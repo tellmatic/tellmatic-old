@@ -31,18 +31,20 @@ $$InputName_Descr = strtr($$InputName_Descr, $trans);
 
 $InputName_Aktiv="aktiv";//range from
 $$InputName_Aktiv=getVar($InputName_Aktiv);
-//
+
 $InputName_Color="color";
 $$InputName_Color=getVar($InputName_Color);
 
 $InputName_ColorView="color_view";//nur anzeige....
 
-$check=true;
+$NEWSLETTER=new tm_NL();
+$GRP=$NEWSLETTER->getGroup($nl_grp_id,0,0);
+$standard=$GRP[0]['standard'];
 if ($set=="save") {
+	$check=true;
 	//checkinput
 	if (empty($name)) {$check=false;$_MAIN_MESSAGE.="<br>".___("Name der Gruppe sollte nicht leer sein.");}
 	if ($check) {
-		$NEWSLETTER=new tm_NL();
 		$NEWSLETTER->updateGrp(Array(
 					"id"=>$nl_grp_id,
 					"name"=>$name,
@@ -57,14 +59,10 @@ if ($set=="save") {
 	} else {
 		include_once (TM_INCLUDEPATH."/nl_grp_form.inc.php");
 	}
-
 } else {
-	$NEWSLETTER=new tm_NL();
-	$GRP=$NEWSLETTER->getGroup($nl_grp_id,0,0);
 	$name=$GRP[0]['name'];
 	$descr=$GRP[0]['descr'];//strtr($GRP[0]['descr'],$trans);
 	$aktiv=$GRP[0]['aktiv'];
-	$standard=$GRP[0]['standard'];
 	include_once (TM_INCLUDEPATH."/nl_grp_form.inc.php");
 }
 ?>

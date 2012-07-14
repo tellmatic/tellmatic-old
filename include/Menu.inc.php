@@ -17,9 +17,11 @@ $_TIMEOUT=sprintf(___("Login verfällt in %s Sekunden."),"<span id=\"timeoutdisp
 $MENU=Array(
 					0 => Array(
 						'id'=>'menu_tm',
+						'aktiv'=>1,
 						'name'=>'Tellmatic',
 						'links' => Array(
 									0 => Array(
+										'aktiv'=>1,
 										'js' => 1,
 										'link' => $_SERVER["PHP_SELF"]."",
 										'name' => ___("Startseite"),
@@ -32,8 +34,9 @@ $MENU=Array(
 										'manager' => '0',
 										),
 									1 => Array(
+										'aktiv'=>1,
 										'js' => 1,
-										'link' => "javascript:switchSection('main_info')",
+										'link' => "#",//javascript:switchSection('main_info')
 										'name' => date("Y-m-d H:i:s"),
 										'description' => ___("Aktuelle Meldungen ein-/ausblenden"),
 										'text' => date("Y-m-d H:i:s"),
@@ -43,13 +46,29 @@ $MENU=Array(
 										'admin' => '0',
 										'manager' => '0',
 										),
+									2 => Array(
+										'aktiv'=>1,
+										'js' => 1,
+										'link' => "#",//javascript:switchSection('main_help')
+										'name' => ___("Hilfe"),
+										'description' => ___("Hilfe ein-/ausblenden"),
+										'text' => ___("Hilfe"),
+										'icon' => 'help.png',
+										'target' => '_self',
+										'indent' => '0',
+										'admin' => '0',
+										'manager' => '0',
+										),
+
 									),
 						),
 					1 => Array(
 						'id'=>'menu_nl',
+						'aktiv'=>1,
 						'name'=>___("Newsletter"),
 						'links' => Array(
 									0 => Array(
+										'aktiv'=>1,
 										'js' => 0,
 										'link' => $_SERVER["PHP_SELF"]."?act=nl_grp_list",
 										'name' => ___("Gruppen"),
@@ -62,6 +81,7 @@ $MENU=Array(
 										'manager' => '0',
 										),
 									1 => Array(
+										'aktiv'=>1,
 										'js' => 0,
 										'link' => $_SERVER["PHP_SELF"]."?act=nl_grp_new",
 										'name' => ___("Neue Gruppe"),
@@ -74,6 +94,7 @@ $MENU=Array(
 										'manager' => '0',
 										),
 									2 => Array(
+										'aktiv'=>1,
 										'js' => 0,
 										'link' => $_SERVER["PHP_SELF"]."?act=nl_list",
 										'name' => ___("Newsletter"),
@@ -86,6 +107,7 @@ $MENU=Array(
 										'manager' => '0',
 										),
 									3 => Array(
+										'aktiv'=>1,
 										'js' => 0,
 										'link' => $_SERVER["PHP_SELF"]."?act=nl_new",
 										'name' => ___("Neuer Newsletter"),
@@ -97,39 +119,16 @@ $MENU=Array(
 										'admin' => '0',
 										'manager' => '0',
 										),
-									4 => Array(
-										'js' => 0,
-										'link' => $_SERVER["PHP_SELF"]."?act=queue_list",
-										'name' => ___("Queue"),
-										'description' => ___("Queue / Warteschlange anzeigen"),
-										'text' => ___("Hier sehen Sie den Versandstatus Ihrer Newsletter"),
-										'icon' => 'hourglass.png',
-										'target' => '_self',
-										'indent' => '0',
-										'admin' => '1',
-										'manager' => '1',
-										),
-									5 => Array(
-										'js' => 0,
-										'link' => $_SERVER["PHP_SELF"]."?act=queue_new",
-										'name' => ___("Neue Queue"),
-										'description' => ___("neuen Newsletter in die Queue / Warteschlange eintragen"),
-										'text' => ___("Hier bereiten Sie den Versand Ihres Newsletter vor"),
-										'icon' => 'hourglass_add.png',
-										'target' => '_self',
-										'indent' => '16',
-										'admin' => '0',
-										'manager' => '0',
-										),
-
 									),
 						),
 
 					2 => Array(
 						'id'=>'menu_adr',
+						'aktiv'=>1,
 						'name'=>___("Adressen"),
 						'links' => Array(
 									0 => Array(
+										'aktiv'=>1,
 										'js' => 0,
 										'link' => $_SERVER["PHP_SELF"]."?act=adr_grp_list",
 										'name' => ___("Gruppen"),
@@ -142,6 +141,7 @@ $MENU=Array(
 										'manager' => '0',
 										),
 									1 => Array(
+										'aktiv'=>1,
 										'js' => 0,
 										'link' => $_SERVER["PHP_SELF"]."?act=adr_grp_new",
 										'name' => ___("Neue Gruppe"),
@@ -154,6 +154,7 @@ $MENU=Array(
 										'manager' => '0',
 										),
 									2 => Array(
+										'aktiv'=>1,
 										'js' => 0,
 										'link' => $_SERVER["PHP_SELF"]."?act=adr_list",
 										'name' => ___("Adressen"),
@@ -166,6 +167,7 @@ $MENU=Array(
 										'manager' => '0',
 										),
 									3 => Array(
+										'aktiv'=>1,
 										'js' => 0,
 										'link' => $_SERVER["PHP_SELF"]."?act=adr_new",
 										'name' => ___("Neue Adresse"),
@@ -178,6 +180,7 @@ $MENU=Array(
 										'manager' => '0',
 										),
 									4 => Array(
+										'aktiv'=>1,
 										'js' => 0,
 										'link' => $_SERVER["PHP_SELF"]."?act=adr_import",
 										'name' => ___("CSV-Import"),
@@ -190,11 +193,12 @@ $MENU=Array(
 										'manager' => '1',
 										),
 									5 => Array(
+										'aktiv'=>1,
 										'js' => 0,
 										'link' => $_SERVER["PHP_SELF"]."?act=adr_export",
 										'name' => ___("CSV-Export"),
 										'description' => ___("Adressen in eine CSV-Datei exportieren"),
-										'text' => ___("Exportieren Sie Ihre Adressbestünde in eine CSV-Datei"),
+										'text' => ___("Exportieren Sie Ihre Adressbestände in eine CSV-Datei"),
 										'icon' => 'cake.png',
 										'target' => '_self',
 										'indent' => '0',
@@ -205,9 +209,11 @@ $MENU=Array(
 							),
 					3 => Array(
 						'id'=>'menu_frm',
+						'aktiv'=>1,
 						'name'=>___("Formulare"),
 						'links' => Array(
 									0 => Array(
+										'aktiv'=>1,
 										'js' => 0,
 										'link' => $_SERVER["PHP_SELF"]."?act=form_list",
 										'name' => ___("Formulare"),
@@ -220,6 +226,7 @@ $MENU=Array(
 										'manager' => '0',
 										),
 									1 => Array(
+										'aktiv'=>1,
 										'js' => 0,
 										'link' => $_SERVER["PHP_SELF"]."?act=form_new",
 										'name' => ___("Neues Formular"),
@@ -234,28 +241,12 @@ $MENU=Array(
 								),
 						),
 					4 => Array(
-						'id'=>'menu_tools',
-						'name'=>___("Tools"),
-						'links' => Array(
-									0 => Array(
-										'js' => 0,
-										'link' => $_SERVER["PHP_SELF"]."?act=filemanager",
-										'name' => ___("Filemanager"),
-										'description' => ___("Filemanager"),
-										'text' => ___("Filemanager from myftphp.sf.net - thx to Knittl"),
-										'icon' => 'folder_wrench.png',
-										'target' => '_self',
-										'indent' => '0',
-										'admin' => '0',
-										'manager' => '0',
-										),
-								),
-						),
-					5 => Array(
 						'id'=>'menu_st',
+						'aktiv'=>1,
 						'name'=>___("Status"),
 						'links' => Array(
 									0 => Array(
+										'aktiv'=>1,
 										'js' => 0,
 										'link' => $_SERVER["PHP_SELF"]."?act=status_top_x",
 										'name' => ___("Top X"),
@@ -268,6 +259,7 @@ $MENU=Array(
 										'manager' => '0',
 										),
 									1 => Array(
+										'aktiv'=>1,
 										'js' => 0,
 										'link' => $_SERVER["PHP_SELF"]."?act=status",
 										'name' => ___("Status"),
@@ -280,6 +272,7 @@ $MENU=Array(
 										'manager' => '0',
 										),
 									2 => Array(
+										'aktiv'=>1,
 										'js' => 0,
 										'link' => $_SERVER["PHP_SELF"]."?act=status_map",
 										'name' => ___("Karte"),
@@ -293,11 +286,13 @@ $MENU=Array(
 										),
 								),
 						),
-					6 => Array(
+					5 => Array(
 						'id'=>'menu_vw',
+						'aktiv'=>1,
 						'name'=>___("Verwaltung"),
 						'links' => Array(
 									0 => Array(
+										'aktiv'=>1,
 										'js' => 0,
 										'link' => $_SERVER["PHP_SELF"]."?act=bounce",
 										'name' => ___("Bounce-Management"),
@@ -310,6 +305,7 @@ $MENU=Array(
 										'manager' => '1',
 										),
 									1 => Array(
+										'aktiv'=>1,
 										'js' => 0,
 										'link' => $_SERVER["PHP_SELF"]."?act=adr_clean",
 										'name' => ___("Datenbank bereinigen"),
@@ -322,6 +318,7 @@ $MENU=Array(
 										'manager' => '1',
 										),
 									2 => Array(
+										'aktiv'=>1,
 										'js' => 0,
 										'link' => $_SERVER["PHP_SELF"]."?act=bl_list",
 										'name' => ___("Blacklist"),
@@ -334,6 +331,7 @@ $MENU=Array(
 										'manager' => '1',
 										),
 									3 => Array(
+										'aktiv'=>1,
 										'js' => 0,
 										'link' => $_SERVER["PHP_SELF"]."?act=bl_new",
 										'name' => ___("Neuer Blacklisteintrag"),
@@ -346,18 +344,7 @@ $MENU=Array(
 										'manager' => '1',
 										),
 									4 => Array(
-										'js' => 1,
-										'link' => $tm_URL_FE."/include/send_it.php",
-										'name' => ___("manueller Versand"),
-										'description' => ___("manueller Versand"),
-										'text' => ___("Hier versenden Sie Ihre Newsletter manuell"),
-										'icon' => 'email_go.png',
-										'target' => '_blank',
-										'indent' => '0',
-										'admin' => '0',
-										'manager' => '1',
-										),
-									5 => Array(
+										'aktiv'=>1,
 										'js' => 1,
 										'link' => $tm_URL_FE."/unsubscribe.php",
 										'name' => ___("Abmeldeformular"),
@@ -371,11 +358,80 @@ $MENU=Array(
 										),
 								),
 						),
+
+					6 => Array(
+						'id'=>'menu_send',
+						'aktiv'=>1,
+						'name'=>___("Versand"),
+						'links' => Array(
+									0 => Array(
+										'aktiv'=>1,
+										'js' => 0,
+										'link' => $_SERVER["PHP_SELF"]."?act=queue_list",
+										'name' => ___("Queue"),
+										'description' => ___("Queue / Warteschlange anzeigen"),
+										'text' => ___("Hier sehen Sie den Versandstatus Ihrer Newsletter"),
+										'icon' => 'hourglass.png',
+										'target' => '_self',
+										'indent' => '0',
+										'admin' => '1',
+										'manager' => '1',
+										),
+									1 => Array(
+										'aktiv'=>1,
+										'js' => 0,
+										'link' => $_SERVER["PHP_SELF"]."?act=queue_new",
+										'name' => ___("Neue Queue"),
+										'description' => ___("neuen Newsletter in die Queue / Warteschlange eintragen"),
+										'text' => ___("Hier bereiten Sie den Versand Ihres Newsletter vor"),
+										'icon' => 'hourglass_add.png',
+										'target' => '_self',
+										'indent' => '16',
+										'admin' => '0',
+										'manager' => '0',
+										),
+									2 => Array(
+										'aktiv'=>1,
+										'js' => 1,
+										'link' => $tm_URL_FE."/include/send_it.php",
+										'name' => ___("manueller Versand"),
+										'description' => ___("manueller Versand"),
+										'text' => ___("Hier versenden Sie Ihre Newsletter manuell"),
+										'icon' => 'email_go.png',
+										'target' => '_blank',
+										'indent' => '0',
+										'admin' => '0',
+										'manager' => '1',
+										),
+								),
+						),
 					7 => Array(
+						'id'=>'menu_tools',
+						'aktiv'=>1,
+						'name'=>___("Tools"),
+						'links' => Array(
+									0 => Array(
+										'aktiv'=>1,
+										'js' => 0,
+										'link' => $_SERVER["PHP_SELF"]."?act=filemanager",
+										'name' => ___("Filemanager"),
+										'description' => ___("Filemanager"),
+										'text' => ___("Filemanager from myftphp.sf.net - thx to Knittl"),
+										'icon' => 'folder_wrench.png',
+										'target' => '_self',
+										'indent' => '0',
+										'admin' => '0',
+										'manager' => '1',
+										),
+								),
+						),
+					8 => Array(
 						'id'=>'menu_user',
+						'aktiv'=>1,
 						'name'=>___("Benutzer"),
 						'links' => Array(
 									0 => Array(
+										'aktiv'=>1,
 										'js' => 0,
 										'link' => $_SERVER["PHP_SELF"]."?act=user",
 										'name' => ___("Benutzereinstellungen"),
@@ -388,6 +444,7 @@ $MENU=Array(
 										'manager' => '0',
 										),
 									1 => Array(
+										'aktiv'=>1,
 										'js' => 1,
 										'link' => "http://www.tellmatic.org/doc",
 										'name' => ___("Dokumentation"),
@@ -400,6 +457,7 @@ $MENU=Array(
 										'manager' => '0',
 										),
 									2 => Array(
+										'aktiv'=>1,
 										'js' => 1,
 										'link' => "http://www.tellmatic.org/credits",
 										'name' => ___("Credits"),
@@ -412,6 +470,7 @@ $MENU=Array(
 										'manager' => '0',
 										),
 									3 => Array(
+										'aktiv'=>1,
 										'js' => 0,
 										'link' => $_SERVER["PHP_SELF"]."?act=logout",
 										'name' => ___("Logout"),
@@ -425,11 +484,13 @@ $MENU=Array(
 										),
 								),
 						),
-					8 => Array(
+					9 => Array(
 						'id'=>'menu_admin',
+						'aktiv'=>1,
 						'name'=>___("Admin"),
 						'links' => Array(
 									0 => Array(
+										'aktiv'=>1,
 										'js' => 0,
 										'link' => $_SERVER["PHP_SELF"]."?act=host_list",
 										'name' => ___("Mail-Server"),
@@ -442,6 +503,7 @@ $MENU=Array(
 										'manager' => '0',
 										),
 									1 => Array(
+										'aktiv'=>1,
 										'js' => 0,
 										'link' => $_SERVER["PHP_SELF"]."?act=host_new",
 										'name' => ___("Neuer Mail-Server"),
@@ -454,6 +516,7 @@ $MENU=Array(
 										'manager' => '0',
 										),
 									2 => Array(
+										'aktiv'=>1,
 										'js' => 0,
 										'link' => $_SERVER["PHP_SELF"]."?act=adm_user_list",
 										'name' => ___("Benutzer"),
@@ -466,6 +529,7 @@ $MENU=Array(
 										'manager' => '0',
 										),
 									3 => Array(
+										'aktiv'=>1,
 										'js' => 0,
 										'link' => $_SERVER["PHP_SELF"]."?act=adm_user_new",
 										'name' => ___("Neuer Benutzer"),
@@ -478,6 +542,7 @@ $MENU=Array(
 										'manager' => '0',
 										),
 									4 => Array(
+										'aktiv'=>1,
 										'js' => 0,
 										'link' => $_SERVER["PHP_SELF"]."?act=adm_set",
 										'name' => ___("Einstellungen"),
@@ -490,6 +555,7 @@ $MENU=Array(
 										'manager' => '0',
 										),
 									5 => Array(
+										'aktiv'=>1,
 										'js' => 1,
 										'link' => "javascript:switchSection('div_debug');",
 										'name' => ___("Serverinfo"),
@@ -502,6 +568,7 @@ $MENU=Array(
 										'manager' => '0',
 										),
 									6 => Array(
+										'aktiv'=>1,
 										'js' => 1,
 										'link' => $tm_URL_FE."/".TM_INCLUDEDIR."/phpinfo.php",
 										'name' => ___("PHP Info"),
@@ -514,6 +581,7 @@ $MENU=Array(
 										'manager' => '0',
 										),
 									7 => Array(
+										'aktiv'=>1,
 										'js' => 1,
 										'link' => "http://www.tellmatic.org/donate",
 										'name' => ___("Spende"),
@@ -547,6 +615,7 @@ $_Tpl_Menu_Foot->setTemplatePath(TM_TPLPATH."/".$LOGIN->USER['style']);
 $_MENU="";
 $mtc=count($MENU);
 for ($mtcc=0;$mtcc<$mtc;$mtcc++) {
+	if ($MENU[$mtcc]['aktiv']==1) {
 	//add head
 	$_NAME=$MENU[$mtcc]['name'];
 	$_ID=$MENU[$mtcc]['id'];
@@ -557,7 +626,7 @@ for ($mtcc=0;$mtcc<$mtc;$mtcc++) {
 	$_MENU_ENTRY="";
 	$mlc=count($MENU[$mtcc]['links']);
 	for ($mlcc=0;$mlcc<$mlc;$mlcc++) {
-
+			if ($MENU[$mtcc]['links'][$mlcc]['aktiv']==1) {
 		if (	($MENU[$mtcc]['links'][$mlcc]['admin']!=1 && $MENU[$mtcc]['links'][$mlcc]['manager']!=1) ||
 				($user_is_admin && $MENU[$mtcc]['links'][$mlcc]['admin']==1) ||
 				($user_is_manager && $MENU[$mtcc]['links'][$mlcc]['manager']==1)
@@ -567,7 +636,7 @@ for ($mtcc=0;$mtcc<$mtc;$mtcc++) {
 			$_Tpl_Menu_Entry->setParseValue("_TEXT", $MENU[$mtcc]['links'][$mlcc]['text']);
 			if ($MENU[$mtcc]['links'][$mlcc]['js'] != 1) {
 				$_Tpl_Menu_Entry->setParseValue("_LINK", $MENU[$mtcc]['links'][$mlcc]['link']."&amp;s=s_".$MENU[$mtcc]['id']);
-				$_Tpl_Menu_Entry->setParseValue("_LOADER", "onMousedown=\"load();switchSection('div_loader');\"" );
+						$_Tpl_Menu_Entry->setParseValue("_LOADER", "" );
 			} else {
 				$_Tpl_Menu_Entry->setParseValue("_LINK", $MENU[$mtcc]['links'][$mlcc]['link']);
 				$_Tpl_Menu_Entry->setParseValue("_LOADER", "");
@@ -578,18 +647,25 @@ for ($mtcc=0;$mtcc<$mtc;$mtcc++) {
 			$_Tpl_Menu_Entry->setParseValue("_ID", "me_".$mtcc."_".$mlcc);
 			$_MENU_ENTRY.="\n".$_Tpl_Menu_Entry->renderTemplate("Menu_entry.html");
 		}//if admin
-	}
+			}//$MENU[$mtcc]['links'][$mlcc]['aktiv']==1
+		}//for mlcc //links
 	//add foot
 	$_Tpl_Menu_Foot->setParseValue("_ID", $_ID);
 	$_MENU_FOOT=$_Tpl_Menu_Foot->renderTemplate("Menu_foot.html");
-	if ($user_is_expert && $mtcc>0)
-	$_MENU_FOOT.= "
-		<script type=\"text/javascript\">
-		switchSection('s_".$MENU[$mtcc]['id']."');
-		</script>\n";
+	}//$MENU[$mtcc]['aktiv']==1
+	//toggle out if expert
+	$_MENU_FOOT.="<script language=\"javascript\" type=\"text/javascript\">\n //$_ID\n";
+	if (($mtcc>0 && is_in("s_".$_ID,$menu_sections) ) || $_ID=="menu_tm") {//$user_is_expert && 
+		$_MENU_FOOT.="toggleSlide('".$_ID."','s_".$_ID."',0);";
+	} else {
+		$_MENU_FOOT.="toggleSlide('".$_ID."','s_".$_ID."',1);";
+	}
+	$_MENU_FOOT.="</script>\n";
+	//hide section
 	//create menu
 	$_MENU.=$_MENU_HEAD."\n".$_MENU_ENTRY."\n".$_MENU_FOOT."\n\n";
-}
+}//for mtcc //topics
+
 
 
 $_MENU.= "<div class=\"userinfo\"><!--a href=\"http://www.tellmatic.org\" target=\"blank\">".$ApplicationText."</a><br-->".
@@ -599,15 +675,6 @@ $_MENU.= "<div class=\"userinfo\"><!--a href=\"http://www.tellmatic.org\" target
 									"<br>".
 									$_TIMEOUT.
 									"</div>\n";
-
-	//re-open selected menu sections
-	for ($mscc=0;$mscc<$menu_sections_c;$mscc++) {
-		if ($user_is_expert && $menu_sections[0]!="s_menu_tm") $_MENU.= "
-			<script type=\"text/javascript\">
-			switchSection('".$menu_sections[$mscc]."');
-			</script>\n";
-	}
-
 
 
 //some Cookie Testcode
@@ -635,15 +702,14 @@ if (DEBUG) {
 	$_MENU .=$LOGIN->USER['name']."<br>sessid: ".session_id();
 	$_MENU .="<br>ip: ".$_SESSION['ip'];
 	$_MENU .='</div>';
-}
 
-$_MENU.='
-<p align="center">
-<a href="http://validator.w3.org/check?uri=referer&amp;ss=1"><img
-        src="http://www.w3.org/Icons/valid-html401-blue"
-        alt="Valid HTML 4.01 Transitional" height="31" width="88" border="0"></a>
-</p>
-
-';
+	$_MENU.='
+	<p align="center">
+	<a href="http://validator.w3.org/check?uri=referer&amp;ss=1"><img
+	        src="http://www.w3.org/Icons/valid-html401-blue"
+	        alt="Valid HTML 4.01 Transitional" height="31" width="88" border="0"></a>
+	</p>
+	';
+}//DEBUG
 
 ?>

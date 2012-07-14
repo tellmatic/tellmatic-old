@@ -25,6 +25,57 @@
 	GPL V2.1 ++
 	http://www.gnu.org/licenses/gpl.html
 
+*+*+*+*+*+*+*+*+*+*+ REQUIREMENTS +*+*+*+*+*+*+*+*+*+*+*
+	Server / ISP:
+		- Linux oder MacosX, (NO Windows!)
+		- Apache HTTP Server (or similar, must support .htaccess) => http://httpd.apache.org/download.cgi
+		- PHP >= 4.4 => http://www.php.net/downloads.php (no CGI Installation recommended)
+           + Imap Library + Mysql + GD-Lib
+           (Tellmatic is developed and tested under PHP 4.4.7 and latest PHP5 stable releases + suhosin)
+		- Mysql Datenbank >= v4.1 (Mysql 4.1.x/5, NO Mysql3!)
+           (Tellmatic is developed and tested under latest Mysql 4.x and latest Mysql5 stable releases)
+		- Access to SMTP, POP3/IMAP Server
+		- Optional: Cronjobs, PHP CLI or wget (Cronjobs execute at least every 5 Min.)
+    
+    Client:   
+       standard Browser with Javascript support (Seamonkey, Mozilla or Firefox, IE (limited, no 24Bit PNG support))
+
+
+
+*+*+*+*+*+*+*+*+*+*+ BASIC-FEATURES V1.0.x +*+*+*+*+*+*+*+*+*+*+*
+	Eaysy installation, installed in 2 minutes
+	Comfortable and intuitive web frontend
+	Multiuser
+	Online help
+	Multilingual
+	Filemanager
+	Different styles for frontend
+	Wysiwyg Online-Editor (TinyMCE) & spellchecker	
+	Blacklist (blacklist by email, domain or regular expression)
+	Multiple mailservers for SMTP and POP3/IMAP (maildelivery and bouncemanagement)
+	Graphical statistics
+	Geographical maps (subscriptions, readers, etc.), using GeoIP API and database
+	Scheduled mail delivery, (with cronjobs), write now, send in two weeks
+	Multiple address-/recipientgroups per address (private and public groups, define default groups/subcribers can choose from public groups etc)
+	Newslettergroups
+	Bouncemanagement
+	Errormanagement, delivery-errors, address-errors etc
+	General statistics and reports
+	"Clean Up Database"-Feature (delete, move failed addresses etc)
+	Email-Reports 
+	Click-/Linktracker
+	Viewtracker (blank blindimage, or any other png/jpg)
+	Email validation (3 levels for internal and subscriptions)
+	CSV address import
+	CSV address export
+	Personalized newsletter (add a private salutation etc, track clicks, views etc.)
+	Massmailing (send anonymized newsletter)
+	Delivery via SMTP
+	Double opt-in/out
+	Subscription-form-generator
+	Unlimited attachments
+	
+
 *+*+*+*+*+*+*+*+*+*+ INSTALLATION +*+*+*+*+*+*+*+*+*+*+*
 
 	Bitte INSTALL.DE / UPDATE / CHANGES lesen

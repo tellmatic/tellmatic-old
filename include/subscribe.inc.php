@@ -220,7 +220,7 @@ if ($frm_id>0 && $doptin!=1) {
 						"f7"=>$f7,
 						"f8"=>$f8,
 						"f9"=>$f9,
-						"memo"=>"\n".$created.": subscribe update\n memo:\n ".$memo."\n".$ADR[0]['memo'],
+						"memo"=>"subscribe update, memo:\n ".$memo,
 						),
 						$all_adr_grp);
 					//wenn user abgemeldet und sich wieder anmelden will... dann status aendern, sonst bleibt alles wie es ist...:
@@ -252,7 +252,7 @@ if ($frm_id>0 && $doptin!=1) {
 						"f7"=>$f7,
 						"f8"=>$f8,
 						"f9"=>$f9,
-						"memo"=>"\n".$created.": subcribe\n  message:\n ".$memo,
+						"memo"=>"subscribe new, memo:\n ".$memo,
 						),
 						$new_adr_grp);
 				}
@@ -272,7 +272,7 @@ if ($frm_id>0 && $doptin!=1) {
 													"<br>Form: '<b>".$FRM[0]['name']."</b>'\n".
 													"<br>ID: <b>".$FRM[0]['id']."</b>\n".
 													"<ul>\n".
-													"<li>(e-Mail) ".$FRM[0]['email']."<b>".$email."</b></li>\n".
+													"<li>(e-Mail) ".$FRM[0]['email'].": <b>".$email."</b></li>\n".
 													"<li>(F0) ".$FRM[0]['f0'].": <b>".$f0."</b></li>\n".
 													"<li>(F1) ".$FRM[0]['f1'].": <b>".$f1."</b></li>\n".
 													"<li>(F2) ".$FRM[0]['f2'].": <b>".$f2."</b></li>\n".
@@ -291,7 +291,7 @@ if ($frm_id>0 && $doptin!=1) {
 													"<br>\n".
 													"<br>\n";
 
-					if ($FRM[0]['double_optin']==1) {
+					if (!$adr_exists && $FRM[0]['double_optin']==1) {
 						$SubscriptionMail_HTML.=$MSG['subscribe']['mail']['body_doptin'];
 					}
 					if ($adr_exists) {

@@ -15,13 +15,17 @@
 $_MAIN_OUTPUT.="\n\n<!-- bounce_mail_list.inc -->\n\n";
 $Bounces=Array();
 $bcmatch=0;
-$Mail=$Bounce->filterBounces($Mail,1,1,$bounce);//$Messages , checkHeader=1, checkBody, returnOnlyBounces..., filter to:
 
+//bouncemails filtern
+$Mail=$Bounce->filterBounces($Mail,$checkHeader,$checkBody,$bounce,"");//$Messages , checkHeader=1, checkBody, returnOnlyBounces..., filter to:
 $mc=count($Mail);
 
 $_MAIN_OUTPUT .= "<br>".sprintf(___("Gesamt: %s Mails"),$Mailer->count_msg);
+$_MAIN_OUTPUT .= "<br>".sprintf(___("Gefiltert: %s Mails"),$mc);
+$_MAIN_OUTPUT .= "<br>".sprintf(___("Angezeigt werden max. %s Mails"),$limit);
 
 if ($mc>0) {
+	$_MAIN_OUTPUT .= "<br>".sprintf(___("Mail Nr. %s bis %s"),($offset+1),($offset+$mc));
 	$_MAIN_OUTPUT.="<table border=\"0\" cellpadding=\"1\" cellspacing=\"1\" width=100%>";
 	$_MAIN_OUTPUT.= "<thead>".
 							"<tr>".
@@ -43,14 +47,14 @@ if ($mc>0) {
 		if ($mcc%2==0) {$bgcolor=$row_bgcolor;} else {$bgcolor=$row_bgcolor2;}
 		$_MAIN_OUTPUT.= "<tr id=\"row_".$mcc."\" bgcolor=\"".$bgcolor."\" onmousemove=\"showToolTip('tt_bouncemail_list_".$mcc."')\" onmouseover=\"setBGColor('row_".$mcc."','".$row_bgcolor_hilite."');\" onmouseout=\"setBGColor('row_".$mcc."','".$bgcolor."');hideToolTip();\">";
 		$_MAIN_OUTPUT.= "<td valign=\"top\">";
-		if ($Mail[$mcc]['to']==$C[0]['return_mail'] || $Mail[$mcc]['is_bouncemail']==1) {
+		if ($Mail[$mcc]['to']==$filter_to_smtp_return_path || $Mail[$mcc]['is_bouncemail']==1) {
 			$Form->set_InputDefault($FormularName,$InputName_Mail,$Mail[$mcc]['no']);
 		}
 		$Form->set_InputValue($FormularName,$InputName_Mail,$Mail[$mcc]['no']);
 		$Form->render_Input($FormularName,$InputName_Mail);
 		$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Mail]['html'];
 		$_MAIN_OUTPUT.= $Mail[$mcc]['no'].".";
-		if ($Mail[$mcc]['to']==$C[0]['return_mail']) {
+		if ($Mail[$mcc]['to']==$filter_to_smtp_return_path) {
 			$_MAIN_OUTPUT.=  tm_icon("status_offline.png",___("Return Mail"));
 		}
 		if ($Mail[$mcc]['is_bouncemail']==1) {
@@ -109,8 +113,8 @@ if ($mc>0) {
 			//div fuer adressen
 			$_MAIN_OUTPUT.= "<div id=\"tt_bouncemail_adr_".$mcc."\">";
 			$_MAIN_OUTPUT.= "<font size=-1>";
-			foreach ($Mail[$mcc]['bounce'] as $adr) {
-				$_MAIN_OUTPUT.= $adr.", ";
+			foreach ($Mail[$mcc]['bounce'] as $badr) {
+				$_MAIN_OUTPUT.= $badr.", ";
 			}
 			$_MAIN_OUTPUT.= "</font>";
 			$_MAIN_OUTPUT.= "</div>";

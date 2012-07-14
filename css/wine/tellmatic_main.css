@@ -117,7 +117,7 @@
  /*display:block;*/
  padding:1px;
  border:1px solid #ffffff;
- background-color:#c5e7ee;
+ /*background-color:#c5e7ee;*/
  text-align:left;
  color:#000000;
  text-decoration:none;
@@ -130,12 +130,12 @@
 a.list_edit_entry:link, a.list_edit_entry:visited
 { 
  color:#000066;
- background-color:#c5e7ee;
+ /*background-color:#c5e7ee;*/
  text-decoration:none;
 }
 a.list_edit_entry:active, a.list_edit_entry:hover
 { 
  color:#ff0000;
- background-color:#fda711;
+ /*background-color:#fda711;*/
 }
 

@@ -4,3 +4,9 @@
 	background-color:#eeeeee;
 	margin: 2px 2px 2px 2px;
 }
+
+.list_edit {
+	border-bottom: 1px solid #aaaaaa;
+	border-left: 1px solid #aaaaaa;
+	border-right: 1px solid #aaaaaa;
+}

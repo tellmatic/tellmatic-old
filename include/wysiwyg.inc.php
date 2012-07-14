@@ -44,7 +44,17 @@ tinyMCE.init({
 	theme_advanced_toolbar_align : "left",
 	theme_advanced_path_location : "bottom",
 	content_css : "'.$tm_URL_FE.'/css/tinymce.css",
-   spellchecker_languages : "+English=en,Deutsch=de,Francais=fr,Italiano=it",
+		';
+	    #spellchecker_languages : "+English=en,Deutsch=de,Francais=fr,Italiano=it",
+$_MAIN_OUTPUT.='spellchecker_languages : "';
+$lc=count($LANGUAGES['lang']);
+for ($lcc=0;$lcc<$lc;$lcc++) {
+	if ($LANGUAGES['lang'][$lcc]==$LOGIN->USER['lang']) $_MAIN_OUTPUT.='+';
+	$_MAIN_OUTPUT.=$LANGUAGES['text'][$lcc].'='.$LANGUAGES['lang'][$lcc];
+	if ($lcc<($lc-1)) $_MAIN_OUTPUT.=',';
+}
+$_MAIN_OUTPUT.='",';
+$_MAIN_OUTPUT.='
 	plugin_insertdate_dateFormat : "%Y-%m-%d",
 	plugin_insertdate_timeFormat : "%H:%M:%S",
 	//extended_valid_elements : "a[name|href|target|title|onclick],img[class|src|border=0|alt|title|hspace|vspace|width|height|align|onmouseover|onmouseout|name],hr[class|width|size|noshade],font[face|size|color|style],span[class|align|style],form[action|name|type|method],input[name|type|size|maxlength],select[name],option[value],textarea[name|cols|rows],radio[name|value]",
@@ -54,14 +64,13 @@ tinyMCE.init({
 	theme_advanced_resizing : true,
 	fullpage_default_langcode : "'.$LOGIN->USER['lang'].'",
 	fullpage_default_title : "",
-	//"'.___("Newsletter").'",
 	fullpage_default_encoding : "'.$encoding.'",
 	fullpage_default_xml_pi : false,
 	fullpage_default_doctype : "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">",
 	fullscreen_new_window : true,
 	fullscreen_settings : {
 		theme_advanced_path_location : "top"
-	},
+		}
 	});
 
 function toggleEditor(id) {

@@ -37,7 +37,7 @@ $Form->set_InputStyleClass($FormularName,$InputName_Expr,"mFormText","mFormTextF
 $Form->set_InputSize($FormularName,$InputName_Expr,48,256);
 $Form->set_InputDesc($FormularName,$InputName_Expr,___("Ausdruck (E-Mail/Domain/RegEx)"));
 $Form->set_InputReadonly($FormularName,$InputName_Expr,false);
-$Form->set_InputOrder($FormularName,$InputName_Expr,1);
+$Form->set_InputOrder($FormularName,$InputName_Expr,2);
 $Form->set_InputLabel($FormularName,$InputName_Expr,"");
 
 //Type
@@ -47,7 +47,7 @@ $Form->set_InputDefault($FormularName,$InputName_Type,$$InputName_Type);
 $Form->set_InputStyleClass($FormularName,$InputName_Type,"mFormSelect","mFormSelectFocus");
 $Form->set_InputDesc($FormularName,$InputName_Type,___("Typ"));
 $Form->set_InputReadonly($FormularName,$InputName_Type,false);
-$Form->set_InputOrder($FormularName,$InputName_Type,6);
+$Form->set_InputOrder($FormularName,$InputName_Type,1);
 $Form->set_InputLabel($FormularName,$InputName_Type,"");
 $Form->set_InputSize($FormularName,$InputName_Type,0,1);
 $Form->set_InputMultiple($FormularName,$InputName_Type,false);
@@ -64,7 +64,7 @@ $Form->set_InputStyleClass($FormularName,$InputName_Aktiv,"mFormText","mFormText
 $Form->set_InputSize($FormularName,$InputName_Aktiv,48,256);
 $Form->set_InputDesc($FormularName,$InputName_Aktiv,___("Aktiv"));
 $Form->set_InputReadonly($FormularName,$InputName_Aktiv,false);
-$Form->set_InputOrder($FormularName,$InputName_Aktiv,2);
+$Form->set_InputOrder($FormularName,$InputName_Aktiv,3);
 $Form->set_InputLabel($FormularName,$InputName_Aktiv,"");
 
 //submit button

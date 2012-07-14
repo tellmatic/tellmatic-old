@@ -109,9 +109,12 @@ if (!$logged_in) {
 //RENDER PAGE
 $_PAGE=$_Tpl->renderTemplate("Index.html");
 //write to file and redirect?
-#write_file(TM_PATH."/admin/tmp/",$adm_file_name,$_PAGE);
-#header('Location: '.$tm_URL."/tmp/".$adm_file_name);
-//or output page and exit :)
+#if ($logged_in) {
+#	write_file(TM_PATH."/admin/tmp/",$adm_file_name,$_PAGE);
+#	header('Location: '.$tm_URL."/tmp/".$adm_file_name);
+#} else {
+#	//or output page and exit :)
 echo $_PAGE;
+#}
 exit;
 ?>

@@ -15,6 +15,7 @@
 $_MAIN_DESCR=___("Bounce Management");
 $_MAIN_MESSAGE.="";
 
+$HOSTS=new tm_HOST();
 $set=getVar("set");
 $InputName_Limit="limit";
 $$InputName_Limit=getVar($InputName_Limit);
@@ -35,12 +36,17 @@ $$InputName_Export=getVar($InputName_Export);
 $InputName_Bounce="bounce";//
 $$InputName_Bounce=getVar($InputName_Bounce,1);
 //
+$InputName_BounceType="bounce_type";//
+$$InputName_BounceType=getVar($InputName_BounceType,1);
+//
 $InputName_FilterTo="filter_to";//
 $$InputName_FilterTo=getVar($InputName_FilterTo,1);
 //
 $InputName_Host="host";//
 $$InputName_Host=getVar($InputName_Host,0);
-$HOSTS=new tm_HOST();
+
+$InputName_FilterToSMTPReturnPath="filter_to_smtp_return_path";//
+$$InputName_FilterToSMTPReturnPath=getVar($InputName_FilterToSMTPReturnPath);
 
 $InputName_Mail="mailno";//
 pt_register("POST","mailno");
@@ -77,7 +83,8 @@ if ($set=="connect") {
 	//filter? emails suchen?
 	if ($filter_to==1) {
 		//nur mails an aktuelle return adesse fuer host
-		$search_mail['to']=$C[0]['return_mail'];
+		$search_mail['to']=$filter_to_smtp_return_path;
+		$_MAIN_OUTPUT .= "<br>".sprintf(___("Es werden nur E-Mails an die Adresse %s angezeigt."),$filter_to_smtp_return_path);
 	}
 
 	$_MAIN_OUTPUT .= "<br>".sprintf(___("Verbindung zum Server %s wird aufgebaut..."),$HOST[0]['name']." (".$HOST[0]['host'].":".$HOST[0]['port']."/".$HOST[0]['type'].")");
@@ -88,7 +95,29 @@ if ($set=="connect") {
 
 	//Mails auslesen
 	$Mail=$Mailer->getMail(0,$offset,$limit,$search_mail);
-
+	//typ
+	$checkHeader=0;
+	$checkBody=0;
+	if ($bounce_type=="header") {
+		$_MAIN_OUTPUT .= "<br>".___("E-Mail-Header wird nach potentiellen Adressen durchsucht");
+		$checkHeader=1;
+	}
+	if ($bounce_type=="body") {
+		$_MAIN_OUTPUT .= "<br>".___("E-Mail-Body wird nach potentiellen Adressen durchsucht");
+		$checkBody=1;
+	}
+	if ($bounce_type=="headerbody") { 
+		$_MAIN_OUTPUT .= "<br>".___("E-Mail-Header und Body werden nach potentiellen Adressen durchsucht");
+		$checkHeader=1;
+		$checkBody=1;
+	}
+	
+	//Liste der Mails anzeigen
+	if ($val=="list") {
+		require_once (TM_INCLUDEPATH."/bounce_mail_form_head.inc.php");
+		require_once (TM_INCLUDEPATH."/bounce_mail_list.inc.php");
+		require_once (TM_INCLUDEPATH."/bounce_mail_form.inc.php");
+	}
 	if ($val=="filter" || $val=="filter_delete") {
 		$mc=count($mailno);
 		if ($mc>0) {
@@ -131,8 +160,11 @@ if ($set=="connect") {
 	//val2==..... aktionen fuer die adressen
 	if (!empty($val2)) {
 		$ac=count($adr);
-
+		if ($val2 == "none") {
+			$_MAIN_MESSAGE.= "<br>".___("Keine Aktion.");
+		}
 		if ($export==1) {
+			$_MAIN_MESSAGE.= "<br>".___("Adressen werden exportiert.");
 			//ausgabedatei:
 			//standard name aus datum fuer export generieren
 			$created=date("Y-m-d H:i:s");
@@ -140,7 +172,6 @@ if ($set=="connect") {
 			$Export_Filename="bounce_".date_convert_to_string($created).".csv";
 			$fp = fopen($tm_datapath."/".$Export_Filename,"w");
 		}
-
 		if ($ac>0) {
 			$_MAIN_MESSAGE.= "<br>".sprintf(___("%s Adressen zum Bearbeiten ausgewählt."),$ac);
 
@@ -179,16 +210,16 @@ if ($set=="connect") {
 						//wenn erros noch unter dem limit...
 							//fehler zaehlen
 							$ADDRESS->setAError($A[0]['id'],($A[0]['errors']+1));
-							$_MAIN_MESSAGE.= " -- ".sprintf(___("Fehler: %s von max. %s"),($A[0]['errors']+1),$max_mails_retry);
+							$_MAIN_MESSAGE.= " -- ".sprintf(___("Fehler: %s von max. %s"),($A[0]['errors']+1),$C[0]['max_mails_retry']);
 
 							//wenn adresse noch nicht abgemeldet!!!!!
 							if ($A[0]['status']!=11) {
 								//wenn erros das limit ueberschritten hat:
-								if (($A[0]['errors']+1) > $max_mails_retry)  {
+								if (($A[0]['errors']+1) > $C[0]['max_mails_retry'])  {
 									//unsubscribe und deaktivieren
 									$ADDRESS->setStatus($A[0]['id'],9);
 									$ADDRESS->setAktiv($A[0]['id'],0);
-									$_MAIN_MESSAGE.= " -- ".sprintf(___("Als fehlerhaft markiert und deaktivert (Sendefehler >%s)"),$max_mails_retry);
+									$_MAIN_MESSAGE.= " -- ".sprintf(___("Als fehlerhaft markiert und deaktivert (Sendefehler >%s)"),$C[0]['max_mails_retry']);
 								} else {
 									//wenn errors limit noch nicht ueberschritten
 									//dann als sendefehler markieren
@@ -217,15 +248,9 @@ if ($set=="connect") {
 			$_MAIN_MESSAGE.= "<br>".___("Es wurden keine Adressen zum Bearbeiten ausgewählt.");
 		}//$ac>0
 	}//if !empty val2
-
-	//Liste der Mails anzeigen
-	if ($val=="list") {
-		require_once (TM_INCLUDEPATH."/bounce_mail_form_head.inc.php");
-		require_once (TM_INCLUDEPATH."/bounce_mail_list.inc.php");
-		require_once (TM_INCLUDEPATH."/bounce_mail_form.inc.php");
-	}
 	//verbindung schliessen
 	$Mailer->disconnect();
 } else {
+	//require_once (TM_INCLUDEPATH."/bounce_host_form.inc.php");
 }
 ?>

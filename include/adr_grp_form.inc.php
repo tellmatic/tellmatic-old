@@ -63,7 +63,7 @@ if ($standard==1) {
 	$Form->set_InputSize($FormularName,$InputName_Public,48,256);
 	$Form->set_InputDesc($FormularName,$InputName_Public,___("Öffentlich"));
 	$Form->set_InputReadonly($FormularName,$InputName_Public,false);
-	$Form->set_InputOrder($FormularName,$InputName_Public,2);
+	$Form->set_InputOrder($FormularName,$InputName_Public,3);
 	$Form->set_InputLabel($FormularName,$InputName_Public,"");
 
 //PUBName
@@ -73,7 +73,7 @@ $Form->set_InputStyleClass($FormularName,$InputName_PublicName,"mFormText","mFor
 $Form->set_InputSize($FormularName,$InputName_PublicName,48,256);
 $Form->set_InputDesc($FormularName,$InputName_PublicName,___("Name (öffentlich)"));
 $Form->set_InputReadonly($FormularName,$InputName_PublicName,false);
-$Form->set_InputOrder($FormularName,$InputName_PublicName,1);
+$Form->set_InputOrder($FormularName,$InputName_PublicName,4);
 $Form->set_InputLabel($FormularName,$InputName_PublicName,"");
 //Descr
 $Form->new_Input($FormularName,$InputName_Descr,"textarea", display($$InputName_Descr));
@@ -82,7 +82,7 @@ $Form->set_InputStyleClass($FormularName,$InputName_Descr,"mFormTextarea","mForm
 $Form->set_InputSize($FormularName,$InputName_Descr,20,5);
 $Form->set_InputDesc($FormularName,$InputName_Descr,___("Beschreibung"));
 $Form->set_InputReadonly($FormularName,$InputName_Descr,false);
-$Form->set_InputOrder($FormularName,$InputName_Descr,3);
+$Form->set_InputOrder($FormularName,$InputName_Descr,5);
 $Form->set_InputLabel($FormularName,$InputName_Descr,"");
 
 //submit button
@@ -127,7 +127,7 @@ $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "<td valign=top>";
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Aktiv]['html'];
 	if ($standard==1) {
-		$_MAIN_OUTPUT.=  "<img src=\"".$tm_iconURL."/page_white_lightning.png\" title=\"".___("Diese Gruppe ist die Standardgruppe")."\" border=\"0\">&nbsp;".___("Standardgruppe! Kann nicht de-aktiviert werden.");
+		$_MAIN_OUTPUT.=  tm_icon("page_white_lightning.png",___("Diese Gruppe ist die Standardgruppe"))."&nbsp;".___("Standardgruppe! Kann nicht de-aktiviert werden.");
 	}
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "</tr>";

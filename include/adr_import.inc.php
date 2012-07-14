@@ -123,7 +123,7 @@ if ($set=="import") {
 					$IMPORT_MESSAGE.= "<ul>".$_FILES["file_new"]["name"];
 					$IMPORT_MESSAGE.= " / ".$_FILES["file_new"]["size"]." Byte";
 					$IMPORT_MESSAGE.= ", ".$_FILES["file_new"]["type"];
-					$IMPORT_MESSAGE.= "<br>".sprintf(___("Datei gespeichert unter: %s"),"<a href=\"".$tm_datadir."/".$CSV_Filename."\" target=\"_preview\">".$tm_datadir."/".$CSV_Filename."</a>");
+					$IMPORT_MESSAGE.= "<br>".sprintf(___("Datei gespeichert unter: %s"),"<a href=\"".$tm_URL_FE."/".$tm_datadir."/".$CSV_Filename."\" target=\"_preview\">".$tm_datadir."/".$CSV_Filename."</a>");
 					$IMPORT_MESSAGE.= "</ul>";
 					$check=true;
 				} else {
@@ -450,7 +450,7 @@ if ($set=="import") {
 								"aktiv"=>$aktiv_update,
 								"created"=>$created,
 								"author"=>$author,
-								"memo"=>"\n".$created.": import update\n".$ADR[0]['memo'],
+								"memo"=>"import update: ".$ADR[0]['memo'],
 								"f0"=>$addr[$i]['f0'],
 								"f1"=>$addr[$i]['f1'],
 								"f2"=>$addr[$i]['f2'],
@@ -514,7 +514,7 @@ if ($set=="import") {
 								"author"=>$author,
 								"status"=>$status_new,
 								"code"=>$code,
-								"memo"=>"\n".$created.": import",
+								"memo"=>"import",
 								"f0"=>$addr[$i]['f0'],
 								"f1"=>$addr[$i]['f1'],
 								"f2"=>$addr[$i]['f2'],

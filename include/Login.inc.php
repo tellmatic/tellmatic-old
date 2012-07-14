@@ -32,6 +32,7 @@ $user_is_admin=FALSE;
 $user_is_manager=FALSE;
 
 /***********************************************************/
+/***********************************************************/
 //check login
 //log_in[0]: bool: true | false
 //log_in[1]: message
@@ -40,15 +41,21 @@ $log_in = include(TM_INCLUDEPATH."/Login_guard_ret.inc.php");
 $logged_in=$log_in[0];
 $_MAIN_MESSAGE.=$log_in[1];
 
-if (DEBUG) $_MAIN_OUTPUT.="<!-- \n session name : ".session_id()."-->\n";
-if (DEBUG) $_MAIN_OUTPUT.="<!--\n cookie: ".$_COOKIE[session_name()]."-->\n";
-if (DEBUG) $_MAIN_OUTPUT.="<!-- \n old session id: ".session_id()."-->\n";
+if (DEBUG) $_MAIN_OUTPUT.="\n session id : ".session_id()."<br>\n";
+if (DEBUG) {
+	if (isset($_COOKIE[session_name()])) {
+		$_MAIN_MESSAGE.="\n cookie: ".$_COOKIE[session_name()]."<br>\n";
+	} else {
+		$_MAIN_MESSAGE.="\n _COOKIE[sessionname], sessionname: ".session_name()." not set yet<br>\n";
+	}
+}
+if (DEBUG) $_MAIN_MESSAGE.="\n old session id: ".session_id()."<br>\n";
 
 /***********************************************************/
 //neue sessionid
 /***********************************************************/
 session_regenerate_id();
-if (DEBUG) $_MAIN_OUTPUT.="<!--\n new session id: ".session_id()."-->\n";
+if (DEBUG) $_MAIN_MESSAGE.="\n new session id: ".session_id()."<br>\n";
 
 /***********************************************************/
 //set cookie

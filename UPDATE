@@ -11,6 +11,67 @@
 /* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
 /********************************************************************************/
 
+*+*+*+*+*+*+*+*+*+*+*+ 1.0.8.4
+--en
+	Read the CHANGES file carefully! It contains the list of new features and changes with some more or less technical details! 
+	Backup all your files and the database!
+	To update earlier Versions than 1.0.8.2 please follow instructions for update to 1.0.8.2
+	Login into Tellmatic as admin and go to admin-->settings and write down all your SMTP-Server and email settings!
+	Backup all your files and the database!	
+	Copy newer files and don't forget to set path in *.php in / and include/send_it.php after updating if you plan to use cronjobs!
+	Backup the database! Do it now!
+	Update Database use phpMyAdmin or console etc, see SQL below!
+	Login to TM as admin again and create a new SMTP Host with the settings you have noted before, set it te default SMTP host.
+	Edit existing SMTP hosts with new settings and fill out new empty values like return-path etc. (All SMTP-Settings are now 'per host')
+	That's it. Have fun with the new features!
+	
+--de
+	Lies die Datei CHANGES aufmerksam durch. Hier stehen nuetzlich Hinweise und einige technische Infos zu den Aenderungen!!!
+	Sichere alle deine Daten und Datenbanken!
+	Zum Update auf 1.0.8.4 von einer frueheren Verison als 1.0.8.2 befolgen zuerst die Anweisungen fuer das Update auf 1.0.8.2
+	Melde dich als Administrator in Tellmatic an und schreibe die Einstellungen fuer den SMTP Server und E-Mails bei den Einstellungen auf!
+	Sichere alle deine Daten und Datenbanken!
+	Kopieren die neuen Dateien auf den Server. Vergiss nicht den Pfad in den *.php Dateien in / und include/send_it.php anzupassen wenn Cronjobs genutzt werden sollen.
+	Sichere deine Datenbank! Jetzt!
+	Aktualisiere die Datenbank, s.u.
+	Melde dich ernet in Tellmatic an und erstelle einen neuen Standard-SMTP Host mit den Einstellungen die Du dir vorher ja aufgeschrieben hast.
+	Aendere existierende SMTP Hosts ab und fuelle die leeren Felder mit sinnvollen Werten. Alle SMTP und E-Mail Einstellungen die vorher bei den Konfigurationseinstelungen fuer Tellmatic waren, sind nun in den Hosts abgelegt!
+	Das wars, viel Spass.
+	
+------------------------------
+Datenbank aktualisieren: / Update Database:
+
+	ALTER TABLE `hosts` ADD `standard` TINYINT( 1 ) NOT NULL DEFAULT '0' AFTER `aktiv` ;
+	ALTER TABLE `hosts` ADD `smtp_ssl` TINYINT( 1 ) NOT NULL DEFAULT '0' AFTER `smtp_domain` ;
+	ALTER TABLE `hosts` ADD `smtp_max_piped_rcpt` SMALLINT NOT NULL DEFAULT '1' AFTER `smtp_ssl` ;
+	ALTER TABLE `hosts` ADD `max_mails_atonce` SMALLINT NOT NULL DEFAULT '25' AFTER `pass` ;
+	ALTER TABLE `hosts` ADD `max_mails_bcc` SMALLINT NOT NULL DEFAULT '50' AFTER `max_mails_atonce` ;
+	ALTER TABLE `hosts` ADD `sender_name` VARCHAR( 255 ) NOT NULL AFTER `max_mails_bcc` ;
+	ALTER TABLE `hosts` ADD `sender_email` VARCHAR( 255 ) NOT NULL AFTER `sender_name` ;
+	ALTER TABLE `hosts` ADD `return_mail` VARCHAR( 255 ) NOT NULL AFTER `sender_email` ;
+	ALTER TABLE `hosts` ADD `reply_to` VARCHAR( 255 ) NOT NULL AFTER `return_mail` ;
+	ALTER TABLE `hosts` ADD INDEX ( `standard` ) ;
+
+	ALTER TABLE `nl_q` ADD `autogen` TINYINT( 1 ) NOT NULL DEFAULT '0' AFTER `check_blacklist` ;
+	ALTER TABLE `nl_q` ADD INDEX ( `autogen` ) ;
+
+	ALTER TABLE `nl` DROP `attm` ; 
+	ALTER TABLE `config`
+		DROP `smtp_host`,
+		DROP `smtp_port`,
+		DROP `smtp_domain`,
+		DROP `smtp_user`,
+		DROP `smtp_pass`,
+		DROP `smtp_auth`,
+		DROP `sender_name`,
+		DROP `sender_email`,
+		DROP `return_mail`,
+		DROP `max_mails_atonce`,
+		DROP `max_mails_bcc` ;
+
+*+*+*+*+*+*+*+*+*+*+*+ 1.0.8.3
+	--skipped!!!
+
 *+*+*+*+*+*+*+*+*+*+*+ 1.0.8.2
 
 --en

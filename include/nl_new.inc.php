@@ -30,9 +30,9 @@ pt_register("POST","image1");
 $InputName_Attach1="attach1";//bild1
 pt_register("POST","attach1");
 
-$attach_existing=Array();
 $InputName_AttachExisting="attach_existing";// auswahl anhang
-pt_register("POST","attach_existing");
+$$InputName_AttachExisting=Array();
+pt_register("POST",$InputName_AttachExisting);
 
 //field names for query
 $InputName_Name="subject";//betreff
@@ -98,7 +98,6 @@ if ($set=="save") {
 									"created"=>$created,
 									"author"=>$author,
 									"grp_id"=>$nl_grp_id,
-									"attm"=>"",
 									"content_type"=>$content_type,
 									"track_image"=>$track_image,
 									"rcpt_name"=>$rcpt_name,

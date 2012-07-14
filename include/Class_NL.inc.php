@@ -30,18 +30,18 @@ class tm_NL {
 						SELECT
 						id, subject, body,body_text,
 						created, author, updated, editor,
-						link, status, massmail, clicks, views, attm, track_image,
+						link, status, massmail, clicks, views, track_image,
 						grp_id, aktiv,
 						content_type, rcpt_name
 						FROM ".TM_TABLE_NL."
 						WHERE ".TM_TABLE_NL.".siteid='".TM_SITEID."'
 					";
 		if (check_dbid($group_id)) {
-			$Query .=" AND grp_id='".$group_id."'
+			$Query .=" AND grp_id=".checkset_int($group_id)."
 						";
 		}
 		if (check_dbid($id)) {
-			$Query .= " AND id='".$id."'";
+			$Query .= " AND id=".checkset_int($id)." ";
 		}
 
 		if (!empty($sortIndex)) {
@@ -55,7 +55,7 @@ class tm_NL {
 		}
 
 		if ($limit >0 and $offset>=0) {
-			$Query .= " LIMIT ".dbesc($offset)." ,".dbesc($limit);
+			$Query .= " LIMIT ".checkset_int($offset)." ,".checkset_int($limit);
 		}
 		$this->DB->Query($Query);
 		$ac=0;
@@ -79,7 +79,6 @@ class tm_NL {
 			$this->NL[$ac]['link']=$this->DB->Record['link'];
 			$this->NL[$ac]['clicks']=$this->DB->Record['clicks'];
 			$this->NL[$ac]['views']=$this->DB->Record['views'];
-			$this->NL[$ac]['attm']=$this->DB->Record['attm'];
 			$this->NL[$ac]['content_type']=$this->DB->Record['content_type'];
 			$this->NL[$ac]['track_image']=$this->DB->Record['track_image'];
 			$this->NL[$ac]['rcpt_name']=$this->DB->Record['rcpt_name'];
@@ -95,17 +94,17 @@ class tm_NL {
 						(
 						subject,body,body_text,aktiv,
 						created,author,updated,editor,
-						link,grp_id,status,attm,track_image,
+						link,grp_id,status,track_image,
 						massmail,clicks,views,
 						content_type, rcpt_name,
 						siteid
 						)
 						VALUES
 						(
-						'".dbesc($nl["subject"])."', '".dbesc($nl["body"])."', '".dbesc($nl["body_text"])."', '".dbesc($nl["aktiv"])."',
+						'".dbesc($nl["subject"])."', '".dbesc($nl["body"])."', '".dbesc($nl["body_text"])."', ".checkset_int($nl["aktiv"]).",
 						'".dbesc($nl["created"])."', '".dbesc($nl["author"])."', '".dbesc($nl["created"])."', '".dbesc($nl["author"])."',
-						'".dbesc($nl["link"])."','".dbesc($nl["grp_id"])."','".dbesc($nl["status"])."', '".dbesc($nl["attm"])."', '".dbesc($nl["track_image"])."',
-						'".dbesc($nl["massmail"])."', 0, 0,
+						'".dbesc($nl["link"])."',".checkset_int($nl["grp_id"]).",".checkset_int($nl["status"]).", '".dbesc($nl["track_image"])."',
+						".checkset_int($nl["massmail"]).", 0, 0,
 						'".dbesc($nl["content_type"])."',	'".dbesc($nl["rcpt_name"])."',
 						'".TM_SITEID."'
 						)";
@@ -125,7 +124,7 @@ class tm_NL {
 			//alte eintraege erstmal loeschen
 				$Query ="DELETE FROM ".TM_TABLE_NL_ATTM."
 							WHERE
-							nl_id='".dbesc($nl_id)."'
+							nl_id=".checkset_int($nl_id)."
 							and siteid='".TM_SITEID."'
 							";
 				if ($this->DB->Query($Query)) {
@@ -141,7 +140,7 @@ class tm_NL {
 								(nl_id,	file,siteid)
 								VALUES
 								(
-								'".dbesc($nl_id)."',
+								".checkset_int($nl_id).",
 								'".dbesc($filename)."',
 								'".TM_SITEID."'
 								)";
@@ -164,7 +163,7 @@ class tm_NL {
 						id,nl_id,file,siteid 
 						FROM ".TM_TABLE_NL_ATTM."
 						WHERE
-						nl_id='".dbesc($nl_id)."'
+						nl_id=".checkset_int($nl_id)."
 						AND ".TM_TABLE_NL_ATTM.".siteid='".TM_SITEID."'
 						";
 			$this->DB2->Query($Query);
@@ -190,16 +189,15 @@ class tm_NL {
 						editor='".dbesc($nl["author"])."',
 						body='".dbesc($nl["body"])."',
 						body_text='".dbesc($nl["body_text"])."',
-						aktiv='".dbesc($nl["aktiv"])."',
-						attm='".dbesc($nl["attm"])."',
+						aktiv=".checkset_int($nl["aktiv"]).",
 						track_image='".dbesc($nl["track_image"])."',
-						massmail='".dbesc($nl["massmail"])."',
+						massmail=".checkset_int($nl["massmail"]).",
 						link='".dbesc($nl["link"])."',
 						content_type='".dbesc($nl["content_type"])."',
-						grp_id='".dbesc($nl["grp_id"])."',
+						grp_id=".checkset_int($nl["grp_id"]).",
 						rcpt_name='".dbesc($nl["rcpt_name"])."'
 						WHERE siteid='".TM_SITEID."'
-						AND id='".$nl["id"]."'";
+						AND id=".checkset_int($nl["id"]);
 			if ($this->DB->Query($Query)) {
 				$Return=true;
 			} else {
@@ -219,7 +217,7 @@ class tm_NL {
 			//ok historie loeschen!
 			$Query ="DELETE FROM ".TM_TABLE_NL_H."
 						WHERE siteid='".TM_SITEID."'
-						AND nl_id='".$id."'";
+						AND nl_id=".checkset_int($id);
 				if ($this->DB->Query($Query)) {
 					$Return=true;
 				} else {
@@ -229,7 +227,7 @@ class tm_NL {
 			//q loeschen
 			$Query ="DELETE FROM ".TM_TABLE_NL_Q."
 						WHERE siteid='".TM_SITEID."'
-						AND nl_id='".$id."'";
+						AND nl_id=".checkset_int($id);
 			if ($this->DB->Query($Query)) {
 				$Return=true;
 			} else {
@@ -239,7 +237,7 @@ class tm_NL {
 			//attachements loeschen
 			$Query ="DELETE FROM ".TM_TABLE_NL_ATTM."
 						WHERE siteid='".TM_SITEID."'
-						AND nl_id='".$id."'";
+						AND nl_id=".checkset_int($id);
 			if ($this->DB->Query($Query)) {
 				$Return=true;
 			} else {
@@ -249,7 +247,7 @@ class tm_NL {
 			//nl loecshen
 			$Query ="DELETE FROM ".TM_TABLE_NL."
 						WHERE siteid='".TM_SITEID."'
-						AND id='".$id."'";
+						AND id=".checkset_int($id);
 			if ($this->DB->Query($Query)) {
 				$Return=true;
 			} else {
@@ -264,8 +262,8 @@ class tm_NL {
 		$Return=false;
 		if (check_dbid($id)) {
 			$Query ="UPDATE ".TM_TABLE_NL."
-						SET aktiv='".dbesc($aktiv)."'
-						WHERE id='".$id."'
+						SET aktiv=".checkset_int($aktiv)."
+						WHERE id=".checkset_int($id)."
 						AND siteid='".TM_SITEID."'";
 			if ($this->DB->Query($Query)) {
 				$Return=true;
@@ -280,8 +278,8 @@ class tm_NL {
 	function setStatus($id,$status) {
 		$Return=false;
 		if (check_dbid($id)) {
-			$Query ="UPDATE ".TM_TABLE_NL." SET status='".dbesc($status)."'
-						 WHERE siteid='".TM_SITEID."' AND id='".$id."'";
+			$Query ="UPDATE ".TM_TABLE_NL." SET status=".checkset_int($status)."
+						 WHERE siteid='".TM_SITEID."' AND id=".checkset_int($id);
 			if ($this->DB->Query($Query)) {
 				$Return=true;
 			} else {
@@ -300,9 +298,9 @@ class tm_NL {
 			$clicks++;
 
 			$Query ="UPDATE ".TM_TABLE_NL."
-						SET clicks='".$clicks."'
+						SET clicks=".checkset_int($clicks)."
 						WHERE siteid='".TM_SITEID."'
-						AND id='".$nl_id."'";
+						AND id=".checkset_int($nl_id);
 			if ($this->DB->Query($Query)) {
 				$Return=true;
 			} else {
@@ -321,9 +319,9 @@ class tm_NL {
 			$views++;
 
 			$Query ="UPDATE ".TM_TABLE_NL."
-						SET views='".$views."'
+						SET views=".checkset_int($views)."
 						WHERE siteid='".TM_SITEID."'
-						AND id='".$nl_id."'";
+						AND id=".checkset_int($nl_id);
 			if ($this->DB->Query($Query)) {
 				$Return=true;
 			} else {
@@ -345,7 +343,7 @@ class tm_NL {
 						WHERE siteid='".TM_SITEID."'
 					";
 		if (check_dbid($group_id)) {
-			$Query .=" AND grp_id='".$group_id."'	";
+			$Query .=" AND grp_id=".checkset_int($group_id)." ";
 		}
 		$this->DB2->Query($Query);
 		if ($this->DB2->next_record()) {
@@ -356,13 +354,12 @@ class tm_NL {
 
 	function getNLID($group_id=0) {
 		$this->NL=Array();
-		$Query ="
-							SELECT id
+		$Query ="	SELECT id
 							FROM ".TM_TABLE_NL."
 							WHERE siteid='".TM_SITEID."'
 						";
 			if (check_dbid($group_id)) {
-				$Query .=" AND grp_id='".$group_id."'
+				$Query .=" AND grp_id=".checkset_int($group_id)."
 							";
 			}
 			$this->DB->Query($Query);
@@ -448,7 +445,7 @@ class tm_NL {
 			WHERE ".TM_TABLE_NL_GRP.".siteid='".TM_SITEID."'
 			";
 		if (check_dbid($id)) {
-			$Query .= " AND ".TM_TABLE_NL_GRP.".id='".$id."'";
+			$Query .= " AND ".TM_TABLE_NL_GRP.".id=".checkset_int($id);
 		}
 		if (check_dbid($nl_id)) {
 			$Query ="";
@@ -462,7 +459,7 @@ class tm_NL {
 				WHERE ".TM_TABLE_NL_GRP.".id=".TM_TABLE_NL.".grp_id
 				AND ".TM_TABLE_NL_GRP.".siteid='".TM_SITEID."'
 				AND ".TM_TABLE_NL.".siteid='".TM_SITEID."'
-				AND ".TM_TABLE_NL.".id='".$nl_id."'
+				AND ".TM_TABLE_NL.".id=".checkset_int($nl_id)."
 			";
 		}
 		$Query .= "	ORDER BY ".TM_TABLE_NL_GRP.".name";
@@ -508,8 +505,8 @@ class tm_NL {
 		$Return=false;
 		if (check_dbid($id)) {
 			$Query ="UPDATE ".TM_TABLE_NL_GRP."
-						SET aktiv='".dbesc($aktiv)."'
-						WHERE id='".$id."'
+						SET aktiv=".checkset_int($aktiv)."
+						WHERE id=".checkset_int($id)."
 						AND siteid='".TM_SITEID."'";
 			if ($this->DB->Query($Query)) {
 				$Return=true;
@@ -533,7 +530,7 @@ class tm_NL {
 			}
 			$Query ="UPDATE ".TM_TABLE_NL_GRP."
 						SET standard=1
-						WHERE id='".$id."'
+						WHERE id=".checkset_int($id)."
 						AND siteid='".TM_SITEID."'";
 			if ($this->DB->Query($Query)) {
 				$Return=true;
@@ -558,7 +555,7 @@ class tm_NL {
 					VALUES
 					(
 					'".dbesc($group["name"])."', '".dbesc($group["descr"])."',
-					'".dbesc($group["aktiv"])."', 0,
+					".checkset_int($group["aktiv"]).", 0,
 					'".dbesc($group["created"])."', '".dbesc($group["author"])."',
 					'".dbesc($group["created"])."', '".dbesc($group["author"])."',
 					 '".TM_SITEID."'
@@ -575,11 +572,11 @@ class tm_NL {
 			$Query ="UPDATE ".TM_TABLE_NL_GRP."
 						SET name='".dbesc($group["name"])."',
 						descr='".dbesc($group["descr"])."',
-						aktiv='".dbesc($group["aktiv"])."' ,
+						aktiv=".checkset_int($group["aktiv"]).",
 						updated='".dbesc($group["created"])."',
 						editor='".dbesc($group["author"])."'
 						WHERE siteid='".TM_SITEID."'
-						AND id='".$group["id"]."'";
+						AND id=".checkset_int($group["id"]);
 			if ($this->DB->Query($Query)) {
 				$Return=true;
 			}
@@ -605,9 +602,9 @@ class tm_NL {
 				$stdGrpID=$this->DB->Record['id'];
 				//newsletter der stdgruppe neu zuordnen
 				$Query ="UPDATE ".TM_TABLE_NL." SET
-							grp_id='".$stdGrpID."'
+							grp_id=".checkset_int($stdGrpID)."
 							WHERE siteid='".TM_SITEID."'
-							AND grp_id='".$id."'";
+							AND grp_id=".checkset_int($id);
 				if ($this->DB->Query($Query)) {
 					$Return=true;
 				} else {
@@ -617,7 +614,7 @@ class tm_NL {
 				//gruppe loeschen
 				$Query ="DELETE FROM ".TM_TABLE_NL_GRP."
 							WHERE siteid='".TM_SITEID."'
-							AND id='".$id."'";
+							AND id=".checkset_int($id);
 				if ($this->DB->Query($Query)) {
 					$Return=true;
 				} else {
@@ -631,16 +628,16 @@ class tm_NL {
 		return $Return;
 	}//delGrp
 
-function convertNL2Text($html,$type) {
-	global $encoding;
-	$text=$html;
-	if ($type=="html" || $type=="text/html") {
-		$htmlToText=new Html2Text($html, 80);//class has apache license, may be in conflict with gpl???
-	    $text=$htmlToText->convert();
-		$text = preg_replace('~<[^>]+>~', '', $text); // remove any HTML tags that are still left
+	function convertNL2Text($html,$type) {
+		global $encoding;
+		$text=$html;
+		if ($type=="html" || $type=="text/html") {
+			$htmlToText=new Html2Text($html, 80);//class has apache license, may be in conflict with gpl???
+		    $text=$htmlToText->convert();
+			$text = preg_replace('~<[^>]+>~', '', $text); // remove any HTML tags that are still left
 	}
-	return $text;
-}
+		return $text;
+	}//convertNL2Text
 
 } //class
 ?>

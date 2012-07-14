@@ -12,7 +12,8 @@
 /* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
 /********************************************************************************/
 	//STATUSCODES
-	//statuscodes und bilder dazu
+	//statuscodes der adressen und bilder dazu
+	//achtung!!! wenn neuer status dann auch beim versenden beachten......... und evtll. anfuegen an if abfrage, send.inc
 	$STATUS=Array(
 						"adr"=>Array(
 								"status"=>Array(
@@ -21,13 +22,13 @@
 												3=>___("Bestätigt"),
 												4=>___("Angezeigt"),
 												5=>___("Warten"),
-												6=>"6",
-												7=>"7",
+												6=>"6 --",
+												7=>"7 --",
 												8=>___("Fehler C"),
 												9=>___("Fehler A"),
 												10=>___("Fehler S"),
 												11=>___("Abgemeldet"),
-												12=>___("Touch")
+												12=>___("Touch"),
 								),
 								"descr"=>Array(
 												1=>___("Neuanmeldung"),
@@ -41,7 +42,7 @@
 												9=>___("Fehlerhafte Adresse o. Rückläufer"),
 												10=>___("Fehler beim versenden, neuer Versuch"),
 												11=>___("Abgemeldet"),
-												12=>___("1st-Touch-Opt-In")
+												12=>___("1st-Touch-Opt-In"),
 								),
 								"statimg"=>Array(
 												1=>"bullet_black.png",
@@ -55,7 +56,7 @@
 												9=>"bullet_error.png",
 												10=>"transmit_error.png",
 												11=>"user_red.png",
-												12=>"user_add.png"
+												12=>"user_add.png",
 								),
 								"color"=>Array(
 												1=>"#009933",
@@ -69,7 +70,21 @@
 												9=>"#ff0000",
 												10=>"#ffcc00",
 												11=>"#333333",//#ff9933
-												12=>"#996600"
+												12=>"#996600",
+								),
+								"textcolor"=>Array(
+												1=>"#000000",
+												2=>"#000000",
+												3=>"#000000",
+												4=>"#000000",
+												5=>"#000000",
+												6=>"#ffffff",
+												7=>"#ffffff",
+												8=>"#000000",
+												9=>"#000000",
+												10=>"#000000",
+												11=>"#ffffff",
+												12=>"#ffffff",
 								),
 						),
 

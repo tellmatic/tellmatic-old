@@ -46,21 +46,24 @@ if ($$InputName_SendAtTimeM=="") {
 	$$InputName_SendAtTimeM=date("i");
 }
 
-$InputName_Group="adr_grp";//range from
+$InputName_Group="adr_grp";
 pt_register("POST","adr_grp");
 if (!isset($adr_grp)) {
 	$adr_grp=Array();
 }
 
-$InputName_Send="send_now";//range from
+$InputName_Send="send_now";
 $$InputName_Send=getVar($InputName_Send);
 
-$InputName_Blacklist="check_blacklist";//range from
+$InputName_Autogen="autogen";
+$$InputName_Autogen=getVar($InputName_Autogen);
+$InputName_Blacklist="check_blacklist";
 $$InputName_Blacklist=getVar($InputName_Blacklist);
 
 $check=true;
 //abgeschickt?
 if ($set=="save") {
+	if (!empty($nl_id)) {
 	$HOST=$HOSTS->getHost($host_id,Array("aktiv"=>1,"type"=>"smtp"));
 	//SMTP Server ausgewaehlt?
 	if (count($HOST)==1) {
@@ -100,6 +103,7 @@ if ($set=="save") {
 							unset($adr_grp[$gcc]);
 							$_MAIN_MESSAGE.="<br><font color=\"red\">".sprintf(___("Für die Gruppe %s existieren bereits %s laufende Einträge. Nicht hinzugefügt!"),"'<b>".display($GRP[0]['name'])."</b>'","<b>".$qc_run."</b>")."</font>";
 						} else {
+								//ok, hier auch status 5 checken, angehaltene q's
 							//ok, die gruppe enthaelt brauchbare daten
 							$group_add=true;
 						}//qrun!=0
@@ -108,46 +112,35 @@ if ($set=="save") {
 				//natuerlich macht es nur sinn die gruppe in die q aufzunehmen und fuer den versand vorzubereiten wenn diese gruppe auch ein paar aressen enthaelt, also aktive adressen die nihct unsubscribed sind etc.
 				//das wird zwar beim versand und erstellen der sendeliste auch geprueft, jedoch koennen die zeiten zu denen beide listen angelegt werden variieren. --> manuelles anlegen der history
 				//wir wollen aber wirklich nur gruppen aufnehmen ind enen taugliche adressen existieren.
-				//Adr status=1 oder 2 oder 3 oder 4
+					//Adr status=1 oder 2 oder 3 oder 4, 10 oder 12
 				//und nur aktive
-				$search['aktiv']=1;
-				$ac=0;//gefundene adressen insgesamt
-				for ($stat=1; $stat<=4;$stat++) {
-					$search['status']=$stat;
-					$ac +=$ADDRESS->countADR($grp_id,$search);
-				}//for stat
-				//und status 10!
-				$search['status']=10;
-				$ac +=$ADDRESS->countADR($grp_id,$search);
-				//und status 12!
-				$search['status']=12;
-				$ac +=$ADDRESS->countADR($grp_id,$search);
-	
-				//keine benutzbaren adressen gefunden
-				if ($ac==0) {
-					unset($adr_grp[$gcc]);
-					$_MAIN_MESSAGE.="<br><font color=\"red\">".sprintf(___("In der  Gruppe %s existieren keine gültigen Adressen. Nicht hinzugefügt!"),"'<b>".display($GRP[0]['name'])."</b>'")."</font>";
-				} elseif ($group_add) {
-					$_MAIN_MESSAGE.="<br><font color=\"#006600\">".sprintf(___("In der  Gruppe %s existieren %s gültige Adressen. Gruppe hinzugefügt!"),"'<b>".display($GRP[0]['name'])."</b>'","<b>".$ac."</b>")."</font>";
-				}//if ac
-			}//for gcc
-			//array neu indizieren, indexe neu erstellen.....
-			$adr_grp= array_values($adr_grp);
-			//neu zaehlen...
-			$gc=count($adr_grp);
-			//sind jetzt ueberhaupt noch gruppen gewaehlt???
-			if ($gc>0) {
-				$send_at=$send_at_date." ".$send_at_h.":".$send_at_m.":00";
-				$QUEUE->addQ(Array(
-						"created"=>$created,
-						"author"=>$author,
-						"status"=>$status,
-						"nl_id"=>$nl_id,
-						"host_id"=>$host_id,
-						"send_at"=>$send_at,
-						"check_blacklist"=>$check_blacklist
-						),
-						$adr_grp);
+					$ac=$ADDRESS->countValidADR($grp_id);
+					//keine benutzbaren adressen gefunden
+					if ($ac==0) {
+						unset($adr_grp[$gcc]);
+						$_MAIN_MESSAGE.="<br><font color=\"red\">".sprintf(___("In der  Gruppe %s existieren keine gültigen Adressen. Nicht hinzugefügt!"),"'<b>".display($GRP[0]['name'])."</b>'")."</font>";
+					} elseif ($group_add) {
+						$_MAIN_MESSAGE.="<br><font color=\"#006600\">".sprintf(___("In der  Gruppe %s existieren %s gültige Adressen. Gruppe hinzugefügt!"),"'<b>".display($GRP[0]['name'])."</b>'","<b>".$ac."</b>")."</font>";
+					}//if ac
+				}//for gcc
+				//array neu indizieren, indexe neu erstellen.....
+				$adr_grp= array_values($adr_grp);
+				//neu zaehlen...
+				$gc=count($adr_grp);
+				//sind jetzt ueberhaupt noch gruppen gewaehlt???
+				if ($gc>0) {
+					$send_at=$send_at_date." ".$send_at_h.":".$send_at_m.":00";
+					$new_q_arr=$QUEUE->addQ(Array(
+							"created"=>$created,
+							"author"=>$author,
+							"status"=>$status,
+							"nl_id"=>$nl_id,
+							"host_id"=>$host_id,
+							"send_at"=>$send_at,
+							"check_blacklist"=>$check_blacklist,
+							"autogen"=>$autogen
+							),
+							$adr_grp);
 						//						
 				//nl auf status queued setzen =2/6=terminiert
 				$NEWSLETTER=new tm_NL();
@@ -170,6 +163,10 @@ if ($set=="save") {
 	} else { //$host_c==1
 			$_MAIN_MESSAGE.="<br>".___("Kein Mail-Server gewählt. Nichts hinzugefügt");
 			require_once (TM_INCLUDEPATH."/queue_form.inc.php");
+	}
+	} else {
+				$_MAIN_MESSAGE.="<br>".___("Kein Newsletter gewählt. Nichts hinzugefügt");
+				require_once (TM_INCLUDEPATH."/queue_form.inc.php");
 	}
 } else {//set==save
 	require_once (TM_INCLUDEPATH."/queue_form.inc.php");

@@ -146,7 +146,8 @@ if (((!empty($set) && $set!="delete") || $blacklist==1) && $ac>0) { // wenn min 
 //muss nach blacklisting kommen!!! wegen getAdr abfrage in blacklist, siehe oben
 if ($set=="delete") {// && $status!="delete_all"
 	if (!DEMO) $ADDRESS->cleanAdr($search);
-	$_MAIN_MESSAGE.="<br>".sprintf(___("%s Einträge aus der Gruppe %s mit dem Status %s wurden gelöscht."),"<b>".$ac."</b>","<b>".$GRP[0]['name']."</b>","<b>".$STATUS['adr']['status'][$search['status']]."</b>");
+	if ($status==0) $_MAIN_MESSAGE.="<br>".sprintf(___("%s Einträge aus der Gruppe %s wurden gelöscht."),"<b>".$ac."</b>","<b>".$GRP[0]['name']."</b>");
+	if ($status>0) $_MAIN_MESSAGE.="<br>".sprintf(___("%s Einträge aus der Gruppe %s mit dem Status %s wurden gelöscht."),"<b>".$ac."</b>","<b>".$GRP[0]['name']."</b>","<b>".$STATUS['adr']['status'][$search['status']]."</b>");
 }
 
 

@@ -30,6 +30,10 @@ if ($set=="aktiv") {
 		$_MAIN_MESSAGE.="<br>".___("Server wurde de-aktiviert.");
 	}
 }
+if ($set=="standard") {
+	$HOSTS->setHostStd($h_id,$val);//val?????
+	$_MAIN_MESSAGE.="<br>".___("Neuer Standard SMTP-Host wurde definiert.");
+}
 if ($set=="delete" && $doit==1) {
 	if (!DEMO) $HOSTS->delHost($h_id);
 	$_MAIN_MESSAGE.="<br>".___("Server wurde gelöscht.");
@@ -40,13 +44,17 @@ if ($set=="test") {
 	require_once(TM_INCLUDEPATH."/host_test.inc.php");
 }
 
+$mSTDURL->addParam("act","host_list");
 $editURLPara=$mSTDURL;
+$editURLPara->addParam("act","host_edit");
 
 $testURLPara=$mSTDURL;
 $testURLPara->addParam("set","test");
 
 $aktivURLPara=$mSTDURL;
 $aktivURLPara->addParam("set","aktiv");
+$stdURLPara=$mSTDURL;
+$stdURLPara->addParam("set","standard");
 
 $delURLPara=$mSTDURL;
 $delURLPara->addParam("set","delete");
@@ -89,31 +97,35 @@ for ($hcc=0;$hcc<$hc;$hcc++) {
 		$new_aktiv=0;
 	}
 
-	$editURLPara->addParam("act","host_edit");
 	$editURLPara->addParam("h_id",$HOST[$hcc]['id']);
 	$editURLPara_=$editURLPara->getAllParams();
 
-	$testURLPara->addParam("act","host_list");
 	$testURLPara->addParam("h_id",$HOST[$hcc]['id']);
 	$testURLPara_=$testURLPara->getAllParams();
 
-	$aktivURLPara->addParam("act","host_list");
 	$aktivURLPara->addParam("h_id",$HOST[$hcc]['id']);
 	$aktivURLPara->addParam("val",$new_aktiv);
 	$aktivURLPara_=$aktivURLPara->getAllParams();
 
-	$delURLPara->addParam("act","host_list");
+	$stdURLPara->addParam("h_id",$HOST[$hcc]['id']);
+	$stdURLPara_=$stdURLPara->getAllParams();
 	$delURLPara->addParam("h_id",$HOST[$hcc]['id']);
 	$delURLPara_=$delURLPara->getAllParams();
 
-#	$statURLPara->addParam("adr_grp_id",$USER[$ucc]['id']);
-#	$statURLPara_=$statURLPara->getAllParams();
 
 	$_MAIN_OUTPUT.= "<tr id=\"row_".$hcc."\"  bgcolor=\"".$bgcolor."\" onmouseover=\"setBGColor('row_".$hcc."','".$row_bgcolor_hilite."');\" onmouseout=\"setBGColor('row_".$hcc."','".$bgcolor."');\">";
 	$_MAIN_OUTPUT.= "<td onmousemove=\"showToolTip('tt_host_list_".$HOST[$hcc]['id']."')\" onmouseout=\"hideToolTip();\">";
 
 	if ($HOST[$hcc]['type']=="smtp") {
-		$_MAIN_OUTPUT.=  tm_icon("server_compressed.png",___("SMTP"))."&nbsp;";
+		if ($HOST[$hcc]['standard']==1) {
+			$_MAIN_OUTPUT.= tm_icon("lightning.png",___("Standard SMTP Host"),"","","","server_compressed.png")."&nbsp;";
+		} else {
+			$_MAIN_OUTPUT.= tm_icon("server_compressed.png",___("SMTP"))."&nbsp;";
+		}
+		//ssl smtp
+		if ($HOST[$hcc]['smtp_ssl']==1) {
+			$_MAIN_OUTPUT.=  tm_icon("lock.png",___("SSL"))."&nbsp;";
+		}
 	}
 	if ($HOST[$hcc]['type']=="pop3") {
 		$_MAIN_OUTPUT.=  tm_icon("server_uncompressed.png",___("POP3"))."&nbsp;";
@@ -124,20 +136,12 @@ for ($hcc=0;$hcc<$hc;$hcc++) {
 
 	//wenn standardgruppe, dann icon anzeigen
 	$_MAIN_OUTPUT.= "</td>";
-	$_MAIN_OUTPUT.= "<td onmousemove=\"showToolTip('tt_user_list_".$HOST[$hcc]['id']."')\" onmouseout=\"hideToolTip();\">";
+	$_MAIN_OUTPUT.= "<td onmousemove=\"showToolTip('tt_host_list_".$HOST[$hcc]['id']."')\" onmouseout=\"hideToolTip();\">";
 	$_MAIN_OUTPUT.= "<a href=\"".$tm_URL."/".$editURLPara_."\"  title=\"".___("Server bearbeiten")."\">".display($HOST[$hcc]['name'])."</a>";
-	$_MAIN_OUTPUT.= "<div id=\"tt_user_list_".$HOST[$hcc]['id']."\" class=\"tooltip\">";
+	$_MAIN_OUTPUT.= "<div id=\"tt_host_list_".$HOST[$hcc]['id']."\" class=\"tooltip\">";
 	$_MAIN_OUTPUT.="<b>".display($HOST[$hcc]['name'])."</b>";
 	$_MAIN_OUTPUT.= "<br><font size=\"-1\">".display($HOST[$hcc]['host'])."</font>";
 	$_MAIN_OUTPUT.= "<br>ID: ".$HOST[$hcc]['id']." ";
-	$_MAIN_OUTPUT.= "<br>".___("Host").": ".$HOST[$hcc]['host']." ";
-	$_MAIN_OUTPUT.= "<br>".___("Type").": ".$HOST[$hcc]['type']." ";
-	$_MAIN_OUTPUT.= "<br>".___("Port").": ".$HOST[$hcc]['port']." ";
-	$_MAIN_OUTPUT.= "<br>".___("Options").": ".$HOST[$hcc]['options']." ";
-	$_MAIN_OUTPUT.= "<br>".___("SMTP-Auth").": ".$HOST[$hcc]['smtp_auth']." ";
-	$_MAIN_OUTPUT.= "<br>".___("SMTP-Domain").": ".$HOST[$hcc]['smtp_domain']." ";
-	$_MAIN_OUTPUT.= "<br>".___("User").": ".$HOST[$hcc]['user']." ";
-
 	if ($HOST[$hcc]['aktiv']==1) {
 		$_MAIN_OUTPUT.=  "<br>".tm_icon("tick.png",___("Aktiv"))."&nbsp;";
 		$_MAIN_OUTPUT.=  ___("(aktiv)");
@@ -145,13 +149,69 @@ for ($hcc=0;$hcc<$hc;$hcc++) {
 		$_MAIN_OUTPUT.=  "<br>".tm_icon("cancel.png",___("Inaktiv"))."&nbsp;";
 		$_MAIN_OUTPUT.=  ___("(inaktiv)");
 	}
-
+	//wenn standardgruppe, dann icon anzeigen
+	if ($HOST[$hcc]['standard']==1) {
+		$_MAIN_OUTPUT.=  "<br>".tm_icon("lightning.png",___("Standard SMTP Host"),"","","","server_compressed.png")."&nbsp;".___("Standard SMTP-Host");
+	}
+	if (!DEMO) {
+		$_MAIN_OUTPUT.= "<br>".___("Host").": ".$HOST[$hcc]['host']." ";
+	} else {
+		$_MAIN_OUTPUT.= "<br>".___("Host").": mail.my-domain.tld ";
+	}
+	$_MAIN_OUTPUT.= "<br>".___("Type").": ".$HOST[$hcc]['type']." ";
+	$_MAIN_OUTPUT.= "<br>".___("Port").": ".$HOST[$hcc]['port']." ";
+	if ($HOST[$hcc]['type']=='pop3' || $HOST[$hcc]['type']=='imap') {
+		$_MAIN_OUTPUT.= "<br>".___("POP3/IMAP Options").": ".$HOST[$hcc]['options']." ";
+	}//pop3/imap
+	if (!DEMO) {
+		$_MAIN_OUTPUT.= "<br>".___("User").": ".$HOST[$hcc]['user']." ";
+	} else {
+		$_MAIN_OUTPUT.= "<br>".___("User").": my-username ";
+	}
+	if ($HOST[$hcc]['type']=='smtp') {
+		if (!DEMO) {
+			$_MAIN_OUTPUT.= "<br>".___("SMTP-Domain").": ".$HOST[$hcc]['smtp_domain']." ";
+		} else {
+			$_MAIN_OUTPUT.= "<br>".___("SMTP-Domain").": my-domain.tld";
+		}
+		$_MAIN_OUTPUT.= "<br>".___("SMTP-Auth").": ".$HOST[$hcc]['smtp_auth']." ";
+		$_MAIN_OUTPUT.= "<br>".___("max. RCPT TO").": ".$HOST[$hcc]['smtp_max_piped_rcpt']." ";
+		if ($HOST[$hcc]['smtp_ssl']==1) {
+			$_MAIN_OUTPUT.= "<br>".tm_icon("lock.png",___("SSL"))."&nbsp;".___("SSL");
+		}
+		$_MAIN_OUTPUT.= "<br>".___("max. Mails / Run").": ".$HOST[$hcc]['max_mails_atonce']." ";
+		$_MAIN_OUTPUT.= "<br>".___("max. Mails / BCC").": ".$HOST[$hcc]['max_mails_bcc']." ";
+		$_MAIN_OUTPUT.= "<br>".___("Absender-Name").": ".$HOST[$hcc]['sender_name']." ";
+		if (!DEMO) {
+			$_MAIN_OUTPUT.= "<br>".___("Absender-Adresse").": ".$HOST[$hcc]['sender_email']." ";
+		} else {
+			$_MAIN_OUTPUT.= "<br>".___("Absender-Adresse").": newsletter@my-domain.tld";
+		}
+		if (!DEMO) {
+			$_MAIN_OUTPUT.= "<br>".___("Antwort-Adresse").": ".$HOST[$hcc]['reply_to']." ";
+		} else {
+			$_MAIN_OUTPUT.= "<br>".___("Antwort-Adresse").": reply@my-domain.tld";
+		}
+		if (!DEMO) {
+			$_MAIN_OUTPUT.= "<br>".___("Return-Path").": ".$HOST[$hcc]['return_mail']." ";
+		} else {
+			$_MAIN_OUTPUT.= "<br>".___("Return-Path").": bounce@my-domain.tld";
+		}
+	}//smtp
 	$_MAIN_OUTPUT.= "</div>";
 	$_MAIN_OUTPUT.= "</td>";
 	$_MAIN_OUTPUT.= "<td>";
-	$_MAIN_OUTPUT.= display($HOST[$hcc]['host']).":".display($HOST[$hcc]['port']);
+	if (!DEMO) {
+		$_MAIN_OUTPUT.= display($HOST[$hcc]['host']).":".display($HOST[$hcc]['port']);
+	} else {
+		$_MAIN_OUTPUT.= "mail.my-domain.tld:".display($HOST[$hcc]['port']);
+	}
 	if ($HOST[$hcc]['type']=="smtp") {
-		$_MAIN_OUTPUT.= "<br>".display($HOST[$hcc]['smtp_domain']);
+		if (!DEMO) {
+			$_MAIN_OUTPUT.= "<br>".display($HOST[$hcc]['smtp_domain']);
+		} else {
+			$_MAIN_OUTPUT.= "<br>my-domain.tld";
+		}
 	}
 	$_MAIN_OUTPUT.= "</td>";
 	$_MAIN_OUTPUT.= "<td>";
@@ -162,10 +222,16 @@ for ($hcc=0;$hcc<$hc;$hcc++) {
 	$_MAIN_OUTPUT.= display($HOST[$hcc]['smtp_auth']);
 	$_MAIN_OUTPUT.= "</td>";
 	$_MAIN_OUTPUT.= "<td>";
-	$_MAIN_OUTPUT.= display($HOST[$hcc]['user']);
+	if (!DEMO) {
+		$_MAIN_OUTPUT.= display($HOST[$hcc]['user']);
+	} else {
+		$_MAIN_OUTPUT.= "my-username";
+	}
 	$_MAIN_OUTPUT.= "</td>";
 	$_MAIN_OUTPUT.= "<td>";
-	$_MAIN_OUTPUT.= "<a href=\"".$tm_URL."/".$aktivURLPara_."\" title=\"".___("aktivieren/de-aktivieren")."\">";
+	if ($HOST[$hcc]['standard']!=1) {
+		$_MAIN_OUTPUT.= "<a href=\"".$tm_URL."/".$aktivURLPara_."\" title=\"".___("aktivieren/de-aktivieren")."\">";
+	}
 	if ($HOST[$hcc]['aktiv']==1) {
 		//aktiv
 		$_MAIN_OUTPUT.=  tm_icon("tick.png",___("Aktiv"))."&nbsp;";
@@ -173,10 +239,14 @@ for ($hcc=0;$hcc<$hc;$hcc++) {
 		//inaktiv
 		$_MAIN_OUTPUT.=  tm_icon("cancel.png",___("Inaktiv"))."&nbsp;";
 	}
+	if ($HOST[$hcc]['standard']!=1) {
 	$_MAIN_OUTPUT.= "</a>";
-
+	}
 	$_MAIN_OUTPUT.= "</td>";
 	$_MAIN_OUTPUT.= "<td>";
+	if ($HOST[$hcc]['aktiv']==1 && $HOST[$hcc]['standard']!=1 && $HOST[$hcc]['type']=="smtp") {
+		$_MAIN_OUTPUT.= "&nbsp;<a href=\"".$tm_URL."/".$stdURLPara_."\" title=\"".___("Standard SMTP Host")."\">".tm_icon("arrow_right.png",___("Standard SMTP Host"),"","","","server_compressed.png")."</a>";
+	}
 	$_MAIN_OUTPUT.= "&nbsp;<a href=\"".$tm_URL."/".$testURLPara_."\" title=\"".___("Server testen")."\">".tm_icon("server_connect.png",___("Server testen"))."</a>";
 	$_MAIN_OUTPUT.= "&nbsp;<a href=\"".$tm_URL."/".$editURLPara_."\" title=\"".___("Server bearbeiten")."\">".tm_icon("pencil.png",___("Server bearbeiten"))."</a>";
 	#$_MAIN_OUTPUT.=  "&nbsp;<a href=\"".$tm_URL."/".$statURLPara_."\" title=\"".___("Statistik anzeigen")."\">".tm_icon("chart_pie.png",___("Statistik anzeigen"))."</a>";

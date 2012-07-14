@@ -22,7 +22,7 @@ if ($offset>0) {
 }
 $_MAIN_OUTPUT.= "&nbsp;".sprintf(___("Eintrag %s bis %s von %s"),($offset+1),($offset+$entrys),$entrys_total);
 //1 seite vor
-if ($limit < ($entrys+1)) {
+if ($limit < ($entrys+1) && ($offset+$entrys)!=$entrys_total) {
 	$_MAIN_OUTPUT.= "<a href=\"".$tm_URL."/".$nextURLPara_."\" title=\"".___("Vor")."\">.".tm_icon("resultset_next.png",___("Vor"))."</a>";
 }
 $_MAIN_OUTPUT.= "</center><br>";

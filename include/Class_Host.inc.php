@@ -34,26 +34,33 @@ class tm_HOST {
 										.TM_TABLE_HOST.".options, "
 										.TM_TABLE_HOST.".smtp_auth, "
 										.TM_TABLE_HOST.".smtp_domain, "
+										.TM_TABLE_HOST.".smtp_ssl, "
+										.TM_TABLE_HOST.".smtp_max_piped_rcpt, "
 										.TM_TABLE_HOST.".aktiv, "
+										.TM_TABLE_HOST.".standard, "
 										.TM_TABLE_HOST.".user, "
 										.TM_TABLE_HOST.".pass, "
+										.TM_TABLE_HOST.".max_mails_atonce, "
+										.TM_TABLE_HOST.".max_mails_bcc, "
+										.TM_TABLE_HOST.".sender_name, "
+										.TM_TABLE_HOST.".sender_email, "
+										.TM_TABLE_HOST.".return_mail, "
+										.TM_TABLE_HOST.".reply_to, "
 										.TM_TABLE_HOST.".siteid";
-
 		$Query .=" FROM ".TM_TABLE_HOST;
 		$Query .=" WHERE ".TM_TABLE_HOST.".siteid='".TM_SITEID."'";
-
 		if (check_dbid($id)) {
-			$Query .= " AND ".TM_TABLE_HOST.".id='".$id."'";
+			$Query .= " AND ".TM_TABLE_HOST.".id=".checkset_int($id);
 		}
 		if (isset($search['type']) && !empty($search['type'])) {
 			$Query .= " AND ".TM_TABLE_HOST.".type='".dbesc($search['type'])."'";
 		}
 		if (isset($search['aktiv']) && !empty($search['aktiv'])) {
-			$Query .= " AND ".TM_TABLE_HOST.".aktiv='".dbesc(checkset_int($search['aktiv']))."'";
+			$Query .= " AND ".TM_TABLE_HOST.".aktiv=".checkset_int($search['aktiv']);
 		}
-
-
-
+		if (isset($search['standard']) && !empty($search['standard'])) {
+			$Query .= " AND ".TM_TABLE_HOST.".standard=".checkset_int($search['standard']);
+		}
 		if (!empty($sortIndex)) {
 			$Query .= " ORDER BY ".dbesc($sortIndex);
 			if ($sortType==0) {
@@ -63,7 +70,6 @@ class tm_HOST {
 				$Query .= " DESC";
 			}
 		}
-
 		$this->DB->Query($Query);
 		$hc=0;
 		while ($this->DB->next_record()) {
@@ -75,9 +81,18 @@ class tm_HOST {
 			$this->HOST[$hc]['options']=$this->DB->Record['options'];
 			$this->HOST[$hc]['smtp_auth']=$this->DB->Record['smtp_auth'];
 			$this->HOST[$hc]['smtp_domain']=$this->DB->Record['smtp_domain'];
+			$this->HOST[$hc]['smtp_ssl']=$this->DB->Record['smtp_ssl'];
+			$this->HOST[$hc]['smtp_max_piped_rcpt']=$this->DB->Record['smtp_max_piped_rcpt'];
 			$this->HOST[$hc]['aktiv']=$this->DB->Record['aktiv'];
+			$this->HOST[$hc]['standard']=$this->DB->Record['standard'];
 			$this->HOST[$hc]['user']=$this->DB->Record['user'];
 			$this->HOST[$hc]['pass']=$this->DB->Record['pass'];
+			$this->HOST[$hc]['max_mails_atonce']=$this->DB->Record['max_mails_atonce'];
+			$this->HOST[$hc]['max_mails_bcc']=$this->DB->Record['max_mails_bcc'];
+			$this->HOST[$hc]['sender_name']=$this->DB->Record['sender_name'];
+			$this->HOST[$hc]['sender_email']=$this->DB->Record['sender_email'];
+			$this->HOST[$hc]['return_mail']=$this->DB->Record['return_mail'];
+			$this->HOST[$hc]['reply_to']=$this->DB->Record['reply_to'];
 			$this->HOST[$hc]['siteid']=$this->DB->Record['siteid'];
 			$hc++;
 		}
@@ -87,7 +102,10 @@ class tm_HOST {
 	function setAktiv($id=0,$aktiv=1) {
 		$Return=false;
 		if (check_dbid($id)) {
-			$Query ="UPDATE ".TM_TABLE_HOST." SET aktiv='".dbesc($aktiv)."' WHERE id='".$id."' AND siteid='".TM_SITEID."'";
+			$Query ="UPDATE ".TM_TABLE_HOST." 
+								SET aktiv=".checkset_int($aktiv)."
+								WHERE id=".checkset_int($id)." 
+								AND siteid='".TM_SITEID."'";
 			if ($this->DB->Query($Query)) {
 				$Return=true;
 			}
@@ -97,28 +115,40 @@ class tm_HOST {
 
 
 	function addHost($host) {
-		$Return=false;
+		$Return[0]=false;
+		$Return[1]=0;
 		$Query ="INSERT INTO ".TM_TABLE_HOST." (
 					name,host,
 					type,port,
 					options,
 					smtp_auth,
 					smtp_domain,
+					smtp_ssl,
+					smtp_max_piped_rcpt,
 					user,pass,
-					aktiv,
+					max_mails_atonce, max_mails_bcc,
+					sender_name, sender_email, return_mail,reply_to,
+					aktiv,standard,
 					siteid
 					)
 					VALUES (
 					'".dbesc($host["name"])."', '".dbesc($host["host"])."',
-					'".dbesc($host["type"])."', '".dbesc($host["port"])."',
+					'".dbesc($host["type"])."', ".checkset_int($host["port"]).",
 					'".dbesc($host["options"])."',
 					'".dbesc($host["smtp_auth"])."',
 					'".dbesc($host["smtp_domain"])."',
+					".checkset_int($host["smtp_ssl"]).",
+					".checkset_int($host["smtp_max_piped_rcpt"]).",
 					'".dbesc($host["user"])."',	'".dbesc($host["pass"])."',
-					'".dbesc($host["aktiv"])."',
+					".checkset_int($host["max_mails_atonce"]).",".checkset_int($host["max_mails_bcc"]).",
+					'".dbesc($host["sender_name"])."',	'".dbesc($host["sender_email"])."',	'".dbesc($host["return_mail"])."',	'".dbesc($host["reply_to"])."',
+					".checkset_int($host["aktiv"]).",0,
 					'".TM_SITEID."')";
 		if ($this->DB->Query($Query)) {
-			$Return=true;
+				if ($this->DB->LastInsertID != 0) {
+					$Return[0]=true;
+					$Return[1]=$this->DB->LastInsertID;
+				}
 		}
 		return $Return;
 	}//addHost
@@ -129,13 +159,17 @@ class tm_HOST {
 			$Query ="UPDATE ".TM_TABLE_HOST."
 					SET
 					name='".dbesc($host["name"])."', host='".dbesc($host["host"])."',
-					type='".dbesc($host["type"])."', port='".dbesc($host["port"])."',
+					type='".dbesc($host["type"])."', port=".checkset_int($host["port"]).",
 					options='".dbesc($host["options"])."',
 					smtp_auth='".dbesc($host["smtp_auth"])."',
 					smtp_domain='".dbesc($host["smtp_domain"])."',
+					smtp_ssl=".checkset_int($host["smtp_ssl"]).",
+					smtp_max_piped_rcpt=".checkset_int($host["smtp_max_piped_rcpt"]).",
 					user='".dbesc($host["user"])."', pass='".dbesc($host["pass"])."',
-					aktiv='".dbesc($host["aktiv"])."'
-					WHERE siteid='".TM_SITEID."' AND id='".dbesc($host["id"])."'";
+					max_mails_atonce=".checkset_int($host["max_mails_atonce"]).", max_mails_bcc=".checkset_int($host["max_mails_bcc"]).",
+					sender_name='".dbesc($host["sender_name"])."', sender_email='".dbesc($host["sender_email"])."', return_mail='".dbesc($host["return_mail"])."', reply_to='".dbesc($host["reply_to"])."',
+					aktiv=".checkset_int($host["aktiv"])."
+					WHERE siteid='".TM_SITEID."' AND id=".checkset_int($host["id"]);
 			if ($this->DB->Query($Query)) {
 				$Return=true;
 			}
@@ -146,7 +180,7 @@ class tm_HOST {
 	function delHost($id) {
 		$Return=false;
 		if (check_dbid($id)) {
-			$Query ="DELETE FROM ".TM_TABLE_HOST." WHERE siteid='".TM_SITEID."' AND id='".$id."'";
+			$Query ="DELETE FROM ".TM_TABLE_HOST." WHERE siteid='".TM_SITEID."' AND id=".checkset_int($id);
 				if ($this->DB->Query($Query)) {
 					$Return=true;
 				} else {
@@ -155,9 +189,39 @@ class tm_HOST {
 				}
 		}
 		//todo: defaulthost fuer offene versendeauftraege!!! host nur loeschen wenn nicht aktuell benutzt wird! oder komplett loeschen....
-		
 		return $Return;
 	}//delHost
 
+	function getStdSMTPHost() {
+		$Return=$this->getHost(0,Array("standard"=>1, "aktiv"=>1, "type"=>"smtp"));
+		return $Return;
+	}
+
+	function setHostStd($id=0) {
+		$Return=false;
+		if (check_dbid($id)) {
+			$Query ="UPDATE ".TM_TABLE_HOST."
+						SET standard=0
+						WHERE standard=1
+						AND siteid='".TM_SITEID."'";
+			if ($this->DB->Query($Query)) {
+				$Return=true;
+			} else {
+				$Return=false;
+				return $Return;
+			}
+			$Query ="UPDATE ".TM_TABLE_HOST."
+						SET standard=1
+						WHERE id=".checkset_int($id)."
+						AND siteid='".TM_SITEID."'";
+			if ($this->DB->Query($Query)) {
+				$Return=true;
+			} else {
+				$Return=false;
+				return $Return;
+			}
+		}
+		return $Return;
+	}//setHostStd
 }  //class
 ?>

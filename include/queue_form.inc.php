@@ -37,7 +37,7 @@ $Form->set_InputDefault($FormularName,$InputName_NL,$nl_id);
 $Form->set_InputStyleClass($FormularName,$InputName_NL,"mFormSelect","mFormSelectFocus");
 $Form->set_InputDesc($FormularName,$InputName_NL,___("Newsletter wählen"));
 $Form->set_InputReadonly($FormularName,$InputName_NL,false);
-$Form->set_InputOrder($FormularName,$InputName_NL,6);
+$Form->set_InputOrder($FormularName,$InputName_NL,1);
 $Form->set_InputLabel($FormularName,$InputName_NL,"");
 $Form->set_InputSize($FormularName,$InputName_NL,0,5);
 $Form->set_InputMultiple($FormularName,$InputName_NL,false);
@@ -62,18 +62,15 @@ for ($ncc=0; $ncc<$nc; $ncc++)
 //Gruppe
 $Form->new_Input($FormularName,$InputName_Group,"select", "");
 $Form->set_InputJS($FormularName,$InputName_Group," onChange=\"flash('submit','#ff0000');\" ");
-//$Form->set_InputDefault($FormularName,$InputName_Group,$adr_grp_id);
 $Form->set_InputStyleClass($FormularName,$InputName_Group,"mFormSelect","mFormSelectFocus");
 $Form->set_InputDesc($FormularName,$InputName_Group,___("Gruppen wählen, STRG/CTRL gedrückt halten und klicken f. Mehrfachauswahl"));
 $Form->set_InputReadonly($FormularName,$InputName_Group,false);
-$Form->set_InputOrder($FormularName,$InputName_Group,6);
+$Form->set_InputOrder($FormularName,$InputName_Group,2);
 $Form->set_InputLabel($FormularName,$InputName_Group,"");
-//$Form->set_InputValue($FormularName,$InputName_Group,"");
 $Form->set_InputSize($FormularName,$InputName_Group,0,5);
 $Form->set_InputMultiple($FormularName,$InputName_Group,true);
 //add Data
 $ADDRESS=new tm_ADR();
-//getGroup($id=0,$adr_id=0,$frm_id=0,$count=0)
 $GRP=$ADDRESS->getGroup(0,0,0,1);
 $acg=count($GRP);
 for ($accg=0; $accg<$acg; $accg++)
@@ -91,19 +88,30 @@ for ($accg=0; $accg<$acg; $accg++)
 	$Form->set_InputSize($FormularName,$InputName_Blacklist,48,256);
 	$Form->set_InputDesc($FormularName,$InputName_Blacklist,___("Blacklist prüfen"));
 	$Form->set_InputReadonly($FormularName,$InputName_Blacklist,false);
-	$Form->set_InputOrder($FormularName,$InputName_Blacklist,2);
+	$Form->set_InputOrder($FormularName,$InputName_Blacklist,6);
 	$Form->set_InputLabel($FormularName,$InputName_Blacklist,"");
 
 //send now
 	$Form->new_Input($FormularName,$InputName_Send,"checkbox", 1);
-	$Form->set_InputJS($FormularName,$InputName_Send," onChange=\"flash('submit','#ff0000');checkQNewLimitOffset();\" onClick=\"checkQNewLimitOffset();\"");
+	$Form->set_InputJS($FormularName,$InputName_Send," onChange=\"flash('submit','#ff0000');\"");
 	$Form->set_InputDefault($FormularName,$InputName_Send,1);
 	$Form->set_InputStyleClass($FormularName,$InputName_Send,"mFormText","mFormTextFocus");
 	$Form->set_InputSize($FormularName,$InputName_Send,48,256);
 	$Form->set_InputDesc($FormularName,$InputName_Send,___("Versandliste sofort aktivieren"));
 	$Form->set_InputReadonly($FormularName,$InputName_Send,false);
-	$Form->set_InputOrder($FormularName,$InputName_Send,2);
+	$Form->set_InputOrder($FormularName,$InputName_Send,8);
 	$Form->set_InputLabel($FormularName,$InputName_Send,"");
+
+//Autogen
+	$Form->new_Input($FormularName,$InputName_Autogen,"checkbox", 1);
+	$Form->set_InputJS($FormularName,$InputName_Autogen," onChange=\"flash('submit','#ff0000');\"");
+	$Form->set_InputDefault($FormularName,$InputName_Autogen,1);
+	$Form->set_InputStyleClass($FormularName,$InputName_Autogen,"mFormText","mFormTextFocus");
+	$Form->set_InputSize($FormularName,$InputName_Send,48,256);
+	$Form->set_InputDesc($FormularName,$InputName_Autogen,___("Versand automatisch starten / Empfängerliste automatisch aktualisieren"));
+	$Form->set_InputReadonly($FormularName,$InputName_Autogen,false);
+	$Form->set_InputOrder($FormularName,$InputName_Autogen,7);
+	$Form->set_InputLabel($FormularName,$InputName_Autogen,"");
 
 //send_at_date
 $Form->new_Input($FormularName,$InputName_SendAt,"text", $send_at_date);
@@ -112,7 +120,7 @@ $Form->set_InputStyleClass($FormularName,$InputName_SendAt,"mFormText","mFormTex
 $Form->set_InputSize($FormularName,$InputName_SendAt,20,30);
 $Form->set_InputDesc($FormularName,$InputName_SendAt,___("Datum des terminierten Versands"));
 $Form->set_InputReadonly($FormularName,$InputName_SendAt,false);
-$Form->set_InputOrder($FormularName,$InputName_SendAt,77);
+$Form->set_InputOrder($FormularName,$InputName_SendAt,3);
 $Form->set_InputLabel($FormularName,$InputName_SendAt,"");
 
 
@@ -124,7 +132,7 @@ $Form->set_InputDefault($FormularName,$InputName_SendAtTimeH,$$InputName_SendAtT
 $Form->set_InputStyleClass($FormularName,$InputName_SendAtTimeH,"mFormSelect","mFormSelectFocus");
 $Form->set_InputDesc($FormularName,$InputName_SendAtTimeH,___("Stunde"));
 $Form->set_InputReadonly($FormularName,$InputName_SendAtTimeH,false);
-$Form->set_InputOrder($FormularName,$InputName_SendAtTimeH,6);
+$Form->set_InputOrder($FormularName,$InputName_SendAtTimeH,4);
 $Form->set_InputLabel($FormularName,$InputName_SendAtTimeH,"");
 $Form->set_InputSize($FormularName,$InputName_SendAtTimeH,0,1);
 $Form->set_InputMultiple($FormularName,$InputName_SendAtTimeH,false);
@@ -141,7 +149,7 @@ $Form->set_InputDefault($FormularName,$InputName_SendAtTimeM,$$InputName_SendAtT
 $Form->set_InputStyleClass($FormularName,$InputName_SendAtTimeM,"mFormSelect","mFormSelectFocus");
 $Form->set_InputDesc($FormularName,$InputName_SendAtTimeM,___("Minute"));
 $Form->set_InputReadonly($FormularName,$InputName_SendAtTimeH,false);
-$Form->set_InputOrder($FormularName,$InputName_SendAtTimeM,6);
+$Form->set_InputOrder($FormularName,$InputName_SendAtTimeM,5);
 $Form->set_InputLabel($FormularName,$InputName_SendAtTimeM,"");
 $Form->set_InputSize($FormularName,$InputName_SendAtTimeM,0,1);
 $Form->set_InputMultiple($FormularName,$InputName_SendAtTimeM,false);
@@ -153,22 +161,22 @@ for ($m=0; $m<60; $m++)
 
 //offset
 $Form->new_Input($FormularName,$InputName_Offset,"text", $$InputName_Offset);
-$Form->set_InputJS($FormularName,$InputName_Offset," onChange=\"flash('submit','#ff0000');checkQNewLimitOffset()\" onKeyUp=\"RemoveInvalidChars(this, '[^0-9]');\" onClick=\"checkQNewLimitOffset();\"");
+$Form->set_InputJS($FormularName,$InputName_Offset," onChange=\"flash('submit','#ff0000');\" onKeyUp=\"RemoveInvalidChars(this, '[^0-9]');\" ");
 $Form->set_InputStyleClass($FormularName,$InputName_Offset,"mFormText","mFormTextFocus");
 $Form->set_InputSize($FormularName,$InputName_Offset,20,8);
 $Form->set_InputDesc($FormularName,$InputName_Offset,___("Offset"));
 $Form->set_InputReadonly($FormularName,$InputName_Offset,false);
-$Form->set_InputOrder($FormularName,$InputName_Offset,4);
+$Form->set_InputOrder($FormularName,$InputName_Offset,10);
 $Form->set_InputLabel($FormularName,$InputName_Offset,"");
 
 //limit
 $Form->new_Input($FormularName,$InputName_Limit,"text", $$InputName_Limit);
-$Form->set_InputJS($FormularName,$InputName_Limit," onChange=\"flash('submit','#ff0000');checkQNewLimitOffset();\" onKeyUp=\"RemoveInvalidChars(this, '[^1-90]');\" onClick=\"checkQNewLimitOffset();\"");
+$Form->set_InputJS($FormularName,$InputName_Limit," onChange=\"flash('submit','#ff0000');\" onKeyUp=\"RemoveInvalidChars(this, '[^1-90]');\" ");
 $Form->set_InputStyleClass($FormularName,$InputName_Limit,"mFormText","mFormTextFocus");
 $Form->set_InputSize($FormularName,$InputName_Limit,20,8);
 $Form->set_InputDesc($FormularName,$InputName_Limit,___("Limit"));
 $Form->set_InputReadonly($FormularName,$InputName_Limit,false);
-$Form->set_InputOrder($FormularName,$InputName_Limit,4);
+$Form->set_InputOrder($FormularName,$InputName_Limit,11);
 $Form->set_InputLabel($FormularName,$InputName_Limit,"");
 
 //HOST
@@ -179,16 +187,16 @@ $Form->set_InputStyleClass($FormularName,$InputName_Host,"mFormSelect","mFormSel
 $Form->set_InputSize($FormularName,$InputName_Host,1,1);
 $Form->set_InputDesc($FormularName,$InputName_Host,___("SMTP Server auswählen"));
 $Form->set_InputReadonly($FormularName,$InputName_Host,false);
-$Form->set_InputOrder($FormularName,$InputName_Host,1);
+$Form->set_InputOrder($FormularName,$InputName_Host,9);
 $Form->set_InputLabel($FormularName,$InputName_Host,"");
 $Form->set_InputMultiple($FormularName,$InputName_Host,false);
 #Hostliste....
 //smtp hosts
-$HOST_=$HOSTS->getHost("",Array("aktiv"=>1, "type"=>"smtp"));//id,filter
+$HOST_=$HOSTS->getHost(0,Array("aktiv"=>1, "type"=>"smtp"));//id,filter
 $hcg=count($HOST_);
 for ($hccg=0; $hccg<$hcg; $hccg++)
 {
-		$Form->add_InputOption($FormularName,$InputName_Host,$HOST_[$hccg]['id'],$HOST_[$hccg]['name']);
+		$Form->add_InputOption($FormularName,$InputName_Host,$HOST_[$hccg]['id'],display($HOST_[$hccg]['name']));
 }
 
 //submit button
@@ -218,25 +226,19 @@ $_MAIN_OUTPUT.= $Form->INPUT[$FormularName]['act']['html'];
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName]['set']['html'];
 $_MAIN_OUTPUT.= "<table border=0>";
 $_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top>".tm_icon("newspaper.png",___("Newsletter"))."&nbsp;".___("Newsletter")."<br>";
+$_MAIN_OUTPUT.= "<td valign=\"top\">".tm_icon("newspaper.png",___("Newsletter"))."&nbsp;".___("Newsletter")."<br>";
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_NL]['html'];
 $_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top colspan=1>";
+$_MAIN_OUTPUT.= "<td valign=\"middle\">";
 $_MAIN_OUTPUT.= "".___("versenden an:");
 $_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top colspan=1>".tm_icon("group.png",___("Gruppen"))."&nbsp;".___("Gruppen")."<br>";
+$_MAIN_OUTPUT.= "<td valign=\"top\">".tm_icon("group.png",___("Gruppen"))."&nbsp;".___("Gruppen")."<br>";
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Group]['html'];
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "</tr>";
 
 $_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top colspan=1>".tm_icon("calendar.png",___("Versanddatum"))."&nbsp;".___("Versand starten am:")."<br>";
+$_MAIN_OUTPUT.= "<td valign=\"top\" colspan=3>".tm_icon("calendar.png",___("Versanddatum"))."&nbsp;".___("Versand starten am:")."<br>";
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_SendAt]['html'];
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_SendAtTimeH]['html'];
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_SendAtTimeM]['html'];
@@ -244,21 +246,28 @@ $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "</tr>";
 
 $_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top colspan=1>";
-$_MAIN_OUTPUT.= "<br>".tm_icon("ruby.png",___("Blacklist"))."&nbsp;".___("Blacklist prüfen");
+$_MAIN_OUTPUT.= "<td valign=\"top\" colspan=3>";
+$_MAIN_OUTPUT.= "<br>".tm_icon("ruby.png",___("Blacklist prüfen"))."&nbsp;".___("Blacklist prüfen");
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Blacklist]['html']."&nbsp;&nbsp;";
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "</tr>";
 
 $_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top colspan=1>";
-$_MAIN_OUTPUT.= "<br>".tm_icon("hourglass.png",___("Versandliste"))."&nbsp;".___("Versandliste sofort erstellen");
+$_MAIN_OUTPUT.= "<td valign=\"top\" colspan=3>";
+$_MAIN_OUTPUT.= "<br>".tm_icon("cog.png",___("Versand automatisch starten / Empfängerliste automatisch aktualisieren"))."&nbsp;".___("Versand automatisch starten / Empfängerliste automatisch aktualisieren");
+$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Autogen]['html']."&nbsp;&nbsp;";
+$_MAIN_OUTPUT.= "</td>";
+$_MAIN_OUTPUT.= "</tr>";
+
+$_MAIN_OUTPUT.= "<tr>";
+$_MAIN_OUTPUT.= "<td valign=\"top\" colspan=3>";
+$_MAIN_OUTPUT.= "<br>".tm_icon("hourglass.png",___("Versandliste sofort erstellen"))."&nbsp;".___("Versandliste sofort erstellen");
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Send]['html']."&nbsp;&nbsp;";
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "</tr>";
 
 $_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top colspan=1>";
+$_MAIN_OUTPUT.= "<td valign=\"top\" colspan=3>";
 $_MAIN_OUTPUT.= "<br>".tm_icon("server.png",___("Mail-Server"))."&nbsp;".___("Mail-Server");
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Host]['html']."&nbsp;&nbsp;";
 $_MAIN_OUTPUT.= "</td>";
@@ -266,7 +275,7 @@ $_MAIN_OUTPUT.= "</tr>";
 
 
 $_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top colspan=2>";
+$_MAIN_OUTPUT.= "<td valign=\"top\" colspan=3>";
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Submit]['html'];
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Reset]['html'];
 $_MAIN_OUTPUT.= "</td>";

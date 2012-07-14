@@ -29,13 +29,20 @@ $Form->new_Input($FormularName,"host", "hidden", $host);
 $Form->new_Input($FormularName,"offset", "hidden", $offset);
 $Form->new_Input($FormularName,"limit", "hidden", $limit);
 $Form->new_Input($FormularName,"set", "hidden", $set);
+$Form->new_Input($FormularName,"bounce", "hidden", $bounce);
+$Form->new_Input($FormularName,"bounce_type", "hidden", $bounce_type);
+$Form->new_Input($FormularName,"filter_to", "hidden", $filter_to);
+$Form->new_Input($FormularName,"filter_to_smtp_return_path", "hidden", $filter_to_smtp_return_path);
 
 $Form->set_InputID($FormularName,"act", "act2");
 $Form->set_InputID($FormularName,"host", "host2");
 $Form->set_InputID($FormularName,"offset", "offset2");
 $Form->set_InputID($FormularName,"limit", "limit2");
 $Form->set_InputID($FormularName,"set", "set2");
-
+$Form->set_InputID($FormularName,"bounce", "bounce2");
+$Form->set_InputID($FormularName,"bounce_type", "bounce_type2");
+$Form->set_InputID($FormularName,"filter_to", "filter_to2");
+$Form->set_InputID($FormularName,"filter_to_smtp_return_path", "filter_to_smtp_return_path2");
 //////////////////
 //add inputfields and buttons....
 //////////////////
@@ -94,6 +101,7 @@ $Form->set_InputOrder($FormularName,$InputName_ActionAdr,1);
 $Form->set_InputLabel($FormularName,$InputName_ActionAdr,"");
 $Form->set_InputSize($FormularName,$InputName_ActionAdr,0,1);
 $Form->set_InputMultiple($FormularName,$InputName_ActionAdr,false);
+$Form->add_InputOption($FormularName,$InputName_ActionAdr,"none",___("--"));
 $Form->add_InputOption($FormularName,$InputName_ActionAdr,"auto",___("Adressen automatisch bearbeiten"));
 $Form->add_InputOption($FormularName,$InputName_ActionAdr,"error",___("Adressen als Fehlerhaft markieren"));
 $Form->add_InputOption($FormularName,$InputName_ActionAdr,"unsubscribe",___("Adressen abmelden und deaktivieren"));
@@ -128,5 +136,8 @@ $_MAIN_OUTPUT.= $Form->INPUT[$FormularName]['host']['html'];
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName]['limit']['html'];
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName]['offset']['html'];
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName]['set']['html'];
-
+$_MAIN_OUTPUT.= $Form->INPUT[$FormularName]['bounce_type']['html'];
+$_MAIN_OUTPUT.= $Form->INPUT[$FormularName]['bounce']['html'];
+$_MAIN_OUTPUT.= $Form->INPUT[$FormularName]['filter_to']['html'];
+$_MAIN_OUTPUT.= $Form->INPUT[$FormularName]['filter_to_smtp_return_path']['html'];
 ?>

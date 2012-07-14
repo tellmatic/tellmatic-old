@@ -64,21 +64,10 @@ if ($check && $checkDB) {
 		$CONFIG->addCFG(Array(
 				"siteid"=>TM_SITEID,
 				"name"=>"Tellmatic_0",
-				"sender_name"=>"Tellmatic",
-				"sender_email"=>$email,
-				"return_mail"=>$email,
 				"notify_mail"=>$email,
 				"notify_subscribe"=>0,
 				"notify_unsubscribe"=>0,
-				"max_mails_atonce"=>25,
-				"max_mails_bcc"=>50,
 				"max_mails_retry"=>5,
-				"smtp_host"=>$smtp_host,
-				"smtp_port"=>$smtp_port,
-				"smtp_domain"=>$smtp_domain,
-				"smtp_auth"=>$smtp_auth,
-				"smtp_user"=>$smtp_user,
-				"smtp_pass"=>$smtp_pass,
 				"emailcheck_intern"=>2,
 				"emailcheck_subscribe"=>2,
 				"check_version"=>1,
@@ -88,19 +77,29 @@ if ($check && $checkDB) {
 		//add mailservers, use default settings for config and create smtp/pop3 host entries...
 				$HOSTS=new tm_HOST();
 				//add smtp host
-				$HOSTS->addHost(Array(
+				$Add_Host=$HOSTS->addHost(Array(
 							"siteid"=>TM_SITEID,
 							"name"=>"default smtp",
 							"aktiv"=>1,
 							"host"=>$smtp_host,
 							"port"=>$smtp_port,
-							"options"=>"",
+							"options"=>"novalidate-cert",
 							"smtp_auth"=>$smtp_auth,
 							"smtp_domain"=>$smtp_domain,
+							"smtp_ssl"=>0,
+							"smtp_max_piped_rcpt"=>1,
 							"type"=>"smtp",
 							"user"=>$smtp_user,
-							"pass"=>$smtp_pass
+							"pass"=>$smtp_pass,
+							"max_mails_atonce"=>25,
+							"max_mails_bcc"=>50,
+							"sender_name"=>"Tellmatic",
+							"sender_email"=>$email,
+							"return_mail"=>$email,
+							"reply_to"=>$email
 							));
+				//make default smtp host!
+				$HOSTS->setHostStd($Add_Host[1]);
 				//add pop3 host
 				$HOSTS->addHost(Array(
 							"siteid"=>TM_SITEID,
@@ -111,9 +110,17 @@ if ($check && $checkDB) {
 							"options"=>"novalidate-cert",
 							"smtp_auth"=>"",
 							"smtp_domain"=>"",
+							"smtp_ssl"=>0,
+							"smtp_max_piped_rcpt"=>1,
 							"type"=>"pop3",
 							"user"=>$smtp_user,
-							"pass"=>$smtp_pass
+							"pass"=>$smtp_pass,
+							"max_mails_atonce"=>25,
+							"max_mails_bcc"=>50,
+							"sender_name"=>"Tellmatic",
+							"sender_email"=>$email,
+							"return_mail"=>$email,
+							"reply_to"=>$email
 							));
 		
 		
@@ -176,7 +183,6 @@ require valid-user
 	#not used yet: if (!DEMO) write_file(TM_PATH."/admin/tmp/",".htaccess",$tm_htaccess);
 	if (!DEMO) write_file(TM_INCLUDEPATH,".htaccess",$tm_htaccess);
 	if (!DEMO) write_file($tm_datapath,".htaccess",$tm_htaccess);
-	if (!DEMO) write_file($tm_nlattachpath,".htaccess",$tm_htaccess);
 	if (!DEMO) write_file(TM_TPLPATH,".htaccess",$tm_htaccess);
 	if (!DEMO) write_file($tm_formpath,".htaccess",$tm_htaccess);
 	if (!DEMO) write_file($tm_logpath,".htaccess",$tm_htaccess);

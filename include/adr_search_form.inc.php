@@ -244,30 +244,28 @@ $Form->render_Form($FormularName);
 
 /*DISPLAY*/
 $_MAIN_OUTPUT.= $Form->FORM[$FormularName]['head'];
-//hidden fieldsnicht vergessen!
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName]['act']['html'];
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName]['set']['html'];
 $_MAIN_OUTPUT.= "<table border=0>";
 $_MAIN_OUTPUT.= "<tr>";
 $_MAIN_OUTPUT.= "<td valign=top>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Name]['html'];
+$_MAIN_OUTPUT.= tm_icon("email.png",___("Suche nach E-Mail-Adresse")).$Form->INPUT[$FormularName][$InputName_Name]['html'];
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "<td valign=top colspan=1>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_F]['html'];
+$_MAIN_OUTPUT.= tm_icon("textfield.png",___("Suche in F0-F9")).$Form->INPUT[$FormularName][$InputName_F]['html'];
 $_MAIN_OUTPUT.= "</td>";
-
 $_MAIN_OUTPUT.= "<td valign=top>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Status]['html'];
+$_MAIN_OUTPUT.= tm_icon("lightbulb.png",___("Filtern nach Status")).$Form->INPUT[$FormularName][$InputName_Status]['html'];
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "<td valign=top colspan=1>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Group]['html'];
+$_MAIN_OUTPUT.= tm_icon("group.png",___("Filtern nach Gruppe")).$Form->INPUT[$FormularName][$InputName_Group]['html'];
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "<td valign=top colspan=1>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Limit]['html'];
+$_MAIN_OUTPUT.= tm_icon("bullet_wrench.png",___("Zeige maximal N Adressen pro Seite")).$Form->INPUT[$FormularName][$InputName_Limit]['html'];
 $_MAIN_OUTPUT.= "</td>";
 
 $_MAIN_OUTPUT.= "<td valign=top colspan=1>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Author]['html'];
+$_MAIN_OUTPUT.= tm_icon("application_form.png",___("Filtern nach Author/Formular")).$Form->INPUT[$FormularName][$InputName_Author]['html'];
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "</tr>";
 

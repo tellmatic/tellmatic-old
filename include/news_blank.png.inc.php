@@ -68,7 +68,7 @@ if (checkid($nl_id)) {
 		$ADDRESS->addView($a_id);	//view
 		//save memo
 		$created=date("Y-m-d H:i:s");
-		$memo="\n".$created.": viewed (".$NL[0]['subject'].")";
+		$memo="viewed (".$NL[0]['subject'].")";
 		$ADDRESS->addMemo($a_id,$memo);
 	}
 }

@@ -117,7 +117,6 @@ for ($nccg=0;$nccg<$ncg;$nccg++) {
 
 	$_MAIN_OUTPUT.= "<tr id=\"row_".$nccg."\" bgcolor=\"".$bgcolor."\" onmouseover=\"setBGColor('row_".$nccg."','".$row_bgcolor_hilite."');\" onmouseout=\"setBGColor('row_".$nccg."','".$bgcolor."');\">";
 	$_MAIN_OUTPUT.= "<td onmousemove=\"showToolTip('tt_adr_grp_list_".$GRP[$nccg]['id']."')\" onmouseout=\"hideToolTip();\">";
-
 	//wenn standardgruppe, dann icon anzeigen
 	if ($GRP[$nccg]['standard']==1) {
 		$_MAIN_OUTPUT.=  "&nbsp;".tm_icon("page_white_lightning.png",___("Diese Gruppe ist die Standardgruppe"));

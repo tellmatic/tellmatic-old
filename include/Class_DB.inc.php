@@ -12,6 +12,7 @@
 /* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
 /********************************************************************************/
 
+if (!defined('DEBUG_SQL')) { define('DEBUG_SQL',FALSE); }
 
 /*DB*/
 define ("DBDB",$tm["DB"]["Name"]);
@@ -50,7 +51,7 @@ class tm_DB extends DB_Sql
  * Copyright (c) 1998-2000 NetUSE AG
  *                    Boris Erdmann, Kristian Koehntopp
  *
- * $Id: Class_DB.inc.php,v 1.3 2008/09/29 18:01:43 mcms09 Exp $
+ * $Id: Class_DB.inc.php,v 1.5 2009/01/30 13:29:11 mcms09 Exp $
  *
  */ 
 
@@ -148,6 +149,7 @@ class DB_Sql {
 
   /* public: perform a query */
   function query($Query_String) {
+	if (DEBUG_SQL) echo $Query_String;
     /* No empty queries, please, since PHP4 chokes on them. */
     if ($Query_String == "")
       /* The empty query string is passed on from the constructor,

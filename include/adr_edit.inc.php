@@ -90,7 +90,6 @@ if ($set=="save") {
 				"aktiv"=>$aktiv,
 				"created"=>$created,
 				"author"=>$author,
-				"memo"=>$memo,
 				"f0"=>$f0,
 				"f1"=>$f1,
 				"f2"=>$f2,
@@ -103,6 +102,7 @@ if ($set=="save") {
 				"f9"=>$f9
 				),
 				$adr_grp);
+		$ADDRESS->newMemo($ADR[0]['id'],$memo);
 		$ADDRESS->setStatus($adr_id,$status);
 
 		$_MAIN_MESSAGE.="<br>".sprintf(___("Adresse %s wurde bearbeitet."),"<b>".display($email)."</b>");

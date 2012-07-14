@@ -48,7 +48,7 @@ $Form->set_InputStyleClass($FormularName,$InputName_Captcha,"tm_form_captcha","t
 $Form->set_InputSize($FormularName,$InputName_Captcha,12,12);
 $Form->set_InputDesc($FormularName,$InputName_Captcha,"");
 $Form->set_InputReadonly($FormularName,$InputName_Captcha,false);
-$Form->set_InputOrder($FormularName,$InputName_Captcha,1);
+$Form->set_InputOrder($FormularName,$InputName_Captcha,888);
 $Form->set_InputLabel($FormularName,$InputName_Captcha,"");
 //MEMO
 $Form->new_Input($FormularName,$InputName_Memo,"textarea", display($$InputName_Memo));
@@ -57,7 +57,7 @@ $Form->set_InputStyleClass($FormularName,$InputName_Memo,"tm_form_memo","tm_form
 $Form->set_InputSize($FormularName,$InputName_Memo,48,5);
 $Form->set_InputDesc($FormularName,$InputName_Memo,"");
 $Form->set_InputReadonly($FormularName,$InputName_Memo,false);
-$Form->set_InputOrder($FormularName,$InputName_Memo,1);
+$Form->set_InputOrder($FormularName,$InputName_Memo,777);
 $Form->set_InputLabel($FormularName,$InputName_Memo,"");
 
 //F, neu f0-9
@@ -97,7 +97,7 @@ $Form->set_InputJS($FormularName,$InputName_GroupPub," onChange=\"flash('submit'
 $Form->set_InputStyleClass($FormularName,$InputName_GroupPub,"tm_form_group_select","tm_form_focus_group_select");
 #$Form->set_InputDesc($FormularName,$InputName_GroupPub,___("Gruppen wählen, STRG/CTRL gedrückt halten und klicken f. Mehrfachauswahl"));
 $Form->set_InputReadonly($FormularName,$InputName_GroupPub,false);
-$Form->set_InputOrder($FormularName,$InputName_GroupPub,6);
+$Form->set_InputOrder($FormularName,$InputName_GroupPub,111);
 $Form->set_InputLabel($FormularName,$InputName_GroupPub,"");
 //$Form->set_InputValue($FormularName,$InputName_GroupPub,"");
 $Form->set_InputSize($FormularName,$InputName_GroupPub,0,5);
