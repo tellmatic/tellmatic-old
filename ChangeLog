@@ -1,3 +1,19 @@
+2010-03-06 Saturday 12:27  tag r-1-0-8-7
+
+2010-03-06 Saturday 12:27  mcms09
+
+	Changed:
+		include/Functions.inc.php (1.21), "Exp", lines: +1 -1
+
+	fixed missing parameter $from in checkemailadr()
+
+2010-03-06 Saturday 12:26  mcms09
+
+	Changed:
+		include/check_it.php (1.2), "Exp", lines: +2 -2
+
+	fixed typo
+
 2010-02-26 Friday 13:07  mcms09
 
 	Changed:

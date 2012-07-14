@@ -909,7 +909,7 @@ function configure_me() {
 	return true;
 }
 
-function checkEmailAdr($email,$level=1) {
+function checkEmailAdr($email,$level=1,$from="") {
 	$Return[0]=true;//ok, weil mit level=0 oder >3 pruefung ausgeschaltet werden kann.....
 	$Return[1]="";
 	//default level ist 2, mx dns und sytax!

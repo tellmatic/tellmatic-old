@@ -53,12 +53,12 @@ if ($ac>0) {
 				}
 	
 				if ($C[0]['checkit_adr_reset_error']==1) {
-					$ADDRESS->setAError($ADR[$acc]['id'],0)
+					$ADDRESS->setAError($ADR[$acc]['id'],0);
 					$protocol.=___("OK, reset errors to 0.")."\n";
 				}
 			}
 		} else {
-			protocol.=___("Skipped, already processed")."\n";
+			$protocol.=___("Skipped, already processed")."\n";
 		}
 		$protocol.="----------------\n";
 		echo $protocol;
