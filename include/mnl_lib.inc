@@ -286,7 +286,7 @@ if (!$mnl_config) {
 //////////////////////////////////	
 
 	$ApplicationName="tellmatic";
-	$ApplicationVersion="1.0 mNL";
+	$ApplicationVersion="1.01 mNL";
 	$ApplicationDescr="Die Newslettermaschine";
 	$ApplicationUrl="www.tellmatic.de";
 	$ApplicationText=$ApplicationName." v".$ApplicationVersion." - ".$ApplicationDescr." (".$ApplicationUrl.")";

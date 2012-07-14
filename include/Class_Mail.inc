@@ -99,6 +99,7 @@ Class mMail {
 				$Mail[$cc]['from'] = $from;
 				$Mail[$cc]['subject'] =  $header->fetchsubject;
 				$Mail[$cc]['date'] = $header->Date;
+				#$Mail[$cc]['id'] = $header->message_id;
 				$Mail[$cc]['no'] = utrim($header->Msgno);
 				$Mail[$cc]['size'] = $header->Size;
 				$Mail[$cc]['unseen'] = $header->Unseen;

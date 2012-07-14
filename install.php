@@ -595,7 +595,7 @@ require valid-user
 			$MESSAGE.= "Herzlichen Glueckwunsch,\n
 					\nDie Installation der Tellmatic Newslettermascine auf ".$mnl_Domain."/".$mnl_dir." war erfogreich.\n
 					\ndie Installation ist abgeschlossen.\n
-					\nBesuchen Sie ".$mnl_Domain."/".$mnl_dir."/index.php\\n
+					\nBesuchen Sie ".$mnl_Domain."/".$mnl_dir."/index.php\n
 					und melden sich mit Ihrem Benutzernamen und Passwort an.";
 			@mail($email,
 					"Tellmatic Installation",

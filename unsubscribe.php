@@ -15,6 +15,11 @@
 //config einbinden
 include ("./include/mnl_config.inc");
 
+//if unsubscribe.php is included in your script, please set $called_via_url=false; $_CONTENT holds the html output 
+if (!isset($_CONTENT)) {$_CONTENT="";}
+if (!isset($called_via_url)) {$called_via_url=true;}
+
+//
 //aufruf: unsubscribe.php?h_id=&nl_id=&a_id=
 //oder auch ohne parameter
 //da wir ja ein formular haben
@@ -129,5 +134,10 @@ $_Tpl_FRM->setParseValue("FSUBMIT", $FSUBMIT);
 $_Tpl_FRM->setParseValue("FEMAIL", $FEMAIL);
 $OUTPUT=$_Tpl_FRM->renderTemplate("Unsubscribe.html");
 
-echo $OUTPUT;
+//anzeige
+if ($called_via_url) {
+	echo $OUTPUT;
+} else {
+	$_CONTENT.= $OUTPUT;
+}
 ?>

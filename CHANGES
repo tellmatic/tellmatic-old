@@ -11,33 +11,15 @@
 /* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
 /********************************************************************************/
 
-*+*+*+*+*+*+*+*+*+*+*+ README +*+*+*+*+*+*+*+*+*+*+*+*
-
-	tellmatic - the newslettermachine, die Newslettermaschine
-	2006/7 by Volker Augustin, multi.art.studio Hanau
-	Contact/Kontakt: mnl@multiartstudio.com
-	Homepage: www.tellmatic.de
-	check Homepage for Updates and more Infos
-	Besuchen Sie die Homepage fuer Updates und weitere Infos
-
-*+*+*+*+*+*+*+*+*+*+ LICENSE +*+*+*+*+*+*+*+*+*+*+*
-
-	GPL V2.1 ++
-	http://www.gnu.org/licenses/gpl.html
-
-*+*+*+*+*+*+*+*+*+*+ INSTALLATION +*+*+*+*+*+*+*+*+*+*+*
-
-	Bitte INSTALL lesen
-	Please read INSTALL
-	http://www.tellmatic.de/?c=doc
+*+*+*+*+*+*+*+*+*+*+*+ CHANGES V1.0.1  +*+*+*+*+*+*+*+*+*+*+*+*
+	bugs fixed: 
+		- message id not exists for pop3 connections
+		- install.php : link to index.php startpage contains \n
+		- subcribe.php: SUBSCRIBE_URL missing in optin mail	, broken link for textmails, fixed.
+		- install message contains no link and a \n.
+		- install mail is a bit weird.
 		
-*+*+*+*+*+*+*+*+*+*+*+*+ TELLMATIC +*+*+*+*+*+*+*+*+*+*+*+*
-
-	About: see http://www.tellmatic.de/?c=about
-
-*+*+*+*+*+*+*+*+*+*+*+*+ CREDITS +*+*+*+*+*+*+*+*+*+*+*+*
-
-	Credits: see http://www.tellmatic.de/?c=credits
-
-
+*+*+*+*+*+*+*+*+*+*+*+ CHANGES V1.0  +*+*+*+*+*+*+*+*+*+*+*+*
+	no changes, initial release!
+		
 EOF

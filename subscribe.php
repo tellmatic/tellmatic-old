@@ -16,6 +16,12 @@
 //config einbinden
 include ("./include/mnl_config.inc");
 
+//if subscribe.php is included in your script, please set frm_id to Form ID and $called_via_url=false; $_CONTENT holds the html output
+if (!isset($_CONTENT)) {$_CONTENT="";}
+if (!isset($called_via_url)) {$called_via_url=true;}
+
+//
+
 $MESSAGE="";
 $OUTPUT="";
 if (!isset($frm_id)) {
@@ -284,7 +290,8 @@ if ($frm_id>0 && $doptin!=1) {
 					//SUBSCRIBE ... = link zu subscribe.php , doptin=1, adr_id, code!=$c fid !!
 					//EMAIL
 					//CLOSELINK
-					$SUBSCRIBE="<a href=\"".$mnl_URL."/subscribe.php?doptin=1&email=".$email."&fid=".$frm_id."&c=".$code."\" target=\"_blank\">";
+					$SUBSCRIBE_URL=$mnl_URL."/subscribe.php?doptin=1&email=".$email."&fid=".$frm_id."&c=".$code;
+					$SUBSCRIBE="<a href=\"".$SUBSCRIBE_URL."\" target=\"_blank\">";
 
 					$Form_Filename_O="/Form_".$frm_id."_o.html";//email wenn doubleoptin
 					$_Tpl_FRM=new mTemplate();
@@ -292,6 +299,7 @@ if ($frm_id>0 && $doptin!=1) {
 					$_Tpl_FRM->setParseValue("DATE", $date_sub);
 					$_Tpl_FRM->setParseValue("EMAIL", $email);
 					$_Tpl_FRM->setParseValue("SUBSCRIBE", $SUBSCRIBE);
+					$_Tpl_FRM->setParseValue("SUBSCRIBE_URL", $SUBSCRIBE_URL);
 					$_Tpl_FRM->setParseValue("CLOSELINK", "</a>");
 					//template ausgeben
 					$OptinMail_HTML=$_Tpl_FRM->renderTemplate($Form_Filename_O);
@@ -401,5 +409,9 @@ if ($frm_id>0 && $doptin!=1) {
 }//frm_id>0
 
 //anzeige
-echo $OUTPUT;
+if ($called_via_url) {
+	echo $OUTPUT;
+} else {
+	$_CONTENT.= $OUTPUT;
+}
 ?>

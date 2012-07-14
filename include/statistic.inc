@@ -303,9 +303,12 @@ if ($set=="adr") {
 
 
 
-
-
-
+/////////////////////////////////////
+//Statistik fuer Adressen
+/////////////////////////////////////
+if ($set=="form") {
+	$_MAIN_OUTPUT.="<a href=\"http://www.tellmatic.de/?c=donate\" target=\"_blank\">Noch nicht implementiert. Bitte unterstuetzen Sie die Entwicklung von Tellmatic.</a>";
+}
 
 
 

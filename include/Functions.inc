@@ -584,7 +584,7 @@ function strip_specialchar($x) {
 	$x=str_replace ( "\\", "", $x); 
 	//$x=str_replace ( "+", "", $x); 
 	$x=str_replace ( "*", "", $x); 
-	$x=str_replace ( "?", "", $x); 
+//	$x=str_replace ( "?", "", $x); 
 //	$x=str_replace ( "[", "", $x); 
 	$x=str_replace ( "^", "", $x); 
 //	$x=str_replace ( "]", "", $x); 
@@ -593,16 +593,16 @@ function strip_specialchar($x) {
 //	$x=str_replace ( ")", "", $x); 
 //	$x=str_replace ( "{", "", $x); 
 //	$x=str_replace ( "}", "", $x); 
-	$x=str_replace ( "=", "", $x); 
+//	$x=str_replace ( "=", "", $x); 
 	$x=str_replace ( "!", "", $x); 
 	//$x=str_replace ( "<", "", $x); 
 	//$x=str_replace ( ">", "", $x); 
 	$x=str_replace ( "|", "", $x); 
 	//$x=str_replace ( ":", "", $x); 
-	$x=str_replace ( "&", "", $x); 
+//	$x=str_replace ( "&", "", $x); 
 	$x=str_replace ( "\"", "", $x); 
 	$x=str_replace ( "%", "", $x); 
-	$x=str_replace ( "=", "", $x); 
+	//$x=str_replace ( "=", "", $x); 
 	//$x=str_replace ( "/", "", $x); 
 	$x=str_replace ( "'", "", $x); 
 	$x=str_replace ( "´", "", $x); 
