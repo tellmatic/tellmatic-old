@@ -160,7 +160,8 @@ $sql[5]['sql']="
 CREATE TABLE ".$tm_tablePrefix."frm (
   id int NOT NULL auto_increment,
   name varchar(64) collate utf8_bin NOT NULL default '',
-  descr varchar(255) collate utf8_bin NOT NULL default '',
+  action_url varchar(255) collate utf8_bin NOT NULL default '',
+  descr tinytext collate utf8_bin NOT NULL default '',
   siteid varchar(64) collate utf8_bin NOT NULL default '',
   aktiv tinyint NOT NULL default '1',
   created datetime default NULL,
@@ -450,10 +451,11 @@ CREATE TABLE ".$tm_tablePrefix."nl_attm (
 id INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
 nl_id INT NOT NULL ,
 file VARCHAR( 255 ) NOT NULL ,
-site_id VARCHAR( 64 ) NOT NULL ,
+siteid VARCHAR( 64 ) NOT NULL ,
 INDEX ( nl_id )
 ) ENGINE=".$db_type."  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 ";
+
 
 /***********************************************************/
 //create tables etc

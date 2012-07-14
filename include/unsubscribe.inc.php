@@ -34,7 +34,7 @@ $FMESSAGE="";
 $InputName_Name="email";//email
 $$InputName_Name=getVar($InputName_Name);
 
-$check_mail=checkEmailAdr($email,$EMailcheck_Intern);
+$check_mail=checkEmailAdr($email,$EMailcheck_Subscribe);
 if ($check_mail[0] && $set=="unsubscribe") {
 //unbedingt ^^^ pruefen auf gueltige email!
 //sonst findet getAdr alle adressen!!! da search - email null ist / leer ist

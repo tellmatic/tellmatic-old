@@ -39,6 +39,17 @@ $Form->set_InputReadonly($FormularName,$InputName_Name,false);
 $Form->set_InputOrder($FormularName,$InputName_Name,1);
 $Form->set_InputLabel($FormularName,$InputName_Name,"");
 
+//Url
+$Form->new_Input($FormularName,$InputName_ActionUrl,"text", display($$InputName_ActionUrl));
+$Form->set_InputJS($FormularName,$InputName_ActionUrl," onChange=\"flash('submit','#ff0000');\" ");
+$Form->set_InputStyleClass($FormularName,$InputName_ActionUrl,"mFormText","mFormTextFocus");
+$Form->set_InputSize($FormularName,$InputName_ActionUrl,48,1024);
+$Form->set_InputDesc($FormularName,$InputName_ActionUrl,___("URL"));
+$Form->set_InputReadonly($FormularName,$InputName_ActionUrl,false);
+$Form->set_InputOrder($FormularName,$InputName_ActionUrl,1);
+$Form->set_InputLabel($FormularName,$InputName_ActionUrl,"");
+
+
 //Aktiv
 	$Form->new_Input($FormularName,$InputName_Aktiv,"checkbox", 1);
 	$Form->set_InputJS($FormularName,$InputName_Aktiv," onChange=\"flash('submit','#ff0000');\" ");
@@ -377,6 +388,15 @@ $_MAIN_OUTPUT.= tm_icon("folder.png",___("Name"))."&nbsp;".___("Name");
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "<td valign=top colspan=1>";
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Name]['html'];
+$_MAIN_OUTPUT.= "</td>";
+$_MAIN_OUTPUT.= "</tr>";
+
+$_MAIN_OUTPUT.= "<tr>";
+$_MAIN_OUTPUT.= "<td valign=top>";
+$_MAIN_OUTPUT.= tm_icon("world.png",___("URL"))."&nbsp;".___("URL");
+$_MAIN_OUTPUT.= "</td>";
+$_MAIN_OUTPUT.= "<td valign=top colspan=1>";
+$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_ActionUrl]['html'];
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "</tr>";
 

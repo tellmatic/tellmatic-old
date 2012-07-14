@@ -98,8 +98,6 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 		$NL_Filename_T="nl_".date_convert_to_string($NL[0]['created'])."_t.txt";
 		//bild
 		$NL_Imagename1="nl_".date_convert_to_string($NL[0]['created'])."_1.jpg";
-		//attachement
-		$NL_Attachfile1=$tm_nlattachpath."/a".date_convert_to_string($NL[0]['created'])."_1.".$NL[0]['attm'];
 
 		//online:
 		$NL_Filename_P="nl_".date_convert_to_string($NL[0]['created'])."_p.html";
@@ -109,10 +107,10 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 		//template values
 		$IMAGE1="";
 		$LINK1="";
-		$ATTACH1="";
 		$IMAGE1_URL="";
 		$LINK1_URL="";
-		$ATTACH1_URL="";
+		$ATTACHEMENTS="";
+		$ATTACHEMENTS_TEXT="";
 
 		//Bild
 		if (file_exists($tm_nlimgpath."/".$NL_Imagename1)) {
@@ -120,26 +118,19 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 			$IMAGE1_URL=$tm_URL_FE."/".$tm_nlimgdir."/".$NL_Imagename1;
 			$IMAGE1="<img src=\"".$IMAGE1_URL."\" border=0>";
 		}
+//Attachements!
+		$attachements=$NL[0]['attachements'];
+		$atc=count($attachements);
+		if ($atc>0) {
+			foreach ($attachements as $attachfile) {
+				$ATTACHEMENTS.= "<a href=\"".$tm_URL_FE."/".$tm_nlattachdir."/".$attachfile['file']."\" target=\"_blank\" title=\"".$attachfile['file']."\">";
+				$ATTACHEMENTS.=$attachfile['file'];
+				$ATTACHEMENTS.= "</a><br>\n";
 
-		//attachement?
-		$ATTM=Array();
-		$attach_file=false;
-		if (file_exists($NL_Attachfile1)) {
-			send_log(  "\n".date("Y-m-d H:i:s").":  NL Attachement:".$tm_URL_FE."/".$tm_nlattachdir."/a".date_convert_to_string($NL[0]['created'])."_1.".$NL[0]['attm']);
-			$attach_file=true;
-			$ATTM=array(
-					"FileName"=>$NL_Attachfile1,
-					"Content-Type"=>"automatic/name",
-					"Disposition"=>"attachment"
-					);
-			//$email_obj->AddFilePart($ATTM); //dieser part darf erst nach anfuegen des body hinzugefuegt werden, da sonst evtl ein jpeg am anfang der mail erscheint.....
-			//leider ne performancebremse aber ok...... beim personalisierten NL ist eh langsam....
-			//bei massenmail wird die mail anders zusammengesetzt!
-			//link zum attachement fuer newsletter
-			$ATTACH1_URL=$tm_URL_FE."/".$tm_nlattachdir."/a".date_convert_to_string($NL[0]['created'])."_1.".$NL[0]['attm'];
-			$ATTACH1="<a href=\"".$ATTACH1_URL."\" target=\"_blank\">";
-		}
-
+				$ATTACHEMENTS_TEXT.=$attachfile['file'].": ".$tm_URL_FE."/".$tm_nlattachdir."/".$attachfile['file'];
+				$ATTACHEMENTS_TEXT.= "\n";
+			}//foreach
+		}//if count/atc
 		//Link wird weiter unten aufbereitet da evtl personalisiert .....
 		//unsubscribe ist auch personalisiert
 		//blindimage ist auch personalisiert
@@ -177,7 +168,6 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 		}
 
 		$email_obj->SetBulkMail=1;
-		$email_obj->smtp_html_debug=0;
 		$email_obj->mailer=$ApplicationText;
 		$email_obj->SetEncodedEmailHeader("From",$C[0]['sender_email'],$C[0]['sender_name']);
 		$email_obj->SetEncodedEmailHeader("Reply-To",$C[0]['sender_email'],$C[0]['sender_name']);
@@ -259,16 +249,15 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 			$_Tpl_NL->setTemplatePath($tm_nlpath);
 			$_Tpl_NL->setParseValue("IMAGE1", $IMAGE1);
 			$_Tpl_NL->setParseValue("LINK1", $LINK1);
-			$_Tpl_NL->setParseValue("ATTACH1", $ATTACH1);
+			$_Tpl_NL->setParseValue("ATTACH1", "");
 			$_Tpl_NL->setParseValue("CLOSELINK", "</a>");
 			$_Tpl_NL->setParseValue("BLINDIMAGE", $BLINDIMAGE);
 			$_Tpl_NL->setParseValue("UNSUBSCRIBE", $UNSUBSCRIBE);
 			$_Tpl_NL->setParseValue("SUBSCRIBE", $SUBSCRIBE);
 			$_Tpl_NL->setParseValue("NLONLINE", $NLONLINE);
-
 			$_Tpl_NL->setParseValue("IMAGE1_URL", $IMAGE1_URL);
 			$_Tpl_NL->setParseValue("LINK1_URL", $LINK1_URL);
-			$_Tpl_NL->setParseValue("ATTACH1_URL", $ATTACH1_URL);
+			$_Tpl_NL->setParseValue("ATTACH1_URL", "");
 			$_Tpl_NL->setParseValue("NLONLINE_URL", $NLONLINE_URL);
 			$_Tpl_NL->setParseValue("BLINDIMAGE_URL", $BLINDIMAGE_URL);
 			$_Tpl_NL->setParseValue("UNSUBSCRIBE_URL", $UNSUBSCRIBE_URL);
@@ -289,6 +278,8 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 			$NLBODY="";
 			if ($NL[0]['content_type']=="html" || $NL[0]['content_type']=="text/html") {
 					send_log(  "\n".date("Y-m-d H:i:s").":   render HTML Template: ".$NL_Filename_N);
+					//attachements html code
+					$_Tpl_NL->setParseValue("ATTACHEMENTS", $ATTACHEMENTS);
 					//Template rendern und body zusammenbauen
 					//render template. this will load the saved newsletter template and render it. this is useful if you edit your template with a texteditor and update via ftp etc
 					$NLBODY=$_Tpl_NL->renderTemplate($NL_Filename_N);//html
@@ -298,6 +289,8 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 			$NLBODY_TEXT="";
 			if ($NL[0]['content_type']=="text" || $NL[0]['content_type']=="text/html") {
 				#if (!empty($NL[0]['body_text']) && $NL[0]['body_text']!="") {
+					//attachements text code
+					$_Tpl_NL->setParseValue("ATTACHEMENTS", $ATTACHEMENTS_TEXT);
 					#$NLBODY_TEXT=$NL[0]['body_text'];
 					send_log(  "\n".date("Y-m-d H:i:s").":   render Text Template: ".$NL_Filename_T);
 					$NLBODY_TEXT=$_Tpl_NL->renderTemplate($NL_Filename_T);//text!
@@ -350,9 +343,9 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 						//jetzt abfragen ob was gefunden fuer status wait==1
 						send_log( "\n".date("Y-m-d H:i:s").":     HID: ".$H[$bcc]['id']." adrid:".$H[$bcc]['adr_id']." h_status: ".$H[$bcc]['status']."==1");
 						if ($hc_wait>0) { //ok
-							
+
 							$send_it=true;//wird gebraucht um versenden abzufangen wenn aktuell bearbeiteter eintrag
-							
+
 							send_log( "\n".date("Y-m-d H:i:s").":     OK: HID: ".$H[$bcc]['id']." adrid:".$H[$bcc]['adr_id']." --- ");
 							//adresse holen
 							send_log(  "\n".date("Y-m-d H:i:s").":     getAdr() ");
@@ -477,7 +470,7 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 									$_Tpl_NL->setTemplatePath($tm_nlpath);
 									$_Tpl_NL->setParseValue("IMAGE1", $IMAGE1);
 									$_Tpl_NL->setParseValue("LINK1", $LINK1);
-									$_Tpl_NL->setParseValue("ATTACH1", $ATTACH1);
+									$_Tpl_NL->setParseValue("ATTACH1", "");
 									$_Tpl_NL->setParseValue("CLOSELINK", "</a>");
 									$_Tpl_NL->setParseValue("BLINDIMAGE", $BLINDIMAGE);
 									$_Tpl_NL->setParseValue("UNSUBSCRIBE", $UNSUBSCRIBE);
@@ -486,7 +479,7 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 
 									$_Tpl_NL->setParseValue("IMAGE1_URL", $IMAGE1_URL);
 									$_Tpl_NL->setParseValue("LINK1_URL", $LINK1_URL);
-									$_Tpl_NL->setParseValue("ATTACH1_URL", $ATTACH1_URL);
+									$_Tpl_NL->setParseValue("ATTACH1_URL", "");									
 									$_Tpl_NL->setParseValue("NLONLINE_URL", $NLONLINE_URL);
 									$_Tpl_NL->setParseValue("BLINDIMAGE_URL", $BLINDIMAGE_URL);
 									$_Tpl_NL->setParseValue("UNSUBSCRIBE_URL", $UNSUBSCRIBE_URL);
@@ -508,6 +501,8 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 									$NLBODY="";
 									if ($NL[0]['content_type']=="html" || $NL[0]['content_type']=="text/html") {
 										send_log(  "\n".date("Y-m-d H:i:s").":   render HTML Template: ".$NL_Filename_N);
+										//attachements html code
+										$_Tpl_NL->setParseValue("ATTACHEMENTS", $ATTACHEMENTS);
 										//Template rendern und body zusammenbauen
 										$NLBODY=$_Tpl_NL->renderTemplate($NL_Filename_N);//html
 									}
@@ -516,6 +511,8 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 									$NLBODY_TEXT="";
 									if ($NL[0]['content_type']=="text" || $NL[0]['content_type']=="text/html") {
 										#if (!empty($NL[0]['body_text']) && $NL[0]['body_text']!="") {
+											//attachements text code
+											$_Tpl_NL->setParseValue("ATTACHEMENTS", $ATTACHEMENTS_TEXT);
 											#$NLBODY_TEXT=$NL[0]['body_text'];
 											send_log(  "\n".date("Y-m-d H:i:s").":   render Text Template: ".$NL_Filename_T);
 											$NLBODY_TEXT=$_Tpl_NL->renderTemplate($NL_Filename_T);//text!
@@ -536,7 +533,6 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 									$SUBJ = str_replace($SUBJ_search, $SUBJ_replace, $NL[0]['subject']);
 									send_log(  "\n".date("Y-m-d H:i:s").": subject=".$NL[0]['subject']." | parsed: ".$SUBJ);
 									$email_message->SetEncodedHeader("Subject",$SUBJ);
-
 						
 									send_log(  "\n".date("Y-m-d H:i:s").": personal Mailing, add TO: ");
 									$To=$ADR[0]['email'];
@@ -584,7 +580,7 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 					$email_message->SetHeader("Precedence","bulk");
 					$email_message->SetBulkMail(1);
 				}
-				
+
 			$send_ok=false;
 
 			if (!$a_error && !$h_error && $send_it)	{
@@ -610,12 +606,22 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 				//AddAlternativeMultiparts
 				if (DEBUG) print_r($partids);
 				$email_message->AddAlternativeMultipart($partids);
-	
+
 				//erst jetzt darf der part f.d. attachement hinzugefuegt werden!
-				if ($attach_file) {
-					send_log(  "\n".date("Y-m-d H:i:s").": add Mail Attachement");
-					$email_message->AddFilePart($ATTM);
-				}
+				$attachements=$NL[0]['attachements'];
+				$atc=count($attachements);
+				if ($atc>0) {
+					send_log(  "\n".date("Y-m-d H:i:s").":    adding ".$atc." Attachements:");
+					foreach ($attachements as $attachfile) {
+						send_log(  "\n".date("Y-m-d H:i:s").":              add Attachement ".$attachfile['file']);
+						$ATTM=array(
+							"FileName"=>$tm_nlattachpath."/".$attachfile['file'],
+							"Content-Type"=>"automatic/name",
+							"Disposition"=>"attachment"
+						);
+						$email_message->AddFilePart($ATTM);
+					}
+				}//if count/atc
 
 				//Versenden
 				send_log(  "\n\n".date("Y-m-d H:i:s").": SEND Mail\n");

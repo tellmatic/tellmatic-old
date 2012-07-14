@@ -52,11 +52,38 @@ $Form->set_InputLabel($FormularName,$InputName_Image1,"");
 $Form->new_Input($FormularName,$InputName_Attach1,"file", "");
 $Form->set_InputJS($FormularName,$InputName_Attach1," onChange=\"flash('submit','#ff0000');\" ");
 $Form->set_InputStyleClass($FormularName,$InputName_Attach1,"mFormText","mFormTextFocus");
-$Form->set_InputSize($FormularName,$InputName_Attach1,48,48);
+$Form->set_InputSize($FormularName,$InputName_Attach1,8,255);
 $Form->set_InputDesc($FormularName,$InputName_Attach1,___("Anhang hochladen")." {ATTACH1}");
 $Form->set_InputReadonly($FormularName,$InputName_Attach1,false);
 $Form->set_InputOrder($FormularName,$InputName_Attach1,1);
 $Form->set_InputLabel($FormularName,$InputName_Attach1,"");
+
+//existing attachements
+$Form->new_Input($FormularName,$InputName_AttachExisting,"select", "");
+$Form->set_InputJS($FormularName,$InputName_AttachExisting," onChange=\"flash('submit','#ff0000');\" ");
+$Form->set_InputDefault($FormularName,$InputName_AttachExisting,basename($$InputName_AttachExisting));
+$Form->set_InputStyleClass($FormularName,$InputName_AttachExisting,"mFormSelect","mFormSelectFocus");
+$Form->set_InputDesc($FormularName,$InputName_AttachExisting,___("Anhänge auswählen"));
+$Form->set_InputReadonly($FormularName,$InputName_AttachExisting,false);
+$Form->set_InputOrder($FormularName,$InputName_AttachExisting,6);
+$Form->set_InputLabel($FormularName,$InputName_AttachExisting,"");
+$Form->set_InputSize($FormularName,$InputName_AttachExisting,0,24);
+$Form->set_InputMultiple($FormularName,$InputName_AttachExisting,true);
+//add Data
+unset($FileARRAY);
+gen_rec_files_array($tm_nlattachpath);
+//sort array by name:
+foreach ($FileARRAY as $field) {
+	$btsort[]=$field['filename'];
+}
+@array_multisort($btsort, SORT_ASC, $FileARRAY, SORT_ASC);
+$ic= count($FileARRAY);
+for ($icc=0; $icc < $ic; $icc++) {
+	$Form->add_InputOption($FormularName,$InputName_AttachExisting,basename($FileARRAY[$icc]['filename']),basename($FileARRAY[$icc]['filename']));
+}
+
+
+
 
 //Subject
 $Form->new_Input($FormularName,$InputName_Name,"text", display($$InputName_Name));
@@ -233,122 +260,127 @@ $_MAIN_OUTPUT.= $Form->INPUT[$FormularName]['nl_id']['html'];
 
 $_MAIN_OUTPUT.= "<table border=0>";
 
-if (!empty($nl_id)) {
 	$_MAIN_OUTPUT.= "<tr>";
 	$_MAIN_OUTPUT.= "<td colspan=\"2\">";
+if (!empty($nl_id)) {
 	$_MAIN_OUTPUT.= "ID: <b>".$NL[0]['id']."</b>";
 	$_MAIN_OUTPUT.= "<br>";
 	$_MAIN_OUTPUT.= sprintf(___("Erstellt am: %s von %s"),"<b>".$NL[0]['created']."</b>","<b>".$NL[0]['author']."</b>");
 	$_MAIN_OUTPUT.= "<br>";
 	$_MAIN_OUTPUT.= sprintf(___("Bearbeitet am: %s von %s"),"<b>".$NL[0]['updated']."</b>","<b>".$NL[0]['editor']."</b>");
+}
 	$_MAIN_OUTPUT.= "<br><br>";
 	$_MAIN_OUTPUT.= "</td>";
+	$_MAIN_OUTPUT.= "<td valign=\"top\"  rowspan=12>";
+	$_MAIN_OUTPUT.= tm_icon("disk.png",___("Anhänge"))."&nbsp;".___("Anhänge");
+	$_MAIN_OUTPUT.= "<br>";
+	$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_AttachExisting]['html'];
+	$_MAIN_OUTPUT.= "</td>";
 	$_MAIN_OUTPUT.= "</tr>";
-}
 
 $_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top width=\"200\">";
+$_MAIN_OUTPUT.= "<td valign=\"top\" width=\"200\">";
 $_MAIN_OUTPUT.= tm_icon("sum.png",___("Betreff"))."&nbsp;".___("Betreff");
 $_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "<td valign=top>";
+$_MAIN_OUTPUT.= "<td valign=\"top\">";
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Name]['html'];
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "</tr>";
 
 $_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top width=\"200\">";
+$_MAIN_OUTPUT.= "<td valign=\"top\" width=\"200\">";
 $_MAIN_OUTPUT.= tm_icon("user_comment.png",___("Empfängername"))."&nbsp;".___("Empfängername");
 $_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "<td valign=top>";
+$_MAIN_OUTPUT.= "<td valign=\"top\">";
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_RCPTName]['html'];
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "</tr>";
 
 $_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top>";
+$_MAIN_OUTPUT.= "<td valign=\"top\">";
 $_MAIN_OUTPUT.= tm_icon("tick.png",___("Aktiv")).tm_icon("cancel.png",___("Inaktiv"))."&nbsp;".___("Aktiv");
 $_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "<td valign=top>";
+$_MAIN_OUTPUT.= "<td valign=\"top\">";
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Aktiv]['html'];
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "</tr>";
 
 $_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top>";
+$_MAIN_OUTPUT.= "<td valign=\"top\">";
 $_MAIN_OUTPUT.= tm_icon("page_white_office.png",___("Format"))."&nbsp;".___("Format");
 $_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "<td valign=top>";
+$_MAIN_OUTPUT.= "<td valign=\"top\">";
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_ContentType]['html'];
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "</tr>";
 
 $_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top>";
+$_MAIN_OUTPUT.= "<td valign=\"top\">";
 $_MAIN_OUTPUT.= tm_icon("lorry.png",___("Massenmailing")).tm_icon("user_suit.png",___("personalisiertes Newsletter"))."&nbsp;".___("Massenmailing (BCC)");
 $_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "<td valign=top>";
+$_MAIN_OUTPUT.= "<td valign=\"top\">";
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Massmail]['html'];
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "</tr>";
 
 $_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top>";
+$_MAIN_OUTPUT.= "<td valign=\"top\">";
 $_MAIN_OUTPUT.= tm_icon("book.png",___("Gruppe"))."&nbsp;".___("Gruppe");
 $_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "<td valign=top>";
+$_MAIN_OUTPUT.= "<td valign=\"top\">";
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Group]['html'];
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "</tr>";
 
 $_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top>";
+$_MAIN_OUTPUT.= "<td valign=\"top\">";
 $_MAIN_OUTPUT.= tm_icon("page_white_link.png",___("Link"))."&nbsp;".___("Link");
 $_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "<td valign=top>";
+$_MAIN_OUTPUT.= "<td valign=\"top\">";
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Link]['html'];
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "</tr>";
 
 $_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top>";
+$_MAIN_OUTPUT.= "<td valign=\"top\">";
 $_MAIN_OUTPUT.= tm_icon("photo.png",___("Bild"))."&nbsp;".___("Bild");
 $_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "<td valign=top>";
+$_MAIN_OUTPUT.= "<td valign=\"top\">";
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Image1]['html'];
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "</tr>";
 
 $_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top>";
+$_MAIN_OUTPUT.= "<td valign=\"top\">";
 $_MAIN_OUTPUT.= tm_icon("page_white_world.png",___("HTML"))."&nbsp;".___("HTML");
 $_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "<td valign=top>";
+$_MAIN_OUTPUT.= "<td valign=\"top\">";
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_File]['html'];
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "</tr>";
 
 $_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top>";
-$_MAIN_OUTPUT.= tm_icon("attach.png",___("Anhang"))."&nbsp;".___("Anhang");
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "<td valign=top>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Attach1]['html'];
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
-
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top>";
+$_MAIN_OUTPUT.= "<td valign=\"top\">";
 $_MAIN_OUTPUT.= tm_icon("picture_go.png",___("Tracking Bild"))."&nbsp;".___("Blind- bzw. Tracking Bild auswählen oder neues Bild hochladen");
 $_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "<td valign=top>";
+$_MAIN_OUTPUT.= "<td valign=\"top\">";
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_TrackImageExisting]['html']."&nbsp; oder<br>";
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_TrackImageNew]['html'];
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "</tr>";
 
 $_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top colspan=2>";
-$_MAIN_OUTPUT.= tm_icon("layout.png",___("Text"))."&nbsp;".___("HTML-Part")."&nbsp;&nbsp;&nbsp;";
+$_MAIN_OUTPUT.= "<td valign=\"top\">";
+$_MAIN_OUTPUT.= tm_icon("attach.png",___("Anhang"))."&nbsp;".___("Neuer Anhang");
+$_MAIN_OUTPUT.= "</td>";
+$_MAIN_OUTPUT.= "<td valign=\"top\">";
+$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Attach1]['html'];
+$_MAIN_OUTPUT.= "</td>";
+$_MAIN_OUTPUT.= "</tr>";
+
+$_MAIN_OUTPUT.= "<tr>";
+$_MAIN_OUTPUT.= "<td valign=\"top\" colspan=3 style=\"border: 1px dashed #cccccc;\">";
+$_MAIN_OUTPUT.= tm_icon("page_white_h.png",___("Text"))."&nbsp;".___("HTML-Part")."&nbsp;&nbsp;&nbsp;";
 $_MAIN_OUTPUT.= "(<a href=\"javascript:switchSection('html_part');\" >show/hide</a>)";
 $_MAIN_OUTPUT.= "<div id=\"html_part\">";
 $_MAIN_OUTPUT.= "(<a href=\"javascript:toggleEditor('".$InputName_Descr."');\" >";
@@ -359,8 +391,8 @@ $_MAIN_OUTPUT.= "</div>";
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "</tr>";
 $_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top colspan=2>";
-$_MAIN_OUTPUT.= tm_icon("page_white.png",___("Text"))."&nbsp;".___("Text-Part")."&nbsp;&nbsp;&nbsp;";
+$_MAIN_OUTPUT.= "<td valign=\"top\" colspan=3 style=\"border: 1px dashed #cccccc;\">";
+$_MAIN_OUTPUT.= tm_icon("page_white_text.png",___("Text"))."&nbsp;".___("Text-Part")."&nbsp;&nbsp;&nbsp;";
 $_MAIN_OUTPUT.= "(<a href=\"javascript:switchSection('text_part');\" >show/hide</a>)";
 $_MAIN_OUTPUT.= "<div id=\"text_part\">";
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_DescrText]['html'];
@@ -369,7 +401,12 @@ $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "</tr>";
 
 $_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top colspan=2>";
+$_MAIN_OUTPUT.= "<td valign=\"top\" colspan=3>&nbsp;";
+$_MAIN_OUTPUT.= "</td>";
+$_MAIN_OUTPUT.= "</tr>";
+
+$_MAIN_OUTPUT.= "<tr>";
+$_MAIN_OUTPUT.= "<td valign=\"top\" colspan=3>";
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Submit]['html'];
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Reset]['html'];
 $_MAIN_OUTPUT.= "</td>";
@@ -377,9 +414,11 @@ $_MAIN_OUTPUT.= "</tr>";
 
 $_MAIN_OUTPUT.= "</table>";
 $_MAIN_OUTPUT.= $Form->FORM[$FormularName]['foot'];
+
+$_MAIN_OUTPUT.= "<br><br>";
 $_MAIN_OUTPUT.= sprintf(___("%s enthält das hochgeladene Bild 'img src' | %s enthält nur die URL zum Bild"),"<b>{IMAGE1}</b>","<b>{IMAGE1_URL}</b>")."<br>".
 						sprintf(___("%s enthält den angegebenen Link 'a href' | %s enthält nur die URL des Links"),"<b>{LINK1}</b>","<b>{LINK1_URL}</b>")."<br>".
-						sprintf(___("%s enthält den Link zum Attachement 'a href' |  %s enthält nur die URL zum Attachement"),"<b>{ATTACH1}</b>","<b>{ATTACH1_URL}</b>")."<br>".
+						sprintf(___("%s enthält die Links zu den Attachements"),"<b>{ATTACHEMENTS}</b>")."<br>".
 						sprintf(___("%s enthält den Link zum abmelden |   %s enthält nur die URL zum Abmeldeformular"),"<b>{UNSUBSCRIBE}</b>","<b>{UNSUBSCRIBE_URL}</b>")."<br>".
 						sprintf(___("%s enthält den Link zur Onlineversion 'a href' |  %s enthält nur die URL zur Onlineversion"),"<b>{NLONLINE}</b>","<b>{NLONLINE_URL}</b>")."<br>".
 						sprintf(___("%s enthält das schliessende TAG '/a' fuer die Links"),"<b>{CLOSELINK}</b>")."<br>".

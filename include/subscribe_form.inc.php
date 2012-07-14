@@ -18,7 +18,14 @@ $InputName_Reset="reset";
 $Form=new tm_SimpleForm();
 $FormularName="subscribe".$FRM[0]['id'];
 //make new Form
-$Form->new_Form($FormularName,$_SERVER["PHP_SELF"],"post","_self");
+
+//action url: 
+if (!empty($FRM[0]['action_url'])) {
+	$FURL=$FRM[0]['action_url'];
+} else {
+	$FURL=$_SERVER["PHP_SELF"];
+}
+$Form->new_Form($FormularName,$FURL,"post","_self");
 //add a Description
 $Form->set_FormDesc($FormularName,"subscribe");
 $Form->new_Input($FormularName,"set", "hidden", "save");
@@ -102,6 +109,9 @@ $acgp=count($GRPPUB);
 for ($accgp=0; $accgp<$acgp; $accgp++)
 {
 		$Form->add_InputOption($FormularName,$InputName_GroupPub,$GRPPUB[$accgp]['id'],$GRPPUB[$accgp]['public_name']);
+		
+		$FGROUPDESCR.="<strong>".display($GRPPUB[$accgp]['public_name'])."</strong><br>";
+		$FGROUPDESCR.=display($GRPPUB[$accgp]['descr'])."<br>";
 }
 
 

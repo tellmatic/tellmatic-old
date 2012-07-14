@@ -26,7 +26,7 @@ class tm_FRM {
 	function getForm($id=0,$offset=0,$limit=0,$group_id=0,$sortIndex="",$sortType=0) {
 		$this->FRM=Array();
 		#$DB=new tm_DB();
-		$Query ="	SELECT ".TM_TABLE_FRM.".id, ".TM_TABLE_FRM.".name, ".TM_TABLE_FRM.".descr, ".TM_TABLE_FRM.".aktiv, ".TM_TABLE_FRM.".author, ".TM_TABLE_FRM.".created, ".TM_TABLE_FRM.".editor, ".TM_TABLE_FRM.".updated, ".TM_TABLE_FRM.".double_optin, ".TM_TABLE_FRM.".subscriptions,
+		$Query ="	SELECT ".TM_TABLE_FRM.".id, ".TM_TABLE_FRM.".name, ".TM_TABLE_FRM.".action_url, ".TM_TABLE_FRM.".descr, ".TM_TABLE_FRM.".aktiv, ".TM_TABLE_FRM.".author, ".TM_TABLE_FRM.".created, ".TM_TABLE_FRM.".editor, ".TM_TABLE_FRM.".updated, ".TM_TABLE_FRM.".double_optin, ".TM_TABLE_FRM.".subscriptions,
 						 ".TM_TABLE_FRM.".use_captcha,  ".TM_TABLE_FRM.".digits_captcha,  ".TM_TABLE_FRM.".subscribe_aktiv, ".TM_TABLE_FRM.".check_blacklist,
 						 ".TM_TABLE_FRM.".submit_value, ".TM_TABLE_FRM.".reset_value,
 						".TM_TABLE_FRM.".email, ".TM_TABLE_FRM.".f0, ".TM_TABLE_FRM.".f1, ".TM_TABLE_FRM.".f2, ".TM_TABLE_FRM.".f3, ".TM_TABLE_FRM.".f4, ".TM_TABLE_FRM.".f5, ".TM_TABLE_FRM.".f6, ".TM_TABLE_FRM.".f7, ".TM_TABLE_FRM.".f8, ".TM_TABLE_FRM.".f9,
@@ -67,6 +67,7 @@ class tm_FRM {
 		while ($this->DB->next_record()) {
 			$this->FORM[$ac]['id']=$this->DB->Record['id'];
 			$this->FORM[$ac]['name']=$this->DB->Record['name'];
+			$this->FORM[$ac]['action_url']=$this->DB->Record['action_url'];
 			$this->FORM[$ac]['aktiv']=$this->DB->Record['aktiv'];
 			$this->FORM[$ac]['descr']=$this->DB->Record['descr'];
 			$this->FORM[$ac]['author']=$this->DB->Record['author'];
@@ -223,7 +224,7 @@ class tm_FRM {
 		$Query ="INSERT INTO
 					".TM_TABLE_FRM."
 					(
-					name,descr,aktiv,author,created,editor,updated,double_optin,subscriptions,use_captcha,digits_captcha,subscribe_aktiv,check_blacklist,
+					name,action_url,descr,aktiv,author,created,editor,updated,double_optin,subscriptions,use_captcha,digits_captcha,subscribe_aktiv,check_blacklist,
 					submit_value, reset_value, siteid,
 					email, f0,f1,f2,f3,f4,f5,f6,f7,f8,f9,
 					f0_type, f1_type, f2_type, f3_type, f4_type, f5_type, f6_type, f7_type, f8_type, f9_type,
@@ -234,7 +235,7 @@ class tm_FRM {
 					)
 					VALUES
 					(
-					'".dbesc($frm["name"])."', '".dbesc($frm["descr"])."', '".dbesc($frm["aktiv"])."', '".dbesc($frm["author"])."', '".dbesc($frm["created"])."', '".dbesc($frm["author"])."', '".dbesc($frm["created"])."',
+					'".dbesc($frm["name"])."', '".dbesc($frm["action_url"])."', '".dbesc($frm["descr"])."', '".dbesc($frm["aktiv"])."', '".dbesc($frm["author"])."', '".dbesc($frm["created"])."', '".dbesc($frm["author"])."', '".dbesc($frm["created"])."',
 					'".dbesc($frm["double_optin"])."', 0, '".dbesc($frm["use_captcha"])."',
 					'".dbesc($frm["digits_captcha"])."', '".dbesc($frm["subscribe_aktiv"])."', '".dbesc($frm["check_blacklist"])."',
 					'".dbesc($frm["submit_value"])."', '".dbesc($frm["reset_value"])."',
@@ -396,7 +397,7 @@ class tm_FRM {
 		if (check_dbid($frm['id'])) {
 			#$DB=new tm_DB();
 			$Query ="UPDATE ".TM_TABLE_FRM." SET
-						name='".dbesc($frm["name"])."', descr='".dbesc($frm["descr"])."', aktiv='".dbesc($frm["aktiv"])."',
+						name='".dbesc($frm["name"])."', action_url='".dbesc($frm["action_url"])."', descr='".dbesc($frm["descr"])."', aktiv='".dbesc($frm["aktiv"])."',
 						updated='".dbesc($frm["created"])."',
 						editor='".dbesc($frm["author"])."',
 						double_optin='".dbesc($frm["double_optin"])."',

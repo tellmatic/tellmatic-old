@@ -35,9 +35,6 @@ $_MAIN_OUTPUT.= tm_icon("page_white.png",___("Text"))."&nbsp;".___("PlainText Ve
 //link zum bild
 $_MAIN_OUTPUT.= tm_icon("photo.png",___("Bild anzeigen"))."&nbsp;".___("verknüpftes Bild anzeigen")."<br>";
 $_MAIN_OUTPUT.= tm_icon("photo_delete.png",___("Bild löschen"))."&nbsp;".___("verknüpftes Bild löschen")."<br>";
-//attachement
-$_MAIN_OUTPUT.= tm_icon("attach.png",___("Anhang anzeigen"))."&nbsp;".___("Anhang anzeigen")."<br>";
-$_MAIN_OUTPUT.= tm_icon("link_break.png",___("Anhang löschen"))."&nbsp;".___("Anhang löschen")."<br>";
 //link zur html datei!
 $_MAIN_OUTPUT.= tm_icon("page_white_world.png",___("HTML-Datei anzeigen"))."&nbsp;".___("verknüpfte HTML Datei anzeigen")."<br>";
 $_MAIN_OUTPUT.= tm_icon("page_white_delete.png",___("HTML-Datei löschen"))."&nbsp;".___("verknüpfte HTML-Datei löschen")."<br>";

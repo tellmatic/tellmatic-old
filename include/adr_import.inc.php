@@ -118,8 +118,8 @@ if ($set=="import") {
 			// Datei auch nicht zu groß
 			if($_FILES["file_new"]["size"] <= $max_upload_size) {
 				// Alles OK -> Datei kopieren
-				if(copy($_FILES["file_new"]["tmp_name"], $tm_datapath."/".$CSV_Filename)) {
-					$IMPORT_MESSAGE.= "<br>HTML-Datei erfolgreich hochgeladen!";
+				if (move_uploaded_file($_FILES["file_new"]["tmp_name"], $tm_datapath."/".$CSV_Filename)) {
+					$IMPORT_MESSAGE.= "<br>".___("CSV-Datei erfolgreich hochgeladen.");
 					$IMPORT_MESSAGE.= "<ul>".$_FILES["file_new"]["name"];
 					$IMPORT_MESSAGE.= " / ".$_FILES["file_new"]["size"]." Byte";
 					$IMPORT_MESSAGE.= ", ".$_FILES["file_new"]["type"];
@@ -302,9 +302,9 @@ if ($set=="import") {
 			  	while(!feof($uf) && $lines_tmp < $import_offset_user) {
 				  	$tmp=fgets($uf);//, 4096
 					$lines_tmp++;
-			  	}
+			  	}//while
 			  	unset($tmp);
-			}
+			}//import offset user
 			//zeilen auslesen bis limit erreicht
 			while(!feof($uf) && $lines_f < $import_limit_user) {
 				$row=fgets($uf, 4096);

@@ -11,6 +11,27 @@
 /* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
 /********************************************************************************/
 
+*+*+*+*+*+*+*+*+*+*+*+ CHANGES V1.0.8.2  +*+*+*+*+*+*+*+*+*+*+*+*
+	* New features/Changes:
+		- multiple, unlimited attachements.
+			{ATTACH1} and {ATTACH1} are no longer used. Instead use {ATTACHEMENTS} to display a list of attachements and links
+		- "action url" in forms: in some cases an url is needed to post the form, enter url here if phpself doesn't work (php self is default if URL is empty)
+		- export addresses from bouncemails
+		
+	* Bugs fixed:
+		- Translation: ist nicht passwortgeschuetzt ---> is not write protected.	
+		- subscribe: fixed bug on checking email at dubleoptin confirmation
+		- unsubscribe: use email checking method for subscriptions instead of internal
+		- install: sql: nl_attm: site_id should be siteid
+		- nl_edit: do not strtr body_text
+		- login: disable cookiechecks, needed to login twice after false login or timeout etc.
+
+	* Code changes:
+		- adr_import: use move_uploaded_file() instead fo copy
+		- frm:descr tinytext (was varchar(255) before)
+		- hosts: allow @ sign in username
+		- forms: parse {FGROUPDESCR} , FGROUPDESCR is replaced by a list of public groupname and description
+		
 *+*+*+*+*+*+*+*+*+*+*+ CHANGES V1.0.8.1  +*+*+*+*+*+*+*+*+*+*+*+*
 	* New features/Changes:
 		- Legende: split attributes and actions/status
@@ -22,7 +43,7 @@
 		- queue_send.inc.php: fastmode. not used yet, but defined.
 		- adr_import: bulk import did not work, lines dont get imported, fixed!
 		- adr_import: delimiter within excapecharacters destroys import, e.g. "test@tellmatic.org","herr","test,test", fixed!
-	
+		
 		
 *+*+*+*+*+*+*+*+*+*+*+ CHANGES V1.0.8.0  +*+*+*+*+*+*+*+*+*+*+*+*
 	24.06.008 - 03-07-008, 01.09.2008, released 01.10.2008

@@ -29,10 +29,8 @@ if ($check) {
 //nl: personal, massmailing
 		$body="Hallo {F0} {F1} {F2}<br>\n".
 					"<br>\n".
-					"Attachement-URL<br>\n".
-					"{ATTACH1_URL}<br>\n".
-					"Attachement mit Link<br>\n".
-					"{ATTACH1} {ATTACH1_URL} {CLOSELINK}<br>\n".
+					"Attachements<br>\n".
+					"{ATTACHEMENTS}<br>\n".
 					"<br>\n".
 					"Link-URL<br>\n".
 					"{LINK1_URL}<br>\n".
@@ -77,8 +75,8 @@ if ($check) {
 					
 		$body_text="Hallo {F0} {F1} {F2}\n".
 					"\n".
-					"Attachement-URL\n".
-					"{ATTACH1_URL}\n".
+					"Attachements\n".
+					"{ATTACHEMENTS}\n".
 					"Link-URL\n".
 					"{LINK1_URL}\n".
 					"Online-URL\n".
@@ -108,7 +106,8 @@ if ($check) {
 									"attm"=>"",
 									"rcpt_name"=>"Newsletter",
 									"track_image"=>"_blank",
-									"content_type"=>"text/html"
+									"content_type"=>"text/html",
+									"attachements"=>Array(),
 									)
 								);
 
@@ -171,6 +170,7 @@ if ($check) {
 		$new_adr_grp[0]=1;
 		$FORMULAR->addForm(Array(
 				"name"=>"Form 1",
+				"action_url"=>"",
 				"descr"=>"zum testen / for testing",
 				"aktiv"=>1,
 				"created"=>date("Y-m-d H:i:s"),

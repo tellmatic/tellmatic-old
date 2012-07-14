@@ -28,6 +28,10 @@ if ($$InputName_Offset <0 || empty($$InputName_Offset)) {
 	$$InputName_Offset=0;
 }
 
+//export
+$InputName_Export="export";//
+$$InputName_Export=getVar($InputName_Export);
+
 $InputName_Bounce="bounce";//
 $$InputName_Bounce=getVar($InputName_Bounce,1);
 //
@@ -128,12 +132,25 @@ if ($set=="connect") {
 	if (!empty($val2)) {
 		$ac=count($adr);
 
+		if ($export==1) {
+			//ausgabedatei:
+			//standard name aus datum fuer export generieren
+			$created=date("Y-m-d H:i:s");
+			//default:
+			$Export_Filename="bounce_".date_convert_to_string($created).".csv";
+			$fp = fopen($tm_datapath."/".$Export_Filename,"w");
+		}
+
 		if ($ac>0) {
 			$_MAIN_MESSAGE.= "<br>".sprintf(___("%s Adressen zum Bearbeiten ausgewählt."),$ac);
 
 			for ($acc=0;$acc<$ac;$acc++) {
 				$search['email']=$adr[$acc];
 				$search['email_exact_match']=true;
+				if ($export==1) {
+					$CSV="\"".$adr[$acc]."\"\n";
+					fputs($fp,$CSV,strlen($CSV));
+				}
 				$A=$ADDRESS->getAdr(0,0,0,0,$search,"",0,0);
 				if (isset($A[0]['id'])) {
 
@@ -190,6 +207,12 @@ if ($set=="connect") {
 					$_MAIN_MESSAGE.= "<br>".sprintf(___("%s ist nicht bekannt."),$adr[$acc]);
 				}//isset A
 			}//for $acc
+
+			if ($export==1) {
+				fclose($fp);
+				$_MAIN_MESSAGE.= "<br>".sprintf(___("Datei gespeichert unter: %s"),"<a href=\"".$tm_URL_FE."/".$tm_datadir."/".$Export_Filename."\" target=\"_preview\">".$tm_datadir."/".$Export_Filename."</a>");
+			}
+
 		} else { //$ac>0
 			$_MAIN_MESSAGE.= "<br>".___("Es wurden keine Adressen zum Bearbeiten ausgewählt.");
 		}//$ac>0

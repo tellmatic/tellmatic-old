@@ -2114,7 +2114,7 @@ msgstr	"No write permissions for %s"
 #: ../include/Main.inc.php:66 ../include/Main.inc.php:69 ../include/Main.inc.php:72 ../include/Main.inc.php:75 ../include/Main.inc.php:78 ../include/Main.inc.php:81 ../include/Main.inc.php:67 ../include/Main.inc.php:70 ../include/Main.inc.php:73 ../include/Main.inc.php:76 ../include/Main.inc.php:79 ../include/Main.inc.php:82
 #, c-format
 msgid	"ACHTUNG! %s ist nicht Passwortgeschützt"
-msgstr	"Warning! %s is not write protected"
+msgstr	"Warning! %s is not password protected"
 
 #: ../include/Main.inc.php:85 ../include/Main.inc.php:86
 msgid	"Bitte aus dem Menü wählen."

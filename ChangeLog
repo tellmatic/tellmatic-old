@@ -1,3 +1,244 @@
+2008-10-16 Thursday 12:52  mcms09
+
+	Changed:
+		UPDATE (1.13), "Exp", lines: +1 -1
+
+	update instructions for 1.0.8.2
+
+2008-10-16 Thursday 12:47  mcms09
+
+	Changed:
+		include/nl_new.inc.php (1.7), "Exp", lines: +2 -1
+
+	attach_existing defaults to empty array, attach_ext no longer used
+
+2008-10-16 Thursday 12:39  mcms09
+
+	Changed:
+		include/install/install_install.inc.php (1.9), "Exp", lines: +2 -0
+
+	new tables
+
+2008-10-16 Thursday 12:39  mcms09
+
+	Changed:
+		include/install/install_examples.inc.php (1.5), "Exp", lines: +7 -7
+
+	{ATTACHEMENTS}/action_url
+
+2008-10-16 Thursday 11:58  mcms09
+
+	Changed:
+		include/tellmatic.sql (1.2), "Exp", lines: +79 -4
+
+	structure for 1.0.8.2
+
+2008-10-16 Thursday 11:46  mcms09
+
+	Changed:
+		include/bounce.inc.php (1.6), "Exp", lines: +23 -0
+		include/bounce_filter_form.inc.php (1.2), "Exp", lines: +1 -0
+		include/bounce_filter_form_head.inc.php (1.2), "Exp", lines: +10 -1
+
+	export
+
+2008-10-16 Thursday 11:44  mcms09
+
+	Changed:
+		include/subscribe_form.inc.php (1.4), "Exp", lines: +3 -0
+
+	gen FGROUPDESCR
+
+2008-10-16 Thursday 11:43  mcms09
+
+	Changed:
+		include/subscribe.inc.php (1.3), "Exp", lines: +3 -0
+
+	parse FGROUPDESCR
+
+2008-10-16 Thursday 11:42  mcms09
+
+	Changed:
+		CHANGES (1.12), "Exp", lines: +3 -1
+
+	changes for 1.0.8.2
+
+2008-10-15 Wednesday 16:28  mcms09
+
+	Changed:
+		include/send_it.php (1.15), "Exp", lines: +45 -39
+
+	handle multiple attachements
+
+2008-10-15 Wednesday 16:22  mcms09
+
+	Changed:
+		include/Login_guard_ret.inc.php (1.2), "Exp", lines: +2 -28
+
+	disable cookiechecks, fix bug with login twice after false login or
+	timeout, no need to use gpcmagicquotes...
+
+2008-10-15 Wednesday 16:19  mcms09
+
+	Changed:
+		CHANGES (1.11), "Exp", lines: +1 -0
+
+	changes for 1.0.8.2
+
+2008-10-15 Wednesday 16:00  mcms09
+
+	Changed:
+		CHANGES (1.10), "Exp", lines: +18 -0
+
+	changes for 1.0.8.2
+
+2008-10-15 Wednesday 15:47  mcms09
+
+	Changed:
+		UPDATE (1.12), "Exp", lines: +18 -0
+
+	update instructions for 1.0.8.2
+
+2008-10-15 Wednesday 15:46  mcms09
+
+	Changed:
+		include/unsubscribe.inc.php (1.2), "Exp", lines: +1 -1
+
+	use emailchecking method for subscriptions instead of internal
+
+2008-10-15 Wednesday 15:45  mcms09
+
+	Changed:
+		include/tm_version.inc.php (1.4), "Exp", lines: +1 -1
+
+	chg release to 1.0.8.2
+
+2008-10-15 Wednesday 15:44  mcms09
+
+	Changed:
+		include/subscribe.inc.php (1.2), "Exp", lines: +1 -1
+
+	fix bug checking email at doubleoptin confirmation
+
+2008-10-15 Wednesday 15:43  mcms09
+
+	Changed:
+		include/subscribe_form.inc.php (1.3), "Exp", lines: +8 -1
+
+	use action url or phpself by default
+
+2008-10-15 Wednesday 15:42  mcms09
+
+	Changed:
+		include/nl_upload.inc.php (1.4), "Exp", lines: +14 -17
+
+	handle multiple attachements, upload new attm
+
+2008-10-15 Wednesday 15:38  mcms09
+
+	Changed:
+		include/nl_new.inc.php (1.6), "Exp", lines: +4 -0
+
+	handle multiple attachements
+
+2008-10-15 Wednesday 15:37  mcms09
+
+	Changed:
+		include/nl_list_legende.inc.php (1.5), "Exp", lines: +0 -3
+
+	delete icon show/delete attachement
+
+2008-10-15 Wednesday 15:36  mcms09
+
+	Changed:
+		include/nl_list.inc.php (1.6), "Exp", lines: +39 -39
+
+	show and link multiple attachements, delete link to old attachement
+
+2008-10-15 Wednesday 15:31  mcms09
+
+	Changed:
+		include/nl_edit.inc.php (1.5), "Exp", lines: +13 -2
+		include/nl_form.inc.php (1.6), "Exp", lines: +75 -36
+
+	handle multiple attachements
+
+2008-10-15 Wednesday 15:29  mcms09
+
+	Changed:
+		include/host_form.inc.php (1.4), "Exp", lines: +1 -1
+
+	allow at sign in username
+
+2008-10-15 Wednesday 15:19  mcms09
+
+	Changed:
+		include/form_edit.inc.php (1.4), "Exp", lines: +5 -1
+		include/form_form.inc.php (1.3), "Exp", lines: +20 -0
+		include/form_list.inc.php (1.4), "Exp", lines: +10 -2
+		include/form_new.inc.php (1.4), "Exp", lines: +4 -0
+
+	action_url
+
+2008-10-15 Wednesday 15:17  mcms09
+
+	Changed:
+		include/Class_NL.inc.php (1.6), "Exp", lines: +110 -12
+
+	handle attachments, add method getAttm(), addAttm()
+
+2008-10-15 Wednesday 15:14  mcms09
+
+	Changed:
+		include/install/install_conf_sql.inc.php (1.14), "Exp", lines: +1 -1
+
+	nl_attm: site_id should be siteid
+
+2008-10-15 Wednesday 15:12  mcms09
+
+	Changed:
+		include/Class_Form.inc.php (1.5), "Exp", lines: +5 -4
+
+	action_url
+
+2008-10-15 Wednesday 15:10  mcms09
+
+	Changed:
+		include/install/install_conf_sql.inc.php (1.13), "Exp", lines: +3 -1
+
+	frm: add action_url, frm: descr changed to tinytext, nl_attm:
+	site_id should be siteid
+
+2008-10-09 Thursday 16:33  mcms09
+
+	Changed:
+		include/tm_lib.inc.php (1.15), "Exp", lines: +1 -0
+
+	define table nl_attm
+
+2008-10-09 Thursday 16:31  mcms09
+
+	Changed:
+		include/adr_import.inc.php (1.6), "Exp", lines: +4 -4
+
+	fix typo, use move_uploaded_file instead of copy
+
+2008-10-09 Thursday 16:29  mcms09
+
+	Changed:
+		locale/tellmatic-en.po (1.3), "Exp", lines: +1 -1
+
+	fix translation error, write protected should be password protected
+
+2008-10-09 Thursday 04:16  tag r-1-0-8-1
+
+2008-10-09 Thursday 04:16  mcms09
+
+	Changed:
+		ChangeLog (1.3), "Exp", lines: +1025 -142
+
+	changelog 1.0.8.1
+
 2008-10-09 Thursday 04:10  mcms09
 
 	Changed:

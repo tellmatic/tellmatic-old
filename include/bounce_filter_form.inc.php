@@ -21,6 +21,7 @@ if ($bc) {
 	$_MAIN_OUTPUT.= "</td>";
 	$_MAIN_OUTPUT.= "<td valign=bottom colspan=1>";
 	$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_ActionAdr]['html'];
+	$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Export]['html'];
 	$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Submit]['html'];
 	$_MAIN_OUTPUT.= "</td>";
 	$_MAIN_OUTPUT.= "</tr>";

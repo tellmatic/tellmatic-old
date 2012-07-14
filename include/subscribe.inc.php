@@ -33,7 +33,7 @@ if ($doptin==1 && !empty($c) && !empty($email)) { // && checkEmailAdr($email,$EM
 	//adresse pruefen:
 	$_Tpl_FRM=new tm_Template();
 	$_Tpl_FRM->setTemplatePath($tm_formpath);
-
+	$check_mail=checkEmailAdr($email,$EMailcheck_Subscribe);
 	if ($check_mail[0]) {
 		//double optin bestaetigung:
 		//adr suchen, code vergleichen, wenn ok, weiter, sonst ...... leere seite! -?
@@ -363,6 +363,8 @@ if ($frm_id>0 && $doptin!=1) {
 			$FCAPTCHAIMG=$captcha_text->printNumber();
 			//$FCAPTCHAIMG ist jetzt der html code fuer den css captcha...
 
+			//FGROUPDESCR wird in subscribe_form definiert
+			$FGROUPDESCR="";
 			//formular einbinden
 			require_once (TM_INCLUDEPATH."/subscribe_form.inc.php");
 			//template vars definieren
@@ -399,6 +401,7 @@ if ($frm_id>0 && $doptin!=1) {
 			$_Tpl_FRM->setParseValue("F9NAME", display($FRM[0]['f9']));
 
 			$_Tpl_FRM->setParseValue("FGROUP", $FGROUP);
+			$_Tpl_FRM->setParseValue("FGROUPDESCR", $FGROUPDESCR);
 			
 			$_Tpl_FRM->setParseValue("MEMO", $FMEMO);
 			//template ausgeben

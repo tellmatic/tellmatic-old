@@ -60,7 +60,9 @@ class tm_NL {
 		$this->DB->Query($Query);
 		$ac=0;
 		while ($this->DB->next_record()) {
-			$this->NL[$ac]['id']=$this->DB->Record['id'];
+			$id=$this->DB->Record['id'];
+			#$this->NL[$ac]['id']=$this->DB->Record['id'];
+			$this->NL[$ac]['id']=$id;
 			$this->NL[$ac]['aktiv']=$this->DB->Record['aktiv'];
 			$this->NL[$ac]['created']=$this->DB->Record['created'];
 			$this->NL[$ac]['updated']=$this->DB->Record['updated'];
@@ -81,6 +83,7 @@ class tm_NL {
 			$this->NL[$ac]['content_type']=$this->DB->Record['content_type'];
 			$this->NL[$ac]['track_image']=$this->DB->Record['track_image'];
 			$this->NL[$ac]['rcpt_name']=$this->DB->Record['rcpt_name'];
+			$this->NL[$ac]['attachements']=$this->getAttm($id);
 			$ac++;
 		}
 		return $this->NL;
@@ -109,8 +112,74 @@ class tm_NL {
 		if ($this->DB->Query($Query)) {
 			$Return=true;
 		}
+		//neue id
+		$new_nl_id=$this->DB->LastInsertID;
+		//add attachements
+		$this->addAttm($new_nl_id,$nl['attachements']);
 		return $Return;
 	}//addNL
+
+	function addAttm($nl_id,$attm) {
+		$Return=false;
+		if (check_dbid($nl_id)) {
+			//alte eintraege erstmal loeschen
+				$Query ="DELETE FROM ".TM_TABLE_NL_ATTM."
+							WHERE
+							nl_id='".dbesc($nl_id)."'
+							and siteid='".TM_SITEID."'
+							";
+				if ($this->DB->Query($Query)) {
+					$Return=true;
+				} else {
+					$Return=false;
+					return $Return;
+				}//if query
+			//und dann neue hinzufuegen	, falls welche vorhanden
+			if (count($attm>0)) {
+				foreach ($attm as $attachement => $filename) {
+					$Query ="INSERT INTO ".TM_TABLE_NL_ATTM."
+								(nl_id,	file,siteid)
+								VALUES
+								(
+								'".dbesc($nl_id)."',
+								'".dbesc($filename)."',
+								'".TM_SITEID."'
+								)";
+					if ($this->DB->Query($Query)) {
+						$Return=true;
+					} else {
+						$Return=false;
+						return $Return;
+					}//if query
+				}//count
+			}//foreach
+		}//if dbid
+		return $Return;
+	}//addAttm
+
+	function getAttm($nl_id) {
+		$attm=Array();
+		if (check_dbid($nl_id)) {
+			$Query ="SELECT 
+						id,nl_id,file,siteid 
+						FROM ".TM_TABLE_NL_ATTM."
+						WHERE
+						nl_id='".dbesc($nl_id)."'
+						AND ".TM_TABLE_NL_ATTM.".siteid='".TM_SITEID."'
+						";
+			$this->DB2->Query($Query);
+			$atc=0;
+			while ($this->DB2->next_record()) {
+				$attm[$atc]['id']=$this->DB2->Record['id'];
+				$attm[$atc]['nl_id']=$this->DB2->Record['nl_id'];
+				$attm[$atc]['file']=$this->DB2->Record['file'];
+				$attm[$atc]['siteid']=$this->DB2->Record['siteid'];
+				$atc++;
+			}
+		}//if dbid
+		#print_r($attm);
+		return $attm;
+	}//getAttm
 
 	function updateNL($nl) {
 		$Return=false;
@@ -133,8 +202,13 @@ class tm_NL {
 						AND id='".$nl["id"]."'";
 			if ($this->DB->Query($Query)) {
 				$Return=true;
-			}
+			} else {
+				$Return=false;
+				return $Return;
+			}//if query
 		}
+		//add attachements
+		$this->addAttm($nl['id'],$nl['attachements']);
 		return $Return;
 	}//updateNL
 
@@ -154,6 +228,16 @@ class tm_NL {
 				}
 			//q loeschen
 			$Query ="DELETE FROM ".TM_TABLE_NL_Q."
+						WHERE siteid='".TM_SITEID."'
+						AND nl_id='".$id."'";
+			if ($this->DB->Query($Query)) {
+				$Return=true;
+			} else {
+				$Return=false;
+				return $Return;
+			}
+			//attachements loeschen
+			$Query ="DELETE FROM ".TM_TABLE_NL_ATTM."
 						WHERE siteid='".TM_SITEID."'
 						AND nl_id='".$id."'";
 			if ($this->DB->Query($Query)) {
@@ -185,7 +269,10 @@ class tm_NL {
 						AND siteid='".TM_SITEID."'";
 			if ($this->DB->Query($Query)) {
 				$Return=true;
-			}
+			} else {
+				$Return=false;
+				return $Return;
+			}//if query
 		}
 		return $Return;
 	}//setAktiv
@@ -218,7 +305,10 @@ class tm_NL {
 						AND id='".$nl_id."'";
 			if ($this->DB->Query($Query)) {
 				$Return=true;
-			}
+			} else {
+				$Return=false;
+				return $Return;
+			}//if query
 		}
 		return $Return;
 	}//addClick
@@ -236,7 +326,10 @@ class tm_NL {
 						AND id='".$nl_id."'";
 			if ($this->DB->Query($Query)) {
 				$Return=true;
-			}
+			} else {
+				$Return=false;
+				return $Return;
+			}//if query
 		}
 		return $Return;
 	}//addView
@@ -257,7 +350,7 @@ class tm_NL {
 		$this->DB2->Query($Query);
 		if ($this->DB2->next_record()) {
 			$count=$this->DB2->Record['c'];
-		}
+		}//if next record
 		return $count;
 	}//counNL
 
@@ -296,6 +389,17 @@ class tm_NL {
 			$NL_copy['created']=$created;
 			$NL_copy['author']=$author;
 			$NL_copy['status']=$status;
+			//copy attachement references
+			//array umwandeln, der array aus get sieht anders aus als der fuer update und new!!!
+			$atc=0;
+			$attachements_new=Array();
+			$attachements=$NL[0]['attachements'];
+			foreach ($attachements as $attachfile) {
+				$attachements_new[$atc]=$attachfile['file'];
+				$atc++;
+			}
+			$NL_copy['attachements']=$attachements_new;
+
 			//add new NL
 			$Return=$this->addNL($NL_copy);
 			//thats it
@@ -306,12 +410,6 @@ class tm_NL {
 					$NL_Imagefile1_New=$tm_nlimgpath."/nl_".date_convert_to_string($created)."_1.jpg";
 					if (file_exists($NL_Imagefile1)) {
 						copy($NL_Imagefile1,$NL_Imagefile1_New);
-					}
-					//atachement
-					$NL_Attachfile1=$tm_nlattachpath."/a".date_convert_to_string($NL[0]['created'])."_1.".$NL[0]['attm'];
-					$NL_Attachfile1_New=$tm_nlattachpath."/a".date_convert_to_string($created)."_1.".$NL[0]['attm'];
-					if (file_exists($NL_Attachfile1)) {
-						copy($NL_Attachfile1,$NL_Attachfile1_New);
 					}
 					//html datei
 					$NL_File=$tm_nlpath."/nl_".date_convert_to_string($NL[0]['created']).".html";

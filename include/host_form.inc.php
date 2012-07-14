@@ -118,7 +118,7 @@ $Form->add_InputOption($FormularName,$InputName_Type,"imap","IMAP4");
 
 //User
 $Form->new_Input($FormularName,$InputName_User,"text", display($$InputName_User));
-$Form->set_InputJS($FormularName,$InputName_User," onChange=\"flash('submit','#ff0000');\" onkeyup=\"RemoveInvalidChars(this, '[^A-Za-z0-9\_\.\-]');\"");
+$Form->set_InputJS($FormularName,$InputName_User," onChange=\"flash('submit','#ff0000');\" onkeyup=\"RemoveInvalidChars(this, '[^A-Za-z0-9\_\.\-\@]');\"");
 $Form->set_InputStyleClass($FormularName,$InputName_User,"mFormText","mFormTextFocus");
 $Form->set_InputSize($FormularName,$InputName_User,48,256);
 $Form->set_InputDesc($FormularName,$InputName_User,___("Benutzername"));

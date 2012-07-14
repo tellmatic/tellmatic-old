@@ -26,39 +26,13 @@
 	}
 
 /***********************************************************/
-//check cookie
-/***********************************************************/
-	//1. Bedingung
-	//Falls Benutzer schonmal auf der Seite war und Session laeuft, wurde ggf. auch ein gueltiges Cookie mit der SessionID gesendet.
-	//Hat der Benutzer ein Cookie in der Hand?
-	//if ( !isset( $_COOKIE[session_name()] ) ) return FALSE;
-	//alternativ: $Return[0]=FALSE; $Return[1]="kein Cookie"; return $Return;
-	if ( !isset( $_COOKIE[session_name()] ) ) {
-		$LOGIN->Logout();
-		$Return[0]=FALSE;
-		$Return[1]=___("Kein Keks");
-		return $Return;
-	}
-
-/***********************************************************/
-//check sessionid & cookie
-/***********************************************************/
-	//Stimmt der Cookie-Wert mit der SessionID überein, so akzeptiert der Browser Cookies, das ist was wir wollen, gut, weitermachen.
-	if ( session_id() != $_COOKIE[session_name()] ) {
-		$LOGIN->Logout();
-		$Return[0]=FALSE;
-		$Return[1]=___("ungültiger Keks");
-		return $Return;
-	}
-
-/***********************************************************/
 //get post (login)
 //get session (already logged in)
 /***********************************************************/
 	//Name und Passwort entnehmen wir zuerst $_POST (login über Formular)
 	if ( ( isset($_POST['user_name']) && isset($_POST['user_pw']) && !empty($_POST['user_name']) && !empty($_POST['user_pw']) ) ) {
-		$user_name = (get_magic_quotes_gpc()) ? stripslashes($_POST['user_name']) : $_POST['user_name'];
-		$user_pw = (get_magic_quotes_gpc()) ? stripslashes($_POST['user_pw']) : $_POST['user_pw'];
+		$user_name = $_POST['user_name']; //(get_magic_quotes_gpc()) ? stripslashes($_POST['user_name']) : $_POST['user_name'];
+		$user_pw = $_POST['user_pw']; //(get_magic_quotes_gpc()) ? stripslashes($_POST['user_pw']) : $_POST['user_pw'];
 		//passwort verschluesseln
 		//hash ist md5 aus siteid+name+passwort
 		$user_pw_md5 = md5(TM_SITEID.$user_name.$user_pw);

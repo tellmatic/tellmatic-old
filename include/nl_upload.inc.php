@@ -31,7 +31,6 @@
 	//Bild 1
 	$NL_Imagename1="nl_".date_convert_to_string($created)."_1.jpg";
 	//Attachement 1
-	$NL_Attachname1="a".date_convert_to_string($created)."_1.";//+extension!!! wie uploaded file! weiter unten!
 
 	//html datei
 	// Wurde wirklich eine Datei hochgeladen?
@@ -117,24 +116,24 @@
 	//attachement
 	//attaxchement upload
 	// Wurde wirklich eine Datei hochgeladen?
-	$attach_ext="";
 	if(is_uploaded_file($_FILES["attach1"]["tmp_name"])) {
 			// Datei auch nicht zu groß
 			if($_FILES["attach1"]["size"] <= $max_upload_size) {
 				// Alles OK -> Datei kopieren
 				$attachinfo=pathinfo($_FILES["attach1"]["name"]);
-				$attach_ext=$attachinfo['extension'];
-				$NL_Attachname1.=$attach_ext;
 				if($check) {
+					$uploaded_attachement_new_name=$_FILES["attach1"]["name"];
 					//http://www.php.net/manual/en/features.file-upload.php, use basename to preserve filename for multiple uploaded files.... if needed ;)
-					if (move_uploaded_file($_FILES["attach1"]["tmp_name"], $tm_nlattachpath."/".$NL_Attachname1)) {
+					if (move_uploaded_file($_FILES["attach1"]["tmp_name"], $tm_nlattachpath."/".$uploaded_attachement_new_name)) {
 						$_MAIN_MESSAGE.= "<br>".___("Anhang erfolgreich hochgeladen.");
 						$_MAIN_MESSAGE.= "<ul>".$_FILES["attach1"]["name"];
 						$_MAIN_MESSAGE.= " / ".$_FILES["attach1"]["size"]." Byte";
 						$_MAIN_MESSAGE.= ", ".$_FILES["attach1"]["type"];
-						$_MAIN_MESSAGE.= "<br>".___("gespeichert unter:")." <a href=\"".$tm_URL_FE."/".$tm_nlattachdir."/".$NL_Attachname1."\"  target=\"_preview\">".$tm_nlattachdir."/".$NL_Attachname1."</a>";
+						$_MAIN_MESSAGE.= "<br>".___("gespeichert unter:")." <a href=\"".$tm_URL_FE."/".$tm_nlattachdir."/".$uploaded_attachement_new_name."\"  target=\"_preview\">".$tm_nlattachdir."/".$uploaded_attachement_new_name."</a>";
 						$_MAIN_MESSAGE.= "</ul>";
 						$uploaded_attach1=true;
+						$atc=count($attach_existing);
+						$attach_existing[$atc]=$uploaded_attachement_new_name;
 					} else {
 						$_MAIN_MESSAGE.= "<br>".___("Fehler beim kopieren.");
 						$_MAIN_MESSAGE.= "<br>".___("Anhang konnte nicht hochgeladen werden.");
@@ -222,10 +221,9 @@
 	//template values
 	$IMAGE1="";
 	$LINK1="";
-	$ATTACH1="";
+	$ATTACHEMENTS="";
 	$IMAGE1_URL="";
 	$LINK1_URL="";
-	$ATTACH1_URL="";
 	//Bild
 	if (file_exists($tm_nlimgpath."/".$NL_Imagename1)) {
 		$IMAGE1_URL=$tm_URL_FE."/".$tm_nlimgdir."/".$NL_Imagename1;
@@ -237,13 +235,11 @@
 		$LINK1="<a href=\"".$LINK1_URL."\" target=\"_link\">";
 	}
 	//link zu attachement:
-	//attachement?
-	$NL_Attachfile1=$tm_nlattachpath."/".$NL_Attachname1;
-	if (file_exists($NL_Attachfile1)) {
-		//link zum attachement fuer newsletter
-		$ATTACH1_URL=$tm_URL_FE."/".$tm_nlattachdir."/".$NL_Attachname1;
-		$ATTACH1="<a href=\"".$ATTACH1_URL."\" target=\"_blank\">";
-	}
+			foreach ($attach_existing as $filename) {
+				$ATTACHEMENTS.= "<a href=\"".$tm_URL_FE."/".$tm_nlattachdir."/".$filename."\" target=\"_blank\" title=\"".$filename."\">";
+				$ATTACHEMENTS.=$filename;
+				$ATTACHEMENTS.= "</a><br>\n";
+			}
 	//blindimage
 	$BLINDIMAGE_URL=$tm_URL_FE."/news_blank.png.php?nl_id=".$nl_id;//?nl_id=".$Q[$qcc]['nl_id'];
 	$BLINDIMAGE="<img src=\"".$BLINDIMAGE_URL."\" border=0>";
@@ -266,7 +262,8 @@
 	$_Tpl_NL->setTemplatePath($tm_nlpath);
 	$_Tpl_NL->setParseValue("IMAGE1", $IMAGE1);
 	$_Tpl_NL->setParseValue("LINK1", $LINK1);
-	$_Tpl_NL->setParseValue("ATTACH1", $ATTACH1);
+	$_Tpl_NL->setParseValue("ATTACHEMENTS", $ATTACHEMENTS);
+	$_Tpl_NL->setParseValue("ATTACH1", "");
 	$_Tpl_NL->setParseValue("NLONLINE", $NLONLINE);
 	$_Tpl_NL->setParseValue("BLINDIMAGE", $BLINDIMAGE);
 	$_Tpl_NL->setParseValue("UNSUBSCRIBE", $UNSUBSCRIBE);
@@ -274,7 +271,7 @@
 
 	$_Tpl_NL->setParseValue("IMAGE1_URL", $IMAGE1_URL);
 	$_Tpl_NL->setParseValue("LINK1_URL", $LINK1_URL);
-	$_Tpl_NL->setParseValue("ATTACH1_URL", $ATTACH1_URL);
+	$_Tpl_NL->setParseValue("ATTACH1_URL", "");
 	$_Tpl_NL->setParseValue("NLONLINE_URL", $NLONLINE_URL);
 	$_Tpl_NL->setParseValue("BLINDIMAGE_URL", $BLINDIMAGE_URL);
 	$_Tpl_NL->setParseValue("UNSUBSCRIBE_URL", $UNSUBSCRIBE_URL);

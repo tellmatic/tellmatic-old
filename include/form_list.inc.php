@@ -167,8 +167,16 @@ for ($acc=0;$acc<$ac;$acc++) {
 	$_MAIN_OUTPUT.= "<td onmousemove=\"showToolTip('tt_adr_list_".$FRM[$acc]['id']."')\" onmouseout=\"hideToolTip();\">";
 	$_MAIN_OUTPUT.= "<a href=\"".$tm_URL."/".$editURLPara_."\"  title=\"".___("Formular bearbeiten")."\">".display($FRM[$acc]['name'])."</a>";
 	$_MAIN_OUTPUT.= "<div id=\"tt_adr_list_".$FRM[$acc]['id']."\" class=\"tooltip\">";
-	$_MAIN_OUTPUT.= "<b>".display($FRM[$acc]['name'])."</b>".
-							"<font size=-1><br>".display($FRM[$acc]['descr']);
+	$_MAIN_OUTPUT.= "<b>".display($FRM[$acc]['name'])."</b>";
+	$_MAIN_OUTPUT.= "<font size=-1><br>".display($FRM[$acc]['descr']);
+	
+	if (!empty($FRM[$acc]['action_url'])) {
+		$_MAIN_OUTPUT.="<br>".___("URL").":&nbsp;".display($FRM[$acc]['action_url']);
+	} else {
+		$_MAIN_OUTPUT.="<br>".___("URL").":&nbsp;[PHP_SELF]";
+	}
+
+
 
 	$_MAIN_OUTPUT.= "<br>ID: ".$FRM[$acc]['id']." ";
 	if ($FRM[$acc]['aktiv']==1) {

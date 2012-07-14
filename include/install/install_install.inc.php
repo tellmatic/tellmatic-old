@@ -27,10 +27,12 @@ if ($check && $checkDB) {
 	define ("TM_TABLE_ADR_GRP_REF", $tm_tablePrefix."adr_grp_ref");
 	define ("TM_TABLE_NL_Q", $tm_tablePrefix."nl_q");
 	define ("TM_TABLE_NL_H", $tm_tablePrefix."nl_h");
+	define ("TM_TABLE_NL_ATTM", $tm_tablePrefix."nl_attm");
 	define ("TM_TABLE_FRM", $tm_tablePrefix."frm");
 	define ("TM_TABLE_FRM_GRP_REF", $tm_tablePrefix."frm_grp_ref");
 	define ("TM_TABLE_FRM_S", $tm_tablePrefix."frm_s");
 	define ("TM_TABLE_HOST", $tm_tablePrefix."hosts");
+	define ("TM_TABLE_BLACKLIST", $tm_tablePrefix."blacklist");
 
 /***********************************************************/
 //add user

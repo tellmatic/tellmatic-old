@@ -22,7 +22,7 @@ $FormularName="bounce_filter";
 $Form->new_Form($FormularName,$_SERVER["PHP_SELF"],"post","_self");
 $Form->set_FormJS($FormularName," onSubmit=\"switchSection('div_loader');\" ");
 //add a Description
-$Form->set_FormDesc($FormularName,"Host waehlen");
+$Form->set_FormDesc($FormularName,___("Host wählen"));
 //variable content aus menu als hidden field!
 $Form->new_Input($FormularName,"act", "hidden", $action);
 $Form->new_Input($FormularName,"host", "hidden", $host);
@@ -60,6 +60,15 @@ $Form->set_InputOrder($FormularName,$InputName_Adr,1);
 $Form->set_InputLabel($FormularName,$InputName_Adr,"");
 $Form->set_InputMultiple($FormularName,$InputName_Adr,true);
 
+//export
+$Form->new_Input($FormularName,$InputName_Export,"checkbox", 1);
+$Form->set_InputDefault($FormularName,$InputName_Export, 1);
+$Form->set_InputStyleClass($FormularName,$InputName_Export,"mFormText","mFormTextFocus");
+$Form->set_InputSize($FormularName,$InputName_Export,48,256);
+$Form->set_InputDesc($FormularName,$InputName_Export,___("Adressen exportieren"));
+$Form->set_InputReadonly($FormularName,$InputName_Export,false);
+$Form->set_InputOrder($FormularName,$InputName_Export,2);
+$Form->set_InputLabel($FormularName,$InputName_Export,___("Export"));
 
 
 //Aktion Mail

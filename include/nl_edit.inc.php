@@ -28,6 +28,8 @@ pt_register("POST","image1");
 $InputName_Attach1="attach1";
 pt_register("POST","attach1");
 
+$InputName_AttachExisting="attach_existing";// auswahl anhang
+pt_register("POST","attach_existing");
 $InputName_Name="subject";
 $$InputName_Name=getVar($InputName_Name);
 
@@ -102,10 +104,11 @@ if ($set=="save") {
 									"created"=>$updated,
 									"author"=>$author,
 									"grp_id"=>$nl_grp_id,
-									"attm"=>$attach_ext,
+									"attm"=>"",
 									"content_type"=>$content_type,
 									"track_image"=>$track_image,
 									"rcpt_name"=>$rcpt_name,
+									"attachements"=>$attach_existing,
 									)
 									);
 		$_MAIN_MESSAGE.="<br>".sprintf(___("Newsletter %s wurde aktualisiert."),"'<b>".display($subject)."</b>'");
@@ -129,7 +132,7 @@ if ($set=="save") {
 	$NL=$NEWSLETTER->getNL($nl_id,0,0,0,1);
 	$subject=$NL[0]['subject'];
 	$body=strtr($NL[0]['body'], $trans);
-	$body_text=strtr($NL[0]['body_text'], $trans);
+	$body_text=$NL[0]['body_text'];
 	$aktiv=$NL[0]['aktiv'];
 	$massmail=$NL[0]['massmail'];
 	$link=$NL[0]['link'];
@@ -137,6 +140,14 @@ if ($set=="save") {
 	$content_type=$NL[0]['content_type'];
 	$rcpt_name=$NL[0]['rcpt_name'];
 	$$InputName_TrackImageExisting=$NL[0]['track_image'];
+	//array umwandeln, der array aus get sieht anders aus als der fuer update und new!!!
+	$atc=0;
+	$attachements=$NL[0]['attachements'];
+	foreach ($attachements as $attachfile) {
+		$attach_existing[$atc]=$attachfile['file'];
+		$atc++;
+	}
+	
 	include_once (TM_INCLUDEPATH."/nl_form.inc.php");
 }
 ?>

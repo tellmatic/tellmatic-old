@@ -30,6 +30,10 @@ pt_register("POST","image1");
 $InputName_Attach1="attach1";//bild1
 pt_register("POST","attach1");
 
+$attach_existing=Array();
+$InputName_AttachExisting="attach_existing";// auswahl anhang
+pt_register("POST","attach_existing");
+
 //field names for query
 $InputName_Name="subject";//betreff
 $$InputName_Name=getVar($InputName_Name);
@@ -94,10 +98,11 @@ if ($set=="save") {
 									"created"=>$created,
 									"author"=>$author,
 									"grp_id"=>$nl_grp_id,
-									"attm"=>$attach_ext,
+									"attm"=>"",
 									"content_type"=>$content_type,
 									"track_image"=>$track_image,
 									"rcpt_name"=>$rcpt_name,
+									"attachements"=>$attach_existing,
 									)
 								);
 		$_MAIN_MESSAGE.="<br>".sprintf(___("Neuer Newsletter %s wurde erstellt."),"'<b>".display($subject)."</b>'");

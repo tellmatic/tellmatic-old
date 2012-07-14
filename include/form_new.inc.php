@@ -38,6 +38,9 @@ if (!isset($$InputName_GroupPub)) {
 $InputName_Name="name";//betreff
 $$InputName_Name=getVar($InputName_Name);
 
+$InputName_ActionUrl="action_url";//url
+$$InputName_ActionUrl=getVar($InputName_ActionUrl);
+
 $InputName_Descr="descr";
 $$InputName_Descr=getVar($InputName_Descr,0);//varname,slashes? 0=no add slashes
 
@@ -210,6 +213,7 @@ if ($set=="save") {
 		$FORMULAR=new tm_FRM();
 		$FORMULAR->addForm(Array(
 				"name"=>$name,
+				"action_url"=>$action_url,
 				"descr"=>$descr,
 				"aktiv"=>$aktiv,
 				"created"=>$created,
