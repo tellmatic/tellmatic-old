@@ -11,6 +11,37 @@
 /* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
 /********************************************************************************/
 
+*+*+*+*+*+*+*+*+*+*+*+ 1.0.8.5
+--en
+	Read the CHANGES file carefully! It contains the list of new features and changes with some more or less technical details! 
+	Backup all your files and the database!
+	To update earlier Versions than 1.0.8.4 please follow instructions for update to 1.0.8.4
+	Backup all your files and the database!	
+	Copy newer files and don't forget to set path in *.php in / and include/send_it.php after updating if you plan to use cronjobs!
+	Backup the database! Do it now!
+	Update Database use phpMyAdmin or console etc, see SQL below!
+	if you want to use the new feature for saving output to temporary files in admin/tmp please set USE_TMP_HTML_FILES to TRUE in tm_lib.inc.php	
+	That's it. Have fun with the new features!
+	
+--de
+	Lies die Datei CHANGES aufmerksam durch. Hier stehen nuetzlich Hinweise und einige technische Infos zu den Aenderungen!!!
+	Sichere alle deine Daten und Datenbanken!
+	Zum Update auf 1.0.8.5 von einer frueheren Verison als 1.0.8.4 befolge zuerst die Anweisungen fuer das Update auf 1.0.8.4
+	Sichere alle deine Daten und Datenbanken!
+	Kopieren die neuen Dateien auf den Server. Vergiss nicht den Pfad in den *.php Dateien in / und include/send_it.php anzupassen wenn Cronjobs genutzt werden sollen.
+	Sichere deine Datenbank! Jetzt!
+	Aktualisiere die Datenbank, s.u.
+	Wenn Du das neue Feature nutzen moechtest womit die Ausgabe in temporaere HTML Dateien in admin/tmp geschrieben wird, setze USE_TMP_HTML_FILES in tm_lib.inc.php auf TRUE
+	Das wars, viel Spass.
+
+------------------------------
+Datenbank aktualisieren: / Update Database:
+
+			ALTER TABLE `frm` ADD `force_pubgroup` SMALLINT( 1 ) NOT NULL DEFAULT '0' 
+			AFTER `check_blacklist`;
+			ALTER TABLE `frm` ADD `pubgroup_errmsg` VARCHAR( 255 ) NOT NULL DEFAULT '""' AFTER `blacklist_errmsg` ;
+			ALTER TABLE `frm` ADD `overwrite_pubgroup` SMALLINT( 1 ) NOT NULL DEFAULT '0' 
+			AFTER `force_pubgroup` ;
 *+*+*+*+*+*+*+*+*+*+*+ 1.0.8.4-fix01
 --en
 	Read the CHANGES file carefully! It contains the list of new features and changes with some more or less technical details!

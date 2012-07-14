@@ -46,9 +46,9 @@ $aktivURLPara->addParam("set","aktiv");
 $delURLPara=$mSTDURL;
 $delURLPara->addParam("set","delete");
 
-$statURLPara=$mSTDURL;
-$statURLPara->addParam("act","statistic");
-$statURLPara->addParam("set","user");
+#$statURLPara=$mSTDURL;
+#$statURLPara->addParam("act","statistic");
+#$statURLPara->addParam("set","user");
 
 $_MAIN_OUTPUT="<table border=\"0\" cellpadding=\"1\" cellspacing=\"1\" width=\"100%\">";
 $_MAIN_OUTPUT.= "<thead>".
@@ -101,12 +101,12 @@ for ($ucc=0;$ucc<$uc;$ucc++) {
 	$delURLPara->addParam("u_id",$USER[$ucc]['id']);
 	$delURLPara_=$delURLPara->getAllParams();
 
-	$statURLPara->addParam("adr_grp_id",$USER[$ucc]['id']);
-	$statURLPara_=$statURLPara->getAllParams();
+	#$statURLPara->addParam("adr_grp_id",$USER[$ucc]['id']);
+	#$statURLPara_=$statURLPara->getAllParams();
 
 	$_MAIN_OUTPUT.= "<tr id=\"row_".$ucc."\"  bgcolor=\"".$bgcolor."\" onmouseover=\"setBGColor('row_".$ucc."','".$row_bgcolor_hilite."');\" onmouseout=\"setBGColor('row_".$ucc."','".$bgcolor."');\">";
-	$_MAIN_OUTPUT.= "<td onmousemove=\"showToolTip('tt_adr_grp_list_".$USER[$ucc]['id']."')\" onmouseout=\"hideToolTip();\">";
-
+	#$_MAIN_OUTPUT.= "<td onmousemove=\"showToolTip('tt_adr_grp_list_".$USER[$ucc]['id']."')\" onmouseout=\"hideToolTip();\">";
+	$_MAIN_OUTPUT.= "<td>";
 	//wenn standardgruppe, dann icon anzeigen
 	if ($USER[$ucc]['name']==$LOGIN->USER['name']) {
 		$_MAIN_OUTPUT.=  "&nbsp;".tm_icon("star.png",___("Ihr Bentzer"));
@@ -170,7 +170,7 @@ for ($ucc=0;$ucc<$uc;$ucc++) {
 	$_MAIN_OUTPUT.= "</td>";
 	$_MAIN_OUTPUT.= "<td>";
 	$_MAIN_OUTPUT.= "&nbsp;<a href=\"".$tm_URL."/".$editURLPara_."\" title=\"".___("Benutzer bearbeiten")."\">".tm_icon("pencil.png",___("Benutzer bearbeiten"))."</a>";
-	$_MAIN_OUTPUT.=  "&nbsp;<a href=\"".$tm_URL."/".$statURLPara_."\" title=\"".___("Statistik anzeigen")."\">".tm_icon("chart_pie.png",___("Statistik anzeigen"))."</a>";
+	#$_MAIN_OUTPUT.=  "&nbsp;<a href=\"".$tm_URL."/".$statURLPara_."\" title=\"".___("Statistik anzeigen")."\">".tm_icon("chart_pie.png",___("Statistik anzeigen"))."</a>";
 	//loeschen
 	if ($USER[$ucc]['admin']!=1) {
 		$_MAIN_OUTPUT.= "&nbsp;<a href=\"".$tm_URL."/".$delURLPara_."\" onclick=\"return confirmLink(this, '".sprintf(___("Benutzer %s löschen?"),display($USER[$ucc]['name']))."')\" title=\"".___("Benutzer löschen")."\">".tm_icon("cross.png",___("Benutzer löschen"))."</a>";

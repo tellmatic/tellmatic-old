@@ -163,6 +163,21 @@ for ($acc=0;$acc<$ac;$acc++) {
 	if ($FRM[$acc]['double_optin']==1) {
 		$_MAIN_OUTPUT.=  tm_icon("arrow_refresh_small.png",___("Double-Opt-In"));
 	}
+
+	//force pubgroup
+	if ($FRM[$acc]['force_pubgroup']==1) {
+		$_MAIN_OUTPUT.=  tm_icon("group_error.png",___("Auswahl öffentlicher Gruppen erzwingen"));
+	} else {
+		#$_MAIN_OUTPUT.=  tm_icon("group.png",___("Auswahl öffentlicher Gruppen nicht erzwingen"));
+	}
+
+	//update/overwrite pubgroup refs
+	if ($FRM[$acc]['force_pubgroup']==1) {
+		$_MAIN_OUTPUT.=  tm_icon("group_gear.png",___("Gruppen überschreiben"));
+	} else {
+		#$_MAIN_OUTPUT.=  tm_icon("group_link.png",___("Gruppen aktualisieren, nur Neue hinzufügen"));
+	}
+
 	$_MAIN_OUTPUT.= "</td>";
 	$_MAIN_OUTPUT.= "<td onmousemove=\"showToolTip('tt_adr_list_".$FRM[$acc]['id']."')\" onmouseout=\"hideToolTip();\">";
 	$_MAIN_OUTPUT.= "<a href=\"".$tm_URL."/".$editURLPara_."\"  title=\"".___("Formular bearbeiten")."\">".display($FRM[$acc]['name'])."</a>";
@@ -197,18 +212,34 @@ for ($acc=0;$acc<$ac;$acc++) {
 	if ($FRM[$acc]['use_captcha']==1) {
 		$_MAIN_OUTPUT.=  "<br>".tm_icon("sport_8ball.png",___("Captcha"))."&nbsp;".___("Captcha").",&nbsp;";
 		$_MAIN_OUTPUT.=  sprintf(___("%s Ziffern"),$FRM[$acc]['digits_captcha']);
-		$_MAIN_OUTPUT.=  "<br>&nbsp;&nbsp;&nbsp;".___("Fehlermeldung").": <em>".$FRM[$acc]['captcha_errmsg']."</em>";
+		$_MAIN_OUTPUT.=  "<br>&nbsp;&nbsp;&nbsp;".___("Fehlermeldung").": <em>".display($FRM[$acc]['captcha_errmsg'])."</em>";
 	}
 	//markierung blacklist
 	if ($FRM[$acc]['check_blacklist']==1) {
 		$_MAIN_OUTPUT.=  "<br>".tm_icon("ruby.png",___("Blacklist"))."&nbsp;".___("Blacklist prüfen").",&nbsp;";
-		$_MAIN_OUTPUT.=  "<br>&nbsp;&nbsp;&nbsp;".___("Fehlermeldung").": <em>".$FRM[$acc]['blacklist_errmsg']."</em>";
+		$_MAIN_OUTPUT.=  "<br>&nbsp;&nbsp;&nbsp;".___("Fehlermeldung").": <em>".display($FRM[$acc]['blacklist_errmsg'])."</em>";
 	}
 
 	//markierung doubleoptin
 	if ($FRM[$acc]['double_optin']==1) {
 		$_MAIN_OUTPUT.=  "<br>".tm_icon("arrow_refresh_small.png",___("Double-Opt-In"))."&nbsp;".___("Double-Opt-In");
 	}
+
+	//force pubgroup
+	if ($FRM[$acc]['force_pubgroup']==1) {
+		$_MAIN_OUTPUT.=  "<br>".tm_icon("group_error.png",___("Auswahl öffentlicher Gruppen erzwingen"))."&nbsp;".___("Auswahl öffentlicher Gruppen erzwingen").",&nbsp;";
+		$_MAIN_OUTPUT.=  "<br>&nbsp;&nbsp;&nbsp;".___("Fehlermeldung").": <em>".display($FRM[$acc]['pubgroup_errmsg'])."</em>";
+	} else {
+		#$_MAIN_OUTPUT.=  "<br>".tm_icon("group.png",___("Auswahl öffentlicher Gruppen nicht erzwingen"))."&nbsp;".___("Auswahl öffentlicher Gruppen nicht erzwingen").",&nbsp;";
+	}
+
+	//update/overwrite pubgroup refs
+	if ($FRM[$acc]['force_pubgroup']==1) {
+		$_MAIN_OUTPUT.=  "<br>".tm_icon("group_gear.png",___("Gruppen überschreiben"))."&nbsp;".___("Gruppen überschreiben").",&nbsp;";
+	} else {
+		#$_MAIN_OUTPUT.=  "<br>".tm_icon("group_link.png",___("Gruppen aktualisieren, nur Neue hinzufügen"))."&nbsp;".___("Gruppen aktualisieren, nur Neue hinzufügen").",&nbsp;";
+	}
+
 	$_MAIN_OUTPUT.= 	"<br><br>".sprintf(___("Anmeldungen: %s"),$FRM[$acc]['subscriptions']).
 							"<br><br>email= ".display($FRM[$acc]['email'])." &nbsp; [] &nbsp; <em>".display($FRM[$acc]['email_errmsg'])."</em>".
 							"<br><br>f0= ".display($FRM[$acc]['f0'])." &nbsp; [".display($FRM[$acc]['f0_value'])."] &nbsp; <em>".display($FRM[$acc]['f0_errmsg'])."</em>".

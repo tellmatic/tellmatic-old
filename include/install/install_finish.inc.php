@@ -39,7 +39,6 @@ if ($check) {
 		$headers = "";
 		$headers .= "Return-Path: <".$email.">\r\n";
 		$headers .= "From: ".$email." <".$email.">\r\n";
-		$headers .= "To: ".$email." <".$email.">\r\n";
 		$headers .= "X-Mailer: Tellmatic\r\n";
 		$headers .= "Content-Type: text/plain;\n\tcharset=\"utf-8\"\n";
 		@mail($email,
@@ -51,7 +50,6 @@ if ($check) {
 			$headers = "";
 			$headers .= "Return-Path: <".$email.">\r\n";
 			$headers .= "From: ".$email." <".$email.">\r\n";
-			$headers .= "To: install@tellmatic.org <install@tellmatic.org>\r\n";
 			$headers .= "X-Mailer: Tellmatic\r\n";
 			$headers .= "Content-Type: text/plain;\n\tcharset=\"utf-8\"\n";
 			@mail("install@tellmatic.org",

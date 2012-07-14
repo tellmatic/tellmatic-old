@@ -83,7 +83,31 @@ $Form->set_InputLabel($FormularName,$InputName_ActionUrl,"");
 	$Form->set_InputOrder($FormularName,$InputName_Blacklist,8);
 	$Form->set_InputLabel($FormularName,$InputName_Blacklist,"");
 
+//Force Publicgroups selection
+	$Form->new_Input($FormularName,$InputName_ForcePubGroup,"checkbox", 1);
+	$Form->set_InputJS($FormularName,$InputName_ForcePubGroup," onChange=\"flash('submit','#ff0000');\" ");
+	$Form->set_InputDefault($FormularName,$InputName_ForcePubGroup,$$InputName_ForcePubGroup);
+	$Form->set_InputStyleClass($FormularName,$InputName_ForcePubGroup,"mFormText","mFormTextFocus");
+	$Form->set_InputSize($FormularName,$InputName_ForcePubGroup,48,1024);
+	$Form->set_InputDesc($FormularName,$InputName_ForcePubGroup,___("Auswahl erzwingen"));
+	$Form->set_InputReadonly($FormularName,$InputName_ForcePubGroup,false);
+	$Form->set_InputOrder($FormularName,$InputName_ForcePubGroup,8);
+	$Form->set_InputLabel($FormularName,$InputName_ForcePubGroup,"");
 
+//Overwrite Publicgroups selection or update?
+$Form->new_Input($FormularName,$InputName_OverwritePubgroup,"select", "");
+$Form->set_InputJS($FormularName,$InputName_OverwritePubgroup," onChange=\"flash('submit','#ff0000');\" ");
+$Form->set_InputDefault($FormularName,$InputName_OverwritePubgroup,$$InputName_OverwritePubgroup);
+$Form->set_InputStyleClass($FormularName,$InputName_OverwritePubgroup,"mFormSelect","mFormSelectFocus");
+$Form->set_InputDesc($FormularName,$InputName_OverwritePubgroup,___("Auswahl überschreiben oder aktualisieren?"));
+$Form->set_InputReadonly($FormularName,$InputName_OverwritePubgroup,false);
+$Form->set_InputOrder($FormularName,$InputName_OverwritePubgroup,6);
+$Form->set_InputLabel($FormularName,$InputName_OverwritePubgroup,"");
+$Form->set_InputSize($FormularName,$InputName_OverwritePubgroup,0,1);
+$Form->set_InputMultiple($FormularName,$InputName_OverwritePubgroup,false);
+//add Data
+$Form->add_InputOption($FormularName,$InputName_OverwritePubgroup,0,___("Nur Neue Gruppen hinzufügen"));
+$Form->add_InputOption($FormularName,$InputName_OverwritePubgroup,1,___("Gruppenauswahl überschreiben"));
 //Use Captcha
 	$Form->new_Input($FormularName,$InputName_UseCaptcha,"checkbox", 1);
 	$Form->set_InputJS($FormularName,$InputName_UseCaptcha," onChange=\"flash('submit','#ff0000');\" ");
@@ -306,6 +330,15 @@ $Form->set_InputReadonly($FormularName,$InputName_Blacklist_errmsg,false);
 $Form->set_InputOrder($FormularName,$InputName_Blacklist_errmsg,9);
 $Form->set_InputLabel($FormularName,$InputName_Blacklist_errmsg,"");
 
+//PubgGroup ErrMsg, i force_pubgroup=1
+$Form->new_Input($FormularName,$InputName_PubGroup_errmsg,"text", display($$InputName_PubGroup_errmsg));
+$Form->set_InputJS($FormularName,$InputName_PubGroup_errmsg," onChange=\"flash('submit','#ff0000');\" ");
+$Form->set_InputStyleClass($FormularName,$InputName_PubGroup_errmsg,"mFormText","mFormTextFocus_wide");
+$Form->set_InputSize($FormularName,$InputName_PubGroup_errmsg,32,255);
+$Form->set_InputDesc($FormularName,$InputName_PubGroup_errmsg,___("Fehlermeldung"));
+$Form->set_InputReadonly($FormularName,$InputName_PubGroup_errmsg,false);
+$Form->set_InputOrder($FormularName,$InputName_PubGroup_errmsg,9);
+$Form->set_InputLabel($FormularName,$InputName_PubGroup_errmsg,"");
 /////////////////////////////////////////
 //F ErrMsg, new, f0-f9
 for ($fc=0;$fc<=9;$fc++) {
@@ -434,6 +467,25 @@ $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "<td valign=top colspan=1>";
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Blacklist]['html'];
 $_MAIN_OUTPUT.= "<br>".___("Fehlermeldung")." ".$Form->INPUT[$FormularName][$InputName_Blacklist_errmsg]['html'];
+$_MAIN_OUTPUT.= "</td>";
+$_MAIN_OUTPUT.= "</tr>";
+
+$_MAIN_OUTPUT.= "<tr>";
+$_MAIN_OUTPUT.= "<td valign=top>";
+$_MAIN_OUTPUT.= tm_icon("group_error.png",___("Auswahl für Gruppen erzwingen"))."&nbsp;".___("Auswahl für Gruppen erzwingen");
+$_MAIN_OUTPUT.= "</td>";
+$_MAIN_OUTPUT.= "<td valign=top colspan=1>";
+$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_ForcePubGroup]['html'];
+$_MAIN_OUTPUT.= "<br>".___("Fehlermeldung")." ".$Form->INPUT[$FormularName][$InputName_PubGroup_errmsg]['html'];
+$_MAIN_OUTPUT.= "</td>";
+$_MAIN_OUTPUT.= "</tr>";
+
+$_MAIN_OUTPUT.= "<tr>";
+$_MAIN_OUTPUT.= "<td valign=top>";
+$_MAIN_OUTPUT.= tm_icon("group_link.png",___("Gruppen aktualisieren, nur Neue hinzu"))."&nbsp;".tm_icon("group_gear.png",___("Gruppen überschreiben"))."&nbsp;".___("Gruppen Auswahl");
+$_MAIN_OUTPUT.= "</td>";
+$_MAIN_OUTPUT.= "<td valign=top colspan=1>";
+$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_OverwritePubgroup]['html'];
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "</tr>";
 

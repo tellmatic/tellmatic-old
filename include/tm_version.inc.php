@@ -12,7 +12,7 @@
 /* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
 /********************************************************************************/
 	$ApplicationName="Tellmatic";
-	$ApplicationVersion="1.0.8.4-fix01";
+	$ApplicationVersion="1.0.8.5";
 	$ApplicationDescr=___("Die Newsletter Maschine");
 	$ApplicationUrl="www.tellmatic.org";
 	$ApplicationText=$ApplicationName." v".$ApplicationVersion." - ".$ApplicationDescr." (".$ApplicationUrl.")";

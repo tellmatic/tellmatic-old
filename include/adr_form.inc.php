@@ -168,9 +168,9 @@ if (!empty($adr_id)) {
 	$_MAIN_OUTPUT.= "<td colspan=\"2\">";
 	$_MAIN_OUTPUT.= "ID: <b>".$ADR[0]['id']."</b>";
 	$_MAIN_OUTPUT.= "<br>";
-	$_MAIN_OUTPUT.= sprintf(___("Erstellt am: %s von %s"),"<b>".$ADR[0]['author']."</b>","<b>".$ADR[0]['created']."</b>");
+	$_MAIN_OUTPUT.= sprintf(___("Erstellt am: %s von %s"),"<b>".$ADR[0]['created']."</b>","<b>".$ADR[0]['author']."</b>");
 	$_MAIN_OUTPUT.= "<br>";
-	$_MAIN_OUTPUT.= sprintf(___("Bearbeitet am: %s von %s"),"<b>".$ADR[0]['editor']."</b>","<b>".$ADR[0]['updated']."</b>");
+	$_MAIN_OUTPUT.= sprintf(___("Bearbeitet am: %s von %s"),"<b>".$ADR[0]['updated']."</b>","<b>".$ADR[0]['editor']."</b>");
 	$_MAIN_OUTPUT.= "<br><br>";
 	$_MAIN_OUTPUT.= "</td>";
 	$_MAIN_OUTPUT.= "</tr>";

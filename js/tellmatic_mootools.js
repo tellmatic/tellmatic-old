@@ -18,9 +18,7 @@ function toggleSlide(trigger,element,toggle){
 	  //Select the element you wish to slide
 	  var mySlide = new Fx.Slide(element, {
 		    duration: 250,
-			mode:'vertical'
-			});
-		
+			mode:'vertical'});//brackets in next line crashes IE!!! :P		
 	  //Create a slide in/out
 	  $(trigger).addEvent('click', function(e){
 		  	//add the click function (i.e on an anchor)

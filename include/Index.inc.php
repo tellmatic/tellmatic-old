@@ -30,6 +30,15 @@ if (!isset($action) || empty($action)) {
 	$action="Welcome";
 }
 
+//remove old temporrary admin html  files!
+//if file is older then 3 seconds, remove!
+if (USE_TMP_HTML_FILES) {
+	if (DEBUG) {
+		$_MAIN_OUTPUT.="<!--\n".remove_old_admin_files()."-->\n";
+	} else {
+		remove_old_admin_files();
+	}
+}
 $mSTDURL=new tm_URL();
 
 //Handle Login / Logout
@@ -109,12 +118,12 @@ if (!$logged_in) {
 //RENDER PAGE
 $_PAGE=$_Tpl->renderTemplate("Index.html");
 //write to file and redirect?
-#if ($logged_in) {
-#	write_file(TM_PATH."/admin/tmp/",$adm_file_name,$_PAGE);
-#	header('Location: '.$tm_URL."/tmp/".$adm_file_name);
-#} else {
-#	//or output page and exit :)
-echo $_PAGE;
-#}
+if (USE_TMP_HTML_FILES) {
+	write_file(TM_PATH."/admin/tmp/",$adm_file_name,$_PAGE);
+	header('Location: '.$tm_URL."/tmp/".$adm_file_name);
+} else {
+	//or output page and exit :)
+	echo $_PAGE;
+}
 exit;
 ?>

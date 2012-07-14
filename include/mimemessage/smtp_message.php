@@ -1,8 +1,8 @@
-  <?php
+<?php
 /*
  * smtp_message.php
  *
- * @(#) $Header: /cvsroot/tellmatic/tellmatic/include/mimemessage/smtp_message.php,v 1.5 2007/12/05 20:28:05 mcms09 Exp $
+ * @(#) $Header: /cvsroot/tellmatic/tellmatic/include/mimemessage/smtp_message.php,v 1.6 2009/07/05 23:42:30 mcms09 Exp $
  *
  *
  */
@@ -14,7 +14,7 @@
 	<package>net.manuellemos.mimemessage</package>
 
 	<name>smtp_message_class</name>
-	<version>@(#) $Id: smtp_message.php,v 1.5 2007/12/05 20:28:05 mcms09 Exp $</version>
+	<version>@(#) $Id: smtp_message.php,v 1.6 2009/07/05 23:42:30 mcms09 Exp $</version>
 	<copyright>Copyright © (C) Manuel Lemos 1999-2004</copyright>
 	<title>MIME E-mail message composing and sending via SMTP</title>
 	<author>Manuel Lemos</author>
@@ -456,7 +456,7 @@ class smtp_message_class extends email_message_class
 {metadocument}
 	<variable>
 		<name>mailer_delivery</name>
-		<value>smtp $Revision: 1.5 $</value>
+		<value>smtp $Revision: 1.6 $</value>
 		<documentation>
 			<purpose>Specify the text that is used to identify the mail
 				delivery class or sub-class. This text is appended to the
@@ -467,7 +467,7 @@ class smtp_message_class extends email_message_class
 	</variable>
 {/metadocument}
 */
-	var $mailer_delivery='smtp $Revision: 1.5 $';
+	var $mailer_delivery='smtp $Revision: 1.6 $';
 /*
 {metadocument}
 	<variable>

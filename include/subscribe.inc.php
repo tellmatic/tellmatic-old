@@ -16,6 +16,8 @@
 if (!isset($_CONTENT)) {$_CONTENT="";}
 if (!isset($called_via_url)) {$called_via_url=true;}
 
+$HOSTS=new tm_HOST();
+$HOST=$HOSTS->getStdSMTPHost();
 $MESSAGE="";
 $OUTPUT="";
 if (!isset($frm_id)) {
@@ -59,10 +61,8 @@ if ($doptin==1 && !empty($c) && !empty($email)) { // && checkEmailAdr($email,$EM
 				//template laden, vielen dank etc, Form_R.html R wie rechecked
 				//evtl mail an empfaenger, vielen dank etc... blabla
 			}//empty frm_id
-			#$MESSAGE.="Die Registrierung war erfolgreich.";
 			$MESSAGE.="OK";
 		} else {
-			#$OUTPUT.="Adresse wurde nicht  gefunden.";
 			$OUTPUT.="ERR 2";
 		}
 
@@ -71,9 +71,7 @@ if ($doptin==1 && !empty($c) && !empty($email)) { // && checkEmailAdr($email,$EM
 			$_Tpl_FRM->setTemplatePath(TM_TPLPATH);//set path for new template Form_0_os.html!
 		}
 	} else {
-		#$MESSAGE.="Sie haben eine ungültige E-Mail-Adresse eingegeben.";
 		$MESSAGE.="ERR 1";
-		#$MESSAGE.=$FRM[0]['email_errmsg'];
 	}//checkemail
 
 	$Form_Filename_OS="/Form_".$frm_id."_os.html";//meldung wenn subscribed
@@ -138,50 +136,85 @@ if ($frm_id>0 && $doptin!=1) {
 			$author=$FRM[0]['id'];
 			//double optin
 			if ($FRM[0]['double_optin']==1) {
+				if (DEBUG) $MESSAGE.="<br>Debug: double opt in";
 				$status=5;//warten auf recheck
 			} else {
+				if (DEBUG) $MESSAGE.="<br>Debug: simple single opt in";
 				$status=1;//neu
 			}
 			$MESSAGE="";
 
 			//checkinput
 			if ($FRM[0]['use_captcha']==1) {
+				if (DEBUG) $MESSAGE.="<br>Debug: use captcha";
 				if (!is_numeric($fcpt) || empty($fcpt) || md5($fcpt)!=$cpt) {
 					$check=false;
+					if (DEBUG) $MESSAGE.="<br>Debug: wrong captcha code";
 					$MESSAGE.="".$FRM[0]['captcha_errmsg'];
 				}
 			}
 			//blacklist checken
 			if ($FRM[0]['check_blacklist']==1) {
+				if (DEBUG) $MESSAGE.="<br>Debug: use/check blacklist";
 				$BLACKLIST=new tm_Blacklist();
 				$check_mail=checkEmailAdr($email,$EMailcheck_Subscribe);
 				$blacklisted=$BLACKLIST->isBlacklisted($email);
 				if ($blacklisted) {
 					$check=false;
+					if (DEBUG) $MESSAGE.="<br>blacklisted!";
 					$MESSAGE.="<br>".$FRM[0]['blacklist_errmsg'];
 				}
 			}
 			//email auf gueltigkeit pruefen
+			if (DEBUG) $MESSAGE.="<br>Debug: checking email";
 			$check_mail=checkEmailAdr($email,$EMailcheck_Subscribe);
-			if (empty($email) || !$check_mail[0]) {$check=false;$MESSAGE.="<br>".$FRM[0]['email_errmsg'];}
+			if (empty($email) || !$check_mail[0]) {
+				$check=false;
+				if (DEBUG) $MESSAGE.="<br>Debug: incorrect email";			
+				$MESSAGE.="<br>".$FRM[0]['email_errmsg'];
+			}
 			//eingaben pruefen
 			//"simplified":
 			for ($fc=0;$fc<=9;$fc++) {
 				$field="f".$fc;
-				if ( (!empty($FRM[0]['f'.$fc.'_expr']) && !ereg($FRM[0]['f'.$fc.'_expr'],$$field)) || ($FRM[0]['f'.$fc.'_required']==1 && empty($$field)) ) {$check=false; $MESSAGE.="<br>".$FRM[0]['f'.$fc.'_errmsg'];}
+				if (DEBUG) $MESSAGE.="<br>Debug: checking ".$field;
+				if ( (!empty($FRM[0]['f'.$fc.'_expr']) && !ereg($FRM[0]['f'.$fc.'_expr'],$$field)) || ($FRM[0]['f'.$fc.'_required']==1 && empty($$field)) ) {
+					$check=false;
+					if (DEBUG) $MESSAGE.="<br>Debug: '.$field.' failed!";
+					$MESSAGE.="<br>".$FRM[0]['f'.$fc.'_errmsg'];}
 			}
 			
+			//1085:
+			//check for public groups, force user to select at least one public group			
+			if ($FRM[0]['force_pubgroup']==1) {
+				if (DEBUG) $MESSAGE.="<br>Debug: force public group";
+				if (!isset($adr_grp_pub[0])) {
+					$check=false;
+					if (DEBUG) $MESSAGE.="<br>Debug: no group selected";
+					$MESSAGE.="<br>".$FRM[0]['pubgroup_errmsg'];
+				}			
+			}
 			if ($check) {
+				if (DEBUG) $MESSAGE.="<br>Debug: precheck ok";
 				///////////////////////////
+				//ab 1085: was passiert mit updates und pubgroups? ueberschreiben oder update? 'overwrite_pubgroup':: 1= ueberschreiben, 0= update, nur neue!
+				//ab 1085: force user to select pubgroup 'force_pubgroup'				
+				
 				//gruppen f. formular
 				//erst nur die defaultgruppen!
-				$adr_grp=$ADDRESS->getGroupID(0,0,$frm_id,Array("public_frm_ref"=>0,"aktiv"=>1));
-				$new_adr_grp=$adr_grp;
-				//dann mergen! mit user selectable groups..... (public)
-				$new_adr_grp=array_merge($adr_grp_pub,$new_adr_grp);
-				$new_adr_grp=array_unique($new_adr_grp);
-
+				$default_adr_grp=$ADDRESS->getGroupID(0,0,$frm_id,Array("public_frm_ref"=>0,"aktiv"=>1));
+				if (DEBUG) $MESSAGE.="<br>Debug: default group for this form: ".implode(",",$default_adr_grp);
+				//default gruppenzuordnung im code: gruppen neu referenzieren, default seinstellung in tellmatc ist aber aktualisierung und nur neue gruppen bei update
+				//deswegen bei exsitenten adressen check if overwrite_pubgroup !=1, uffz 
+				//erstmal gruppen komplett neu anlegen
+				//neu= public + default
+				if (DEBUG) $MESSAGE.="<br>Debug: user selected public group for this form: ".implode(",",$adr_grp_pub);
+				$tmp_adr_grp=array_merge($adr_grp_pub,$default_adr_grp);
+				if (DEBUG) $MESSAGE.="<br>Debug: default group + selected public group: ".implode(",",$tmp_adr_grp);
+				$new_adr_grp=array_unique($tmp_adr_grp);
+				if (DEBUG) $MESSAGE.="<br>Debug: default group + public group, unique: ".implode(",",$new_adr_grp);
 				//dublettencheck
+				if (DEBUG) $MESSAGE.="<br>Debug: checking email";
 				$search['email']=$email;
 				//auf existenz pruefen und wenn email noch nicht existiert dann eintragen.
 				$ADR=$ADDRESS->getAdr(0,0,0,0,$search);
@@ -190,18 +223,37 @@ if ($frm_id>0 && $doptin!=1) {
 				//wir diffen die gruppen und fuegen nur die referenzen hinzu die noch nicht existieren!
 				$adr_exists=false;
 				if ($ac>0) {
+					$adr_exists=true;
+					if (DEBUG) $MESSAGE.="<br>Debug: email already exists";
 					$MESSAGE.="<br>".$MSG['subscribe']['update'];
 					//gruppen denen die adr bereits  angehoert
-					$old_adr_grp = $ADDRESS->getGroupID(0,$ADR[0]['id'],0);
-					//neue gruppen nur die die neu sind, denen die adr noch nicht angehoert!
-					//adr_grp=gruppen aus dem formular
-					$new_adr_grp = array_diff($adr_grp,$old_adr_grp);
-					$all_adr_grp = array_merge($old_adr_grp, $new_adr_grp);
-					$adr_exists=true;
-				}
+					if ($FRM[0]['overwrite_pubgroup']!=1) {
+						if (DEBUG) $MESSAGE.="<br>Debug: updating groups, merge with old";
+						$old_adr_grp = $ADDRESS->getGroupID(0,$ADR[0]['id'],0);
+						if (DEBUG) $MESSAGE.="<br>Debug: old groups: ".implode(",",$old_adr_grp);
+						//nur neue public gruppen hinzufuegen 
+						//1085: nur noch aktualisieren wenn gewuenscht, also overwrite_pubgroup != 1
+						//nur aktualisierung, merge groups + public groups!
+						$tmp_adr_grp = array_merge($old_adr_grp, $new_adr_grp);
+						if (DEBUG) $MESSAGE.="<br>Debug: merge old and new: ".implode(",",$tmp_adr_grp);
+						$new_adr_grp = array_unique($tmp_adr_grp);
+						if (DEBUG) $MESSAGE.="<br>Debug: merge old and new, unique: ".implode(",",$new_adr_grp);
+					} else {//overwrite pubgroups
+						//ueberschreiben mit neuen gruppen refs:
+						if (DEBUG) $MESSAGE.="<br>Debug: overwrite groups, save only default and new selected.";
+					}//overwrite pubgroups
+				} else {//adr exists
+					if (DEBUG) $MESSAGE.="<br>Debug: email not yet exists, save new entry";
+					}
+
+				//re-index, important!
+				$new_adr_grp=array_values($new_adr_grp);				
+				
 				srand((double)microtime()*1000000);
 				$code=rand(111111,999999);
+
 				if ($adr_exists) {
+				if (DEBUG) $MESSAGE.="<br>Debug: updating! ";
 					//wenn adresse existiert, adressdaten updaten!
 					$code=$ADR[0]['code'];
 					$ADDRESS->updateAdr(Array(
@@ -222,10 +274,11 @@ if ($frm_id>0 && $doptin!=1) {
 						"f9"=>$f9,
 						"memo"=>"subscribe update, memo:\n ".$memo,
 						),
-						$all_adr_grp);
+						$new_adr_grp);
 					//wenn user abgemeldet und sich wieder anmelden will... dann status aendern, sonst bleibt alles wie es ist...:
 					//update status wenn unsubscribed (11)! -- status: 1 , neu
 					if ($ADR[0]['status'] ==11) {
+						if (DEBUG) $MESSAGE.="<br>Debug: email was unsubscribe status 11, set status=1, aktiv=1";
 						$ADDRESS->setStatus($ADR[0]['id'],1);
 						$ADDRESS->setAktiv($ADR[0]['id'],1);
 					}
@@ -235,6 +288,7 @@ if ($frm_id>0 && $doptin!=1) {
 					//optional nachzuruesten und in den settings einstellbar :)
 				} else {
 					//wenn adresse noch nicht existiert , neu anlegen
+					if (DEBUG) $MESSAGE.="<br>Debug: create new";
 					$newADRID=$ADDRESS->addAdr(Array(
 						"email"=>$email,
 						"aktiv"=>$FRM[0]['subscribe_aktiv'],
@@ -300,7 +354,7 @@ if ($frm_id>0 && $doptin!=1) {
 						$SubscriptionMail_HTML.=$MSG['subscribe']['mail']['body_new'];
 					}
 
-					@SendMail($C[0]['sender_email'],$C[0]['sender_name'],$C[0]['notify_mail'],$C[0]['sender_name'],$SubscriptionMail_Subject,clear_text($SubscriptionMail_HTML),$SubscriptionMail_HTML);
+					@SendMail($HOST[0]['sender_email'],$HOST[0]['sender_name'],$HOST[0]['notify_mail'],$HOST[0]['sender_name'],$SubscriptionMail_Subject,clear_text($SubscriptionMail_HTML),$SubscriptionMail_HTML,Array(),$HOST); //fixed, now uses defaulthost, http://sourceforge.net/tracker/?func=detail&aid=2642029&group_id=190396&atid=933192
 				}//send notify
 
 				//send double optin:
@@ -323,7 +377,7 @@ if ($frm_id>0 && $doptin!=1) {
 					//template ausgeben
 					$OptinMail_HTML=$_Tpl_FRM->renderTemplate($Form_Filename_O);
 					$OptinMail_Subject=$MSG['subscribe']['mail']['subject_user'];
-					@SendMail($C[0]['sender_email'],$C[0]['sender_name'],$email,$C[0]['sender_name'],$OptinMail_Subject,clear_text($OptinMail_HTML),$OptinMail_HTML);
+					@SendMail($HOST[0]['sender_email'],$HOST[0]['sender_name'],$email,$HOST[0]['sender_name'],$OptinMail_Subject,clear_text($OptinMail_HTML),$OptinMail_HTML,Array(),$HOST);//fixed, now uses defaulthost, http://sourceforge.net/tracker/?func=detail&aid=2642029&group_id=190396&atid=933192
 				}
 
 				if (!$adr_exists) {
@@ -344,6 +398,7 @@ if ($frm_id>0 && $doptin!=1) {
 		$_Tpl_FRM->setTemplatePath($tm_formpath);
 
 		if (!$check || $set!="save") {
+			if (DEBUG) $MESSAGE.="<br>Debug: check false or set != save";
 			//Formular generieren und anzeigen lassen
 			//captcha code
 			//captcha digits werden einzeln erzeugt ....
@@ -440,18 +495,22 @@ if ($frm_id>0 && $doptin!=1) {
 			$OUTPUT=$_Tpl_FRM->renderTemplate($Form_Filename_S);
 		}
 	} else {
+		if (DEBUG) $OUTPUT.="<br>Debug: form not active";
 		$OUTPUT.="na";
 	}//aktiv==1, form nicht aktiv!
 } else {
-	//$OUTPUT.="?";
+	if (DEBUG) $OUTPUT.="<br>Debug: no form id";
+	$OUTPUT.="?";
 }//frm_id>0 keine formular id uebergeben
 
 //anzeige
 if ($called_via_url) {
+	if (DEBUG) $OUTPUT.="<br>Debug: called via url";
 	//wenn direkt aufgerufen, ausgabe
 	echo $OUTPUT;
 } else {
 	//wenn included, ausgabe in variable _CONTENT speichern
+	if (DEBUG) $MESSAGE.="<br>Debug: include";
 	$_CONTENT.= $OUTPUT;
 }
 ?>

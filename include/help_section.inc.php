@@ -24,5 +24,10 @@ if (file_exists($helpfile)) {
 	$_MAIN_HELP=$_Tpl_HelpS->renderTemplate("help.html");
 }
 
+//Link online doku
+$OnlineHelpURL="http://doc.tellmatic.org/doc_".$action;
+$_MAIN_HELP.="<div align=\"right\">
+<a href=\"".$OnlineHelpURL."\" target=\"_blank\" title=\"".___("Online Dokumentation")."\">".tm_icon("world.png",___("Online Dokumentation"),___("Online Dokumentation"))."&nbsp;".___("Online Dokumentation")."</a>
+</div>";
 
 ?>

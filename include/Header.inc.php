@@ -50,16 +50,20 @@ $_HEAD_HTML='<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "htt
 	<script type="text/javascript" src="'.$tm_URL_FE.'/js/mootools/mootools.js"></script>
 	<script type="text/javascript" src="'.$tm_URL_FE.'/js/mootools/mootools-more.js"></script>
 	<script type="text/javascript" src="'.$tm_URL_FE.'/js/tellmatic_mootools.js"></script>
+';
 
-	<script type="text/javascript">
+if ($logged_in) {
+	$_HEAD_HTML.='<script type="text/javascript">
 		window.onload = countdown;
 		var timeout = '.TM_SESSION_TIMEOUT.';
 		function countdown() {
 		  document.getElementById("timeoutdisplay").firstChild.nodeValue = timeout;
 		  if ((timeout--) > 0) window.setTimeout("countdown()", 1000);
 		}
-	</script>
+	</script>';
 
+}
+$_HEAD_HTML.='
 </head>
 <body><!-- onload="init_ajax();" -->
 

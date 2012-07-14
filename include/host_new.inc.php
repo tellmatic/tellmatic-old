@@ -74,6 +74,9 @@ $$InputName_ReplyTo=getVar($InputName_ReplyTo);
 $InputName_Aktiv="aktiv";
 $$InputName_Aktiv=getVar($InputName_Aktiv);
 
+//we MUST remove leading slashes from imap options, if not we get invalid remote specification error. 
+if (strpos($options, "/")==0) $options=substr_replace($options, '', 0, 1);
+
 if ($set=="save") {
 	$check=true;
 	//checkinput

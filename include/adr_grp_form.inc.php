@@ -61,7 +61,7 @@ if ($standard==1) {
 	$Form->set_InputDefault($FormularName,$InputName_Public,$$InputName_Public);
 	$Form->set_InputStyleClass($FormularName,$InputName_Public,"mFormText","mFormTextFocus");
 	$Form->set_InputSize($FormularName,$InputName_Public,48,256);
-	$Form->set_InputDesc($FormularName,$InputName_Public,___("Öffentlich"));
+	$Form->set_InputDesc($FormularName,$InputName_Public,___("Ã–ffentlich"));
 	$Form->set_InputReadonly($FormularName,$InputName_Public,false);
 	$Form->set_InputOrder($FormularName,$InputName_Public,3);
 	$Form->set_InputLabel($FormularName,$InputName_Public,"");
@@ -71,7 +71,7 @@ $Form->new_Input($FormularName,$InputName_PublicName,"text", display($$InputName
 $Form->set_InputJS($FormularName,$InputName_PublicName," onChange=\"flash('submit','#ff0000');\" ");
 $Form->set_InputStyleClass($FormularName,$InputName_PublicName,"mFormText","mFormTextFocus");
 $Form->set_InputSize($FormularName,$InputName_PublicName,48,256);
-$Form->set_InputDesc($FormularName,$InputName_PublicName,___("Name (öffentlich)"));
+$Form->set_InputDesc($FormularName,$InputName_PublicName,___("Name (Ã¶ffentlich)"));
 $Form->set_InputReadonly($FormularName,$InputName_PublicName,false);
 $Form->set_InputOrder($FormularName,$InputName_PublicName,4);
 $Form->set_InputLabel($FormularName,$InputName_PublicName,"");
@@ -134,7 +134,7 @@ $_MAIN_OUTPUT.= "</tr>";
 
 $_MAIN_OUTPUT.= "<tr>";
 $_MAIN_OUTPUT.= "<td valign=top>";
-$_MAIN_OUTPUT.= tm_icon("cup.png",___("Öffentlich"))."&nbsp;".___("Öffentlich");
+$_MAIN_OUTPUT.= tm_icon("cup.png",___("Ã–ffentlich"))."&nbsp;".___("Ã–ffentlich");
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "<td valign=top>";
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Public]['html'];
@@ -142,7 +142,7 @@ $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "</tr>";
 $_MAIN_OUTPUT.= "<tr>";
 $_MAIN_OUTPUT.= "<td valign=top>";
-$_MAIN_OUTPUT.= tm_icon("cup.png",___("Name"))."&nbsp;".___("Name (öffentlich)");
+$_MAIN_OUTPUT.= tm_icon("cup.png",___("Name"))."&nbsp;".___("Name (Ã¶ffentlich)");
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "<td valign=top>";
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_PublicName]['html'];

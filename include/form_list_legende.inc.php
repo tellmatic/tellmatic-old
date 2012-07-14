@@ -21,6 +21,13 @@ $_MAIN_OUTPUT.= tm_icon("user_green.png",___("Neuangemeldete Adressen sind aktiv
 $_MAIN_OUTPUT.= tm_icon("sport_8ball.png",___("Captcha Spamschutz aktiviert"))."&nbsp;".___("Captcha Spamschutz aktiviert")."<br>";
 $_MAIN_OUTPUT.= tm_icon("ruby.png",___("Blacklist prüfen"))."&nbsp;".___("Blacklist Überprüfung aktiv")."<br>";
 $_MAIN_OUTPUT.= tm_icon("arrow_refresh.png",___("Double-Opt-In"))."&nbsp;".___("Double-Opt-In aktiviert")."<br>";
+
+$_MAIN_OUTPUT.= tm_icon("group_error.png",___("Auswahl öffentlicher Gruppen erzwingen"))."&nbsp;".___("Auswahl öffentlicher Gruppen erzwingen")."<br>";
+#$_MAIN_OUTPUT.= tm_icon("group.png",___("Auswahl öffentlicher Gruppen nicht erzwingen"))."&nbsp;".___("Auswahl öffentlicher Gruppen nicht erzwingen")."<br>";
+
+$_MAIN_OUTPUT.= tm_icon("group_gear.png",___("öffentliche Gruppen Referenzen überschreiben"))."&nbsp;".___("öffentliche Gruppen Referenzen überschreiben")."<br>";
+#$_MAIN_OUTPUT.= tm_icon("group_link.png",___("nur neue öffentliche Gruppen Referenzen hinzufügen"))."&nbsp;".___("nur neue öffentliche Gruppen Referenzen hinzufügen")."<br>";
+
 $_MAIN_OUTPUT.= "<br><strong>".___("Aktionen")."</strong><br>";
 //link zur dynamischen onlineversion!
 $_MAIN_OUTPUT.= tm_icon("eye.png",___("Online"))."&nbsp;".___("Dynamische Onlineversion anzeigen:")." subscribe.php?fid=[FORMULAR-ID]<br>";

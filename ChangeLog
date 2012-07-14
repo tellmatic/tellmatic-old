@@ -1,3 +1,801 @@
+2009-07-12 Sunday 23:29  mcms09
+
+	Changed:
+		CHANGES (1.18), "Exp", lines: +2 -0
+		README (1.3), "Exp", lines: +2 -2
+		UPDATE (1.17), "Exp", lines: +2 -0
+
+	update
+
+2009-07-12 Sunday 23:22  mcms09
+
+	Changed:
+		include/adr_list.inc.php (1.7), "Exp", lines: +9 -0
+		include/adr_new.inc.php (1.4), "Exp", lines: +1 -1
+
+	add link to create new address if list is empty, e.g. after
+	searching. selected group in search form and email is prefilled in
+	the adr_new_form
+
+2009-07-12 Sunday 03:07  mcms09
+
+	Changed:
+		CHANGES (1.17), "Exp", lines: +3 -1
+		ChangeLog (1.12), "Exp", lines: +38 -0
+
+	update
+
+2009-07-12 Sunday 03:07  mcms09
+
+	Changed:
+		include/subscribe.inc.php (1.7), "Exp", lines: +57 -19
+
+	fixed some issues with group updates and/or overwrite. add lots of
+	debug messages
+
+2009-07-12 Sunday 03:05  mcms09
+
+	Changed:
+		include/tm_lib.inc.php (1.18), "Exp", lines: +14 -11
+
+	save output to temporary html files, USE_TMP_HTML_FILES, default is
+	FALSE
+
+2009-07-12 Sunday 03:01  mcms09
+
+	Changed:
+		include/Index.inc.php (1.5), "Exp", lines: +16 -7
+
+	save output to temporary html files
+
+2009-07-11 Saturday 03:32  mcms09
+
+	Changed:
+		ChangeLog (1.11), "Exp", lines: +12 -0
+		include/send_it.php (1.19), "Exp", lines: +1 -1
+
+	update
+
+2009-07-11 Saturday 03:00  mcms09
+
+	Changed:
+		ChangeLog (1.10), "Exp", lines: +728 -0
+		locale/tellmatic-nl.po (1.2), "Exp", lines: +7178 -6683
+		include/adr_grp_form.inc.php (1.4), "Exp", lines: +4 -4
+		include/send_it.php (1.18), "Exp", lines: +8 -7
+		locale/mkpo.sh (1.4), "Exp", lines: +2 -1
+		locale/tellmatic-de.po (1.4), "Exp", lines: +1709 -3
+
+	update
+
+2009-07-11 Saturday 02:26  mcms09
+
+	Changed:
+		include/tellmatic.sql (1.4), "Exp", lines: +365 -360
+
+	update for 1085
+
+2009-07-11 Saturday 02:25  mcms09
+
+	Changed:
+		CHANGES (1.16), "Exp", lines: +1 -0
+
+	update instructions and changes for 1085
+
+2009-07-11 Saturday 02:19  mcms09
+
+	Changed:
+		locale/tellmatic-en.po (1.6), "Exp", lines: +1708 -7
+		locale/tellmatic-es.po (1.4), "Exp", lines: +1798 -95
+		locale/tellmatic-it.po (1.4), "Exp", lines: +1798 -95
+		locale/tellmatic-pt.po (1.2), "Exp", lines: +1798 -95
+
+	fixed typo
+
+2009-07-11 Saturday 02:16  mcms09
+
+	Changed:
+		include/Header.inc.php (1.5), "Exp", lines: +1 -0
+
+	fixed syntax error
+
+2009-07-11 Saturday 02:15  mcms09
+
+	Changed:
+		include/help_section.inc.php (1.4), "Exp", lines: +1 -1
+
+	change url to online doc to doc.tellmatic.org
+
+2009-07-11 Saturday 02:14  mcms09
+
+	Changed:
+		include/install/install_check_db.inc.php (1.4), "Exp", lines: +19 -12
+
+	select db and check if database exists
+
+2009-07-11 Saturday 02:13  mcms09
+
+	Changed:
+		include/install/install_finish.inc.php (1.4), "Exp", lines: +0 -2
+
+	removed to: headers. suhopsin may block sending reg mails through
+	mail() function
+
+2009-07-11 Saturday 02:12  mcms09
+
+	Changed:
+		include/install/install_form.inc.php (1.6), "Exp", lines: +0 -13
+
+	removed double db name field
+
+2009-07-10 Friday 00:08  mcms09
+
+	Changed:
+		UPDATE (1.16), "Exp", lines: +29 -0
+		CHANGES (1.15), "Exp", lines: +74 -0
+
+	update instructions and changes for 1085
+
+2009-07-08 Wednesday 16:06  mcms09
+
+	Changed:
+		include/nl_form.inc.php (1.10), "Exp", lines: +1 -1
+
+	fixed typo
+
+2009-07-08 Wednesday 14:45  mcms09
+
+	Changed:
+		include/send_it.php (1.17), "Exp", lines: +16 -0
+
+	additional headers in mail: X-TM_GRPID, X-TM_NLID, X-TM_QID,
+	X-TM_AID, X-TM_ACODE, X-TM_DATE, X-TM_MASSMAIL 0/1
+
+2009-07-08 Wednesday 14:22  mcms09
+
+	Changed:
+		include/install/install_check_db.inc.php (1.3), "Exp", lines: +22 -1
+
+	check for creating temporary tables
+
+2009-07-08 Wednesday 14:20  mcms09
+
+	Changed:
+		include/queue_list.inc.php (1.8), "Exp", lines: +17 -7
+
+	use check_dbid instead of !empty or >0
+
+2009-07-07 Tuesday 12:26  mcms09
+
+	Changed:
+		include/unsubscribe_form.inc.php (1.2), "Exp", lines: +14 -3
+
+	captcha
+
+2009-07-07 Tuesday 12:25  mcms09
+
+	Changed:
+		include/unsubscribe.inc.php (1.5), "Exp", lines: +73 -6
+
+	check for a_id and code, if valid prefill textfield. added
+	captchacode and check
+
+2009-07-07 Tuesday 12:23  mcms09
+
+	Changed:
+		include/unsubscribe.inc.php (1.4), "Exp", lines: +3 -1
+
+	use defaulthost to send notification mail
+
+2009-07-07 Tuesday 12:19  mcms09
+
+	Changed:
+		tpl/Unsubscribe.html (1.3), "Exp", lines: +26 -1
+
+	add html header etc., added FCAPTCHA and FCAPTCHAIMG
+
+2009-07-07 Tuesday 12:18  mcms09
+
+	Changed:
+		include/tm_version.inc.php (1.7), "Exp", lines: +1 -1
+
+	set version to 1.0.8.5
+
+2009-07-07 Tuesday 12:17  mcms09
+
+	Changed:
+		include/subscribe.inc.php (1.6), "Exp", lines: +24 -12
+
+	added force_pubgroup, overwrite_pubgroup and pubgroup_errmsg checks
+
+2009-07-07 Tuesday 12:16  mcms09
+
+	Changed:
+		include/Messages.inc.php (1.3), "Exp", lines: +2 -0
+
+	added phrases for invalid captcha in unsubscribe
+
+2009-07-07 Tuesday 12:14  mcms09
+
+	Changed:
+		include/help_section.inc.php (1.3), "Exp", lines: +5 -0
+
+	add link to online docu which hopefully coming soon, link syntax and
+	parameters may change between releases
+
+2009-07-07 Tuesday 12:12  mcms09
+
+	Changed:
+		include/form_list.inc.php (1.6), "Exp", lines: +33 -2
+		include/form_list_legende.inc.php (1.5), "Exp", lines: +7 -0
+		include/form_new.inc.php (1.5), "Exp", lines: +11 -0
+
+	added force_pubgroup, overwrite_pubgroup and pubgroup_errmsg
+
+2009-07-07 Tuesday 12:09  mcms09
+
+	Changed:
+		include/Class_Form.inc.php (1.7), "Exp", lines: +12 -2
+		include/form_edit.inc.php (1.5), "Exp", lines: +13 -0
+		include/form_form.inc.php (1.5), "Exp", lines: +53 -1
+
+	added force_pubgroup, overwrite_pubgroup and pubgroup_errmsg
+
+2009-07-07 Tuesday 12:06  mcms09
+
+	Changed:
+		include/install/install_license.inc.php (1.2), "Exp", lines: +14 -0
+
+	added memo for download from other hosts than sf or tellmatic.org
+
+2009-07-07 Tuesday 12:04  mcms09
+
+	Changed:
+		include/install/install_conf_sql.inc.php (1.17), "Exp", lines: +3 -0
+		include/install/install_examples.inc.php (1.7), "Exp", lines: +3 -0
+
+	added force_pubgroup, overwrite_pubgroup and pubgroup_errmsg
+
+2009-07-06 Monday 12:58  mcms09
+
+	Added:
+		js/tinymce/jscripts/tiny_mce/themes/advanced/img/colorpicker.jpg (1.1)
+		js/tinymce/jscripts/tiny_mce/themes/advanced/img/icons.gif (1.1)
+		js/tinymce/jscripts/tiny_mce/themes/advanced/js/about.js (1.1)
+		js/tinymce/jscripts/tiny_mce/themes/advanced/js/anchor.js (1.1)
+		js/tinymce/jscripts/tiny_mce/themes/advanced/js/charmap.js (1.1)
+		js/tinymce/jscripts/tiny_mce/themes/advanced/js/color_picker.js (1.1)
+		js/tinymce/jscripts/tiny_mce/themes/advanced/js/image.js (1.1)
+		js/tinymce/jscripts/tiny_mce/themes/advanced/js/link.js (1.1)
+		js/tinymce/jscripts/tiny_mce/themes/advanced/js/source_editor.js (1.1)
+		js/tinymce/jscripts/tiny_mce/themes/advanced/skins/default/img/buttons.png (1.1)
+		js/tinymce/jscripts/tiny_mce/themes/advanced/skins/default/img/items.gif (1.1)
+		js/tinymce/jscripts/tiny_mce/themes/advanced/skins/default/img/menu_arrow.gif (1.1)
+		js/tinymce/jscripts/tiny_mce/themes/advanced/skins/default/img/menu_check.gif (1.1)
+		js/tinymce/jscripts/tiny_mce/themes/advanced/skins/default/img/progress.gif (1.1)
+		js/tinymce/jscripts/tiny_mce/themes/advanced/skins/default/img/tabs.gif (1.1)
+
+	tinymce 3
+
+2009-07-06 Monday 12:54  mcms09
+
+	Added:
+		js/tinymce/jscripts/tiny_mce/themes/simple/img/icons.gif (1.1)
+		js/tinymce/jscripts/tiny_mce/themes/simple/skins/default/content.css (1.1)
+		js/tinymce/jscripts/tiny_mce/themes/simple/skins/default/ui.css (1.1)
+		js/tinymce/jscripts/tiny_mce/themes/simple/skins/o2k7/content.css (1.1)
+		js/tinymce/jscripts/tiny_mce/themes/simple/skins/o2k7/ui.css (1.1)
+		js/tinymce/jscripts/tiny_mce/themes/simple/skins/o2k7/img/button_bg.png (1.1)
+		js/tinymce/jscripts/tiny_mce/themes/advanced/langs/de_dlg.js (1.1)
+		js/tinymce/jscripts/tiny_mce/themes/advanced/langs/fr.js (1.1)
+		js/tinymce/jscripts/tiny_mce/themes/advanced/langs/fr_dlg.js (1.1)
+		js/tinymce/jscripts/tiny_mce/themes/advanced/skins/default/content.css (1.1)
+		js/tinymce/jscripts/tiny_mce/themes/advanced/skins/default/dialog.css (1.1)
+		js/tinymce/jscripts/tiny_mce/themes/advanced/skins/default/ui.css (1.1)
+		js/tinymce/jscripts/tiny_mce/themes/advanced/skins/o2k7/content.css (1.1)
+		js/tinymce/jscripts/tiny_mce/themes/advanced/skins/o2k7/dialog.css (1.1)
+		js/tinymce/jscripts/tiny_mce/themes/advanced/skins/o2k7/ui.css (1.1)
+		js/tinymce/jscripts/tiny_mce/themes/advanced/skins/o2k7/ui_black.css (1.1)
+		js/tinymce/jscripts/tiny_mce/themes/advanced/skins/o2k7/ui_silver.css (1.1)
+		js/tinymce/jscripts/tiny_mce/themes/advanced/skins/o2k7/img/button_bg.png (1.1)
+		js/tinymce/jscripts/tiny_mce/themes/advanced/skins/o2k7/img/button_bg_black.png (1.1)
+		js/tinymce/jscripts/tiny_mce/themes/advanced/skins/o2k7/img/button_bg_silver.png (1.1)
+
+	tinymce 3
+
+2009-07-06 Monday 12:42  mcms09
+
+	Added:
+		js/tinymce/jscripts/tiny_mce/plugins/table/js/cell.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/table/js/merge_cells.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/table/js/row.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/table/js/table.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/table/langs/de_dlg.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/table/langs/fr_dlg.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/template/js/template.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/template/langs/de_dlg.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/template/langs/fr_dlg.js (1.1)
+		js/tinymce/jscripts/tiny_mce/themes/simple/langs/de.js (1.1)
+		js/tinymce/jscripts/tiny_mce/themes/simple/langs/fr.js (1.1)
+
+	tinymce 3
+
+2009-07-06 Monday 12:37  mcms09
+
+	Added:
+		js/tinymce/jscripts/tiny_mce/plugins/spellchecker/rpc.php (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/spellchecker/classes/EnchantSpell.php (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/spellchecker/classes/GoogleSpell.php (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/spellchecker/classes/PSpell.php (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/spellchecker/classes/PSpellShell.php (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/spellchecker/classes/SpellChecker.php (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/spellchecker/classes/utils/JSON.php (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/spellchecker/classes/utils/Logger.php (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/spellchecker/img/wline.gif (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/spellchecker/includes/general.php (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/style/js/props.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/style/langs/de_dlg.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/style/langs/fr_dlg.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/tabfocus/editor_plugin.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/tabfocus/editor_plugin_src.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/xhtmlxtras/js/abbr.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/xhtmlxtras/js/acronym.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/xhtmlxtras/js/attributes.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/xhtmlxtras/js/cite.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/xhtmlxtras/js/del.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/xhtmlxtras/js/element_common.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/xhtmlxtras/js/ins.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/xhtmlxtras/langs/de_dlg.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/xhtmlxtras/langs/fr_dlg.js (1.1)
+
+	tinymce 3
+
+2009-07-06 Monday 12:27  mcms09
+
+	Added:
+		js/tinymce/jscripts/tiny_mce/plugins/advimage/img/sample.gif (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/advimage/js/image.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/emotions/img/smiley-cool.gif (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/emotions/img/smiley-cry.gif (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/emotions/img/smiley-embarassed.gif (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/emotions/img/smiley-foot-in-mouth.gif (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/emotions/img/smiley-frown.gif (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/emotions/img/smiley-innocent.gif (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/emotions/img/smiley-kiss.gif (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/emotions/img/smiley-laughing.gif (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/emotions/img/smiley-money-mouth.gif (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/emotions/img/smiley-sealed.gif (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/emotions/img/smiley-smile.gif (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/emotions/img/smiley-surprised.gif (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/emotions/img/smiley-tongue-out.gif (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/emotions/img/smiley-undecided.gif (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/emotions/img/smiley-wink.gif (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/emotions/img/smiley-yell.gif (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/emotions/js/emotions.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/inlinepopups/template.htm (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/inlinepopups/skins/clearlooks2/window.css (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/inlinepopups/skins/clearlooks2/img/alert.gif (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/inlinepopups/skins/clearlooks2/img/button.gif (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/inlinepopups/skins/clearlooks2/img/buttons.gif (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/inlinepopups/skins/clearlooks2/img/confirm.gif (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/inlinepopups/skins/clearlooks2/img/corners.gif (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/inlinepopups/skins/clearlooks2/img/horizontal.gif (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/inlinepopups/skins/clearlooks2/img/vertical.gif (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/media/img/flash.gif (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/media/img/flv_player.swf (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/media/img/quicktime.gif (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/media/img/realmedia.gif (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/media/img/shockwave.gif (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/media/img/trans.gif (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/media/img/windowsmedia.gif (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/media/js/embed.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/media/js/media.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/media/langs/de_dlg.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/media/langs/fr_dlg.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/pagebreak/editor_plugin.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/pagebreak/editor_plugin_src.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/pagebreak/css/content.css (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/pagebreak/img/pagebreak.gif (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/pagebreak/img/trans.gif (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/paste/js/pastetext.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/paste/js/pasteword.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/paste/langs/de_dlg.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/paste/langs/fr_dlg.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/preview/preview.html (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/safari/blank.htm (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/safari/editor_plugin.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/safari/editor_plugin_src.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/searchreplace/js/searchreplace.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/searchreplace/langs/de_dlg.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/searchreplace/langs/fr_dlg.js (1.1)
+
+	tinymce 3
+
+2009-07-06 Monday 12:15  mcms09
+
+	Added:
+		js/tinymce/jscripts/tiny_mce/plugins/fullpage/js/fullpage.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/fullpage/langs/de_dlg.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/fullpage/langs/fr_dlg.js (1.1)
+	Changed:
+		js/tinymce/jscripts/tiny_mce/tiny_mce.js (1.2), "Exp", lines: +1 -1
+		js/tinymce/jscripts/tiny_mce/tiny_mce_gzip.php (1.2), "Exp", lines: +139 -224
+		js/tinymce/jscripts/tiny_mce/tiny_mce_popup.js (1.2), "Exp", lines: +5 -288
+		js/tinymce/jscripts/tiny_mce/tiny_mce_src.js (1.2), "Exp", lines: +11460 -5911
+		js/tinymce/jscripts/tiny_mce/plugins/fullpage/editor_plugin.js (1.2), "Exp", lines: +1 -1
+		js/tinymce/jscripts/tiny_mce/plugins/fullpage/editor_plugin_src.js (1.3), "Exp", lines: +129 -210
+		js/tinymce/jscripts/tiny_mce/plugins/fullpage/fullpage.htm (1.2), "Exp", lines: +119 -120
+		js/tinymce/jscripts/tiny_mce/plugins/fullpage/css/fullpage.css (1.2), "Exp", lines: +10 -0
+		js/tinymce/jscripts/tiny_mce/plugins/fullpage/langs/pt_dlg.js (1.2), "Exp", lines: +19 -19
+		js/tinymce/jscripts/tiny_mce/plugins/fullscreen/editor_plugin.js (1.2), "Exp", lines: +1 -1
+		js/tinymce/jscripts/tiny_mce/plugins/fullscreen/editor_plugin_src.js (1.3), "Exp", lines: +134 -219
+		js/tinymce/jscripts/tiny_mce/plugins/fullscreen/fullscreen.htm (1.2), "Exp", lines: +53 -34
+		js/tinymce/jscripts/tiny_mce/plugins/iespell/editor_plugin.js (1.2), "Exp", lines: +1 -1
+		js/tinymce/jscripts/tiny_mce/plugins/iespell/editor_plugin_src.js (1.3), "Exp", lines: +44 -51
+		js/tinymce/jscripts/tiny_mce/plugins/inlinepopups/editor_plugin.js (1.2), "Exp", lines: +1 -1
+		js/tinymce/jscripts/tiny_mce/plugins/inlinepopups/editor_plugin_src.js (1.3), "Exp", lines: +632 -814
+		js/tinymce/jscripts/tiny_mce/plugins/insertdatetime/editor_plugin.js (1.2), "Exp", lines: +1 -1
+		js/tinymce/jscripts/tiny_mce/plugins/insertdatetime/editor_plugin_src.js (1.3), "Exp", lines: +57 -67
+		js/tinymce/jscripts/tiny_mce/plugins/layer/editor_plugin.js (1.2), "Exp", lines: +1 -1
+		js/tinymce/jscripts/tiny_mce/plugins/layer/editor_plugin_src.js (1.3), "Exp", lines: +188 -227
+		js/tinymce/jscripts/tiny_mce/plugins/media/editor_plugin.js (1.2), "Exp", lines: +1 -1
+		js/tinymce/jscripts/tiny_mce/plugins/media/editor_plugin_src.js (1.3), "Exp", lines: +318 -348
+		js/tinymce/jscripts/tiny_mce/plugins/media/media.htm (1.2), "Exp", lines: +232 -133
+		js/tinymce/jscripts/tiny_mce/plugins/media/css/content.css (1.2), "Exp", lines: +6 -26
+		js/tinymce/jscripts/tiny_mce/plugins/media/css/media.css (1.2), "Exp", lines: +16 -68
+		js/tinymce/jscripts/tiny_mce/plugins/media/langs/pt_dlg.js (1.2), "Exp", lines: +29 -29
+		js/tinymce/jscripts/tiny_mce/plugins/nonbreaking/editor_plugin.js (1.2), "Exp", lines: +1 -1
+		js/tinymce/jscripts/tiny_mce/plugins/nonbreaking/editor_plugin_src.js (1.3), "Exp", lines: +42 -54
+		js/tinymce/jscripts/tiny_mce/plugins/noneditable/editor_plugin.js (1.2), "Exp", lines: +1 -1
+		js/tinymce/jscripts/tiny_mce/plugins/noneditable/editor_plugin_src.js (1.3), "Exp", lines: +76 -142
+		js/tinymce/jscripts/tiny_mce/plugins/paste/editor_plugin.js (1.2), "Exp", lines: +1 -1
+		js/tinymce/jscripts/tiny_mce/plugins/paste/editor_plugin_src.js (1.3), "Exp", lines: +476 -359
+		js/tinymce/jscripts/tiny_mce/plugins/paste/pastetext.htm (1.2), "Exp", lines: +20 -21
+		js/tinymce/jscripts/tiny_mce/plugins/paste/pasteword.htm (1.2), "Exp", lines: +9 -11
+		js/tinymce/jscripts/tiny_mce/plugins/preview/editor_plugin.js (1.2), "Exp", lines: +1 -1
+		js/tinymce/jscripts/tiny_mce/plugins/preview/editor_plugin_src.js (1.3), "Exp", lines: +43 -198
+		js/tinymce/jscripts/tiny_mce/plugins/preview/example.html (1.2), "Exp", lines: +16 -2
+		js/tinymce/jscripts/tiny_mce/plugins/print/editor_plugin.js (1.2), "Exp", lines: +1 -1
+		js/tinymce/jscripts/tiny_mce/plugins/print/editor_plugin_src.js (1.3), "Exp", lines: +24 -40
+		js/tinymce/jscripts/tiny_mce/plugins/save/editor_plugin.js (1.2), "Exp", lines: +1 -1
+		js/tinymce/jscripts/tiny_mce/plugins/save/editor_plugin_src.js (1.3), "Exp", lines: +83 -100
+		js/tinymce/jscripts/tiny_mce/plugins/searchreplace/editor_plugin.js (1.2), "Exp", lines: +1 -1
+		js/tinymce/jscripts/tiny_mce/plugins/searchreplace/editor_plugin_src.js (1.3), "Exp", lines: +47 -166
+		js/tinymce/jscripts/tiny_mce/plugins/searchreplace/searchreplace.htm (1.2), "Exp", lines: +27 -30
+		js/tinymce/jscripts/tiny_mce/plugins/searchreplace/css/searchreplace.css (1.2), "Exp", lines: +5 -19
+		js/tinymce/jscripts/tiny_mce/plugins/searchreplace/langs/pt_dlg.js (1.2), "Exp", lines: +5 -5
+		js/tinymce/jscripts/tiny_mce/plugins/spellchecker/changelog (1.2), "Exp", lines: +20 -28
+		js/tinymce/jscripts/tiny_mce/plugins/spellchecker/config.php (1.2), "Exp", lines: +16 -18
+		js/tinymce/jscripts/tiny_mce/plugins/spellchecker/editor_plugin.js (1.2), "Exp", lines: +1 -1
+		js/tinymce/jscripts/tiny_mce/plugins/spellchecker/css/content.css (1.2), "Exp", lines: +1 -4
+		js/tinymce/jscripts/tiny_mce/plugins/style/editor_plugin.js (1.2), "Exp", lines: +1 -1
+		js/tinymce/jscripts/tiny_mce/plugins/style/editor_plugin_src.js (1.3), "Exp", lines: +43 -74
+		js/tinymce/jscripts/tiny_mce/plugins/style/props.htm (1.2), "Exp", lines: +125 -124
+		js/tinymce/jscripts/tiny_mce/plugins/style/css/props.css (1.2), "Exp", lines: +13 -62
+		js/tinymce/jscripts/tiny_mce/plugins/style/langs/pt_dlg.js (1.2), "Exp", lines: +8 -8
+		js/tinymce/jscripts/tiny_mce/plugins/table/cell.htm (1.2), "Exp", lines: +52 -51
+		js/tinymce/jscripts/tiny_mce/plugins/table/editor_plugin.js (1.2), "Exp", lines: +1 -1
+		js/tinymce/jscripts/tiny_mce/plugins/table/editor_plugin_src.js (1.3), "Exp", lines: +920 -857
+		js/tinymce/jscripts/tiny_mce/plugins/table/merge_cells.htm (1.2), "Exp", lines: +14 -15
+		js/tinymce/jscripts/tiny_mce/plugins/table/row.htm (1.2), "Exp", lines: +47 -46
+		js/tinymce/jscripts/tiny_mce/plugins/table/table.htm (1.2), "Exp", lines: +83 -51
+		js/tinymce/jscripts/tiny_mce/plugins/table/css/table.css (1.2), "Exp", lines: +1 -1
+		js/tinymce/jscripts/tiny_mce/plugins/table/langs/pt_dlg.js (1.2), "Exp", lines: +24 -24
+		js/tinymce/jscripts/tiny_mce/plugins/template/blank.htm (1.2), "Exp", lines: +2 -13
+		js/tinymce/jscripts/tiny_mce/plugins/template/editor_plugin.js (1.2), "Exp", lines: +1 -1
+		js/tinymce/jscripts/tiny_mce/plugins/template/editor_plugin_src.js (1.3), "Exp", lines: +132 -527
+		js/tinymce/jscripts/tiny_mce/plugins/template/template.htm (1.2), "Exp", lines: +15 -14
+		js/tinymce/jscripts/tiny_mce/plugins/template/langs/pt_dlg.js (1.2), "Exp", lines: +5 -5
+		js/tinymce/jscripts/tiny_mce/plugins/visualchars/editor_plugin.js (1.2), "Exp", lines: +1 -1
+		js/tinymce/jscripts/tiny_mce/plugins/visualchars/editor_plugin_src.js (1.3), "Exp", lines: +64 -80
+		js/tinymce/jscripts/tiny_mce/plugins/xhtmlxtras/abbr.htm (1.2), "Exp", lines: +27 -27
+		js/tinymce/jscripts/tiny_mce/plugins/xhtmlxtras/acronym.htm (1.2), "Exp", lines: +27 -27
+		js/tinymce/jscripts/tiny_mce/plugins/xhtmlxtras/attributes.htm (1.2), "Exp", lines: +27 -27
+		js/tinymce/jscripts/tiny_mce/plugins/xhtmlxtras/cite.htm (1.2), "Exp", lines: +27 -27
+		js/tinymce/jscripts/tiny_mce/plugins/xhtmlxtras/del.htm (1.2), "Exp", lines: +31 -31
+		js/tinymce/jscripts/tiny_mce/plugins/xhtmlxtras/editor_plugin.js (1.2), "Exp", lines: +1 -1
+		js/tinymce/jscripts/tiny_mce/plugins/xhtmlxtras/editor_plugin_src.js (1.3), "Exp", lines: +129 -192
+		js/tinymce/jscripts/tiny_mce/plugins/xhtmlxtras/ins.htm (1.2), "Exp", lines: +31 -31
+		js/tinymce/jscripts/tiny_mce/plugins/xhtmlxtras/css/popup.css (1.2), "Exp", lines: +9 -46
+		js/tinymce/jscripts/tiny_mce/plugins/xhtmlxtras/langs/pt_dlg.js (1.2), "Exp", lines: +7 -7
+		js/tinymce/jscripts/tiny_mce/themes/advanced/about.htm (1.2), "Exp", lines: +19 -15
+		js/tinymce/jscripts/tiny_mce/themes/advanced/anchor.htm (1.2), "Exp", lines: +11 -13
+		js/tinymce/jscripts/tiny_mce/themes/advanced/charmap.htm (1.2), "Exp", lines: +11 -11
+		js/tinymce/jscripts/tiny_mce/themes/advanced/color_picker.htm (1.2), "Exp", lines: +18 -17
+		js/tinymce/jscripts/tiny_mce/themes/advanced/editor_template.js (1.2), "Exp", lines: +1 -1
+		js/tinymce/jscripts/tiny_mce/themes/advanced/editor_template_src.js (1.3), "Exp", lines: +935 -1356
+		js/tinymce/jscripts/tiny_mce/themes/advanced/image.htm (1.2), "Exp", lines: +42 -57
+		js/tinymce/jscripts/tiny_mce/themes/advanced/link.htm (1.2), "Exp", lines: +28 -65
+		js/tinymce/jscripts/tiny_mce/themes/advanced/source_editor.htm (1.2), "Exp", lines: +10 -11
+		js/tinymce/jscripts/tiny_mce/themes/advanced/langs/de.js (1.2), "Exp", lines: +63 -82
+		js/tinymce/jscripts/tiny_mce/themes/advanced/langs/pt.js (1.2), "Exp", lines: +39 -39
+		js/tinymce/jscripts/tiny_mce/themes/advanced/langs/pt_dlg.js (1.2), "Exp", lines: +14 -14
+		js/tinymce/jscripts/tiny_mce/themes/simple/editor_template.js (1.2), "Exp", lines: +1 -1
+		js/tinymce/jscripts/tiny_mce/themes/simple/editor_template_src.js (1.3), "Exp", lines: +78 -77
+		js/tinymce/jscripts/tiny_mce/themes/simple/langs/pt.js (1.2), "Exp", lines: +3 -3
+		js/tinymce/jscripts/tiny_mce/utils/editable_selects.js (1.2), "Exp", lines: +14 -6
+		js/tinymce/jscripts/tiny_mce/utils/form_utils.js (1.2), "Exp", lines: +32 -43
+		js/tinymce/jscripts/tiny_mce/utils/mclayer.js (1.2), "Exp", lines: +0 -0
+		js/tinymce/jscripts/tiny_mce/utils/mctabs.js (1.2), "Exp", lines: +14 -12
+		js/tinymce/jscripts/tiny_mce/utils/validate.js (1.2), "Exp", lines: +4 -4
+
+	tinymce 3
+
+2009-07-06 Monday 12:04  mcms09
+
+	Added:
+		js/tinymce/jscripts/tiny_mce/plugins/compat2x/editor_plugin.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/compat2x/editor_plugin_src.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/emotions/langs/de_dlg.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/emotions/langs/fr_dlg.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/example/dialog.htm (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/example/editor_plugin.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/example/editor_plugin_src.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/example/img/example.gif (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/example/js/dialog.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/example/langs/en.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/example/langs/en_dlg.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/advimage/langs/de_dlg.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/advimage/langs/fr_dlg.js (1.1)
+	Changed:
+		js/tinymce/jscripts/tiny_mce/plugins/contextmenu/editor_plugin.js (1.2), "Exp", lines: +1 -1
+		js/tinymce/jscripts/tiny_mce/plugins/contextmenu/editor_plugin_src.js (1.3), "Exp", lines: +79 -341
+		js/tinymce/jscripts/tiny_mce/plugins/directionality/editor_plugin.js (1.2), "Exp", lines: +1 -1
+		js/tinymce/jscripts/tiny_mce/plugins/directionality/editor_plugin_src.js (1.3), "Exp", lines: +72 -83
+		js/tinymce/jscripts/tiny_mce/plugins/emotions/editor_plugin.js (1.2), "Exp", lines: +1 -1
+		js/tinymce/jscripts/tiny_mce/plugins/emotions/editor_plugin_src.js (1.3), "Exp", lines: +33 -56
+		js/tinymce/jscripts/tiny_mce/plugins/emotions/emotions.htm (1.2), "Exp", lines: +22 -22
+		js/tinymce/jscripts/tiny_mce/plugins/emotions/langs/pt_dlg.js (1.2), "Exp", lines: +4 -4
+
+	tinymce 3
+
+2009-07-06 Monday 12:00  mcms09
+
+	Added:
+		js/tinymce/jscripts/tiny_mce/plugins/advlink/langs/de_dlg.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/advlink/langs/fr_dlg.js (1.1)
+	Changed:
+		js/tinymce/jscripts/tiny_mce/plugins/advlink/langs/pt_dlg.js (1.2), "Exp", lines: +21 -21
+
+	tinymce 3
+
+2009-07-06 Monday 11:55  mcms09
+
+	Added:
+		js/tinymce/jscripts/tiny_mce/plugins/advlink/js/advlink.js (1.1)
+	Changed:
+		js/tinymce/jscripts/tiny_mce/plugins/advhr/css/advhr.css (1.2), "Exp", lines: +5 -23
+		js/tinymce/jscripts/tiny_mce/plugins/advhr/editor_plugin.js (1.2), "Exp", lines: +1 -1
+		js/tinymce/jscripts/tiny_mce/plugins/advhr/editor_plugin_src.js (1.3), "Exp", lines: +47 -83
+		js/tinymce/jscripts/tiny_mce/plugins/advhr/rule.htm (1.2), "Exp", lines: +16 -15
+		js/tinymce/jscripts/tiny_mce/plugins/advimage/editor_plugin.js (1.2), "Exp", lines: +1 -1
+		js/tinymce/jscripts/tiny_mce/plugins/advimage/editor_plugin_src.js (1.3), "Exp", lines: +40 -141
+		js/tinymce/jscripts/tiny_mce/plugins/advimage/image.htm (1.2), "Exp", lines: +74 -78
+		js/tinymce/jscripts/tiny_mce/plugins/advimage/css/advimage.css (1.2), "Exp", lines: +13 -66
+		js/tinymce/jscripts/tiny_mce/plugins/advimage/langs/pt_dlg.js (1.2), "Exp", lines: +15 -15
+		js/tinymce/jscripts/tiny_mce/plugins/advlink/editor_plugin.js (1.2), "Exp", lines: +1 -1
+		js/tinymce/jscripts/tiny_mce/plugins/advlink/editor_plugin_src.js (1.3), "Exp", lines: +51 -81
+		js/tinymce/jscripts/tiny_mce/plugins/advlink/link.htm (1.2), "Exp", lines: +63 -62
+		js/tinymce/jscripts/tiny_mce/plugins/advlink/css/advlink.css (1.2), "Exp", lines: +8 -35
+		js/tinymce/jscripts/tiny_mce/plugins/autosave/editor_plugin.js (1.2), "Exp", lines: +1 -1
+		js/tinymce/jscripts/tiny_mce/plugins/autosave/editor_plugin_src.js (1.3), "Exp", lines: +42 -37
+		js/tinymce/jscripts/tiny_mce/plugins/bbcode/editor_plugin.js (1.2), "Exp", lines: +1 -1
+		js/tinymce/jscripts/tiny_mce/plugins/bbcode/editor_plugin_src.js (1.2), "Exp", lines: +115 -100
+
+	tinymce 3
+
+2009-07-06 Monday 02:36  mcms09
+
+	Added:
+		js/tinymce/jscripts/tiny_mce/langs/fr.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/advhr/js/rule.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/advhr/langs/de_dlg.js (1.1)
+		js/tinymce/jscripts/tiny_mce/plugins/advhr/langs/fr_dlg.js (1.1)
+	Changed:
+		js/tinymce/jscripts/tiny_mce/langs/de.js (1.2), "Exp", lines: +155 -41
+		js/tinymce/jscripts/tiny_mce/langs/pt.js (1.2), "Exp", lines: +31 -31
+
+	tinymce 3
+
+2009-07-06 Monday 02:29  mcms09
+
+	Added:
+		js/tinymce/changelog.txt (1.1)
+		js/tinymce/jscripts/tiny_mce/tiny_mce_gzip.js (1.1)
+
+	tinymce 3
+
+2009-07-06 Monday 01:42  mcms09
+
+	Changed:
+		include/mimemessage/smtp_message.php (1.6), "Exp", lines: +5 -5
+
+	removed whitespaces before <?php
+
+2009-07-06 Monday 01:39  mcms09
+
+	Changed:
+		locale/tellmatic-en.po (1.5), "Exp", lines: +1 -1
+
+	corrected spelling error
+
+2009-07-06 Monday 01:29  mcms09
+
+	Deleted:
+		js/tinymce/changelog (1.2)
+		js/tinymce/readme (1.2)
+	Changed:
+		ChangeLog (1.9), "Exp", lines: +74 -0
+		include/filemanager.inc.php (1.4), "Exp", lines: +1 -1
+
+	removed tinymce for replace
+
+2009-07-06 Monday 00:48  mcms09
+
+	Changed:
+		INSTALL.DE (1.7), "Exp", lines: +4 -0
+		INSTALL.EN (1.6), "Exp", lines: +4 -2
+
+	some notes about ftp binary transfer etc. and cronjob
+
+2009-07-06 Monday 00:47  mcms09
+
+	Changed:
+		.htaccess (1.2), "Exp", lines: +20 -5
+
+	some explanations on the options. added some example pseudo security
+	options :)
+
+2009-07-06 Monday 00:46  mcms09
+
+	Changed:
+		api_example.php (1.3), "Exp", lines: +94 -0
+
+	exit. remove before use! added mor eexample code to add new
+	addresses
+
+2009-07-06 Monday 00:45  mcms09
+
+	Changed:
+		js/tellmatic_mootools.js (1.2), "Exp", lines: +1 -3
+
+	fixed for ie :P brackets in new line crashed internet explorer :)))
+
+2009-07-06 Monday 00:44  mcms09
+
+	Changed:
+		js/tellmatic.js (1.7), "Exp", lines: +28 -4
+
+	added new functions: copyselectedoption: copy option of a selectbox
+	to textfield, makeVisBlock/makeInVisBlock: make div blocks
+	in-/visible, needed for install form. fix some undefined var js
+	errors
+
+2009-07-06 Monday 00:41  mcms09
+
+	Changed:
+		include/wysiwyg.inc.php (1.9), "Exp", lines: +105 -43
+
+	changed tinymce config to user uncompressed or compressed loader
+
+2009-07-06 Monday 00:39  mcms09
+
+	Changed:
+		include/subscribe.inc.php (1.5), "Exp", lines: +11 -2
+
+	add some testcode to force user to select at least one publich
+	group, uncomment around line 170 or so before use. FIXED Bug not
+	using default smtp host on subscribe via double opt-in or subscribe
+	notification
+
+2009-07-06 Monday 00:32  mcms09
+
+	Changed:
+		include/nl_form.inc.php (1.9), "Exp", lines: +14 -10
+
+	make massmail/personalized newsletter type a selecbox instead of
+	checkbox
+
+2009-07-06 Monday 00:31  mcms09
+
+	Changed:
+		include/Messages.inc.php (1.2), "Exp", lines: +27 -7
+
+	add english translation
+
+2009-07-06 Monday 00:30  mcms09
+
+	Changed:
+		include/Main.inc.php (1.7), "Exp", lines: +15 -8
+
+	add warning for admin/tmp writeaccess and .htaccess file. moved
+	inclusion of help section. fixed javascript undefined property error
+	for toggleslide
+
+2009-07-06 Monday 00:26  mcms09
+
+	Changed:
+		include/host_form.inc.php (1.6), "Exp", lines: +23 -2
+
+	added redefined imap options for click+add via javascript :) fixed
+	bug with not allowed / character in options, ...do not check for
+	special characters in username
+
+2009-07-06 Monday 00:23  mcms09
+
+	Changed:
+		include/host_edit.inc.php (1.3), "Exp", lines: +4 -0
+		include/host_new.inc.php (1.3), "Exp", lines: +3 -0
+
+	remove leading slashes from imap/pop3 options
+
+2009-07-06 Monday 00:22  mcms09
+
+	Changed:
+		include/Header.inc.php (1.4), "Exp", lines: +5 -2
+
+	fixed undefined js property error if user is not logged in
+
+2009-07-06 Monday 00:21  mcms09
+
+	Changed:
+		include/Functions.inc.php (1.18), "Exp", lines: +1 -1
+
+	check_dbid: allows 0, a valid db internal id is >0 :) do not allow 0
+	values
+
+2009-07-06 Monday 00:19  mcms09
+
+	Changed:
+		include/Class_Q.inc.php (1.10), "Exp", lines: +18 -7
+
+	addHQ: changed filter for addresses in temporary table!!! do not
+	check for status=1, instead check for status!=... see code readme
+	docs
+
+2009-07-06 Monday 00:16  mcms09
+
+	Changed:
+		include/adr_form.inc.php (1.6), "Exp", lines: +2 -2
+
+	changed created/author, updated/editor, was in wrong order
+
+2009-07-06 Monday 00:14  mcms09
+
+	Changed:
+		include/adm_user_list.inc.php (1.3), "Exp", lines: +8 -8
+		include/adm_user_list_legende.inc.php (1.5), "Exp", lines: +0 -1
+
+	for now there is no user statistics, so dont show an icon for this
+	:) statistiks will be available if global logging feature gets added
+	in next releases
+
+2009-07-06 Monday 00:12  mcms09
+
+	Changed:
+		include/adm_user_form.inc.php (1.6), "Exp", lines: +1 -1
+
+	do not force lowercase for username! username is now case sensitiv!
+
+2009-07-06 Monday 00:11  mcms09
+
+	Changed:
+		include/smtp/smtp.php (1.3), "Exp", lines: +12 -3
+
+	added quick and dorty gmail hack. hmmm, i wonder why users should
+	use email to send out newsletters.... i added this workaround only
+	for serious users, not for hackers. sending newsletter via gmail is
+	not an elegant and serious way!
+
+2009-07-06 Monday 00:07  mcms09
+
+	Changed:
+		include/install/install_form.inc.php (1.5), "Exp", lines: +51 -5
+
+	allow user to show only one big form or single sections - via
+	javascript, added lots of text to explain the install options and
+	values
+
 2009-02-02 Monday 23:31  mcms09
 
 	Changed:

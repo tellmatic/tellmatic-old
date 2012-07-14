@@ -28,12 +28,13 @@ class tm_FRM {
 		#$DB=new tm_DB();
 		$Query ="	SELECT ".TM_TABLE_FRM.".id, ".TM_TABLE_FRM.".name, ".TM_TABLE_FRM.".action_url, ".TM_TABLE_FRM.".descr, ".TM_TABLE_FRM.".aktiv, ".TM_TABLE_FRM.".author, ".TM_TABLE_FRM.".created, ".TM_TABLE_FRM.".editor, ".TM_TABLE_FRM.".updated, ".TM_TABLE_FRM.".double_optin, ".TM_TABLE_FRM.".subscriptions,
 						 ".TM_TABLE_FRM.".use_captcha,  ".TM_TABLE_FRM.".digits_captcha,  ".TM_TABLE_FRM.".subscribe_aktiv, ".TM_TABLE_FRM.".check_blacklist,
+						 ".TM_TABLE_FRM.".force_pubgroup, ".TM_TABLE_FRM.".overwrite_pubgroup,
 						 ".TM_TABLE_FRM.".submit_value, ".TM_TABLE_FRM.".reset_value,
 						".TM_TABLE_FRM.".email, ".TM_TABLE_FRM.".f0, ".TM_TABLE_FRM.".f1, ".TM_TABLE_FRM.".f2, ".TM_TABLE_FRM.".f3, ".TM_TABLE_FRM.".f4, ".TM_TABLE_FRM.".f5, ".TM_TABLE_FRM.".f6, ".TM_TABLE_FRM.".f7, ".TM_TABLE_FRM.".f8, ".TM_TABLE_FRM.".f9,
 						".TM_TABLE_FRM.".f0_type, ".TM_TABLE_FRM.".f1_type, ".TM_TABLE_FRM.".f2_type, ".TM_TABLE_FRM.".f3_type, ".TM_TABLE_FRM.".f4_type, ".TM_TABLE_FRM.".f5_type, ".TM_TABLE_FRM.".f6_type, ".TM_TABLE_FRM.".f7_type, ".TM_TABLE_FRM.".f8_type, ".TM_TABLE_FRM.".f9_type,
 						".TM_TABLE_FRM.".f0_required, ".TM_TABLE_FRM.".f1_required, ".TM_TABLE_FRM.".f2_required, ".TM_TABLE_FRM.".f3_required, ".TM_TABLE_FRM.".f4_required, ".TM_TABLE_FRM.".f5_required, ".TM_TABLE_FRM.".f6_required, ".TM_TABLE_FRM.".f7_required, ".TM_TABLE_FRM.".f8_required, ".TM_TABLE_FRM.".f9_required,
 						".TM_TABLE_FRM.".f0_value, ".TM_TABLE_FRM.".f1_value, ".TM_TABLE_FRM.".f2_value, ".TM_TABLE_FRM.".f3_value, ".TM_TABLE_FRM.".f4_value, ".TM_TABLE_FRM.".f5_value, ".TM_TABLE_FRM.".f6_value, ".TM_TABLE_FRM.".f7_value, ".TM_TABLE_FRM.".f8_value, ".TM_TABLE_FRM.".f9_value,
-						".TM_TABLE_FRM.".email_errmsg, ".TM_TABLE_FRM.".captcha_errmsg, ".TM_TABLE_FRM.".blacklist_errmsg, ".TM_TABLE_FRM.".f0_errmsg, ".TM_TABLE_FRM.".f1_errmsg, ".TM_TABLE_FRM.".f2_errmsg, ".TM_TABLE_FRM.".f3_errmsg, ".TM_TABLE_FRM.".f4_errmsg, ".TM_TABLE_FRM.".f5_errmsg, ".TM_TABLE_FRM.".f6_errmsg, ".TM_TABLE_FRM.".f7_errmsg, ".TM_TABLE_FRM.".f8_errmsg, ".TM_TABLE_FRM.".f9_errmsg,
+						".TM_TABLE_FRM.".email_errmsg, ".TM_TABLE_FRM.".captcha_errmsg, ".TM_TABLE_FRM.".blacklist_errmsg, ".TM_TABLE_FRM.".pubgroup_errmsg, ".TM_TABLE_FRM.".f0_errmsg, ".TM_TABLE_FRM.".f1_errmsg, ".TM_TABLE_FRM.".f2_errmsg, ".TM_TABLE_FRM.".f3_errmsg, ".TM_TABLE_FRM.".f4_errmsg, ".TM_TABLE_FRM.".f5_errmsg, ".TM_TABLE_FRM.".f6_errmsg, ".TM_TABLE_FRM.".f7_errmsg, ".TM_TABLE_FRM.".f8_errmsg, ".TM_TABLE_FRM.".f9_errmsg,
 						".TM_TABLE_FRM.".f0_expr, ".TM_TABLE_FRM.".f1_expr, ".TM_TABLE_FRM.".f2_expr, ".TM_TABLE_FRM.".f3_expr, ".TM_TABLE_FRM.".f4_expr, ".TM_TABLE_FRM.".f5_expr, ".TM_TABLE_FRM.".f6_expr, ".TM_TABLE_FRM.".f7_expr, ".TM_TABLE_FRM.".f8_expr, ".TM_TABLE_FRM.".f9_expr
 						FROM ".TM_TABLE_FRM."
 					";
@@ -80,6 +81,8 @@ class tm_FRM {
 			$this->FORM[$ac]['digits_captcha']=$this->DB->Record['digits_captcha'];
 			$this->FORM[$ac]['subscribe_aktiv']=$this->DB->Record['subscribe_aktiv'];
 			$this->FORM[$ac]['check_blacklist']=$this->DB->Record['check_blacklist'];
+			$this->FORM[$ac]['force_pubgroup']=$this->DB->Record['force_pubgroup'];
+			$this->FORM[$ac]['overwrite_pubgroup']=$this->DB->Record['overwrite_pubgroup'];			
 			$this->FORM[$ac]['submit_value']=$this->DB->Record['submit_value'];
 			$this->FORM[$ac]['reset_value']=$this->DB->Record['reset_value'];
 			$this->FORM[$ac]['email']=$this->DB->Record['email'];
@@ -126,6 +129,7 @@ class tm_FRM {
 			$this->FORM[$ac]['email_errmsg']=$this->DB->Record['email_errmsg'];
 			$this->FORM[$ac]['captcha_errmsg']=$this->DB->Record['captcha_errmsg'];
 			$this->FORM[$ac]['blacklist_errmsg']=$this->DB->Record['blacklist_errmsg'];
+			$this->FORM[$ac]['pubgroup_errmsg']=$this->DB->Record['pubgroup_errmsg'];
 			$this->FORM[$ac]['f0_errmsg']=$this->DB->Record['f0_errmsg'];
 			$this->FORM[$ac]['f1_errmsg']=$this->DB->Record['f1_errmsg'];
 			$this->FORM[$ac]['f2_errmsg']=$this->DB->Record['f2_errmsg'];
@@ -225,12 +229,13 @@ class tm_FRM {
 					".TM_TABLE_FRM."
 					(
 					name,action_url,descr,aktiv,author,created,editor,updated,double_optin,subscriptions,use_captcha,digits_captcha,subscribe_aktiv,check_blacklist,
+					force_pubgroup,overwrite_pubgroup,
 					submit_value, reset_value, siteid,
 					email, f0,f1,f2,f3,f4,f5,f6,f7,f8,f9,
 					f0_type, f1_type, f2_type, f3_type, f4_type, f5_type, f6_type, f7_type, f8_type, f9_type,
 					f0_required, f1_required, f2_required, f3_required, f4_required, f5_required, f6_required, f7_required, f8_required, f9_required,
 					f0_value, f1_value, f2_value, f3_value, f4_value, f5_value, f6_value, f7_value, f8_value, f9_value,
-					email_errmsg, captcha_errmsg, blacklist_errmsg, f0_errmsg, f1_errmsg, f2_errmsg, f3_errmsg, f4_errmsg, f5_errmsg, f6_errmsg, f7_errmsg, f8_errmsg, f9_errmsg,
+					email_errmsg, captcha_errmsg, blacklist_errmsg, pubgroup_errmsg, f0_errmsg, f1_errmsg, f2_errmsg, f3_errmsg, f4_errmsg, f5_errmsg, f6_errmsg, f7_errmsg, f8_errmsg, f9_errmsg,
 					f0_expr, f1_expr, f2_expr, f3_expr, f4_expr, f5_expr, f6_expr, f7_expr, f8_expr, f9_expr
 					)
 					VALUES
@@ -238,6 +243,7 @@ class tm_FRM {
 					'".dbesc($frm["name"])."', '".dbesc($frm["action_url"])."', '".dbesc($frm["descr"])."', ".checkset_int($frm["aktiv"]).", '".dbesc($frm["author"])."', '".dbesc($frm["created"])."', '".dbesc($frm["author"])."', '".dbesc($frm["created"])."',
 					".checkset_int($frm["double_optin"]).", 0, ".checkset_int($frm["use_captcha"]).",
 					".checkset_int($frm["digits_captcha"]).", ".checkset_int($frm["subscribe_aktiv"]).", ".checkset_int($frm["check_blacklist"]).",
+					'".dbesc($frm["force_pubgroup"])."', '".dbesc($frm["overwrite_pubgroup"])."',
 					'".dbesc($frm["submit_value"])."', '".dbesc($frm["reset_value"])."',
 					'".TM_SITEID."',
 					'".dbesc($frm["email"])."',
@@ -284,6 +290,7 @@ class tm_FRM {
 					'".dbesc($frm["email_errmsg"])."',
 					'".dbesc($frm["captcha_errmsg"])."',
 					'".dbesc($frm["blacklist_errmsg"])."',
+					'".dbesc($frm["pubgroup_errmsg"])."',
 					'".dbesc($frm["f0_errmsg"])."',
 					'".dbesc($frm["f1_errmsg"])."',
 					'".dbesc($frm["f2_errmsg"])."',
@@ -393,6 +400,8 @@ class tm_FRM {
 						digits_captcha=".checkset_int($frm["digits_captcha"]).",
 						subscribe_aktiv=".checkset_int($frm["subscribe_aktiv"]).",
 						check_blacklist=".checkset_int($frm["check_blacklist"]).",
+						force_pubgroup=".checkset_int($frm["force_pubgroup"]).",
+						overwrite_pubgroup=".checkset_int($frm["overwrite_pubgroup"]).",
 						submit_value='".dbesc($frm["submit_value"])."',
 						reset_value='".dbesc($frm["reset_value"])."',
 						email='".dbesc($frm["email"])."',
@@ -439,6 +448,7 @@ class tm_FRM {
 						email_errmsg='".dbesc($frm["email_errmsg"])."',
 						captcha_errmsg='".dbesc($frm["captcha_errmsg"])."',
 						blacklist_errmsg='".dbesc($frm["blacklist_errmsg"])."',
+						pubgroup_errmsg='".dbesc($frm["pubgroup_errmsg"])."',
 						f0_errmsg='".dbesc($frm["f0_errmsg"])."',
 						f1_errmsg='".dbesc($frm["f1_errmsg"])."',
 						f2_errmsg='".dbesc($frm["f2_errmsg"])."',

@@ -25,6 +25,9 @@ if (is_writeable(TM_INCLUDEPATH."/tm_config.inc.php")) {
 	}
 }
 
+if (!is_writeable(TM_PATH."/admin/tmp")) {
+	#$_MAIN_MESSAGE.="<br><font size=2 color=red><b>".sprintf(___("Keine Schreibrechte für %s"),TM_PATH."/admin/tmp")."</b></font>";
+}
 if (!is_writeable($tm_datapath)) {
 	$_MAIN_MESSAGE.="<br><font size=2 color=red><b>".sprintf(___("Keine Schreibrechte für %s"),$tm_datapath)."</b></font>";
 }
@@ -50,6 +53,9 @@ if (!is_writeable($tm_reportpath)) {
 	$_MAIN_MESSAGE.="<br><font size=2 color=red><b>".sprintf(___("Keine Schreibrechte für %s"),$tm_reportpath)."</b></font>";
 }
 
+if (!file_exists(TM_PATH."/admin/tmp/.htaccess")) {
+	#$_MAIN_MESSAGE.="<br><font size=2 color=red><b>".sprintf(___("ACHTUNG! %s ist nicht Passwortgeschützt"),TM_PATH."/admin/tmp/")."</b></font>";
+}
 if (!file_exists(TM_INCLUDEPATH."/.htaccess")) {
 	$_MAIN_MESSAGE.="<br><font size=2 color=red><b>".sprintf(___("ACHTUNG! %s ist nicht Passwortgeschützt"),TM_INCLUDEPATH)."</b></font>";
 }
@@ -68,7 +74,6 @@ if (!file_exists($tm_reportpath."/.htaccess")) {
 
 if ($logged_in) {
 	$_MAIN_DESCR=___("Bitte aus dem Menü wählen.");
-	require_once (TM_INCLUDEPATH."/help_section.inc.php");
 
 	switch ($action) {
 		//default:
@@ -126,6 +131,8 @@ if ($logged_in) {
 	$_MAIN_DESCR.=" (".TM_SITEID.")";
 	//icon hilfe
 	$_MAIN_DESCR=tm_icon("help.png",___("Hilfe"),___("Hilfe"),"toggle_help")."&nbsp;".$_MAIN_DESCR;
+	//HELP	
+	require_once (TM_INCLUDEPATH."/help_section.inc.php");
 	//expertmode, hilfe ausblenden
 	if ($user_is_expert) $_MAIN_OUTPUT.= "
 	<script type=\"text/javascript\">
@@ -155,6 +162,12 @@ if ($logged_in) {
 			$_MAIN_MESSAGE.="<br>".___("Passwort wurde gespeichert und ist ab sofort gültig.");
 		}//check
 	}//pwchanged
+    //wichtig, triggerfunction f. menu: id ist "me_0_1"
+    //only if logged in, else it throws a $trigger has no property js error because there is no menu!
+    $_MAIN_OUTPUT.= "<script language=\"javascript\" type=\"text/javascript\">".
+										"toggleSlide('me_0_1','main_info',0);".
+										"toggleSlide('me_0_2','main_help',0);".
+										"</script>";
 }//logged in
 
 
@@ -167,20 +180,14 @@ if (!empty($_MAIN_MESSAGE)) {
 			"&nbsp;".___("Informationen ausblenden")."</a>".
 			"</font><br><br>".
 			"<script language=\"javascript\" type=\"text/javascript\">".
-			"toggleSlide('toggle_main_info','main_info',0);".
 			"</script>".$_MAIN_MESSAGE;
 	$_MAIN_MESSAGE.="<br><br>";
 }
 
-//wichtig, triggerfunction f. menu: id ist "me_0_1"
-$_MAIN_OUTPUT.= "<script language=\"javascript\" type=\"text/javascript\">".
-										"toggleSlide('me_0_1','main_info',0);".
-										"toggleSlide('me_0_2','main_help',0);".
-										"</script>";
-
 $_MAIN_OUTPUT.= '
 <script type="text/javascript">
 	<!--
+	toggleSlide("toggle_main_info","main_info",0);
 	checkForm();
 	-->
 </script>

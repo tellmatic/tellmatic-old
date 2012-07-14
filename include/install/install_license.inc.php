@@ -11,6 +11,14 @@
 /* check Homepage for Updates and more Infos                                    */
 /* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
 /********************************************************************************/
+$download_note['en']='<b>Thank you for using Tellmatic!</b><br>A small Warning: Unforntunately there are several downloadsites in the internet offering Tellmatic 
+download from a different host other than Tellmatic.org or Sourceforge, or maybe offer download as a ZIP File.
+<br>You may trust them, but do it on your own risk!
+<br>You better download Tellmatic from http://www.tellmatic.org/download (there is a Link to download for free from Sourceforge.net)
+<br>Please do NOT PAY for downloads except you make a donation to Tellmatic.org or so and get it as an email attachment.
+<br>Especially DO NOT TRUST and use downloads from sites saying they offer a "Tellmatic special exnterprise full featured Version" or something weird like this, there is only one Version available! And it\'s for free!';
+
+$download_note['de']=$download_note['en'];
 $license['en']='
 	    GNU GENERAL PUBLIC LICENSE
 		       Version 2, June 1991
@@ -732,6 +740,12 @@ $FORM_LICENSE.= "</td>";
 $FORM_LICENSE.= "</tr>";
 $FORM_LICENSE.= "</thead>";
 $FORM_LICENSE.= "<tbody>";
+$FORM_LICENSE.= "<tr>";
+$FORM_LICENSE.= "<td valign=top align=\"left\" colspan=2>";
+$FORM_LICENSE.= $download_note['en'];
+$FORM_LICENSE.= "<br><br>";
+$FORM_LICENSE.= "</td>";
+$FORM_LICENSE.= "</tr>";
 $FORM_LICENSE.= "<tr>";
 $FORM_LICENSE.= "<td valign=top align=\"left\" colspan=2>";
 $FORM_LICENSE.= $Form->INPUT[$FormularName][$InputName_License]['html'];

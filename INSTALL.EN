@@ -25,7 +25,8 @@ Notes:
 Installation:
 
 	Unpack the archive file to your local harddisc.
-	Copy the directory tellmatic-[xxx] or the content of this directory completely to your server via ftp into a directory of your choice.
+	Copy the directory tellmatic-[xxx] or the content of this directory completely to your server via ftp into a directory of your choice. Images must be transfered in Binary Mode 
+	(Auto Mode is OK, but sometimes the ftp programm is broken and transfers images in textmode, this is a but in the ftp client, not in Tellmatic)
 	You can also copy the archiv via ssh or similar or use wget on your server. Please update user and groups for your needs after unpacking (chown)
 	The directory where you install Tellmatic and the 'include' directory must be writeable by the webserver - use chmod function of your ftp programm and set permissions to 0775 or 0777
 	
@@ -70,7 +71,8 @@ Installation:
 
 	To send via cronjob, call http://[user:passwort]@[domain]/[tellmatic-installdir]/include/send_it.php with wget (add username and pw), or use php cli (recommended!)
 		*/1 * * * * /path/to/php-cli-binary /path/to/include/send_it.php
-
+	Sending Newsletters at a specific time is only possible with cronjobs! If you can't create Cronjobs on your Server, you have to use manual sending.
+	
 For questions and suggestions please visit www.tellmatic.org and read doc and faq or write to the public forum.
 
 Important: 1and1 or Strato-Users should watch the forum, it contains workarounds to get tellmatic running on such "special configured" hosts.

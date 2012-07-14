@@ -25,7 +25,6 @@ $_MAIN_OUTPUT.= "<br><strong>".___("Aktionen")."</strong><br>";
 $_MAIN_OUTPUT.= tm_icon("tick.png",___("Benutzer ist Aktiv"));
 $_MAIN_OUTPUT.= tm_icon("cancel.png",___("Benutzer ist Inaktiv"))."&nbsp;".___("Benutzer ist Aktiv/Inaktiv (Klick=Deaktivieren/Aktivieren)")."<br>";
 $_MAIN_OUTPUT.= tm_icon("pencil.png",___("Bearbeiten"))."&nbsp;".___("Bearbeiten")."<br>";
-$_MAIN_OUTPUT.= tm_icon("chart_pie.png",___("Statistik anzeigen"))."&nbsp;".___("Statistik anzeigen")."<br>";
 $_MAIN_OUTPUT.= tm_icon("cross.png",___("Benutzer löschen"))."&nbsp;".___("Benutzer löschen")."<br>";
 $_MAIN_OUTPUT.= "</div><br><br>";
 $_MAIN_OUTPUT.= "<script type=\"text/javascript\">";

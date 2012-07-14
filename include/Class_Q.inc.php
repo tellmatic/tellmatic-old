@@ -644,11 +644,17 @@ class tm_Q {
 			#temporary tablename: $tmp_tablename
 			/*
 			select into new table: $tmp_tablename
-			all entries from nl_h nl_h table that have status=1 and 
-			addresses (adr_id) found in adr and are member in the selected group
-			(group in nl_h doesnt matter, only group from adr_ref table)
-			dont care of adr.status, aktiv etc. we want all entries with status new (nl_h.status=1)
+			all entries from nl_h table (recipients list for selected adrgroup and newsletter) that have status=1 and 
+			addresses (adr_id) found in adr and are member of the selected group
+			(group in nl_h doesnt matter, only group from adr_ref table!!! this one is important to be aware of double entries)
+			don't care of adr.status, aktiv etc. we want all entries with status new (nl_h.status=1)
 			for current siteid!
+			2009.06.09 changed from status=1 to !=4,  this finally is the list of adresses belonging to more than one group who should receive the newsletter.
+			this list of emails should not get inserted in the newly created recipients list for a queue to one of such groups for the same newsletter, because they already exist there!.
+			changed from nl_h.status=1 to nl_h status=1 or 2 or 3 or 5, means not status 4 and not status =6 (canceled).
+			not status 4 means that failed addresses gets inserted again!!!!!! maybe make that an option, just testing now. maybe status doesnt matter? a subscriber should never get the same newsletter twice ....
+			would be a problem maybe because you always have to create a new newsletter for a group. or only could insert new collected addresses to send an 'old' newsletter you have already send to that group before.
+			to resend to failed addresses may be a good idea also, as it does with status !=4 becaue failed addresses gets marked failed more quickly ;) and that gives us a better quality maybe of our address pool.
 			*/
 			CREATE TEMPORARY TABLE
 				".$tmp_tablename." 
@@ -663,7 +669,8 @@ class tm_Q {
 				'".TM_SITEID."' as siteid
 			FROM ".TM_TABLE_NL_H."
 				/* join with addresstable */
-				INNER JOIN ".TM_TABLE_ADR." ON ".TM_TABLE_NL_H.".adr_id = ".TM_TABLE_ADR.".id
+				INNER JOIN ".TM_TABLE_ADR." 
+					ON (".TM_TABLE_NL_H.".adr_id = ".TM_TABLE_ADR.".id)
 			WHERE 
 				/* with siteid */
 				".TM_TABLE_ADR.".siteid='".TM_SITEID."'
@@ -671,7 +678,11 @@ class tm_Q {
 				/* for selected newsletter */
 				AND ".TM_TABLE_NL_H.".nl_id=".checkset_int($h['nl_id'])."
 				/* with status=1=new */
-				AND ".TM_TABLE_NL_H.".status=1
+				AND (
+						".TM_TABLE_NL_H.".status !=4 /* was status=1 */
+						/*new:*/
+						AND ".TM_TABLE_NL_H.".status !=6
+						)
 				/* group by adr id and siteid */
 				GROUP BY ".TM_TABLE_ADR.".id, ".TM_TABLE_ADR.".siteid
 			";//Query_TempTable
@@ -721,7 +732,7 @@ class tm_Q {
 				INNER JOIN ".TM_TABLE_NL." 
 					ON (".TM_TABLE_NL_Q.".nl_id = ".TM_TABLE_NL.".id)
 				/* left join now adresstable adr.id with temporary historytable/recipientstable $tmp_tablename.adr_id */
-				LEFT JOIN ".$tmp_tablename." ON ".TM_TABLE_ADR.".id = ".$tmp_tablename.".adr_id 
+				LEFT JOIN ".$tmp_tablename." ON (".TM_TABLE_ADR.".id = ".$tmp_tablename.".adr_id) 
 			WHERE 
 				/* Address is active */
 				".TM_TABLE_ADR.".aktiv=1

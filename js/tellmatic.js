@@ -10,9 +10,33 @@
 /* check Homepage for Updates and more Infos                                    */
 /* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
 /********************************************************************************/
+//copy selected option from selectbox to textarea/textfield etc. 
+		function copyselectedoption(ID,optionslist,pretag,posttag) {
+		//example:
+		//add: onChange="javascript:copyselectedoption('idOfTextArea_etc',this,'---pre---','---post---');" to a selectbox (this!).
+		//e.g. used in host_form.inc.php for imap/pop3 options			
+	    	var SelectedOption = optionslist.selectedIndex;
+	    	if (SelectedOption != 0) {
+	        	document.getElementById(ID).value += pretag + optionslist.options[SelectedOption].value + posttag;
+	        	optionslist.selectedIndex = 0;
+	    	}	
+		}
+
+//change css visibility of an element
 function makeVis(divID) {
 	document.getElementById(divID).style.visibility = "visible";
 }
+
+function makeVisBlock(divID) {
+	document.getElementById(divID).style.visibility = "visible";
+	document.getElementById(divID).style.display = "block";
+}
+function makeInVisBlock(divID) {
+	document.getElementById(divID).style.visibility = "invisible";
+	document.getElementById(divID).style.display = "none";
+}
+
+//check form settings and enable disable several options
 function checkFormSettings(form_id,items_match,items_nomatch,check_id,check_value) {
 	//voa 11/008
 	//check for value and enable/disable items with item_ids
@@ -190,7 +214,7 @@ function checkForm() {
 //setzt style hintergrundfarbe ueber id
 function setBGColor(my_id,color)
 {
-	element=document.getElementById(my_id);
+	var element=document.getElementById(my_id);
 	element.style.background=color;
 }
 
@@ -198,7 +222,7 @@ function setBGColor(my_id,color)
 //irgendwo im netz gefunden
 function doc_writer(arg1,arg2)
   {
-    o = false;
+    var o = false;
     if (document.getElementById)
       { o = document.getElementById(arg1); }
     else if (document.all)
@@ -235,14 +259,14 @@ function confirmLink(theLink, theMessage)
 
 
 
-opacity=0 //opacity of image
+var opacity=0 //opacity of image
 var increase=1 //increase opacity indicator
 var decrease=0 //decrease opacity indicator
 
 	
 function switchSection(input)
 {
-	section=document.getElementById(input);
+	var section=document.getElementById(input);
 	if(section.style.display=="none")
 	{
 		section.style.display="block"

@@ -356,6 +356,15 @@ $blacklistDomainDelURLPara=$blacklistURLPara;
 $blacklistDomainDelURLPara->addParam("set","blacklist_domain_del");
 
 
+//show a link to create new entry if list is empty, e.g. if searching email doesnt match, etc.
+if ($ac==0) {
+	$newURLPara=$mSTDURL;
+	$newURLPara->addParam("adr_grp_id",$adr_grp_id);
+	$newURLPara->addParam("email",$s_email);
+	$newURLPara->addParam("act","adr_new");
+	$newURLPara_=$newURLPara->getAllParams();
+			$_MAIN_OUTPUT.= "<a href=\"".$tm_URL."/".$newURLPara_."\" title=\"".___("Neue Adresse anlegen")."\">".tm_icon("vcard_add.png",___("Neue Adresse anlegen"))."&nbsp;".___("Neue Adresse anlegen")."</a>";
+}
 include(TM_INCLUDEPATH."/pager.inc.php");
 
 $_MAIN_OUTPUT.="<table border=\"0\" cellpadding=\"1\" cellspacing=\"1\" width=\"100%\">";

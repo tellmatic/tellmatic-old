@@ -35,7 +35,7 @@ $si2=getVar("si2");
 //field names for query
 $InputName_Group="adr_grp";//range from
 pt_register("POST","adr_grp");
-if (!isset($adr_grp)) {
+if (!isset($adr_grp[0])) {
 	$adr_grp[0]=getVar("adr_grp_id");
 }
 

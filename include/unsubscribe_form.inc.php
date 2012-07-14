@@ -28,14 +28,16 @@ $Form->new_Input($FormularName,"h_id", "hidden", $h_id);
 $Form->new_Input($FormularName,"nl_id", "hidden", $nl_id);
 $Form->new_Input($FormularName,"c", "hidden", $code);
 
+$Form->new_Input($FormularName,"cpt", "hidden", $captcha_md5);
 $Form->set_InputID($FormularName,"set", "set_u");
 $Form->set_InputID($FormularName,"email", "email_u");
+$Form->set_InputID($FormularName,"fcpt", "fcpt_u");
 $Form->set_InputID($FormularName,"submit", "submit_u");
 //////////////////
 //add inputfields and buttons....
 //////////////////
 //EMAIL
-$Form->new_Input($FormularName,$InputName_Name,"text", $$InputName_Name);
+$Form->new_Input($FormularName,$InputName_Name,"text", display($$InputName_Name));
 $Form->set_InputStyleClass($FormularName,$InputName_Name,"mFormText","mFormTextFocus");
 $Form->set_InputSize($FormularName,$InputName_Name,48,256);
 $Form->set_InputDesc($FormularName,$InputName_Name,"");
@@ -43,7 +45,14 @@ $Form->set_InputReadonly($FormularName,$InputName_Name,false);
 $Form->set_InputOrder($FormularName,$InputName_Name,1);
 $Form->set_InputLabel($FormularName,$InputName_Name,"");
 
-
+//Captcha
+$Form->new_Input($FormularName,$InputName_Captcha,"text", "");
+$Form->set_InputStyleClass($FormularName,$InputName_Captcha,"tm_form_captcha","tm_form_focus_captcha");
+$Form->set_InputSize($FormularName,$InputName_Captcha,12,12);
+$Form->set_InputDesc($FormularName,$InputName_Captcha,"");
+$Form->set_InputReadonly($FormularName,$InputName_Captcha,false);
+$Form->set_InputOrder($FormularName,$InputName_Captcha,888);
+$Form->set_InputLabel($FormularName,$InputName_Captcha,"");
 
 //submit button
 $Form->new_Input($FormularName,$InputName_Submit,"submit","Abmelden");
@@ -64,9 +73,11 @@ $FHEAD.= $Form->INPUT[$FormularName]['a_id']['html'];
 $FHEAD.= $Form->INPUT[$FormularName]['h_id']['html'];
 $FHEAD.= $Form->INPUT[$FormularName]['nl_id']['html'];
 $FHEAD.= $Form->INPUT[$FormularName]['c']['html'];
+$FHEAD.= $Form->INPUT[$FormularName]['cpt']['html'];//captcha
 $FHEAD.= $Form->INPUT[$FormularName]['set']['html'];
 $FEMAIL= $Form->INPUT[$FormularName][$InputName_Name]['html'];
+$FCAPTCHA= $Form->INPUT[$FormularName][$InputName_Captcha]['html'];
 $FSUBMIT= $Form->INPUT[$FormularName][$InputName_Submit]['html'];
-$FFOOT=$Form->FORM[$FormularName]['foot'];;
+$FFOOT=$Form->FORM[$FormularName]['foot'];
 
 ?>

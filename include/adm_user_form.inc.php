@@ -51,7 +51,7 @@ $Form->new_Input($FormularName,"u_id", "hidden", $u_id);
 
 //Name
 $Form->new_Input($FormularName,$InputName_Name,"text",display($$InputName_Name));
-$Form->set_InputJS($FormularName,$InputName_Name," onChange=\"flash('submit','#ff0000');\" onkeyup=\"RemoveInvalidChars(this, '[^A-Za-z0-9\ \_\.\-]'); ForceLowercase(this);\"");
+$Form->set_InputJS($FormularName,$InputName_Name," onChange=\"flash('submit','#ff0000');\" onkeyup=\"RemoveInvalidChars(this, '[^A-Za-z0-9\ \_\.\-]');\"");//do not force lowercase //ForceLowercase(this);
 $Form->set_InputStyleClass($FormularName,$InputName_Name,"mFormText","mFormTextFocus");
 $Form->set_InputSize($FormularName,$InputName_Name,48,256);
 $Form->set_InputDesc($FormularName,$InputName_Name,___("Name"));

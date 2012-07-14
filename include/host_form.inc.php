@@ -63,13 +63,33 @@ $Form->set_InputLabel($FormularName,$InputName_Port,"");
 
 //Options
 $Form->new_Input($FormularName,$InputName_Options,"text",display($$InputName_Options));
-$Form->set_InputJS($FormularName,$InputName_Options," onChange=\"flash('submit','#ff0000');\" onkeyup=\"RemoveInvalidChars(this, '[^A-Za-z0-9\_\.\-]');\"");
+$Form->set_InputJS($FormularName,$InputName_Options," onChange=\"flash('submit','#ff0000');\" onkeyup=\"RemoveInvalidChars(this, '[^A-Za-z0-9_\.\/\-]');\"");
 $Form->set_InputStyleClass($FormularName,$InputName_Options,"mFormText","mFormTextFocus");
 $Form->set_InputSize($FormularName,$InputName_Options,48,256);
 $Form->set_InputDesc($FormularName,$InputName_Options,___("Options"));
 $Form->set_InputReadonly($FormularName,$InputName_Options,false);
 $Form->set_InputOrder($FormularName,$InputName_Options,8);
 $Form->set_InputLabel($FormularName,$InputName_Options,"");
+//predefined options, static!
+$Form->new_Input($FormularName,'predefined_imap_options',"select", "");
+$Form->set_InputJS($FormularName,'predefined_imap_options'," onChange=\"copyselectedoption('options',this,'/','');flash('submit','#ff0000');\"");
+$Form->set_InputDefault($FormularName,'predefined_imap_options',$$InputName_SMTPAuth);
+$Form->set_InputStyleClass($FormularName,'predefined_imap_options',"mFormSelect","mFormSelectFocus");
+$Form->set_InputDesc($FormularName,'predefined_imap_options',___("IMAP/POP3 Optionen"));
+$Form->set_InputReadonly($FormularName,'predefined_imap_options',false);
+$Form->set_InputOrder($FormularName,'predefined_imap_options',9999);
+$Form->set_InputLabel($FormularName,'predefined_imap_options',"");
+$Form->set_InputSize($FormularName,'predefined_imap_options',0,1);
+$Form->set_InputMultiple($FormularName,'predefined_imap_options',false);
+//add Data
+$Form->add_InputOption($FormularName,'predefined_imap_options',"","-- Option(en) auswählen --");
+$Form->add_InputOption($FormularName,'predefined_imap_options',"novalidate-cert","novalidate-cert");
+$Form->add_InputOption($FormularName,'predefined_imap_options',"validate-cert","validate-cert");
+$Form->add_InputOption($FormularName,'predefined_imap_options',"ssl","ssl");
+$Form->add_InputOption($FormularName,'predefined_imap_options',"tls","tls");
+$Form->add_InputOption($FormularName,'predefined_imap_options',"notls","notls");
+$Form->add_InputOption($FormularName,'predefined_imap_options',"readonly","readonly");
+if (DEBUG) $Form->add_InputOption($FormularName,'predefined_imap_options',"debug","debug");
 
 //SMTP-AuthType
 $Form->new_Input($FormularName,$InputName_SMTPAuth,"select", "");
@@ -118,7 +138,7 @@ $Form->add_InputOption($FormularName,$InputName_Type,"imap","IMAP4");
 
 //User
 $Form->new_Input($FormularName,$InputName_User,"text", display($$InputName_User));
-$Form->set_InputJS($FormularName,$InputName_User," onChange=\"flash('submit','#ff0000');\" onkeyup=\"RemoveInvalidChars(this, '[^A-Za-z0-9\_\.\-\@-]');\"");
+$Form->set_InputJS($FormularName,$InputName_User," onChange=\"flash('submit','#ff0000');\"");//onkeyup=\"RemoveInvalidChars(this, '[^A-Za-z0-9\_\.\-\@-]');\" removed due to special chars may appear in usernames
 $Form->set_InputStyleClass($FormularName,$InputName_User,"mFormText","mFormTextFocus");
 $Form->set_InputSize($FormularName,$InputName_User,48,256);
 $Form->set_InputDesc($FormularName,$InputName_User,___("Benutzername"));
@@ -364,6 +384,7 @@ $_MAIN_OUTPUT.= ___("POP3/IMAP Optionen");
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "<td style=\"border-top:1px dashed grey\" valign=\"top\">";
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Options]['html'];
+$_MAIN_OUTPUT.= $Form->INPUT[$FormularName]['predefined_imap_options']['html'];
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "</tr>";
 

@@ -23,6 +23,7 @@ $MSG['unsubscribe']['error']='Fehler!';
 $MSG['unsubscribe']['invalid']='Ungültig!';
 $MSG['unsubscribe']['already_unsubscribed']='Sie sind nicht mehr angemeldet.';
 $MSG['unsubscribe']['invalid_email']='Ungültige E-Mail-Adresse';
+$MSG['unsubscribe']['invalid_captcha']="Ungültiger Code!";
 
 $MSG['subscribe']['mail']['subject_user']='Newsletteranmeldung';
 $MSG['subscribe']['mail']['subject_new']='Neuanmeldung';
@@ -46,13 +47,34 @@ $MSG['subscribe']['mail']['body_update']="
 
 //en
 /*
-$MSG['subscribe']['update']='emailaddress already exists. your data has been updated';
-$MSG['unsubscribe']['unsubscribe']='you are now unsubscribed from our list.';
-$MSG['unsubscribe']['error']='error!';
-$MSG['unsubscribe']['invalid']='invalid!';
-$MSG['unsubscribe']['already_unsubscribed']='you are already unsubscribed';
-$MSG['unsubscribe']['invalid_email']='invalid emailaddress';
-
+//thx to vwinstead, http://sourceforge.net/users/vwinstead/
+//see http://sourceforge.net/forum/message.php?msg_id=7456872
+$MSG['subscribe']['update']='Email address exists in our database already. The data for this address has been updated.'; 
+$MSG['unsubscribe']['unsubscribe']='You have successfully unsubscribed from the newsletter.'; 
+$MSG['unsubscribe']['error']='Error!'; 
+$MSG['unsubscribe']['invalid']='Invalid!'; 
+$MSG['unsubscribe']['already_unsubscribed']='This email is already unsubscribed from the our newsletter.'; 
+$MSG['unsubscribe']['invalid_email']='Invalid email address'; 
+$MSG['unsubscribe']['invalid_captcha']="Inavlid code!";
+ 
+$MSG['subscribe']['mail']['subject_user']='Newsletter Subscription'; 
+$MSG['subscribe']['mail']['subject_new']='New Subscriber'; 
+$MSG['subscribe']['mail']['subject_update']='Subscriber Update'; 
+$MSG['subscribe']['mail']['body_new']=" 
+<br>New Subscription: Data was stored.\n 
+<br>The address was assigned to the groups which were marked for this form at the time of the registration.\n 
+"; 
+$MSG['subscribe']['mail']['body_doptin']=" 
+<br>Double Opt-In: A confirmation email was sent to indicated address.\n 
+<br>No newsletter will be sent to this email\n 
+<br>until the registration has been confirmed.\n 
+"; 
+$MSG['subscribe']['mail']['body_update']=" 
+<br>Activation: The data was updated.\n 
+<br>This email address exists already.\n 
+<br>The stored data record was updated with the entered data.\n 
+<br>The address was assigned if necessary to additional groups.\n 
+"; 
 
 */
 ?>

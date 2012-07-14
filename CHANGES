@@ -10,6 +10,85 @@
 /* check Homepage for Updates and more Infos                                    */
 /* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
 /********************************************************************************/
+*+*+*+*+*+*+*+*+*+*+*+ CHANGES V1.0.8.5  +*+*+*+*+*+*+*+*+*+*+*+*
+	10.07.2009
+	This is an enhanced version of 1.0.8.4.
+	
+	*** New features:
+	- added link to create new address entry if search results in an empty list. the selected group in the search form and email is filled in into thhe fields in the address form.
+		this is useful if you search for addresses to check f they exist, and then if not exists easily add the address with one click. makes entering emails manually a bit faster.
+	- write output to temporary files in 'admin/tmp'. to use it, set USE_TMP_HTML_FILES to TRUE in tm_lib.inc.php. 
+		if enabled all temporary files in admin/tmp older than 3 seconds gets deleted on page load.
+		if enabled and DEBUG set to TRUE, files don't get deleted!
+	- doc: added link to online documentation on tellmatic.org, docu is still under construction!			
+	- mail: added additional headers in newsletter mails: X-TM_NLID: Newsletter ID, X-TM_QID: Queue ID, X-TM_AID: Address ID, X-TM_ACODE: Address Code, X-TM_DATE: Date sent, X-TM_MASSMAIL 0=personalized/1=massmail
+		(ACODE, AID only available in personalized newsletters!)
+	- hosts: add presets to imap/pop3 options in host form! Added selectbox to select options from list. Selected option gets copied to textfield, on save the leading / is removed
+		https://sourceforge.net/tracker/?func=detail&atid=933193&aid=2767032&group_id=190396
+	- unsubscribe: personalized unsubscribe. If address id and code matches the email gets prefilled in the textfield.
+	- unsubscribe: added Captcha check for unsubscribe form
+			in Messages.inc.php: 
+				$MSG['unsubscribe']['invalid_captcha']="Ungültiger Code!";
+				#en: $MSG['unsubscribe']['invalid_captcha']="Inavlid code!";
+			in tpl/Unsubscribe.html: 
+				{FCAPTCHAIMG}{FCAPTCHA}
+	- forms: let admin choose if a subscriber is forced to select at least one public group if there is at least one public group to choose from ;)
+		SQL UPDATE:
+			ALTER TABLE `frm` ADD `force_pubgroup` SMALLINT( 1 ) NOT NULL DEFAULT '0' 
+			AFTER `check_blacklist`;
+			ALTER TABLE `frm` ADD `pubgroup_errmsg` VARCHAR( 255 ) NOT NULL DEFAULT '""' AFTER `blacklist_errmsg` ;
+	- forms: let admin choose what happens on update with public groups. overwrite references or only add new refs?
+			//in upcoming versions a recheck is send/shown to the user to review data and selections.
+			SQL UPDATE:
+			ALTER TABLE `frm` ADD `overwrite_pubgroup` SMALLINT( 1 ) NOT NULL DEFAULT '0' 
+			AFTER `force_pubgroup` ;		
+
+	*** Code changes / Optimizations:
+		
+		- Queue, Recipients list: create queue, now filters for status !=4 etc. instead of =1 ---> see sourcefile for comments, now it works as expected!
+			https://sourceforge.net/tracker/?func=detail&aid=2807136&group_id=190396&atid=933192
+		- tinyMCE language errors, for some reason i mixed up new v3 lpacks with tinymce v2.x, now switched and updated to tinymce v3.x
+		- switch to tinymce 3.x, complete update, add tinymce gzip.... ok, tested, works for me
+		- host: removed check for 'invalid' chars. some special chars are needed sometimes for the username on some hosts. 
+			http://sourceforge.net/forum/forum.php?thread_id=3308114&forum_id=675746
+		- allow / character in imap/pop3 options!
+			https://sourceforge.net/tracker/?func=detail&atid=933193&aid=2767032&group_id=190396
+		- quick and dirty gmail hack in smtp/smtp.php:
+			https://sourceforge.net/forum/forum.php?thread_id=2954157&forum_id=670073
+		- en translation of Messages.inc.php:
+			from vwinstead: https://sourceforge.net/forum/message.php?msg_id=7456872
+		- queue: use check_dbid instead of !empty or >0 for checking valid ids
+		- install: added installation notes!
+		- install: show one big form
+		- .htaccess: added some comments
+		- users: allow upper case chars in Tellmatic usernames
+		- install: Check for permissions for creating temporary tables in mysql!
+		- API example: more examples
+		- newsletter: make massmailing/personalized checkbox a selectbox with 2 options
+		or downloads from other hosts than sf or tellmatic.org
+		- unsubscribe: use default host to send mails!
+		- install: add warnig message for payed downloads or download from other hosts than sf or tellmatic.org 
+		- install: removed to: header in install mail, may make trouble with suhosin
+
+	*** Bugs fixed:
+
+		- help/quickdoc: e.g. after edit help for edit was shown for the list view
+		- users: removed mouseover which has no effect in user list in first column
+		- users: removed icon and link for statistics in list and legend for users, has no effect! later we will have a link to the log here!
+		- NOT A BUG (!?): [ tellmatic-Bugs-2767198 ] Email bounce management can't download messages from IMAP: https://sourceforge.net/tracker/?func=detail&atid=933192&aid=2767198&group_id=190396
+		- most/own js errors and warnings
+		- subscribe: http://sourceforge.net/tracker/?func=detail&aid=2642029&group_id=190396&atid=933192 , sender_email in opt-in is missing - ID: 2642029 , now uses defaulthost as configured!
+		- removed whitespaces in smtp_message.php: https://sourceforge.net/tracker/?func=detail&aid=2789936&group_id=190396&atid=933192
+		- fixed some brackets around joins in addHQ in Class_Q
+		- edit adr: name datum sind vertauscht
+		- Functions: check_dbid laesst werte =0 zu, sollte sie nicht!!! aendern und neues verhalten testen! changed to >=1
+		- Functions: tm_icon, now use display() to write title into speechbubble! Gives us a javascript error before if use ' characters etc, doc_writer('sprechblase_text','".display($title)."');
+		- bounce: typos in bounce, only emai header, fixed typo -en.po
+		- translations: translation error: adr_grp_new: say 'newsletter group' instead of 'address group', fixed
+		- subscribe: on update public groups get not updated!
+			https://sourceforge.net/forum/forum.php?thread_id=3317937&forum_id=675746
+			https://sourceforge.net/tracker/?func=detail&atid=933192&aid=2814505&group_id=190396
+			fixed! instead now the admin chooses from overwrite or update! see new features.
 *+*+*+*+*+*+*+*+*+*+*+ CHANGES V1.0.8.4-fix01  +*+*+*+*+*+*+*+*+*+*+*+*
 	02.02.2009
 	This is a bugfixed version of 1.0.8.4.

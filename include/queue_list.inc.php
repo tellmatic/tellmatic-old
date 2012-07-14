@@ -27,26 +27,30 @@ $nl_id=getVar("nl_id");
 $grp_id=getVar("grp_id");
 $doit=getVar("doit");//wird per js an url angefuegt!!! confirm()
 
-if (!empty($q_id)) {
+//logfile
+if (check_dbid($q_id)) {
 	$Q=$QUEUE->getQ($q_id);
 	$logfilename="q_.log.html";
 	if (isset($Q[0]['id']))	{
 		$logfilename="q_".$Q[0]['id']."_".$Q[0]['grp_id']."_".date_convert_to_string($Q[0]['created']).".log.html";
 	}
 }
-if ($set=="stop" && $doit==1 && !empty($q_id)) {
+/* Actions */
+//stop queue
+if ($set=="stop" && $doit==1 && check_dbid($q_id)) {
 	$QUEUE->setStatus($q_id,5);
 	$LOG="<br>\n\n".date("d-m-Y H:i:s")." ---- Q ID $q_id halted.\n\n<br>";
 	update_file($tm_logpath,$logfilename,$LOG);
 }
-if ($set=="continue" && $doit==1 && !empty($q_id)) {
+//continue stopped queue
+if ($set=="continue" && $doit==1 && check_dbid($q_id)) {
 	$QUEUE->setStatus($q_id,2);
 	$LOG="<br>\n\n".date("d-m-Y H:i:s")." ---- Q ID $q_id continues.\n\n<br>";
 	update_file($tm_logpath,$logfilename,$LOG);
 }
 
-
-if ( ($set=="delete" || $set=="delete_all") && $doit==1 && !empty($q_id)) {
+//delete, delete all
+if ( ($set=="delete" || $set=="delete_all") && $doit==1 && check_dbid($q_id)) {
 	//nl auf status queued setzen =2
 	//Q holen
 	$Q=$QUEUE->getQ($q_id);
@@ -73,6 +77,7 @@ if ( ($set=="delete" || $set=="delete_all") && $doit==1 && !empty($q_id)) {
 	}
 	}//isset Q[id]
 }//delete |< delete_all && doit
+//delete logfile
 if ($set=="delete_log" && $doit==1) {
 	$Q=$QUEUE->getQ($q_id);
 	if (isset($Q[0]['id']))	{
@@ -84,20 +89,25 @@ if ($set=="delete_log" && $doit==1) {
 	}//isset Q[id]
 }
 
+//if newsletter id is set
 //q f. liste holen
-if ($nl_id>0) {
+if (check_dbid($nl_id)) {
 	$NL=$NEWSLETTER->getNL($nl_id);
 	$_MAIN_MESSAGE.="<br>".sprintf(___("gewähltes Newsletter: %s")," <b>".display($NL[0]['subject'])."</b>");
 }
 
-if ($grp_id>0) {
+//if address group id is set
+if (check_dbid($grp_id)) {
 	$GRP=$ADDRESS->getGroup($grp_id);
 	$_MAIN_MESSAGE.="<br>".sprintf(___("gewählte Gruppe: %s")," <b>".display($GRP[0]['name'])."</b>");
 }
 
+//get Queue Entry
 $Q=$QUEUE->getQ($id=0,$offset=0,$limit=0,$nl_id,$grp_id,$status=0,$search=Array());
+//count entries
 $qc=count($Q);
 
+//Action URLS
 $reloadURLPara=$mSTDURL;
 $reloadURLPara->addParam("act","queue_list");
 $reloadURLPara->addParam("nl_id",$nl_id);

@@ -34,7 +34,6 @@ if (!isset($tm_config)) {
 
 if (!$tm_config) {
 
-
 	/***********************************************************/
 	//
 	//Dateformat for Newsletters to parse {DATE}
@@ -45,13 +44,6 @@ if (!$tm_config) {
 	//see: www.php.net/date
 
 	/***********************************************************/
-	//siteid
-	//siteid wird aber zukuenftig variabel sein, bzw default-siteid vergeben werden.
-	/***********************************************************/
-	//siteid //achtung, siteid aendern heisst komplett neuer datenstamm... es muessen auch user angelegt werden.... oehm... nicht aendern!!!
-	define ("TM_SITEID","tellmatic");
-
-	/***********************************************************/
 	//demomode und debugmode
 	/***********************************************************/
 	define ("DEMO", FALSE);//use demo mode
@@ -60,12 +52,24 @@ if (!$tm_config) {
 	define ("DEBUG_SMTP", FALSE);//Warning! this will print out all smtp messages and communication with server
 
 	/***********************************************************/
+	//use temporary html files?
+	/***********************************************************/
+	define ("USE_TMP_HTML_FILES", FALSE);//save output to temporary html files in admin/tmp
+	//this is useful if you want to prevent reloading a page with new values! 
+	
+	/***********************************************************/
+	//siteid
+	//siteid wird aber zukuenftig variabel sein, bzw default-siteid vergeben werden.
+	/***********************************************************/
+	//siteid //achtung, siteid aendern heisst komplett neuer datenstamm... es muessen auch user angelegt werden.... oehm... nicht aendern!!!
+	define ("TM_SITEID","tellmatic");
+
+	/***********************************************************/
 	//old httpd auth login +php-cgi
+	//not needed for tellmatic >1.0.8, changed to use sessions!
 	/***********************************************************/
 	//old login via http-auth via php had problems on misconfigured php-cgi installations
 	//uncomment the next line if your php is running as cgi and http authentication does not work:
-
-
 	#list($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']) = explode(':' , base64_decode(substr($_SERVER['HTTP_AUTHORIZATION'], 6)));
 	/*
 	and  create a textfile named '.htaccess' in your tellmatic install-directory:
@@ -296,7 +300,6 @@ if (!$tm_config) {
 /***********************************************************/
 	$CONFIG=new tm_CFG();
 	$C=$CONFIG->getCFG(TM_SITEID);
-
 	//eMail prueflevel!
 	$EMailcheck_Intern=$C[0]['emailcheck_intern'];
 	$EMailcheck_Subscribe=$C[0]['emailcheck_subscribe'];

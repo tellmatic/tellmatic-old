@@ -451,7 +451,7 @@ function check_flag($value) {
 function check_dbid($value) {
 	$return=false;
 	if (isset($value) && is_numeric($value) && (int)$value==$value) {
-		if (($value>=0) && $value!="") {
+		if (($value>=1) && $value!="") { // war <=0, changed 1085
 			$return=true;
 //			$return=$value;
 		}

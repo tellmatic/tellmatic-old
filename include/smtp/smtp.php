@@ -2,7 +2,7 @@
 /*
  * smtp.php
  *
- * @(#) $Header: /cvsroot/tellmatic/tellmatic/include/smtp/smtp.php,v 1.2 2008/09/29 13:42:14 mcms09 Exp $
+ * @(#) $Header: /cvsroot/tellmatic/tellmatic/include/smtp/smtp.php,v 1.3 2009/07/05 22:11:29 mcms09 Exp $
  *
  */
 
@@ -236,8 +236,17 @@ class smtp_class
 			return("domain \"".$domain."\" resolved to an address excluded to be valid");
 		if($this->debug)
 			$this->OutputDebug("Connecting to host address \"".$ip."\" port ".$port."...");
-		if(($this->connection=($this->timeout ? @fsockopen(($this->ssl ? "ssl://" : "").$ip,$port,$errno,$error,$this->timeout) : @fsockopen(($this->ssl ? "ssl://" : "").$ip,$port))))
-			return("");
+//quick and dirty gmail hack! see https://sourceforge.net/forum/forum.php?thread_id=2954157&forum_id=670073
+		if(stristr($domain, "gmail")) 
+		{ 
+			$this->connection=@fsockopen("tls://".$domain,$port,$errno,$error,$this->timeout); 
+			return (""); 
+		} 
+		else 
+		{ 
+		if(($this->connection=($this->timeout ? @fsockopen(($this->ssl ? "ssl://" : "").$ip,$port,$errno,$error,$this->timeout) : @fsockopen(($this->ssl ? "ssl://" : "").$ip,$port)))) 
+			return(""); 
+		} 
 		$error=($this->timeout ? strval($error) : "??");
 		switch($error)
 		{

@@ -133,15 +133,19 @@ $Form->set_InputLabel($FormularName,$InputName_Link,"");
 	$Form->set_InputLabel($FormularName,$InputName_Aktiv,"");
 
 //Massenmail!?
-	$Form->new_Input($FormularName,$InputName_Massmail,"checkbox", 1);
-	$Form->set_InputJS($FormularName,$InputName_Massmail," onChange=\"flash('submit','#ff0000');\" ");
-	$Form->set_InputDefault($FormularName,$InputName_Massmail,$$InputName_Massmail);
-	$Form->set_InputStyleClass($FormularName,$InputName_Massmail,"mFormText","mFormTextFocus");
-	$Form->set_InputSize($FormularName,$InputName_Massmail,48,48);
-	$Form->set_InputDesc($FormularName,$InputName_Massmail,___("Massenmailing (BCC)"));
-	$Form->set_InputReadonly($FormularName,$InputName_Massmail,false);
-	$Form->set_InputOrder($FormularName,$InputName_Massmail,5);
-	$Form->set_InputLabel($FormularName,$InputName_Massmail,"");
+$Form->new_Input($FormularName,$InputName_Massmail,"select", "");
+$Form->set_InputJS($FormularName,$InputName_Massmail," onChange=\"flash('submit','#ff0000');\" ");
+$Form->set_InputDefault($FormularName,$InputName_Massmail,$$InputName_Massmail);
+$Form->set_InputStyleClass($FormularName,$InputName_Massmail,"mFormSelect","mFormSelectFocus");
+$Form->set_InputDesc($FormularName,$InputName_Massmail,___("Mailing-Typ"));
+$Form->set_InputReadonly($FormularName,$InputName_Massmail,false);
+$Form->set_InputOrder($FormularName,$InputName_Massmail,4);
+$Form->set_InputLabel($FormularName,$InputName_Massmail,"");
+$Form->set_InputSize($FormularName,$InputName_Massmail,0,1);
+$Form->set_InputMultiple($FormularName,$InputName_Massmail,false);
+//add Data
+$Form->add_InputOption($FormularName,$InputName_Massmail,0,"Personalisiertes Newsletter (einzelne Mails)");
+$Form->add_InputOption($FormularName,$InputName_Massmail,1,"Massenmailing (per BCC, nicht personalisiert)");
 
 //Content
 $Form->new_Input($FormularName,$InputName_Descr,"textarea", $$InputName_Descr);
@@ -332,7 +336,7 @@ $_MAIN_OUTPUT.= "</tr>";
 
 $_MAIN_OUTPUT.= "<tr>";
 $_MAIN_OUTPUT.= "<td valign=\"top\">";
-$_MAIN_OUTPUT.= tm_icon("lorry.png",___("Massenmailing")).tm_icon("user_suit.png",___("personalisiertes Newsletter"))."&nbsp;".___("Massenmailing (BCC)");
+$_MAIN_OUTPUT.= tm_icon("lorry.png",___("Massenmailing")).tm_icon("user_suit.png",___("personalisiertes Newsletter"))."&nbsp;".___("Mailing-Typ");
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "<td valign=\"top\">";
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Massmail]['html'];

@@ -61,14 +61,14 @@ for ($qpcc=0;$qpcc<$qpc;$qpcc++) {
 																		);
 		if ($h_refresh[0]) {
 			$ReportMail_HTML.="<br>AutoGen=1";
-			$ReportMail_HTML.="<br>Die Empf‰ngerliste wurde automatisch erzeugt! Es wurden ".$h_refresh[2]." Adressen f¸r Gruppe ".$G[0]['name']." eingetragen.";
+			$ReportMail_HTML.="<br>Die Empf√§ngerliste wurde automatisch erzeugt! Es wurden ".$h_refresh[2]." Adressen f√ºr Gruppe ".$G[0]['name']." eingetragen.";
 			$ReportMail_HTML.="<br>The recipientslist has been automagical created, ".$h_refresh[2]." adresses for group ".$G[0]['name']." inserted.";
 			$ReportMail_HTML.="<br>SMTP-Mailserver: ".$HOST[0]['name']." / ".$HOST[0]['user'].":[pass]@".$HOST[0]['host'].":".$HOST[0]['port'];
 			send_log(  "\n".date("Y-m-d H:i:s").":    ".$h_refresh[2]." adresses for group ".$G[0]['name']." inserted in recipients list");
 			send_log(  "\n".date("Y-m-d H:i:s").": set q status=2, started!");
 			$QUEUE->setStatus($QP[$qpcc]['id'],2);//gestartet
 		} else {
-			$ReportMail_HTML.="<br>Feher beim aktualisieren der Empf‰ngerliste.".
+			$ReportMail_HTML.="<br>Feher beim aktualisieren der Empf√§ngerliste.".
 			$ReportMail_HTML.="<br>Error refreshing the recipients list.".
 			send_log(  "\n".date("Y-m-d H:i:s").":     Error refreshing recipients list!");
 		}
@@ -154,11 +154,11 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 																		);
 				if ($h_refresh[0]) {
 					$ReportMail_HTML.="<br>AutoGen=1".
-					$ReportMail_HTML.="<br>Die Empf‰ngerliste wurde automatisch aktualisiert! Es wurden ".$h_refresh[2]." neue Adressen f¸r Gruppe ".$G[0]['name']." eingetragen.".
+					$ReportMail_HTML.="<br>Die Empf√§ngerliste wurde automatisch aktualisiert! Es wurden ".$h_refresh[2]." neue Adressen f√ºr Gruppe ".$G[0]['name']." eingetragen.".
 					$ReportMail_HTML.="<br>The recipientslist has been automagical refreshed, ".$h_refresh[2]." new adresses for group ".$G[0]['name']." inserted.".
 					send_log(  "\n".date("Y-m-d H:i:s").":    ".$h_refresh[2]." new adresses for group ".$G[0]['name']." inserted in recipients list");
 				} else {
-					$ReportMail_HTML.="<br>Fehler beim aktualisieren der Empf‰ngerliste.";
+					$ReportMail_HTML.="<br>Fehler beim aktualisieren der Empf√§ngerliste.";
 					$ReportMail_HTML.="<br>Error refreshing the recipients list.";
 					send_log(  "\n".date("Y-m-d H:i:s").":     Error refreshing recipients list!");
 				}
@@ -262,6 +262,18 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 		$email_obj->SetEncodedEmailHeader("Reply-To",$HOST[0]['reply_to'],$HOST[0]['sender_name']);
 		$email_obj->SetHeader("Return-Path",$HOST[0]['return_mail']);
 		$email_obj->SetEncodedEmailHeader("Errors-To",$HOST[0]['return_mail'],$HOST[0]['return_mail']);
+
+		//set additional headers
+		//date
+		$email_obj->SetEncodedHeader("X-TM_DATE",date("Y-m-d H:i:s"));
+		//mark massmails
+		$email_obj->SetEncodedHeader("X-TM_MASSMAIL",$NL[0]['massmail']);
+		//queue id
+		$email_obj->SetHeader("X-TM_QID",$Q[$qcc]['id']);
+		//newsletter id		
+		$email_obj->SetHeader("X-TM_NLID",$NL[0]['id']);
+		//adr grp id		
+		$email_obj->SetHeader("X-TM_GRPID",$Q[$qcc]['grp_id']);
 
 
 		//H holen
@@ -458,7 +470,7 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 							$a_status=$ADR[0]['status'];
 ////todo optimierung: check errors vor blacklist und vor mx, spart ggf zeit und abfragen von adressen die eh zu viele fehler haben oder geblacklisted wurden!
 
-							//BLACKLIST pr¸fen
+							//BLACKLIST pr√ºfen
 							if ($Q[$qcc]['check_blacklist']) {
 								send_log(  "\n".date("Y-m-d H:i:s").":     checking blacklist: ");	
 								if ($BLACKLIST->isBlacklisted($ADR[0]['email'])) {
@@ -556,6 +568,10 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 									send_log(  "\n".date("Y-m-d H:i:s").":   Unsubscribe: ".$UNSUBSCRIBE_URL);
 									send_log(  "\n".date("Y-m-d H:i:s").":   Subscribe (touch/double optin): ".$SUBSCRIBE_URL);
 
+									//add some additional personalized headers
+									#$email_message->SetEncodedHeader("X-TM_ADRF0",$ADR[0]['f0']);  
+									$email_message->SetEncodedHeader("X-TM_ACODE",$ADR[0]['code']);  
+									$email_message->SetEncodedHeader("X-TM_AID",$ADR[0]['id']);
 									if (!empty($NL[0]['link'])) {
 										$LINK1_URL=$tm_URL_FE."/click.php?h_id=".$H[$hcc]['id']."&nl_id=".$H[$hcc]['nl_id']."&a_id=".$H[$hcc]['adr_id'];
 									}
@@ -859,12 +875,13 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 	//a http refresh may work
 $reload_intervall=300;
 echo "<html>\n".
-			"<head>\n".
+			"<head>
+<meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\">\n".
 			"<meta http-equiv=\"refresh\" content=\"".$reload_intervall."; URL=".TM_DOMAIN.$_SERVER["PHP_SELF"]."\">\n".
 			"</head>\n".
 			"<body bgcolor=\"#ffffff\">\n";
 if ($qc==0) {
-	echo "<br>".___("Zur Zeit gibt es keine zu verarbeitenden Versandauftr‰ge.");
+	echo "<br>".___("Zur Zeit gibt es keine zu verarbeitenden Versandauftr√§ge.");
 }
 
 echo	"<br>".sprintf(___("Die Seite wird in %s Sekunden automatisch neu geladen."),$reload_intervall).
