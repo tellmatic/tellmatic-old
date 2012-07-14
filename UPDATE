@@ -11,6 +11,59 @@
 /* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
 /********************************************************************************/
 
+*+*+*+*+*+*+*+*+*+*+*+ 1.0.8.7
+--en
+	Read the CHANGES file carefully! It contains the list of new features and changes with some more or less technical details! 
+	Please also read INSTALL.EN on how to set up cronjob scripts, auto-validation and auto-bounce,amagement.	
+
+	Backup all your files and the database!
+	To update earlier Versions than 1.0.8.6 please follow instructions for update to 1.0.8.6
+	Backup all your files and the database!	
+	Copy newer files and don't forget to set path in *.php in / and include/send_it.php after updating if you plan to use cronjobs!
+	Backup the database! Do it now!
+	Update Database use phpMyAdmin or console etc, see SQL below!
+	if don't you want to use the new feature for saving output to temporary files in admin/tmp please set USE_TMP_HTML_FILES to FALSE in tm_lib.inc.php (default: TRUE  since 1.0.8.7)	
+	That's it. Have fun with the new features!
+	
+--de
+	Lesen sie die Datei CHANGES aufmerksam durch. Hier stehen nuetzlich Hinweise und einige technische Infos zu den Aenderungen!!!
+	Bitte lesen Sie auch die INSTALL.DE Datei. Dort wird beschrieben wie man die neuen Scripte fuer automatisches Boundemanagement und E-Mail-Adressen Validierung einrichtet.
+	Sichern Sie alle Daten und Datenbanken!
+	Zum Update von einer frueheren Verison als 1.0.8.6 befolgen Sie zuerst die Anweisungen fuer das Update auf 1.0.8.6
+	Sichern Sie alle Daten und Datenbanken!
+	Kopieren Sie die neuen Dateien auf den Server. Vergessen Sie nicht den Pfad in den *.php Dateien im Installationsverzeichnis anzupassen / sowie include/send_it.php / check_it.php / bounce_it.php wenn Cronjobs genutzt werden sollen.
+	Sichern Sie die alte Datenbank! Jetzt!
+	Aktualisieren Sie die Datenbank, s.u.
+	Wenn Sie das neue Feature womit die Ausgabe in temporaere HTML Dateien in admin/tmp geschrieben wird nicht nutzen moechten, setzen Sie USE_TMP_HTML_FILES in tm_lib.inc.php auf FALSE (standard: TRUE ab 1.0.8.7)
+	Das wars, viel Spass.
+	
+-- SQL for update from 1.0.8.6 to 1.0.8.7:
+
+Datenbank aktualisieren: / Update Database:
+		ALTER TABLE `config` ADD `emailcheck_sendit` TINYINT( 1 ) NOT NULL DEFAULT '1' AFTER `emailcheck_subscribe`;
+		ALTER TABLE `config` ADD `emailcheck_checkit` TINYINT( 1 ) NOT NULL DEFAULT '3' AFTER `emailcheck_sendit`;
+
+		ALTER TABLE `config` ADD `unsubscribe_use_captcha` TINYINT( 1 ) NOT NULL DEFAULT '0';
+		ALTER TABLE `config` ADD `unsubscribe_digits_captcha` TINYINT( 1 ) NOT NULL DEFAULT '4';
+		ALTER TABLE `config` ADD `unsubscribe_sendmail` SMALLINT NOT NULL DEFAULT '1';
+		ALTER TABLE `config` ADD `unsubscribe_action` enum('unsubscribe','delete') collate utf8_bin NOT NULL;
+
+		ALTER TABLE `config` ADD `checkit_limit` SMALLINT NOT NULL DEFAULT '25';
+		ALTER TABLE `config` ADD `checkit_from_email` VARCHAR( 255 ) NOT NULL DEFAULT '';
+		ALTER TABLE `config` ADD `checkit_adr_reset_error` TINYINT( 1 ) NOT NULL DEFAULT '1';
+		ALTER TABLE `config` ADD `checkit_adr_reset_status` TINYINT( 1 ) NOT NULL DEFAULT '1';
+
+  		ALTER TABLE `config` ADD `bounceit_limit` SMALLINT NOT NULL DEFAULT '10';
+		ALTER TABLE `config` ADD `bounceit_host` INT NOT NULL DEFAULT '0';
+		ALTER TABLE `config` ADD `bounceit_search` enum('header','body','headerbody') collate utf8_bin NOT NULL default 'headerbody';
+ 		ALTER TABLE `config` ADD `bounceit_action` enum('auto','error','unsubscribe','aktiv','delete') collate utf8_bin NOT NULL default 'auto';
+		ALTER TABLE `config` ADD `bounceit_filter_to` TINYINT( 1 ) NOT NULL DEFAULT '0';
+		ALTER TABLE `config` ADD `bounceit_filter_to_email` VARCHAR( 255 ) NOT NULL DEFAULT '';
+		
+		ALTER TABLE `adr` ADD `recheck` TINYINT( 1 ) NULL DEFAULT '0';
+				
+
+
 *+*+*+*+*+*+*+*+*+*+*+ 1.0.8.6
 --en
 	Read the CHANGES file carefully! It contains the list of new features and changes with some more or less technical details! 
@@ -37,10 +90,10 @@
 ------------------------------
 
 Datenbank aktualisieren: / Update Database:
-	ALTER TABLE `nl` ADD `title` VARCHAR( 255 ) AFTER `subject`
-	ALTER TABLE `nl` ADD `title_sub` VARCHAR( 255 ) AFTER `title` 
-	ALTER TABLE `nl` ADD `summary` LONGTEXT AFTER `body_text` 
-	ALTER TABLE `nl` ADD `is_template` TINYINT(1) default 0 after `tracking_image` 
+	ALTER TABLE `nl` ADD `title` VARCHAR( 255 ) AFTER `subject`;
+	ALTER TABLE `nl` ADD `title_sub` VARCHAR( 255 ) AFTER `title`; 
+	ALTER TABLE `nl` ADD `summary` LONGTEXT AFTER `body_text`;
+	ALTER TABLE `nl` ADD `is_template` TINYINT(1) default 0 after `track_image`; 
 
 *+*+*+*+*+*+*+*+*+*+*+ 1.0.8.5
 --en

@@ -14,6 +14,8 @@
 
 $_MAIN_DESCR=___("Systemeinstellungen ändern");
 
+$_MAIN_OUTPUT.= "<strong>".___("Globale Einstellungen")."</strong><br>";
+
 if (!$user_is_admin) {
 	$_MAIN_MESSAGE.="<br>".___("Sie haben keine Berechtigung dies zu tun");
 	$LOGIN->Logout();
@@ -27,6 +29,7 @@ if ($user_is_admin) {
 	//field names for query
 	$InputName_Name="name";//name
 	$$InputName_Name=getVar($InputName_Name);
+
 	$InputName_NotifySubscribe="notify_subscribe";
 	$$InputName_NotifySubscribe=getVar($InputName_NotifySubscribe);
 
@@ -35,6 +38,7 @@ if ($user_is_admin) {
 
 	$InputName_NotifyMail="notify_mail";
 	$$InputName_NotifyMail=getVar($InputName_NotifyMail);
+
 	$InputName_MaxRetry="max_retry";
 	$$InputName_MaxRetry=getVar($InputName_MaxRetry);
 
@@ -43,6 +47,13 @@ if ($user_is_admin) {
 
 	$InputName_ECheckSubscribe="emailcheck_subscribe";
 	$$InputName_ECheckSubscribe=getVar($InputName_ECheckSubscribe);
+
+	$InputName_ECheckSendit="emailcheck_sendit";
+	$$InputName_ECheckSendit=getVar($InputName_ECheckSendit);
+
+	$InputName_ECheckCheckit="emailcheck_checkit";
+	$$InputName_ECheckCheckit=getVar($InputName_ECheckCheckit);
+
 	$InputName_CheckVersion="check_version";
 	$$InputName_CheckVersion=getVar($InputName_CheckVersion);
 
@@ -55,9 +66,51 @@ if ($user_is_admin) {
 	$InputName_RCPTName="rcpt_name";//name
 	$$InputName_RCPTName=getVar($InputName_RCPTName);
 
+	$InputName_UnsubUseCaptcha="unsubscribe_use_captcha";
+	$$InputName_UnsubUseCaptcha=getVar($InputName_UnsubUseCaptcha);
+	
+	$InputName_UnsubDigitsCaptcha="unsubscribe_digits_captcha";
+	$$InputName_UnsubDigitsCaptcha=getVar($InputName_UnsubDigitsCaptcha);
+	
+	$InputName_UnsubSendMail="unsubscribe_sendmail";
+	$$InputName_UnsubSendMail=getVar($InputName_UnsubSendMail);
+	
+	$InputName_UnsubAction="unsubscribe_action";
+	$$InputName_UnsubAction=getVar($InputName_UnsubAction);
+	
+	$InputName_CheckitLimit="checkit_limit";
+	$$InputName_CheckitLimit=getVar($InputName_CheckitLimit);
+
+	$InputName_CheckitFromEmail="checkit_from_email";
+	$$InputName_CheckitFromEmail=getVar($InputName_CheckitFromEmail);
+	
+	$InputName_CheckitAdrResetError="checkit_adr_reset_error";
+	$$InputName_CheckitAdrResetError=getVar($InputName_CheckitAdrResetError);
+	
+	$InputName_CheckitAdrResetStatus="checkit_adr_reset_status";
+	$$InputName_CheckitAdrResetStatus=getVar($InputName_CheckitAdrResetStatus);
+
+	$InputName_BounceitLimit="bounceit_limit";
+	$$InputName_BounceitLimit=getVar($InputName_BounceitLimit);
+	
+	$InputName_BounceitHost="bounceit_host";
+	$$InputName_BounceitHost=getVar($InputName_BounceitHost);
+	
+	$InputName_BounceitAction="bounceit_action";
+	$$InputName_BounceitAction=getVar($InputName_BounceitAction);
+
+	$InputName_BounceitSearch="bounceit_search";
+	$$InputName_BounceitSearch=getVar($InputName_BounceitSearch);
+	
+	$InputName_BounceitFilterTo="bounceit_filter_to";
+	$$InputName_BounceitFilterTo=getVar($InputName_BounceitFilterTo);
+	
+	$InputName_BounceitFilterToEmail="bounceit_filter_to_email";
+	$$InputName_BounceitFilterToEmail=getVar($InputName_BounceitFilterToEmail);
 
 	$CONFIG=new tm_CFG();
-
+	$HOSTS=new tm_HOST();
+	
 	$check=true;
 	if ($set=="save") {
 
@@ -101,16 +154,21 @@ if ($user_is_admin) {
 		} else {
 		}//no file
 		//ende upload image
-
-
-
 		//checkinput
 		if (($notify_subscribe==1 || $notify_unsubscribe==1) && empty($notify_mail)) {$check=false;$_MAIN_MESSAGE.="<br>".___("Die E-Mail-Adresse für Benachrichtigungen darf nicht leer sein").".";}
 		$check_mail=checkEmailAdr($notify_mail,$EMailcheck_Intern);
 		if (!empty($notify_mail) && !$check_mail[0]) {$check=false;$_MAIN_MESSAGE.="<br>".___("Die E-Mail-Adresse für Benachrichtigungen bei An-/Abmeldungen ist nicht gültig.")." ".$check_mail[1];}
 
-		//check smtp/pop3 connection .... and maybe give a warning message, dont fail :)
-		//still to do , connect doesnt work here, need a testfunction........
+		if (!empty($$InputName_CheckitFromEmail)) {
+			$check_mail=checkEmailAdr($$InputName_CheckitFromEmail,$EMailcheck_Intern);
+			if (!$check_mail[0]) {$check=false;$_MAIN_MESSAGE.="<br>".___("Die Filter E-Mail-Adresse für die automatische Prüfung ist nicht gültig.")." ".$check_mail[1];}
+		}
+
+		if ($$InputName_BounceitFilterTo==1) {
+			$check_mail=checkEmailAdr($$InputName_BounceitFilterToEmail,$EMailcheck_Intern);
+			if (!$check_mail[0]) {$check=false;$_MAIN_MESSAGE.="<br>".___("Die Filter E-Mail-Adresse für das  automatische Bouncemanagement ist nicht gültig.")." ".$check_mail[1];}
+		}
+
 		if (!DEMO && $check) {
 			$track_image="";
 			if ($uploaded_track_image_new) {
@@ -127,14 +185,28 @@ if ($user_is_admin) {
 					"max_mails_retry"=>$max_retry,
 					"emailcheck_intern"=>$emailcheck_intern,
 					"emailcheck_subscribe"=>$emailcheck_subscribe,
+					"emailcheck_sendit"=>$emailcheck_sendit,
+					"emailcheck_checkit"=>$emailcheck_checkit,
 					"check_version"=>$check_version,
 					"track_image"=>$track_image,
-					"rcpt_name"=>$rcpt_name
+					"rcpt_name"=>$rcpt_name,
+					"unsubscribe_use_captcha"=>$unsubscribe_use_captcha,
+					"unsubscribe_digits_captcha"=>$unsubscribe_digits_captcha,
+					"unsubscribe_sendmail"=>$unsubscribe_sendmail,
+					"unsubscribe_action"=>$unsubscribe_action,
+					"checkit_limit"=>$checkit_limit,
+					"checkit_from_email"=>$checkit_from_email,
+					"checkit_adr_reset_error"=>$checkit_adr_reset_error,
+					"checkit_adr_reset_status"=>$checkit_adr_reset_status,
+					"bounceit_limit"=>$bounceit_limit,
+					"bounceit_host"=>$bounceit_host,
+					"bounceit_action"=>$bounceit_action,
+					"bounceit_search"=>$bounceit_search,
+					"bounceit_filter_to"=>$bounceit_filter_to,
+					"bounceit_filter_to_email"=>$bounceit_filter_to_email,
 					));
 			$_MAIN_MESSAGE.="<br>".___("Die Einstellungen wurden gespeichert und sind ab sofort gültig")."!";
 			$action="adm_set";
-		} else {
-			include_once (TM_INCLUDEPATH."/adm_set_form.inc.php");
 		}
 	} else {
 		$C=$CONFIG->getCFG(TM_SITEID);
@@ -145,12 +217,27 @@ if ($user_is_admin) {
 		$$InputName_MaxRetry=$C[0]['max_mails_retry'];//
 		$$InputName_ECheckIntern=$C[0]['emailcheck_intern'];//
 		$$InputName_ECheckSubscribe=$C[0]['emailcheck_subscribe'];//
+		$$InputName_ECheckSendit=$C[0]['emailcheck_sendit'];//
+		$$InputName_ECheckCheckit=$C[0]['emailcheck_checkit'];//
 		$$InputName_CheckVersion=$C[0]['check_version'];//
 		$$InputName_TrackImageExisting=$C[0]['track_image'];
 		$$InputName_RCPTName=$C[0]['rcpt_name'];
-		require_once (TM_INCLUDEPATH."/adm_set_form.inc.php");
+		$$InputName_UnsubUseCaptcha=$C[0]['unsubscribe_use_captcha'];
+		$$InputName_UnsubDigitsCaptcha=$C[0]['unsubscribe_digits_captcha'];
+		$$InputName_UnsubSendMail=$C[0]['unsubscribe_sendmail'];
+		$$InputName_UnsubAction=$C[0]['unsubscribe_action'];
+		$$InputName_CheckitLimit=$C[0]['checkit_limit'];
+		$$InputName_CheckitFromEmail=$C[0]['checkit_from_email'];
+		$$InputName_CheckitAdrResetError=$C[0]['checkit_adr_reset_error'];
+		$$InputName_CheckitAdrResetStatus=$C[0]['checkit_adr_reset_status'];
+		$$InputName_BounceitLimit=$C[0]['bounceit_limit'];
+		$$InputName_BounceitHost=$C[0]['bounceit_host'];
+		$$InputName_BounceitAction=$C[0]['bounceit_action'];
+		$$InputName_BounceitSearch=$C[0]['bounceit_search'];
+		$$InputName_BounceitFilterTo=$C[0]['bounceit_filter_to'];
+		$$InputName_BounceitFilterToEmail=$C[0]['bounceit_filter_to_email'];
 		#$_MAIN_OUTPUT.="<br><br><a href=\"javascript:switchSection('div_debug');\">".tm_icon("information.png",___("Serverinfo"))."&nbsp;".___("Serverinfo")."</a>";
 	}
-
+	include_once (TM_INCLUDEPATH."/adm_set_form.inc.php");
 }//user_is_admin
 ?>

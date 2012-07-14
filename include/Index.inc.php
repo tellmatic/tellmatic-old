@@ -20,7 +20,7 @@ $action=getVar("act");
 require (TM_INCLUDEPATH."/Lang.inc.php");
 
 $_MAIN_MESSAGE="";
-if (DEMO) $_MAIN_MESSAGE.="<h2><font color=\"red\">Demo</font></h2>";
+if (DEMO) $_MAIN_MESSAGE.="<br><font color=\"red\"><strong>Demo</strong>! Some functions and features may be disabled! You can not delete items!</font></br>";
 $_MAIN_HELP="";
 $_MAIN_OUTPUT="";
 $_MENU="";

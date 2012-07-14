@@ -2,7 +2,7 @@
 /* this file is part of: / diese Datei ist ein Teil von:                        */
 /* tellmatic, the newslettermachine                                             */
 /* tellmatic, die Newslettermaschine                                            */
-/* 2006/7 by Volker Augustin, multi.art.studio Hanau                            */
+/* 2006/10 by Volker Augustin, multi.art.studio Hanau                            */
 /* Contact/Kontakt: info@tellmatic.org                                      */
 /* Homepage: www.tellmatic.org                                                   */
 /* leave this header in file!                                                   */
@@ -11,68 +11,122 @@
 /* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
 /********************************************************************************/
 
+*+*+*+*+*+*+*+*+*+*+*+ CHANGES V1.0.8.7  +*+*+*+*+*+*+*+*+*+*+*+*
+	23.2.2010
+	
+	*** New features/enhancements:
+		
+		- Since 1.0.8.7 Tellmatic has 2 new scripts you can start manually via the menu or with cronjob
+			pleae read the INSTALL.xx file!
+			- automagic bouncemanagement:
+				include/bounce_it.php
+				This script opens a mailbox on the selected server and checks for bouncemails, fetch emailaddresss and do something with it (action) 
+				Automagic bouncemanagement behaviour can be configured in the admin - settings menu (see below)
+				The script adds a memo  with debug info if an address fails and exports bounced addresses to a file in the files/import_export directory
+			- quality check/address validation:
+				include/check_it.php
+				This Script validates flagged/marked email addresses and optionally set new status, etc. 
+				Behaviour can be configured in the admin - settings menu (see below)
+				The script adds a memo  with debug info if an address fails			
+				Class_ADR.inc.php: tm_ADR->markRecheck()
+		- check e-mail-addresses:
+			check/validate email addresses via link from list (the new spellcheck icon)	or via form below adr list (also choose from syntax , mx/dns or validation)
+			a click on the spellcheck icon gives some more debugging results
+		- unsubscribe: send e-mail to un-subscriber (optional - see settings). Template is: tpl/Unsubscribe_mail.html
+		- newsletter: memo is now a variable for the newsletter: {MEMO}
+		- Admin - Settings:	New Options for unsubscribe, auto-bounce, validation script and send routine:
+			- send_it: 
+				- choose e-mail check method
+			- unsuscribe:
+				- unsubscribe: use captcha: default 0/disabled
+				- unsubscribe: how many captcha digits: default 4
+				- unsubscribe: send memo to un-subscriber: tpl/Unsubscribe_mail.html
+				- unsubscribe: choose action: unsubscribe (set status and deactivate entry) or finally delete from database (no undo)?
+			- check_it:
+				- choose e-mail check method
+				- validate email-from-addres: address to check via validation script. use sender address of default  host if empty 
+				- mark as ok if address was errorness (status 9, a-error)?
+				- reset error counter if address check was successful?
+				- set limit on how many addresses should be checked on each run: default 25		
+			- bounce_it:
+				- bounce method (body, header etc), action: move, delete, auto, unsubscribe etc
+				- select pop3/imap host
+				- set limit on how many emails should be checked at once: default 10
+				- select search method: header and body, only body, only header
+				- choose action: auto , mark as errorness/failed, unsubscribe and deactivate, deactivate, delete
+				- filter emails, only search mails to from: address: default 0
+				- from_address for filter: default ''
+		- import: mark for recheck/validation
+		- send_it, check_it and bounce_it have now links in menu and will not be called directly! Instead a page with some hints will be shown and a link to load the script directly in the browser.
+		- create new Item: add some default values/errormessages in current language in all forms when creating a new entry (adr, form, nl, etc)
+		- rechecked tab index in all forms 
+		- adress list: shows summary of total addresses and per selected and marked/deactivated entries
+		- search adresses: filter for active addresses
+		- clean up database now has an option to mark addresses for validation/recheck using check_it.php
+		- clean up database disables unneeded inputs depending on what action you select (as in import, hosts etc)
+		- clean up database now shows amount of marked addresses for recheck, total and for each group, and deactivated addresses
+	
+	*** Code changes / Optimizations:
+		- install: safemode warning is now info!
+		- Functions: validate_email: fsockopen now has timeout and errno
+		- Functions: validate_email: error 4xx should be no address-error but send error (greylisted, deferred, temp error)
+		- unsubscribe: should only check for syntax, not mx/dns or validate, now only checks for syntax!
+		- error_reporting: disabled notices because auto bouncemanagement may have 0 mails and this gives a notice in the php logfile.if you run the script often and there is an empty mailbox this would lead to a logfile with a few hundreds MB... :>
+		- Functions: validate_email: from-address is now sender address of default/selected host.
+		- Funktions: validate_email: accepts $from addres, or use default from default/selected host if empty
+		- send_it: add memo if address check fails
+		- default for USE_TMP_HTML_FILES is TRUE, make sure admin/tmp is writeable by the webserver. To disable feature, set USE_TMP_HTML_FILES to FALSE in tm_lib.inc.php
+
+	*** new API examples:
+		- api_example_dev_001.php:
+			list addresses which are in more than one group
+		- api_example_dev_002.php:
+			show a list of newsletters					
+		- api_example_dev_003.php:
+			shows a list of already send newsletters (get nl list from q instead of nl)
+		- api_example_dev_004.php:
+			output list of archived newsletters to a rss-xml file
+		
+		Note: remove exit command at top of file!
+
+	*** fixed Bugs:
+		- subscribe.inc.php: c= was not code= in 1086, fixed now. Now using $code instead of $c
+		- install: files/tmp was checked twice
+		- https://sourceforge.net/projects/tellmatic/forums/forum/670072/topic/3539879/index/page/1
+			subscribe.inc.php date_sub for mail and template should be formatted by TM_NL_DATEFORMAT
+			$date_sub=date(TM_NL_DATEFORMAT);
+		- DEBUG_SQL had no effect using temp html files. now debug output/queries is included in $_MAIN_MESSAGE 
+		- export: in 1086, if status was choosen as a filter, there was no export. this was because of a change in the api, weird bug, weird php....
+		- validate email now uses default host or given host
+		- unsubscribe:  typeNotice Undefined variable: author , file:include/unsubscribe.inc.php
+			author is now "unsubscribe"
+		- send_it: 732: undefined var a_error, h_error: fixed
+		- send_it: 634:  undefined index summary
+	 	- UPDATE: ALTER TABLE `nl` ADD `is_template` TINYINT(1) default 0 after `track_image`, was "tracking_image"
+		- Functions.inc.php: typeNotice Undefined index:  HTTP_X_FORWARDED_FOR include/Functions.inc.php line 303
+		- send_it: h entry should not be marked as errorness if entry has already been processed....!
+			Not a critical bug :) just the results in the statistics are a bit messed up. The error counter for the newsletter queue had some false results! now fixed.	now the entry is skipped and status is not changed!
+			
+			
 *+*+*+*+*+*+*+*+*+*+*+ CHANGES V1.0.8.6  +*+*+*+*+*+*+*+*+*+*+*+*
 	06.01.2010
 
-	Opensource is a hard job!
-	The Blues:
-	It was in november 2006 when i was asked to write a small newsletter script for commercial use.
-	It should be a newslettersystem that can be sold by the company.
-	All i got was a link to a commercial closed source properitary newsletter system that cost about 2000 euros 
-	for standard interface and usage and additional up to 3000 euros for additional features like bouncemanagement, blacklist and extras (e.g. >10k recipients etc).
-	(Looked very nice, bu tonly working in InternetExploder due to heavy use of active x and all that MS properitary closed source stuff)
-	I finished my first useable version in january 2007. Unfortunately the company was not willing to pay for all the wanted features and the job was canceled.
-	(Cost at this time was still under 1500 euros netto...:P , remember: the commercial system cost about 2000 euros + extras)
-	But it was not my indention to make a bad e-mail client replacement in php nobody wants, but a good newsletter system.
-	I mentioned that the company i wrote the newsletter script for didn't test it in any way or even had a closer look at it. (But a lot of silly questions 6 months later)
-	To save all the work i have done, i decided to make a complete rewrite with all the features i personally like to see in a newsletter.
-	And this list is very very long. The current version includes now about 80%. (without optimizations and enhancements that could be done ;-) 
-	In March 2007 i released the first open source version of Tellmatic which included, in comparison to the current version, 
-	not 1/10 of the features, but at least everything you need and get with a commercial expensive newslettersystem. Bah.
-	
-	But doing Opensource is really a hard job:
-	
-	The 1.0.8.6 release was almost finished in october 2009, but i did not had the time to make the updates, 
-	write changes (this file), doing the tests and all the stuff you need to do when releasing a new version (it's a lot!).
-	All this is because i only can develop Tellmatic in my rare spare time.
-	
-	I cancelled my last job in december 2009. I did 1st level tele-support for endusers. OUCH!
-	The worst job i've ever done! /&%&$§ I really feel a bit stupid after 6 years beeing asked by 
-	superduperwebmasters to explain what ftp is, how email works, how to press a start button and call outlook, etc., *sick²*
-	This means that i am unemployed now.
-
-	Now i have to decide if i get a new job, or continue in some other way, e.g. building model rockets and/or coding Tellmatic.
-	At least we all need money to paid food and flat, even if we are coding free software , right?
-	
-	If you are using Tellmatic in a commercial way, or sell service to your customers please make your donations :D
-	In 2009, about 90% of the donation came from private users with small private non commercial homepages, not companies or consultants who use or sell Tellmatic...
-	
-	Please help me keep on developing Tellmatic. Make your donations.
-	Last year (2009) i got a total of ~300 euros (many thanks! price from tdl 2009 not included, price was 1000 euros),  
-	but this is still not enough to live and pay food and drinks i consume when spending time on developing Tellmatic. 
-
-	For this reason i will offer more commercial support in the near future. 
-
-	The new version:
-
 	Sorry, still no new filemanager, hopefully coming soon. 
 	Sorry, still no working online documentation.
-	Your donations are welcome. I can't not do this without your help.		
-
+	Your donations are welcome. i can not do this without your help.		
+		
 	Some of the new festures n 1.0.8.6, like title, sub-title and summary in newsletters were sponsored by Schroewig News and Images Berlin (www.schroewig.com)		
 	As usual, i tried to implement new features in a way so that new functions will be useful for everyone not just for the sponsor.
 		(This is why sponsors would never pay the whole work, just a few bucks.
 		so... if you need some special features, please ask, its not that expensive as you think)
 		
-	Additionally i decided to add the 'uploaded image resize and watermark' function permanently to Tellmatic.  		
-		
+	Additionally i decided to add the 'uploaded image resize and watermark' function permanently to Tellmatic.  
 	I also added some new api examples to demonstrate the new festures for displaying newsletters summaries on a website		
 	
 	Wichtiger Hinweis fuer Newsletterversender aus dem deutschen Raum:
 	"Das LG Heidelberg hat in einer aktuellen Entscheidung (LG Heidelberg, Urt. v. 23.09.2009 - Az.: 1 S 15/09)
 	noch einmal bestätigt, dass das Confirmed-Opt-In-Verfahren bei E-Mail-Werbung unzureichend ist, um einen Missbrauch zu vermeiden."
 	Quelle: http://www.online-und-recht.de/urteile/Confirmed-Opt-In-Verfahren-nicht-geeignet-um-Missbrauch-zu-verhindern-1-S-15-09-Landgericht-Heidelberg-20090923.html
-	
 	
 	*** New features/enhancements:
 		* Newsletter: added Title, SubTitle and Summary

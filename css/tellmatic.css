@@ -10,3 +10,9 @@
 	border-left: 1px solid #aaaaaa;
 	border-right: 1px solid #aaaaaa;
 }
+
+.adr_summary {
+	background-color:#cceeee;
+	border: 1px dashed #cccccc;
+	padding:4px;
+}

@@ -2,7 +2,7 @@
 /* this file is part of: / diese Datei ist ein Teil von:                        */
 /* tellmatic, the newslettermachine                                             */
 /* tellmatic, die Newslettermaschine                                            */
-/* 2006/7 by Volker Augustin, multi.art.studio Hanau                            */
+/* 2006/10 by Volker Augustin, multi.art.studio Hanau                            */
 /* Contact/Kontakt: info@tellmatic.org                                      */
 /* Homepage: www.tellmatic.org                                                   */
 /* leave this header in file!                                                   */
@@ -14,11 +14,15 @@
 *+*+*+*+*+*+*+*+*+*+*+ README +*+*+*+*+*+*+*+*+*+*+*+*
 
 	tellmatic - the newslettermachine, die Newslettermaschine
-	2006/9 by Volker Augustin, multi.art.studio Hanau
+	2006/10 by Volker Augustin, multi.art.studio Hanau
 	Contact/Kontakt: info@tellmatic.org
 	Homepage: www.tellmatic.org
 	check Homepage for Updates and more Infos
 	Besuchen Sie die Homepage für Updates und weitere Infos
+
+
+	Diese Software ist OpenSource und steht unter der GPL Lizenz.
+	Es besteht keinerlei Gewaehrleistung!
 
 *+*+*+*+*+*+*+*+*+*+ LICENSE +*+*+*+*+*+*+*+*+*+*+*
 
@@ -82,19 +86,15 @@
 
 	Please read INSTALL.EN / UPDATE / CHANGES 
 
-	http://www.tellmatic.org/?c=doc
+	http://www.tellmatic.org
 
-	Sie benutzen PHP5? Tellmatic läuft nun auch mit php4+5
-
-	using PHP5? Tellmatic now works with php4+5
-		
 *+*+*+*+*+*+*+*+*+*+*+*+ TELLMATIC +*+*+*+*+*+*+*+*+*+*+*+*
 
-	About: http://www.tellmatic.org/?c=about
+	About: http://www.tellmatic.org/about
 
 *+*+*+*+*+*+*+*+*+*+*+*+ CREDITS +*+*+*+*+*+*+*+*+*+*+*+*
 
-	Credits: http://www.tellmatic.org/?c=credits
+	Credits: http://www.tellmatic.org/credits
 
 
 EOF

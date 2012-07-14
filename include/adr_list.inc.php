@@ -62,6 +62,23 @@ if ($set=="delete" && $doit==1) {
 	if (!DEMO) $ADDRESS->delAdr($adr_id);
 	$_MAIN_MESSAGE.="<br>".___("Eintrag wurde gelöscht.");
 }//del single
+if ($set=="check") {
+	$ADR_check=$ADDRESS->getAdr($adr_id);
+	$_MAIN_MESSAGE.="<br>".___("Eintrag wird geprüft:")." <br><em>".display($ADR_check[0]['email'])."</em>";
+	$check_mail=checkEmailAdr($ADR_check[0]['email'],$EMailcheck_Intern);
+	if (!$check_mail[0]) {
+		$_MAIN_MESSAGE.="<br><font color=\"red\">".___("Die E-Mail-Adresse ist nicht gültig.")."</font>";
+		$_MAIN_MESSAGE.="<br><font color=\"red\">".___("E-Mail wurde als fehlerhaft markiert.")."</font>";
+		$_MAIN_MESSAGE.="&nbsp;".tm_icon($STATUS['adr']['statimg'][9],$STATUS['adr']['status'][9])."&nbsp;\"<b>".$STATUS['adr']['status'][9]."</b>\"";
+		$ADDRESS->setStatus($adr_id,9);
+		$ADDRESS->addMemo($adr_id,$check_mail[1]);
+	} else {
+		$_MAIN_MESSAGE.="<br><font color=\"green\">".___("OK")."</font>";
+	}
+	$ADDRESS->markRecheck($adr_id,0);
+	$_MAIN_MESSAGE.="<br><pre><em>".display($check_mail[1])."</em></pre>";
+	
+}//check single
 if ($user_is_manager  && $set=="delete_history" && $doit==1) {
 	if (!DEMO) $QUEUE->clearH(Array("adr_id"=>$adr_id));
 	$_MAIN_MESSAGE.="<br>".___("Historie wurde gelöscht.");
@@ -127,6 +144,17 @@ if ($ac_multi>0) { // wenn min 1 adr gewaehlt
 	// && $doit==1
 	//meldungen ausgeben
 	$_MAIN_MESSAGE.="<br>".sprintf(___("%s Adressen ausgewählt."),$ac_multi);
+	if ($set=="check_syntax_multi" || $set=="check_mx_multi" || $set=="check_validate_multi") {
+		$_MAIN_MESSAGE.="<br>".___("Ausgewählte Adressen werden geprüft");
+		$_MAIN_MESSAGE.="<br>".___("Status für fehlerhafte Adressen wird geändert.")."&nbsp;".tm_icon($STATUS['adr']['statimg'][9],$STATUS['adr']['status'][9])."&nbsp;\"<b>".$STATUS['adr']['status'][9]."</b>\"";
+		if ($set=="check_syntax_multi") $_MAIN_MESSAGE.="<br>".___("Syntax");
+		if ($set=="check_mx_multi") $_MAIN_MESSAGE.="<br>".___("Syntax, MX/DNS");
+		if ($set=="check_validate_multi") $_MAIN_MESSAGE.="<br>".___("Syntax, MX/DNS + Validate");
+
+		if ($set=="check_syntax_multi") $EMailcheck=1;
+		if ($set=="check_mx_multi") $EMailcheck=2;
+		if ($set=="check_validate_multi") $EMailcheck=3;
+	}	
 	if ($set=="aktiv_1_multi") {
 		$_MAIN_MESSAGE.="<br>".___("Ausgewählte Adressen werden aktiviert");
 	}
@@ -161,6 +189,20 @@ if ($ac_multi>0) { // wenn min 1 adr gewaehlt
 	//array durchwandern
 	for ($acc_m=0;$acc_m<$ac_multi;$acc_m++) {
 		#$_MAIN_OUTPUT.="<br>ID".$adr_id_arr[$acc_m];
+
+//check adr syntax, mx, validate
+		if ($set=="check_syntax_multi" || $set=="check_mx_multi" || $set=="check_validate_multi") {
+			$ADR_check=$ADDRESS->getAdr($adr_id_arr[$acc_m]);
+			$check_mail=checkEmailAdr($ADR_check[0]['email'],$EMailcheck);
+			if (!$check_mail[0]) {
+				$_MAIN_MESSAGE.="<br><em>".display($ADR_check[0]['email'])."</em> <font color=\"red\">".___("FEHLER")."</font>";
+				$ADDRESS->setStatus($adr_id_arr[$acc_m],9);
+				$ADDRESS->addMemo($adr_id_arr[$acc_m],$check_mail[1]);
+			} else {
+				$_MAIN_MESSAGE.="<br><em>".display($ADR_check[0]['email'])."</em> <font color=\"green\">".___("OK")."</font>";
+			}
+			$ADDRESS->markRecheck($adr_id_arr[$acc_m],0);
+		}//check multi
 		//activate adr
 		if ($set=="aktiv_1_multi") {
 			$ADDRESS->setAktiv($adr_id_arr[$acc_m],1);
@@ -249,18 +291,66 @@ if ($ac_multi>0) { // wenn min 1 adr gewaehlt
 		#$_MAIN_MESSAGE.="<br>".___("Es wurden keine Adressen ausgewählt.");
 }//if ac_multi>0
 
+//übersicht
+$_MAIN_OUTPUT.="<div class=\"adr_summary\">";#ccdddd
+$_MAIN_OUTPUT.=tm_icon("information.png",___("Übersicht"),___("Übersicht"))."&nbsp;<b>".___("Übersicht").":</b>";
+
+//anzahl alle
+$entrys_all=$ADDRESS->countADR();//anzahl eintraege, alles
+$_MAIN_OUTPUT.="<br>".sprintf(___("%s Adressen Gesamt"),"<b>".$entrys_all."</b>");
+
+//anzahl recheck alle
+$search_recheck=Array();
+$search_recheck['recheck']=1;
+$entrys_recheck=$ADDRESS->countADR(0,$search_recheck);//anzahl eintraege die zur pruefung markiert sind
+if ($entrys_recheck>0) $_MAIN_OUTPUT.="<br>".sprintf(___("%s Adressen sind zur Prüfung vorgemerkt"),"<b>".$entrys_recheck."</b>");
+
+//anzahl inaktiv/deaktivert
+$search_inaktiv=Array();
+$search_inaktiv['aktiv']='0';
+$entrys_inaktiv=$ADDRESS->countADR(0,$search_inaktiv);
+if ($entrys_inaktiv>0) $_MAIN_OUTPUT.="<br>".sprintf(___("%s Adressen sind deaktiviert"),"<b>".$entrys_inaktiv."</b>");
+
+$_MAIN_OUTPUT.="<br>";
 
 if ($adr_grp_id>0)
 {
 	$ADR=$ADDRESS->getAdr(0,$offset,$limit,$adr_grp_id,$search,$sortIndex,$sortType);//id,offset,limit,group,$search_array
 	$adr_grp=$ADDRESS->getGroup($adr_grp_id);
-	$_MAIN_MESSAGE.="<br>".sprintf(___("gewählte Gruppe: %s"),"<b>".display($adr_grp[0]['name'])."</b>");
+	$_MAIN_OUTPUT.="<br>".sprintf(___("gewählte Gruppe: %s"),"<b>".display($adr_grp[0]['name'])."</b>");
 } else {
 	$ADR=$ADDRESS->getAdr(0,$offset,$limit,0,$search,$sortIndex,$sortType);//id,offset,limit,group,$search_array
 }
+
+if ($s_status >0) {
+	$_MAIN_OUTPUT.="<br>".___("gewählter Status").":&nbsp;".tm_icon($STATUS['adr']['statimg'][$s_status],$STATUS['adr']['status'][$s_status])."&nbsp;\"<b>".$STATUS['adr']['status'][$s_status]."</b>\"";
+}
+
 $ac=count($ADR);
-$entrys=$ac; // fuer pager.inc!!!
-$entrys_total=$ADDRESS->countADR($adr_grp_id,$search);
+$entrys=$ac; // fuer pager.inc!!! // aktuelle anzahl angezeigter eintraege
+
+$entrys_total=$ADDRESS->countADR($adr_grp_id,$search);//anzahl eintraege aktuell gewaehlt mit filter
+$search_recheck_selected=$search;
+$search_recheck_selected['recheck']=1;
+$entrys_recheck_selected=$ADDRESS->countADR($adr_grp_id,$search_recheck_selected);//anzahl eintraege die zur pruefung markiert sind mit aktuellem suchfilter
+
+//anzahl (zu pruefender) adressen
+if ($entrys_total!=$entrys_all) {
+	$_MAIN_OUTPUT.="<br>".sprintf(___("%s Adressen (gefiltert)"),"<b>".$entrys_total."</b>");
+	if ($entrys_recheck_selected>0)$_MAIN_OUTPUT.="<br>".sprintf(___("%s Adressen sind zur Prüfung vorgemerkt, gefiltert)"),"<b>".$entrys_recheck_selected."</b>");
+	$_MAIN_OUTPUT.="";
+}
+
+//anzahl deaktiverte adressen in der aktuellen auswahl gesamt
+if (!isset($search['aktiv']) || $search['aktiv'] ==="") {
+	$search_inaktiv_selected=$search;
+	$search_inaktiv_selected['aktiv']='0';//use a string!
+	$entrys_inaktiv_selected=$ADDRESS->countADR($adr_grp_id,$search_inaktiv_selected);//anzahl inaktive adr
+	if ($entrys_inaktiv_selected>0)$_MAIN_OUTPUT.="<br>".sprintf(___("%s Adressen sind deaktivert (gefiltert)"),"<b>".$entrys_inaktiv_selected."</b>");
+}
+$_MAIN_OUTPUT.="<br></div>";
+
+
 //wir sortieren ueber die db, sortIndex und Type werden uebergeben an get ADR
 //damit die sortierung auch mit limits klappt.... sonst werden nur die gezeigten eintraege im array sortiert, nichjt aber die geamte adressliste in der db... etc
 //sortierung ueber array:
@@ -284,8 +374,11 @@ if (isset($f0_9)) {
 if (isset($s_status)) {
 	$mSTDURL->addParam("s_status",$s_status);
 }
-if ($set=="search") {
-	$mSTDURL->addParam("set",$set);
+if (isset($s_aktiv)) {
+	$mSTDURL->addParam("s_aktiv",$s_aktiv);
+}
+if ($set_search=="search") {
+	$mSTDURL->addParam("set",$set_search);
 }
 
 $mSTDURL->addParam("adr_grp_id",$adr_grp_id);
@@ -332,6 +425,13 @@ $aktivURLPara->addParam("offset",$offset);
 $aktivURLPara->addParam("limit",$limit);
 $aktivURLPara->addParam("act","adr_list");
 $aktivURLPara->addParam("set","aktiv");
+
+$checkURLPara=$mSTDURL;
+$checkURLPara->addParam("adr_grp_id",$adr_grp_id);
+$checkURLPara->addParam("offset",$offset);
+$checkURLPara->addParam("limit",$limit);
+$checkURLPara->addParam("act","adr_list");
+$checkURLPara->addParam("set","check");
 
 $delURLPara=$mSTDURL;
 $delURLPara->addParam("adr_grp_id",$adr_grp_id);
@@ -439,6 +539,9 @@ for ($acc=0;$acc<$ac;$acc++) {
 	$aktivURLPara->addParam("val",$new_aktiv);
 	$aktivURLPara_=$aktivURLPara->getAllParams();
 
+	$checkURLPara->addParam("adr_id",$ADR[$acc]['id']);
+	$checkURLPara_=$checkURLPara->getAllParams();
+
 	$delURLPara->addParam("adr_id",$ADR[$acc]['id']);
 	$delURLPara_=$delURLPara->getAllParams();
 
@@ -469,6 +572,10 @@ for ($acc=0;$acc<$ac;$acc++) {
 	$Form->set_InputValue($FormularName,$InputName_AdrID,$ADR[$acc]['id']);
 	$Form->render_Input($FormularName,$InputName_AdrID);
 	$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_AdrID]['html'];
+	
+	if ($ADR[$acc]['recheck']==1) {	
+		$_MAIN_OUTPUT.=  "&nbsp;".tm_icon("spellcheck.png",___("E-Mail Prüfen"));
+	}	
 	
 	//BLACKLIST Details
 	//zeigt an ob adresse AKTIV!!!!! geblacklisted ist:
@@ -619,6 +726,7 @@ for ($acc=0;$acc<$ac;$acc++) {
 	$_MAIN_OUTPUT.= "</a>";
 	$_MAIN_OUTPUT.= "</td>";
 	$_MAIN_OUTPUT.= "<td>";
+	$_MAIN_OUTPUT.= "<a href=\"".$tm_URL."/".$checkURLPara_."\" title=\"".___("E-Mail prüfen")."\">".tm_icon("spellcheck.png",___("E-Mail prüfen"))."</a>";
 	$_MAIN_OUTPUT.= "<a href=\"".$tm_URL."/".$editURLPara_."\" title=\"".___("Adresse bearbeiten")."\">".tm_icon("pencil.png",___("Adresse bearbeiten"))."</a>";
 	$_MAIN_OUTPUT.=  "&nbsp;<a href=\"".$tm_URL."/".$statURLPara_."\" title=\"".___("Statistik anzeigen")."\">".tm_icon("chart_pie.png",___("Statistik anzeigen"))."</a>";
 	if ($user_is_manager) {

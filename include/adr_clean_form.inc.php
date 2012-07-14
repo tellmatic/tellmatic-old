@@ -22,6 +22,7 @@ $FormularName="adr_clean";
 //make new Form
 $Form->new_Form($FormularName,$_SERVER["PHP_SELF"],"post","_self");
 $Form->set_FormJS($FormularName," onSubmit=\"switchSection('div_loader');\" ");
+$Form->set_FormJS($FormularName," onSubmit=\"switchSection('div_loader');\"  OnChange=\"checkADRCleanForm();\" onClick=\"checkADRCleanForm();\"");
 //add a Description
 $Form->set_FormDesc($FormularName,___("Adressdatenbank bereinigen"));
 $Form->new_Input($FormularName,"act", "hidden", $action);
@@ -71,14 +72,12 @@ $Form->set_InputSize($FormularName,$InputName_Status,0,1);
 $Form->set_InputMultiple($FormularName,$InputName_Status,false);
 //add Data
 $sc=count($STATUS['adr']['status']);
-
 $Form->add_InputOption($FormularName,$InputName_Status,0,___(" -- Alle -- "));
 #$Form->add_InputOption($FormularName,$InputName_Status,"delete_all",___(" -- Alle fehlerhaften Adressen -- "));
 for ($scc=$sc; $scc>0; $scc--)//>0 , array beginnt bei 1! //5 und 6 undefiniert //5
 {
 	$Form->add_InputOption($FormularName,$InputName_Status,$scc,$STATUS['adr']['status'][$scc]." (".$STATUS['adr']['descr'][$scc].")");
 }
-
 
 //Gruppe dst, ziel
 $Form->new_Input($FormularName,$InputName_GroupDst,"select", "");
@@ -112,7 +111,6 @@ $Form->set_InputSize($FormularName,$InputName_StatusDst,0,1);
 $Form->set_InputMultiple($FormularName,$InputName_StatusDst,false);
 //add Data
 $sc=count($STATUS['adr']['status']);
-
 for ($scc=1; $scc<=$sc; $scc++)//0
 {
 	$Form->add_InputOption($FormularName,$InputName_StatusDst,$scc,$STATUS['adr']['status'][$scc]);
@@ -131,6 +129,7 @@ $Form->set_InputSize($FormularName,$InputName_Set,0,1);
 $Form->set_InputMultiple($FormularName,$InputName_Set,false);
 //add Data
 $Form->add_InputOption($FormularName,$InputName_Set,"--","--");
+$Form->add_InputOption($FormularName,$InputName_Set,"check",___("zur Prüfung vormerken"));
 $Form->add_InputOption($FormularName,$InputName_Set,"delete",___("komplett Löschen"));
 $Form->add_InputOption($FormularName,$InputName_Set,"aktiv_1",___("aktivieren"));
 $Form->add_InputOption($FormularName,$InputName_Set,"aktiv_0",___("deaktivieren"));
@@ -150,6 +149,7 @@ $Form->set_InputDesc($FormularName,$InputName_Blacklist,___("Importierte Adresse
 $Form->set_InputReadonly($FormularName,$InputName_Blacklist,false);
 $Form->set_InputOrder($FormularName,$InputName_Blacklist,7);
 $Form->set_InputLabel($FormularName,$InputName_Blacklist,"");
+
 //submit button
 $Form->new_Input($FormularName,$InputName_Submit,"submit",___("Aktion Ausführen"));
 $Form->set_InputStyleClass($FormularName,$InputName_Submit,"mFormSubmit","mFormSubmitFocus");

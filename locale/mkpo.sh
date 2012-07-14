@@ -1,7 +1,7 @@
 ######!/bin/bash
 clear
-#LANGS="de en es it nl pt"
-LANGS="nl"
+LANGS="de en es it nl pt"
+#LANGS="nl"
 domain="tellmatic"
 for lang in $LANGS; do
     echo $lang

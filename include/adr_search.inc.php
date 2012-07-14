@@ -13,7 +13,7 @@
 /********************************************************************************/
 $_MAIN_OUTPUT.="\n\n<!-- adr_search.inc -->\n\n";
 
-$set=getVar("set");
+$set_search=getVar("set_search");
 $search_array=Array();
 
 $InputName_Name="s_email";//
@@ -24,6 +24,9 @@ $$InputName_F=getVar($InputName_F);
 
 $InputName_Status="s_status";//
 $$InputName_Status=getVar($InputName_Status);
+
+$InputName_Aktiv="s_aktiv";//
+$$InputName_Aktiv=getVar($InputName_Aktiv);
 
 $InputName_Group="adr_grp_id";//
 $$InputName_Group=getVar($InputName_Group);
@@ -84,6 +87,7 @@ if ($reset_adr_search_values!=1 && $save_adr_search_values==1) {
 	$_SESSION['f0_9']=$f0_9;
 	$_SESSION['limit']=$limit;
 	$_SESSION['adr_grp_id']=$adr_grp_id;
+	$_SESSION['s_aktiv']="$s_aktiv";
 }
 if ($reset_adr_search_values==1) {
 	$_SESSION['s_email']="";
@@ -97,6 +101,8 @@ if ($reset_adr_search_values==1) {
 	$_SESSION['limit']=$limit;
 	$_SESSION['adr_grp_id']=0;
 	$adr_grp_id=0;
+	$_SESSION['s_aktiv']="";
+	$s_aktiv="";
 }
 
 ###
@@ -111,6 +117,8 @@ $resetSearchValuesURL->addParam("s_status",0);
 $resetSearchValuesURL->addParam("adr_grp_id",0);
 $resetSearchValuesURL->addParam("s_author",0);
 $resetSearchValuesURL->addParam("f0_9","*");// * weil wenn leer wieder der session wert genommen wird....
+$resetSearchValuesURL->addParam("s_aktiv","");
+
 $resetSearchValuesURL_=$resetSearchValuesURL->getAllParams();
 include_once (TM_INCLUDEPATH."/adr_search_form.inc.php");
 
@@ -119,4 +127,5 @@ include_once (TM_INCLUDEPATH."/adr_search_form.inc.php");
 	$search['author']=$s_author;
 	$search['f0_9']=str_replace("*","%",$f0_9);
 	$search['group']=$adr_grp_id;
+	$search['aktiv']="$s_aktiv";
 ?>

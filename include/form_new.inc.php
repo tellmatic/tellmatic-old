@@ -163,7 +163,6 @@ $$InputName_F9_value=getVar($InputName_F9_value);
 
 $InputName_email_errmsg="email_errmsg";
 $$InputName_email_errmsg=getVar($InputName_email_errmsg);
-
 $InputName_captcha_errmsg="captcha_errmsg";
 $$InputName_captcha_errmsg=getVar($InputName_captcha_errmsg);
 $InputName_Blacklist_errmsg="blacklist_errmsg";
@@ -311,6 +310,16 @@ if ($set=="save") {
 	}
 
 } else {
+	$$InputName_Aktiv=1;
+	$$InputName_DoubleOptin=1;
+	$$InputName_Name=___("neues Formular");
+	$$InputName_Descr=___("neues Formular");
+	$$InputName_email_errmsg=___("Die E-Mail-Adresse ist nicht gültig.");
+	$$InputName_captcha_errmsg=___("Fehler");
+	$$InputName_Blacklist_errmsg=___("Fehler");
+	$$InputName_PubGroup_errmsg=___("Fehler");
+	$$InputName_SubmitValue=___("Absenden");
+	$$InputName_ResetValue=___("Zurücksetzen");
 	include_once (TM_INCLUDEPATH."/form_form.inc.php");
 }
 ?>

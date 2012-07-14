@@ -47,6 +47,7 @@ CREATE TABLE ".$tm_tablePrefix."adr (
   clicks smallint default '0',
   views smallint default '0',
   newsletter smallint default '0',
+  recheck tinyint default '0',
   PRIMARY KEY  (id),
   KEY email (email),
   KEY aktiv (aktiv),
@@ -135,14 +136,29 @@ CREATE TABLE ".$tm_tablePrefix."config (
   notify_unsubscribe tinyint NOT NULL default '1',
   emailcheck_intern tinyint NOT NULL default '2',
   emailcheck_subscribe tinyint NOT NULL default '2',
+  emailcheck_sendit tinyint NOT NULL default '1',
+  emailcheck_checkit tinyint NOT NULL default '3',
   max_mails_retry tinyint NOT NULL default '5',
   check_version tinyint NOT NULL default '1',
   track_image varchar(255) collate utf8_bin NOT NULL default '',
   rcpt_name varchar( 255 ) NOT NULL default 'Newsletter',
+  unsubscribe_use_captcha tinyint NOT NULL default '1',
+  unsubscribe_digits_captcha tinyint NOT NULL default '4',
+  checkit_limit smallint NOT NULL default '25',
+  checkit_from_email varchar( 255 ) NOT NULL default '',
+  checkit_adr_reset_error tinyint NOT NULL default '1',
+  checkit_adr_reset_status tinyint NOT NULL default '1',
+  bounceit_limit smallint NOT NULL default '10',  
+  bounceit_host int NOT NULL default '0',
+  bounceit_action enum('auto','error','unsubscribe','aktiv','delete') collate utf8_bin NOT NULL default 'auto',
+  bounceit_search enum('header','body','headerbody') collate utf8_bin NOT NULL default 'headerbody',
+  bounceit_filter_to tinyint NOT NULL default '0',
+  bounceit_filter_to_email varchar( 255 ) NOT NULL default ''
   PRIMARY KEY  (id),
   KEY siteid (siteid)
 ) ENGINE=".$db_type."  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 ";
+
 $sql[5]['name']=___("Tabelle")." '".$tm_tablePrefix."frm' ".___("Formulare");
 $sql[5]['sql']="
 CREATE TABLE ".$tm_tablePrefix."frm (

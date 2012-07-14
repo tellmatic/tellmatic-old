@@ -95,7 +95,10 @@ if ($logged_in) {
 		case 'bl_new' : if ($user_is_manager) require_once (TM_INCLUDEPATH."/bl_new.inc.php"); break;
 		case 'bl_edit' : if ($user_is_manager) require_once (TM_INCLUDEPATH."/bl_edit.inc.php"); break;
 		case 'bounce' : if ($user_is_manager) require_once (TM_INCLUDEPATH."/bounce.inc.php"); break;
+		case 'bounce_it' : if ($user_is_manager) require_once (TM_INCLUDEPATH."/bounce_it.inc.php"); break;
+		case 'check_it' : if ($user_is_manager) require_once (TM_INCLUDEPATH."/check_it.inc.php"); break;
 		case 'adr_clean' : if ($user_is_manager) require_once (TM_INCLUDEPATH."/adr_clean.inc.php"); break;
+		case 'send_it' : if ($user_is_manager) require_once (TM_INCLUDEPATH."/send_it.inc.php"); break;
 		//newsletter
 		case 'nl_grp_list' : require_once (TM_INCLUDEPATH."/nl_grp_list.inc.php"); break;
 		case 'nl_grp_new' : require_once (TM_INCLUDEPATH."/nl_grp_new.inc.php"); break;
@@ -201,5 +204,5 @@ $_Tpl_Main->setParseValue("_MAIN_MESSAGE", $_MAIN_MESSAGE);
 $_Tpl_Main->setParseValue("_MAIN_HELP", $_MAIN_HELP);
 $_Tpl_Main->setParseValue("_MAIN_OUTPUT", $_MAIN_OUTPUT);
 $_MAIN=$_Tpl_Main->renderTemplate("Main.html")."\n";
-$_MAIN.= "<br><br><center>&copy;-left 2006/8 <a href=\"http://www.tellmatic.org\" target=\"blank\">".$ApplicationText."</a></center><br><br>";
+$_MAIN.= "<br><br><center>&copy;-left 2006-2010 <a href=\"http://www.tellmatic.org\" target=\"blank\">".$ApplicationText."</a></center><br><br>";
 ?>

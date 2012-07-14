@@ -58,7 +58,7 @@ if ($check && !DEMO) {
 		    }//checktmptable
 		} else {
     		$check=false;
-			$MESSAGE.="<p><font color=red>".___("").mysql_error()."</font></p>";
+			$MESSAGE.="<p><font color=red>".___("SQL ERROR:").mysql_error()."</font></p>";
 		}
 	}//mysqlconnect
 }

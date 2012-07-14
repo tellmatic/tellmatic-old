@@ -22,7 +22,7 @@ $FormularName="nl_new";
 $Form->new_Form($FormularName,$_SERVER["PHP_SELF"],"post","_self");
 $Form->set_FormJS($FormularName," onSubmit=\"switchSection('div_loader');\" ");
 //add a Description
-$Form->set_FormDesc($FormularName,___("Neue Newslettergruppe erstellen"));
+$Form->set_FormDesc($FormularName,___("Neuen Newsletter erstellen"));
 $Form->set_FormType($FormularName,"multipart/form-data");
 $Form->new_Input($FormularName,"act", "hidden", $action);
 $Form->new_Input($FormularName,"set", "hidden", "save");
@@ -55,7 +55,7 @@ $Form->set_InputStyleClass($FormularName,$InputName_Attach1,"mFormText","mFormTe
 $Form->set_InputSize($FormularName,$InputName_Attach1,8,255);
 $Form->set_InputDesc($FormularName,$InputName_Attach1,___("Anhang hochladen")." {ATTACH1}");
 $Form->set_InputReadonly($FormularName,$InputName_Attach1,false);
-$Form->set_InputOrder($FormularName,$InputName_Attach1,12);
+$Form->set_InputOrder($FormularName,$InputName_Attach1,11);
 $Form->set_InputLabel($FormularName,$InputName_Attach1,"");
 
 //Watermark?
@@ -66,7 +66,7 @@ $Form->set_InputStyleClass($FormularName,$InputName_ImageWatermark,"mFormText","
 $Form->set_InputSize($FormularName,$InputName_ImageWatermark,48,48);
 $Form->set_InputDesc($FormularName,$InputName_ImageWatermark,___("Wasserzeichen hinzufügen"));
 $Form->set_InputReadonly($FormularName,$InputName_ImageWatermark,false);
-$Form->set_InputOrder($FormularName,$InputName_ImageWatermark,4);
+$Form->set_InputOrder($FormularName,$InputName_ImageWatermark,8);
 $Form->set_InputLabel($FormularName,$InputName_ImageWatermark,"");
 
 //Select Watermark Image
@@ -76,7 +76,7 @@ $Form->set_InputDefault($FormularName,$InputName_ImageWatermarkImage,basename($$
 $Form->set_InputStyleClass($FormularName,$InputName_ImageWatermarkImage,"mFormSelect","mFormSelectFocus");
 $Form->set_InputDesc($FormularName,$InputName_ImageWatermarkImage,___("Wasserzeichen-Bild auswählen"));
 $Form->set_InputReadonly($FormularName,$InputName_ImageWatermarkImage,false);
-$Form->set_InputOrder($FormularName,$InputName_ImageWatermarkImage,10);
+$Form->set_InputOrder($FormularName,$InputName_ImageWatermarkImage,8);
 $Form->set_InputLabel($FormularName,$InputName_ImageWatermarkImage,"");
 $Form->set_InputSize($FormularName,$InputName_ImageWatermarkImage,0,1);
 $Form->set_InputMultiple($FormularName,$InputName_ImageWatermarkImage,false);
@@ -102,7 +102,7 @@ $Form->set_InputStyleClass($FormularName,$InputName_ImageResize,"mFormText","mFo
 $Form->set_InputSize($FormularName,$InputName_ImageResize,48,48);
 $Form->set_InputDesc($FormularName,$InputName_ImageResize,___("Größe ändern"));
 $Form->set_InputReadonly($FormularName,$InputName_ImageResize,false);
-$Form->set_InputOrder($FormularName,$InputName_ImageResize,4);
+$Form->set_InputOrder($FormularName,$InputName_ImageResize,8);
 $Form->set_InputLabel($FormularName,$InputName_ImageResize,"");
 
 //Resize Size
@@ -112,7 +112,7 @@ $Form->set_InputStyleClass($FormularName,$InputName_ImageResizeSize,"mFormText",
 $Form->set_InputSize($FormularName,$InputName_ImageResizeSize,5,3);
 $Form->set_InputDesc($FormularName,$InputName_ImageResizeSize,___("Neue Größe"));
 $Form->set_InputReadonly($FormularName,$InputName_ImageResizeSize,false);
-$Form->set_InputOrder($FormularName,$InputName_ImageResizeSize,1);
+$Form->set_InputOrder($FormularName,$InputName_ImageResizeSize,8);
 $Form->set_InputLabel($FormularName,$InputName_ImageResizeSize,"");
 
 //existing attachements
@@ -124,7 +124,7 @@ $Form->set_InputDesc($FormularName,$InputName_AttachExisting,___("Anhänge ausw�
 $Form->set_InputReadonly($FormularName,$InputName_AttachExisting,false);
 $Form->set_InputOrder($FormularName,$InputName_AttachExisting,22);
 $Form->set_InputLabel($FormularName,$InputName_AttachExisting,"");
-$Form->set_InputSize($FormularName,$InputName_AttachExisting,0,24);
+$Form->set_InputSize($FormularName,$InputName_AttachExisting,0,11);
 $Form->set_InputMultiple($FormularName,$InputName_AttachExisting,true);
 //add Data
 $Attm_Dirs=getDirectories($tm_nlattachpath) ;
@@ -175,7 +175,7 @@ $Form->set_InputStyleClass($FormularName,$InputName_Title,"mFormText","mFormText
 $Form->set_InputSize($FormularName,$InputName_Title,48,255);
 $Form->set_InputDesc($FormularName,$InputName_Title,___("Titel (z.Bsp. zur Anzeige auf der Webseite)"));
 $Form->set_InputReadonly($FormularName,$InputName_Title,false);
-$Form->set_InputOrder($FormularName,$InputName_Title,1);
+$Form->set_InputOrder($FormularName,$InputName_Title,2);
 $Form->set_InputLabel($FormularName,$InputName_Title,"");
 
 //SubTitel
@@ -185,9 +185,8 @@ $Form->set_InputStyleClass($FormularName,$InputName_TitleSub,"mFormText","mFormT
 $Form->set_InputSize($FormularName,$InputName_TitleSub,48,255);
 $Form->set_InputDesc($FormularName,$InputName_TitleSub,___("Sub-Titel (z.Bsp. zur Anzeige auf der Webseite)"));
 $Form->set_InputReadonly($FormularName,$InputName_TitleSub,false);
-$Form->set_InputOrder($FormularName,$InputName_TitleSub,1);
+$Form->set_InputOrder($FormularName,$InputName_TitleSub,3);
 $Form->set_InputLabel($FormularName,$InputName_TitleSub,"");
-
 
 //Link
 $Form->new_Input($FormularName,$InputName_Link,"text", display($$InputName_Link));
@@ -200,36 +199,37 @@ $Form->set_InputOrder($FormularName,$InputName_Link,7);
 $Form->set_InputLabel($FormularName,$InputName_Link,"");
 
 //Aktiv
-	$Form->new_Input($FormularName,$InputName_Aktiv,"checkbox", 1);
-	$Form->set_InputJS($FormularName,$InputName_Aktiv," onChange=\"flash('submit','#ff0000');\" ");
-	$Form->set_InputDefault($FormularName,$InputName_Aktiv,$$InputName_Aktiv);
-	$Form->set_InputStyleClass($FormularName,$InputName_Aktiv,"mFormText","mFormTextFocus");
-	$Form->set_InputSize($FormularName,$InputName_Aktiv,48,48);
-	$Form->set_InputDesc($FormularName,$InputName_Aktiv,___("Aktiv"));
-	$Form->set_InputReadonly($FormularName,$InputName_Aktiv,false);
-	$Form->set_InputOrder($FormularName,$InputName_Aktiv,4);
-	$Form->set_InputLabel($FormularName,$InputName_Aktiv,"");
+$Form->new_Input($FormularName,$InputName_Aktiv,"checkbox", 1);
+$Form->set_InputJS($FormularName,$InputName_Aktiv," onChange=\"flash('submit','#ff0000');\" ");
+$Form->set_InputDefault($FormularName,$InputName_Aktiv,$$InputName_Aktiv);
+$Form->set_InputStyleClass($FormularName,$InputName_Aktiv,"mFormText","mFormTextFocus");
+$Form->set_InputSize($FormularName,$InputName_Aktiv,48,48);
+$Form->set_InputDesc($FormularName,$InputName_Aktiv,___("Aktiv"));
+$Form->set_InputReadonly($FormularName,$InputName_Aktiv,false);
+$Form->set_InputOrder($FormularName,$InputName_Aktiv,1);
+$Form->set_InputLabel($FormularName,$InputName_Aktiv,"");
 
 //Template?
-	$Form->new_Input($FormularName,$InputName_Template,"checkbox", 1);
-	$Form->set_InputJS($FormularName,$InputName_Template," onChange=\"flash('submit','#ff0000');\" ");
-	$Form->set_InputDefault($FormularName,$InputName_Template,$$InputName_Template);
-	$Form->set_InputStyleClass($FormularName,$InputName_Template,"mFormText","mFormTextFocus");
-	$Form->set_InputSize($FormularName,$InputName_Template,48,48);
-	$Form->set_InputDesc($FormularName,$InputName_Template,___("Aktiv"));
-	$Form->set_InputReadonly($FormularName,$InputName_Template,false);
-	$Form->set_InputOrder($FormularName,$InputName_Template,4);
-	$Form->set_InputLabel($FormularName,$InputName_Template,"");
+$Form->new_Input($FormularName,$InputName_Template,"checkbox", 1);
+$Form->set_InputJS($FormularName,$InputName_Template," onChange=\"flash('submit','#ff0000');\" ");
+$Form->set_InputDefault($FormularName,$InputName_Template,$$InputName_Template);
+$Form->set_InputStyleClass($FormularName,$InputName_Template,"mFormText","mFormTextFocus");
+$Form->set_InputSize($FormularName,$InputName_Template,48,48);
+$Form->set_InputDesc($FormularName,$InputName_Template,___("Aktiv"));
+$Form->set_InputReadonly($FormularName,$InputName_Template,false);
+$Form->set_InputOrder($FormularName,$InputName_Template,1);
+$Form->set_InputLabel($FormularName,$InputName_Template,"");
 
 
 //Massenmail!?
+//Content_Type
 $Form->new_Input($FormularName,$InputName_Massmail,"select", "");
 $Form->set_InputJS($FormularName,$InputName_Massmail," onChange=\"flash('submit','#ff0000');\" ");
 $Form->set_InputDefault($FormularName,$InputName_Massmail,$$InputName_Massmail);
 $Form->set_InputStyleClass($FormularName,$InputName_Massmail,"mFormSelect","mFormSelectFocus");
 $Form->set_InputDesc($FormularName,$InputName_Massmail,___("Mailing-Typ"));
 $Form->set_InputReadonly($FormularName,$InputName_Massmail,false);
-$Form->set_InputOrder($FormularName,$InputName_Massmail,4);
+$Form->set_InputOrder($FormularName,$InputName_Massmail,6);
 $Form->set_InputLabel($FormularName,$InputName_Massmail,"");
 $Form->set_InputSize($FormularName,$InputName_Massmail,0,1);
 $Form->set_InputMultiple($FormularName,$InputName_Massmail,false);
@@ -244,7 +244,7 @@ $Form->set_InputStyleClass($FormularName,$InputName_Descr,"mFormTextarea_Content
 $Form->set_InputSize($FormularName,$InputName_Descr,180,50);
 $Form->set_InputDesc($FormularName,$InputName_Descr,___("Newsletter-Text")." (html)");
 $Form->set_InputReadonly($FormularName,$InputName_Descr,false);
-$Form->set_InputOrder($FormularName,$InputName_Descr,16);
+$Form->set_InputOrder($FormularName,$InputName_Descr,21);
 $Form->set_InputLabel($FormularName,$InputName_Descr,"");
 
 //Content text
@@ -254,7 +254,7 @@ $Form->set_InputStyleClass($FormularName,$InputName_DescrText,"mFormTextarea_Con
 $Form->set_InputSize($FormularName,$InputName_DescrText,180,30);
 $Form->set_InputDesc($FormularName,$InputName_DescrText,___("Newsletter-Text")." (text)");
 $Form->set_InputReadonly($FormularName,$InputName_DescrText,false);
-$Form->set_InputOrder($FormularName,$InputName_DescrText,15);
+$Form->set_InputOrder($FormularName,$InputName_DescrText,20);
 $Form->set_InputLabel($FormularName,$InputName_DescrText,"");
 
 //Summary
@@ -264,7 +264,7 @@ $Form->set_InputStyleClass($FormularName,$InputName_Summary,"mFormTextarea_Conte
 $Form->set_InputSize($FormularName,$InputName_Summary,180,8);
 $Form->set_InputDesc($FormularName,$InputName_Summary,___("Zusammenfassung")." (html)");
 $Form->set_InputReadonly($FormularName,$InputName_Summary,false);
-$Form->set_InputOrder($FormularName,$InputName_Summary,16);
+$Form->set_InputOrder($FormularName,$InputName_Summary,22);
 $Form->set_InputLabel($FormularName,$InputName_Summary,"");
 
 
@@ -321,7 +321,7 @@ $Form->set_InputStyleClass($FormularName,$InputName_TrackImageNew,"mFormText","m
 $Form->set_InputSize($FormularName,$InputName_TrackImageNew,48,48);
 $Form->set_InputDesc($FormularName,$InputName_TrackImageNew,___("neues Bild hochladen")." {IMAGE1}");
 $Form->set_InputReadonly($FormularName,$InputName_TrackImageNew,false);
-$Form->set_InputOrder($FormularName,$InputName_TrackImageNew,11);
+$Form->set_InputOrder($FormularName,$InputName_TrackImageNew,10);
 $Form->set_InputLabel($FormularName,$InputName_TrackImageNew,"");
 
 //Content_Type
@@ -331,7 +331,7 @@ $Form->set_InputDefault($FormularName,$InputName_ContentType,$$InputName_Content
 $Form->set_InputStyleClass($FormularName,$InputName_ContentType,"mFormSelect","mFormSelectFocus");
 $Form->set_InputDesc($FormularName,$InputName_ContentType,___("Format"));
 $Form->set_InputReadonly($FormularName,$InputName_ContentType,false);
-$Form->set_InputOrder($FormularName,$InputName_ContentType,4);
+$Form->set_InputOrder($FormularName,$InputName_ContentType,5);
 $Form->set_InputLabel($FormularName,$InputName_ContentType,"");
 $Form->set_InputSize($FormularName,$InputName_ContentType,0,1);
 $Form->set_InputMultiple($FormularName,$InputName_ContentType,false);
@@ -347,7 +347,7 @@ $Form->set_InputStyleClass($FormularName,$InputName_RCPTName,"mFormText","mFormT
 $Form->set_InputSize($FormularName,$InputName_RCPTName,48,256);
 $Form->set_InputDesc($FormularName,$InputName_RCPTName,___("Erscheint als Empfängername in der E-Mail"));
 $Form->set_InputReadonly($FormularName,$InputName_RCPTName,false);
-$Form->set_InputOrder($FormularName,$InputName_RCPTName,2);
+$Form->set_InputOrder($FormularName,$InputName_RCPTName,4);
 $Form->set_InputLabel($FormularName,$InputName_RCPTName,"");
 
 //submit button

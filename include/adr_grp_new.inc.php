@@ -62,6 +62,10 @@ if ($set=="save") {
 	}
 
 } else {
+	$$InputName_Aktiv=1;
+	$$InputName_Name=___("Neue Gruppe");
+	$$InputName_PublicName=___("Neue Gruppe");
+	$$InputName_Descr=___("Neue Gruppe");
 	require_once (TM_INCLUDEPATH."/adr_grp_form.inc.php");
 }
 ?>

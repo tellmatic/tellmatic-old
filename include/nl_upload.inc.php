@@ -300,6 +300,7 @@
 	//$SUBSCRIBE_URL="#";
 	//$SUBSCRIBE="<a href=\"".$SUBSCRIBE_URL."\" target=\"_self\">";
 
+	//summary parsen....
 	// ---> $body_p
 	//new Template
 	$_Tpl_NL=new tm_Template();
@@ -335,6 +336,8 @@
 	$_Tpl_NL->setParseValue("F7","");
 	$_Tpl_NL->setParseValue("F8","");
 	$_Tpl_NL->setParseValue("F9","");
+	$_Tpl_NL->setParseValue("MEMO","");
+	
 	//title /subtitle, unpersonalisiert!
 	$_Tpl_NL->setParseValue("TITLE",$title);
 	$_Tpl_NL->setParseValue("TITLE_SUB",$title_sub);

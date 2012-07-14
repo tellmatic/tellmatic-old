@@ -40,7 +40,7 @@ $MENU=Array(
 										'name' => date("Y-m-d H:i:s"),
 										'description' => ___("Aktuelle Meldungen ein-/ausblenden"),
 										'text' => date("Y-m-d H:i:s"),
-										'icon' => 'information.png',
+										'icon' => 'exclamation.png',
 										'target' => '_self',
 										'indent' => '0',
 										'admin' => '0',
@@ -333,6 +333,19 @@ $MENU=Array(
 									1 => Array(
 										'aktiv'=>1,
 										'js' => 0,
+										'link' => $_SERVER["PHP_SELF"]."?act=bounce_it",
+										'name' => ___("auto-Bounce"),
+										'description' => ___("automatisches Bouncemanagement"),
+										'text' => ___("Hier starten Sie das automatische Bouncemanagement manuell"),
+										'icon' => 'sport_soccer.png',
+										'target' => '_self',
+										'indent' => '16',
+										'admin' => '0',
+										'manager' => '1',
+										),
+									2 => Array(
+										'aktiv'=>1,
+										'js' => 0,
 										'link' => $_SERVER["PHP_SELF"]."?act=adr_clean",
 										'name' => ___("Datenbank bereinigen"),
 										'description' => ___("Datenbank bereinigen"),
@@ -343,7 +356,21 @@ $MENU=Array(
 										'admin' => '0',
 										'manager' => '1',
 										),
-									2 => Array(
+									3 => Array(
+										'aktiv'=>1,
+										'js' => 0,
+										'link' => $_SERVER["PHP_SELF"]."?act=check_it",
+										'name' => ___("Prüfen"),
+										'description' => ___("E-Mail-Adressen prüfen"),
+										'text' => ___("markierte E-Mail-Adressen prüfen"),
+										'icon' => 'spellcheck.png',
+										'target' => '_self',
+										'indent' => '16',
+										'admin' => '0',
+										'manager' => '1',
+										),
+
+									4 => Array(
 										'aktiv'=>1,
 										'js' => 0,
 										'link' => $_SERVER["PHP_SELF"]."?act=bl_list",
@@ -356,7 +383,7 @@ $MENU=Array(
 										'admin' => '0',
 										'manager' => '1',
 										),
-									3 => Array(
+									5 => Array(
 										'aktiv'=>1,
 										'js' => 0,
 										'link' => $_SERVER["PHP_SELF"]."?act=bl_new",
@@ -369,7 +396,7 @@ $MENU=Array(
 										'admin' => '0',
 										'manager' => '1',
 										),
-									4 => Array(
+									6 => Array(
 										'aktiv'=>1,
 										'js' => 1,
 										'link' => $tm_URL_FE."/unsubscribe.php",
@@ -418,17 +445,19 @@ $MENU=Array(
 										),
 									2 => Array(
 										'aktiv'=>1,
-										'js' => 1,
-										'link' => $tm_URL_FE."/include/send_it.php",
+										'js' => 0,
+										'link' => $_SERVER["PHP_SELF"]."?act=send_it",
 										'name' => ___("manueller Versand"),
 										'description' => ___("manueller Versand"),
 										'text' => ___("Hier versenden Sie Ihre Newsletter manuell"),
 										'icon' => 'email_go.png',
-										'target' => '_blank',
+										'target' => '_self',
 										'indent' => '0',
 										'admin' => '0',
 										'manager' => '1',
 										),
+
+
 								),
 						),
 					7 => Array(

@@ -70,11 +70,26 @@ Installation:
 	call admin/index.php, enter username and password at login page, ready, enjoy mailing :)
 
 	To send via cronjob, call http://[user:passwort]@[domain]/[tellmatic-installdir]/include/send_it.php with wget (add username and pw), or use php cli (recommended!)
-		*/1 * * * * /path/to/php-cli-binary /path/to/include/send_it.php
+		*/5 * * * * /path/to/php-cli-binary /path/to/include/send_it.php
 	Sending Newsletters at a specific time is only possible with cronjobs! If you can't create Cronjobs on your Server, you have to use manual sending.
 	
+	Since Release 1.0.8.7 Tellmatic includes some Scripts for auto-bouncemanagemewnt and address validation.
+	These Scripts are als meant to run via a cronjob.
+	Do the cron stuff too for these scripts, create a cronjob and run script every few minutes or hours.
+	
+	* include/bounce_it.php: auto-bouncemanagement, set up in gui 'admin' -> 'settings' and create a cronjob to run it e.g. every 2 hours (don't set the limits too high). Edit include Path at top of file and remove the exit command!
+	You can run this Script manually via Browser from the Tellmatic menu in the 'management' section
+	 	
+	* include/check_it.php: auto-address validation, set up in gui 'admin' -> 'settings' and create a cronjob to run it e.g. every 10 minutes (don't set the limits too high). Edit include Path at top of file and remove the exit command!
+	You also can run this Script manually via Browser from the Tellmatic menu in the 'management' section. 
+	 	
+	
 For questions and suggestions please visit www.tellmatic.org and read doc and faq or write to the public forum.
+I will not answer question via e-mail without a donation, use the forum instead.
+
+For support please visit http://www.tellmatic.org/support
 
 Important: 1and1 or Strato-Users should watch the forum, it contains workarounds to get tellmatic running on such "special configured" hosts.
+
 
 EOF

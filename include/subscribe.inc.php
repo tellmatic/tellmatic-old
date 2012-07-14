@@ -28,10 +28,10 @@ $doptin=getVar("doptin");//opt in click, bestaetigung, aus email f. double optin
 $email=getVar("email");
 $touch=getVar("touch");//touch=1 wenn erster kontakt und benutzer prueft gegen....
 //$adr_id=getVar("adr_id");
-$c=getVar("code");//recheck code
+$code=getVar("code");//recheck code
 $check=true;
 //opt in click?
-if ($doptin==1 && !empty($c) && !empty($email)) { // && checkEmailAdr($email,$EMailcheck_Intern) //&& !empty($frm_id) rausgenommen!
+if ($doptin==1 && !empty($code) && !empty($email)) { // && checkEmailAdr($email,$EMailcheck_Intern) //&& !empty($frm_id) rausgenommen!
 	//adresse pruefen:
 	$_Tpl_FRM=new tm_Template();
 	$_Tpl_FRM->setTemplatePath($tm_formpath);
@@ -41,12 +41,12 @@ if ($doptin==1 && !empty($c) && !empty($email)) { // && checkEmailAdr($email,$EM
 		//adr suchen, code vergleichen, wenn ok, weiter, sonst ...... leere seite! -?
 		$ADDRESS=new tm_ADR();
 		$search['email']=$email;
-		$search['code']=$c;
+		$search['code']=$code;
 		$search['email_exact_match']=true;
 		//harte pruefung, nur wenn noch nicht bestaetigt:	$search['status']=5;
 		//limit=1: adr holen
 		$ADR=$ADDRESS->getAdr(0,0,1,0,$search);
-		if (!empty($ADR[0]['id']) && $ADR[0]['code']==$c) {
+		if (!empty($ADR[0]['id']) && $ADR[0]['code']==$code) {
 			//ja, code muesste man nicht nochmal pruefen, wird ja in search bereits in der db gesucht....
 			//setstatus adr_id = 3
 			$ADDRESS->setStatus($ADR[0]['id'],3);
@@ -133,6 +133,7 @@ if ($frm_id>0 && $doptin!=1) {
 			$created=date("Y-m-d H:i:s");
 			//$date_sub=strftime("%d-%m-%Y %H:%M:%S",mk_microtime($created));
 			$date_sub=$created;
+			$date_sub=date(TM_NL_DATEFORMAT);//used in template and email, formatted
 			$author=$FRM[0]['id'];
 			//double optin
 			if ($FRM[0]['double_optin']==1) {
@@ -363,7 +364,7 @@ if ($frm_id>0 && $doptin!=1) {
 					//SUBSCRIBE ... = link zu subscribe.php , doptin=1, adr_id, code!=$c fid !!
 					//EMAIL
 					//CLOSELINK
-					$SUBSCRIBE_URL=$tm_URL_FE."/subscribe.php?doptin=1&email=".$email."&fid=".$frm_id."&c=".$code;
+					$SUBSCRIBE_URL=$tm_URL_FE."/subscribe.php?doptin=1&amp;email=".$email."&amp;fid=".$frm_id."&amp;code=".$code;
 					$SUBSCRIBE="<a href=\"".$SUBSCRIBE_URL."\" target=\"_blank\">";
 
 					$Form_Filename_O="/Form_".$frm_id."_o.html";//email wenn doubleoptin

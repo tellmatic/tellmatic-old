@@ -68,6 +68,10 @@ $$InputName_GroupsMerge=getVar($InputName_GroupsMerge);
 $InputName_ECheckImport="check_mail_import";//
 $$InputName_ECheckImport=getVar($InputName_ECheckImport);
 
+//mark recheck
+$InputName_MarkRecheck="mark_recheck";//
+$$InputName_MarkRecheck=getVar($InputName_MarkRecheck);
+
 //usr limit
 $InputName_Limit="import_limit_user";//
 $$InputName_Limit=getVar($InputName_Limit);
@@ -167,6 +171,10 @@ if ($set=="import") {
 			$IMPORT_MESSAGE.= " ".___("Keine Änderung");
 		}
 
+		if ($mark_recheck==1) {
+			$IMPORT_MESSAGE.="<br>".tm_icon("spellcheck.png",___("Adressen werden zur automatischen Prüfung vorgemerkt."));
+			$IMPORT_MESSAGE.= "&nbsp;".___("Adressen werden zur automatischen Prüfung vorgemerkt.");
+		}
 		if ($check_double==1) {
 			$IMPORT_MESSAGE.="<br>".tm_icon("key_go.png",___("Adressen werden auf Eindeutigkeit geprüft."));
 			$IMPORT_MESSAGE.= "&nbsp;".___("Adressen werden auf Eindeutigkeit geprüft.");
@@ -390,8 +398,8 @@ if ($set=="import") {
 		$idouble=0;
 		$idelete=0;
 		$iblacklist=0;
+		srand((double)microtime()*1000000);#aus der schleife rausgenommen
 		for ($i=0;$i<$lines;$i++) {
-			srand((double)microtime()*1000000);
 			$code=rand(111111,999999);
 			//eintragen des datensatzes
 			if (isset($addr[$i]['email'])) {
@@ -463,6 +471,9 @@ if ($set=="import") {
 								"f9"=>$addr[$i]['f9']
 								),
 								$all_adr_grp);
+								if ($mark_recheck==1) {
+									$ADDRESS->markRecheck($ADR[0]['id'],1);
+								}
 								$IMPORT_LOG.="<br>".sprintf(___("Zeile %s: E-Mail %s existiert Bereits und wurde aktualisiert und ggf. in neue Gruppen eingetragen."),($import_offset_user+$i+1),"<em>".$addr[$i]['email']."</em>");
 							//wenn status_ex >0 dann aendern! status fuer bestehende adressen
 							if ($status_ex>0) {
@@ -507,7 +518,7 @@ if ($set=="import") {
 						//und nur einfuegen wenn nicht geloescht werden soll, ne, is klar!
 						if ($delete != 1 && !empty($adr_grp)) {
 							//wenn adresse noch nicht existiert , neu anlegen
-							$ADDRESS->addAdr(Array(
+							$new_adr_id=$ADDRESS->addAdr(Array(
 								"email"=>$addr[$i]['email'],
 								"aktiv"=>$aktiv_new,
 								"created"=>$created,
@@ -527,6 +538,9 @@ if ($set=="import") {
 								"f9"=>$addr[$i]['f9']
 								),
 								$new_adr_grp);
+								if ($mark_recheck==1) {
+									$ADDRESS->markRecheck($new_adr_id,1);
+								}
 								$IMPORT_LOG.="<br>".sprintf(___("Zeile %s: E-Mail %s  wurde hinzugefügt und in gewählten Gruppen eingetragen."),($import_offset_user+$i+1),"<em>".$addr[$i]['email']."</em>");
 							$iok++;
 						} // ! delete

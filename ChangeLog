@@ -1,3 +1,377 @@
+2010-02-25 Thursday 16:07  mcms09
+
+	Changed:
+		ChangeLog (1.14), "Exp", lines: +367 -0
+
+	changelog f. 1087
+
+2010-02-25 Thursday 15:36  mcms09
+
+	Changed:
+		include/nl_new.inc.php (1.11), "Exp", lines: +1 -1
+
+	set defaults
+
+2010-02-25 Thursday 15:34  mcms09
+
+	Changed:
+		locale/mkpo.sh (1.5), "Exp", lines: +2 -2
+
+	do all langs
+
+2010-02-25 Thursday 15:34  mcms09
+
+	Changed:
+		js/tellmatic.js (1.8), "Exp", lines: +64 -8
+
+	check adr list and adr clean forms
+
+2010-02-25 Thursday 15:33  mcms09
+
+	Changed:
+		include/install/install_examples.inc.php (1.9), "Exp", lines: +8 -1
+		include/install/install_install.inc.php (1.12), "Exp", lines: +20 -5
+
+	new parameters
+
+2010-02-25 Thursday 15:33  mcms09
+
+	Changed:
+		include/install/install_conf_sql.inc.php (1.19), "Exp", lines: +16 -0
+
+	new sql
+
+2010-02-25 Thursday 15:32  mcms09
+
+	Changed:
+		include/install/install_check_pre.inc.php (1.6), "Exp", lines: +6 -5
+
+	safemodeis only info, check if admin/tmp is writeable
+
+2010-02-25 Thursday 15:31  mcms09
+
+	Changed:
+		include/install/install_check_db.inc.php (1.5), "Exp", lines: +1 -1
+
+	removed empty string for translation....
+
+2010-02-25 Thursday 15:31  mcms09
+
+	Changed:
+		include/unsubscribe.inc.php (1.7), "Exp", lines: +47 -19
+
+	check for captcha? send confirmation?
+
+2010-02-25 Thursday 15:28  mcms09
+
+	Changed:
+		include/tm_version.inc.php (1.9), "Exp", lines: +1 -1
+
+	1.0.8.7
+
+2010-02-25 Thursday 15:28  mcms09
+
+	Changed:
+		include/tm_lib.inc.php (1.19), "Exp", lines: +12 -2
+
+	default for USE_TMP_HTML_FILES is now TRUE
+
+2010-02-25 Thursday 15:27  mcms09
+
+	Changed:
+		include/tellmatic.sql (1.5), "Exp", lines: +54 -49
+
+	new sql,from dev db
+
+2010-02-25 Thursday 15:27  mcms09
+
+	Changed:
+		include/subscribe.inc.php (1.9), "Exp", lines: +6 -5
+
+	check for captcha, c becomes code
+
+2010-02-25 Thursday 15:25  mcms09
+
+	Changed:
+		include/status.inc.php (1.5), "Exp", lines: +11 -0
+
+	show small summary
+
+2010-02-25 Thursday 15:25  mcms09
+
+	Changed:
+		include/send_it.php (1.21), "Exp", lines: +52 -22
+
+	parse {MEMO}, corrected errorstatus for history, add memo to adr if
+	failed, check if adr should be skipped
+
+2010-02-25 Thursday 15:24  mcms09
+
+	Changed:
+		include/nl_upload.inc.php (1.7), "Exp", lines: +3 -0
+
+	parse {MEMO}
+
+2010-02-25 Thursday 15:23  mcms09
+
+	Changed:
+		include/form_new.inc.php (1.6), "Exp", lines: +10 -1
+		include/nl_grp_new.inc.php (1.4), "Exp", lines: +3 -0
+
+	set defaults
+
+2010-02-25 Thursday 15:22  mcms09
+
+	Changed:
+		include/form_form.inc.php (1.6), "Exp", lines: +14 -13
+		include/nl_form.inc.php (1.12), "Exp", lines: +35 -35
+
+	tab index
+
+2010-02-25 Thursday 15:22  mcms09
+
+	Changed:
+		include/adr_search.inc.php (1.5), "Exp", lines: +10 -1
+		include/adr_search_form.inc.php (1.5), "Exp", lines: +35 -13
+
+	filter aktiv
+
+2010-02-25 Thursday 15:21  mcms09
+
+	Changed:
+		include/adr_list_legende.inc.php (1.5), "Exp", lines: +2 -3
+
+	new icon for recheck
+
+2010-02-25 Thursday 15:21  mcms09
+
+	Changed:
+		include/adr_list_form_head.inc.php (1.2), "Exp", lines: +8 -5
+
+	filter aktiv, deactivate and mark addresses for recheck
+
+2010-02-25 Thursday 15:19  mcms09
+
+	Changed:
+		include/adr_grp_new.inc.php (1.4), "Exp", lines: +4 -0
+		include/adr_new.inc.php (1.6), "Exp", lines: +3 -0
+
+	set defaults
+
+2010-02-25 Thursday 15:18  mcms09
+
+	Changed:
+		include/adr_edit.inc.php (1.4), "Exp", lines: +3 -0
+		include/adr_form.inc.php (1.7), "Exp", lines: +2 -0
+
+	filter aktiv
+
+2010-02-25 Thursday 15:17  mcms09
+
+	Changed:
+		include/adr_clean_form.inc.php (1.5), "Exp", lines: +3 -3
+		include/adr_import.inc.php (1.8), "Exp", lines: +16 -2
+		include/adr_import_form.inc.php (1.4), "Exp", lines: +29 -8
+
+	mark addresses for recheck
+
+2010-02-25 Thursday 15:17  mcms09
+
+	Changed:
+		include/adr_clean.inc.php (1.5), "Exp", lines: +37 -4
+		include/adr_list.inc.php (1.9), "Exp", lines: +113 -5
+
+	show summary,deactivated and marked addresses for recheck
+
+2010-02-25 Thursday 15:16  mcms09
+
+	Changed:
+		include/adm_set.inc.php (1.9), "Exp", lines: +98 -11
+		include/adm_set_form.inc.php (1.6), "Exp", lines: +452 -29
+
+	new options for bouncemanagement, checkit, unsubscribe etc
+
+2010-02-25 Thursday 15:15  mcms09
+
+	Changed:
+		include/Stats.inc.php (1.5), "Exp", lines: +2 -2
+
+	status new should have icon new
+
+2010-02-25 Thursday 15:15  mcms09
+
+	Changed:
+		include/Menu.inc.php (1.9), "Exp", lines: +36 -7
+
+	link to check_it,bounce_it
+
+2010-02-25 Thursday 15:14  mcms09
+
+	Changed:
+		include/Main.inc.php (1.8), "Exp", lines: +4 -1
+
+	check_it, bounce_it, send_it ; relays pages
+
+2010-02-25 Thursday 15:14  mcms09
+
+	Changed:
+		include/Index.inc.php (1.7), "Exp", lines: +1 -1
+
+	Message if DEMO === true
+
+2010-02-25 Thursday 15:13  mcms09
+
+	Changed:
+		include/Functions.inc.php (1.20), "Exp", lines: +34 -19
+
+	fixed warning for HTTP_X_FORWARDED_FOR, improved validate email
+	function
+
+2010-02-25 Thursday 15:12  mcms09
+
+	Changed:
+		include/Foot.inc.php (1.5), "Exp", lines: +1 -1
+
+	footer, copyleft
+
+2010-02-25 Thursday 15:12  mcms09
+
+	Changed:
+		include/Errorhandling.inc.php (1.2), "Exp", lines: +15 -1
+
+	do not show notices...
+
+2010-02-25 Thursday 15:11  mcms09
+
+	Changed:
+		include/Class_DB.inc.php (1.6), "Exp", lines: +5 -2
+
+	add debug sql output to global $_MAIN_MESSAGE
+
+2010-02-25 Thursday 15:11  mcms09
+
+	Changed:
+		include/Class_CFG.inc.php (1.5), "Exp", lines: +82 -3
+
+	new options for bouncemanagement, checkit, unsubscribe etc
+
+2010-02-25 Thursday 15:10  mcms09
+
+	Changed:
+		include/Class_Adr.inc.php (1.8), "Exp", lines: +103 -19
+
+	markRecheck(), filter recheck, filter aktiv, filter multiple status
+
+2010-02-25 Thursday 15:09  mcms09
+
+	Changed:
+		css/tellmatic.css (1.3), "Exp", lines: +6 -0
+
+	style for summary in adr list etc
+
+2010-02-25 Thursday 15:09  mcms09
+
+	Changed:
+		CHANGES (1.20), "Exp", lines: +101 -47
+
+	CHANGES for 1087
+
+2010-02-25 Thursday 15:08  mcms09
+
+	Changed:
+		api_example.php (1.4), "Exp", lines: +2 -0
+		api_example_dev_01.php (1.2), "Exp", lines: +2 -2
+		api_example_dev_02.php (1.2), "Exp", lines: +3 -3
+
+	fixed some stuff
+
+2010-02-25 Thursday 15:05  mcms09
+
+	Changed:
+		locale/tellmatic-de.po (1.5), "Exp", lines: +5568 -9752
+		locale/tellmatic-en.po (1.7), "Exp", lines: +1528 -6
+		locale/tellmatic-es.po (1.5), "Exp", lines: +5507 -9671
+		locale/tellmatic-it.po (1.5), "Exp", lines: +5507 -9671
+		locale/tellmatic-nl.po (1.3), "Exp", lines: +5264 -6608
+		locale/tellmatic-pt.po (1.3), "Exp", lines: +5507 -9671
+
+	added new phrases
+
+2010-02-25 Thursday 15:04  mcms09
+
+	Added:
+		tpl/Unsubscribe_mail.html (1.1)
+
+	template for unsubscribe confirmation email
+
+2010-02-25 Thursday 15:03  mcms09
+
+	Added:
+		include/send_it.inc.php (1.1)
+
+	relay page for send_it.php manual delivery
+
+2010-02-25 Thursday 15:02  mcms09
+
+	Added:
+		include/check_it.inc.php (1.1)
+		include/check_it.php (1.1)
+
+	scripts for autmatic address verification
+
+2010-02-25 Thursday 15:02  mcms09
+
+	Added:
+		include/bounce_it.inc.php (1.1)
+		include/bounce_it.php (1.1)
+
+	scripts for autmatic bouncemanagement
+
+2010-02-25 Thursday 15:00  mcms09
+
+	Changed:
+		INSTALL.DE (1.8), "Exp", lines: +20 -5
+		INSTALL.EN (1.7), "Exp", lines: +16 -1
+
+	install instructions for 1087
+
+2010-02-25 Thursday 15:00  mcms09
+
+	Changed:
+		UPDATE (1.19), "Exp", lines: +57 -4
+
+	update instructions for 1087
+
+2010-02-25 Thursday 14:59  mcms09
+
+	Changed:
+		README (1.5), "Exp", lines: +9 -9
+
+	readme for 1087
+
+2010-02-25 Thursday 14:59  mcms09
+
+	Added:
+		api_example_dev_03.php (1.1)
+
+	new api example:show newsletters
+
+2010-02-25 Thursday 14:58  mcms09
+
+	Added:
+		api_example_dev_04.php (1.1)
+
+	new api example:show newsletter archive
+
+2010-01-12 Tuesday 05:52  tag r-1-0-8-6
+
+2010-01-12 Tuesday 05:52  mcms09
+
+	Changed:
+		ChangeLog (1.13), "Exp", lines: +262 -0
+
+	changelog
+
 2010-01-12 Tuesday 05:49  mcms09
 
 	Changed:

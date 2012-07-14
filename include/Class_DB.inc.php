@@ -51,7 +51,7 @@ class tm_DB extends DB_Sql
  * Copyright (c) 1998-2000 NetUSE AG
  *                    Boris Erdmann, Kristian Koehntopp
  *
- * $Id: Class_DB.inc.php,v 1.5 2009/01/30 13:29:11 mcms09 Exp $
+ * $Id: Class_DB.inc.php,v 1.6 2010/02/25 14:11:59 mcms09 Exp $
  *
  */ 
 
@@ -149,7 +149,10 @@ class DB_Sql {
 
   /* public: perform a query */
   function query($Query_String) {
-	if (DEBUG_SQL) echo $Query_String;
+	if (DEBUG_SQL) {
+		global $_MAIN_MESSAGE;
+		$_MAIN_MESSAGE.="<br><em>".display($Query_String)."</em><br>";
+	}
     /* No empty queries, please, since PHP4 chokes on them. */
     if ($Query_String == "")
       /* The empty query string is passed on from the constructor,

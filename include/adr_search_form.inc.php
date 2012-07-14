@@ -26,7 +26,7 @@ $Form->set_FormJS($FormularName," onSubmit=\"switchSection('div_loader');\" ");
 //add a Description
 $Form->set_FormDesc($FormularName,___("Adressen suchen und filtern"));
 $Form->new_Input($FormularName,"act", "hidden", $action);
-$Form->new_Input($FormularName,"set", "hidden", "search");
+$Form->new_Input($FormularName,"set_search", "hidden", "search");
 
 //////////////////
 //add inputfields and buttons....
@@ -48,7 +48,7 @@ $Form->set_InputStyleClass($FormularName,$InputName_F,"mFormText","mFormTextFocu
 $Form->set_InputSize($FormularName,$InputName_F,12,256);
 $Form->set_InputDesc($FormularName,$InputName_F,___("Suche in den Feldern F0-F9"));
 $Form->set_InputReadonly($FormularName,$InputName_F,false);
-$Form->set_InputOrder($FormularName,$InputName_F,1);
+$Form->set_InputOrder($FormularName,$InputName_F,2);
 $Form->set_InputLabel($FormularName,$InputName_F,"F0-F9<br>");
 
 
@@ -59,7 +59,7 @@ $Form->set_InputDefault($FormularName,$InputName_Group,$adr_grp_id);
 $Form->set_InputStyleClass($FormularName,$InputName_Group,"mFormSelect","mFormSelectFocus");
 $Form->set_InputDesc($FormularName,$InputName_Group,___("Suche nach Gruppenzugehörigkeit"));
 $Form->set_InputReadonly($FormularName,$InputName_Group,false);
-$Form->set_InputOrder($FormularName,$InputName_Group,6);
+$Form->set_InputOrder($FormularName,$InputName_Group,3);
 $Form->set_InputLabel($FormularName,$InputName_Group,"Gruppe<br>");
 $Form->set_InputSize($FormularName,$InputName_Group,0,1);
 $Form->set_InputMultiple($FormularName,$InputName_Group,false);
@@ -104,7 +104,7 @@ $Form->set_InputDefault($FormularName,$InputName_Status,$$InputName_Status);
 $Form->set_InputStyleClass($FormularName,$InputName_Status,"mFormSelect","mFormSelectFocus");
 $Form->set_InputDesc($FormularName,$InputName_Status,___("Suche nach Adress-Status"));
 $Form->set_InputReadonly($FormularName,$InputName_Status,false);
-$Form->set_InputOrder($FormularName,$InputName_Status,6);
+$Form->set_InputOrder($FormularName,$InputName_Status,4);
 $Form->set_InputLabel($FormularName,$InputName_Status,___("Status")."<br>");
 $Form->set_InputSize($FormularName,$InputName_Status,0,1);
 $Form->set_InputMultiple($FormularName,$InputName_Status,false);
@@ -118,6 +118,22 @@ for ($scc=1; $scc<=$sc; $scc++)//0
 }
 
 
+//Aktiv
+$Form->new_Input($FormularName,$InputName_Aktiv,"select", "");
+$Form->set_InputJS($FormularName,$InputName_Aktiv," onChange=\"flash('submit','#ff0000');\" ");
+$Form->set_InputDefault($FormularName,$InputName_Aktiv,$$InputName_Aktiv);//$s_aktiv
+$Form->set_InputStyleClass($FormularName,$InputName_Aktiv,"mFormSelect","mFormSelectFocus");
+$Form->set_InputDesc($FormularName,$InputName_Aktiv,___("Nach aktiven/deaktivierten Adressen filtern"));
+$Form->set_InputReadonly($FormularName,$InputName_Aktiv,false);
+$Form->set_InputOrder($FormularName,$InputName_Aktiv,5);
+$Form->set_InputLabel($FormularName,$InputName_Aktiv,___("Aktiv")."<br>");
+$Form->set_InputSize($FormularName,$InputName_Aktiv,0,1);
+$Form->set_InputMultiple($FormularName,$InputName_Aktiv,false);
+//add Data
+$Form->add_InputOption($FormularName,$InputName_Aktiv,1,"".___("Aktiv"));
+$Form->add_InputOption($FormularName,$InputName_Aktiv,0,"".___("Inaktiv"));
+$Form->add_InputOption($FormularName,$InputName_Aktiv,"","".___("Alle"));
+
 //Limit
 $Form->new_Input($FormularName,$InputName_Limit,"select", "");
 $Form->set_InputJS($FormularName,$InputName_Limit," onChange=\"flash('submit','#ff0000');\" ");
@@ -125,7 +141,7 @@ $Form->set_InputDefault($FormularName,$InputName_Limit,$limit);
 $Form->set_InputStyleClass($FormularName,$InputName_Limit,"mFormSelect","mFormSelectFocus");
 $Form->set_InputDesc($FormularName,$InputName_Limit,___("Maximale Anzahl Einträge die auf einmal angezeigt werden."));
 $Form->set_InputReadonly($FormularName,$InputName_Limit,false);
-$Form->set_InputOrder($FormularName,$InputName_Limit,6);
+$Form->set_InputOrder($FormularName,$InputName_Limit,10);
 $Form->set_InputLabel($FormularName,$InputName_Limit,___("zeige max.")."<br>");
 $Form->set_InputSize($FormularName,$InputName_Limit,0,1);
 $Form->set_InputMultiple($FormularName,$InputName_Limit,false);
@@ -135,6 +151,7 @@ $Form->add_InputOption($FormularName,$InputName_Limit,10,"10 ".___("Adressen"));
 $Form->add_InputOption($FormularName,$InputName_Limit,25,"25 ".___("Adressen"));
 $Form->add_InputOption($FormularName,$InputName_Limit,50,"50 ".___("Adressen"));
 $Form->add_InputOption($FormularName,$InputName_Limit,100,"100 ".___("Adressen"));
+$Form->add_InputOption($FormularName,$InputName_Limit,250,"250 ".___("Adressen"));
 
 
 //SaveSearch
@@ -144,7 +161,7 @@ $Form->set_InputJS($FormularName,$InputName_SaveSearch," onChange=\"flash('submi
 $Form->set_InputStyleClass($FormularName,$InputName_SaveSearch,"mFormText","mFormTextFocus");
 $Form->set_InputDesc($FormularName,$InputName_SaveSearch,___("Suchparameter speichern"));
 $Form->set_InputReadonly($FormularName,$InputName_SaveSearch,false);
-$Form->set_InputOrder($FormularName,$InputName_SaveSearch,1);
+$Form->set_InputOrder($FormularName,$InputName_SaveSearch,11);
 $Form->set_InputLabel($FormularName,$InputName_SaveSearch,___("Suche speichern")."<br>");
 
 //Sort-multi - 0
@@ -255,8 +272,8 @@ $Form->render_Form($FormularName);
 /*DISPLAY*/
 $_MAIN_OUTPUT.= $Form->FORM[$FormularName]['head'];
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName]['act']['html'];
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName]['set']['html'];
-$_MAIN_OUTPUT.= "<table border=0>";
+$_MAIN_OUTPUT.= $Form->INPUT[$FormularName]['set_search']['html'];
+$_MAIN_OUTPUT.= "<table style=\"border: 1px dashed #cccccc; width:100%;\">";
 $_MAIN_OUTPUT.= "<tr>";
 $_MAIN_OUTPUT.= "<td valign=top>";
 $_MAIN_OUTPUT.= tm_icon("email.png",___("Suche nach E-Mail-Adresse")).$Form->INPUT[$FormularName][$InputName_Name]['html'];
@@ -264,14 +281,14 @@ $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "<td valign=top colspan=1>";
 $_MAIN_OUTPUT.= tm_icon("textfield.png",___("Suche in F0-F9")).$Form->INPUT[$FormularName][$InputName_F]['html'];
 $_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "<td valign=top>";
-$_MAIN_OUTPUT.= tm_icon("lightbulb.png",___("Filtern nach Status")).$Form->INPUT[$FormularName][$InputName_Status]['html'];
-$_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "<td valign=top colspan=1>";
 $_MAIN_OUTPUT.= tm_icon("group.png",___("Filtern nach Gruppe")).$Form->INPUT[$FormularName][$InputName_Group]['html'];
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "<td valign=top colspan=1>";
-$_MAIN_OUTPUT.= tm_icon("bullet_wrench.png",___("Zeige maximal N Adressen pro Seite")).$Form->INPUT[$FormularName][$InputName_Limit]['html'];
+$_MAIN_OUTPUT.= tm_icon("lightbulb.png",___("Filtern nach Status")).$Form->INPUT[$FormularName][$InputName_Status]['html'];
+$_MAIN_OUTPUT.= "</td>";
+$_MAIN_OUTPUT.= "<td valign=top colspan=1>";
+$_MAIN_OUTPUT.= tm_icon("tick.png",___("Aktiv"))."&nbsp;".tm_icon("cancel.png",___("Deaktiviert"))."&nbsp;".$Form->INPUT[$FormularName][$InputName_Aktiv]['html'];
 $_MAIN_OUTPUT.= "</td>";
 
 $_MAIN_OUTPUT.= "<td valign=top colspan=1>";
@@ -282,10 +299,15 @@ $_MAIN_OUTPUT.= "</tr>";
 $_MAIN_OUTPUT.= "<tr>";
 
 $_MAIN_OUTPUT.= "<td valign=top colspan=1>";
+$_MAIN_OUTPUT.= "<td valign=top colspan=1>";
+$_MAIN_OUTPUT.= tm_icon("bullet_wrench.png",___("Zeige maximal N Adressen pro Seite")).$Form->INPUT[$FormularName][$InputName_Limit]['html'];
+$_MAIN_OUTPUT.= "</td>";
+
+$_MAIN_OUTPUT.= "<td valign=top colspan=1>";
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_SaveSearch]['html'];
 $_MAIN_OUTPUT.= "</td>";
 
-$_MAIN_OUTPUT.= "<td valign=bottom colspan=5>";
+$_MAIN_OUTPUT.= "<td valign=bottom colspan=3>";
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Submit]['html'];
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Reset]['html'];
 $_MAIN_OUTPUT.= "&nbsp;";

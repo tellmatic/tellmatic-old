@@ -46,7 +46,7 @@ if (ini_get("register_globals")=='on') {
 	#$ERR_MESSAGE.="<br>".sprintf(___("Register Globals ist %s."),"<font color=\"green\">OFF</font>");
 }
 if (!ini_get("safe_mode")=='off') {
-	$ERR_MESSAGE.="<br>".___("WARNUNG!")." ".sprintf(___("Safe Mode ist %s."),"<font color=\"red\">OFF</font>");
+	$ERR_MESSAGE.="<br>".___("INFO!")." ".sprintf(___("Safe Mode ist %s."),"<font color=\"blue\">OFF</font>");
 } else {
 	#$ERR_MESSAGE.="<br>".sprintf(___("Safe Mode ist %s."),"<font color=\"green\">ON</font>");
 }
@@ -94,6 +94,11 @@ if ($check) {
 /***********************************************************/
 //check dir permissions
 /***********************************************************/
+	if (!is_writeable(TM_PATH."/admin/tmp")) {
+		$ERR_MESSAGE.="<br>".sprintf(___("%s ist Schreibgeschützt. Weitere Details finden Sie den den Dateien README und INSTALL"),TM_PATH."/admin/tmp")."";
+		$check=false;
+	}
+	
 	if (!is_writeable(TM_TPLPATH)) {
 		$ERR_MESSAGE.="<br>".sprintf(___("%s ist Schreibgeschützt. Weitere Details finden Sie den den Dateien README und INSTALL"),TM_TPLPATH)."";
 		$check=false;
@@ -128,10 +133,6 @@ if ($check) {
 	}
 	if (!is_writeable($tm_formpath)) {
 		$ERR_MESSAGE.="<br>".sprintf(___("%s ist Schreibgeschützt. Weitere Details finden Sie den den Dateien README und INSTALL"),$tm_formpath)."";
-		$check=false;
-	}
-	if (!is_writeable($tm_tmppath)) {
-		$ERR_MESSAGE.="<br>".sprintf(___("%s ist Schreibgeschützt. Weitere Details finden Sie den den Dateien README und INSTALL"),$tm_tmppath)."";
 		$check=false;
 	}
 	if (!is_writeable($tm_reportpath)) {

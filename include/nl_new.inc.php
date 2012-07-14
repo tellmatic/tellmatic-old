@@ -148,8 +148,8 @@ if ($set=="save") {
 		$body=stripslashes(strtr($body, $trans));
 		include_once (TM_INCLUDEPATH."/nl_form.inc.php");
 	}
-
 } else {
+	$$InputName_Aktiv=1;
 	include_once (TM_INCLUDEPATH."/nl_form.inc.php");
 }
 ?>

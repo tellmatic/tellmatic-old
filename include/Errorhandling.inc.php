@@ -60,7 +60,21 @@ function userErrorHandler ($errno, $errmsg, $filename, $linenum, $vars) {
                 512 =>  "User Warning",
                 1024=>  "User Notice"
                 );
-   $user_errors = array( E_ALL, E_USER_NOTICE, E_ERROR,  E_PARSE, E_USER_ERROR, E_USER_WARNING, E_NOTICE);//E_WARNING,
+    $user_errors = array( E_ALL, E_USER_NOTICE, E_ERROR,  E_PARSE, E_USER_ERROR, E_USER_WARNING );//E_WARNING, E_NOTICE
+
+/*
+    $err = "<errorentry>\n";
+    $err .= "\t<datetime>".$dt."</datetime>\n";
+    $err .= "\t<errornum>".$errno."</errornum>\n";
+    $err .= "\t<errortype>".$errortype[$errno]."</errortype>\n";
+    $err .= "\t<errormsg>".$errmsg."</errormsg>\n";
+    $err .= "\t<scriptname>".$filename."</scriptname>\n";
+    $err .= "\t<scriptlinenum>".$linenum."</scriptlinenum>\n";
+    if (in_array($errno, $user_errors)) {
+        $err .= "\t<vartrace>".serialize($vars,"Variables")."</vartrace>\n";
+    }
+    $err .= "</errorentry>\n\n";
+*/
    $err="";
    $err_html="";
     if (in_array($errno, $user_errors)) {

@@ -69,7 +69,7 @@ $Form->set_InputLabel($FormularName,$InputName_ActionUrl,"");
 	$Form->set_InputSize($FormularName,$InputName_SubAktiv,48,1024);
 	$Form->set_InputDesc($FormularName,$InputName_SubAktiv,___("Anmeldungen sind aktiv/inaktiv"));
 	$Form->set_InputReadonly($FormularName,$InputName_SubAktiv,false);
-	$Form->set_InputOrder($FormularName,$InputName_SubAktiv,10);
+	$Form->set_InputOrder($FormularName,$InputName_SubAktiv,13);
 	$Form->set_InputLabel($FormularName,$InputName_SubAktiv,"");
 
 //Check Blacklist
@@ -80,7 +80,7 @@ $Form->set_InputLabel($FormularName,$InputName_ActionUrl,"");
 	$Form->set_InputSize($FormularName,$InputName_Blacklist,48,1024);
 	$Form->set_InputDesc($FormularName,$InputName_Blacklist,___("Blacklist"));
 	$Form->set_InputReadonly($FormularName,$InputName_Blacklist,false);
-	$Form->set_InputOrder($FormularName,$InputName_Blacklist,8);
+	$Form->set_InputOrder($FormularName,$InputName_Blacklist,7);
 	$Form->set_InputLabel($FormularName,$InputName_Blacklist,"");
 
 //Force Publicgroups selection
@@ -91,7 +91,7 @@ $Form->set_InputLabel($FormularName,$InputName_ActionUrl,"");
 	$Form->set_InputSize($FormularName,$InputName_ForcePubGroup,48,1024);
 	$Form->set_InputDesc($FormularName,$InputName_ForcePubGroup,___("Auswahl erzwingen"));
 	$Form->set_InputReadonly($FormularName,$InputName_ForcePubGroup,false);
-	$Form->set_InputOrder($FormularName,$InputName_ForcePubGroup,8);
+	$Form->set_InputOrder($FormularName,$InputName_ForcePubGroup,9);
 	$Form->set_InputLabel($FormularName,$InputName_ForcePubGroup,"");
 
 //Overwrite Publicgroups selection or update?
@@ -101,7 +101,7 @@ $Form->set_InputDefault($FormularName,$InputName_OverwritePubgroup,$$InputName_O
 $Form->set_InputStyleClass($FormularName,$InputName_OverwritePubgroup,"mFormSelect","mFormSelectFocus");
 $Form->set_InputDesc($FormularName,$InputName_OverwritePubgroup,___("Auswahl überschreiben oder aktualisieren?"));
 $Form->set_InputReadonly($FormularName,$InputName_OverwritePubgroup,false);
-$Form->set_InputOrder($FormularName,$InputName_OverwritePubgroup,6);
+$Form->set_InputOrder($FormularName,$InputName_OverwritePubgroup,11);
 $Form->set_InputLabel($FormularName,$InputName_OverwritePubgroup,"");
 $Form->set_InputSize($FormularName,$InputName_OverwritePubgroup,0,1);
 $Form->set_InputMultiple($FormularName,$InputName_OverwritePubgroup,false);
@@ -157,7 +157,7 @@ $Form->set_InputStyleClass($FormularName,$InputName_Descr,"mFormTextarea","mForm
 $Form->set_InputSize($FormularName,$InputName_Descr,20,3);
 $Form->set_InputDesc($FormularName,$InputName_Descr,___("Beschreibung"));
 $Form->set_InputReadonly($FormularName,$InputName_Descr,false);
-$Form->set_InputOrder($FormularName,$InputName_Descr,11);
+$Form->set_InputOrder($FormularName,$InputName_Descr,13);
 $Form->set_InputLabel($FormularName,$InputName_Descr,"");
 
 //Gruppe
@@ -337,7 +337,7 @@ $Form->set_InputStyleClass($FormularName,$InputName_PubGroup_errmsg,"mFormText",
 $Form->set_InputSize($FormularName,$InputName_PubGroup_errmsg,32,255);
 $Form->set_InputDesc($FormularName,$InputName_PubGroup_errmsg,___("Fehlermeldung"));
 $Form->set_InputReadonly($FormularName,$InputName_PubGroup_errmsg,false);
-$Form->set_InputOrder($FormularName,$InputName_PubGroup_errmsg,9);
+$Form->set_InputOrder($FormularName,$InputName_PubGroup_errmsg,11);
 $Form->set_InputLabel($FormularName,$InputName_PubGroup_errmsg,"");
 /////////////////////////////////////////
 //F ErrMsg, new, f0-f9
@@ -419,6 +419,13 @@ $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "<td valign=top colspan=1>";
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Name]['html'];
 $_MAIN_OUTPUT.= "</td>";
+
+$_MAIN_OUTPUT.= "<td valign=top rowspan=9>";
+$_MAIN_OUTPUT.= tm_icon("group.png",___("Gruppen"))."&nbsp;".___("Gruppen")."<br>";
+$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Group]['html'];
+$_MAIN_OUTPUT.= "<br>".tm_icon("group.png",___("Gruppen"))."&nbsp;".___("öffentliche Gruppen")."<br>";
+$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_GroupPub]['html'];
+$_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "</tr>";
 
 $_MAIN_OUTPUT.= "<tr>";
@@ -499,14 +506,8 @@ $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "</tr>";
 
 $_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top colspan=2>". tm_icon("layout.png",___("Beschreibung"))."&nbsp;".___("Beschreibung")."<br>";
+$_MAIN_OUTPUT.= "<td valign=top colspan=3>". tm_icon("layout.png",___("Beschreibung"))."&nbsp;".___("Beschreibung")."<br>";
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Descr]['html'];
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "<td valign=top>";
-$_MAIN_OUTPUT.= tm_icon("group.png",___("Gruppen"))."&nbsp;".___("Gruppen")."<br>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Group]['html'];
-$_MAIN_OUTPUT.= "<br>".tm_icon("group.png",___("Gruppen"))."&nbsp;".___("öffentliche Gruppen")."<br>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_GroupPub]['html'];
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "</tr>";
 

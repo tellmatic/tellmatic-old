@@ -39,7 +39,8 @@ class tm_ADR {
 										.TM_TABLE_ADR.".code, "
 										.TM_TABLE_ADR.".clicks, "
 										.TM_TABLE_ADR.".views, "
-										.TM_TABLE_ADR.".newsletter";
+										.TM_TABLE_ADR.".newsletter, "
+										.TM_TABLE_ADR.".recheck ";
 			$Query .=", ".TM_TABLE_ADR_DETAILS.".id as d_id,"
 								.TM_TABLE_ADR_DETAILS.".memo";
 
@@ -85,20 +86,26 @@ class tm_ADR {
 		if (isset($search['author']) && !empty($search['author'])) {
 			$Query .= " AND ".TM_TABLE_ADR.".author like '".dbesc($search['author'])."'";
 		}
+		if (isset($search['recheck']) && !empty($search['recheck'])) {
+			$Query .= " AND ".TM_TABLE_ADR.".recheck = ".checkset_int($search['recheck'])."";
+		}
+		if (isset($search['aktiv']) && ($search['aktiv']==="1" || $search['aktiv']==="0")) {//!!! we have to compare strings, weird php! argh.
+			$Query .= " AND ".TM_TABLE_ADR.".aktiv = ".checkset_int($search['aktiv'])."";
+		}
 		//check for status, OR
-		if (isset($search['status'])) {
+		if (isset($search['status']) && $search['status']>0) {
 			//if is no array, let first array entry be the string, so we always have an array
 			if (!is_array($search['status'])) {
 				$search_status=$search['status'];				
 				$search['status']=Array();
-				$search['status'][0]=$search_status;			
+				$search['status'][0]=$search_status;
 			}
 			//create query
 			$ssc=count($search['status']);
 			if ($search['status'][0]>0) {
 				$Query .= " AND (";
 				for ($sscc=0;$sscc<$ssc;$sscc++) {
-					$Query .= " status=".checkset_int($search['status'][$sscc]);
+					$Query .= TM_TABLE_ADR.".status=".checkset_int($search['status'][$sscc]);
 					if (($sscc+1)<$ssc) $Query.=" OR";
 				}
 				$Query .= " )";
@@ -158,6 +165,7 @@ class tm_ADR {
 			$this->ADR[$ac]['errors']=$this->DB->Record['errors'];
 			$this->ADR[$ac]['code']=$this->DB->Record['code'];
 			$this->ADR[$ac]['memo']=$this->DB->Record['memo'];
+			$this->ADR[$ac]['recheck']=$this->DB->Record['recheck'];
 			$this->ADR[$ac]['d_id']=$this->DB->Record['d_id'];
 			if ($Details==1) {
 				#$this->ADR[$ac]['memo']=$this->DB->Record['memo'];
@@ -202,9 +210,31 @@ class tm_ADR {
 		if (isset($search['email']) && !empty($search['email'])) {
 			$Query .= " AND lcase(".TM_TABLE_ADR.".email) like lcase('".dbesc($search['email'])."')";
 		}
-		if (isset($search['status']) && !empty($search['status'])) {
-			$Query .= " AND ".TM_TABLE_ADR.".status = ".checkset_int($search['status']);
+		if (isset($search['recheck']) && !empty($search['recheck'])) {
+			$Query .= " AND ".TM_TABLE_ADR.".recheck = ".checkset_int($search['recheck'])."";
 		}
+		if (isset($search['aktiv']) && ($search['aktiv']==="1" || $search['aktiv']==="0")) {//!!! we have to compare strings, weird php! argh.
+			$Query .= " AND ".TM_TABLE_ADR.".aktiv = ".checkset_int($search['aktiv'])."";
+		}
+		//check for status, OR
+		if (isset($search['status']) && $search['status']>0) {
+			//if is no array, let first array entry be the string, so we always have an array
+			if (!is_array($search['status'])) {
+				$search_status=$search['status'];				
+				$search['status']=Array();
+				$search['status'][0]=$search_status;
+			}
+			//create query
+			$ssc=count($search['status']);
+			if ($search['status'][0]>0) {
+				$Query .= " AND (";
+				for ($sscc=0;$sscc<$ssc;$sscc++) {
+					$Query .= TM_TABLE_ADR.".status=".checkset_int($search['status'][$sscc]);
+					if (($sscc+1)<$ssc) $Query.=" OR";
+				}
+				$Query .= " )";
+			}
+		}		
 		$DB->Query($Query);
 		$ac=0;
 		while ($DB->next_record()) {
@@ -234,25 +264,28 @@ class tm_ADR {
 		if (isset($search['email']) && !empty($search['email'])) {
 			$Query .= " AND lcase(".TM_TABLE_ADR.".email) like lcase('".dbesc($search['email'])."')";
 		}
+		if (isset($search['recheck']) && !empty($search['recheck'])) {
+			$Query .= " AND ".TM_TABLE_ADR.".recheck = ".checkset_int($search['recheck'])."";
+		}
 		//check for status, OR
-		if (isset($search['status'])) {
+		if (isset($search['status']) && $search['status']>0) {
 			//if is no array, let first array entry be the string, so we always have an array
 			if (!is_array($search['status'])) {
 				$search_status=$search['status'];				
 				$search['status']=Array();
-				$search['status'][0]=$search_status;			
+				$search['status'][0]=$search_status;
 			}
 			//create query
 			$ssc=count($search['status']);
 			$Query .= " AND (";
 			for ($sscc=0;$sscc<$ssc;$sscc++) {
-				$Query .= " status=".checkset_int($search['status'][$sscc]);
+				$Query .= TM_TABLE_ADR.".status=".checkset_int($search['status'][$sscc]);
 				if (($sscc+1)<$ssc) $Query.=" OR";
 			}
 			$Query .= " )";
 		}		
-		if (isset($search['aktiv']) && !empty($search['aktiv'])) {
-			$Query .= " AND ".TM_TABLE_ADR.".aktiv = ".checkset_int($search['aktiv']);
+		if (isset($search['aktiv']) && ($search['aktiv']==="1" || $search['aktiv']==="0")) {//!!! we have to compare strings, weird php! argh.
+			$Query .= " AND ".TM_TABLE_ADR.".aktiv = ".checkset_int($search['aktiv'])."";
 		}
 		$this->DB2->Query($Query);
 		if ($this->DB2->next_record()) {
@@ -376,7 +409,7 @@ class tm_ADR {
 			}
 		}
 		
-		if (isset($search['aktiv'])) {
+		if (isset($search['aktiv']) && ($search['aktiv']==="1" || $search['aktiv']==="0")) {//!!! we have to compare strings, weird php! argh.
 			$Query .= " AND ".TM_TABLE_ADR_GRP.".aktiv=".checkset_int($search['aktiv']);
 		}
 		$Query .= "	ORDER BY ".TM_TABLE_ADR_GRP.".name";
@@ -858,12 +891,12 @@ class tm_ADR {
 										'".dbesc($adr['f8'])."',
 										'".dbesc($adr['f9'])."'
 										)";
-				if ($this->DB->Query($Query)) {
-					$Return=true;
-				} else {//if query
-					$Return=false;
-					return $Return;
-				}//if query
+			if ($this->DB->Query($Query)) {
+				$Return=true;
+			} else {//if query
+				$Return=false;
+				return $Return;
+			}//if query
 			//memo eintragen
 			//wenn memo expliziot gesetzt wurde, hier anfuegen, ansonsten muss das script selbst addMemo() oder newMemo() aufrufen!
 			if (isset($adr['memo']) && !empty($adr['memo'])) $this->newMemo($new_adr_id,$adr['memo']); // neue memo!
@@ -961,6 +994,9 @@ class tm_ADR {
 				$Return=false;
 				return $Return;
 			}
+			//update memo!
+			//wenn memo expliziot gesetzt wurde, hier anfuegen, ansonsten muss das script selbst addMemo() oder newMemo() aufrufen!
+			if (isset($adr['memo']) && !empty($adr['memo'])) $this->addMemo($adr['id'],$adr['memo']);//memo anfuegen
 			//update group references
 			//use setGroup instead!:
 			$this->setGroup($adr['id'],$grp);
@@ -1009,7 +1045,6 @@ function mergeGroups($grp1,$grp2) {
 	$grp = array_merge($grp2, $grp_diff);//alte+neue gruppen zusammenfuegen
 	return $grp;
 }
-
 
 	function setAError($id,$errors) {
 		$Return=false;
@@ -1083,6 +1118,7 @@ function mergeGroups($grp1,$grp2) {
 		$Return=false;
 		if (check_dbid($adr_id)) {
 			$ADR=$this->getADR($adr_id);
+			//memo = datum + neue memo + alte memo, neu steht somit jetzt immer oben
 			$memo=date("Y-m-d H:i:s").": ".$memo."\n\n".$ADR[0]['memo'];
 			$Query ="UPDATE ".TM_TABLE_ADR_DETAILS." SET memo='".dbesc($memo)."' WHERE siteid='".TM_SITEID."' AND adr_id=".checkset_int($adr_id);
 			if ($this->DB->Query($Query)) {
@@ -1091,5 +1127,53 @@ function mergeGroups($grp1,$grp2) {
 		}
 		return $Return;
 	}//addMemo
+	
+	function markRecheck($id, $recheck=0,$search=Array()) {
+		$Query ="
+						UPDATE ".TM_TABLE_ADR."
+					";
+		if (isset($search['group']) && !empty($search['group'])) {
+			$group_id=checkset_int($search['group']);
+		} else {
+			$group_id=0;		
+		}
+		if (check_dbid($group_id)) {
+			$Query .="LEFT JOIN ".TM_TABLE_ADR_GRP_REF." ON ".TM_TABLE_ADR.".id = ".TM_TABLE_ADR_GRP_REF.".adr_id";
+		}
+		$Query .=" SET  ".TM_TABLE_ADR.".recheck=".checkset_int($recheck); 
+		$Query .=" WHERE ".TM_TABLE_ADR.".siteid='".TM_SITEID."'
+					";
+		if (check_dbid($group_id)) {
+			$Query .=" AND ".TM_TABLE_ADR_GRP_REF.".siteid='".TM_SITEID."'
+						  AND ".TM_TABLE_ADR_GRP_REF.".grp_id = ".checkset_int($group_id);
+		}
+		if (isset($search['email']) && !empty($search['email'])) {
+			$Query .= " AND lcase(".TM_TABLE_ADR.".email) like lcase('".dbesc($search['email'])."')";
+		}
+		//check for status, OR
+		if (isset($search['status']) && $search['status']>0) {
+			//if is no array, let first array entry be the string, so we always have an array
+			if (!is_array($search['status'])) {
+				$search_status=$search['status'];				
+				$search['status']=Array();
+				$search['status'][0]=$search_status;
+			}
+			//create query
+			$ssc=count($search['status']);
+			$Query .= " AND (";
+			for ($sscc=0;$sscc<$ssc;$sscc++) {
+				$Query .= TM_TABLE_ADR.".status=".checkset_int($search['status'][$sscc]);
+				if (($sscc+1)<$ssc) $Query.=" OR";
+			}
+			$Query .= " )";
+		}
+		if (isset($search['aktiv']) && ($search['aktiv']==="1" || $search['aktiv']==="0")) {//!!! we have to compare strings, weird php! argh.
+			$Query .= " AND ".TM_TABLE_ADR.".aktiv = ".checkset_int($search['aktiv']);
+		}
+		if (check_dbid($id)) {
+			$Query .= " AND ".TM_TABLE_ADR.".id=".checkset_int($id);
+		}
+		$this->DB2->Query($Query);
+	}
 }//class
 ?>

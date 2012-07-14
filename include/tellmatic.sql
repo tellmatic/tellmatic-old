@@ -1,9 +1,9 @@
-
+-- Tellmatic 1.0.8.7
 --
 -- Tabellenstruktur für Tabelle `adr`
 --
 
-CREATE TABLE `adr` (
+CREATE TABLE IF NOT EXISTS `adr` (
   `id` int(11) NOT NULL auto_increment,
   `email` varchar(255) collate utf8_bin NOT NULL default '',
   `clean` tinyint(1) NOT NULL default '0',
@@ -19,6 +19,7 @@ CREATE TABLE `adr` (
   `clicks` smallint(1) default '0',
   `views` smallint(1) default '0',
   `newsletter` smallint(1) default '0',
+  `recheck` tinyint(1) default NULL COMMENT 'marked for email validation',
   PRIMARY KEY  (`id`),
   KEY `email` (`email`),
   KEY `aktiv` (`aktiv`),
@@ -28,7 +29,7 @@ CREATE TABLE `adr` (
   KEY `adr_siteid_status` (`siteid`,`status`),
   KEY `adr_siteid_email` (`siteid`,`email`),
   KEY `adr_siteid_id` (`id`,`siteid`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=999189 ;
 
 -- --------------------------------------------------------
 
@@ -36,7 +37,7 @@ CREATE TABLE `adr` (
 -- Tabellenstruktur für Tabelle `adr_details`
 --
 
-CREATE TABLE `adr_details` (
+CREATE TABLE IF NOT EXISTS `adr_details` (
   `id` int(11) NOT NULL auto_increment,
   `adr_id` int(11) NOT NULL default '0',
   `memo` text collate utf8_bin,
@@ -55,7 +56,7 @@ CREATE TABLE `adr_details` (
   KEY `adr_id` (`adr_id`),
   KEY `siteid` (`siteid`),
   KEY `adrd_siteid_adrid` (`adr_id`,`siteid`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=999154 ;
 
 -- --------------------------------------------------------
 
@@ -63,7 +64,7 @@ CREATE TABLE `adr_details` (
 -- Tabellenstruktur für Tabelle `adr_grp`
 --
 
-CREATE TABLE `adr_grp` (
+CREATE TABLE IF NOT EXISTS `adr_grp` (
   `id` int(11) NOT NULL auto_increment,
   `name` varchar(128) collate utf8_bin NOT NULL default '',
   `public` tinyint(1) NOT NULL default '0',
@@ -83,7 +84,7 @@ CREATE TABLE `adr_grp` (
   KEY `siteid` (`siteid`),
   KEY `standard` (`standard`),
   KEY `public` (`public`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=111 ;
 
 -- --------------------------------------------------------
 
@@ -91,7 +92,7 @@ CREATE TABLE `adr_grp` (
 -- Tabellenstruktur für Tabelle `adr_grp_ref`
 --
 
-CREATE TABLE `adr_grp_ref` (
+CREATE TABLE IF NOT EXISTS `adr_grp_ref` (
   `id` int(11) NOT NULL auto_increment,
   `adr_id` int(11) NOT NULL default '0',
   `grp_id` int(11) NOT NULL default '0',
@@ -102,7 +103,7 @@ CREATE TABLE `adr_grp_ref` (
   KEY `siteid` (`siteid`),
   KEY `grp_site_id` (`grp_id`,`siteid`),
   KEY `aref_adrid_siteid` (`adr_id`,`siteid`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=1178551 ;
 
 -- --------------------------------------------------------
 
@@ -110,7 +111,7 @@ CREATE TABLE `adr_grp_ref` (
 -- Tabellenstruktur für Tabelle `blacklist`
 --
 
-CREATE TABLE `blacklist` (
+CREATE TABLE IF NOT EXISTS `blacklist` (
   `id` int(11) NOT NULL auto_increment,
   `type` enum('email','domain','expr') collate utf8_bin NOT NULL default 'email',
   `expr` varchar(255) collate utf8_bin NOT NULL default '',
@@ -119,7 +120,7 @@ CREATE TABLE `blacklist` (
   PRIMARY KEY  (`id`),
   KEY `type` (`type`),
   KEY `bl_ate` (`type`,`expr`,`aktiv`,`siteid`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=104 ;
 
 -- --------------------------------------------------------
 
@@ -127,7 +128,7 @@ CREATE TABLE `blacklist` (
 -- Tabellenstruktur für Tabelle `config`
 --
 
-CREATE TABLE `config` (
+CREATE TABLE IF NOT EXISTS `config` (
   `id` int(11) NOT NULL auto_increment,
   `name` varchar(255) collate utf8_bin NOT NULL default '',
   `siteid` varchar(64) collate utf8_bin NOT NULL default '',
@@ -136,13 +137,29 @@ CREATE TABLE `config` (
   `notify_unsubscribe` tinyint(1) NOT NULL default '1',
   `emailcheck_intern` tinyint(1) NOT NULL default '2',
   `emailcheck_subscribe` tinyint(1) NOT NULL default '2',
+  `emailcheck_sendit` tinyint(1) NOT NULL default '1' COMMENT 'emailpruefung beim senden',
+  `emailcheck_checkit` tinyint(1) NOT NULL default '3' COMMENT 'emailpruefung bei aufruf von check_it.php',
   `max_mails_retry` tinyint(1) NOT NULL default '5',
   `check_version` tinyint(1) NOT NULL default '1',
   `track_image` varchar(255) collate utf8_bin NOT NULL default '',
   `rcpt_name` varchar(255) collate utf8_bin NOT NULL default 'Newsletter',
+  `unsubscribe_use_captcha` tinyint(1) NOT NULL default '0',
+  `unsubscribe_digits_captcha` tinyint(1) NOT NULL default '4',
+  `unsubscribe_sendmail` smallint(6) NOT NULL default '1',
+  `unsubscribe_action` enum('unsubscribe','delete') collate utf8_bin NOT NULL,
+  `checkit_from_email` varchar(255) collate utf8_bin NOT NULL default '',
+  `checkit_adr_reset_error` tinyint(1) NOT NULL default '1',
+  `checkit_adr_reset_status` tinyint(1) NOT NULL default '1',
+  `bounceit_host` int(11) NOT NULL default '0',
+  `bounceit_search` enum('header','body','headerbody') collate utf8_bin NOT NULL default 'headerbody',
+  `bounceit_action` enum('auto','error','unsubscribe','aktiv','delete') collate utf8_bin NOT NULL default 'auto',
+  `bounceit_filter_to` tinyint(1) NOT NULL default '0',
+  `bounceit_filter_to_email` varchar(255) collate utf8_bin NOT NULL default '',
+  `checkit_limit` smallint(6) NOT NULL default '25',
+  `bounceit_limit` smallint(6) NOT NULL default '10',
   PRIMARY KEY  (`id`),
   KEY `siteid` (`siteid`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=3 ;
 
 -- --------------------------------------------------------
 
@@ -150,7 +167,7 @@ CREATE TABLE `config` (
 -- Tabellenstruktur für Tabelle `frm`
 --
 
-CREATE TABLE `frm` (
+CREATE TABLE IF NOT EXISTS `frm` (
   `id` int(11) NOT NULL auto_increment,
   `name` varchar(64) collate utf8_bin NOT NULL default '',
   `action_url` varchar(255) collate utf8_bin NOT NULL default '',
@@ -240,7 +257,7 @@ CREATE TABLE `frm` (
   KEY `name` (`name`),
   KEY `siteid` (`siteid`),
   KEY `aktiv` (`aktiv`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=147 ;
 
 -- --------------------------------------------------------
 
@@ -248,7 +265,7 @@ CREATE TABLE `frm` (
 -- Tabellenstruktur für Tabelle `frm_grp_ref`
 --
 
-CREATE TABLE `frm_grp_ref` (
+CREATE TABLE IF NOT EXISTS `frm_grp_ref` (
   `id` int(11) NOT NULL auto_increment,
   `frm_id` int(11) NOT NULL default '0',
   `grp_id` int(11) NOT NULL default '0',
@@ -259,7 +276,7 @@ CREATE TABLE `frm_grp_ref` (
   KEY `grp_id` (`grp_id`),
   KEY `siteid` (`siteid`),
   KEY `grp_site_id` (`grp_id`,`siteid`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=931 ;
 
 -- --------------------------------------------------------
 
@@ -267,7 +284,7 @@ CREATE TABLE `frm_grp_ref` (
 -- Tabellenstruktur für Tabelle `frm_s`
 --
 
-CREATE TABLE `frm_s` (
+CREATE TABLE IF NOT EXISTS `frm_s` (
   `id` int(11) NOT NULL auto_increment,
   `created` datetime default NULL,
   `frm_id` int(11) NOT NULL default '0',
@@ -278,7 +295,7 @@ CREATE TABLE `frm_s` (
   KEY `frm_id` (`frm_id`,`adr_id`,`siteid`),
   KEY `frms_siteid_ip` (`siteid`,`ip`),
   KEY `frms_siteid_ip_frmid` (`siteid`,`ip`,`frm_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=16 ;
 
 -- --------------------------------------------------------
 
@@ -286,7 +303,7 @@ CREATE TABLE `frm_s` (
 -- Tabellenstruktur für Tabelle `hosts`
 --
 
-CREATE TABLE `hosts` (
+CREATE TABLE IF NOT EXISTS `hosts` (
   `id` int(11) NOT NULL auto_increment,
   `name` varchar(255) collate utf8_bin NOT NULL default '',
   `aktiv` tinyint(1) NOT NULL default '1',
@@ -314,22 +331,7 @@ CREATE TABLE `hosts` (
   KEY `hosts_aktiv_siteid` (`aktiv`,`siteid`),
   KEY `smtp_auth` (`smtp_auth`),
   KEY `standard` (`standard`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `log`
---
-
-CREATE TABLE `log` (
-  `id` int(11) NOT NULL auto_increment,
-  `user` varchar(64) collate utf8_bin NOT NULL default '',
-  `action` varchar(255) collate utf8_bin NOT NULL default '',
-  `siteid` varchar(64) collate utf8_bin NOT NULL default '',
-  PRIMARY KEY  (`id`),
-  KEY `user` (`user`,`siteid`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=12 ;
 
 -- --------------------------------------------------------
 
@@ -337,12 +339,15 @@ CREATE TABLE `log` (
 -- Tabellenstruktur für Tabelle `nl`
 --
 
-CREATE TABLE `nl` (
+CREATE TABLE IF NOT EXISTS `nl` (
   `id` int(11) NOT NULL auto_increment,
   `subject` varchar(255) collate utf8_bin NOT NULL default '',
+  `title` varchar(255) collate utf8_bin default NULL COMMENT 'title, text 1 f. webseite',
+  `title_sub` varchar(255) collate utf8_bin default NULL COMMENT 'subtitle, text 2 f webseite',
   `aktiv` tinyint(1) NOT NULL default '0',
   `body` longtext collate utf8_bin,
   `body_text` longtext collate utf8_bin,
+  `summary` longtext collate utf8_bin NOT NULL COMMENT 'zusammenfassung f. webseite',
   `link` tinytext collate utf8_bin,
   `created` datetime default NULL,
   `updated` datetime default NULL,
@@ -356,6 +361,7 @@ CREATE TABLE `nl` (
   `grp_id` int(11) NOT NULL default '0',
   `content_type` varchar(12) collate utf8_bin NOT NULL default 'html',
   `track_image` varchar(255) collate utf8_bin NOT NULL default '_global',
+  `is_template` tinyint(1) NOT NULL,
   `siteid` varchar(64) collate utf8_bin NOT NULL default '',
   PRIMARY KEY  (`id`),
   KEY `aktiv` (`aktiv`),
@@ -363,7 +369,7 @@ CREATE TABLE `nl` (
   KEY `grp_id` (`grp_id`),
   KEY `siteid` (`siteid`),
   KEY `status` (`status`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=303 ;
 
 -- --------------------------------------------------------
 
@@ -371,14 +377,14 @@ CREATE TABLE `nl` (
 -- Tabellenstruktur für Tabelle `nl_attm`
 --
 
-CREATE TABLE `nl_attm` (
+CREATE TABLE IF NOT EXISTS `nl_attm` (
   `id` int(11) NOT NULL auto_increment,
   `nl_id` int(11) NOT NULL default '0',
   `file` varchar(255) collate utf8_bin NOT NULL default '',
   `siteid` varchar(64) collate utf8_bin NOT NULL default '',
   PRIMARY KEY  (`id`),
   KEY `nl_id` (`nl_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=566 ;
 
 -- --------------------------------------------------------
 
@@ -386,7 +392,7 @@ CREATE TABLE `nl_attm` (
 -- Tabellenstruktur für Tabelle `nl_grp`
 --
 
-CREATE TABLE `nl_grp` (
+CREATE TABLE IF NOT EXISTS `nl_grp` (
   `id` int(11) NOT NULL auto_increment,
   `name` varchar(128) collate utf8_bin NOT NULL default '',
   `descr` mediumtext collate utf8_bin NOT NULL,
@@ -403,7 +409,7 @@ CREATE TABLE `nl_grp` (
   KEY `aktiv` (`aktiv`),
   KEY `siteid` (`siteid`),
   KEY `standard` (`standard`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=39 ;
 
 -- --------------------------------------------------------
 
@@ -411,7 +417,7 @@ CREATE TABLE `nl_grp` (
 -- Tabellenstruktur für Tabelle `nl_h`
 --
 
-CREATE TABLE `nl_h` (
+CREATE TABLE IF NOT EXISTS `nl_h` (
   `id` int(11) NOT NULL auto_increment,
   `q_id` int(11) NOT NULL default '0',
   `nl_id` int(11) NOT NULL default '0',
@@ -438,7 +444,7 @@ CREATE TABLE `nl_h` (
   KEY `nlh_siteid_ip_grpid` (`siteid`,`ip`,`grp_id`),
   KEY `nlh_siteid_ip_qid_nlid` (`siteid`,`ip`,`q_id`,`nl_id`),
   KEY `host_id` (`host_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=871141 ;
 
 -- --------------------------------------------------------
 
@@ -446,7 +452,7 @@ CREATE TABLE `nl_h` (
 -- Tabellenstruktur für Tabelle `nl_q`
 --
 
-CREATE TABLE `nl_q` (
+CREATE TABLE IF NOT EXISTS `nl_q` (
   `id` int(11) NOT NULL auto_increment,
   `nl_id` int(11) NOT NULL default '0',
   `grp_id` int(11) NOT NULL default '0',
@@ -465,8 +471,7 @@ CREATE TABLE `nl_q` (
   KEY `send_at` (`send_at`),
   KEY `host_id` (`host_id`),
   KEY `autostart` (`autogen`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=1113 ;
 
 -- --------------------------------------------------------
 
@@ -474,7 +479,7 @@ CREATE TABLE `nl_q` (
 -- Tabellenstruktur für Tabelle `user`
 --
 
-CREATE TABLE `user` (
+CREATE TABLE IF NOT EXISTS `user` (
   `id` int(11) NOT NULL auto_increment,
   `name` varchar(64) collate utf8_bin NOT NULL default '',
   `passwd` varchar(64) collate utf8_bin NOT NULL default '',
@@ -491,4 +496,4 @@ CREATE TABLE `user` (
   PRIMARY KEY  (`id`),
   KEY `name` (`name`,`passwd`,`aktiv`,`siteid`),
   KEY `lang` (`lang`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=31 ;

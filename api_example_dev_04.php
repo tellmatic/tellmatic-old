@@ -15,55 +15,45 @@ exit;//remove this line or add # in front of line
 //inclue tm config
 include ("./include/tm_config.inc.php");//change path to full path to tm_config if the script is not in tellmatic installation directory!
 
+//Beispielcode: letzte X Newsletter anzeigen, newsletter aber aus q holen! nur mit status versendet!
+//"export RSS"
 
-//Beispielcode: Adressen mit mehr als 1 Gruppe anzeigen
-
+$rss_output_filename="newsletter_index.xml";
 //This is just a very simple example!
+$nl_offset=0;//offset, kann auch aus $_GET oder per getVar ermittelt werden....
+$nl_limit=10;//anzahl anzuzeigender newsletter
+$nl_content=0;//do not return content
+$nl_grpid=0;//nl group, 0=all groups
 
-//neues address-objekt
-$ADR=new tm_ADR();
+$QUEUE=new tm_Q();
+$NL=new tm_NL();
+$search_nl['is_template']=0;
+$search_nl['aktiv']=1;
+$search_nl['status']=Array(3,4,5);//started, sent, archiv, see Stats.inc.php
+$Q=$QUEUE->getQ(0,0,$nl_limit,0,$nl_grpid,4);
 
-//
-$A=Array();//array mit allen addressids
-$B=Array();//zielarray mit addressids mit mehr als 1 gruppe
-$bn=0;//zaehler f. adressen > 1 gruppe
+$_RSS='<?xml version="1.0"?>
+<rss version="2.0">
+<channel>
+<title>Newsletter</title>
+<description>Tellmatic</description>
+<link>http://www.tellmatic.org</link>
+';
 
-//Array A fuellen mit AddressIDs aus der DB
-//syntax:   function getAdrID($group_id=0,$search=Array())
-$A=$ADR->getAdrID();
-
-echo print_r($A,TRUE);
-echo "<hr>";
-
-
-//Array durchwandern und jede Adresse pruefen
-foreach ($A as $adr_id) {
-	$G=Array();//temporaeres Array
-	//Gruppen fuer Adresse holen	
-	//syntax: function getGroupID($id=0,$adr_id=0,$frm_id=0,$search=Array())
-	$G=$ADR->getGroupID(0,$adr_id);
-	//wenn mehr als 1 Gruppe!, dann speichere ID der Adresse in B und erhoehe den Counter bn	
-	if (count($G)>1) {
-		$B[$bn]=$adr_id;
-		$bn++;
-	}
+foreach ($Q as $q) {
+	$N=$NL->getNL($q['nl_id'],0,1,0,1,"",1,$search_nl);
+	$nl=$N[0];
+	$_RSS.='
+	<item>
+	<title>'.$nl['subject'].'</title>
+	<link>'.$tm_URL_FE.'/'.$tm_nldir.'/nl_'.date_convert_to_string($nl['created']).'_p.html</link>
+	</item>
+	';
 }
 
-echo print_r($B,TRUE);
-echo "<hr>";
-
-
-//ergebnis anzeigen, IDs von Adressen mit mehr als 1 Gruppe sind in $B abgelegt
-foreach ($B as $adr_id) {
-	//Addressdetails auslesen
-	//syntax: getAdr($id=0,$offset=0,$limit=0,$group_id=0,$search=Array(),$sortIndex="",$sortType=0,$Details=1) 
-	$A=$ADR->getAdr($adr_id);
-	//Gruppen f.d. Addresse auslesen
-	$G=$ADR->getGroup(0,$adr_id);
-	
-	echo print_r($A,TRUE);
-	echo print_r($G,TRUE);
-	echo "<hr>";
-}
-
+$_RSS.='
+</channel>
+</rss>
+';
+write_file(TM_PATH,$rss_output_filename,$_RSS);
 ?>

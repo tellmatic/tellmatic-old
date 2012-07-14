@@ -70,9 +70,24 @@ if ($check && $checkDB) {
 				"max_mails_retry"=>5,
 				"emailcheck_intern"=>2,
 				"emailcheck_subscribe"=>2,
+				"emailcheck_sendit"=>1,
+				"emailcheck_checkit"=>3,
 				"check_version"=>1,
 				"rcpt_name"=>"Newsletter",
-				"track_image"=>'_blank'
+				"track_image"=>'_blank',
+				"unsubscribe_use_captcha"=>0,
+				"unsubscribe_digits_captcha"=>4,
+				"unsubscribe_sendmail"=>1,
+				"unsubscribe_action"=>"unsubscribe",
+				"checkit_limit"=>25,
+				"checkit_from_email"=>'',
+				"checkit_adr_reset_error"=>1,
+				"checkit_adr_reset_status"=>1,
+				"bounceit_limit"=>10,
+				"bounceit_host"=>0,
+				"bounceit_action"=>'auto',
+				"bounceit_filter_to"=>0,
+				"bounceit_filter_to_email"=>'',
 				));
 		//add mailservers, use default settings for config and create smtp/pop3 host entries...
 				$HOSTS=new tm_HOST();
@@ -97,7 +112,7 @@ if ($check && $checkDB) {
 							"sender_email"=>$email,
 							"return_mail"=>$email,
 							"reply_to"=>$email
-							));
+					));
 				//make default smtp host!
 				$HOSTS->setHostStd($Add_Host[1]);
 				//add pop3 host
@@ -122,17 +137,17 @@ if ($check && $checkDB) {
 							"return_mail"=>$email,
 							"reply_to"=>$email
 							));
-		
-		
-	
 	}
 	$MESSAGE.="<br>".___("Einstellungen wurden gespeichert.");
+	
+	
 
 /***********************************************************/
 //create configfile
 /***********************************************************/
 	$tm_config='<?php
 //domain
+
 if (isset($_SERVER[\'HTTPS\'])) {
 	$protocol = $_SERVER[\'HTTPS\'] ? "https://" : "http://";
 } else {

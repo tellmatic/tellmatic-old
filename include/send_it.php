@@ -12,9 +12,10 @@
 /* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
 /********************************************************************************/
 
-//send_it.php version 4, smtp direkt + massenmailing! offset und limit, sowie blacklist!
+#include config file: edit line if you run this script via cronjob, add full path to tellmatic config file
 
 require_once ("./tm_config.inc.php");
+/********************************************************************************/
 require_once(TM_INCLUDEPATH."/Class_SMTP.inc.php");
 
 $QUEUE=new tm_Q();
@@ -26,7 +27,7 @@ $T=new Timer();//zeitmessung
 
 $LOG="";
 $skip_send=FALSE;//if true, skip sending routine// is true after new q has been prepared
-
+$log_msg="";
 function send_log($text) {
 	global $LOG;
 	$LOG.=$text;
@@ -128,7 +129,7 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 
 		//Newsletter holen
 		send_log(  "\n".date("Y-m-d H:i:s").": get nl");
-		$NL=$NEWSLETTER->getNL($Q[$qcc]['nl_id']);
+		$NL=$NEWSLETTER->getNL($Q[$qcc]['nl_id'],0,0,0,1);//mit content!!!
 
 
 		//status fuer nl auf 3=running setzen
@@ -385,6 +386,7 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 			$_Tpl_NL->setParseValue("F7","");
 			$_Tpl_NL->setParseValue("F8","");
 			$_Tpl_NL->setParseValue("F9","");
+			$_Tpl_NL->setParseValue("MEMO","");
 			
 			$_Tpl_NL->setParseValue("TITLE",$NL[0]['title']);
 			$_Tpl_NL->setParseValue("TITLE_SUB",$NL[0]['title_sub']);
@@ -433,6 +435,10 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 			$BCC="";
 			$BCC_Arr=Array();
 			for ($bcc=$hcc;$bcc<$bc;$bcc++) {
+				$a_error=false;
+				$h_error=false;
+				$skipped=false;
+
 				if (isset($H[$bcc]['id'])) {
 						send_log(  "\n".date("Y-m-d H:i:s").":   $bcc : ");
 						// ok, wir muessen nun um zu vermeiden,
@@ -502,7 +508,7 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 							send_log(  "\n".date("Y-m-d H:i:s").":  setHStatus 5 ");
 							$QUEUE->setHStatus($H[$bcc]['id'],5);
 							//email pruefen
-							$check_mail=checkEmailAdr($ADR[0]['email'],$EMailcheck_Intern);
+							$check_mail=checkEmailAdr($ADR[0]['email'],$EMailcheck_Sendit);
 							//if !a_error auch abfragen wegen blacklist pruefung oben!
 							//if (!$a_error && $check_mail[0] && $ADR[0]['errors']<=$C[0]['max_mails_retry']) {
 							//statt a_error nehmen wir jetzt h_error! das hat den grund das adressen in der blacklist als fehlerhaft markiert wurden mit a_error
@@ -541,16 +547,25 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 								$a_error=true;
 								$h_status=4;//fehler
 								$h_error=true;
-								send_log(  "\n".date("Y-m-d H:i:s").": 	ERROR: invalid email: ".$ADR[0]['email']." ".$check_mail[1]." or reached max errors:".$ADR[0]['errors']."/".$C[0]['max_mails_retry']);
-							}//wenn errors < max errors
+								//adr add memo:
+								
+								$log_msg="ERROR: invalid email: ".$ADR[0]['email']."\n".$check_mail[1]."\nor reached max errors:".$ADR[0]['errors']." of max. ".$C[0]['max_mails_retry'];
+								$ADDRESS->addMemo($H[$bcc]['adr_id'],"send_it: ".$log_msg);
+								send_log("\n".date("Y-m-d H:i:s").": 	".$log_msg);
+							}//wenn errors < max errors oder !check_mail oder max_errors
 
 							if ($a_error) {
-								send_log(  "\n".date("Y-m-d H:i:s").": 	ERROR: set adr status=$a_status");
+								$log_msg="ERROR: set adr to status=".$a_status;
+								$ADDRESS->addMemo($H[$bcc]['adr_id'],"send_it: ".$log_msg);
+								send_log(  "\n".date("Y-m-d H:i:s").": 	".$log_msg);
+								
 								//$ADDRESS->setStatus($H[$bcc]['adr_id'],$a_status);
 								$ADDRESS->setStatus($ADR[0]['id'],$a_status);
 								$ADDRESS->setAError($ADR[0]['id'],($ADR[0]['errors']+1));//fehler um 1 erhoehen
 								//ADR Status
-								send_log(  "\n".date("Y-m-d H:i:s").":      err new: ".($ADR[0]['errors']+1));
+								$log_msg="adr errors (new): ".($ADR[0]['errors']+1);
+								$ADDRESS->addMemo($H[$bcc]['adr_id'],"send_it: ".$log_msg);
+								send_log(  "\n".date("Y-m-d H:i:s").":      ".$log_msg);
 							}
 
 							send_log(  "\n".date("Y-m-d H:i:s").":   set h status=$h_status");
@@ -628,6 +643,7 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 									$_Tpl_NL->setParseValue("F7", $ADR[0]['f7']);
 									$_Tpl_NL->setParseValue("F8", $ADR[0]['f8']);
 									$_Tpl_NL->setParseValue("F9", $ADR[0]['f9']);
+									$_Tpl_NL->setParseValue("MEMO", $ADR[0]['memo']);
 									
 									$_Tpl_NL->setParseValue("TITLE",$NL[0]['title']);
 									$_Tpl_NL->setParseValue("TITLE_SUB",$NL[0]['title_sub']);
@@ -711,11 +727,13 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 							send_log(  "\n".date("Y-m-d H:i:s").": *** Entry was already processed");
 							if (!$massmail) {
 								$send_it=false;
+								$skipped=true;
 							}
 						}
 					} else {//if isset h[bcc][id]
 						send_log(  "\n".date("Y-m-d H:i:s").": *** h[][id] not set");
 					}
+					$ADDRESS->markRecheck($ADR[0]['id'],0);				
 				}//for bcc
 
 				if ($massmail) {
@@ -790,26 +808,38 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 					$a_status=2;//ok
 					$h_status=2;//gesendet
 				} else {
-					$a_status=10;//sende fehler, wait retry
-					$h_status=4;//fehler
-					$a_error=true;
+					//wenn nihct uebersprungen, status markieren
+					if (!$skipped) {
+						$a_status=10;//sende fehler, wait retry
+						$h_status=4;//fehler
+						$a_error=true;
+					}
+					if ($skipped) {
+						//wenn uebersprungen, alten status behalten
+						$h_status=$H[$bcc]['status'];					
+					}
 				}//send ok
 
-			send_log(  "\n".date("Y-m-d H:i:s").": set h status=$h_status for entry $hcc to $bc -1");
-			$created=date("Y-m-d H:i:s");
-			for ($bcc=$hcc;$bcc<$bc;$bcc++) {
-				if (isset($H[$bcc]['id'])) {
-					//H Status setzen
-					$QUEUE->setHStatus($H[$bcc]['id'],$h_status);
-					$QUEUE->setHSentDate($H[$bcc]['id'],$created);
+			if (!$skipped) {
+				send_log(  "\n".date("Y-m-d H:i:s").": set h status=$h_status for entry $hcc to $bc -1");
+				$created=date("Y-m-d H:i:s");
+				for ($bcc=$hcc;$bcc<$bc;$bcc++) {
+					if (isset($H[$bcc]['id'])) {
+						//H Status setzen
+						$QUEUE->setHStatus($H[$bcc]['id'],$h_status);
+						$QUEUE->setHSentDate($H[$bcc]['id'],$created);
+					}
 				}
 			}
 
+			if ($skipped) {
+				send_log(  "\n".date("Y-m-d H:i:s").": skipped.");
+			}
 				//////////////////////////////////////////
 
 
-				//wenn address-fehler aufgetreten ist und KEIN Massenmailing!
-				if (!$massmail && !$a_error) {
+				//wenn kein address-fehler aufgetreten ist und KEIN Massenmailing!
+				if (!$massmail && !$a_error && !$skipped) {
 						//ADR Fehler zuruecksetzen....
 						$ADDRESS->setAError($ADR[0]['id'],0);//fehler auf 0
 						//ADR Status
@@ -817,7 +847,7 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 							send_log(  "\n".date("Y-m-d H:i:s").":     set Adr status: $a_status");
 							$ADDRESS->setStatus($ADR[0]['id'],$a_status);
 						}
-						send_log(  "\n".date("Y-m-d H:i:s").":     set Adr err changhed from ".$ADR[0]['errors']." to: 0");
+						send_log(  "\n".date("Y-m-d H:i:s").":     set Adr err changed from ".$ADR[0]['errors']." to: 0");
 				}//massmail && no error
 
 			$time=$T->MidResult();
@@ -891,7 +921,7 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 	update_file($tm_logpath,$logfilename,$LOG);
 }//$qcc
 
-	//a http refresh may work
+//a http refresh may work
 $reload_intervall=300;
 echo "<html>\n".
 			"<head>

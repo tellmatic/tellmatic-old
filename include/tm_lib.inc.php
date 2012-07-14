@@ -54,7 +54,7 @@ if (!$tm_config) {
 	/***********************************************************/
 	//use temporary html files?
 	/***********************************************************/
-	define ("USE_TMP_HTML_FILES", FALSE);//save output to temporary html files in admin/tmp
+	define ("USE_TMP_HTML_FILES", TRUE);//save output to temporary html files in admin/tmp
 	//this is useful if you want to prevent reloading a page with new values! 
 	
 	/***********************************************************/
@@ -241,7 +241,7 @@ if (!$tm_config) {
 //funktionen
 /***********************************************************/
 	require_once (TM_INCLUDEPATH."/Functions.inc.php");
-	
+
 /***********************************************************/
 //handle magic quotes
 /***********************************************************/
@@ -303,6 +303,8 @@ if (!$tm_config) {
 	//eMail prueflevel!
 	$EMailcheck_Intern=$C[0]['emailcheck_intern'];
 	$EMailcheck_Subscribe=$C[0]['emailcheck_subscribe'];
+	$EMailcheck_Sendit=$C[0]['emailcheck_sendit'];
+	$EMailcheck_Checkit=$C[0]['emailcheck_checkit'];
 
 /***********************************************************/
 //SMTP/POP3 Config
@@ -328,6 +330,14 @@ if (!$tm_config) {
 	$EMAILCHECK['subscribe'][1]="Syntax";
 	$EMAILCHECK['subscribe'][2]="Syntax + MX/DNS";
 	$EMAILCHECK['subscribe'][3]="Syntax, MX/DNS + Validate";
+
+	$EMAILCHECK['sendit'][1]="Syntax";
+	$EMAILCHECK['sendit'][2]="Syntax + MX/DNS";
+	$EMAILCHECK['sendit'][3]="Syntax, MX/DNS + Validate";
+
+	$EMAILCHECK['checkit'][1]="Syntax";
+	$EMAILCHECK['checkit'][2]="Syntax + MX/DNS";
+	$EMAILCHECK['checkit'][3]="Syntax, MX/DNS + Validate";
 
 /***********************************************************/
 //Tellmatic Name/Version

@@ -37,7 +37,7 @@ $Form->set_InputStyleClass($FormularName,$InputName_File,"mFormText","mFormTextF
 $Form->set_InputSize($FormularName,$InputName_File,48,256);
 $Form->set_InputDesc($FormularName,$InputName_File,___("CSV-Datei hochladen und importieren"));
 $Form->set_InputReadonly($FormularName,$InputName_File,false);
-$Form->set_InputOrder($FormularName,$InputName_File,2);
+$Form->set_InputOrder($FormularName,$InputName_File,1);
 $Form->set_InputLabel($FormularName,$InputName_File,"");
 
 //Select existing file
@@ -47,7 +47,7 @@ $Form->set_InputDefault($FormularName,$InputName_FileExisting,$$InputName_FileEx
 $Form->set_InputStyleClass($FormularName,$InputName_FileExisting,"mFormSelect","mFormSelectFocus");
 $Form->set_InputDesc($FormularName,$InputName_FileExisting,___("CSV-Datei auswählen"));
 $Form->set_InputReadonly($FormularName,$InputName_FileExisting,false);
-$Form->set_InputOrder($FormularName,$InputName_FileExisting,3);
+$Form->set_InputOrder($FormularName,$InputName_FileExisting,2);
 $Form->set_InputLabel($FormularName,$InputName_FileExisting,"");
 $Form->set_InputSize($FormularName,$InputName_FileExisting,0,1);
 $Form->set_InputMultiple($FormularName,$InputName_FileExisting,false);
@@ -72,7 +72,7 @@ $Form->set_InputStyleClass($FormularName,$InputName_Bulk,"mFormText","mFormTextF
 $Form->set_InputSize($FormularName,$InputName_Bulk,64,5);
 $Form->set_InputDesc($FormularName,$InputName_Bulk,"");
 $Form->set_InputReadonly($FormularName,$InputName_Bulk,false);
-$Form->set_InputOrder($FormularName,$InputName_Bulk,4);
+$Form->set_InputOrder($FormularName,$InputName_Bulk,3);
 $Form->set_InputLabel($FormularName,$InputName_Bulk,"");
 
 //Gruppe
@@ -180,7 +180,7 @@ $Form->set_InputDefault($FormularName,$InputName_Delimiter,$$InputName_Delimiter
 $Form->set_InputStyleClass($FormularName,$InputName_Delimiter,"mFormSelect","mFormSelectFocus");
 $Form->set_InputDesc($FormularName,$InputName_Delimiter,___("Trennzeichen"));
 $Form->set_InputReadonly($FormularName,$InputName_Delimiter,false);
-$Form->set_InputOrder($FormularName,$InputName_Delimiter,18);
+$Form->set_InputOrder($FormularName,$InputName_Delimiter,20);
 $Form->set_InputLabel($FormularName,$InputName_Delimiter,"");
 $Form->set_InputSize($FormularName,$InputName_Delimiter,0,1);
 $Form->set_InputMultiple($FormularName,$InputName_Delimiter,false);
@@ -199,6 +199,18 @@ $Form->set_InputDesc($FormularName,$InputName_Delete,___("Importierte Adressen l
 $Form->set_InputReadonly($FormularName,$InputName_Delete,false);
 $Form->set_InputOrder($FormularName,$InputName_Delete,15);
 $Form->set_InputLabel($FormularName,$InputName_Delete,"");
+
+//mark recheck
+$Form->new_Input($FormularName,$InputName_MarkRecheck,"checkbox", 1);
+$Form->set_InputJS($FormularName,$InputName_MarkRecheck," onChange=\"flash('submit','#ff0000');checkImport();\" onClick=\"checkImport();\"");
+$Form->set_InputDefault($FormularName,$InputName_MarkRecheck,$$InputName_MarkRecheck);
+$Form->set_InputStyleClass($FormularName,$InputName_MarkRecheck,"mFormText","mFormTextFocus");
+$Form->set_InputSize($FormularName,$InputName_MarkRecheck,48,256);
+$Form->set_InputDesc($FormularName,$InputName_MarkRecheck,___("Importierte Adressen zur Prüfung vormerken"));
+$Form->set_InputReadonly($FormularName,$InputName_MarkRecheck,false);
+$Form->set_InputOrder($FormularName,$InputName_MarkRecheck,18);
+$Form->set_InputLabel($FormularName,$InputName_MarkRecheck,"");
+
 
 //blacklist
 $Form->new_Input($FormularName,$InputName_Blacklist,"checkbox", 1);
@@ -230,7 +242,7 @@ $Form->set_InputDefault($FormularName,$InputName_ECheckImport,$EMailcheck_Intern
 $Form->set_InputStyleClass($FormularName,$InputName_ECheckImport,"mFormSelect","mFormSelectFocus");
 $Form->set_InputDesc($FormularName,$InputName_ECheckImport,"");
 $Form->set_InputReadonly($FormularName,$InputName_ECheckImport,false);
-$Form->set_InputOrder($FormularName,$InputName_ECheckImport,19);
+$Form->set_InputOrder($FormularName,$InputName_ECheckImport,22);
 $Form->set_InputLabel($FormularName,$InputName_ECheckImport,"");
 $Form->set_InputSize($FormularName,$InputName_ECheckImport,0,1);
 $Form->set_InputMultiple($FormularName,$InputName_ECheckImport,false);
@@ -248,7 +260,7 @@ $Form->set_InputStyleClass($FormularName,$InputName_Offset,"mFormText","mFormTex
 $Form->set_InputSize($FormularName,$InputName_Offset,20,10);
 $Form->set_InputDesc($FormularName,$InputName_Offset,___("Offset: Anzahl der Datensätze die übersprungen werden sollen."));
 $Form->set_InputReadonly($FormularName,$InputName_Offset,false);
-$Form->set_InputOrder($FormularName,$InputName_Offset,20);
+$Form->set_InputOrder($FormularName,$InputName_Offset,30);
 $Form->set_InputLabel($FormularName,$InputName_Offset,"");
 
 //limit
@@ -258,7 +270,7 @@ $Form->set_InputStyleClass($FormularName,$InputName_Limit,"mFormText","mFormText
 $Form->set_InputSize($FormularName,$InputName_Limit,20,10);
 $Form->set_InputDesc($FormularName,$InputName_Limit,___("Limit: Anzahl maximal zu exportierender Datensätze."));
 $Form->set_InputReadonly($FormularName,$InputName_Limit,false);
-$Form->set_InputOrder($FormularName,$InputName_Limit,21);
+$Form->set_InputOrder($FormularName,$InputName_Limit,31);
 $Form->set_InputLabel($FormularName,$InputName_Limit,"");
 
 //submit button
@@ -288,7 +300,7 @@ $_MAIN_OUTPUT.= $Form->INPUT[$FormularName]['act']['html'];
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName]['set']['html'];
 $_MAIN_OUTPUT.= "<table>";
 $_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top rowspan=\"12\" style=\"border-right:1px solid grey\">".tm_icon("group.png",___("Gruppen"))."&nbsp;".___("Gruppen")."<br>";
+$_MAIN_OUTPUT.= "<td valign=top rowspan=\"13\" style=\"border-right:1px solid grey\">".tm_icon("group.png",___("Gruppen"))."&nbsp;".___("Gruppen")."<br>";
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Group]['html'];
 $_MAIN_OUTPUT.= "</td>";
 
@@ -364,6 +376,15 @@ $_MAIN_OUTPUT.= tm_icon("key.png",___("Dublettencheck"))."&nbsp;<font color=\"#f
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_DoubleCheck]['html'];
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "</tr>";
+
+
+$_MAIN_OUTPUT.= "<tr>";
+$_MAIN_OUTPUT.= "<td style=\"border-top:2px solid grey\" valign=\"top\">";
+$_MAIN_OUTPUT.= tm_icon("spellcheck.png",___("zur Prüfung vormerken"))."&nbsp;".___("Zur automatiscen Prüfung vormerken")."";
+$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_MarkRecheck]['html'];
+$_MAIN_OUTPUT.= "</td>";
+$_MAIN_OUTPUT.= "</tr>";
+
 
 $_MAIN_OUTPUT.= "<tr>";
 $_MAIN_OUTPUT.= "<td style=\"border-top:2px solid grey\" valign=\"top\">";

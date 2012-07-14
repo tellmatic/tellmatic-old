@@ -10,6 +10,7 @@
 /* check Homepage for Updates and more Infos                                    */
 /* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
 /********************************************************************************/
+
 //copy selected option from selectbox to textarea/textfield etc. 
 		function copyselectedoption(ID,optionslist,pretag,posttag) {
 		//example:
@@ -45,6 +46,7 @@ function checkFormSettings(form_id,items_match,items_nomatch,check_id,check_valu
 	//items: array of items and bool to disable item[N][0]=item_id | [1]=disabled:true|false]
 	//check_id: id of item to check for check_value
 	//check_value: value of item with check_id 
+
 	form=document.getElementById(form_id);
 	field=document.getElementById(check_id);
 	if (field.value==check_value)  {
@@ -93,6 +95,56 @@ function checkHostType() {
 	checkFormSettings(form_id,items_match,items_nomatch,check_id,check_value);
 }
 
+
+function checkAdrListForm() {
+	form=document.getElementById('adr_list');
+	field=document.getElementById('set');
+
+	if (field.value == 'set_status_multi')  {
+		var changefield=document.getElementById('status_multi');
+	    changefield.disabled = false;
+		var changefield=document.getElementById('adr_grp_id_multi');
+	    changefield.disabled = true;
+	} else {
+		var changefield=document.getElementById('status_multi');
+	    changefield.disabled = true;
+	}
+	
+	if (field.value == 'move_grp_multi' || field.value == 'copy_grp_multi' || field.value == 'delete_grp_multi')  {
+		var changefield=document.getElementById('adr_grp_id_multi');
+	    changefield.disabled = false;
+		var changefield=document.getElementById('status_multi');
+	    changefield.disabled = true;
+	} else {
+		var changefield=document.getElementById('adr_grp_id_multi');
+	    changefield.disabled = true;
+	}
+}
+
+function checkADRCleanForm() {
+	form=document.getElementById('adr_clean');
+	field=document.getElementById('set');
+
+	var changefield=document.getElementById('adr_grp_id_multi');
+    changefield.disabled = true;
+	var changefield=document.getElementById('status_multi');
+    changefield.disabled = true;
+
+
+	if (field.value == 'set_status')  {
+		var changefield=document.getElementById('adr_grp_id_multi');
+	    changefield.disabled = true;
+		var changefield=document.getElementById('status_multi');
+	    changefield.disabled = false;
+	}
+	if (field.value == 'move_grp' || field.value == 'copy_grp' || field.value == 'delete_grp')  {
+		var changefield=document.getElementById('adr_grp_id_multi');
+	    changefield.disabled = false;
+		var changefield=document.getElementById('status_multi');
+	    changefield.disabled = true;
+	}
+	
+}
 function checkImport() {
 	form=document.getElementById('adr_import');
 	field=document.getElementById('delete');
@@ -113,6 +165,8 @@ function checkImport() {
 	    changefield.disabled = true;
 		var changefield=document.getElementById('check_double');
 	    changefield.disabled = true;
+		var changefield=document.getElementById('mark_recheck');
+	    changefield.disabled = true;
 	} else {
 	//enable
 		var changefield=document.getElementById('merge_groups');
@@ -128,6 +182,8 @@ function checkImport() {
 		var changefield=document.getElementById('aktiv_existing');
 	    changefield.disabled = false;
 		var changefield=document.getElementById('check_double');
+	    changefield.disabled = false;
+		var changefield=document.getElementById('mark_recheck');
 	    changefield.disabled = false;
 	}
 }
@@ -321,18 +377,18 @@ function iflip(iname,img) {
 
 
 
-WMTT=null;
+var WMTT=null;
 document.onmousemove=updateToolTip;
 
 function updateToolTip(e) 
 {
-	x=(document.all)?window.event.x+document.body.scrollLeft:e.pageX;
-	y=(document.all)?window.event.y+document.body.scrollTop:e.pageY;
+	var x=(document.all)?window.event.x+document.body.scrollLeft:e.pageX;
+	var y=(document.all)?window.event.y+document.body.scrollTop:e.pageY;
 	
 	if (WMTT!=null) 
 	{		
-		versetzungY=-150;
-		versetzungX=-180;
+		var versetzungY=-150;
+		var versetzungX=-180;
 		
 		var WMTTID = WMTT.id;
 		var ersterTeilDerID = WMTTID.substr(0,6);
@@ -345,7 +401,7 @@ function updateToolTip(e)
 function showToolTip(id,inputposition) 
 {
 	updateToolTip;
-	position=inputposition;
+	var position=inputposition;
 	WMTT=document.getElementById(id);
 	WMTT.style.display="block"
 }
@@ -359,7 +415,7 @@ function hideToolTip()
 
 
 
-ini = new Date().getTime();
+var ini = new Date().getTime();
 var pcld = 4;
 var pc = 4;
 var pct = 2;
@@ -392,7 +448,7 @@ if (pctt < 100) {
 } else {
 	pctt=1;
 }
-time = setTimeout("load()",111);
+var time = setTimeout("load()",111);
 //if (pc > 100) { clearTimeout(time); loaded() }
 
 }

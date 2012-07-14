@@ -58,6 +58,9 @@ if ($set=="save") {
 	}
 
 } else {
+	$$InputName_Aktiv=1;
+	$$InputName_Name=___("Neue Gruppe");
+	$$InputName_Descr=___("Neue Gruppe");
 	include_once (TM_INCLUDEPATH."/nl_grp_form.inc.php");
 }
 ?>

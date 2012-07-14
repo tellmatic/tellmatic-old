@@ -46,7 +46,7 @@ $FormularName="adr_list";
 //make new Form
 $Form->new_Form($FormularName,$_SERVER["PHP_SELF"],"post","_self");
 
-$Form->set_FormJS($FormularName," onSubmit=\"return confirmLink(this, '".___("Wirklich?")."');switchSection('div_loader');\" ");
+$Form->set_FormJS($FormularName," onSubmit=\"return confirmLink(this, '".___("Wirklich?")."');switchSection('div_loader');\" OnChange=\"checkAdrListForm();\" onClick=\"checkAdrListForm();\" ");
 
 //$this->set_FormStyle($FormularName,"font-size:10pt;font-color=red;");
 ////$Form->set_FormStyleClass($FormularName,"mForm");
@@ -75,7 +75,7 @@ $Form->new_Input($FormularName,"adr_grp_id", "hidden", $adr_grp_id);
 
 //AdrIDs
 $Form->new_Input($FormularName,$InputName_AdrID,"checkbox", "");
-$Form->set_InputJS($FormularName,$InputName_AdrID," onChange=\"flash('submit_adr','#ff0000');\" ");
+$Form->set_InputJS($FormularName,$InputName_AdrID," onChange=\"flash('submit_adr','#ff0000'); checkAdrListForm();\" onClick=\"checkAdrListForm();\" ");
 $Form->set_InputDefault($FormularName,$InputName_AdrID,$$InputName_AdrID);
 $Form->set_InputStyleClass($FormularName,$InputName_AdrID,"mFormCheckbox","mFormCheckboxFocus");
 $Form->set_InputDesc($FormularName,$InputName_AdrID,___("Auswählen"));
@@ -86,7 +86,7 @@ $Form->set_InputMultiple($FormularName,$InputName_AdrID,true);
 
 //Aktion
 $Form->new_Input($FormularName,$InputName_Action,"select", "");
-$Form->set_InputJS($FormularName,$InputName_Action," onChange=\"flash('submit_adr','#ff0000');\" ");
+$Form->set_InputJS($FormularName,$InputName_Action," onChange=\"flash('submit_adr','#ff0000'); checkAdrListForm();\" onClick=\"checkAdrListForm();\" ");
 $Form->set_InputDefault($FormularName,$InputName_Action,$$InputName_Action);
 $Form->set_InputStyleClass($FormularName,$InputName_Action,"mFormSelect","mFormSelectFocus");
 $Form->set_InputDesc($FormularName,$InputName_Action,___("Aktion ausführen"));
@@ -95,6 +95,9 @@ $Form->set_InputOrder($FormularName,$InputName_Action,1);
 $Form->set_InputLabel($FormularName,$InputName_Action,___("Aktion")."<br>");
 $Form->set_InputSize($FormularName,$InputName_Action,0,1);
 $Form->set_InputMultiple($FormularName,$InputName_Action,false);
+$Form->add_InputOption($FormularName,$InputName_Action,"check_syntax_multi",___("E-Mail Syntax prüfen"));
+$Form->add_InputOption($FormularName,$InputName_Action,"check_mx_multi",___("E-Mail MX/DNS prüfen"));
+$Form->add_InputOption($FormularName,$InputName_Action,"check_validate_multi",___("E-Mail Validieren"));
 $Form->add_InputOption($FormularName,$InputName_Action,"aktiv_1_multi",___("aktivieren"));
 $Form->add_InputOption($FormularName,$InputName_Action,"aktiv_0_multi",___("deaktivieren"));
 $Form->add_InputOption($FormularName,$InputName_Action,"set_status_multi",___("Status setzen"));
@@ -110,7 +113,7 @@ if ($user_is_manager) {
 
 //Gruppe
 $Form->new_Input($FormularName,$InputName_Group,"select", "");
-$Form->set_InputJS($FormularName,$InputName_Group," onChange=\"flash('submit_adr','#ff0000');\" ");
+$Form->set_InputJS($FormularName,$InputName_Group," onChange=\"flash('submit_adr','#ff0000'); checkAdrListForm();\" onClick=\"checkAdrListForm();\" ");
 $Form->set_InputDefault($FormularName,$InputName_Group,$$InputName_Group);
 $Form->set_InputStyleClass($FormularName,$InputName_Group,"mFormSelect","mFormSelectFocus");
 $Form->set_InputDesc($FormularName,$InputName_Group,___("Gruppen wählen, STRG/CTRL gedrückt halten und klicken f. Mehrfachauswahl"));
@@ -130,7 +133,7 @@ for ($accg=0; $accg<$acg; $accg++)
 
 //Status
 $Form->new_Input($FormularName,$InputName_Status,"select", "");
-$Form->set_InputJS($FormularName,$InputName_Status," onChange=\"flash('submit_adr','#ff0000');\" ");
+$Form->set_InputJS($FormularName,$InputName_Status," onChange=\"flash('submit_adr','#ff0000'); checkAdrListForm();\" onClick=\"checkAdrListForm();\" ");
 $Form->set_InputDefault($FormularName,$InputName_Status,$$InputName_Status);
 $Form->set_InputStyleClass($FormularName,$InputName_Status,"mFormSelect","mFormSelectFocus");
 $Form->set_InputDesc($FormularName,$InputName_Status,___("Status"));

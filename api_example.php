@@ -15,6 +15,8 @@ exit;//remove this line or add # in front of line
 //inclue tm config //remove the #
 #include ("./include/tm_config.inc.php");//change path to full path to tm_config if the script is not in tellmatic installation directory!
 
+//This is just a very simple example!
+
 /***********************************************************/
 //create a new newsletter:
 /***********************************************************/

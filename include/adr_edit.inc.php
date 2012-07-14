@@ -25,6 +25,7 @@ $limit=getVar("limit");
 $s_email=getVar("s_email");
 $s_status=getVar("s_status");
 $s_author=getVar("s_author");
+$s_aktiv=getVar("s_aktiv");
 $adr_grp_id=getVar("adr_grp_id");
 $st=getVar("st");
 $si=getVar("si");
@@ -102,6 +103,8 @@ if ($set=="save") {
 				"f9"=>$f9
 				),
 				$adr_grp);
+		//"memo"=>$memo,
+		//hier newmemo benutzen da memo sonst doppelt!
 		$ADDRESS->newMemo($ADR[0]['id'],$memo);
 		$ADDRESS->setStatus($adr_id,$status);
 

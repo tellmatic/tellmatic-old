@@ -334,10 +334,26 @@ class tm_CFG {
 							notify_unsubscribe,
 							emailcheck_intern,
 							emailcheck_subscribe,
+							emailcheck_sendit,
+							emailcheck_checkit,
 							max_mails_retry,
 							check_version,
 							track_image,
-							rcpt_name
+							rcpt_name,
+							unsubscribe_use_captcha,
+							unsubscribe_digits_captcha,
+							unsubscribe_sendmail,
+							unsubscribe_action,
+							checkit_limit,
+							checkit_from_email,
+							checkit_adr_reset_error,
+							checkit_adr_reset_status,
+							bounceit_limit,
+							bounceit_host,
+							bounceit_action,
+							bounceit_search,
+							bounceit_filter_to,
+							bounceit_filter_to_email
 						FROM ".TM_TABLE_CONFIG."
 						WHERE siteid='".TM_SITEID."'
 						LIMIT 1
@@ -354,11 +370,26 @@ class tm_CFG {
 			$this->C[$cc]['notify_unsubscribe']=$DB->Record['notify_unsubscribe'];
 			$this->C[$cc]['emailcheck_intern']=$DB->Record['emailcheck_intern'];
 			$this->C[$cc]['emailcheck_subscribe']=$DB->Record['emailcheck_subscribe'];
+			$this->C[$cc]['emailcheck_sendit']=$DB->Record['emailcheck_sendit'];
+			$this->C[$cc]['emailcheck_checkit']=$DB->Record['emailcheck_checkit'];
 			$this->C[$cc]['max_mails_retry']=$DB->Record['max_mails_retry'];
 			$this->C[$cc]['check_version']=$DB->Record['check_version'];
 			$this->C[$cc]['track_image']=$DB->Record['track_image'];
 			$this->C[$cc]['rcpt_name']=$DB->Record['rcpt_name'];
-			#$cc++;
+			$this->C[$cc]['unsubscribe_use_captcha']=$DB->Record['unsubscribe_use_captcha'];
+			$this->C[$cc]['unsubscribe_digits_captcha']=$DB->Record['unsubscribe_digits_captcha'];
+			$this->C[$cc]['unsubscribe_sendmail']=$DB->Record['unsubscribe_sendmail'];
+			$this->C[$cc]['unsubscribe_action']=$DB->Record['unsubscribe_action'];
+			$this->C[$cc]['checkit_limit']=$DB->Record['checkit_limit'];
+			$this->C[$cc]['checkit_from_email']=$DB->Record['checkit_from_email'];
+			$this->C[$cc]['checkit_adr_reset_error']=$DB->Record['checkit_adr_reset_error'];
+			$this->C[$cc]['checkit_adr_reset_status']=$DB->Record['checkit_adr_reset_status'];
+			$this->C[$cc]['bounceit_limit']=$DB->Record['bounceit_limit'];
+			$this->C[$cc]['bounceit_host']=$DB->Record['bounceit_host'];
+			$this->C[$cc]['bounceit_action']=$DB->Record['bounceit_action'];
+			$this->C[$cc]['bounceit_search']=$DB->Record['bounceit_search'];
+			$this->C[$cc]['bounceit_filter_to']=$DB->Record['bounceit_filter_to'];
+			$this->C[$cc]['bounceit_filter_to_email']=$DB->Record['bounceit_filter_to_email'];
 		}
 		return $this->C;
 	}//getCFG
@@ -376,10 +407,26 @@ class tm_CFG {
 					notify_unsubscribe,
 					emailcheck_intern,
 					emailcheck_subscribe,
+					emailcheck_sendit,
+					emailcheck_checkit,
 					check_version,
 					max_mails_retry,
 					track_image,
 					rcpt_name,
+					unsubscribe_use_captcha,
+					unsubscribe_digits_captcha,
+					unsubscribe_sendmail,
+					unsubscribe_action,
+					checkit_limit,
+					checkit_from_email,
+					checkit_adr_reset_error,
+					checkit_adr_reset_status,
+					bounceit_limit,
+					bounceit_host,
+					bounceit_action,
+					bounceit_search,
+					bounceit_filter_to,
+					bounceit_filter_to_email,
 					siteid
 					)
 					VALUES
@@ -390,10 +437,26 @@ class tm_CFG {
 					".checkset_int($cfg["notify_unsubscribe"]).",
 					".checkset_int($cfg["emailcheck_intern"]).",
 					".checkset_int($cfg["emailcheck_subscribe"]).",
+					".checkset_int($cfg["emailcheck_sendit"]).",
+					".checkset_int($cfg["emailcheck_checkit"]).",
 					".checkset_int($cfg["check_version"]).",
 					".checkset_int($cfg["max_mails_retry"]).",
 					'".dbesc($cfg["track_image"])."',
 					'".dbesc($cfg["rcpt_name"])."',
+					".checkset_int($cfg["unsubscribe_use_captcha"]).",
+					".checkset_int($cfg["unsubscribe_digits_captcha"]).",
+					".checkset_int($cfg["unsubscribe_sendmail"]).",
+					'".dbesc($cfg["unsubscribe_action"])."',
+					".checkset_int($cfg["checkit_limit"]).",
+					'".dbesc($cfg["checkit_from_email"])."',
+					".checkset_int($cfg["checkit_adr_reset_error"]).",
+					".checkset_int($cfg["checkit_adr_reset_status"]).",
+					".checkset_int($cfg["bounceit_limit"]).",
+					".checkset_int($cfg["bounceit_host"]).",
+					'".dbesc($cfg["bounceit_action"])."',
+					'".dbesc($cfg["bounceit_search"])."',
+					".checkset_int($cfg["bounceit_filter_to"]).",
+					'".dbesc($cfg["bounceit_filter_to_email"])."',
 					'".dbesc($cfg["siteid"])."'
 					)
 					";
@@ -417,10 +480,26 @@ class tm_CFG {
 					notify_unsubscribe=".checkset_int($cfg["notify_unsubscribe"]).",
 					emailcheck_intern=".checkset_int($cfg["emailcheck_intern"]).",
 					emailcheck_subscribe=".checkset_int($cfg["emailcheck_subscribe"]).",
+					emailcheck_sendit=".checkset_int($cfg["emailcheck_sendit"]).",
+					emailcheck_checkit=".checkset_int($cfg["emailcheck_checkit"]).",
 					check_version=".checkset_int($cfg["check_version"]).",
 					max_mails_retry=".checkset_int($cfg["max_mails_retry"]).",
 					track_image='".dbesc($cfg["track_image"])."',
-					rcpt_name='".dbesc($cfg["rcpt_name"])."'
+					rcpt_name='".dbesc($cfg["rcpt_name"])."',
+					unsubscribe_use_captcha=".checkset_int($cfg["unsubscribe_use_captcha"]).",
+					unsubscribe_digits_captcha=".checkset_int($cfg["unsubscribe_digits_captcha"]).",
+					unsubscribe_sendmail=".checkset_int($cfg["unsubscribe_sendmail"]).",
+					unsubscribe_action='".dbesc($cfg["unsubscribe_action"])."',
+					checkit_limit=".checkset_int($cfg["checkit_limit"]).",
+					checkit_from_email='".dbesc($cfg["checkit_from_email"])."',
+					checkit_adr_reset_error=".checkset_int($cfg["checkit_adr_reset_error"]).",
+					checkit_adr_reset_status=".checkset_int($cfg["checkit_adr_reset_status"]).",
+					bounceit_limit=".checkset_int($cfg["bounceit_limit"]).",
+					bounceit_host=".checkset_int($cfg["bounceit_host"]).",
+					bounceit_action='".dbesc($cfg["bounceit_action"])."',
+					bounceit_search='".dbesc($cfg["bounceit_search"])."',
+					bounceit_filter_to=".checkset_int($cfg["bounceit_filter_to"]).",
+					bounceit_filter_to_email='".dbesc($cfg["bounceit_filter_to_email"])."'
 					WHERE siteid='".dbesc($cfg["siteid"])."'
 					";
 		if ($DB->Query($Query)) {

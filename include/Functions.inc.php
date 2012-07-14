@@ -290,7 +290,7 @@ function getIP() {
 				$tokenc1 = (int) substr($_SERVER['HTTP_VIA'],0,strpos($_SERVER['HTTP_VIA'],"."));
 			}
 		}
-		if (!($token1 == 10 || $token1 == 192 || $token1 == 127 || $token1 == 224)) { // Proxy is nicht lokal (Firewall oder Transparent-Proxy)
+		if (!($token1 == 10 || $token1 == 192 || $token1 == 127 || $token1 == 224) && isset($_SERVER['HTTP_X_FORWARDED_FOR'])) { // Proxy is nicht lokal (Firewall oder Transparent-Proxy)
 			$ip = long2ip(ip2long($_SERVER['HTTP_X_FORWARDED_FOR']));
 		} elseif(isset($_SERVER['HTTP_CLIENT_IP']) && !($tokenc1 == 10 || $tokenc1 == 192 || $tokenc1 == 127 || $tokenc1 == 224)) {
 			$ip = long2ip(ip2long($_SERVER['HTTP_CLIENT_IP']));
@@ -737,7 +737,7 @@ function SendMail_smtp($from_address,$from_name,$to_address,$to_name,$subject,$t
 	$email_message->default_charset=$encoding;
 	$email_message->authentication_mechanism=$HOST[0]['smtp_auth'];;
 	/* This computer address */
-	$email_message->localhost=$HOST[0]['smtp_domain'];;
+	$email_message->localhost=$HOST[0]['smtp_domain'];
 	$email_message->ssl=$HOST[0]['smtp_ssl'];
 	/* SMTP server address, probably your ISP address */
 	$email_message->smtp_host=$HOST[0]['host'];
@@ -949,62 +949,77 @@ function checkEmailAdr($email,$level=1) {
 
 	//validate()
 	//fragt mx ab, wenn domain aber noch kein dns eintrag hat, weil gerade erzeugt......schlaegt der check fehl....
-	if ($level==3) {
-		$validate=validate_email($email);
-		$Return[0]=$validate[0];
-		$Return[1]=$validate[1];
+	if ($level>=3) {
+		$Return=validate_email($email,$from);
 	}
 	return $Return;
 }
 
-function validate_email($email) {
-	global $HTTP_HOST, $SMTPDomain;
+function validate_email($email,$from="") {
+	$protocol="";
+	$HOSTS=new tm_HOST();
+	$HOST=$HOSTS->getStdSMTPHost();
+
+	if (empty($from)) {
+		$from=$HOST[0]['sender_email'];
+	}
+	
 	$Return=Array(0=>true, 1=>"OK");
 	list($userName, $mailDomain) = split("@", $email);
+	$protocol.="from: ".$from." \n";
+	$protocol.="to: ".$email." \n";
 	$mx=getmxrr($mailDomain,$mxhosts);
 	$hc=count($mxhosts);
 	if ($hc>0) {
 		//wir preuefen nur mal den ersten mx
 		$host=$mxhosts[0];
-		$Connect = fsockopen ( $host, 25 );
+		$protocol.=$host." \n";
+		$Connect = fsockopen ( $host, 25, $errno, $errstr, 0.5);//timeout 0,5 sec
 		if ($Connect) {
 	        //aol hack
 	        /*
+	        //schwachsinnig! gibt schleife bis 220... ohoh
 	        do {
 					 $Out = fgets ( $Connect, 1024 );
 				} while (ereg("^220",$Out));
 	        */
 	        if (ereg("^220", $Out = fgets($Connect, 1024))) {
 	        //aol: if (ereg("^220", $Out)) {
-	           fputs ($Connect, "HELO ".$SMTPDomain."\r\n");
+	           fputs ($Connect, "HELO ".$HOST[0]['smtp_domain']."\r\n");
 	           $Out = fgets ( $Connect, 1024 );
-	           fputs ($Connect, "MAIL FROM: <{$email}>\r\n");
+	           $protocol.=$Out." \n";
+	           fputs ($Connect, "MAIL FROM: <{$from}>\r\n");
 	           $From = fgets ( $Connect, 1024 );
+	           usleep(200000);
+					$protocol.=$From." \n";
 	           fputs ($Connect, "RCPT TO: <{$email}>\r\n");
 	           $To = fgets ($Connect, 1024);
+	           $protocol.=$To." \n";
 	           fputs ($Connect, "QUIT\r\n");
 	           fclose($Connect);
+	           //http://www.faqs.org/rfcs/rfc821.html
 	           if (!ereg ("^250", $From) || !ereg ( "^250", $To )) {
+	           	if (ereg ("^4", $From) || ereg ( "^4", $To )) {
+	           		$Return[1]=___("Server lehnt Mail ab, temporaerer Fehler, Greylisting etc.");#."\n".$protocol."\n";
+	           	} else {
 	               $Return[0]=false;
-	               $Return[1]=___("Server meldet Fehler, Adresse abgelehnt");
-						return $Return;
+	               $Return[1]=___("Server meldet Fehler, Adresse abgelehnt");#."\n".$protocol."\n";
+					}
 	           }
 	        } else {
 	            $Return[0] = false;
-	            $Return[1] = ___("Keine Antwort vom Server.");
-	            return $Return;
+	            $Return[1] = ___("Keine Antwort vom Server.");#."\n".$protocol."\n";
            }
 	   }  else {
 	       $Return[0]=false;
-	       $Return[1]=___("Kann Verbindung zum Server nicht herstellen");
-	       return $Return;
+	       $Return[1]=___("Kann Verbindung zum Server nicht herstellen.")." (".$errno." ".$errstr.")";#."\n".$protocol."\n";
 	   }
 	} else {
 		//kein mx host gefunden $hc=0
 	        $Return[0]=false;
-	        $Return[1]=___("Kein MX Eintrag (Validate)");
-	        return $Return;
+	        $Return[1]=___("Kein MX Eintrag (Validate)");#."\n".$protocol."\n";
 	}
+	$Return[1] .="\n".$protocol."\n";
 	return $Return;
 }
 

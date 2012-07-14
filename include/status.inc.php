@@ -51,6 +51,16 @@ $showadrURLPara_=$showadrURLPara->getAllParams();
 $showgrpURLPara_=$showgrpURLPara->getAllParams();
 
 
+//uebersicht anzeigen!
+$_MAIN_OUTPUT.="<div class=\"adr_summary\">";#ccdddd
+$_MAIN_OUTPUT.=tm_icon("information.png",___("Übersicht"),___("Übersicht"))."&nbsp;<b>".___("Übersicht").":</b>";
+$entrys_all=$ADDRESS->countADR();//anzahl eintraege, alles
+$_MAIN_OUTPUT.="<br>".sprintf(___("Adressen (gesamt): %s"),"<b>".$entrys_all."</b>");
+$search_recheck=Array();
+$search_recheck['recheck']=1;
+$entrys_recheck=$ADDRESS->countADR(0,$search_recheck);//anzahl eintraege die zur pruefung markiert sind
+if ($entrys_recheck>0) $_MAIN_OUTPUT.=" / ".sprintf(___("Adressen (zur Prüfung vorgemerkt): %s"),"<b>".$entrys_recheck."</b>");
+$_MAIN_OUTPUT.="<br><br></div><br>";
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Gesamt nach Status
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -68,6 +78,7 @@ $_MAIN_OUTPUT.="<br><center><table border=0><tr><td valign=\"top\" align=\"left\
 $AG=$ADDRESS->getGroup(0,0,0,1);//count!
 $agc=count($AG);
 $ac=$ADDRESS->countAdr();
+$chart->addPoint(new Point(___("Summe")." (100%)", $ac));
 $showadrURLPara->delParam("email");
 $showadrURLPara->delParam("adr_id");
 $showadrURLPara->addParam("act","adr_list");

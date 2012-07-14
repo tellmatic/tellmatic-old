@@ -5,15 +5,17 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: 1.0.8.7\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-07-08 16:12+0200\n"
-"PO-Revision-Date: 2009-07-08 23:35+0100\n"
-"Last-Translator: Volker Augustin <info@tellmatic.de>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"POT-Creation-Date: 2010-02-24 15:10+0100\n"
+"PO-Revision-Date: 2010-02-25 14:05+0100\n"
+"Last-Translator: Volker Augustin <info@tellmatic.org>\n"
+"Language-Team: LANGUAGE <info@tellmatic.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: English\n"
+"X-Poedit-SourceCharset: utf-8\n"
 
 #: ../install.php:38
 #: ../install.php:130
@@ -37,6 +39,7 @@ msgstr "PHP Version:"
 #: ../install.php:154
 #: ../include/adr_list.inc.php:504
 #: ../include/bl_list_legende.inc.php:21
+#: ../include/adr_list.inc.php:630
 msgid "Domain"
 msgstr "Domain"
 
@@ -81,7 +84,7 @@ msgstr "Connection to database was successfull"
 #: ../include/install/install_check_db.inc.php:26
 #: ../include/install/install_check_db.inc.php:27
 msgid "Fehler! Es konnte keine Verbindung zur Datenbank aufgebaut werden"
-msgstr "Error! Connection to database can not established"
+msgstr "Error! Connection to database can not be established"
 
 #: ../include/install/install_check_input.inc.php:17
 msgid "Kein Benutzernamen angeben"
@@ -138,6 +141,13 @@ msgstr "Data for database access not complete"
 #: ../include/Functions.inc.php:395
 #: ../include/host_test.inc.php:142
 #: ../include/Stats.inc.php:155
+#: ../include/install/install_check_pre.inc.php:147
+#: ../include/form_form.inc.php:522
+#: ../include/form_form.inc.php:535
+#: ../include/form_new.inc.php:318
+#: ../include/form_new.inc.php:319
+#: ../include/form_new.inc.php:320
+#: ../include/Functions.inc.php:469
 msgid "Fehler"
 msgstr "Error"
 
@@ -202,6 +212,16 @@ msgstr "The PHP function imap_open is not available, bouncemanagement and mailbo
 #: ../include/install/install_check_pre.inc.php:130
 #: ../include/install/install_check_pre.inc.php:134
 #: ../include/install/install_check_pre.inc.php:138
+#: ../include/install/install_check_pre.inc.php:103
+#: ../include/install/install_check_pre.inc.php:107
+#: ../include/install/install_check_pre.inc.php:111
+#: ../include/install/install_check_pre.inc.php:115
+#: ../include/install/install_check_pre.inc.php:119
+#: ../include/install/install_check_pre.inc.php:123
+#: ../include/install/install_check_pre.inc.php:127
+#: ../include/install/install_check_pre.inc.php:131
+#: ../include/install/install_check_pre.inc.php:135
+#: ../include/install/install_check_pre.inc.php:139
 #, c-format
 msgid "%s ist Schreibgeschützt. Weitere Details finden Sie den den Dateien README und INSTALL"
 msgstr "%s is write protected, please read README, INSTALL and FAQ"
@@ -259,6 +279,18 @@ msgstr "%s is write protected, please read README, INSTALL and FAQ"
 #: ../include/install/install_conf_sql.inc.php:404
 #: ../include/install/install_conf_sql.inc.php:435
 #: ../include/install/install_conf_sql.inc.php:448
+#: ../include/install/install_conf_sql.inc.php:112
+#: ../include/install/install_conf_sql.inc.php:128
+#: ../include/install/install_conf_sql.inc.php:257
+#: ../include/install/install_conf_sql.inc.php:274
+#: ../include/install/install_conf_sql.inc.php:309
+#: ../include/install/install_conf_sql.inc.php:331
+#: ../include/install/install_conf_sql.inc.php:363
+#: ../include/install/install_conf_sql.inc.php:386
+#: ../include/install/install_conf_sql.inc.php:408
+#: ../include/install/install_conf_sql.inc.php:424
+#: ../include/install/install_conf_sql.inc.php:455
+#: ../include/install/install_conf_sql.inc.php:468
 msgid "Tabelle"
 msgstr "Table"
 
@@ -299,6 +331,18 @@ msgstr "Table"
 #: ../include/status.inc.php:100
 #: ../include/status.inc.php:139
 #: ../include/status.inc.php:175
+#: ../include/adm_set_form.inc.php:606
+#: ../include/adr_search_form.inc.php:149
+#: ../include/adr_search_form.inc.php:150
+#: ../include/adr_search_form.inc.php:151
+#: ../include/adr_search_form.inc.php:152
+#: ../include/adr_search_form.inc.php:153
+#: ../include/adr_search_form.inc.php:154
+#: ../include/Menu.inc.php:141
+#: ../include/Menu.inc.php:186
+#: ../include/status.inc.php:111
+#: ../include/status.inc.php:150
+#: ../include/status.inc.php:186
 msgid "Adressen"
 msgstr "Addresses"
 
@@ -317,6 +361,7 @@ msgstr "Addresses - groups"
 #: ../include/install/install_conf_sql.inc.php:110
 #: ../include/install/install_conf_sql.inc.php:115
 #: ../include/install/install_conf_sql.inc.php:111
+#: ../include/install/install_conf_sql.inc.php:112
 msgid "Adressen - Referenzen"
 msgstr "Addresses - references"
 
@@ -328,6 +373,8 @@ msgstr "Addresses - references"
 #: ../include/Menu.inc.php:548
 #: ../include/install/install_conf_sql.inc.php:127
 #: ../include/statistic_frm.inc.php:65
+#: ../include/install/install_conf_sql.inc.php:128
+#: ../include/Menu.inc.php:603
 msgid "Einstellungen"
 msgstr "Settings"
 
@@ -340,6 +387,8 @@ msgstr "Settings"
 #: ../include/install/install_conf_sql.inc.php:163
 #: ../include/Menu.inc.php:219
 #: ../include/install/install_conf_sql.inc.php:146
+#: ../include/Menu.inc.php:239
+#: ../include/Menu.inc.php:245
 msgid "Formulare"
 msgstr "Forms"
 
@@ -347,6 +396,7 @@ msgstr "Forms"
 #: ../include/install/install_conf_sql.inc.php:253
 #: ../include/install/install_conf_sql.inc.php:255
 #: ../include/install/install_conf_sql.inc.php:241
+#: ../include/install/install_conf_sql.inc.php:257
 msgid "Formulare - Referenzen"
 msgstr "Forms - references"
 
@@ -368,6 +418,8 @@ msgstr "Forms - references"
 #: ../include/nl_grp_list.inc.php:143
 #: ../include/queue_form.inc.php:229
 #: ../include/queue_list.inc.php:167
+#: ../include/install/install_conf_sql.inc.php:274
+#: ../include/adm_set_form.inc.php:470
 msgid "Newsletter"
 msgstr "Newsletter"
 
@@ -395,6 +447,9 @@ msgstr "Newsletter - groups"
 #: ../include/host_list.inc.php:79
 #: ../include/Login_form.inc.php:75
 #: ../include/Login_form.inc.php:76
+#: ../include/install/install_conf_sql.inc.php:386
+#: ../include/Menu.inc.php:486
+#: ../include/Menu.inc.php:577
 msgid "Benutzer"
 msgstr "User"
 
@@ -402,6 +457,7 @@ msgstr "User"
 #: ../include/install/install_conf_sql.inc.php:399
 #: ../include/install/install_conf_sql.inc.php:403
 #: ../include/install/install_conf_sql.inc.php:388
+#: ../include/install/install_conf_sql.inc.php:408
 msgid "Formulare - Anmeldungen"
 msgstr "Forms - subscriptions"
 
@@ -413,6 +469,7 @@ msgstr "Forms - subscriptions"
 #: ../include/install/install_conf_sql.inc.php:488
 #: ../include/install/install_conf_sql.inc.php:468
 #: ../include/install/install_conf_sql.inc.php:474
+#: ../include/install/install_conf_sql.inc.php:494
 #, c-format
 msgid "Datenbank: %s wurde erstellt"
 msgstr "Database: %s created"
@@ -421,10 +478,12 @@ msgstr "Database: %s created"
 #: ../include/install/install_conf_sql.inc.php:469
 #: ../include/install/install_conf_sql.inc.php:491
 #: ../include/install/install_conf_sql.inc.php:477
+#: ../include/install/install_conf_sql.inc.php:497
 msgid "Ein Fehler beim Erstellen der Datenbank ist aufgetreten"
 msgstr "An error occured creating the database"
 
 #: ../include/install/install_finish.inc.php:63
+#: ../include/install/install_finish.inc.php:61
 msgid "Eine E-Mail mit folgenden Informationen wurde an den Entwickler von Tellmatic gesendet"
 msgstr "An email with the following informations have been sent to the developer of Tellmatic"
 
@@ -534,6 +593,9 @@ msgstr "Language"
 #: ../include/adr_search_form.inc.php:209
 #: ../include/user_form.inc.php:164
 #: ../include/user_form.inc.php:165
+#: ../include/adr_search_form.inc.php:180
+#: ../include/adr_search_form.inc.php:208
+#: ../include/adr_search_form.inc.php:236
 msgid "E-Mail-Adresse"
 msgstr "E-mail"
 
@@ -665,12 +727,14 @@ msgstr "Continue (Database)"
 #: ../include/install/install_form.inc.php:286
 #: ../include/install/install_form.inc.php:357
 #: ../include/install/install_form.inc.php:389
+#: ../include/install/install_form.inc.php:380
 msgid "Zurück (Benutzerdaten)"
 msgstr "Back (User)"
 
 #: ../include/install/install_form.inc.php:287
 #: ../include/install/install_form.inc.php:358
 #: ../include/install/install_form.inc.php:390
+#: ../include/install/install_form.inc.php:381
 msgid "Weiter (SMTP)"
 msgstr "Continue (SMTP)"
 
@@ -678,6 +742,7 @@ msgstr "Continue (SMTP)"
 #: ../include/install/install_form.inc.php:408
 #: ../include/install/install_form.inc.php:413
 #: ../include/install/install_form.inc.php:453
+#: ../include/install/install_form.inc.php:440
 msgid "Zurück (Datenbank)"
 msgstr "Back (Database)"
 
@@ -685,6 +750,7 @@ msgstr "Back (Database)"
 #: ../include/install/install_form.inc.php:409
 #: ../include/install/install_form.inc.php:414
 #: ../include/install/install_form.inc.php:454
+#: ../include/install/install_form.inc.php:441
 msgid "Weiter (Installieren)"
 msgstr "Continue (Install)"
 
@@ -692,6 +758,7 @@ msgstr "Continue (Install)"
 #: ../include/install/install_form.inc.php:438
 #: ../include/install/install_form.inc.php:443
 #: ../include/install/install_form.inc.php:486
+#: ../include/install/install_form.inc.php:473
 msgid "Zurück (SMTP)"
 msgstr "Back (SMTP)"
 
@@ -707,6 +774,7 @@ msgstr "User '%s' created"
 #: ../include/install/install_install.inc.php:137
 #: ../include/install/install_install.inc.php:156
 #: ../include/install/install_install.inc.php:129
+#: ../include/install/install_install.inc.php:141
 msgid "Einstellungen wurden gespeichert."
 msgstr "Settings saved"
 
@@ -714,6 +782,7 @@ msgstr "Settings saved"
 #: ../include/install/install_install.inc.php:186
 #: ../include/install/install_install.inc.php:207
 #: ../include/install/install_install.inc.php:178
+#: ../include/install/install_install.inc.php:197
 msgid "Konfigurationsdatei wurde gespeichert."
 msgstr "Configfile created"
 
@@ -721,6 +790,7 @@ msgstr "Configfile created"
 #: ../include/install/install_install.inc.php:189
 #: ../include/install/install_install.inc.php:210
 #: ../include/install/install_install.inc.php:181
+#: ../include/install/install_install.inc.php:200
 msgid ".htpasswd Datei wurden erstellt."
 msgstr ".htpasswd file created"
 
@@ -728,6 +798,7 @@ msgstr ".htpasswd file created"
 #: ../include/install/install_install.inc.php:200
 #: ../include/install/install_install.inc.php:221
 #: ../include/install/install_install.inc.php:191
+#: ../include/install/install_install.inc.php:210
 msgid ".htaccess Dateien wurden erstellt."
 msgstr ".htaccess files created"
 
@@ -771,18 +842,21 @@ msgstr "Will shown as sender-address in you mailings."
 #: ../include/adm_set_form.inc.php:104
 #: ../include/adm_set_form.inc.php:105
 #: ../include/adm_set_form.inc.php:74
+#: ../include/adm_set_form.inc.php:111
 msgid "Nachricht bei Anmeldung"
 msgstr "Notify on subscription"
 
 #: ../include/adm_set_form.inc.php:115
 #: ../include/adm_set_form.inc.php:116
 #: ../include/adm_set_form.inc.php:85
+#: ../include/adm_set_form.inc.php:122
 msgid "Nachricht bei Abmeldung"
 msgstr "Notify on unsubscribe"
 
 #: ../include/adm_set_form.inc.php:125
 #: ../include/adm_set_form.inc.php:126
 #: ../include/adm_set_form.inc.php:95
+#: ../include/adm_set_form.inc.php:132
 msgid "E-Mail-Adresse für Benachrichtigungen"
 msgstr "E-mail for notifications"
 
@@ -809,6 +883,7 @@ msgstr "SMTP domain"
 #: ../include/adm_set_form.inc.php:213
 #: ../include/adm_set_form.inc.php:221
 #: ../include/adm_set_form.inc.php:106
+#: ../include/adm_set_form.inc.php:142
 msgid "Maximale Anzahl Sendeversuche pro Adresse"
 msgstr "Max. delivery-errors per address"
 
@@ -830,6 +905,7 @@ msgstr "Max. BCC-addresses per mail, for massmailings"
 #: ../include/adm_set_form.inc.php:276
 #: ../include/adm_set_form.inc.php:286
 #: ../include/adm_set_form.inc.php:125
+#: ../include/adm_set_form.inc.php:161
 msgid "Aktuelle Version und News auf der Startseite einblenden"
 msgstr "Show current version and news on starting page"
 
@@ -841,6 +917,8 @@ msgstr "Show current version and news on starting page"
 #: ../include/nl_form.inc.php:192
 #: ../include/adm_set_form.inc.php:136
 #: ../include/nl_form.inc.php:195
+#: ../include/adm_set_form.inc.php:171
+#: ../include/nl_form.inc.php:296
 msgid "Blind-/Tracking-Bild auswählen"
 msgstr "Select tracking image"
 
@@ -852,6 +930,8 @@ msgstr "Select tracking image"
 #: ../include/nl_form.inc.php:218
 #: ../include/adm_set_form.inc.php:161
 #: ../include/nl_form.inc.php:221
+#: ../include/adm_set_form.inc.php:196
+#: ../include/nl_form.inc.php:322
 msgid "neues Bild hochladen"
 msgstr "upload new image"
 
@@ -884,6 +964,9 @@ msgstr "upload new image"
 #: ../include/nl_form.inc.php:254
 #: ../include/nl_grp_form.inc.php:88
 #: ../include/queue_form.inc.php:203
+#: ../include/adm_set_form.inc.php:424
+#: ../include/adr_form.inc.php:129
+#: ../include/nl_form.inc.php:354
 msgid "Speichern"
 msgstr "Save"
 
@@ -962,6 +1045,17 @@ msgstr "Save"
 #: ../include/queue_form.inc.php:211
 #: ../include/user_form.inc.php:116
 #: ../include/user_form.inc.php:118
+#: ../include/adm_set_form.inc.php:432
+#: ../include/adm_set_form.inc.php:434
+#: ../include/adr_form.inc.php:137
+#: ../include/adr_form.inc.php:139
+#: ../include/adr_list_form_head.inc.php:162
+#: ../include/adr_list_form_head.inc.php:164
+#: ../include/adr_search_form.inc.php:261
+#: ../include/adr_search_form.inc.php:263
+#: ../include/form_form.inc.php:553
+#: ../include/nl_form.inc.php:363
+#: ../include/nl_form.inc.php:365
 msgid "Reset"
 msgstr "Reset Values"
 
@@ -1006,6 +1100,11 @@ msgstr "Reset Values"
 #: ../include/host_form.inc.php:417
 #: ../include/host_form.inc.php:426
 #: ../include/user_form.inc.php:37
+#: ../include/adm_set_form.inc.php:557
+#: ../include/adr_form.inc.php:51
+#: ../include/adr_form.inc.php:183
+#: ../include/adr_list.inc.php:487
+#: ../include/adr_list.inc.php:626
 msgid "E-Mail"
 msgstr "E-mail"
 
@@ -1078,6 +1177,8 @@ msgstr "E-mail (name@domain.tld)"
 #: ../include/host_list.inc.php:71
 #: ../include/nl_grp_form.inc.php:37
 #: ../include/nl_grp_form.inc.php:116
+#: ../include/adm_set_form.inc.php:476
+#: ../include/form_form.inc.php:533
 msgid "Name"
 msgstr "Name"
 
@@ -1108,6 +1209,11 @@ msgstr "Return-path-address for bounce-messages"
 #: ../include/adm_set_form.inc.php:205
 #: ../include/adm_set_form.inc.php:214
 #: ../include/adr_import_form.inc.php:374
+#: ../include/adm_set_form.inc.php:485
+#: ../include/adm_set_form.inc.php:494
+#: ../include/adm_set_form.inc.php:530
+#: ../include/adm_set_form.inc.php:612
+#: ../include/adr_import_form.inc.php:395
 msgid "E-Mail-Prüfung"
 msgstr "E-mail validation"
 
@@ -1122,6 +1228,7 @@ msgstr "E-mail-validation (internal)"
 #: ../include/adm_set_form.inc.php:396
 #: ../include/adm_set_form.inc.php:404
 #: ../include/adm_set_form.inc.php:214
+#: ../include/adm_set_form.inc.php:530
 msgid "Prüfung der E-Mail-Adressen bei Anmeldung"
 msgstr "E-mail-validation (forms/subscriptions)"
 
@@ -1133,6 +1240,8 @@ msgstr "E-mail-validation (forms/subscriptions)"
 #: ../include/adm_set_form.inc.php:422
 #: ../include/adm_set_form.inc.php:223
 #: ../include/adm_set_form.inc.php:232
+#: ../include/adm_set_form.inc.php:539
+#: ../include/adm_set_form.inc.php:548
 msgid "Benachrichtigung"
 msgstr "Notify"
 
@@ -1140,6 +1249,7 @@ msgstr "Notify"
 #: ../include/adm_set_form.inc.php:405
 #: ../include/adm_set_form.inc.php:413
 #: ../include/adm_set_form.inc.php:223
+#: ../include/adm_set_form.inc.php:539
 msgid "Benachrichtigung bei Neuanmeldung (subscribe)"
 msgstr "Notify on subscriptions"
 
@@ -1147,6 +1257,7 @@ msgstr "Notify on subscriptions"
 #: ../include/adm_set_form.inc.php:414
 #: ../include/adm_set_form.inc.php:422
 #: ../include/adm_set_form.inc.php:232
+#: ../include/adm_set_form.inc.php:548
 msgid "Benachrichtigung bei Abmeldung (unsubscribe)"
 msgstr "Notify on unsubscribe"
 
@@ -1154,6 +1265,7 @@ msgstr "Notify on unsubscribe"
 #: ../include/adm_set_form.inc.php:423
 #: ../include/adm_set_form.inc.php:431
 #: ../include/adm_set_form.inc.php:241
+#: ../include/adm_set_form.inc.php:557
 msgid "Benachrichtigungen gehen an (name@domain.tld)"
 msgstr "Notifications goes to (name@domain.tld)"
 
@@ -1161,6 +1273,7 @@ msgstr "Notifications goes to (name@domain.tld)"
 #: ../include/adm_set_form.inc.php:432
 #: ../include/adm_set_form.inc.php:440
 #: ../include/adm_set_form.inc.php:250
+#: ../include/adm_set_form.inc.php:503
 msgid "Sendeversuche per E-Mail"
 msgstr "Retries per recipient"
 
@@ -1168,6 +1281,7 @@ msgstr "Retries per recipient"
 #: ../include/adm_set_form.inc.php:432
 #: ../include/adm_set_form.inc.php:440
 #: ../include/adm_set_form.inc.php:250
+#: ../include/adm_set_form.inc.php:503
 msgid "Maximale Versuche pro E-Mail (Gesamt)"
 msgstr "Max. delivery-errors per mail (total)"
 
@@ -1208,6 +1322,7 @@ msgstr "SMTP host name"
 #: ../include/adm_set_form.inc.php:515
 #: ../include/adm_set_form.inc.php:529
 #: ../include/adm_set_form.inc.php:258
+#: ../include/adm_set_form.inc.php:461
 msgid "Versionsabfrage und News"
 msgstr "Version check and news"
 
@@ -1215,6 +1330,7 @@ msgstr "Version check and news"
 #: ../include/adm_set_form.inc.php:515
 #: ../include/adm_set_form.inc.php:529
 #: ../include/adm_set_form.inc.php:258
+#: ../include/adm_set_form.inc.php:461
 msgid "Versionsabfrage und News auf der Startseite"
 msgstr "Version check and news at starting page"
 
@@ -1230,6 +1346,9 @@ msgstr "Version check and news at starting page"
 #: ../include/adm_set_form.inc.php:267
 #: ../include/nl_form.inc.php:384
 #: ../include/nl_list.inc.php:368
+#: ../include/adm_set_form.inc.php:512
+#: ../include/nl_form.inc.php:524
+#: ../include/nl_list.inc.php:402
 msgid "Tracking Bild"
 msgstr "Tracking image"
 
@@ -1241,10 +1360,16 @@ msgstr "Tracking image"
 #: ../include/nl_form.inc.php:386
 #: ../include/adm_set_form.inc.php:267
 #: ../include/nl_form.inc.php:384
+#: ../include/adm_set_form.inc.php:512
+#: ../include/nl_form.inc.php:524
 msgid "Blind- bzw. Tracking Bild auswählen oder neues Bild hochladen"
 msgstr "Select existing tracking image or upload a new one"
 
 #: ../include/adm_set.inc.php:18
+#: ../include/adm_set.inc.php:20
+#: ../include/bounce_it.inc.php:20
+#: ../include/check_it.inc.php:20
+#: ../include/send_it.inc.php:20
 msgid "Sie haben keine Berechtigung dies zu tun"
 msgstr "You have no permission to do this"
 
@@ -1256,6 +1381,8 @@ msgstr "You have no permission to do this"
 #: ../include/nl_upload.inc.php:188
 #: ../include/adm_set.inc.php:78
 #: ../include/nl_upload.inc.php:169
+#: ../include/adm_set.inc.php:131
+#: ../include/nl_upload.inc.php:213
 msgid "Track-BILD-Datei erfolgreich hochgeladen."
 msgstr "Tracking image uploaded successfully"
 
@@ -1274,6 +1401,10 @@ msgstr "Tracking image uploaded successfully"
 #: ../include/adm_set.inc.php:82
 #: ../include/nl_upload.inc.php:132
 #: ../include/nl_upload.inc.php:173
+#: ../include/adm_set.inc.php:135
+#: ../include/nl_upload.inc.php:140
+#: ../include/nl_upload.inc.php:176
+#: ../include/nl_upload.inc.php:217
 msgid "gespeichert unter:"
 msgstr "saved as:"
 
@@ -1290,6 +1421,10 @@ msgstr "saved as:"
 #: ../include/adm_set.inc.php:91
 #: ../include/nl_upload.inc.php:178
 #: ../include/nl_upload.inc.php:182
+#: ../include/adm_set.inc.php:140
+#: ../include/adm_set.inc.php:144
+#: ../include/nl_upload.inc.php:222
+#: ../include/nl_upload.inc.php:226
 msgid "Tracker-BILD-Datei konnte nicht hochgeladen werden."
 msgstr "Tracking image could not be uploaded"
 
@@ -1307,6 +1442,8 @@ msgstr "The tracking image file should have a mximum size of %s bytes"
 #: ../include/nl_upload.inc.php:208
 #: ../include/adm_set.inc.php:98
 #: ../include/nl_upload.inc.php:189
+#: ../include/adm_set.inc.php:151
+#: ../include/nl_upload.inc.php:233
 msgid "Die Tracker-BILD-Datei besitzt eine ungültige Endung."
 msgstr "Tracking image file has unknown or invalid extension."
 
@@ -1360,6 +1497,7 @@ msgstr "Returnpath address is invalid."
 #: ../include/adm_set.inc.php:152
 #: ../include/adm_set.inc.php:164
 #: ../include/adm_set.inc.php:108
+#: ../include/adm_set.inc.php:158
 msgid "Die E-Mail-Adresse für Benachrichtigungen darf nicht leer sein"
 msgstr "Notification address should not be empty."
 
@@ -1367,6 +1505,7 @@ msgstr "Notification address should not be empty."
 #: ../include/adm_set.inc.php:154
 #: ../include/adm_set.inc.php:166
 #: ../include/adm_set.inc.php:110
+#: ../include/adm_set.inc.php:160
 msgid "Die E-Mail-Adresse für Benachrichtigungen bei An-/Abmeldungen ist nicht gültig."
 msgstr "Notification address is invalid."
 
@@ -1374,6 +1513,7 @@ msgstr "Notification address is invalid."
 #: ../include/adm_set.inc.php:215
 #: ../include/adm_set.inc.php:229
 #: ../include/adm_set.inc.php:134
+#: ../include/adm_set.inc.php:208
 msgid "Die Einstellungen wurden gespeichert und sind ab sofort gültig"
 msgstr "Settings saved."
 
@@ -1385,6 +1525,8 @@ msgstr "Settings saved."
 #: ../include/Menu.inc.php:496
 #: ../include/Menu.inc.php:561
 #: ../include/Menu.inc.php:562
+#: ../include/Menu.inc.php:616
+#: ../include/Menu.inc.php:617
 msgid "Serverinfo"
 msgstr "Serverinfo"
 
@@ -1412,6 +1554,7 @@ msgstr "Name should not be empty"
 #: ../include/adr_new.inc.php:79
 #: ../include/adr_edit.inc.php:81
 #: ../include/adr_new.inc.php:78
+#: ../include/adr_new.inc.php:91
 msgid "Die E-Mail-Adresse darf nicht leer sein."
 msgstr "E-mail should not be empty"
 
@@ -1421,6 +1564,9 @@ msgstr "E-mail should not be empty"
 #: ../include/adr_new.inc.php:82
 #: ../include/adr_edit.inc.php:84
 #: ../include/adr_new.inc.php:81
+#: ../include/adr_list.inc.php:70
+#: ../include/adr_new.inc.php:94
+#: ../include/form_new.inc.php:317
 msgid "Die E-Mail-Adresse ist nicht gültig."
 msgstr "Invalid e-mail"
 
@@ -1485,6 +1631,7 @@ msgstr "Expert mode"
 #: ../include/Menu.inc.php:394
 #: ../include/Menu.inc.php:430
 #: ../include/Menu.inc.php:490
+#: ../include/Menu.inc.php:545
 msgid "Admin"
 msgstr "Admin"
 
@@ -1662,6 +1809,27 @@ msgstr "Manager"
 #: ../include/nl_list_legende.inc.php:43
 #: ../include/statistic_frm.inc.php:35
 #: ../include/statistic_frm.inc.php:43
+#: ../include/adr_form.inc.php:62
+#: ../include/adr_form.inc.php:197
+#: ../include/adr_import_form.inc.php:328
+#: ../include/adr_import_form.inc.php:344
+#: ../include/adr_import.inc.php:196
+#: ../include/adr_list.inc.php:498
+#: ../include/adr_list.inc.php:638
+#: ../include/adr_list.inc.php:658
+#: ../include/adr_list.inc.php:720
+#: ../include/adr_search_form.inc.php:129
+#: ../include/adr_search_form.inc.php:133
+#: ../include/adr_search_form.inc.php:181
+#: ../include/adr_search_form.inc.php:209
+#: ../include/adr_search_form.inc.php:237
+#: ../include/adr_search_form.inc.php:291
+#: ../include/form_form.inc.php:442
+#: ../include/form_form.inc.php:501
+#: ../include/nl_form.inc.php:207
+#: ../include/nl_form.inc.php:218
+#: ../include/nl_form.inc.php:412
+#: ../include/nl_list.inc.php:381
 msgid "Aktiv"
 msgstr "Active"
 
@@ -1750,6 +1918,8 @@ msgstr "You"
 #: ../include/nl_grp_list.inc.php:134
 #: ../include/nl_list.inc.php:348
 #: ../include/statistic_frm.inc.php:36
+#: ../include/adr_list.inc.php:659
+#: ../include/nl_list.inc.php:382
 msgid "(aktiv)"
 msgstr "(active)"
 
@@ -1858,6 +2028,17 @@ msgstr "(active)"
 #: ../include/queue_list.inc.php:316
 #: ../include/statistic_frm.inc.php:38
 #: ../include/statistic_frm.inc.php:46
+#: ../include/adr_form.inc.php:197
+#: ../include/adr_import.inc.php:191
+#: ../include/adr_import.inc.php:200
+#: ../include/adr_list.inc.php:640
+#: ../include/adr_list.inc.php:661
+#: ../include/adr_list.inc.php:722
+#: ../include/adr_search_form.inc.php:134
+#: ../include/form_form.inc.php:442
+#: ../include/form_form.inc.php:501
+#: ../include/nl_form.inc.php:412
+#: ../include/nl_list.inc.php:384
 msgid "Inaktiv"
 msgstr "Inactive"
 
@@ -1885,6 +2066,7 @@ msgstr "Inactive"
 #: ../include/nl_grp_list.inc.php:137
 #: ../include/nl_list.inc.php:351
 #: ../include/statistic_frm.inc.php:39
+#: ../include/nl_list.inc.php:385
 msgid "(inaktiv)"
 msgstr "(inactive)"
 
@@ -1915,6 +2097,8 @@ msgstr "Contact user"
 #: ../include/host_list.inc.php:233
 #: ../include/nl_grp_list.inc.php:156
 #: ../include/nl_list.inc.php:495
+#: ../include/adr_list.inc.php:718
+#: ../include/nl_list.inc.php:542
 msgid "aktivieren/de-aktivieren"
 msgstr "activate/de-activate"
 
@@ -1959,6 +2143,12 @@ msgstr "activate/de-activate"
 #: ../include/statistic_nl.inc.php:129
 #: ../include/status.inc.php:86
 #: ../include/status.inc.php:103
+#: ../include/adr_list.inc.php:729
+#: ../include/adr_list_legende.inc.php:30
+#: ../include/nl_list.inc.php:573
+#: ../include/nl_list_legende.inc.php:50
+#: ../include/status.inc.php:97
+#: ../include/status.inc.php:114
 msgid "Statistik anzeigen"
 msgstr "Show statistics"
 
@@ -2030,6 +2220,7 @@ msgstr "Legend / Status"
 #: ../include/bl_list_legende.inc.php:19
 #: ../include/host_list_legende.inc.php:19
 #: ../include/form_list_legende.inc.php:18
+#: ../include/adr_list_legende.inc.php:18
 msgid "Legende"
 msgstr "Legend"
 
@@ -2104,6 +2295,10 @@ msgstr "User is active/inactive (Click=deactivate/activate)"
 #: ../include/host_list_legende.inc.php:30
 #: ../include/nl_list.inc.php:510
 #: ../include/nl_list.inc.php:515
+#: ../include/adr_list_legende.inc.php:29
+#: ../include/nl_list.inc.php:557
+#: ../include/nl_list.inc.php:562
+#: ../include/nl_list_legende.inc.php:47
 msgid "Bearbeiten"
 msgstr "Edit"
 
@@ -2126,11 +2321,13 @@ msgstr "New user %s created"
 #: ../include/adr_clean_form.inc.php:31
 #: ../include/adr_clean.inc.php:15
 #: ../include/adr_clean_form.inc.php:26
+#: ../include/adr_clean_form.inc.php:27
 msgid "Adressdatenbank bereinigen"
 msgstr "Clean up addresses"
 
 #: ../include/adr_clean_form.inc.php:44
 #: ../include/adr_clean_form.inc.php:37
+#: ../include/adr_clean_form.inc.php:38
 msgid "Filtern nach E-Mail"
 msgstr "Filter e-mail address"
 
@@ -2154,6 +2351,9 @@ msgstr "Filter e-mail address"
 #: ../include/adr_export_form.inc.php:197
 #: ../include/nl_form.inc.php:348
 #: ../include/nl_list.inc.php:224
+#: ../include/adr_clean_form.inc.php:48
+#: ../include/nl_form.inc.php:476
+#: ../include/nl_list.inc.php:246
 msgid "Gruppe"
 msgstr "Group"
 
@@ -2163,6 +2363,7 @@ msgstr "Group"
 #: ../include/adr_search_form.inc.php:114
 #: ../include/adr_clean_form.inc.php:66
 #: ../include/adr_search_form.inc.php:105
+#: ../include/adr_clean_form.inc.php:67
 msgid "Suche nach Adress-Status"
 msgstr "Search for status"
 
@@ -2179,6 +2380,9 @@ msgstr "All failed or errorness addresses"
 #: ../include/adr_clean_form.inc.php:214
 #: ../include/adr_clean_form.inc.php:126
 #: ../include/adr_clean_form.inc.php:197
+#: ../include/adm_set_form.inc.php:258
+#: ../include/adm_set_form.inc.php:575
+#: ../include/adr_clean_form.inc.php:124
 msgid "Aktion"
 msgstr "Action"
 
@@ -2215,6 +2419,11 @@ msgstr "Action"
 #: ../include/nl_list.inc.php:506
 #: ../include/nl_list_legende.inc.php:45
 #: ../include/queue_list_legende.inc.php:33
+#: ../include/adm_set_form.inc.php:266
+#: ../include/adr_import_form.inc.php:361
+#: ../include/adr_list_legende.inc.php:36
+#: ../include/nl_list.inc.php:553
+#: ../include/nl_list_legende.inc.php:46
 msgid "Löschen"
 msgstr "Delete"
 
@@ -2309,6 +2518,22 @@ msgstr "From group:"
 #: ../include/queue_list_legende.inc.php:35
 #: ../include/status.inc.php:142
 #: ../include/status.inc.php:215
+#: ../include/adr_clean_form.inc.php:106
+#: ../include/adr_form.inc.php:91
+#: ../include/adr_form.inc.php:206
+#: ../include/adr_import_form.inc.php:321
+#: ../include/adr_import_form.inc.php:337
+#: ../include/adr_list_form_head.inc.php:142
+#: ../include/adr_list.inc.php:493
+#: ../include/adr_search_form.inc.php:182
+#: ../include/adr_search_form.inc.php:210
+#: ../include/adr_search_form.inc.php:238
+#: ../include/Menu.inc.php:272
+#: ../include/Menu.inc.php:291
+#: ../include/nl_list.inc.php:242
+#: ../include/nl_list_legende.inc.php:53
+#: ../include/status.inc.php:153
+#: ../include/status.inc.php:226
 msgid "Status"
 msgstr "Status"
 
@@ -2328,6 +2553,7 @@ msgstr "with status:"
 #: ../include/adr_clean.inc.php:196
 #: ../include/adr_clean.inc.php:197
 #: ../include/adr_clean.inc.php:150
+#: ../include/adr_clean.inc.php:153
 #, c-format
 msgid "%s Einträge aus der Gruppe %s mit dem Status %s wurden gelöscht."
 msgstr "%s entries from group %s with status %s have been deleted."
@@ -2336,6 +2562,9 @@ msgstr "%s entries from group %s with status %s have been deleted."
 #: ../include/adr_clean.inc.php:203
 #: ../include/adr_clean.inc.php:204
 #: ../include/adr_clean.inc.php:157
+#: ../include/adr_clean.inc.php:165
+#: ../include/adr_list.inc.php:296
+#: ../include/status.inc.php:56
 msgid "Übersicht"
 msgstr "Overview"
 
@@ -2349,6 +2578,8 @@ msgstr "Overview"
 #: ../include/adr_clean.inc.php:167
 #: ../include/adr_clean.inc.php:168
 #: ../include/bounce_filter_adr_list.inc.php:37
+#: ../include/adr_clean.inc.php:188
+#: ../include/adr_clean.inc.php:189
 msgid "Details"
 msgstr "Details"
 
@@ -2363,6 +2594,8 @@ msgstr "Details"
 #: ../include/adr_clean.inc.php:172
 #: ../include/adr_grp_list.inc.php:209
 #: ../include/status.inc.php:83
+#: ../include/adr_clean.inc.php:193
+#: ../include/status.inc.php:94
 #, c-format
 msgid "%s Adressen"
 msgstr "%s addresses"
@@ -2372,6 +2605,7 @@ msgstr "%s addresses"
 #: ../include/adr_list.inc.php:606
 #: ../include/adr_list.inc.php:618
 #: ../include/adr_list.inc.php:583
+#: ../include/adr_list.inc.php:728
 msgid "Adresse bearbeiten"
 msgstr "Edit address"
 
@@ -2387,6 +2621,7 @@ msgstr "Address %s edited."
 #: ../include/Menu.inc.php:196
 #: ../include/Menu.inc.php:200
 #: ../include/adr_export_form.inc.php:25
+#: ../include/Menu.inc.php:226
 msgid "Adressen in eine CSV-Datei exportieren"
 msgstr "Export addresses to CSV-file."
 
@@ -2408,6 +2643,8 @@ msgstr "Export addresses to CSV-file."
 #: ../include/form_form.inc.php:167
 #: ../include/form_form.inc.php:189
 #: ../include/queue_form.inc.php:66
+#: ../include/adr_form.inc.php:71
+#: ../include/adr_list_form_head.inc.php:119
 msgid "Gruppen wählen, STRG/CTRL gedrückt halten und klicken f. Mehrfachauswahl"
 msgstr "Select groups, hold CTRL-key to select multiple groups."
 
@@ -2434,6 +2671,7 @@ msgstr "Expport only addresses with selected status"
 #: ../include/adr_import_form.inc.php:181
 #: ../include/adr_import_form.inc.php:370
 #: ../include/adr_import_form.inc.php:371
+#: ../include/adr_import_form.inc.php:391
 msgid "Trennzeichen"
 msgstr "Delimiter"
 
@@ -2463,6 +2701,7 @@ msgstr "Filename"
 #: ../include/adr_import_form.inc.php:263
 #: ../include/adr_export_form.inc.php:118
 #: ../include/adr_import_form.inc.php:249
+#: ../include/adr_import_form.inc.php:261
 msgid "Offset: Anzahl der Datensätze die übersprungen werden sollen."
 msgstr "Offset"
 
@@ -2472,6 +2711,7 @@ msgstr "Offset"
 #: ../include/adr_import_form.inc.php:273
 #: ../include/adr_export_form.inc.php:128
 #: ../include/adr_import_form.inc.php:259
+#: ../include/adr_import_form.inc.php:271
 msgid "Limit: Anzahl maximal zu exportierender Datensätze."
 msgstr "Limit"
 
@@ -2488,6 +2728,7 @@ msgstr "Append to existing file"
 #: ../include/adr_export_form.inc.php:149
 #: ../include/adr_import_form.inc.php:48
 #: ../include/adr_import_form.inc.php:297
+#: ../include/adr_import_form.inc.php:309
 msgid "CSV-Datei auswählen"
 msgstr "Choose CSV file"
 
@@ -2531,6 +2772,8 @@ msgstr "Append"
 #: ../include/adr_import.inc.php:294
 #: ../include/bounce_host_form.inc.php:189
 #: ../include/queue_form.inc.php:167
+#: ../include/adr_import_form.inc.php:404
+#: ../include/adr_import.inc.php:302
 msgid "Offset"
 msgstr "Offset"
 
@@ -2564,6 +2807,12 @@ msgstr "0= from begining"
 #: ../include/adr_import.inc.php:295
 #: ../include/bounce_host_form.inc.php:191
 #: ../include/queue_form.inc.php:177
+#: ../include/adm_set_form.inc.php:274
+#: ../include/adm_set_form.inc.php:295
+#: ../include/adm_set_form.inc.php:603
+#: ../include/adm_set_form.inc.php:656
+#: ../include/adr_import_form.inc.php:408
+#: ../include/adr_import.inc.php:303
 msgid "Limit"
 msgstr "Limit"
 
@@ -2585,6 +2834,7 @@ msgstr "Export addresses to CSV-file"
 #: ../include/adr_list.inc.php:260
 #: ../include/queue_list.inc.php:98
 #: ../include/queue_list.inc.php:102
+#: ../include/adr_list.inc.php:320
 #, c-format
 msgid "gewählte Gruppe: %s"
 msgstr "Selected group: %s"
@@ -2594,6 +2844,7 @@ msgstr "Selected group: %s"
 #: ../include/adr_export.inc.php:227
 #: ../include/adr_search_form.inc.php:102
 #: ../include/adr_search_form.inc.php:93
+#: ../include/adr_search_form.inc.php:135
 msgid "Alle"
 msgstr "All"
 
@@ -2667,6 +2918,7 @@ msgstr "A total of %s entries imported"
 #: ../include/bounce.inc.php:264
 #: ../include/adr_export.inc.php:360
 #: ../include/bounce.inc.php:244
+#: ../include/adr_import.inc.php:130
 #, c-format
 msgid "Datei gespeichert unter: %s"
 msgstr "Files saved as: %s"
@@ -2708,6 +2960,10 @@ msgstr "Create new addess"
 #: ../include/nl_grp_list.inc.php:144
 #: ../include/nl_list.inc.php:371
 #: ../include/statistic_nl.inc.php:134
+#: ../include/adr_form.inc.php:173
+#: ../include/adr_list.inc.php:668
+#: ../include/nl_form.inc.php:388
+#: ../include/nl_list.inc.php:405
 #, c-format
 msgid "Erstellt am: %s von %s"
 msgstr "Created at %s from %s"
@@ -2741,6 +2997,10 @@ msgstr "Created at %s from %s"
 #: ../include/nl_form.inc.php:290
 #: ../include/nl_grp_list.inc.php:145
 #: ../include/nl_list.inc.php:372
+#: ../include/adr_form.inc.php:175
+#: ../include/adr_list.inc.php:669
+#: ../include/nl_form.inc.php:390
+#: ../include/nl_list.inc.php:406
 #, c-format
 msgid "Bearbeitet am: %s von %s"
 msgstr "Edited at %s from %s"
@@ -2779,12 +3039,21 @@ msgstr "Edited at %s from %s"
 #: ../include/form_form.inc.php:506
 #: ../include/form_form.inc.php:508
 #: ../include/queue_form.inc.php:235
+#: ../include/adr_clean_form.inc.php:87
+#: ../include/adr_form.inc.php:190
+#: ../include/adr_import_form.inc.php:303
+#: ../include/adr_list_form_head.inc.php:122
+#: ../include/adr_list.inc.php:497
+#: ../include/form_form.inc.php:424
+#: ../include/form_form.inc.php:426
+#: ../include/Menu.inc.php:147
 msgid "Gruppen"
 msgstr "Groups"
 
 #: ../include/adr_form.inc.php:405
 #: ../include/adr_form.inc.php:237
 #: ../include/adr_form.inc.php:227
+#: ../include/adr_form.inc.php:229
 msgid "Memo"
 msgstr "Memo"
 
@@ -2808,6 +3077,7 @@ msgstr "Edit address-group"
 #: ../include/adr_grp_new.inc.php:45
 #: ../include/nl_grp_edit.inc.php:46
 #: ../include/adr_grp_edit.inc.php:47
+#: ../include/nl_grp_edit.inc.php:45
 msgid "Name der Gruppe sollte nicht leer sein."
 msgstr "Name of group should not be empty."
 
@@ -2847,6 +3117,7 @@ msgstr "Create new address-group"
 #: ../include/form_form.inc.php:502
 #: ../include/nl_grp_form.inc.php:62
 #: ../include/nl_grp_form.inc.php:135
+#: ../include/form_form.inc.php:509
 msgid "Beschreibung"
 msgstr "Description"
 
@@ -2889,6 +3160,8 @@ msgstr "Manage address groups"
 #: ../include/nl_list.inc.php:31
 #: ../include/adr_list.inc.php:52
 #: ../include/bl_list.inc.php:53
+#: ../include/adr_list.inc.php:56
+#: ../include/nl_list.inc.php:36
 msgid "Eintrag wurde aktiviert."
 msgstr "Entry was activated."
 
@@ -2899,6 +3172,8 @@ msgstr "Entry was activated."
 #: ../include/nl_list.inc.php:33
 #: ../include/adr_list.inc.php:54
 #: ../include/bl_list.inc.php:55
+#: ../include/adr_list.inc.php:58
+#: ../include/nl_list.inc.php:38
 msgid "Eintrag wurde de-aktiviert."
 msgstr "Entry de-activated."
 
@@ -2916,6 +3191,8 @@ msgstr "New dafault-group assigned."
 #: ../include/adr_list.inc.php:59
 #: ../include/bl_list.inc.php:60
 #: ../include/adr_list.inc.php:61
+#: ../include/adr_list.inc.php:63
+#: ../include/nl_list.inc.php:43
 msgid "Eintrag wurde gelöscht."
 msgstr "Entry has been deleted"
 
@@ -3145,6 +3422,7 @@ msgstr "(De-)activate existing addresses on update:"
 #: ../include/adr_import_form.inc.php:365
 #: ../include/adr_import_form.inc.php:198
 #: ../include/adr_import_form.inc.php:349
+#: ../include/adr_import_form.inc.php:361
 msgid "Importierte Adressen löschen"
 msgstr "Delete imported addresses"
 
@@ -3155,24 +3433,28 @@ msgstr "Import addresses to blackllist"
 #: ../include/adr_import_form.inc.php:238
 #: ../include/adr_import_form.inc.php:234
 #: ../include/adr_import_form.inc.php:220
+#: ../include/adr_import_form.inc.php:232
 msgid "Auf doppelt vorhandene Adressen prüfen"
 msgstr "Check for already existing addresses"
 
 #: ../include/adr_import_form.inc.php:283
 #: ../include/adr_import_form.inc.php:279
 #: ../include/adr_import_form.inc.php:265
+#: ../include/adr_import_form.inc.php:277
 msgid "Adressen Importieren"
 msgstr "Import addresses"
 
 #: ../include/adr_import_form.inc.php:315
 #: ../include/adr_import_form.inc.php:311
 #: ../include/adr_import_form.inc.php:295
+#: ../include/adr_import_form.inc.php:307
 msgid "Upload"
 msgstr "Upload"
 
 #: ../include/adr_import_form.inc.php:315
 #: ../include/adr_import_form.inc.php:311
 #: ../include/adr_import_form.inc.php:295
+#: ../include/adr_import_form.inc.php:307
 msgid "CSV-Upload"
 msgstr "CSV upload"
 
@@ -3180,24 +3462,28 @@ msgstr "CSV upload"
 #: ../include/filemanager.inc.php:91
 #: ../include/adr_import_form.inc.php:313
 #: ../include/adr_import_form.inc.php:297
+#: ../include/adr_import_form.inc.php:309
 msgid "Datei"
 msgstr "File"
 
 #: ../include/adr_import_form.inc.php:322
 #: ../include/adr_import_form.inc.php:318
 #: ../include/adr_import_form.inc.php:302
+#: ../include/adr_import_form.inc.php:314
 msgid "Bulk-Import"
 msgstr "Bulk import"
 
 #: ../include/adr_import_form.inc.php:322
 #: ../include/adr_import_form.inc.php:318
 #: ../include/adr_import_form.inc.php:302
+#: ../include/adr_import_form.inc.php:314
 msgid "Eine E-Mail-Adresse pro Zeile"
 msgstr "One e-mail per line"
 
 #: ../include/adr_import_form.inc.php:329
 #: ../include/adr_import_form.inc.php:325
 #: ../include/adr_import_form.inc.php:309
+#: ../include/adr_import_form.inc.php:321
 msgid "Status f. neue Adressen:"
 msgstr "Status for new entries:"
 
@@ -3206,30 +3492,36 @@ msgstr "Status for new entries:"
 #: ../include/adr_import_form.inc.php:333
 #: ../include/adr_import_form.inc.php:349
 #: ../include/adr_import_form.inc.php:317
+#: ../include/adr_import_form.inc.php:329
+#: ../include/adr_import_form.inc.php:345
 msgid "Inktiv"
 msgstr "Inactive"
 
 #: ../include/adr_import_form.inc.php:338
 #: ../include/adr_import_form.inc.php:334
 #: ../include/adr_import_form.inc.php:318
+#: ../include/adr_import_form.inc.php:330
 msgid "Neue Adressen (De-)Aktivieren:"
 msgstr "(De-)activate new addresses:"
 
 #: ../include/adr_import_form.inc.php:345
 #: ../include/adr_import_form.inc.php:341
 #: ../include/adr_import_form.inc.php:325
+#: ../include/adr_import_form.inc.php:337
 msgid "Status bei Update:"
 msgstr "Status on update:"
 
 #: ../include/adr_import_form.inc.php:354
 #: ../include/adr_import_form.inc.php:350
 #: ../include/adr_import_form.inc.php:334
+#: ../include/adr_import_form.inc.php:346
 msgid "Existierende Adressen bei Update (De-)Aktivieren:"
 msgstr "Activate/deactivate existing addresses"
 
 #: ../include/adr_import_form.inc.php:361
 #: ../include/adr_import_form.inc.php:357
 #: ../include/adr_import_form.inc.php:341
+#: ../include/adr_import_form.inc.php:353
 msgid "Gruppen zusammenführen"
 msgstr "Merge groups"
 
@@ -3240,18 +3532,21 @@ msgstr "Add to blacklist"
 #: ../include/adr_import_form.inc.php:383
 #: ../include/adr_import_form.inc.php:379
 #: ../include/adr_import_form.inc.php:363
+#: ../include/adr_import_form.inc.php:375
 msgid "Dublettencheck"
 msgstr "Check for existing entries"
 
 #: ../include/adr_import_form.inc.php:383
 #: ../include/adr_import_form.inc.php:379
 #: ../include/adr_import_form.inc.php:363
+#: ../include/adr_import_form.inc.php:375
 msgid "Auf Dubletten prüfen"
 msgstr "Check for existing entries"
 
 #: ../include/adr_import_form.inc.php:397
 #: ../include/adr_import_form.inc.php:393
 #: ../include/adr_import_form.inc.php:375
+#: ../include/adr_import_form.inc.php:396
 msgid "Prüfung der E-Mail"
 msgstr "E-mail validation"
 
@@ -3260,102 +3555,123 @@ msgid "Adressen importieren (CSV-Import)"
 msgstr "Import addresses from CSV-file"
 
 #: ../include/adr_import.inc.php:96
+#: ../include/adr_import.inc.php:100
 msgid "Keine Gruppe gewählt. Es werden keine neuen Daten importiert."
 msgstr "No group selected. No new entries will be inserted"
 
 #: ../include/adr_import.inc.php:102
+#: ../include/adr_import.inc.php:106
 #, c-format
 msgid "Offset '%s' ist kein gültiger Wert."
 msgstr "Offset '%s' is an invalid value"
 
 #: ../include/adr_import.inc.php:108
+#: ../include/adr_import.inc.php:112
 #, c-format
 msgid "Limit '%s' ist kein gültiger Wert."
 msgstr "Limit '%s' is an invalid value"
 
 #: ../include/adr_import.inc.php:130
 #: ../include/adr_import.inc.php:131
+#: ../include/adr_import.inc.php:134
 msgid "CSV-Datei konnte nicht hochgeladen werden."
 msgstr "CSV-file could not be uploaded."
 
 #: ../include/adr_import.inc.php:134
 #: ../include/adr_import.inc.php:135
+#: ../include/adr_import.inc.php:138
 #, c-format
 msgid "Die CSV-Datei darf nur eine Grösse von max. %s Byte besitzen."
 msgstr "The CSV-file should have a maximum size of %s bytes."
 
 #: ../include/adr_import.inc.php:138
 #: ../include/adr_import.inc.php:139
+#: ../include/adr_import.inc.php:142
 msgid "Die CSV-Datei besitzt eine ungültige Endung."
 msgstr "CSV-file has unknown or invalid extension."
 
 #: ../include/adr_import.inc.php:142
 #: ../include/adr_import.inc.php:143
+#: ../include/adr_import.inc.php:146
 msgid "Keine CSV-Datei zum Hochladen angegeben."
 msgstr "No CSV-file for upload were was selected."
 
 #: ../include/adr_import.inc.php:149
 #: ../include/adr_import.inc.php:150
+#: ../include/adr_import.inc.php:153
 #, c-format
 msgid "Importiere bestehende CSV-Datei %s"
 msgstr "Import existing CSV file %s"
 
 #: ../include/adr_import.inc.php:158
 #: ../include/adr_import.inc.php:159
+#: ../include/adr_import.inc.php:162
 msgid "Status für neue Adressen: "
 msgstr "Status for new addresses"
 
 #: ../include/adr_import.inc.php:162
 #: ../include/adr_import.inc.php:163
+#: ../include/adr_import.inc.php:166
 msgid "Status für bestehende Adressen: "
 msgstr "New status for existing addresses"
 
 #: ../include/adr_import.inc.php:167
 #: ../include/adr_import.inc.php:168
+#: ../include/adr_import.inc.php:171
 msgid "Keine Änderung"
 msgstr "No changes"
 
 #: ../include/adr_import.inc.php:172
 #: ../include/adr_import.inc.php:171
 #: ../include/adr_import.inc.php:173
+#: ../include/adr_import.inc.php:179
+#: ../include/adr_import.inc.php:180
 msgid "Adressen werden auf Eindeutigkeit geprüft."
 msgstr "Checking for existing entries is enabled"
 
 #: ../include/adr_import.inc.php:175
 #: ../include/adr_import.inc.php:174
 #: ../include/adr_import.inc.php:176
+#: ../include/adr_import.inc.php:182
+#: ../include/adr_import.inc.php:183
 msgid "Adressen werden nicht auf Eindeutigkeit geprüft."
 msgstr "Checking for existing entries is disabled"
 
 #: ../include/adr_import.inc.php:181
 #: ../include/adr_import.inc.php:182
+#: ../include/adr_import.inc.php:189
 msgid "Neue Adressen sind aktiv."
 msgstr "New addresses are active"
 
 #: ../include/adr_import.inc.php:184
 #: ../include/adr_import.inc.php:185
+#: ../include/adr_import.inc.php:192
 msgid "Neue Adressen sind inaktiv."
 msgstr "New addresses are inactive"
 
 #: ../include/adr_import.inc.php:189
 #: ../include/adr_import.inc.php:190
+#: ../include/adr_import.inc.php:197
 msgid "Bestehende Adressen werden aktiviert."
 msgstr "Existing entries will be activated"
 
 #: ../include/adr_import.inc.php:193
 #: ../include/adr_import.inc.php:194
+#: ../include/adr_import.inc.php:201
 msgid "Bestehende Adressen werden de-aktiviert."
 msgstr "Existing entries will be de-activated"
 
 #: ../include/adr_import.inc.php:239
 #: ../include/adr_import.inc.php:240
 #: ../include/adr_import.inc.php:214
+#: ../include/adr_import.inc.php:222
 msgid "Importiere E-Mail-Adressen aus Textfeld"
 msgstr "Importing entries from textarea"
 
 #: ../include/adr_import.inc.php:301
 #: ../include/adr_import.inc.php:304
 #: ../include/adr_import.inc.php:276
+#: ../include/adr_import.inc.php:284
 #, c-format
 msgid "Bulk Zeile %s: E-Mail %s hat ein falsches Format."
 msgstr "Bulk line %s: invalid email: %s"
@@ -3366,6 +3682,8 @@ msgstr "Bulk line %s: invalid email: %s"
 #: ../include/adr_import.inc.php:410
 #: ../include/adr_import.inc.php:284
 #: ../include/adr_import.inc.php:378
+#: ../include/adr_import.inc.php:292
+#: ../include/adr_import.inc.php:386
 #, c-format
 msgid "%s Einträge gefunden!"
 msgstr "%s entries total"
@@ -3373,6 +3691,7 @@ msgstr "%s entries total"
 #: ../include/adr_import.inc.php:318
 #: ../include/adr_import.inc.php:321
 #: ../include/adr_import.inc.php:293
+#: ../include/adr_import.inc.php:301
 #, c-format
 msgid "Importiere Datei %s"
 msgstr "Importing file %s"
@@ -3380,6 +3699,7 @@ msgstr "Importing file %s"
 #: ../include/adr_import.inc.php:397
 #: ../include/adr_import.inc.php:402
 #: ../include/adr_import.inc.php:370
+#: ../include/adr_import.inc.php:378
 #, c-format
 msgid "Datei Zeile %s: E-Mail %s hat ein falsches Format."
 msgstr "File line %s: invalid email: %s"
@@ -3387,6 +3707,7 @@ msgstr "File line %s: invalid email: %s"
 #: ../include/adr_import.inc.php:407
 #: ../include/adr_import.inc.php:412
 #: ../include/adr_import.inc.php:380
+#: ../include/adr_import.inc.php:388
 #, c-format
 msgid "Die Import-Datei %s konnte nicht geöffnet werden."
 msgstr "Can not open import file %s"
@@ -3395,6 +3716,7 @@ msgstr "Can not open import file %s"
 #: ../include/adr_import.inc.php:495
 #: ../include/adr_import.inc.php:501
 #: ../include/adr_import.inc.php:466
+#: ../include/adr_import.inc.php:477
 #, c-format
 msgid "Zeile %s: E-Mail %s existiert Bereits und wurde aktualisiert und ggf. in neue Gruppen eingetragen."
 msgstr "Line %s: E-mail %s already exists and has been updated and added to additional groups if not already a member."
@@ -3403,6 +3725,7 @@ msgstr "Line %s: E-mail %s already exists and has been updated and added to addi
 #: ../include/adr_import.inc.php:511
 #: ../include/adr_import.inc.php:517
 #: ../include/adr_import.inc.php:482
+#: ../include/adr_import.inc.php:493
 #, c-format
 msgid "Zeile %s: E-Mail %s wurde gelöscht."
 msgstr "Line %s: email %s deleted"
@@ -3411,6 +3734,7 @@ msgstr "Line %s: email %s deleted"
 #: ../include/adr_import.inc.php:535
 #: ../include/adr_import.inc.php:541
 #: ../include/adr_import.inc.php:503
+#: ../include/adr_import.inc.php:514
 #, c-format
 msgid "Zeile %s: E-Mail %s existiert nicht."
 msgstr "Line %s: email %s not exists"
@@ -3419,6 +3743,7 @@ msgstr "Line %s: email %s not exists"
 #: ../include/adr_import.inc.php:562
 #: ../include/adr_import.inc.php:568
 #: ../include/adr_import.inc.php:530
+#: ../include/adr_import.inc.php:544
 #, c-format
 msgid "Zeile %s: E-Mail %s  wurde hinzugefügt und in gewählten Gruppen eingetragen."
 msgstr "Line %s: email %s inserted and added to selected groups"
@@ -3427,6 +3752,7 @@ msgstr "Line %s: email %s inserted and added to selected groups"
 #: ../include/adr_import.inc.php:592
 #: ../include/adr_import.inc.php:598
 #: ../include/adr_import.inc.php:546
+#: ../include/adr_import.inc.php:560
 #, c-format
 msgid "Es wurden %s von %s Einträgen gelöscht."
 msgstr "%s of %s entries deleted"
@@ -3435,6 +3761,7 @@ msgstr "%s of %s entries deleted"
 #: ../include/adr_import.inc.php:594
 #: ../include/adr_import.inc.php:600
 #: ../include/adr_import.inc.php:548
+#: ../include/adr_import.inc.php:562
 #, c-format
 msgid "Es wurden %s von %s Einträgen importiert und in die gewählten Gruppen eingetragen."
 msgstr "%s from %s entries imported and added to selected groups."
@@ -3443,6 +3770,7 @@ msgstr "%s from %s entries imported and added to selected groups."
 #: ../include/adr_import.inc.php:595
 #: ../include/adr_import.inc.php:601
 #: ../include/adr_import.inc.php:549
+#: ../include/adr_import.inc.php:563
 #, c-format
 msgid "%s Einträge waren Fehlerhaft und wurden NICHT importiert."
 msgstr "%s entries failed, not imported/added."
@@ -3451,6 +3779,7 @@ msgstr "%s entries failed, not imported/added."
 #: ../include/adr_import.inc.php:596
 #: ../include/adr_import.inc.php:602
 #: ../include/adr_import.inc.php:550
+#: ../include/adr_import.inc.php:564
 #, c-format
 msgid "%s Eintraege sind bereits vorhanden und wurden aktualisiert."
 msgstr "%s entries already exists and have been updated."
@@ -3461,6 +3790,7 @@ msgstr "%s entries already exists and have been updated."
 #: ../include/adr_import.inc.php:605
 #: ../include/adr_import.inc.php:553
 #: ../include/Foot.inc.php:23
+#: ../include/adr_import.inc.php:567
 #, c-format
 msgid "Bearbeitungszeit: %s Sekunden"
 msgstr "Processing time %s seconds"
@@ -3469,6 +3799,7 @@ msgstr "Processing time %s seconds"
 #: ../include/adr_import.inc.php:606
 #: ../include/adr_import.inc.php:612
 #: ../include/adr_import.inc.php:560
+#: ../include/adr_import.inc.php:574
 msgid "Logdatei für Import wurde gespeichert unter:"
 msgstr "Log file saved as:"
 
@@ -3481,6 +3812,7 @@ msgstr "Manage addresses"
 #: ../include/adr_list.inc.php:559
 #: ../include/adr_list.inc.php:571
 #: ../include/adr_list.inc.php:536
+#: ../include/adr_list.inc.php:662
 msgid "(Inaktiv)"
 msgstr "(Inactive)"
 
@@ -3488,6 +3820,7 @@ msgstr "(Inactive)"
 #: ../include/adr_list.inc.php:562
 #: ../include/adr_list.inc.php:574
 #: ../include/adr_list.inc.php:539
+#: ../include/adr_list.inc.php:665
 #, c-format
 msgid "Status: %s"
 msgstr "Status: %s"
@@ -3497,6 +3830,7 @@ msgstr "Status: %s"
 #: ../include/adr_list.inc.php:567
 #: ../include/adr_list.inc.php:579
 #: ../include/adr_list.inc.php:544
+#: ../include/adr_list.inc.php:670
 #, c-format
 msgid "Newsletter Aktuell: %s"
 msgstr "Current newsletter: %s"
@@ -3509,6 +3843,7 @@ msgstr "Current newsletter: %s"
 #: ../include/bounce_filter_adr_list.inc.php:73
 #: ../include/adr_list.inc.php:545
 #: ../include/bounce_filter_adr_list.inc.php:64
+#: ../include/adr_list.inc.php:671
 #, c-format
 msgid "Newsletter Gesamt: %s"
 msgstr "Total newsletter: %s"
@@ -3525,6 +3860,8 @@ msgstr "Total newsletter: %s"
 #: ../include/adr_list.inc.php:546
 #: ../include/bounce_filter_adr_list.inc.php:65
 #: ../include/nl_list.inc.php:389
+#: ../include/adr_list.inc.php:672
+#: ../include/nl_list.inc.php:423
 #, c-format
 msgid "Views: %s"
 msgstr "Views: %s"
@@ -3541,6 +3878,8 @@ msgstr "Views: %s"
 #: ../include/adr_list.inc.php:547
 #: ../include/bounce_filter_adr_list.inc.php:66
 #: ../include/nl_list.inc.php:390
+#: ../include/adr_list.inc.php:673
+#: ../include/nl_list.inc.php:424
 #, c-format
 msgid "Clicks: %s"
 msgstr "Clicks: %s"
@@ -3553,6 +3892,7 @@ msgstr "Clicks: %s"
 #: ../include/bounce_filter_adr_list.inc.php:76
 #: ../include/adr_list.inc.php:548
 #: ../include/bounce_filter_adr_list.inc.php:67
+#: ../include/adr_list.inc.php:674
 #, c-format
 msgid "Sendefehler: %s"
 msgstr "Delivery errors: %s"
@@ -3561,6 +3901,7 @@ msgstr "Delivery errors: %s"
 #: ../include/adr_list.inc.php:572
 #: ../include/adr_list.inc.php:593
 #: ../include/adr_list.inc.php:558
+#: ../include/adr_list.inc.php:684
 msgid "Memo:"
 msgstr "Memo:"
 
@@ -3568,6 +3909,7 @@ msgstr "Memo:"
 #: ../include/adr_list.inc.php:573
 #: ../include/adr_list.inc.php:585
 #: ../include/adr_list.inc.php:550
+#: ../include/adr_list.inc.php:676
 msgid "Mitglied in den Gruppen:"
 msgstr "Member of group(s):"
 
@@ -3577,6 +3919,8 @@ msgstr "Member of group(s):"
 #: ../include/adr_list_legende.inc.php:35
 #: ../include/adr_list.inc.php:641
 #: ../include/adr_list.inc.php:606
+#: ../include/adr_list.inc.php:751
+#: ../include/adr_list_legende.inc.php:36
 msgid "Adresse löschen"
 msgstr "Delete address"
 
@@ -3602,6 +3946,9 @@ msgstr "Address is active/inactive (Click=activate/deactivate)"
 #: ../include/form_list.inc.php:336
 #: ../include/form_list_legende.inc.php:41
 #: ../include/nl_list.inc.php:527
+#: ../include/adr_list_legende.inc.php:30
+#: ../include/nl_list.inc.php:574
+#: ../include/nl_list_legende.inc.php:50
 msgid "Statistik"
 msgstr "Statistics"
 
@@ -3613,6 +3960,8 @@ msgstr "Enter new address"
 #: ../include/adr_new.inc.php:145
 #: ../api_example.php:137
 #: ../include/adr_new.inc.php:134
+#: ../api_example.php:139
+#: ../include/adr_new.inc.php:149
 msgid "Diese E-Mail-Adresse existiert bereits. Die Daten wurden aktualisiert."
 msgstr "E-mail already exists, updated"
 
@@ -3620,6 +3969,8 @@ msgstr "E-mail already exists, updated"
 #: ../include/adr_new.inc.php:171
 #: ../api_example.php:163
 #: ../include/adr_new.inc.php:160
+#: ../api_example.php:165
+#: ../include/adr_new.inc.php:175
 #, c-format
 msgid "Neue Adresse %s wurde angelegt."
 msgstr "New recipient %s created"
@@ -3669,12 +4020,14 @@ msgstr "Doesn't matter"
 #: ../include/adr_search_form.inc.php:134
 #: ../include/adr_search_form.inc.php:135
 #: ../include/adr_search_form.inc.php:126
+#: ../include/adr_search_form.inc.php:142
 msgid "Maximale Anzahl Einträge die auf einmal angezeigt werden."
 msgstr "Max. entries shown at once"
 
 #: ../include/adr_search_form.inc.php:137
 #: ../include/adr_search_form.inc.php:138
 #: ../include/adr_search_form.inc.php:129
+#: ../include/adr_search_form.inc.php:145
 msgid "zeige max."
 msgstr "show max."
 
@@ -3687,6 +4040,9 @@ msgstr "show max."
 #: ../include/adr_search_form.inc.php:145
 #: ../include/adr_search_form.inc.php:173
 #: ../include/adr_search_form.inc.php:201
+#: ../include/adr_search_form.inc.php:172
+#: ../include/adr_search_form.inc.php:200
+#: ../include/adr_search_form.inc.php:228
 msgid "Sortieren"
 msgstr "Sort"
 
@@ -3699,6 +4055,9 @@ msgstr "Sort"
 #: ../include/adr_search_form.inc.php:148
 #: ../include/adr_search_form.inc.php:176
 #: ../include/adr_search_form.inc.php:204
+#: ../include/adr_search_form.inc.php:175
+#: ../include/adr_search_form.inc.php:203
+#: ../include/adr_search_form.inc.php:231
 msgid "sortiere nach"
 msgstr "Sort by"
 
@@ -3711,6 +4070,9 @@ msgstr "Sort by"
 #: ../include/adr_search_form.inc.php:156
 #: ../include/adr_search_form.inc.php:184
 #: ../include/adr_search_form.inc.php:212
+#: ../include/adr_search_form.inc.php:183
+#: ../include/adr_search_form.inc.php:211
+#: ../include/adr_search_form.inc.php:239
 msgid "Erstellungs-Datum"
 msgstr "Creation date"
 
@@ -3723,6 +4085,9 @@ msgstr "Creation date"
 #: ../include/adr_search_form.inc.php:157
 #: ../include/adr_search_form.inc.php:185
 #: ../include/adr_search_form.inc.php:213
+#: ../include/adr_search_form.inc.php:184
+#: ../include/adr_search_form.inc.php:212
+#: ../include/adr_search_form.inc.php:240
 msgid "F0"
 msgstr "F0"
 
@@ -3735,6 +4100,9 @@ msgstr "F0"
 #: ../include/adr_search_form.inc.php:158
 #: ../include/adr_search_form.inc.php:186
 #: ../include/adr_search_form.inc.php:214
+#: ../include/adr_search_form.inc.php:185
+#: ../include/adr_search_form.inc.php:213
+#: ../include/adr_search_form.inc.php:241
 msgid "F1"
 msgstr "F1"
 
@@ -3747,6 +4115,9 @@ msgstr "F1"
 #: ../include/adr_search_form.inc.php:159
 #: ../include/adr_search_form.inc.php:187
 #: ../include/adr_search_form.inc.php:215
+#: ../include/adr_search_form.inc.php:186
+#: ../include/adr_search_form.inc.php:214
+#: ../include/adr_search_form.inc.php:242
 msgid "F2"
 msgstr "F2"
 
@@ -3759,6 +4130,9 @@ msgstr "F2"
 #: ../include/adr_search_form.inc.php:160
 #: ../include/adr_search_form.inc.php:188
 #: ../include/adr_search_form.inc.php:216
+#: ../include/adr_search_form.inc.php:187
+#: ../include/adr_search_form.inc.php:215
+#: ../include/adr_search_form.inc.php:243
 msgid "F3"
 msgstr "F3"
 
@@ -3771,6 +4145,9 @@ msgstr "F3"
 #: ../include/adr_search_form.inc.php:161
 #: ../include/adr_search_form.inc.php:189
 #: ../include/adr_search_form.inc.php:217
+#: ../include/adr_search_form.inc.php:188
+#: ../include/adr_search_form.inc.php:216
+#: ../include/adr_search_form.inc.php:244
 msgid "F4"
 msgstr "F4"
 
@@ -3783,6 +4160,9 @@ msgstr "F4"
 #: ../include/adr_search_form.inc.php:162
 #: ../include/adr_search_form.inc.php:190
 #: ../include/adr_search_form.inc.php:218
+#: ../include/adr_search_form.inc.php:189
+#: ../include/adr_search_form.inc.php:217
+#: ../include/adr_search_form.inc.php:245
 msgid "F5"
 msgstr "F5"
 
@@ -3795,6 +4175,9 @@ msgstr "F5"
 #: ../include/adr_search_form.inc.php:163
 #: ../include/adr_search_form.inc.php:191
 #: ../include/adr_search_form.inc.php:219
+#: ../include/adr_search_form.inc.php:190
+#: ../include/adr_search_form.inc.php:218
+#: ../include/adr_search_form.inc.php:246
 msgid "F6"
 msgstr "F6"
 
@@ -3807,6 +4190,9 @@ msgstr "F6"
 #: ../include/adr_search_form.inc.php:164
 #: ../include/adr_search_form.inc.php:192
 #: ../include/adr_search_form.inc.php:220
+#: ../include/adr_search_form.inc.php:191
+#: ../include/adr_search_form.inc.php:219
+#: ../include/adr_search_form.inc.php:247
 msgid "F7"
 msgstr "F7"
 
@@ -3819,6 +4205,9 @@ msgstr "F7"
 #: ../include/adr_search_form.inc.php:165
 #: ../include/adr_search_form.inc.php:193
 #: ../include/adr_search_form.inc.php:221
+#: ../include/adr_search_form.inc.php:192
+#: ../include/adr_search_form.inc.php:220
+#: ../include/adr_search_form.inc.php:248
 msgid "F8"
 msgstr "F8"
 
@@ -3831,12 +4220,17 @@ msgstr "F8"
 #: ../include/adr_search_form.inc.php:166
 #: ../include/adr_search_form.inc.php:194
 #: ../include/adr_search_form.inc.php:222
+#: ../include/adr_search_form.inc.php:193
+#: ../include/adr_search_form.inc.php:221
+#: ../include/adr_search_form.inc.php:249
 msgid "F9"
 msgstr "F9"
 
 #: ../include/adr_search_form.inc.php:238
 #: ../include/adr_search_form.inc.php:239
 #: ../include/adr_search_form.inc.php:226
+#: ../include/adr_search_form.inc.php:253
+#: ../include/Menu.inc.php:173
 msgid "Suchen"
 msgstr "Search"
 
@@ -3847,6 +4241,7 @@ msgstr "Search"
 #: ../include/bounce_mail_list.inc.php:173
 #: ../include/bounce_filter_adr_list.inc.php:28
 #: ../include/bounce_mail_list.inc.php:139
+#: ../include/bounce_it.php:84
 #, c-format
 msgid "Es wurden %s Mails durchsucht."
 msgstr "Examined %s mails"
@@ -3858,6 +4253,7 @@ msgstr "Examined %s mails"
 #: ../include/bounce_mail_list.inc.php:174
 #: ../include/bounce_filter_adr_list.inc.php:29
 #: ../include/bounce_mail_list.inc.php:140
+#: ../include/bounce_it.php:85
 #, c-format
 msgid "%s Mails ergaben einen Treffer."
 msgstr "%s mails matched"
@@ -3865,6 +4261,7 @@ msgstr "%s mails matched"
 #: ../include/bounce_filter_adr_list.inc.php:34
 #: ../include/bounce_filter_adr_list.inc.php:33
 #: ../include/bounce_filter_adr_list.inc.php:30
+#: ../include/bounce_it.php:86
 #, c-format
 msgid "Es wurden aus %s Adressen %s (eindeutige) potentiell fehlerhafte Adressen erkannt."
 msgstr "%s of %s addresses (unique) were detected as errorness or failed"
@@ -3929,6 +4326,8 @@ msgstr "Select"
 #: ../include/bounce_filter_form_head.inc.php:98
 #: ../include/bounce_filter_form_head.inc.php:112
 #: ../include/bounce_mail_form_head.inc.php:76
+#: ../include/adm_set_form.inc.php:375
+#: ../include/adr_list_form_head.inc.php:154
 msgid "Aktion ausführen"
 msgstr "Do it"
 
@@ -3947,30 +4346,35 @@ msgstr "Delete mails"
 #: ../include/bounce_filter_form_head.inc.php:94
 #: ../include/bounce_filter_form_head.inc.php:111
 #: ../include/bounce_filter_form_head.inc.php:105
+#: ../include/adm_set_form.inc.php:381
 msgid "Adressen automatisch bearbeiten"
 msgstr "Automagic address-management"
 
 #: ../include/bounce_filter_form_head.inc.php:95
 #: ../include/bounce_filter_form_head.inc.php:112
 #: ../include/bounce_filter_form_head.inc.php:106
+#: ../include/adm_set_form.inc.php:382
 msgid "Adressen als Fehlerhaft markieren"
 msgstr "Mark addresses as failed"
 
 #: ../include/bounce_filter_form_head.inc.php:96
 #: ../include/bounce_filter_form_head.inc.php:113
 #: ../include/bounce_filter_form_head.inc.php:107
+#: ../include/adm_set_form.inc.php:383
 msgid "Adressen abmelden und deaktivieren"
 msgstr "Unsubscribe and deactivate addresses"
 
 #: ../include/bounce_filter_form_head.inc.php:97
 #: ../include/bounce_filter_form_head.inc.php:114
 #: ../include/bounce_filter_form_head.inc.php:108
+#: ../include/adm_set_form.inc.php:384
 msgid "Adressen deaktivieren"
 msgstr "Deactivate addresses"
 
 #: ../include/bounce_filter_form_head.inc.php:98
 #: ../include/bounce_filter_form_head.inc.php:115
 #: ../include/bounce_filter_form_head.inc.php:109
+#: ../include/adm_set_form.inc.php:385
 msgid "Adressen löschen"
 msgstr "Delete addresses"
 
@@ -3983,6 +4387,7 @@ msgstr "Select host"
 
 #: ../include/bounce_host_form.inc.php:49
 #: ../include/bounce_host_form.inc.php:41
+#: ../include/adm_set_form.inc.php:350
 msgid "Host auswählen"
 msgstr "Select host"
 
@@ -4079,6 +4484,7 @@ msgstr "Bounce-management"
 #: ../include/host_test.inc.php:59
 #: ../include/host_test.inc.php:61
 #: ../include/bounce.inc.php:90
+#: ../include/bounce_it.php:45
 #, c-format
 msgid "Verbindung zum Server %s wird aufgebaut..."
 msgstr "Connecting Server %s ..."
@@ -4086,6 +4492,7 @@ msgstr "Connecting Server %s ..."
 #: ../include/bounce.inc.php:93
 #: ../include/bounce.inc.php:96
 #: ../include/bounce.inc.php:108
+#: ../include/bounce_it.php:48
 #, c-format
 msgid "Servermeldung: %s"
 msgstr "Server says: %s"
@@ -4130,6 +4537,7 @@ msgstr "%s addresses selected for maipulation."
 #: ../include/bounce.inc.php:158
 #: ../include/bounce.inc.php:207
 #: ../include/bounce.inc.php:190
+#: ../include/bounce_it.php:112
 #, c-format
 msgid "Die Adresse %s wurde gelöscht."
 msgstr "The address %s has been deleted"
@@ -4138,6 +4546,7 @@ msgstr "The address %s has been deleted"
 #: ../include/bounce.inc.php:163
 #: ../include/bounce.inc.php:212
 #: ../include/bounce.inc.php:195
+#: ../include/bounce_it.php:117
 #, c-format
 msgid "Die Adresse %s wurde als Fehlerhaft markiert."
 msgstr "The address %s has been marked as failed and errorness."
@@ -4146,6 +4555,7 @@ msgstr "The address %s has been marked as failed and errorness."
 #: ../include/bounce.inc.php:168
 #: ../include/bounce.inc.php:217
 #: ../include/bounce.inc.php:200
+#: ../include/bounce_it.php:122
 #, c-format
 msgid "Die Adresse %s wurde deaktiviert."
 msgstr "The address %s has been deactivated."
@@ -4154,6 +4564,7 @@ msgstr "The address %s has been deactivated."
 #: ../include/bounce.inc.php:174
 #: ../include/bounce.inc.php:223
 #: ../include/bounce.inc.php:206
+#: ../include/bounce_it.php:128
 #, c-format
 msgid "Die Adresse %s wurde abgemeldet und deaktivert."
 msgstr "The address %s has been unsubscribed and deactivated."
@@ -4162,6 +4573,7 @@ msgstr "The address %s has been unsubscribed and deactivated."
 #: ../include/bounce.inc.php:182
 #: ../include/bounce.inc.php:232
 #: ../include/bounce.inc.php:213
+#: ../include/bounce_it.php:137
 #, c-format
 msgid "Fehler: %s von max. %s"
 msgstr "Errors: %s from max %s"
@@ -4170,6 +4582,7 @@ msgstr "Errors: %s from max %s"
 #: ../include/bounce.inc.php:191
 #: ../include/bounce.inc.php:241
 #: ../include/bounce.inc.php:222
+#: ../include/bounce_it.php:146
 #, c-format
 msgid "Als fehlerhaft markiert und deaktivert (Sendefehler >%s)"
 msgstr "Mark as failed (Delivery-errors > %s)"
@@ -4178,6 +4591,7 @@ msgstr "Mark as failed (Delivery-errors > %s)"
 #: ../include/bounce.inc.php:202
 #: ../include/bounce.inc.php:252
 #: ../include/bounce.inc.php:233
+#: ../include/bounce_it.php:157
 msgid "ist bereits abgemeldet (unsubscribed)."
 msgstr "is aleady unsubscribed"
 
@@ -4185,6 +4599,7 @@ msgstr "is aleady unsubscribed"
 #: ../include/bounce.inc.php:208
 #: ../include/bounce.inc.php:258
 #: ../include/bounce.inc.php:238
+#: ../include/bounce_it.php:166
 #, c-format
 msgid "%s ist nicht bekannt."
 msgstr "%s is unknown"
@@ -4255,6 +4670,9 @@ msgstr "Show text and details"
 #: ../include/adr_clean.inc.php:173
 #: ../include/adr_clean.inc.php:188
 #: ../include/bounce_mail_list.inc.php:111
+#: ../include/adr_clean.inc.php:194
+#: ../include/adr_clean.inc.php:222
+#: ../include/Menu.inc.php:187
 msgid "Adressen anzeigen"
 msgstr "Show addresses"
 
@@ -4292,6 +4710,7 @@ msgstr "%s of %s addresses were detected as errorness or failed"
 #: ../include/Menu.inc.php:358
 #: ../include/Menu.inc.php:394
 #: ../include/Menu.inc.php:451
+#: ../include/Menu.inc.php:506
 msgid "Hilfe / Dokumentation"
 msgstr "Help / Documentation"
 
@@ -4348,6 +4767,9 @@ msgstr "%s mails per run"
 #: ../include/Menu.inc.php:575
 #: ../include/Menu.inc.php:576
 #: ../include/Foot.inc.php:37
+#: ../include/Menu.inc.php:629
+#: ../include/Menu.inc.php:630
+#: ../include/Menu.inc.php:631
 msgid "PHP Info"
 msgstr "PHP info"
 
@@ -4368,6 +4790,7 @@ msgstr "Edit form"
 #: ../include/form_new.inc.php:213
 #: ../include/form_edit.inc.php:216
 #: ../include/form_new.inc.php:219
+#: ../include/form_new.inc.php:218
 msgid "Name sollte nicht leer sein."
 msgstr "Name should not be emty."
 
@@ -4405,6 +4828,9 @@ msgstr "Check captcha"
 #: ../include/form_form.inc.php:434
 #: ../include/form_form.inc.php:126
 #: ../include/form_form.inc.php:458
+#: ../include/adm_set_form.inc.php:227
+#: ../include/adm_set_form.inc.php:589
+#: ../include/form_form.inc.php:465
 msgid "Ziffern"
 msgstr "Digits"
 
@@ -4541,6 +4967,9 @@ msgstr "Values, (delimiter is ; (semicolon))"
 #: ../include/statistic_frm.inc.php:128
 #: ../include/statistic_frm.inc.php:135
 #: ../include/statistic_frm.inc.php:142
+#: ../include/form_form.inc.php:466
+#: ../include/form_form.inc.php:476
+#: ../include/form_form.inc.php:486
 msgid "Fehlermeldung"
 msgstr "Errormessage"
 
@@ -4572,6 +5001,7 @@ msgstr "Reset values"
 #: ../include/form_form.inc.php:403
 #: ../include/form_form.inc.php:420
 #: ../include/form_form.inc.php:444
+#: ../include/form_form.inc.php:451
 msgid "Double Opt-in"
 msgstr "Double opt-in"
 
@@ -4589,6 +5019,8 @@ msgstr "Double opt-in"
 #: ../include/form_list.inc.php:156
 #: ../include/form_list.inc.php:213
 #: ../include/statistic_frm.inc.php:55
+#: ../include/adm_set_form.inc.php:584
+#: ../include/form_form.inc.php:460
 msgid "Captcha"
 msgstr "Captcha"
 
@@ -4596,6 +5028,7 @@ msgstr "Captcha"
 #: ../include/form_form.inc.php:412
 #: ../include/form_form.inc.php:429
 #: ../include/form_form.inc.php:453
+#: ../include/form_form.inc.php:460
 msgid "Captcha/Spamcode prüfen"
 msgstr "Check captcha  code"
 
@@ -4603,6 +5036,7 @@ msgstr "Check captcha  code"
 #: ../include/form_form.inc.php:434
 #: ../include/form_form.inc.php:451
 #: ../include/form_form.inc.php:494
+#: ../include/form_form.inc.php:501
 msgid "Neuanmeldungen sind aktiv"
 msgstr "New subscriptions are active"
 
@@ -4610,6 +5044,7 @@ msgstr "New subscriptions are active"
 #: ../include/form_form.inc.php:454
 #: ../include/form_form.inc.php:471
 #: ../include/form_form.inc.php:514
+#: ../include/form_form.inc.php:515
 msgid "Fn / Pflichtfeld / Typ / Name"
 msgstr "Fn / Required / Type / Name"
 
@@ -4626,6 +5061,7 @@ msgstr "Fn / Required / Type / Name"
 #: ../include/form_form.inc.php:473
 #: ../include/form_form.inc.php:490
 #: ../include/form_form.inc.php:533
+#: ../include/form_form.inc.php:534
 msgid "Werte"
 msgstr " Values"
 
@@ -4642,6 +5078,7 @@ msgstr " Values"
 #: ../include/form_form.inc.php:475
 #: ../include/form_form.inc.php:492
 #: ../include/form_form.inc.php:535
+#: ../include/form_form.inc.php:536
 msgid "RegExpr"
 msgstr "RegExpr"
 
@@ -4649,6 +5086,7 @@ msgstr "RegExpr"
 #: ../include/form_form.inc.php:483
 #: ../include/form_form.inc.php:500
 #: ../include/form_form.inc.php:543
+#: ../include/form_form.inc.php:544
 msgid "Submit"
 msgstr "Submit"
 
@@ -4660,12 +5098,14 @@ msgstr "Manage subscription forms"
 #: ../include/nl_list.inc.php:79
 #: ../include/nl_list.inc.php:88
 #: ../include/nl_list.inc.php:76
+#: ../include/nl_list.inc.php:82
 msgid "Eintrag wurde kopiert."
 msgstr "Copied entry."
 
 #: ../include/form_list.inc.php:92
 #: ../include/adr_list.inc.php:383
 #: ../include/adr_list.inc.php:364
+#: ../include/adr_list.inc.php:483
 msgid "ID"
 msgstr "ID"
 
@@ -4815,6 +5255,7 @@ msgstr "Copy form"
 #: ../include/form_list.inc.php:335
 #: ../include/form_list_legende.inc.php:40
 #: ../include/nl_list.inc.php:520
+#: ../include/nl_list.inc.php:567
 msgid "Kopieren"
 msgstr "Copy"
 
@@ -4887,6 +5328,7 @@ msgstr "Create new form"
 #: ../include/form_new.inc.php:293
 #: ../include/form_new.inc.php:297
 #: ../include/form_new.inc.php:306
+#: ../include/form_new.inc.php:305
 #, c-format
 msgid "Neues Formular %s wurde erstellt."
 msgstr "New form %s created."
@@ -4894,6 +5336,7 @@ msgstr "New form %s created."
 #: ../include/Functions.inc.php:121
 #: ../include/Functions.inc.php:106
 #: ../include/Functions.inc.php:94
+#: ../include/Functions.inc.php:165
 msgid "Kein Titel"
 msgstr "No title"
 
@@ -4901,6 +5344,7 @@ msgstr "No title"
 #: ../include/Functions.inc.php:388
 #: ../include/Functions.inc.php:400
 #: ../include/Functions.inc.php:386
+#: ../include/Functions.inc.php:460
 #, c-format
 msgid "Prüfe Adressen: (%s)"
 msgstr "Checking addresses: (%s)"
@@ -4914,6 +5358,9 @@ msgstr "Checking addresses: (%s)"
 #: ../include/Functions.inc.php:397
 #: ../include/host_test.inc.php:146
 #: ../include/Stats.inc.php:21
+#: ../include/adr_list.inc.php:76
+#: ../include/adr_list.inc.php:202
+#: ../include/Functions.inc.php:471
 msgid "OK"
 msgstr "ok"
 
@@ -4921,6 +5368,7 @@ msgstr "ok"
 #: ../include/Functions.inc.php:870
 #: ../include/Functions.inc.php:900
 #: ../include/Functions.inc.php:849
+#: ../include/Functions.inc.php:923
 msgid "Syntaxfehler"
 msgstr "Syntax error"
 
@@ -4940,6 +5388,7 @@ msgstr "MX DNS"
 #: ../include/Functions.inc.php:939
 #: ../include/Functions.inc.php:989
 #: ../include/Functions.inc.php:915
+#: ../include/Functions.inc.php:1006
 msgid "Server meldet Fehler, Adresse abgelehnt"
 msgstr "Server: recipient rejected"
 
@@ -4947,6 +5396,7 @@ msgstr "Server: recipient rejected"
 #: ../include/Functions.inc.php:944
 #: ../include/Functions.inc.php:994
 #: ../include/Functions.inc.php:920
+#: ../include/Functions.inc.php:1011
 msgid "Keine Antwort vom Server."
 msgstr "No answer from server"
 
@@ -4961,6 +5411,7 @@ msgstr "Can not connect to server"
 #: ../include/Functions.inc.php:955
 #: ../include/Functions.inc.php:1005
 #: ../include/Functions.inc.php:931
+#: ../include/Functions.inc.php:1020
 msgid "Kein MX Eintrag (Validate)"
 msgstr "No MX (validate)"
 
@@ -5099,6 +5550,7 @@ msgstr "Please choose from menu"
 #: ../include/Menu.inc.php:53
 #: ../include/Menu.inc.php:55
 #: ../include/Main.inc.php:133
+#: ../include/Main.inc.php:136
 msgid "Hilfe"
 msgstr "Help"
 
@@ -5106,6 +5558,7 @@ msgstr "Help"
 #: ../include/Main.inc.php:177
 #: ../include/Main.inc.php:188
 #: ../include/Main.inc.php:162
+#: ../include/Main.inc.php:165
 msgid "Passwort wurde gespeichert und ist ab sofort gültig."
 msgstr "Password saved."
 
@@ -5113,6 +5566,7 @@ msgstr "Password saved."
 #: ../include/Main.inc.php:197
 #: ../include/Main.inc.php:210
 #: ../include/Main.inc.php:179
+#: ../include/Main.inc.php:182
 msgid "Hinweise"
 msgstr "Informations"
 
@@ -5120,6 +5574,7 @@ msgstr "Informations"
 #: ../include/Main.inc.php:198
 #: ../include/Main.inc.php:211
 #: ../include/Main.inc.php:180
+#: ../include/Main.inc.php:183
 msgid "Informationen ausblenden"
 msgstr "Hide informations"
 
@@ -5160,6 +5615,12 @@ msgstr "Here you manage your newsletter groups"
 #: ../include/Menu.inc.php:135
 #: ../include/Menu.inc.php:147
 #: ../include/Menu.inc.php:87
+#: ../include/adr_grp_new.inc.php:66
+#: ../include/adr_grp_new.inc.php:67
+#: ../include/adr_grp_new.inc.php:68
+#: ../include/Menu.inc.php:160
+#: ../include/nl_grp_new.inc.php:62
+#: ../include/nl_grp_new.inc.php:63
 msgid "Neue Gruppe"
 msgstr "New group"
 
@@ -5201,88 +5662,105 @@ msgstr "Here you create a new newsletter"
 #: ../include/Menu.inc.php:103
 #: ../include/Menu.inc.php:115
 #: ../include/Menu.inc.php:384
+#: ../include/Menu.inc.php:437
 msgid "Neue Queue"
 msgstr "New queue"
 
 #: ../include/Menu.inc.php:104
 #: ../include/Menu.inc.php:116
 #: ../include/Menu.inc.php:385
+#: ../include/Menu.inc.php:438
 msgid "neuen Newsletter in die Queue / Warteschlange eintragen"
 msgstr "Add newsletter to delivery queue"
 
 #: ../include/Menu.inc.php:105
 #: ../include/Menu.inc.php:117
 #: ../include/Menu.inc.php:386
+#: ../include/Menu.inc.php:439
 msgid "Hier bereiten Sie den Versand Ihres Newsletter vor"
 msgstr "Here you prepare your delivery jobs"
 
 #: ../include/Menu.inc.php:124
 #: ../include/Menu.inc.php:136
 #: ../include/Menu.inc.php:135
+#: ../include/Menu.inc.php:148
 msgid "Adress-Gruppen anzeigen"
 msgstr "Show address groups"
 
 #: ../include/Menu.inc.php:125
 #: ../include/Menu.inc.php:137
 #: ../include/Menu.inc.php:136
+#: ../include/Menu.inc.php:149
 msgid "Hier verwalten Sie Ihre Adress-Gruppen"
 msgstr "Here you manage your recipient groups"
 
 #: ../include/Menu.inc.php:136
 #: ../include/Menu.inc.php:148
+#: ../include/Menu.inc.php:161
 msgid "Neue Adress-Gruppe anlegen"
 msgstr "Create recipient group"
 
 #: ../include/Menu.inc.php:137
 #: ../include/Menu.inc.php:149
+#: ../include/Menu.inc.php:162
 msgid "Hier erstellen Sie eine neue Adress-Gruppe"
 msgstr "Here you create new recipient groups"
 
 #: ../include/Menu.inc.php:149
 #: ../include/Menu.inc.php:161
 #: ../include/Menu.inc.php:162
+#: ../include/Menu.inc.php:175
+#: ../include/Menu.inc.php:188
 msgid "Hier können Sie Ihre Adressen suchen, anzeigen und bearbeiten"
 msgstr "Here you can view, search  and edit your recipients"
 
 #: ../include/Menu.inc.php:159
 #: ../include/Menu.inc.php:171
 #: ../include/Menu.inc.php:173
+#: ../include/Menu.inc.php:199
 msgid "Neue Adresse"
 msgstr "New address"
 
 #: ../include/Menu.inc.php:160
 #: ../include/Menu.inc.php:172
 #: ../include/Menu.inc.php:174
+#: ../include/adr_list.inc.php:476
+#: ../include/Menu.inc.php:200
 msgid "Neue Adresse anlegen"
 msgstr "Create new address"
 
 #: ../include/Menu.inc.php:161
 #: ../include/Menu.inc.php:173
 #: ../include/Menu.inc.php:175
+#: ../include/Menu.inc.php:201
 msgid "Hier erfassen Sie Adressen manuell"
 msgstr "Here you create new addresses manually"
 
 #: ../include/Menu.inc.php:171
 #: ../include/Menu.inc.php:183
 #: ../include/Menu.inc.php:186
+#: ../include/Menu.inc.php:212
 msgid "CSV-Import"
 msgstr "CSV import"
 
 #: ../include/Menu.inc.php:172
 #: ../include/Menu.inc.php:184
 #: ../include/Menu.inc.php:187
+#: ../include/Menu.inc.php:213
 msgid "Adressen aus einer CSV-Datei importieren"
 msgstr "Import addresses from CSV file"
 
 #: ../include/Menu.inc.php:173
 #: ../include/Menu.inc.php:185
 #: ../include/Menu.inc.php:188
+#: ../include/Menu.inc.php:214
 msgid "Importieren Sie Ihre Adressbestände aus einer CSV-Datei"
 msgstr "Here you can import your collected addresses"
 
 #: ../include/Menu.inc.php:183
 #: ../include/Menu.inc.php:195
 #: ../include/Menu.inc.php:199
+#: ../include/Menu.inc.php:225
 msgid "CSV-Export"
 msgstr "CSV export"
 
@@ -5294,6 +5772,7 @@ msgstr "Export addresses to CSV file"
 #: ../include/Menu.inc.php:202
 #: ../include/Menu.inc.php:214
 #: ../include/Menu.inc.php:220
+#: ../include/Menu.inc.php:246
 msgid "Formulare anzeigen"
 msgstr "Show forms"
 
@@ -5302,18 +5781,22 @@ msgstr "Show forms"
 #: ../include/Menu.inc.php:227
 #: ../include/Menu.inc.php:221
 #: ../include/Menu.inc.php:234
+#: ../include/Menu.inc.php:247
+#: ../include/Menu.inc.php:260
 msgid "Hier verwalten Sie Ihre Anmeldeformulare"
 msgstr "Here you manage your subscription-forms"
 
 #: ../include/Menu.inc.php:213
 #: ../include/Menu.inc.php:225
 #: ../include/Menu.inc.php:232
+#: ../include/Menu.inc.php:258
 msgid "Neues Formular"
 msgstr "New form"
 
 #: ../include/Menu.inc.php:214
 #: ../include/Menu.inc.php:226
 #: ../include/Menu.inc.php:233
+#: ../include/Menu.inc.php:259
 msgid "Neues Formular erstellen"
 msgstr "Create new form"
 
@@ -5323,12 +5806,15 @@ msgstr "Create new form"
 #: ../include/Menu.inc.php:244
 #: ../include/Menu.inc.php:417
 #: ../include/Menu.inc.php:418
+#: ../include/Menu.inc.php:472
+#: ../include/Menu.inc.php:473
 msgid "Filemanager"
 msgstr "Filemanager"
 
 #: ../include/Menu.inc.php:233
 #: ../include/Menu.inc.php:245
 #: ../include/Menu.inc.php:419
+#: ../include/Menu.inc.php:474
 msgid "Filemanager from myftphp.sf.net - thx to Knittl"
 msgstr "Filemanager from myftphp.sf.net - thx to Knittl"
 
@@ -5341,24 +5827,29 @@ msgstr "Filemanager from myftphp.sf.net - thx to Knittl"
 #: ../include/Menu.inc.php:252
 #: ../include/Menu.inc.php:253
 #: ../include/status_top_x_form.inc.php:26
+#: ../include/Menu.inc.php:278
+#: ../include/Menu.inc.php:279
 msgid "Top X"
 msgstr "Top X"
 
 #: ../include/Menu.inc.php:251
 #: ../include/Menu.inc.php:263
 #: ../include/Menu.inc.php:254
+#: ../include/Menu.inc.php:280
 msgid "Top X Liste"
 msgstr "Top X list"
 
 #: ../include/Menu.inc.php:262
 #: ../include/Menu.inc.php:274
 #: ../include/Menu.inc.php:266
+#: ../include/Menu.inc.php:292
 msgid "Aktueller Status"
 msgstr "Current status"
 
 #: ../include/Menu.inc.php:263
 #: ../include/Menu.inc.php:275
 #: ../include/Menu.inc.php:267
+#: ../include/Menu.inc.php:293
 msgid "Hier sehen Sie den aktuellen Status"
 msgstr "Here you see  the current status of the database"
 
@@ -5372,18 +5863,21 @@ msgstr "Here you see  the current status of the database"
 #: ../include/status_map.inc.php:157
 #: ../include/status_map.inc.php:166
 #: ../include/Menu.inc.php:278
+#: ../include/Menu.inc.php:304
 msgid "Karte"
 msgstr "Map"
 
 #: ../include/Menu.inc.php:274
 #: ../include/Menu.inc.php:286
 #: ../include/Menu.inc.php:279
+#: ../include/Menu.inc.php:305
 msgid "Benutzer-Karte, zeige die Standorte der Leser"
 msgstr "User map, shows location of your subscribers"
 
 #: ../include/Menu.inc.php:275
 #: ../include/Menu.inc.php:287
 #: ../include/Menu.inc.php:280
+#: ../include/Menu.inc.php:306
 msgid "Hier sehen Sie die geographische Verteilung der Leser"
 msgstr "Here you see the geographical mapping of your readers"
 
@@ -5393,12 +5887,15 @@ msgstr "Here you see the geographical mapping of your readers"
 #: ../include/Menu.inc.php:304
 #: ../include/Menu.inc.php:298
 #: ../include/Menu.inc.php:299
+#: ../include/Menu.inc.php:324
+#: ../include/Menu.inc.php:325
 msgid "Bounce-Management"
 msgstr "Bounce management"
 
 #: ../include/Menu.inc.php:293
 #: ../include/Menu.inc.php:305
 #: ../include/Menu.inc.php:300
+#: ../include/Menu.inc.php:326
 msgid "Verwalten Sie fehlgeschlagene E-Mails und Rückläufer"
 msgstr "Manage bounce mails"
 
@@ -5408,12 +5905,15 @@ msgstr "Manage bounce mails"
 #: ../include/Menu.inc.php:316
 #: ../include/Menu.inc.php:311
 #: ../include/Menu.inc.php:312
+#: ../include/Menu.inc.php:350
+#: ../include/Menu.inc.php:351
 msgid "Datenbank bereinigen"
 msgstr "Clean up database"
 
 #: ../include/Menu.inc.php:305
 #: ../include/Menu.inc.php:317
 #: ../include/Menu.inc.php:313
+#: ../include/Menu.inc.php:352
 msgid "Datenbank aufräumen und Adressbestände säubern"
 msgstr "Clean up database"
 
@@ -5423,12 +5923,15 @@ msgstr "Clean up database"
 #: ../include/Menu.inc.php:352
 #: ../include/Menu.inc.php:397
 #: ../include/Menu.inc.php:398
+#: ../include/Menu.inc.php:450
+#: ../include/Menu.inc.php:451
 msgid "manueller Versand"
 msgstr "send manually"
 
 #: ../include/Menu.inc.php:317
 #: ../include/Menu.inc.php:353
 #: ../include/Menu.inc.php:399
+#: ../include/Menu.inc.php:452
 msgid "Hier versenden Sie Ihre Newsletter manuell"
 msgstr "Send newsletter manually"
 
@@ -5438,12 +5941,15 @@ msgstr "Send newsletter manually"
 #: ../include/Menu.inc.php:364
 #: ../include/Menu.inc.php:350
 #: ../include/Menu.inc.php:351
+#: ../include/Menu.inc.php:403
+#: ../include/Menu.inc.php:404
 msgid "Abmeldeformular"
 msgstr "Unsubscription form"
 
 #: ../include/Menu.inc.php:329
 #: ../include/Menu.inc.php:365
 #: ../include/Menu.inc.php:352
+#: ../include/Menu.inc.php:405
 msgid "Hier gelangen Sie zum Abmeldeformular"
 msgstr "Go to unsubscription form"
 
@@ -5453,24 +5959,29 @@ msgstr "Go to unsubscription form"
 #: ../include/Menu.inc.php:382
 #: ../include/Menu.inc.php:437
 #: ../include/Menu.inc.php:438
+#: ../include/Menu.inc.php:492
+#: ../include/Menu.inc.php:493
 msgid "Benutzereinstellungen"
 msgstr "User settings"
 
 #: ../include/Menu.inc.php:347
 #: ../include/Menu.inc.php:383
 #: ../include/Menu.inc.php:439
+#: ../include/Menu.inc.php:494
 msgid "Hier ändern Sie Ihre persönlichen Einstellungen"
 msgstr "Change personal settings"
 
 #: ../include/Menu.inc.php:357
 #: ../include/Menu.inc.php:393
 #: ../include/Menu.inc.php:450
+#: ../include/Menu.inc.php:505
 msgid "Dokumentation"
 msgstr "Documentation"
 
 #: ../include/Menu.inc.php:359
 #: ../include/Menu.inc.php:395
 #: ../include/Menu.inc.php:452
+#: ../include/Menu.inc.php:507
 msgid "Hier wird Ihnen geholfen"
 msgstr "Here you get help"
 
@@ -5483,6 +5994,9 @@ msgstr "Here you get help"
 #: ../include/Menu.inc.php:463
 #: ../include/Menu.inc.php:464
 #: ../include/Menu.inc.php:465
+#: ../include/Menu.inc.php:518
+#: ../include/Menu.inc.php:519
+#: ../include/Menu.inc.php:520
 msgid "Credits"
 msgstr "Credits"
 
@@ -5495,72 +6009,86 @@ msgstr "Credits"
 #: ../include/Menu.inc.php:476
 #: ../include/Menu.inc.php:477
 #: ../include/Menu.inc.php:478
+#: ../include/Menu.inc.php:531
+#: ../include/Menu.inc.php:532
+#: ../include/Menu.inc.php:533
 msgid "Logout"
 msgstr "Logout"
 
 #: ../include/Menu.inc.php:400
 #: ../include/Menu.inc.php:460
 #: ../include/Menu.inc.php:523
+#: ../include/Menu.inc.php:578
 msgid "Benutzer verwalten"
 msgstr "Manage Users"
 
 #: ../include/Menu.inc.php:401
 #: ../include/Menu.inc.php:461
 #: ../include/Menu.inc.php:524
+#: ../include/Menu.inc.php:579
 msgid "Tellmatic Benutzer/Authoren verwalten"
 msgstr "Manage Tellmatic users/authors"
 
 #: ../include/Menu.inc.php:411
 #: ../include/Menu.inc.php:471
 #: ../include/Menu.inc.php:535
+#: ../include/Menu.inc.php:590
 msgid "Neuer Benutzer"
 msgstr "New user"
 
 #: ../include/Menu.inc.php:412
 #: ../include/Menu.inc.php:472
 #: ../include/Menu.inc.php:536
+#: ../include/Menu.inc.php:591
 msgid "Neuer Benutzer/Author"
 msgstr "New user/author"
 
 #: ../include/Menu.inc.php:413
 #: ../include/Menu.inc.php:473
 #: ../include/Menu.inc.php:537
+#: ../include/Menu.inc.php:592
 msgid "Neuen Tellmatic Benutzer/Authoren anlegen"
 msgstr "Crate new Tellmatic user/author"
 
 #: ../include/Menu.inc.php:424
 #: ../include/Menu.inc.php:484
 #: ../include/Menu.inc.php:549
+#: ../include/Menu.inc.php:604
 msgid "Grundeinstellungen"
 msgstr "Settings"
 
 #: ../include/Menu.inc.php:425
 #: ../include/Menu.inc.php:485
 #: ../include/Menu.inc.php:550
+#: ../include/Menu.inc.php:605
 msgid "Globale Einstellungen für Tellmatic"
 msgstr "Global settings for tellmatic"
 
 #: ../include/Menu.inc.php:437
 #: ../include/Menu.inc.php:497
 #: ../include/Menu.inc.php:563
+#: ../include/Menu.inc.php:618
 msgid "Hier sehen Sie einige zusätzliche Informationen"
 msgstr "Some more informations"
 
 #: ../include/Menu.inc.php:459
 #: ../include/Menu.inc.php:519
 #: ../include/Menu.inc.php:587
+#: ../include/Menu.inc.php:642
 msgid "Spende"
 msgstr "Donation"
 
 #: ../include/Menu.inc.php:460
 #: ../include/Menu.inc.php:520
 #: ../include/Menu.inc.php:588
+#: ../include/Menu.inc.php:643
 msgid "Tellmatic unterstützen"
 msgstr "Donate to Tellmatic"
 
 #: ../include/Menu.inc.php:461
 #: ../include/Menu.inc.php:521
 #: ../include/Menu.inc.php:589
+#: ../include/Menu.inc.php:644
 msgid "Bitte unterstützen Sie Tellmatic mit einer Spende"
 msgstr "Please donate to Tellmatic"
 
@@ -5568,6 +6096,7 @@ msgstr "Please donate to Tellmatic"
 #: ../include/Menu.inc.php:596
 #: ../include/Menu.inc.php:682
 #: ../include/Menu.inc.php:672
+#: ../include/Menu.inc.php:727
 #, c-format
 msgid "Benutzer: %s"
 msgstr "User: %s"
@@ -5576,6 +6105,7 @@ msgstr "User: %s"
 #: ../include/Menu.inc.php:598
 #: ../include/Menu.inc.php:684
 #: ../include/Menu.inc.php:674
+#: ../include/Menu.inc.php:729
 msgid "Zuletzt angemeldet:"
 msgstr "Last login:"
 
@@ -5597,6 +6127,11 @@ msgstr "Last login:"
 #: ../include/nl_list.inc.php:334
 #: ../include/nl_list.inc.php:509
 #: ../include/nl_list.inc.php:514
+#: ../include/nl_list.inc.php:356
+#: ../include/nl_list.inc.php:359
+#: ../include/nl_list.inc.php:556
+#: ../include/nl_list.inc.php:561
+#: ../include/nl_list_legende.inc.php:47
 msgid "Newsletter bearbeiten"
 msgstr "Manage newsletter"
 
@@ -5608,6 +6143,8 @@ msgstr "Manage newsletter"
 #: ../include/nl_new.inc.php:75
 #: ../include/nl_edit.inc.php:77
 #: ../include/nl_new.inc.php:74
+#: ../include/nl_edit.inc.php:106
+#: ../include/nl_new.inc.php:99
 msgid "Betreff sollte nicht leer sein."
 msgstr "Subject should not be empty"
 
@@ -5615,6 +6152,7 @@ msgstr "Subject should not be empty"
 #: ../include/nl_edit.inc.php:111
 #: ../include/nl_edit.inc.php:124
 #: ../include/nl_edit.inc.php:108
+#: ../include/nl_edit.inc.php:141
 #, c-format
 msgid "Newsletter %s wurde aktualisiert."
 msgstr "Newsletter %s updated"
@@ -5627,6 +6165,8 @@ msgstr "Newsletter %s updated"
 #: ../include/nl_new.inc.php:110
 #: ../include/nl_edit.inc.php:109
 #: ../include/nl_new.inc.php:108
+#: ../include/nl_edit.inc.php:142
+#: ../include/nl_new.inc.php:137
 msgid "Der Newsletter wurde gespeichert unter:"
 msgstr "Newsletter saved as:"
 
@@ -5634,6 +6174,7 @@ msgstr "Newsletter saved as:"
 #: ../include/nl_edit.inc.php:114
 #: ../include/nl_edit.inc.php:127
 #: ../include/nl_edit.inc.php:111
+#: ../include/nl_edit.inc.php:144
 msgid "Vorlage:"
 msgstr "Template:"
 
@@ -5645,6 +6186,8 @@ msgstr "Template:"
 #: ../include/nl_new.inc.php:114
 #: ../include/nl_edit.inc.php:113
 #: ../include/nl_new.inc.php:112
+#: ../include/nl_edit.inc.php:146
+#: ../include/nl_new.inc.php:141
 msgid "Online:"
 msgstr "Online:"
 
@@ -5674,6 +6217,7 @@ msgstr "Upload attachement"
 #: ../include/nl_form.inc.php:75
 #: ../include/nl_form.inc.php:66
 #: ../include/nl_form.inc.php:109
+#: ../include/nl_form.inc.php:166
 msgid "Erscheint als Betreff in der e-Mail"
 msgstr "Will be shown as subject in e-mail"
 
@@ -5686,6 +6230,9 @@ msgstr "Will be shown as subject in e-mail"
 #: ../include/nl_form.inc.php:359
 #: ../include/nl_list_legende.inc.php:46
 #: ../include/nl_form.inc.php:357
+#: ../include/nl_form.inc.php:196
+#: ../include/nl_form.inc.php:485
+#: ../include/nl_list_legende.inc.php:43
 msgid "Link"
 msgstr "Link"
 
@@ -5704,6 +6251,8 @@ msgstr "Massmailing (BCC)"
 #: ../include/nl_form.inc.php:161
 #: ../include/nl_form.inc.php:155
 #: ../include/nl_form.inc.php:165
+#: ../include/nl_form.inc.php:245
+#: ../include/nl_form.inc.php:255
 msgid "Newsletter-Text"
 msgstr "Newsletter text"
 
@@ -5711,6 +6260,7 @@ msgstr "Newsletter text"
 #: ../include/nl_form.inc.php:118
 #: ../include/nl_form.inc.php:171
 #: ../include/nl_form.inc.php:175
+#: ../include/nl_form.inc.php:276
 msgid "Newsletter-Gruppe waehlen"
 msgstr "Select newsletter group"
 
@@ -5722,12 +6272,14 @@ msgstr "Select newsletter group"
 #: ../include/nl_form.inc.php:332
 #: ../include/nl_form.inc.php:232
 #: ../include/nl_form.inc.php:330
+#: ../include/nl_form.inc.php:458
 msgid "Format"
 msgstr "Format"
 
 #: ../include/nl_form.inc.php:242
 #: ../include/nl_form.inc.php:305
 #: ../include/nl_form.inc.php:303
+#: ../include/nl_form.inc.php:422
 msgid "Betreff"
 msgstr "Subject"
 
@@ -5749,6 +6301,9 @@ msgstr "Subject"
 #: ../include/nl_form.inc.php:339
 #: ../include/nl_list.inc.php:310
 #: ../include/nl_list.inc.php:354
+#: ../include/nl_form.inc.php:467
+#: ../include/nl_list.inc.php:335
+#: ../include/nl_list_legende.inc.php:22
 msgid "Massenmailing"
 msgstr "Massmailing"
 
@@ -5756,6 +6311,7 @@ msgstr "Massmailing"
 #: ../include/nl_form.inc.php:278
 #: ../include/nl_form.inc.php:341
 #: ../include/nl_form.inc.php:339
+#: ../include/nl_form.inc.php:467
 msgid "personalisiertes Newsletter"
 msgstr "Personalized newsletter"
 
@@ -5767,6 +6323,7 @@ msgstr "Personalized newsletter"
 #: ../include/nl_form.inc.php:305
 #: ../include/nl_form.inc.php:368
 #: ../include/nl_form.inc.php:366
+#: ../include/nl_form.inc.php:494
 msgid "Bild"
 msgstr "Image"
 
@@ -5788,6 +6345,9 @@ msgstr "Image"
 #: ../include/nl_form.inc.php:375
 #: ../include/nl_list.inc.php:318
 #: ../include/nl_list.inc.php:362
+#: ../include/nl_form.inc.php:515
+#: ../include/nl_list.inc.php:343
+#: ../include/nl_list_legende.inc.php:25
 msgid "HTML"
 msgstr "HTML"
 
@@ -5795,6 +6355,7 @@ msgstr "HTML"
 #: ../include/nl_form.inc.php:323
 #: ../include/nl_form.inc.php:396
 #: ../include/nl_form.inc.php:394
+#: ../include/nl_form.inc.php:534
 msgid "Anhang"
 msgstr "Attachement"
 
@@ -5806,6 +6367,8 @@ msgstr "Attachement"
 #: ../include/nl_form.inc.php:403
 #: ../include/nl_form.inc.php:412
 #: ../include/nl_list_legende.inc.php:34
+#: ../include/nl_form.inc.php:543
+#: ../include/nl_form.inc.php:552
 msgid "Text"
 msgstr "Text"
 
@@ -5815,6 +6378,8 @@ msgstr "Text"
 #: ../include/nl_form.inc.php:345
 #: ../include/nl_form.inc.php:425
 #: ../include/nl_form.inc.php:419
+#: ../include/nl_form.inc.php:559
+#: ../include/nl_form.inc.php:573
 msgid "Editor Ein/Aus"
 msgstr "Editor on/off"
 
@@ -5822,6 +6387,7 @@ msgstr "Editor on/off"
 #: ../include/nl_form.inc.php:359
 #: ../include/nl_form.inc.php:448
 #: ../include/nl_form.inc.php:442
+#: ../include/nl_form.inc.php:601
 #, c-format
 msgid "%s enthält das hochgeladene Bild 'img src' | %s enthält nur die URL zum Bild"
 msgstr "%s contains the uploaded image 'img src' | %s contains only the url."
@@ -5830,6 +6396,7 @@ msgstr "%s contains the uploaded image 'img src' | %s contains only the url."
 #: ../include/nl_form.inc.php:360
 #: ../include/nl_form.inc.php:449
 #: ../include/nl_form.inc.php:443
+#: ../include/nl_form.inc.php:602
 #, c-format
 msgid "%s enthält den angegebenen Link 'a href' | %s enthält nur die URL des Links"
 msgstr "%s contains the link 'a href' | %s contains only the url."
@@ -5844,6 +6411,7 @@ msgstr "%s contains the link to the attachement 'a href' | %s contains only the 
 #: ../include/nl_form.inc.php:362
 #: ../include/nl_form.inc.php:451
 #: ../include/nl_form.inc.php:445
+#: ../include/nl_form.inc.php:604
 #, c-format
 msgid "%s enthält den Link zum abmelden |   %s enthält nur die URL zum Abmeldeformular"
 msgstr "%s contains the link to unsubscribe 'a href' | %s contains only the url."
@@ -5852,6 +6420,7 @@ msgstr "%s contains the link to unsubscribe 'a href' | %s contains only the url.
 #: ../include/nl_form.inc.php:363
 #: ../include/nl_form.inc.php:452
 #: ../include/nl_form.inc.php:446
+#: ../include/nl_form.inc.php:605
 #, c-format
 msgid "%s enthält den Link zur Onlineversion 'a href' |  %s enthält nur die URL zur Onlineversion"
 msgstr "%s contains the link to the online version of your newsletter 'a href' | %s contains only the url."
@@ -5860,6 +6429,7 @@ msgstr "%s contains the link to the online version of your newsletter 'a href' |
 #: ../include/nl_form.inc.php:364
 #: ../include/nl_form.inc.php:453
 #: ../include/nl_form.inc.php:447
+#: ../include/nl_form.inc.php:606
 #, c-format
 msgid "%s enthält das schliessende TAG '/a' fuer die Links"
 msgstr "%s contains the closing tag for links '/a'."
@@ -5868,6 +6438,7 @@ msgstr "%s contains the closing tag for links '/a'."
 #: ../include/nl_form.inc.php:365
 #: ../include/nl_form.inc.php:454
 #: ../include/nl_form.inc.php:448
+#: ../include/nl_form.inc.php:607
 msgid "Nur für personalisierten Newsleter:"
 msgstr "Only available for personal mailings: (no massmailing/BCC)"
 
@@ -5875,6 +6446,7 @@ msgstr "Only available for personal mailings: (no massmailing/BCC)"
 #: ../include/nl_form.inc.php:366
 #: ../include/nl_form.inc.php:455
 #: ../include/nl_form.inc.php:449
+#: ../include/nl_form.inc.php:608
 #, c-format
 msgid "%s enthält das Tracker-Bild (für View-Tracking, nur HTML-Mails)"
 msgstr "%s contains tracking image for view-tracking, only available for newsletter from type HTML "
@@ -5883,6 +6455,7 @@ msgstr "%s contains tracking image for view-tracking, only available for newslet
 #: ../include/nl_form.inc.php:367
 #: ../include/nl_form.inc.php:456
 #: ../include/nl_form.inc.php:450
+#: ../include/nl_form.inc.php:609
 #, c-format
 msgid "%s enthält die e-Mailadresse des Empfaengers"
 msgstr "%s contains the e-mail-address of the subscriber."
@@ -5891,6 +6464,7 @@ msgstr "%s contains the e-mail-address of the subscriber."
 #: ../include/nl_form.inc.php:368
 #: ../include/nl_form.inc.php:457
 #: ../include/nl_form.inc.php:451
+#: ../include/nl_form.inc.php:610
 #, c-format
 msgid "%s bis %s enthält die Felder aus den Formularen/Adressen"
 msgstr "%s to %s contains the field values from your addresses."
@@ -5899,6 +6473,7 @@ msgstr "%s to %s contains the field values from your addresses."
 #: ../include/nl_form.inc.php:369
 #: ../include/nl_form.inc.php:458
 #: ../include/nl_form.inc.php:452
+#: ../include/nl_form.inc.php:611
 #, c-format
 msgid "%s enthält den kompletten Link 'a href' zum Aktivierungslink ('(1st)-Touch-Opt-In) | %s enthält nur die URL"
 msgstr "%s contains the link 'a href' for 1st-touch-opt-in subscriptions | %s contains only the url."
@@ -5913,6 +6488,7 @@ msgstr "Edit newsletter group"
 
 #: ../include/nl_grp_edit.inc.php:54
 #: ../include/nl_grp_edit.inc.php:56
+#: ../include/nl_grp_edit.inc.php:55
 #, c-format
 msgid "Newslettergruppe %s wurde aktualisiert."
 msgstr "Newsletter group %s updated"
@@ -5999,24 +6575,28 @@ msgstr "Manage newsletter"
 #: ../include/nl_list.inc.php:44
 #: ../include/nl_list.inc.php:53
 #: ../include/nl_list.inc.php:52
+#: ../include/nl_list.inc.php:57
 msgid "Bild wurde gelöscht."
 msgstr "Image deleted"
 
 #: ../include/nl_list.inc.php:46
 #: ../include/nl_list.inc.php:55
 #: ../include/nl_list.inc.php:54
+#: ../include/nl_list.inc.php:59
 msgid "Bild konnte nicht gelöscht werden."
 msgstr "Could not delete image"
 
 #: ../include/nl_list.inc.php:53
 #: ../include/nl_list.inc.php:62
 #: ../include/nl_list.inc.php:61
+#: ../include/nl_list.inc.php:66
 msgid "HTML Datei wurde gelöscht."
 msgstr "HTML file deleted"
 
 #: ../include/nl_list.inc.php:55
 #: ../include/nl_list.inc.php:64
 #: ../include/nl_list.inc.php:63
+#: ../include/nl_list.inc.php:68
 msgid "HTML Datei konnte nicht gelöscht werden."
 msgstr "Could not delete HTML file"
 
@@ -6033,6 +6613,7 @@ msgstr "Could not delete attachement"
 #: ../include/nl_list.inc.php:75
 #: ../include/nl_list.inc.php:84
 #: ../include/nl_list.inc.php:72
+#: ../include/nl_list.inc.php:77
 #, c-format
 msgid "%s Queues für diese Newsletter wurden gelöscht."
 msgstr "%s queue entries have been deleted for this newsletter"
@@ -6040,6 +6621,7 @@ msgstr "%s queue entries have been deleted for this newsletter"
 #: ../include/nl_list.inc.php:83
 #: ../include/nl_list.inc.php:92
 #: ../include/nl_list.inc.php:80
+#: ../include/nl_list.inc.php:87
 msgid "Eintrag und dazugehörige Dateien wurde kopiert."
 msgstr "Entry and associated files have been deleted"
 
@@ -6058,6 +6640,7 @@ msgstr "Selected group: %s"
 #: ../include/queue_list.inc.php:166
 #: ../include/nl_list.inc.php:210
 #: ../include/queue_list.inc.php:165
+#: ../include/nl_list.inc.php:232
 msgid "Datum"
 msgstr "Date"
 
@@ -6065,6 +6648,8 @@ msgstr "Date"
 #: ../include/nl_list.inc.php:235
 #: ../include/nl_list.inc.php:287
 #: ../include/nl_list.inc.php:214
+#: ../include/nl_form.inc.php:431
+#: ../include/nl_list.inc.php:236
 msgid "Titel"
 msgstr "Title"
 
@@ -6082,6 +6667,8 @@ msgstr "Title"
 #: ../include/nl_list_legende.inc.php:22
 #: ../include/nl_list.inc.php:312
 #: ../include/nl_list.inc.php:356
+#: ../include/nl_list.inc.php:337
+#: ../include/nl_list_legende.inc.php:23
 msgid "personalisierter Newsletter"
 msgstr "Personalized newsletter"
 
@@ -6099,6 +6686,8 @@ msgstr "Personalized newsletter"
 #: ../include/nl_list_legende.inc.php:23
 #: ../include/nl_list.inc.php:315
 #: ../include/nl_list.inc.php:359
+#: ../include/nl_list.inc.php:340
+#: ../include/nl_list_legende.inc.php:24
 msgid "TEXT/HTML"
 msgstr "TEXT/HTML"
 
@@ -6116,6 +6705,8 @@ msgstr "TEXT/HTML"
 #: ../include/nl_list_legende.inc.php:25
 #: ../include/nl_list.inc.php:321
 #: ../include/nl_list.inc.php:365
+#: ../include/nl_list.inc.php:346
+#: ../include/nl_list_legende.inc.php:26
 msgid "TEXT"
 msgstr "TEXT"
 
@@ -6127,6 +6718,8 @@ msgstr "TEXT"
 #: ../include/nl_list.inc.php:610
 #: ../include/nl_list.inc.php:331
 #: ../include/nl_list.inc.php:509
+#: ../include/nl_list.inc.php:356
+#: ../include/nl_list.inc.php:556
 msgid "Der Newsletter wurde bereits versendet, wollen Sie ihn wirklich bearbeiten? Es wird empfohlen eine Kopie zu erstellen und diese zu bearbeiten."
 msgstr "This newsletter was already sent. Do you really want to edit? It is recommended to copy the newsletter and edit a copy (using this one as a template)."
 
@@ -6134,6 +6727,7 @@ msgstr "This newsletter was already sent. Do you really want to edit? It is reco
 #: ../include/nl_list.inc.php:393
 #: ../include/nl_list.inc.php:451
 #: ../include/nl_list.inc.php:373
+#: ../include/nl_list.inc.php:407
 msgid "Gruppe:"
 msgstr "Group:"
 
@@ -6141,6 +6735,7 @@ msgstr "Group:"
 #: ../include/nl_list.inc.php:400
 #: ../include/nl_list.inc.php:469
 #: ../include/nl_list.inc.php:388
+#: ../include/nl_list.inc.php:422
 #, c-format
 msgid "Link: %s"
 msgstr "Link: %s"
@@ -6149,6 +6744,7 @@ msgstr "Link: %s"
 #: ../include/nl_list.inc.php:403
 #: ../include/nl_list.inc.php:472
 #: ../include/nl_list.inc.php:391
+#: ../include/nl_list.inc.php:425
 msgid "Versand an:"
 msgstr "Send to:"
 
@@ -6156,6 +6752,7 @@ msgstr "Send to:"
 #: ../include/nl_list.inc.php:404
 #: ../include/nl_list.inc.php:473
 #: ../include/nl_list.inc.php:392
+#: ../include/nl_list.inc.php:426
 #, c-format
 msgid "insgesamt %s Adressen"
 msgstr "total %s recipients"
@@ -6164,6 +6761,7 @@ msgstr "total %s recipients"
 #: ../include/nl_list.inc.php:405
 #: ../include/nl_list.inc.php:474
 #: ../include/nl_list.inc.php:393
+#: ../include/nl_list.inc.php:427
 #, c-format
 msgid "Wartend: %s"
 msgstr "Waiting: %s"
@@ -6172,6 +6770,7 @@ msgstr "Waiting: %s"
 #: ../include/nl_list.inc.php:406
 #: ../include/nl_list.inc.php:475
 #: ../include/nl_list.inc.php:394
+#: ../include/nl_list.inc.php:428
 #, c-format
 msgid "Gesendet: %s"
 msgstr "Sent: %s"
@@ -6180,6 +6779,7 @@ msgstr "Sent: %s"
 #: ../include/nl_list.inc.php:407
 #: ../include/nl_list.inc.php:476
 #: ../include/nl_list.inc.php:395
+#: ../include/nl_list.inc.php:429
 #, c-format
 msgid "Fehler: %s"
 msgstr "Error: %s"
@@ -6189,6 +6789,7 @@ msgstr "Error: %s"
 #: ../include/nl_list.inc.php:408
 #: ../include/nl_list.inc.php:477
 #: ../include/nl_list.inc.php:396
+#: ../include/nl_list.inc.php:430
 #, c-format
 msgid "Angezeigt: %s"
 msgstr "Viewed: %s"
@@ -6197,6 +6798,7 @@ msgstr "Viewed: %s"
 #: ../include/nl_list.inc.php:429
 #: ../include/nl_list.inc.php:499
 #: ../include/nl_list.inc.php:417
+#: ../include/nl_list.inc.php:466
 msgid "Bearbeiten / Aktionen anzeigen"
 msgstr "Edit / show actions"
 
@@ -6204,6 +6806,7 @@ msgstr "Edit / show actions"
 #: ../include/nl_list.inc.php:429
 #: ../include/nl_list.inc.php:499
 #: ../include/nl_list.inc.php:417
+#: ../include/nl_list.inc.php:466
 msgid "Aktionen anzeigen"
 msgstr "Show actions"
 
@@ -6211,6 +6814,7 @@ msgstr "Show actions"
 #: ../include/nl_list.inc.php:443
 #: ../include/nl_list.inc.php:518
 #: ../include/nl_list.inc.php:430
+#: ../include/nl_list.inc.php:477
 msgid "Neue Q"
 msgstr "New Q"
 
@@ -6218,6 +6822,7 @@ msgstr "New Q"
 #: ../include/nl_list.inc.php:444
 #: ../include/nl_list.inc.php:519
 #: ../include/nl_list.inc.php:431
+#: ../include/nl_list.inc.php:478
 msgid "Versandauftrag anlegen"
 msgstr "Create new delivery job"
 
@@ -6225,6 +6830,7 @@ msgstr "Create new delivery job"
 #: ../include/nl_list.inc.php:450
 #: ../include/nl_list.inc.php:525
 #: ../include/nl_list.inc.php:437
+#: ../include/nl_list.inc.php:484
 msgid "Alle Q-Einträge für diesen Newsletter löschen? Achtung es werden auch laufende Sendeaufträge gelöscht!"
 msgstr "Delete all queue entries for this newsletter? All delivery-jobs will be canceled and deleted too."
 
@@ -6232,6 +6838,7 @@ msgstr "Delete all queue entries for this newsletter? All delivery-jobs will be 
 #: ../include/nl_list.inc.php:450
 #: ../include/nl_list.inc.php:525
 #: ../include/nl_list.inc.php:437
+#: ../include/nl_list.inc.php:484
 msgid "Q für diesen Newsletter löschen"
 msgstr "Delete queue for this newsletter"
 
@@ -6239,6 +6846,7 @@ msgstr "Delete queue for this newsletter"
 #: ../include/nl_list.inc.php:451
 #: ../include/nl_list.inc.php:526
 #: ../include/nl_list.inc.php:438
+#: ../include/nl_list.inc.php:485
 msgid "Versandaufträge löschen"
 msgstr "Delete delivery jobs"
 
@@ -6246,6 +6854,7 @@ msgstr "Delete delivery jobs"
 #: ../include/nl_list.inc.php:453
 #: ../include/nl_list.inc.php:528
 #: ../include/nl_list.inc.php:440
+#: ../include/nl_list.inc.php:487
 msgid "Q für dieses Newsletter anzeigen"
 msgstr "Show queue for this newsletter"
 
@@ -6253,6 +6862,7 @@ msgstr "Show queue for this newsletter"
 #: ../include/nl_list.inc.php:454
 #: ../include/nl_list.inc.php:529
 #: ../include/nl_list.inc.php:441
+#: ../include/nl_list.inc.php:488
 msgid "Versandaufträge anzeigen"
 msgstr "Show delivery jobs"
 
@@ -6261,6 +6871,7 @@ msgstr "Show delivery jobs"
 #: ../include/nl_list.inc.php:460
 #: ../include/nl_list.inc.php:538
 #: ../include/nl_list.inc.php:447
+#: ../include/nl_list.inc.php:494
 msgid "Newsletter versenden"
 msgstr "Send newsletter"
 
@@ -6268,6 +6879,7 @@ msgstr "Send newsletter"
 #: ../include/nl_list.inc.php:461
 #: ../include/nl_list.inc.php:539
 #: ../include/nl_list.inc.php:448
+#: ../include/nl_list.inc.php:495
 msgid "Versand starten"
 msgstr "Start delivery"
 
@@ -6275,6 +6887,7 @@ msgstr "Start delivery"
 #: ../include/nl_list.inc.php:469
 #: ../include/nl_list.inc.php:544
 #: ../include/nl_list.inc.php:453
+#: ../include/nl_list.inc.php:500
 msgid "Template des Newsletter anzeigen: "
 msgstr "Show template for newsletter:"
 
@@ -6288,6 +6901,9 @@ msgstr "Show template for newsletter:"
 #: ../include/nl_list.inc.php:453
 #: ../include/nl_list.inc.php:454
 #: ../include/nl_list.inc.php:460
+#: ../include/nl_list.inc.php:500
+#: ../include/nl_list.inc.php:501
+#: ../include/nl_list.inc.php:507
 msgid "Template anzeigen"
 msgstr "Show template"
 
@@ -6295,6 +6911,7 @@ msgstr "Show template"
 #: ../include/nl_list.inc.php:475
 #: ../include/nl_list.inc.php:556
 #: ../include/nl_list.inc.php:465
+#: ../include/nl_list.inc.php:512
 msgid "Onlineversion des Newsletter anzeigen: "
 msgstr "Show onlineversion for newsletter:"
 
@@ -6306,6 +6923,8 @@ msgstr "Show onlineversion for newsletter:"
 #: ../include/nl_list.inc.php:557
 #: ../include/nl_list.inc.php:465
 #: ../include/nl_list.inc.php:466
+#: ../include/nl_list.inc.php:512
+#: ../include/nl_list.inc.php:513
 msgid "Onlineversion anzeigen"
 msgstr "Show onlineversion"
 
@@ -6313,6 +6932,7 @@ msgstr "Show onlineversion"
 #: ../include/nl_list.inc.php:481
 #: ../include/nl_list.inc.php:562
 #: ../include/nl_list.inc.php:471
+#: ../include/nl_list.inc.php:518
 msgid "Bild für diesen Newsletter anzeigen: "
 msgstr "Show image for newsletter"
 
@@ -6320,6 +6940,7 @@ msgstr "Show image for newsletter"
 #: ../include/nl_list.inc.php:481
 #: ../include/nl_list.inc.php:562
 #: ../include/nl_list.inc.php:471
+#: ../include/nl_list.inc.php:518
 msgid "Bild Newsletter anzeigen"
 msgstr "Show newsletter image"
 
@@ -6330,6 +6951,7 @@ msgstr "Show newsletter image"
 #: ../include/nl_list_legende.inc.php:37
 #: ../include/nl_list.inc.php:472
 #: ../include/nl_list_legende.inc.php:36
+#: ../include/nl_list.inc.php:519
 msgid "Bild anzeigen"
 msgstr "Show image"
 
@@ -6344,6 +6966,8 @@ msgstr "Show image"
 #: ../include/nl_list.inc.php:474
 #: ../include/nl_list.inc.php:475
 #: ../include/nl_list_legende.inc.php:37
+#: ../include/nl_list.inc.php:521
+#: ../include/nl_list.inc.php:522
 msgid "Bild löschen"
 msgstr "Delete image"
 
@@ -6357,6 +6981,9 @@ msgstr "Delete image"
 #: ../include/nl_list_legende.inc.php:43
 #: ../include/nl_list.inc.php:480
 #: ../include/nl_list.inc.php:481
+#: ../include/nl_list.inc.php:527
+#: ../include/nl_list.inc.php:528
+#: ../include/nl_list_legende.inc.php:40
 msgid "HTML-Datei anzeigen"
 msgstr "Show HTML file"
 
@@ -6364,6 +6991,7 @@ msgstr "Show HTML file"
 #: ../include/nl_list.inc.php:493
 #: ../include/nl_list.inc.php:574
 #: ../include/nl_list.inc.php:483
+#: ../include/nl_list.inc.php:530
 msgid "HTML Datei löschen"
 msgstr "Delete HTML file"
 
@@ -6373,6 +7001,8 @@ msgstr "Delete HTML file"
 #: ../include/nl_list.inc.php:575
 #: ../include/nl_list_legende.inc.php:44
 #: ../include/nl_list.inc.php:484
+#: ../include/nl_list.inc.php:531
+#: ../include/nl_list_legende.inc.php:41
 msgid "HTML-Datei löschen"
 msgstr "Delete HTML file"
 
@@ -6380,6 +7010,7 @@ msgstr "Delete HTML file"
 #: ../include/nl_list.inc.php:499
 #: ../include/nl_list.inc.php:662
 #: ../include/nl_list.inc.php:558
+#: ../include/nl_list.inc.php:605
 msgid "Anhang für diesen Newsletter laden"
 msgstr "Load attachement for newsletter"
 
@@ -6387,6 +7018,7 @@ msgstr "Load attachement for newsletter"
 #: ../include/nl_list.inc.php:499
 #: ../include/nl_list.inc.php:662
 #: ../include/nl_list.inc.php:558
+#: ../include/nl_list.inc.php:605
 msgid "Anhang laden"
 msgstr "Load attachement"
 
@@ -6412,6 +7044,8 @@ msgstr "Delete attachement"
 #: ../include/nl_list.inc.php:592
 #: ../include/nl_list.inc.php:490
 #: ../include/nl_list.inc.php:491
+#: ../include/nl_list.inc.php:537
+#: ../include/nl_list.inc.php:538
 msgid "Link anzeigen"
 msgstr "Show link"
 
@@ -6423,6 +7057,8 @@ msgstr "Show link"
 #: ../include/nl_list.inc.php:599
 #: ../include/nl_list.inc.php:497
 #: ../include/nl_list.inc.php:498
+#: ../include/nl_list.inc.php:544
+#: ../include/nl_list.inc.php:545
 msgid "Deaktivieren"
 msgstr "Deactivate"
 
@@ -6434,6 +7070,8 @@ msgstr "Deactivate"
 #: ../include/nl_list.inc.php:602
 #: ../include/nl_list.inc.php:500
 #: ../include/nl_list.inc.php:501
+#: ../include/nl_list.inc.php:547
+#: ../include/nl_list.inc.php:548
 msgid "Aktivieren"
 msgstr "Activate"
 
@@ -6445,6 +7083,8 @@ msgstr "Activate"
 #: ../include/nl_list_legende.inc.php:49
 #: ../include/nl_list.inc.php:505
 #: ../include/nl_list_legende.inc.php:45
+#: ../include/nl_list.inc.php:552
+#: ../include/nl_list_legende.inc.php:46
 msgid "Newsletter löschen"
 msgstr "Delete newsletter"
 
@@ -6454,6 +7094,8 @@ msgstr "Delete newsletter"
 #: ../include/nl_list.inc.php:620
 #: ../include/nl_list_legende.inc.php:51
 #: ../include/nl_list.inc.php:519
+#: ../include/nl_list.inc.php:566
+#: ../include/nl_list_legende.inc.php:48
 msgid "Newsletter kopieren"
 msgstr "Copy newsletter"
 
@@ -6463,6 +7105,9 @@ msgstr "Copy newsletter"
 #: ../include/nl_list.inc.php:623
 #: ../include/nl_list_legende.inc.php:52
 #: ../include/nl_list.inc.php:522
+#: ../include/nl_list.inc.php:463
+#: ../include/nl_list.inc.php:569
+#: ../include/nl_list_legende.inc.php:49
 msgid "Newsletter und Dateien kopieren"
 msgstr "Copy newsletter and files"
 
@@ -6470,31 +7115,37 @@ msgstr "Copy newsletter and files"
 #: ../include/nl_list.inc.php:541
 #: ../include/nl_list.inc.php:624
 #: ../include/nl_list.inc.php:523
+#: ../include/nl_list.inc.php:570
 msgid "Kopieren(+Dateien)"
 msgstr "Copy (+files)"
 
 #: ../include/nl_list_legende.inc.php:20
 #: ../include/nl_list_legende.inc.php:21
+#: ../include/nl_list_legende.inc.php:22
 msgid "Massenmailing (per BCC:, kein feedback)"
 msgstr "Massmailing (via BCC, no feedback)"
 
 #: ../include/nl_list_legende.inc.php:25
 #: ../include/nl_list_legende.inc.php:27
+#: ../include/nl_list_legende.inc.php:28
 msgid "Queue-Eintrag hinzufügen, zum Versenden vorbereiten"
 msgstr "Create queue entry, prepare delivery"
 
 #: ../include/nl_list_legende.inc.php:26
 #: ../include/nl_list_legende.inc.php:28
+#: ../include/nl_list_legende.inc.php:29
 msgid "Alle Queue-Einträge löschen"
 msgstr "Delete all delivery jobs"
 
 #: ../include/nl_list_legende.inc.php:26
 #: ../include/nl_list_legende.inc.php:28
+#: ../include/nl_list_legende.inc.php:29
 msgid "Alle Queue-Einträge für diesen Newsletter löschen"
 msgstr "Delete queue entries / delivery jobs for this newsletter"
 
 #: ../include/nl_list_legende.inc.php:27
 #: ../include/nl_list_legende.inc.php:29
+#: ../include/nl_list_legende.inc.php:30
 msgid "Queue-Einträge für Newsletter anzeigen"
 msgstr "Show delivery jobs for this newsletter"
 
@@ -6524,16 +7175,19 @@ msgstr "Delete linked image"
 
 #: ../include/nl_list_legende.inc.php:39
 #: ../include/nl_list_legende.inc.php:43
+#: ../include/nl_list_legende.inc.php:40
 msgid "verknüpfte HTML Datei anzeigen"
 msgstr "Show linked HTML file"
 
 #: ../include/nl_list_legende.inc.php:40
 #: ../include/nl_list_legende.inc.php:44
+#: ../include/nl_list_legende.inc.php:41
 msgid "verknüpfte HTML-Datei löschen"
 msgstr "Delete linked HTML file"
 
 #: ../include/nl_list_legende.inc.php:42
 #: ../include/nl_list_legende.inc.php:46
+#: ../include/nl_list_legende.inc.php:43
 msgid "verknüpften Link anzeigen"
 msgstr "Show link"
 
@@ -6545,10 +7199,12 @@ msgstr "Newsletter is active/inactive (Click=deactivate/activate)"
 
 #: ../include/nl_list_legende.inc.php:47
 #: ../include/nl_list_legende.inc.php:51
+#: ../include/nl_list_legende.inc.php:48
 msgid "Newsletter kopieren (ohne Dateien)"
 msgstr "Copy newsletter (without files)"
 
 #: ../include/nl_new.inc.php:15
+#: ../include/nl_form.inc.php:25
 msgid "Neuen Newsletter erstellen"
 msgstr "Create newsletter"
 
@@ -6556,6 +7212,7 @@ msgstr "Create newsletter"
 #: ../include/nl_new.inc.php:99
 #: ../include/nl_new.inc.php:109
 #: ../include/nl_new.inc.php:107
+#: ../include/nl_new.inc.php:136
 #, c-format
 msgid "Neuer Newsletter %s wurde erstellt."
 msgstr "New newsletter %s created"
@@ -6564,6 +7221,7 @@ msgstr "New newsletter %s created"
 #: ../include/nl_new.inc.php:102
 #: ../include/nl_new.inc.php:112
 #: ../include/nl_new.inc.php:110
+#: ../include/nl_new.inc.php:139
 msgid "Template:"
 msgstr "Template:"
 
@@ -6571,6 +7229,7 @@ msgstr "Template:"
 #: ../include/nl_upload.inc.php:45
 #: ../include/nl_upload.inc.php:49
 #: ../include/nl_upload.inc.php:46
+#: ../include/nl_upload.inc.php:58
 msgid "HTML-Datei erfolgreich hochgeladen."
 msgstr "HTML file successfullly uploaded"
 
@@ -6578,6 +7237,7 @@ msgstr "HTML file successfullly uploaded"
 #: ../include/nl_upload.inc.php:49
 #: ../include/nl_upload.inc.php:53
 #: ../include/nl_upload.inc.php:50
+#: ../include/nl_upload.inc.php:62
 msgid "HTML-Code wurde angefügt."
 msgstr "HTML code appended"
 
@@ -6585,6 +7245,7 @@ msgstr "HTML code appended"
 #: ../include/nl_upload.inc.php:50
 #: ../include/nl_upload.inc.php:54
 #: ../include/nl_upload.inc.php:51
+#: ../include/nl_upload.inc.php:63
 msgid "Datei gespeichert unter:"
 msgstr "File saved as:"
 
@@ -6594,6 +7255,8 @@ msgstr "File saved as:"
 #: ../include/nl_upload.inc.php:63
 #: ../include/nl_upload.inc.php:56
 #: ../include/nl_upload.inc.php:60
+#: ../include/nl_upload.inc.php:68
+#: ../include/nl_upload.inc.php:72
 msgid "HTML-Datei konnte nicht hochgeladen werden."
 msgstr "Could not upload HTML file"
 
@@ -6601,6 +7264,7 @@ msgstr "Could not upload HTML file"
 #: ../include/nl_upload.inc.php:62
 #: ../include/nl_upload.inc.php:66
 #: ../include/nl_upload.inc.php:63
+#: ../include/nl_upload.inc.php:75
 #, c-format
 msgid "Die HTML-Datei darf nur eine Grösse von %s Byte haben."
 msgstr "The HTML file should have a mximum size of %s bytes."
@@ -6609,12 +7273,14 @@ msgstr "The HTML file should have a mximum size of %s bytes."
 #: ../include/nl_upload.inc.php:66
 #: ../include/nl_upload.inc.php:70
 #: ../include/nl_upload.inc.php:67
+#: ../include/nl_upload.inc.php:79
 msgid "Die HTML-Datei besitzt eine ungültige Endung."
 msgstr "The HTML-file has an invalid extension."
 
 #: ../include/nl_upload.inc.php:78
 #: ../include/nl_upload.inc.php:86
 #: ../include/nl_upload.inc.php:90
+#: ../include/nl_upload.inc.php:136
 msgid "BILD-Datei erfolgreich hochgeladen."
 msgstr "Image file successfully uploaded."
 
@@ -6622,12 +7288,14 @@ msgstr "Image file successfully uploaded."
 #: ../include/nl_upload.inc.php:95
 #: ../include/nl_upload.inc.php:99
 #: ../include/nl_upload.inc.php:103
+#: ../include/nl_upload.inc.php:145
 msgid "BILD-Datei konnte nicht hochgeladen werden."
 msgstr "Could not upload image file"
 
 #: ../include/nl_upload.inc.php:90
 #: ../include/nl_upload.inc.php:102
 #: ../include/nl_upload.inc.php:106
+#: ../include/nl_upload.inc.php:149
 #, c-format
 msgid "Die BILD-Datei darf nur eine Grösse von %s Byte besitzen."
 msgstr "The image file should have a mximum size of %s bytes."
@@ -6635,6 +7303,7 @@ msgstr "The image file should have a mximum size of %s bytes."
 #: ../include/nl_upload.inc.php:94
 #: ../include/nl_upload.inc.php:106
 #: ../include/nl_upload.inc.php:110
+#: ../include/nl_upload.inc.php:153
 msgid "Die BILD-Datei besitzt eine ungültige Endung."
 msgstr "The image file has an invalid extension."
 
@@ -6642,6 +7311,7 @@ msgstr "The image file has an invalid extension."
 #: ../include/nl_upload.inc.php:135
 #: ../include/nl_upload.inc.php:140
 #: ../include/nl_upload.inc.php:128
+#: ../include/nl_upload.inc.php:172
 msgid "Anhang erfolgreich hochgeladen."
 msgstr "Attachement uploaded successfully"
 
@@ -6652,6 +7322,8 @@ msgstr "Attachement uploaded successfully"
 #: ../include/nl_upload.inc.php:155
 #: ../include/nl_upload.inc.php:139
 #: ../include/nl_upload.inc.php:143
+#: ../include/nl_upload.inc.php:183
+#: ../include/nl_upload.inc.php:187
 msgid "Anhang konnte nicht hochgeladen werden."
 msgstr "Could not upload attachement"
 
@@ -6659,6 +7331,7 @@ msgstr "Could not upload attachement"
 #: ../include/nl_upload.inc.php:151
 #: ../include/nl_upload.inc.php:158
 #: ../include/nl_upload.inc.php:146
+#: ../include/nl_upload.inc.php:190
 #, c-format
 msgid "Der Anhang Datei darf nur eine Grösse von %s Byte haben."
 msgstr "The attachement should have a mximum size of %s bytes."
@@ -6667,6 +7340,7 @@ msgstr "The attachement should have a mximum size of %s bytes."
 #: ../include/nl_upload.inc.php:197
 #: ../include/nl_upload.inc.php:204
 #: ../include/nl_upload.inc.php:185
+#: ../include/nl_upload.inc.php:229
 #, c-format
 msgid "Die Tracker-BILD-Datei darf nur eine Grösse von %s Byte besitzen."
 msgstr "The tracking image should have a maximum size of %s bytes."
@@ -6675,12 +7349,14 @@ msgstr "The tracking image should have a maximum size of %s bytes."
 #: ../include/filemanager.inc.php:56
 #: ../include/pager.inc.php:26
 #: ../include/pager.inc.php:21
+#: ../include/pager.inc.php:30
 msgid "Zurück"
 msgstr "Previous"
 
 #: ../include/pager.inc.php:30
 #: ../include/pager.inc.php:31
 #: ../include/pager.inc.php:23
+#: ../include/pager.inc.php:39
 #, c-format
 msgid "Eintrag %s bis %s von %s"
 msgstr "Entry %s to %s of %s"
@@ -6688,6 +7364,7 @@ msgstr "Entry %s to %s of %s"
 #: ../include/pager.inc.php:35
 #: ../include/pager.inc.php:36
 #: ../include/pager.inc.php:26
+#: ../include/pager.inc.php:51
 msgid "Vor"
 msgstr "Next"
 
@@ -7127,6 +7804,7 @@ msgstr "Delivery started."
 #: ../include/send_it.php:769
 #: ../include/send_it.php:957
 #: ../include/send_it.php:887
+#: ../include/send_it.php:936
 #, c-format
 msgid "Die Seite wird in %s Sekunden automatisch neu geladen."
 msgstr "This page will reload in %s seconds"
@@ -7137,6 +7815,7 @@ msgstr "This page will reload in %s seconds"
 #: ../include/send_it.php:771
 #: ../include/send_it.php:959
 #: ../include/send_it.php:889
+#: ../include/send_it.php:938
 msgid "Klicken Sie auf 'Neu laden' wenn Sie diese Seite erneut aufrufen wollen."
 msgstr "Please lcick on 'Reload' to reload this page."
 
@@ -7148,6 +7827,8 @@ msgstr "Please lcick on 'Reload' to reload this page."
 #: ../include/send_it.php:961
 #: ../include/install/install_check_pre.inc.php:150
 #: ../include/send_it.php:891
+#: ../include/install/install_check_pre.inc.php:151
+#: ../include/send_it.php:940
 msgid "Neu laden"
 msgstr "Reload"
 
@@ -7173,6 +7854,9 @@ msgstr "Statistics for address group %s"
 #: ../include/statistic_nl.inc.php:144
 #: ../include/status.inc.php:128
 #: ../include/status.inc.php:195
+#: ../include/status.inc.php:81
+#: ../include/status.inc.php:139
+#: ../include/status.inc.php:206
 msgid "Summe"
 msgstr "Sum"
 
@@ -7517,6 +8201,8 @@ msgstr "Queued"
 #: ../include/Stats.inc.php:158
 #: ../include/Stats.inc.php:95
 #: ../include/Stats.inc.php:156
+#: ../include/adm_set_form.inc.php:470
+#: ../include/Menu.inc.php:418
 msgid "Versand"
 msgstr "Delivery"
 
@@ -7673,6 +8359,8 @@ msgstr "Canceld, q deleted"
 #: ../include/status.inc.php:240
 #: ../include/status.inc.php:80
 #: ../include/status.inc.php:206
+#: ../include/status.inc.php:91
+#: ../include/status.inc.php:217
 #, c-format
 msgid "%s Gruppen"
 msgstr "%s groups"
@@ -7688,6 +8376,7 @@ msgstr "Addresses"
 #: ../include/status.inc.php:161
 #: ../include/status.inc.php:240
 #: ../include/status.inc.php:206
+#: ../include/status.inc.php:217
 #, c-format
 msgid "%s Newsletter"
 msgstr "%s newsletter"
@@ -7695,6 +8384,7 @@ msgstr "%s newsletter"
 #: ../include/status.inc.php:162
 #: ../include/status.inc.php:241
 #: ../include/status.inc.php:207
+#: ../include/status.inc.php:218
 #, c-format
 msgid "Insgesamt %s Mails im Versand:"
 msgstr "Total %s mails in delivery"
@@ -7775,6 +8465,8 @@ msgstr "Show top entries"
 #: ../include/status.inc.php:145
 #: ../include/status.inc.php:164
 #: ../include/status_top_x_form.inc.php:50
+#: ../include/status.inc.php:156
+#: ../include/status.inc.php:175
 msgid "Anzeigen"
 msgstr "View"
 
@@ -7815,12 +8507,14 @@ msgstr "The Top %s list also counts double clicks and views"
 #: ../include/tm_lib_admin.inc.php:52
 #: ../include/Index.inc.php:63
 #: ../include/Index.inc.php:52
+#: ../include/Index.inc.php:61
 msgid "Sortierung aufsteigend"
 msgstr "Sort ascend"
 
 #: ../include/tm_lib_admin.inc.php:53
 #: ../include/Index.inc.php:64
 #: ../include/Index.inc.php:53
+#: ../include/Index.inc.php:62
 msgid "Sortierung absteigend"
 msgstr "Sort descend"
 
@@ -7880,12 +8574,14 @@ msgstr "Current available version: %s"
 #: ../include/Menu.inc.php:226
 #: ../include/Menu.inc.php:238
 #: ../include/Menu.inc.php:411
+#: ../include/Menu.inc.php:466
 msgid "Tools"
 msgstr "Tools"
 
 #: ../include/Menu.inc.php:286
 #: ../include/Menu.inc.php:298
 #: ../include/Menu.inc.php:292
+#: ../include/Menu.inc.php:318
 msgid "Verwaltung"
 msgstr "Manage"
 
@@ -7932,6 +8628,7 @@ msgstr "Magic Quotes is %s."
 
 #: ../include/install/install_check_pre.inc.php:155
 #: ../include/install/install_check_pre.inc.php:148
+#: ../include/install/install_check_pre.inc.php:149
 msgid "Es sind Fehler aufgetreten."
 msgstr "There were errors."
 
@@ -7943,6 +8640,8 @@ msgstr "There were errors."
 #: ../include/queue_form.inc.php:306
 #: ../include/install/install_conf_sql.inc.php:404
 #: ../include/queue_form.inc.php:271
+#: ../include/install/install_conf_sql.inc.php:424
+#: ../include/Menu.inc.php:551
 msgid "Mail-Server"
 msgstr "Mailserver"
 
@@ -7985,6 +8684,12 @@ msgstr "Mailserver"
 #: ../include/form_list.inc.php:219
 #: ../include/queue_list.inc.php:245
 #: ../include/queue_new.inc.php:78
+#: ../include/install/install_conf_sql.inc.php:455
+#: ../include/adr_import_form.inc.php:368
+#: ../include/adr_list.inc.php:581
+#: ../include/adr_list.inc.php:621
+#: ../include/form_form.inc.php:472
+#: ../include/Menu.inc.php:377
 msgid "Blacklist"
 msgstr "Blacklist"
 
@@ -8034,6 +8739,8 @@ msgstr "SMTP-auth"
 #: ../include/nl_form.inc.php:244
 #: ../include/adm_set_form.inc.php:171
 #: ../include/nl_form.inc.php:248
+#: ../include/adm_set_form.inc.php:206
+#: ../include/nl_form.inc.php:348
 msgid "Erscheint als Empfängername in der E-Mail"
 msgstr "Shown as recipient name in email"
 
@@ -8051,6 +8758,7 @@ msgstr "SMTP-auth method"
 #: ../include/adm_set_form.inc.php:535
 #: ../include/adm_set_form.inc.php:549
 #: ../include/adm_set_form.inc.php:278
+#: ../include/adm_set_form.inc.php:476
 msgid "Empfänger-Name"
 msgstr "Recipients name"
 
@@ -8069,6 +8777,7 @@ msgstr " --- All --- "
 #: ../include/adr_clean_form.inc.php:144
 #: ../include/adr_clean_form.inc.php:140
 #: ../include/adr_clean_form.inc.php:134
+#: ../include/adr_clean_form.inc.php:133
 msgid "komplett Löschen"
 msgstr "complete deletion"
 
@@ -8076,6 +8785,8 @@ msgstr "complete deletion"
 #: ../include/adr_list_form_head.inc.php:98
 #: ../include/adr_clean_form.inc.php:141
 #: ../include/adr_clean_form.inc.php:135
+#: ../include/adr_clean_form.inc.php:134
+#: ../include/adr_list_form_head.inc.php:101
 msgid "aktivieren"
 msgstr "activate"
 
@@ -8083,6 +8794,8 @@ msgstr "activate"
 #: ../include/adr_list_form_head.inc.php:99
 #: ../include/adr_clean_form.inc.php:142
 #: ../include/adr_clean_form.inc.php:136
+#: ../include/adr_clean_form.inc.php:135
+#: ../include/adr_list_form_head.inc.php:102
 msgid "deaktivieren"
 msgstr "deactivate"
 
@@ -8090,6 +8803,8 @@ msgstr "deactivate"
 #: ../include/adr_list_form_head.inc.php:100
 #: ../include/adr_clean_form.inc.php:143
 #: ../include/adr_clean_form.inc.php:137
+#: ../include/adr_clean_form.inc.php:136
+#: ../include/adr_list_form_head.inc.php:103
 msgid "Status setzen"
 msgstr "Set status"
 
@@ -8097,6 +8812,8 @@ msgstr "Set status"
 #: ../include/adr_list_form_head.inc.php:102
 #: ../include/adr_clean_form.inc.php:144
 #: ../include/adr_clean_form.inc.php:138
+#: ../include/adr_clean_form.inc.php:137
+#: ../include/adr_list_form_head.inc.php:105
 msgid "In gewählte Gruppen verschieben"
 msgstr "Move to selected groups"
 
@@ -8104,6 +8821,8 @@ msgstr "Move to selected groups"
 #: ../include/adr_list_form_head.inc.php:103
 #: ../include/adr_clean_form.inc.php:145
 #: ../include/adr_clean_form.inc.php:139
+#: ../include/adr_clean_form.inc.php:138
+#: ../include/adr_list_form_head.inc.php:106
 msgid "Zu gewählten Gruppen hinzufügen"
 msgstr "Copy to selected groups"
 
@@ -8111,6 +8830,8 @@ msgstr "Copy to selected groups"
 #: ../include/adr_list_form_head.inc.php:104
 #: ../include/adr_clean_form.inc.php:146
 #: ../include/adr_clean_form.inc.php:140
+#: ../include/adr_clean_form.inc.php:139
+#: ../include/adr_list_form_head.inc.php:107
 msgid "Aus gewählten Gruppen austragen"
 msgstr "Remove from selected groups"
 
@@ -8129,6 +8850,12 @@ msgstr "Remove from selected groups"
 #: ../include/adr_list.inc.php:586
 #: ../include/nl_list.inc.php:530
 #: ../include/nl_list.inc.php:531
+#: ../include/adr_clean_form.inc.php:140
+#: ../include/adr_list.inc.php:731
+#: ../include/adr_list_legende.inc.php:31
+#: ../include/nl_list.inc.php:577
+#: ../include/nl_list.inc.php:578
+#: ../include/nl_list_legende.inc.php:51
 msgid "Historie löschen"
 msgstr "Delete history"
 
@@ -8138,6 +8865,8 @@ msgstr "Delete history"
 #: ../include/adr_import_form.inc.php:220
 #: ../include/adr_clean_form.inc.php:149
 #: ../include/adr_import_form.inc.php:209
+#: ../include/adr_clean_form.inc.php:148
+#: ../include/adr_import_form.inc.php:221
 msgid "Importierte Adressen in die Blacklist eintragen"
 msgstr "Add imported addresses to blacklist"
 
@@ -8175,6 +8904,7 @@ msgstr "Working on %s entries."
 #: ../include/adr_list.inc.php:127
 #: ../include/adr_list.inc.php:134
 #: ../include/adr_clean.inc.php:61
+#: ../include/adr_list.inc.php:159
 msgid "Ausgewählte Adressen werden aktiviert"
 msgstr "Selected addresses will be activated"
 
@@ -8182,6 +8912,7 @@ msgstr "Selected addresses will be activated"
 #: ../include/adr_list.inc.php:130
 #: ../include/adr_list.inc.php:137
 #: ../include/adr_clean.inc.php:64
+#: ../include/adr_list.inc.php:162
 msgid "Ausgewählte Adressen werden deaktiviert."
 msgstr "Selected addresses will be deactivated"
 
@@ -8189,6 +8920,7 @@ msgstr "Selected addresses will be deactivated"
 #: ../include/adr_list.inc.php:133
 #: ../include/adr_list.inc.php:140
 #: ../include/adr_clean.inc.php:67
+#: ../include/adr_list.inc.php:165
 #, c-format
 msgid "Setze neuen Status für ausgewählte Adressen auf %s"
 msgstr "Set new status for selected addresses to %s"
@@ -8197,6 +8929,7 @@ msgstr "Set new status for selected addresses to %s"
 #: ../include/adr_list.inc.php:142
 #: ../include/adr_list.inc.php:149
 #: ../include/adr_clean.inc.php:70
+#: ../include/adr_list.inc.php:174
 msgid "Ausgewählte Adressen werden in die gewählten Gruppen kopiert."
 msgstr "Selected addresses will be copied to selected groups."
 
@@ -8204,6 +8937,7 @@ msgstr "Selected addresses will be copied to selected groups."
 #: ../include/adr_list.inc.php:145
 #: ../include/adr_list.inc.php:152
 #: ../include/adr_clean.inc.php:73
+#: ../include/adr_list.inc.php:177
 msgid "Ausgewählte Adressen werden in die gewählten Gruppen verschoben."
 msgstr "Selected addresses will be moved to selected groups."
 
@@ -8211,6 +8945,7 @@ msgstr "Selected addresses will be moved to selected groups."
 #: ../include/adr_list.inc.php:148
 #: ../include/adr_list.inc.php:155
 #: ../include/adr_clean.inc.php:76
+#: ../include/adr_list.inc.php:180
 msgid "Ausgewählte Adressen werden aus den gewählten Gruppen gelöscht."
 msgstr "Selected addresses will be removed from selected groups."
 
@@ -8223,6 +8958,7 @@ msgstr "Selected addresses will be added to blacklist."
 #: ../include/adr_list.inc.php:139
 #: ../include/adr_list.inc.php:146
 #: ../include/adr_clean.inc.php:84
+#: ../include/adr_list.inc.php:171
 msgid "Historie ausgewählter Adressen werden gelöscht."
 msgstr "History of selected addresses will be deleted."
 
@@ -8311,12 +9047,14 @@ msgstr "group is public"
 #: ../include/adr_import_form.inc.php:376
 #: ../include/adr_import_form.inc.php:372
 #: ../include/adr_import_form.inc.php:356
+#: ../include/adr_import_form.inc.php:368
 msgid "In Blacklist eintragen"
 msgstr "add to blacklist"
 
 #: ../include/adr_import.inc.php:525
 #: ../include/adr_import.inc.php:531
 #: ../include/adr_import.inc.php:496
+#: ../include/adr_import.inc.php:507
 #, c-format
 msgid "Zeile %s: E-Mail %s wurde zur Blacklist hinzugefügt."
 msgstr "line %s: email %s added to blacklist"
@@ -8324,6 +9062,7 @@ msgstr "line %s: email %s added to blacklist"
 #: ../include/adr_import.inc.php:528
 #: ../include/adr_import.inc.php:534
 #: ../include/adr_import.inc.php:499
+#: ../include/adr_import.inc.php:510
 #, c-format
 msgid "Zeile %s: E-Mail %s ist bereits in der Blacklist vorhanden."
 msgstr "line %s: email %s already exists in blacklist"
@@ -8331,6 +9070,7 @@ msgstr "line %s: email %s already exists in blacklist"
 #: ../include/adr_import.inc.php:589
 #: ../include/adr_import.inc.php:595
 #: ../include/adr_import.inc.php:543
+#: ../include/adr_import.inc.php:557
 #, c-format
 msgid "Es wurden %s von %s Einträgen in die Blacklist eingefügt."
 msgstr "%s of %s entries added to blacklist."
@@ -8340,18 +9080,22 @@ msgid "Wirklich?"
 msgstr "sure?"
 
 #: ../include/adr_list_form_head.inc.php:101
+#: ../include/adr_list_form_head.inc.php:104
 msgid "löschen"
 msgstr "delete"
 
 #: ../include/adr_list_form_head.inc.php:106
+#: ../include/adr_list_form_head.inc.php:109
 msgid "Ausgewählte Adressen in Blacklist eintragen"
 msgstr "Add selected addresses to blacklist"
 
 #: ../include/adr_list_form_head.inc.php:107
+#: ../include/adr_list_form_head.inc.php:110
 msgid "Domains der ausgewählten Adressen in Blacklist eintragen"
 msgstr "Add domains of selected addresses to blacklist"
 
 #: ../include/adr_list_form_head.inc.php:108
+#: ../include/adr_list_form_head.inc.php:111
 msgid "Historie für ausgewählte Adressen löschen"
 msgstr "Delete history of selected addresses"
 
@@ -8362,6 +9106,8 @@ msgstr "select all / invert selection"
 #: ../include/adr_list.inc.php:63
 #: ../include/nl_list.inc.php:43
 #: ../include/adr_list.inc.php:66
+#: ../include/adr_list.inc.php:84
+#: ../include/nl_list.inc.php:48
 msgid "Historie wurde gelöscht."
 msgstr "History deleted."
 
@@ -8369,6 +9115,8 @@ msgstr "History deleted."
 #: ../include/adr_list.inc.php:212
 #: ../include/adr_list.inc.php:81
 #: ../include/adr_list.inc.php:219
+#: ../include/adr_list.inc.php:98
+#: ../include/adr_list.inc.php:258
 #, c-format
 msgid "Die E-Mail-Adresse %s wurde in die Blacklist eingetragen."
 msgstr "The email %s has been added to blacklist."
@@ -8377,6 +9125,8 @@ msgstr "The email %s has been added to blacklist."
 #: ../include/adr_list.inc.php:214
 #: ../include/adr_list.inc.php:83
 #: ../include/adr_list.inc.php:221
+#: ../include/adr_list.inc.php:100
+#: ../include/adr_list.inc.php:260
 #, c-format
 msgid "Die E-Mail-Adresse %s ist bereits in der Blacklist vorhanden."
 msgstr "The email %s already exists in blacklist."
@@ -8385,6 +9135,8 @@ msgstr "The email %s already exists in blacklist."
 #: ../include/adr_list.inc.php:238
 #: ../include/adr_list.inc.php:100
 #: ../include/adr_list.inc.php:245
+#: ../include/adr_list.inc.php:116
+#: ../include/adr_list.inc.php:284
 #, c-format
 msgid "Die Domain %s wurde in die Blacklist eingetragen."
 msgstr "The domain %s was added to blacklist."
@@ -8393,40 +9145,48 @@ msgstr "The domain %s was added to blacklist."
 #: ../include/adr_list.inc.php:240
 #: ../include/adr_list.inc.php:102
 #: ../include/adr_list.inc.php:247
+#: ../include/adr_list.inc.php:118
+#: ../include/adr_list.inc.php:286
 #, c-format
 msgid "Die Domain %s ist bereits in der Blacklist vorhanden."
 msgstr "Domain %s already exists in blacklist."
 
 #: ../include/adr_list.inc.php:105
 #: ../include/adr_list.inc.php:111
+#: ../include/adr_list.inc.php:126
 #, c-format
 msgid "Die E-Mail-Adresse %s wurde aus der Blacklist gelöscht."
 msgstr "The email %s was deleted from blacklist."
 
 #: ../include/adr_list.inc.php:113
 #: ../include/adr_list.inc.php:120
+#: ../include/adr_list.inc.php:134
 #, c-format
 msgid "Die Domain %s wurde aus der Blacklist gelöscht."
 msgstr "The Domain %s was deleted from blacklist"
 
 #: ../include/adr_list.inc.php:125
 #: ../include/adr_list.inc.php:132
+#: ../include/adr_list.inc.php:146
 #, c-format
 msgid "%s Adressen ausgewählt."
 msgstr "Selected %s addresses."
 
 #: ../include/adr_list.inc.php:136
 #: ../include/adr_list.inc.php:143
+#: ../include/adr_list.inc.php:168
 msgid "Ausgewählte Adressen werden gelöscht."
 msgstr "Selected addresses will be deleted."
 
 #: ../include/adr_list.inc.php:151
 #: ../include/adr_list.inc.php:158
+#: ../include/adr_list.inc.php:183
 msgid "Ausgewählte Adressen werden zur Blacklist hinzgefügt."
 msgstr "Selected addresses will be added to blacklist."
 
 #: ../include/adr_list.inc.php:155
 #: ../include/adr_list.inc.php:162
+#: ../include/adr_list.inc.php:187
 msgid "Domains der ausgewählten Adressen werden zur Blacklist hinzgefügt."
 msgstr "The domains of selected addresses will be added to blacklist."
 
@@ -8438,6 +9198,8 @@ msgstr "The domains of selected addresses will be added to blacklist."
 #: ../include/adr_list_legende.inc.php:22
 #: ../include/adr_list.inc.php:477
 #: ../include/adr_list.inc.php:499
+#: ../include/adr_list.inc.php:603
+#: ../include/adr_list.inc.php:625
 msgid "Blacklist E-Mail"
 msgstr "Blacklist email"
 
@@ -8449,6 +9211,8 @@ msgstr "Blacklist email"
 #: ../include/adr_list_legende.inc.php:23
 #: ../include/adr_list.inc.php:482
 #: ../include/adr_list.inc.php:503
+#: ../include/adr_list.inc.php:608
+#: ../include/adr_list.inc.php:629
 msgid "Blacklist Domain"
 msgstr "Blacklist domain"
 
@@ -8460,6 +9224,8 @@ msgstr "Blacklist domain"
 #: ../include/adr_list_legende.inc.php:24
 #: ../include/adr_list.inc.php:486
 #: ../include/adr_list.inc.php:507
+#: ../include/adr_list.inc.php:612
+#: ../include/adr_list.inc.php:633
 msgid "Blacklist RegEx"
 msgstr "Blacklist regex"
 
@@ -8469,6 +9235,7 @@ msgstr "Blacklist regex"
 #: ../include/adr_list.inc.php:542
 #: ../include/adr_list.inc.php:508
 #: ../include/bl_list_legende.inc.php:22
+#: ../include/adr_list.inc.php:634
 msgid "RegEx"
 msgstr "regex"
 
@@ -8476,6 +9243,8 @@ msgstr "regex"
 #: ../include/adr_list_legende.inc.php:31
 #: ../include/adr_list.inc.php:627
 #: ../include/adr_list.inc.php:592
+#: ../include/adr_list.inc.php:737
+#: ../include/adr_list_legende.inc.php:32
 msgid "Adresse in Blacklist eintragen"
 msgstr "Add address to blacklist"
 
@@ -8483,18 +9252,22 @@ msgstr "Add address to blacklist"
 #: ../include/adr_list_legende.inc.php:32
 #: ../include/adr_list.inc.php:631
 #: ../include/adr_list.inc.php:596
+#: ../include/adr_list.inc.php:741
+#: ../include/adr_list_legende.inc.php:33
 msgid "Adresse aus Blacklist löschen"
 msgstr "Delete address from blacklist"
 
 #: ../include/adr_list.inc.php:623
 #: ../include/adr_list.inc.php:635
 #: ../include/adr_list.inc.php:600
+#: ../include/adr_list.inc.php:745
 msgid "Domain in Blacklist eintragen"
 msgstr "Add Domain to blacklist"
 
 #: ../include/adr_list.inc.php:627
 #: ../include/adr_list.inc.php:639
 #: ../include/adr_list.inc.php:604
+#: ../include/adr_list.inc.php:749
 msgid "Domain aus Blacklist löschen"
 msgstr "Delete domain from blacklist"
 
@@ -8504,10 +9277,12 @@ msgid "Blacklist aktiv"
 msgstr "Blacklist is active"
 
 #: ../include/adr_list_legende.inc.php:33
+#: ../include/adr_list_legende.inc.php:34
 msgid "Domain der Adresse in Blacklist eintragen"
 msgstr "Add domain of address to blacklist"
 
 #: ../include/adr_list_legende.inc.php:34
+#: ../include/adr_list_legende.inc.php:35
 msgid "Domain der Adresse aus Blacklist löschen"
 msgstr "Delete domain of address from blacklist"
 
@@ -8722,12 +9497,14 @@ msgstr "Images"
 #: ../include/form_list.inc.php:219
 #: ../include/queue_form.inc.php:89
 #: ../include/queue_form.inc.php:250
+#: ../include/form_form.inc.php:472
 msgid "Blacklist prüfen"
 msgstr "Check blacklist"
 
 #: ../include/form_form.inc.php:448
 #: ../include/form_form.inc.php:465
 #: ../include/form_form.inc.php:508
+#: ../include/form_form.inc.php:426
 msgid "öffentliche Gruppen"
 msgstr "public groups"
 
@@ -9038,41 +9815,49 @@ msgstr "The test was successfull"
 
 #: ../include/Menu.inc.php:103
 #: ../include/Menu.inc.php:371
+#: ../include/Menu.inc.php:424
 msgid "Queue"
 msgstr "Queue"
 
 #: ../include/Menu.inc.php:104
 #: ../include/Menu.inc.php:372
+#: ../include/Menu.inc.php:425
 msgid "Queue / Warteschlange anzeigen"
 msgstr "Show Queue"
 
 #: ../include/Menu.inc.php:105
 #: ../include/Menu.inc.php:373
+#: ../include/Menu.inc.php:426
 msgid "Hier sehen Sie den Versandstatus Ihrer Newsletter"
 msgstr "Here you see the status of your current sendig queues"
 
 #: ../include/Menu.inc.php:328
 #: ../include/Menu.inc.php:325
+#: ../include/Menu.inc.php:378
 msgid "Blackliste/Robinsonliste"
 msgstr "Blacklist"
 
 #: ../include/Menu.inc.php:329
 #: ../include/Menu.inc.php:326
+#: ../include/Menu.inc.php:379
 msgid "Blacklist/Robinsonliste verwalten"
 msgstr "Manage blacklist"
 
 #: ../include/Menu.inc.php:339
 #: ../include/Menu.inc.php:337
+#: ../include/Menu.inc.php:390
 msgid "Neuer Blacklisteintrag"
 msgstr "New blacklist entry"
 
 #: ../include/Menu.inc.php:340
 #: ../include/Menu.inc.php:338
+#: ../include/Menu.inc.php:391
 msgid "Neueintrag in Blackliste/Robinsonliste"
 msgstr "New entry in blacklist"
 
 #: ../include/Menu.inc.php:341
 #: ../include/Menu.inc.php:339
+#: ../include/Menu.inc.php:392
 msgid "Neuen Eintrag (E-Mail, Domain, ...) der Blacklist/Robinsonliste  hinzufügen"
 msgstr "Add new entry (email,domain,regex) to blacklist"
 
@@ -9080,11 +9865,14 @@ msgstr "Add new entry (email,domain,regex) to blacklist"
 #: ../include/Menu.inc.php:437
 #: ../include/Menu.inc.php:497
 #: ../include/Menu.inc.php:498
+#: ../include/Menu.inc.php:552
+#: ../include/Menu.inc.php:553
 msgid "Mail-Server verwalten"
 msgstr "Manage mailserver"
 
 #: ../include/Menu.inc.php:447
 #: ../include/Menu.inc.php:509
+#: ../include/Menu.inc.php:564
 msgid "Neuer Mail-Server"
 msgstr "New mailserver"
 
@@ -9092,6 +9880,8 @@ msgstr "New mailserver"
 #: ../include/Menu.inc.php:449
 #: ../include/Menu.inc.php:510
 #: ../include/Menu.inc.php:511
+#: ../include/Menu.inc.php:565
+#: ../include/Menu.inc.php:566
 msgid "Neuen Mail-Server anlegen"
 msgstr "New mailserver"
 
@@ -9101,6 +9891,8 @@ msgstr "New mailserver"
 #: ../include/nl_list.inc.php:423
 #: ../include/nl_form.inc.php:312
 #: ../include/nl_list.inc.php:345
+#: ../include/nl_form.inc.php:449
+#: ../include/nl_list.inc.php:379
 msgid "Empfängername"
 msgstr "Recipients name"
 
@@ -9117,6 +9909,11 @@ msgstr "Recipients name"
 #: ../include/nl_upload.inc.php:55
 #: ../include/nl_upload.inc.php:138
 #: ../include/nl_upload.inc.php:177
+#: ../include/adm_set.inc.php:139
+#: ../include/nl_upload.inc.php:67
+#: ../include/nl_upload.inc.php:144
+#: ../include/nl_upload.inc.php:182
+#: ../include/nl_upload.inc.php:221
 msgid "Fehler beim kopieren."
 msgstr "Error copying"
 
@@ -9201,6 +9998,7 @@ msgstr "Reload"
 #: ../include/queue_send.inc.php:92
 #: ../include/queue_new.inc.php:76
 #: ../include/queue_send.inc.php:84
+#: ../include/queue_send.inc.php:89
 #, c-format
 msgid "Ausgewählter Mail-Server: %s"
 msgstr "Selected mailserevr: %s"
@@ -9222,6 +10020,7 @@ msgstr "Default insert method: emailaddresses will be checked"
 #: ../include/queue_send.inc.php:85
 #: ../include/queue_send.inc.php:116
 #: ../include/queue_send.inc.php:108
+#: ../include/queue_send.inc.php:113
 #, c-format
 msgid "%s Einträge eingefügt."
 msgstr "%s entries added."
@@ -9234,6 +10033,7 @@ msgstr "%s entries skipped (blacklisted)"
 #: ../include/queue_send.inc.php:188
 #: ../include/queue_send.inc.php:127
 #: ../include/queue_send.inc.php:119
+#: ../include/queue_send.inc.php:124
 #, c-format
 msgid "Newsletter %s ist nicht aktiv."
 msgstr "Newsletter %s is not active"
@@ -9246,6 +10046,7 @@ msgstr "Searched %s addresses."
 #: ../include/queue_send.inc.php:202
 #: ../include/queue_send.inc.php:144
 #: ../include/queue_send.inc.php:129
+#: ../include/queue_send.inc.php:134
 #, c-format
 msgid "Es wurden %s gültige Adressen für den Versand vorbereitet."
 msgstr "%s addresses have been prepared for sending."
@@ -9253,12 +10054,14 @@ msgstr "%s addresses have been prepared for sending."
 #: ../include/queue_send.inc.php:204
 #: ../include/queue_send.inc.php:146
 #: ../include/queue_send.inc.php:131
+#: ../include/queue_send.inc.php:136
 msgid "Der Versand wurde vorbereitet!"
 msgstr "Prepared sending."
 
 #: ../include/send_it.php:767
 #: ../include/send_it.php:954
 #: ../include/send_it.php:884
+#: ../include/send_it.php:933
 msgid "Zur Zeit gibt es keine zu verarbeitenden Versandaufträge."
 msgstr "There are currently no jobs."
 
@@ -9270,26 +10073,33 @@ msgstr "There are currently no jobs."
 #: ../include/status.inc.php:80
 #: ../include/status.inc.php:83
 #: ../include/status.inc.php:206
+#: ../include/status.inc.php:91
+#: ../include/status.inc.php:94
+#: ../include/status.inc.php:217
 msgid "Liste anzeigen"
 msgstr "Show list"
 
 #: ../include/install/install_conf_sql.inc.php:304
 #: ../include/install/install_conf_sql.inc.php:289
+#: ../include/install/install_conf_sql.inc.php:309
 msgid "Newsletter - Gruppen"
 msgstr "Newsletter - Groups"
 
 #: ../include/install/install_conf_sql.inc.php:462
 #: ../include/install/install_conf_sql.inc.php:448
+#: ../include/install/install_conf_sql.inc.php:468
 msgid "Newsletter - Attachements"
 msgstr "Newsletter - Attachements"
 
 #: ../include/install/install_form.inc.php:375
 #: ../include/install/install_form.inc.php:408
+#: ../include/install/install_form.inc.php:395
 msgid "Sie können die Daten für den SMTP/POP3/IMAP Host auch später ändern und weitere Server hinzufügen etc."
 msgstr "You can enter data for smtp hosts, pop3 and imap later and add multiple hosts."
 
 #: ../include/adm_set.inc.php:140
 #: ../include/adm_set.inc.php:94
+#: ../include/adm_set.inc.php:147
 #, c-format
 msgid "Die Tracker-BILD-Datei darf nur eine Größe von %s Byte besitzen."
 msgstr "The tracking image should have a size less than %s bytes."
@@ -9308,6 +10118,7 @@ msgstr "The tracking image should have a size less than %s bytes."
 #: ../include/bl_list_legende.inc.php:19
 #: ../include/form_list_legende.inc.php:19
 #: ../include/host_list_legende.inc.php:19
+#: ../include/adr_list_legende.inc.php:19
 msgid "Eigenschaften"
 msgstr "Properties"
 
@@ -9325,17 +10136,20 @@ msgstr "Properties"
 #: ../include/bl_list_legende.inc.php:23
 #: ../include/form_list_legende.inc.php:31
 #: ../include/host_list_legende.inc.php:25
+#: ../include/nl_list_legende.inc.php:27
 msgid "Aktionen"
 msgstr "Actions"
 
 #: ../include/adr_clean.inc.php:196
 #: ../include/adr_clean.inc.php:149
+#: ../include/adr_clean.inc.php:152
 #, c-format
 msgid "%s Einträge aus der Gruppe %s wurden gelöscht."
 msgstr "%s entries from group %s have been deleted."
 
 #: ../include/adr_form.inc.php:241
 #: ../include/adr_form.inc.php:230
+#: ../include/adr_form.inc.php:232
 msgid "Memo einblenden/bearbeiten"
 msgstr "Show/hide memo"
 
@@ -9365,6 +10179,8 @@ msgstr "Show Q for this group"
 #: ../include/nl_list.inc.php:537
 #: ../include/nl_list_legende.inc.php:51
 #: ../include/queue_list.inc.php:353
+#: ../include/nl_list.inc.php:584
+#: ../include/nl_list_legende.inc.php:52
 msgid "Adressen nachfassen / Empfängerliste aktualisieren"
 msgstr "Refresh/Update/Recreate recipientslist."
 
@@ -9376,11 +10192,13 @@ msgstr "Update recipients list"
 
 #: ../include/adr_import.inc.php:123
 #: ../include/adr_import.inc.php:122
+#: ../include/adr_import.inc.php:126
 msgid "CSV-Datei erfolgreich hochgeladen."
 msgstr "CVS file uploaded successfully."
 
 #: ../include/adr_list.inc.php:558
 #: ../include/adr_list.inc.php:524
+#: ../include/adr_list.inc.php:650
 #, c-format
 msgid "Adresse hat mindestens %s Sendefehler!"
 msgstr "This address has at least %s errors on delivery!"
@@ -9388,36 +10206,44 @@ msgstr "This address has at least %s errors on delivery!"
 #: ../include/adr_new.inc.php:146
 #: ../api_example.php:138
 #: ../include/adr_new.inc.php:135
+#: ../api_example.php:140
+#: ../include/adr_new.inc.php:150
 msgid "Der Status der Adresse wurde nicht verändert!"
 msgstr "Status was not changed!"
 
 #: ../include/adr_search_form.inc.php:267
 #: ../include/adr_search_form.inc.php:252
+#: ../include/adr_search_form.inc.php:279
 msgid "Suche nach E-Mail-Adresse"
 msgstr "Search for email"
 
 #: ../include/adr_search_form.inc.php:271
 #: ../include/adr_search_form.inc.php:255
+#: ../include/adr_search_form.inc.php:282
 msgid "Suche in F0-F9"
 msgstr "Search for F0-F9"
 
 #: ../include/adr_search_form.inc.php:279
 #: ../include/adr_search_form.inc.php:258
+#: ../include/adr_search_form.inc.php:288
 msgid "Filtern nach Status"
 msgstr "Filter status"
 
 #: ../include/adr_search_form.inc.php:282
 #: ../include/adr_search_form.inc.php:261
+#: ../include/adr_search_form.inc.php:285
 msgid "Filtern nach Gruppe"
 msgstr "Filter group"
 
 #: ../include/adr_search_form.inc.php:285
 #: ../include/adr_search_form.inc.php:264
+#: ../include/adr_search_form.inc.php:303
 msgid "Zeige maximal N Adressen pro Seite"
 msgstr "Show max N addresses per page"
 
 #: ../include/adr_search_form.inc.php:289
 #: ../include/adr_search_form.inc.php:268
+#: ../include/adr_search_form.inc.php:295
 msgid "Filtern nach Author/Formular"
 msgstr "Filter author/form"
 
@@ -9437,6 +10263,7 @@ msgstr "Export addresses"
 
 #: ../include/bounce_filter_form_head.inc.php:84
 #: ../include/bounce_filter_form_head.inc.php:78
+#: ../include/bounce_it.php:97
 msgid "Export"
 msgstr "Export"
 
@@ -9452,11 +10279,13 @@ msgstr "Where to search?"
 
 #: ../include/bounce_host_form.inc.php:128
 #: ../include/bounce_host_form.inc.php:118
+#: ../include/adm_set_form.inc.php:419
 msgid "nur E-MailHeader"
 msgstr "only email header"
 
 #: ../include/bounce_host_form.inc.php:129
 #: ../include/bounce_host_form.inc.php:119
+#: ../include/adm_set_form.inc.php:420
 msgid "nur E-Mail-Body"
 msgstr "only email body"
 
@@ -9483,11 +10312,13 @@ msgstr "Only mails to %s will be shown ."
 
 #: ../include/bounce.inc.php:118
 #: ../include/bounce.inc.php:102
+#: ../include/bounce_it.php:61
 msgid "E-Mail-Header wird nach potentiellen Adressen durchsucht"
 msgstr "E-mail header is scanned for potential addresses."
 
 #: ../include/bounce.inc.php:122
 #: ../include/bounce.inc.php:106
+#: ../include/bounce_it.php:65
 msgid "E-Mail-Body wird nach potentiellen Adressen durchsucht"
 msgstr "E-mail body is scanned for potential addresses."
 
@@ -9532,6 +10363,7 @@ msgstr "Mail no. %s to %s"
 #: ../include/form_form.inc.php:426
 #: ../include/form_list.inc.php:189
 #: ../include/form_list.inc.php:191
+#: ../include/form_form.inc.php:433
 msgid "URL"
 msgstr "URL"
 
@@ -9685,6 +10517,7 @@ msgid "Hilfe ein-/ausblenden"
 msgstr "Show/hide help"
 
 #: ../include/Menu.inc.php:201
+#: ../include/Menu.inc.php:227
 msgid "Exportieren Sie Ihre Adressbestände in eine CSV-Datei"
 msgstr "Export addresses to CSV"
 
@@ -9692,10 +10525,13 @@ msgstr "Export addresses to CSV"
 #: ../include/nl_new.inc.php:116
 #: ../include/nl_edit.inc.php:115
 #: ../include/nl_new.inc.php:114
+#: ../include/nl_edit.inc.php:148
+#: ../include/nl_new.inc.php:143
 msgid "Text:"
 msgstr "Text:"
 
 #: ../include/nl_form.inc.php:66
+#: ../include/nl_form.inc.php:123
 msgid "Anhänge auswählen, Strg/Ctrl+Klick f. Mehrfachauswahl"
 msgstr "Select attachments. Ctrl+Click to select multiple."
 
@@ -9705,16 +10541,21 @@ msgstr "Select attachments. Ctrl+Click to select multiple."
 #: ../include/nl_form.inc.php:295
 #: ../include/nl_list.inc.php:381
 #: ../include/nl_list.inc.php:549
+#: ../include/nl_form.inc.php:395
+#: ../include/nl_list.inc.php:415
+#: ../include/nl_list.inc.php:596
 msgid "Anhänge"
 msgstr "Attachments"
 
 #: ../include/nl_form.inc.php:396
 #: ../include/nl_form.inc.php:394
+#: ../include/nl_form.inc.php:534
 msgid "Neuer Anhang"
 msgstr "New attachment"
 
 #: ../include/nl_form.inc.php:405
 #: ../include/nl_form.inc.php:403
+#: ../include/nl_form.inc.php:543
 msgid "Text-Part"
 msgstr "Textpart"
 
@@ -9722,57 +10563,71 @@ msgstr "Textpart"
 #: ../include/nl_form.inc.php:417
 #: ../include/nl_form.inc.php:404
 #: ../include/nl_form.inc.php:413
+#: ../include/nl_form.inc.php:544
+#: ../include/nl_form.inc.php:553
+#: ../include/nl_form.inc.php:570
 msgid "Ein-/Ausblenden"
 msgstr "Show/hide"
 
 #: ../include/nl_form.inc.php:416
 #: ../include/nl_form.inc.php:412
+#: ../include/nl_form.inc.php:552
 msgid "HTML-Part"
 msgstr "HTML-part"
 
 #: ../include/nl_form.inc.php:425
 #: ../include/nl_form.inc.php:419
+#: ../include/nl_form.inc.php:559
+#: ../include/nl_form.inc.php:573
 msgid "Wysiwyg Editor Ein/Aus"
 msgstr "Wysiwyg editor on/off"
 
 #: ../include/nl_form.inc.php:450
 #: ../include/nl_form.inc.php:444
+#: ../include/nl_form.inc.php:603
 #, c-format
 msgid "%s enthält die Links zu den Attachements"
 msgstr "%s contains links to attachments"
 
 #: ../include/nl_list.inc.php:550
 #: ../include/nl_list.inc.php:459
+#: ../include/nl_list.inc.php:506
 msgid "Text-Template des Newsletter anzeigen: "
 msgstr "Show text template for this newsletter: "
 
 #: ../include/nl_list.inc.php:550
 #: ../include/nl_list.inc.php:459
+#: ../include/nl_list.inc.php:506
 msgid "Textversion anzeigen"
 msgstr "Show text version"
 
 #: ../include/nl_list.inc.php:641
 #: ../include/nl_list.inc.php:538
+#: ../include/nl_list.inc.php:585
 msgid "Nachfassen"
 msgstr "Refresh/Recreate"
 
 #: ../include/nl_list.inc.php:654
 #: ../include/nl_list.inc.php:550
+#: ../include/nl_list.inc.php:597
 msgid "Dateiname:"
 msgstr "Filename:"
 
 #: ../include/nl_list.inc.php:654
 #: ../include/nl_list.inc.php:550
+#: ../include/nl_list.inc.php:597
 msgid "Grösse:"
 msgstr "Size:"
 
 #: ../include/nl_list.inc.php:671
 #: ../include/nl_list.inc.php:567
+#: ../include/nl_list.inc.php:614
 msgid "Datei existiert nicht!"
 msgstr "File does not exist!"
 
 #: ../include/nl_list.inc.php:678
 #: ../include/nl_list.inc.php:574
+#: ../include/nl_list.inc.php:621
 msgid "Total"
 msgstr "Total"
 
@@ -9811,33 +10666,40 @@ msgstr "No newsletter selected. Nothing added."
 
 #: ../include/queue_send.inc.php:117
 #: ../include/queue_send.inc.php:109
+#: ../include/queue_send.inc.php:114
 #, c-format
 msgid "Benötigte Zeit: %s Sekunden"
 msgstr "Time: %s seconds"
 
 #: ../include/queue_send.inc.php:124
 #: ../include/queue_send.inc.php:116
+#: ../include/queue_send.inc.php:121
 msgid "Fehler beim anlegen der Versandliste!"
 msgstr "Error creating the recipients list!"
 
 #: ../include/queue_send.inc.php:145
 #: ../include/queue_send.inc.php:130
+#: ../include/queue_send.inc.php:135
 #, c-format
 msgid "Insgesamt benötigte Zeit: %s Sekunden"
 msgstr "Time total: % seconds"
 
 #: ../include/status.inc.php:118
 #: ../include/status.inc.php:113
+#: ../include/status.inc.php:124
 msgid "Adressgruppen"
 msgstr "Address groups"
 
 #: ../include/status.inc.php:246
 #: ../include/status.inc.php:212
+#: ../include/adm_set_form.inc.php:659
+#: ../include/status.inc.php:223
 msgid "Mails"
 msgstr "Mails"
 
 #: ../include/status.inc.php:282
 #: ../include/status.inc.php:239
+#: ../include/status.inc.php:250
 msgid "Newsletter Queue"
 msgstr "Newsletter queue"
 
@@ -9855,10 +10717,12 @@ msgid "Temporäre Tabelle %s wird erstellt."
 msgstr "Creating temporary table %s"
 
 #: ../include/install/install_check_db.inc.php:47
+#: ../include/install/install_check_db.inc.php:50
 msgid "Ein Fehler beim erstellen temporärer Tabellen ist aufgetreten. Bitte prüfen Sie die Berechtigungen des Datenbankbenutzers."
 msgstr "Error creating temporary tables, please check your permissions."
 
 #: ../include/install/install_check_db.inc.php:53
+#: ../include/install/install_check_db.inc.php:56
 msgid "OK, temporäre Tabellen können erstellt werden."
 msgstr "Ok, creating temporary tables is allowed"
 
@@ -9895,66 +10759,82 @@ msgid "Datenbank"
 msgstr "Database"
 
 #: ../include/install/install_form.inc.php:337
+#: ../include/install/install_form.inc.php:333
 msgid "Tragen Sie hier den Host-Namen oder die IP-Adresse Ihres Datenbankservers ein."
 msgstr "Enter hostname or ip address of your database server."
 
 #: ../include/install/install_form.inc.php:343
+#: ../include/install/install_form.inc.php:339
 msgid "Geben Sie die Portnummer an unter der der Datenbankserver Verbindungen entgegennimmt. (Standard ist 3306 für MySQL)"
 msgstr "Enter portnumber of your database server (default is 3306 for MySQL)"
 
 #: ../include/install/install_form.inc.php:349
+#: ../include/install/install_form.inc.php:345
 msgid "Wählen Sie Sockets wenn der Datenbankserver keine Verbindung über TCP/IP zulässt."
 msgstr "Select Sockets if database server does not allow TCP/IP"
 
 #: ../include/install/install_form.inc.php:355
+#: ../include/install/install_form.inc.php:351
 msgid "Wählen Sie den Typ der Datenbank (Standard is MyISAM für MySQL)"
 msgstr "Please select MySQL Database Type (default is MyISAM for MySQL)"
 
 #: ../include/install/install_form.inc.php:361
+#: ../include/install/install_form.inc.php:357
 msgid "Tragen Sie den Namen der Datenbank ein, sowie den namen des Datenbankbenutzers und das zugehörige Passwort."
 msgstr "Please enter name of database, username and pasword"
 
 #: ../include/install/install_form.inc.php:382
+#: ../include/install/install_form.inc.php:373
 msgid "Optional: Geben Sie einen TabellenPrefix ein. Dieser wird vor die Tabellennamen von tellmatic gesetzt. Wird ein Prefix angegeben, so fuegt Tellmatic automatisch ein _ an den Prefix an. Ein Prefix wird empfohlen wenn nur eine Datenbank zur Verfuegung steht und diese sich mehrere Programme teilen."
 msgstr "Optional: Table Prefix (useful if you only have one database for different web apps.) Prefix is put in front of tablenames used by Tellmatic. If you enter a prefix a underscore _ will be added automatical between prefix and tablename."
 
 #: ../include/install/install_form.inc.php:403
+#: ../include/install/install_form.inc.php:394
 msgid "Mail Server"
 msgstr "Mail Server"
 
 #: ../include/install/install_form.inc.php:415
+#: ../include/install/install_form.inc.php:402
 msgid "Geben Sie den Host-Namen Ihres E-Mail-Servers an. Z.Bsp.: mail.oneofmydomains.tld"
 msgstr "Enter hostname or IP address of your mailserver. e.g. mail.oneofmydomains.tld"
 
 #: ../include/install/install_form.inc.php:421
+#: ../include/install/install_form.inc.php:408
 msgid "Tragen Sie die Portnummer Ihres E-Mail-Servers ein unter der Verbindungen entgegen genommen werden. (Standard für SMTP ist 25, manchmal auch 587)"
 msgstr "Enter portnumber for mailserver (usually 25 for SMTP, sometimes 587)"
 
 #: ../include/install/install_form.inc.php:427
+#: ../include/install/install_form.inc.php:414
 msgid "Benutzername für den SMTP-Server."
 msgstr "Username for SMTP-Server"
 
 #: ../include/install/install_form.inc.php:433
+#: ../include/install/install_form.inc.php:420
 msgid "Das Passwort für den SMTP-Benutzer."
 msgstr "Password for SMTP-User"
 
 #: ../include/install/install_form.inc.php:439
+#: ../include/install/install_form.inc.php:426
 msgid "Bitte geben Sie hier den Domainnamen an mit der sich Tellmatic am SMTP-Server anmeldet. Im Regelfall ist das der Domainname der Webseite, ohne www.!"
 msgstr "Please enter domainname Tellmatic should use to connect to mailserver. Usually this is the domainname of your website without www.!"
 
 #: ../include/install/install_form.inc.php:445
+#: ../include/install/install_form.inc.php:432
 msgid "Wählen Sie hier die Authentifizierungsmethode die Tellmatic verwenden soll um sich am SMTP Server anzumelden."
 msgstr "Please select authentication method for the SMTP-Server"
 
 #: ../include/install/install_form.inc.php:467
+#: ../include/install/install_form.inc.php:454
 msgid "Installation fertigstellen"
 msgstr "Finish Installation"
 
 #: ../include/install/install_form.inc.php:479
+#: ../include/install/install_form.inc.php:466
 msgid "Soll eine Installations-Mail an die Entwickler von Tellmatic gesendet werden? Die E-Mail enthält die oben angegebenen Informationen. Es werden keine sensitiven Daten wie Passwörter oder Benutzernamen verschickt. Die Daten werden nur zu statistischen Zwecken verwendet."
 msgstr "Shold we send an email to the Tellmatic developers? The email does NOT contain sensitive data like usernames and passwords. It is only used for statistics."
 
 #: ../include/install/install_form.inc.php:488
+#: ../include/install/install_form.inc.php:475
 msgid "Wenn Sie alle Angaben gemacht haben bestätigen Sie bitte hier. Tellmatic wird im nächsten Schritt installiert. Sollten Fehler auftreten wird dieses Formular wieder angezeigt und eine Warnmeldung bezüglich der aufgetretenen Fehler ausgegeben."
 msgstr "If you have filled out all necessary fields, please click to continue. In the next step we will check the input and if everything works Tellmatic gets installed. If there are any errrors a message will be shown."
 
@@ -9979,20 +10859,24 @@ msgid "Gruppenauswahl überschreiben"
 msgstr "Overwrite groups"
 
 #: ../include/form_form.inc.php:475
+#: ../include/form_form.inc.php:482
 msgid "Auswahl für Gruppen erzwingen"
 msgstr "Force group selection"
 
 #: ../include/form_form.inc.php:485
+#: ../include/form_form.inc.php:492
 msgid "Gruppen aktualisieren, nur Neue hinzu"
 msgstr "Update groups, only new"
 
 #: ../include/form_form.inc.php:485
 #: ../include/form_list.inc.php:176
 #: ../include/form_list.inc.php:238
+#: ../include/form_form.inc.php:492
 msgid "Gruppen überschreiben"
 msgstr "Overwrite groups"
 
 #: ../include/form_form.inc.php:485
+#: ../include/form_form.inc.php:492
 msgid "Gruppen Auswahl"
 msgstr "Group selection"
 
@@ -10016,7 +10900,645 @@ msgstr "IMAP/POP3 Options"
 
 #: ../include/nl_form.inc.php:140
 #: ../include/nl_form.inc.php:339
+#: ../include/nl_form.inc.php:230
+#: ../include/nl_form.inc.php:467
 msgid "Mailing-Typ"
 msgstr "Mailing type"
 
+#: ../include/install/install_check_db.inc.php:61
+msgid "SQL ERROR:"
+msgstr "SQL ERROR:"
+
+#: ../include/install/install_check_pre.inc.php:49
+msgid "INFO!"
+msgstr "INFO!"
+
+#: ../include/adm_set_form.inc.php:217
+msgid "Captcha im Abmeldeformular"
+msgstr "Use Captcha in unsubscribe form"
+
+#: ../include/adm_set_form.inc.php:248
+#: ../include/adm_set_form.inc.php:566
+msgid "Bestätigungsmail senden"
+msgstr "Send confirmation email"
+
+#: ../include/adm_set_form.inc.php:265
+msgid "Abmelden"
+msgstr "Unsubscribe"
+
+#: ../include/adm_set_form.inc.php:317
+msgid "E-Mail-Adresse für Prüfung (Validate/MAIL FROM:)"
+msgstr "From address for validation (Validate/MAIL FROM:)"
+
+#: ../include/adm_set_form.inc.php:328
+msgid "Wenn OK, Fehler zurücksetzen"
+msgstr "Reset errors if OK"
+
+#: ../include/adm_set_form.inc.php:339
+msgid "Wenn OK, Status zurücksetzen"
+msgstr "Reset state if OK"
+
+#: ../include/adm_set_form.inc.php:393
+msgid "nur Mails an TO: bearbeiten"
+msgstr "only check email to TO;"
+
+#: ../include/adm_set_form.inc.php:403
+msgid "Filter E-Mail-Adresse für Bouncemanagement)"
+msgstr "Filer email address for bouncemanagement"
+
+#: ../include/adm_set_form.inc.php:413
+#: ../include/adm_set_form.inc.php:683
+msgid "Bounce: suche nach Adressen"
+msgstr "Bounce: search for addresses"
+
+#: ../include/adm_set_form.inc.php:455
+msgid "Allgemein / Sonstiges"
+msgstr "Misc"
+
+#: ../include/adm_set_form.inc.php:485
+msgid "Prüfung der E-Mail-Adressen, Intern"
+msgstr "E-Mail verification method, internal"
+
+#: ../include/adm_set_form.inc.php:494
+msgid "Prüfung der E-Mail-Adressen beim Versand"
+msgstr "E-Mail verification method, delivery/send"
+
+#: ../include/adm_set_form.inc.php:524
+msgid "Anmelden / Abmelden"
+msgstr "Subscribe / Unsubscribe"
+
+#: ../include/adm_set_form.inc.php:566
+msgid "Bestätigungsmail"
+msgstr "Confirmation mail"
+
+#: ../include/adm_set_form.inc.php:575
+msgid "Aktion beim Abmelden"
+msgstr "Action on unsubscribe"
+
+#: ../include/adm_set_form.inc.php:584
+msgid "Captcha/Spamcode im Abmeldeformular prüfen"
+msgstr "Check Capctha Code in unsubscribe form"
+
+#: ../include/adm_set_form.inc.php:597
+msgid "Automatische Prüfung via check_it.php"
+msgstr "Automatic verification with check_it.php"
+
+#: ../include/adm_set_form.inc.php:603
+msgid "Anzahl zu prüfender Adressen in einem Durchlauf"
+msgstr "How many addresses should be checked on each run"
+
+#: ../include/adm_set_form.inc.php:612
+msgid "Prüfung der E-Mail-Adressen bei automatischer Prüfung"
+msgstr "Verification method for automatic verification"
+
+#: ../include/adm_set_form.inc.php:621
+msgid "Checkit MAIL FROM:"
+msgstr "Checkit MAIL FROM:"
+
+#: ../include/adm_set_form.inc.php:621
+msgid "Absender für Prüfung der E-Mail-Adressen bei automatischer Prüfung"
+msgstr "Sender address email for automatic verification"
+
+#: ../include/adm_set_form.inc.php:630
+msgid "Fehler zurücksetzen"
+msgstr "Reset errors"
+
+#: ../include/adm_set_form.inc.php:630
+msgid "Wenn Prüfung, Fehler zurücksetzen"
+msgstr "If check OK, reset errors"
+
+#: ../include/adm_set_form.inc.php:639
+msgid "Status zurücksetzen"
+msgstr "Reset status"
+
+#: ../include/adm_set_form.inc.php:639
+msgid "Wenn Prüfung OK, Status zurücksetzen"
+msgstr "If check OK, reset status"
+
+#: ../include/adm_set_form.inc.php:650
+msgid "Automatisches Bouncemanagement via bounce_it.php"
+msgstr "Automatic bouncemanagement via bounce_it.php"
+
+#: ../include/adm_set_form.inc.php:656
+msgid "Anzahl zu prüfender Mails in einem Durchlauf"
+msgstr "How many mails should be checked on each run"
+
+#: ../include/adm_set_form.inc.php:665
+msgid "Host für Bouncemanagement"
+msgstr "Host for bouncemanagement"
+
+#: ../include/adm_set_form.inc.php:665
+msgid "Host für automatisches Bouncemanagement"
+msgstr "Host for automagic bouncemanagement"
+
+#: ../include/adm_set_form.inc.php:674
+msgid "Aktion für Bouncemanagement"
+msgstr "Action for bouncemanagement"
+
+#: ../include/adm_set_form.inc.php:674
+msgid "Aktion für automatisches Bouncemanagement"
+msgstr "Aktion for automagic bouncemanagement"
+
+#: ../include/adm_set_form.inc.php:683
+msgid "Suche nach Adressen"
+msgstr "Search for addresses"
+
+#: ../include/adm_set_form.inc.php:692
+#: ../include/adm_set_form.inc.php:701
+msgid "E-Mail-Adresse (TO:) für Bouncemanagement"
+msgstr "Email address (TO:) for bouncemanagement"
+
+#: ../include/adm_set_form.inc.php:692
+msgid "Filtern nach E-Mail-Adrese (TO:)"
+msgstr "Filter emailddress (TO:)"
+
+#: ../include/adm_set_form.inc.php:701
+msgid "Filter  E-Mail-Adrese (TO:)"
+msgstr "Filter email address (TO:)"
+
+#: ../include/adm_set.inc.php:17
+msgid "Globale Einstellungen"
+msgstr "Global settings"
+
+#: ../include/adm_set.inc.php:164
+msgid "Die Filter E-Mail-Adresse für die automatische Prüfung ist nicht gültig."
+msgstr "The filter email address for automatic verification is invalid"
+
+#: ../include/adm_set.inc.php:169
+msgid "Die Filter E-Mail-Adresse für das  automatische Bouncemanagement ist nicht gültig."
+msgstr "The filter email address for automatic bouncemanagement is invalid"
+
+#: ../include/adr_clean_form.inc.php:132
+#: ../include/adr_import_form.inc.php:383
+msgid "zur Prüfung vormerken"
+msgstr "mark for recheck/verification"
+
+#: ../include/adr_clean.inc.php:87
+msgid "Ausgewählte Adressen werden zur automatischen Prüfung vorgemerkt."
+msgstr "Selected emails marked for recheck/verification"
+
+#: ../include/adr_clean.inc.php:158
+#, c-format
+msgid "%s Einträge aus der Gruppe %s wurden zur Prüfung vorgemerkt."
+msgstr "%s entries from group %s have been marked for recheck/verification."
+
+#: ../include/adr_clean.inc.php:159
+#, c-format
+msgid "%s Einträge aus der Gruppe %s mit dem Status %s wurden zur Prüfung vorgemerkt."
+msgstr "%s entries from group %s with status %s have been marked for recheck/verification."
+
+#: ../include/adr_clean.inc.php:167
+#: ../include/adr_list.inc.php:300
+#, c-format
+msgid "%s Adressen Gesamt"
+msgstr "%s Addresses total"
+
+#: ../include/adr_clean.inc.php:172
+#: ../include/adr_clean.inc.php:201
+#: ../include/adr_list.inc.php:306
+#, c-format
+msgid "%s Adressen sind zur Prüfung vorgemerkt"
+msgstr "%s addresses marked for verification"
+
+#: ../include/adr_clean.inc.php:177
+#: ../include/adr_clean.inc.php:208
+#: ../include/adr_list.inc.php:312
+#, c-format
+msgid "%s Adressen sind deaktiviert"
+msgstr "%s addresses deactivated"
+
+#: ../include/adr_import_form.inc.php:209
+msgid "Importierte Adressen zur Prüfung vormerken"
+msgstr "Mark imported addresses for recheck/verificaton"
+
+#: ../include/adr_import_form.inc.php:383
+msgid "Zur automatiscen Prüfung vormerken"
+msgstr "Mark for recheck/verification"
+
+#: ../include/adr_import.inc.php:175
+#: ../include/adr_import.inc.php:176
+msgid "Adressen werden zur automatischen Prüfung vorgemerkt."
+msgstr "Addresses will be marked for recheck/verification"
+
+#: ../include/adr_list_form_head.inc.php:98
+msgid "E-Mail Syntax prüfen"
+msgstr "Check email syntax"
+
+#: ../include/adr_list_form_head.inc.php:99
+msgid "E-Mail MX/DNS prüfen"
+msgstr "Check MX/DNS"
+
+#: ../include/adr_list_form_head.inc.php:100
+msgid "E-Mail Validieren"
+msgstr "Validate email"
+
+#: ../include/adr_list.inc.php:67
+msgid "Eintrag wird geprüft:"
+msgstr "Checking entry:"
+
+#: ../include/adr_list.inc.php:71
+msgid "E-Mail wurde als fehlerhaft markiert."
+msgstr "Email is errorness"
+
+#: ../include/adr_list.inc.php:148
+msgid "Ausgewählte Adressen werden geprüft"
+msgstr "Checking selected addresses"
+
+#: ../include/adr_list.inc.php:149
+msgid "Status für fehlerhafte Adressen wird geändert."
+msgstr "Status for errorness addresses will be changed"
+
+#: ../include/adr_list.inc.php:150
+msgid "Syntax"
+msgstr "Syntax"
+
+#: ../include/adr_list.inc.php:151
+msgid "Syntax, MX/DNS"
+msgstr "Syntax, MX/DNS"
+
+#: ../include/adr_list.inc.php:152
+msgid "Syntax, MX/DNS + Validate"
+msgstr "Syntax, MX/DNS + Validate"
+
+#: ../include/adr_list.inc.php:198
+msgid "FEHLER"
+msgstr "ERROR"
+
+#: ../include/adr_list.inc.php:326
+msgid "gewählter Status"
+msgstr "selected status"
+
+#: ../include/adr_list.inc.php:339
+#, c-format
+msgid "%s Adressen (gefiltert)"
+msgstr "%s Addresses (with filter)"
+
+#: ../include/adr_list.inc.php:340
+#, c-format
+msgid "%s Adressen sind zur Prüfung vorgemerkt, gefiltert)"
+msgstr "%s Addresses marked for recheck/verification (with filter)"
+
+#: ../include/adr_list.inc.php:348
+#, c-format
+msgid "%s Adressen sind deaktivert (gefiltert)"
+msgstr "%s Addressess are deactivated (with filter)"
+
+#: ../include/adr_list.inc.php:575
+#: ../include/adr_list_legende.inc.php:28
+msgid "E-Mail Prüfen"
+msgstr "Checking email"
+
+#: ../include/adr_list.inc.php:727
+#: ../include/adr_list_legende.inc.php:20
+#: ../include/adr_list_legende.inc.php:28
+msgid "E-Mail prüfen"
+msgstr "Checking email"
+
+#: ../include/adr_list_legende.inc.php:20
+msgid "zur Prüfung vorgemerkt"
+msgstr "marked for recheck/verification"
+
+#: ../include/adr_search_form.inc.php:126
+msgid "Nach aktiven/deaktivierten Adressen filtern"
+msgstr "Filter for active/inactive addresses"
+
+#: ../include/adr_search_form.inc.php:162
+msgid "Suchparameter speichern"
+msgstr "Save search parameters"
+
+#: ../include/adr_search_form.inc.php:165
+msgid "Suche speichern"
+msgstr "Save search"
+
+#: ../include/adr_search_form.inc.php:291
+msgid "Deaktiviert"
+msgstr "Inactive"
+
+#: ../include/adr_search_form.inc.php:314
+msgid "Suchparameter zurücksetzen"
+msgstr "Reset search parameters"
+
+#: ../include/adr_search_form.inc.php:314
+msgid "Such-Parameter zurücksetzen"
+msgstr "Reset search parameters"
+
+#: ../include/bounce_it.inc.php:15
+msgid "Automatisches Bouncemanagement manuell starten"
+msgstr "Manually run automatic bouncemanagement"
+
+#: ../include/bounce_it.inc.php:17
+msgid "Manuelle Ausführung des automatischen Bouncemanagements"
+msgstr "Manually run automatic bouncemanagement"
+
+#: ../include/bounce_it.inc.php:30
+#: ../include/check_it.inc.php:30
+#: ../include/send_it.inc.php:30
+#, c-format
+msgid "Sie möchten das Script %s über den Browser ausführen."
+msgstr "You try to run the script %s via browser."
+
+#: ../include/bounce_it.inc.php:31
+#: ../include/check_it.inc.php:31
+#: ../include/send_it.inc.php:31
+msgid "Bevor Sie die Datei ausführen können, müssen Sie den exit; Befehl in der Datei  entfernen und die Einstellugen überprüfen."
+msgstr "Bevor you can run the script you must remove the exit: statement at top of the file and check settings"
+
+#: ../include/bounce_it.inc.php:32
+#: ../include/check_it.inc.php:32
+#: ../include/send_it.inc.php:32
+msgid "Es wird empfohlen das Sie das Script über einen sogenannten Cronjob per PHP-Command-Line-Interface (PHP-CLI) ausführen."
+msgstr "It is recommended to run this script via a cronjob with PHP command line executable."
+
+#: ../include/bounce_it.inc.php:33
+#: ../include/check_it.inc.php:33
+#: ../include/send_it.inc.php:33
+msgid "Zum Ausführen des Scripts per Cronjob ist es unbedingt erforderlich das Sie den Pfad zur Tellmatic Konfigurationsdatei angeben."
+msgstr "To run a cronjob you may need to change the path to the Tellmatic configuration file."
+
+#: ../include/bounce_it.inc.php:34
+#: ../include/check_it.inc.php:34
+#: ../include/send_it.inc.php:34
+#, c-format
+msgid "Der vollständige Pfad lautet: %s"
+msgstr "The complete path is:"
+
+#: ../include/bounce_it.inc.php:35
+#: ../include/check_it.inc.php:35
+#: ../include/send_it.inc.php:35
+msgid "Beispiel für einen Cronjob:"
+msgstr "Example for cronjob."
+
+#: ../include/bounce_it.inc.php:41
+#: ../include/check_it.inc.php:41
+#: ../include/send_it.inc.php:41
+#, c-format
+msgid "Weitere Infos hierzu finden Sie in der %s Datei oder unter %s."
+msgstr "More infos you can find in the file %s and %s"
+
+#: ../include/bounce_it.inc.php:45
+#: ../include/check_it.inc.php:45
+#: ../include/send_it.inc.php:45
+#, c-format
+msgid "Wenn Sie jetzt das Script %s über den Browser starten wollen, klicken Sie hier:"
+msgstr "To run the script %s via browser click here:"
+
+#: ../include/bounce_it.inc.php:48
+#: ../include/check_it.inc.php:48
+#: ../include/send_it.inc.php:48
+msgid "Sie müssen ggf. Ihren Benutzernamen und Passwort erneut eingeben."
+msgstr "You may need to enter your username and password again."
+
+#: ../include/bounce_it.php:41
+#, c-format
+msgid "Es werden nur E-Mails an die Adresse %s durchsucht."
+msgstr "Only emails to %s will be searched."
+
+#: ../include/bounce_it.php:55
+#, c-format
+msgid "%s Mails gefunden"
+msgstr "Fund %s mails"
+
+#: ../include/check_it.inc.php:15
+msgid "Prüfung manuell starten"
+msgstr "Start verification manually"
+
+#: ../include/check_it.inc.php:17
+msgid "Manuelle Prüfung"
+msgstr "Manual checking"
+
+#: ../include/check_it.php:28
+#, c-format
+msgid "Limit: %s Found: %s"
+msgstr "Limit: %s Found: %s"
+
+#: ../include/check_it.php:40
+msgid "Error, e-mail marked as failed."
+msgstr "Error, e-mail marked as failed."
+
+#: ../include/check_it.php:49
+msgid "OK, e-mail marked as ok."
+msgstr "OK, e-mail marked as ok."
+
+#: ../include/check_it.php:52
+msgid "OK, but e-mail status not changed."
+msgstr "OK, but e-mail status not changed."
+
+#: ../include/check_it.php:57
+msgid "OK, reset errors to 0."
+msgstr "OK, reset errors to 0."
+
+#: ../include/check_it.php:61
+msgid "Skipped, already processed"
+msgstr "Skipped, already processed"
+
+#: ../include/check_it.php:68
+msgid "Finish"
+msgstr "Finish"
+
+#: ../include/form_new.inc.php:315
+#: ../include/form_new.inc.php:316
+msgid "neues Formular"
+msgstr "new Form"
+
+#: ../include/form_new.inc.php:321
+msgid "Absenden"
+msgstr "Send"
+
+#: ../include/form_new.inc.php:322
+msgid "Zurücksetzen"
+msgstr "Reset"
+
+#: ../include/Functions.inc.php:43
+#, c-format
+msgid "Fehler beim schreiben von %s."
+msgstr "Error writing on %s"
+
+#: ../include/Functions.inc.php:48
+#: ../include/Functions.inc.php:53
+#, c-format
+msgid "Fehler beim öffnen von %s."
+msgstr "Error opening %s"
+
+#: ../include/Functions.inc.php:185
+msgid "Kann Tellmatic News nicht öffnen."
+msgstr "Can not open Tellmatic news"
+
+#: ../include/Functions.inc.php:199
+msgid "Kann Tellmatic Versionsinfo nicht öffnen"
+msgstr "Can not open Tellmatic Versioninfo"
+
+#: ../include/Functions.inc.php:1003
+msgid "Server lehnt Mail ab, temporaerer Fehler, Greylisting etc."
+msgstr "Server rejects mail, temporary failure, greylisting etc."
+
+#: ../include/Functions.inc.php:1015
+msgid "Kann Verbindung zum Server nicht herstellen."
+msgstr "Can not connect to server."
+
+#: ../include/Menu.inc.php:126
+msgid "Vorlagen"
+msgstr "Templates"
+
+#: ../include/Menu.inc.php:127
+msgid "Newsletter Vorlagen verwalten"
+msgstr "Manage newsletter templates"
+
+#: ../include/Menu.inc.php:128
+msgid "Hier erstellen Sie neue Vorlagen oder kopieren einen neuen Newsletter aus einer Vorlage"
+msgstr "Here you can create new templates or copy a template to create a new newsletter from it"
+
+#: ../include/Menu.inc.php:174
+msgid "Adressen suchen"
+msgstr "Seatch addresses"
+
+#: ../include/Menu.inc.php:337
+msgid "auto-Bounce"
+msgstr "auto-Bounce"
+
+#: ../include/Menu.inc.php:338
+msgid "automatisches Bouncemanagement"
+msgstr "automagic boundemanagement"
+
+#: ../include/Menu.inc.php:339
+msgid "Hier starten Sie das automatische Bouncemanagement manuell"
+msgstr "Here you can manually run the automatic bouncemanagement script"
+
+#: ../include/Menu.inc.php:363
+msgid "Prüfen"
+msgstr "Check"
+
+#: ../include/Menu.inc.php:364
+msgid "E-Mail-Adressen prüfen"
+msgstr "Checkemail"
+
+#: ../include/Menu.inc.php:365
+msgid "markierte E-Mail-Adressen prüfen"
+msgstr "check markedemails"
+
+#: ../include/nl_form.inc.php:67
+msgid "Wasserzeichen hinzufügen"
+msgstr "Add watermark"
+
+#: ../include/nl_form.inc.php:77
+msgid "Wasserzeichen-Bild auswählen"
+msgstr "Select watermark image"
+
+#: ../include/nl_form.inc.php:103
+msgid "Größe ändern"
+msgstr "Change size"
+
+#: ../include/nl_form.inc.php:113
+#: ../include/nl_form.inc.php:501
+msgid "Neue Größe"
+msgstr "New size"
+
+#: ../include/nl_form.inc.php:176
+msgid "Titel (z.Bsp. zur Anzeige auf der Webseite)"
+msgstr "Title (e.g. to show on a website)"
+
+#: ../include/nl_form.inc.php:186
+msgid "Sub-Titel (z.Bsp. zur Anzeige auf der Webseite)"
+msgstr "Sub title (e.g. to show on a website)"
+
+#: ../include/nl_form.inc.php:265
+#: ../include/nl_form.inc.php:569
+msgid "Zusammenfassung"
+msgstr "Summary"
+
+#: ../include/nl_form.inc.php:403
+#: ../include/nl_list.inc.php:332
+#: ../include/nl_list.inc.php:370
+#: ../include/nl_list.inc.php:450
+#: ../include/nl_list_legende.inc.php:21
+msgid "Vorlage"
+msgstr "Template"
+
+#: ../include/nl_form.inc.php:440
+msgid "Sub-Titel"
+msgstr "Sub-title"
+
+#: ../include/nl_form.inc.php:506
+msgid "Wasserzeichen"
+msgstr "Watermark"
+
+#: ../include/nl_form.inc.php:598
+#, c-format
+msgid "%s enthält den das aktuelle Datum zum Zeitpunkt des Versandes. Das Datumsformat wird in tm_lib.inc.php voreingestellt (TM_NL_DATEFORMAT). Standard: d.m.Y, Aktuell: %s"
+msgstr "%s contains the current date at time of delivery. You can change this format in tm_lib by setting TM_NL_DATEFORMAT. Default d.m.Y, current: %s"
+
+#: ../include/nl_form.inc.php:599
+#, c-format
+msgid "%s enthält den Titel zur Anzeige auf der Webseite | %s enthält den Untertitel zur Anzeige auf der Webseite"
+msgstr "%s contains a title to view on the website | %s contains a sub title to show on the website"
+
+#: ../include/nl_form.inc.php:600
+#, c-format
+msgid "%s enthält die Zusammenfasung zur Anzeige auf der Webseite"
+msgstr "%s contains a summary of your newsletter, e.g. to show on a website."
+
+#: ../include/nl_list.inc.php:370
+#: ../include/nl_list_legende.inc.php:21
+msgid "Dieses NL ist eine Vorlage für neue NL und kann nicht versendet werden."
+msgstr "This is a template and can not be send"
+
+#: ../include/nl_upload.inc.php:109
+#, c-format
+msgid "Bildgröße geändert in max. %s px."
+msgstr "Picture size changed to max %s px."
+
+#: ../include/nl_upload.inc.php:111
+#, c-format
+msgid "Fehler beim Ändern der Bildgröße in max. %s px."
+msgstr "Error changing picture size to max %s px."
+
+#: ../include/nl_upload.inc.php:122
+#, c-format
+msgid "Wasserzeichen zum Bild hinzugefügt (%s)."
+msgstr "Watermark added to image (%s)"
+
+#: ../include/nl_upload.inc.php:124
+#, c-format
+msgid "Fehler beim Hinzufügen des Wasserzeichens (%s)."
+msgstr "Error creating watermark (%s)"
+
+#: ../include/nl_upload.inc.php:128
+#, c-format
+msgid "Wasserzeichen existiert nicht (%s)."
+msgstr "Watermark image does not exist (%s)"
+
+#: ../include/pager.inc.php:38
+#, c-format
+msgid "Seite %s von %s"
+msgstr "Page %s of %s"
+
+#: ../include/pager.inc.php:54
+msgid "Ende"
+msgstr "End"
+
+#: ../include/pager.inc.php:57
+msgid "Gehe zu Seite:"
+msgstr "Go to page:"
+
+#: ../include/pager.inc.php:62
+#, c-format
+msgid "Seite %s von %s, Eintrag %s bis %s"
+msgstr "Page %s of %s. Entry %s to %s"
+
+#: ../include/send_it.inc.php:15
+msgid "Versand manuell starten"
+msgstr "Start manual delivery "
+
+#: ../include/send_it.inc.php:17
+msgid "Manueller Versand"
+msgstr "Manual delivery"
+
+#: ../include/status.inc.php:58
+#, c-format
+msgid "Adressen (gesamt): %s"
+msgstr "Addresses (total): %s"
+
+#: ../include/status.inc.php:62
+#, c-format
+msgid "Adressen (zur Prüfung vorgemerkt): %s"
+msgstr "Adresses (marked for verification): %s"
 

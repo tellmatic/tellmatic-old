@@ -17,6 +17,7 @@ if (!isset($called_via_url)) {$called_via_url=true;}
 
 $HOSTS=new tm_HOST();
 $HOST=$HOSTS->getStdSMTPHost();
+
 //aufruf: unsubscribe.php?h_id=&nl_id=&a_id=
 //oder auch ohne parameter
 //da wir ja ein formular haben
@@ -24,6 +25,7 @@ $HOST=$HOSTS->getStdSMTPHost();
 //und ein massenmailing kein personalisiertes newsletter ist.....
 
 $ADDRESS=new tm_ADR();
+
 $MESSAGE="";
 $FMESSAGE="";
 $OUTPUT="";
@@ -41,6 +43,7 @@ $$InputName_Name=getVar($InputName_Name);
 $InputName_Captcha="fcpt";//einbgegebener Captcha Code
 $$InputName_Captcha=getVar($InputName_Captcha);
 $cpt=getVar("cpt");//zu pruefender captchacode, hidden field, $captcha_code
+
 //if isset $a_id and adr exists and adr code=c, then prefill email!
 if (check_dbid($a_id)) {
 	$ADR_TMP=$ADDRESS->getAdr($a_id);
@@ -64,27 +67,26 @@ if (check_dbid($a_id)) {
 		}
 	}
 }
-//check input
 
-if ($set=='unsubscribe' && ( !is_numeric($fcpt) || empty($fcpt) || md5($fcpt)!=$cpt ) ) {
-		$check=false;
-		$email="";
-		$FMESSAGE.=$MSG['unsubscribe']['invalid_captcha'];
+//check input
+$check_mail=checkEmailAdr($email,1);
+if ($set=='unsubscribe' && !$check_mail[0]) {
+	$check=false;
+	$FMESSAGE.="<br>".$MSG['unsubscribe']['invalid_email']."<br>".$check_mail[1];
 }
 
-$check_mail=checkEmailAdr($email,$EMailcheck_Subscribe);
- if ($set=='unsubscribe' && !$check_mail[0]) {
-	$check=false;
-	$email=""; 
-	$FMESSAGE.="<br>".$MSG['unsubscribe']['invalid_email'];
- } 
-//create captcha code
-#if (!$check || $set!='unsubscribe') {
+$captcha_code="";
+$captcha_md5="";
+$FCAPTCHAIMG="";
+
+if ($C[0]['unsubscribe_use_captcha']==1) {
+	if ($set=='unsubscribe' && ( !is_numeric($fcpt) || empty($fcpt) || md5($fcpt)!=$cpt ) ) {
+		$check=false;
+		$FMESSAGE.=$MSG['unsubscribe']['invalid_captcha'];
+	}
 	//create captcha code
 	//captcha digits werden einzeln erzeugt ....
-	$captcha_code="";
-	//5 digits
-	for ($digits=0;$digits<5;$digits++) {
+	for ($digits=0;$digits<$C[0]['unsubscribe_digits_captcha'];$digits++) {
 		if ($digits>0) {
 			$captcha_code .= rand(0,9);
 		} else {
@@ -98,7 +100,11 @@ $check_mail=checkEmailAdr($email,$EMailcheck_Subscribe);
 	//rendert den css captcha
 	$FCAPTCHAIMG=$captcha_text->printNumber();
 	//$FCAPTCHAIMG ist jetzt der html code fuer den css captcha...
-#}//if set !=unsubscribe
+}
+
+if ($check==false) {
+	$email="";
+}
 
 //unsubscribe
 if ($check && $set=="unsubscribe") {
@@ -128,13 +134,19 @@ if ($check && $set=="unsubscribe") {
 					$memo.=" (".$NL[0]['subject'].")";
 				}
 				//set status adresse, set editor...
+				$author="unsubscribe";
+				//always unsubscribe ...
 				if ($ADDRESS->unsubscribe($ADR[0]['id'],$author)) {
 					$ADDRESS->setAktiv($ADR[0]['id'],0);
 					$ADDRESS->addMemo($ADR[0]['id'],$memo);
 					//unsubscribed
+					
+					if ($C[0]['unsubscribe_action']=="delete") {
+						$ADDRESS->delAdr($ADR[0]['id']);					
+					}
 					if ($C[0]['notify_unsubscribe']==1) {
 						//email bei subscrption an admin....
-						$SubscriptionMail_Subject="Tellmatic: Abmeldung";
+						$SubscriptionMail_Subject="Tellmatic: Abmeldung / Unsubscribe";
 						$SubscriptionMail_HTML="";
 						$SubscriptionMail_HTML.="<br><b>".$created."</b>\n".
 														"<br>'<b>".$memo."</b>'\n".
@@ -162,6 +174,15 @@ if ($check && $set=="unsubscribe") {
 														"Der Datensatz wurde de-aktiviert und markiert (Unsubscribed) und wurde ab sofort aus der Empfaengerliste ausgeschlossen.\n".
 														"<br>The Address has been deactivated and marked as unsubscribed and will be excluded from recipients list.\n";
 						@SendMail($HOST[0]['sender_email'],$HOST[0]['sender_name'],$C[0]['notify_mail'],$HOST[0]['sender_name'],$SubscriptionMail_Subject,clear_text($SubscriptionMail_HTML),$SubscriptionMail_HTML,Array(),$HOST);//fixed, now uses defaulthost
+						if ($C[0]['unsubscribe_sendmail']==1) {
+							//unsubscribe mail to subscriber
+							$UnsubscribeMail_Subject="Tellmatic: Abmeldung / Unsubscribe";
+							$_Tpl_UnsubscribeMail=new tm_Template();
+							$_Tpl_UnsubscribeMail->setTemplatePath(TM_TPLPATH);
+							$_Tpl_UnsubscribeMail->setParseValue("EMAIL", $email);
+							$UnsubscribeMail_HTML=$_Tpl_UnsubscribeMail->renderTemplate("Unsubscribe_mail.html");
+							@SendMail($HOST[0]['sender_email'],$HOST[0]['sender_name'],$email,"<__".$email."__>",$UnsubscribeMail_Subject,clear_text($UnsubscribeMail_HTML),$UnsubscribeMail_HTML,Array(),$HOST);//fixed, now uses defaulthost
+						}
 						$email="";
 					}//send notify
 					$FMESSAGE.= $MSG['unsubscribe']['unsubscribe'];
@@ -189,6 +210,8 @@ if ($check && $set=="unsubscribe") {
 	}
 } else {
  //keine eingabe
+ $email="";
+ $FMESSAGE.= "";
 }
 
 require_once(TM_INCLUDEPATH."/unsubscribe_form.inc.php");
@@ -200,8 +223,13 @@ $_Tpl_FRM->setParseValue("FHEAD", $FHEAD);
 $_Tpl_FRM->setParseValue("FFOOT", $FFOOT);
 $_Tpl_FRM->setParseValue("FSUBMIT", $FSUBMIT);
 $_Tpl_FRM->setParseValue("FEMAIL", $FEMAIL);
-$_Tpl_FRM->setParseValue("FCAPTCHA", $FCAPTCHA);
-$_Tpl_FRM->setParseValue("FCAPTCHAIMG", $FCAPTCHAIMG);
+if ($C[0]['unsubscribe_use_captcha']==1) {
+	$_Tpl_FRM->setParseValue("FCAPTCHA", $FCAPTCHA);
+	$_Tpl_FRM->setParseValue("FCAPTCHAIMG", $FCAPTCHAIMG);
+} else {
+	$_Tpl_FRM->setParseValue("FCAPTCHA", "");
+	$_Tpl_FRM->setParseValue("FCAPTCHAIMG", "");
+}
 $OUTPUT=$_Tpl_FRM->renderTemplate("Unsubscribe.html");
 //anzeige
 if ($called_via_url) {

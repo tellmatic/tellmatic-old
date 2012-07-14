@@ -36,7 +36,7 @@ $_FOOT.= "<br>Docroot=: ".$doc_root;
 $_FOOT.= "<br>Dir=: ".$pathinfo['dirname'];
 $_FOOT.= "<br><br><a href=\"".$tm_URL_FE."/".TM_INCLUDEDIR."/phpinfo.php\" target=\"_blank\">".___("PHP Info")."</a><br><br>";
 $_FOOT.= "<br><br><a href=\"javascript:switchSection('div_debug');\">(X) ".___("Fenster schliessen")."</a><br><br>";
-$_FOOT.= $ApplicationText."&nbsp;<br>&copy;-left&nbsp;2006/7/8&nbsp;-&nbsp;Volker Augustin&nbsp;";
+$_FOOT.= "<br><br><center>&copy;-left 2006-2010 <a href=\"http://www.tellmatic.org\" target=\"blank\">".$ApplicationText."</a></center><br><br>";
 $_FOOT.= "</div>";
 
 //new Template

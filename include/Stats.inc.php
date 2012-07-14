@@ -45,8 +45,8 @@
 												12=>___("1st-Touch-Opt-In"),
 								),
 								"statimg"=>Array(
-												1=>"bullet_black.png",
-												2=>"new.png",
+												1=>"new.png",
+												2=>"bullet_black.png",
 												3=>"bullet_green.png",
 												4=>"bullet_feed.png",
 												5=>"bullet_purple.png",

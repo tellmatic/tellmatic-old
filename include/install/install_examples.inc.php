@@ -74,6 +74,9 @@ if ($check) {
 					"<br>\n".
 					"{SUBSCRIBE}{SUBSCRIBE_URL}{CLOSELINK}<br>\n".
 					"<br>\n".
+					"Ihre bei uns gespeicherten Daten:<br>\n".
+					"<br>\n".
+					"{MEMO}\n".
 					"Viel Spass mit tellmatic! :-)<br>\n";
 					
 		$body_text="{TITLE}\n".
@@ -94,6 +97,11 @@ if ($check) {
 					"{UNSUBSCRIBE_URL}\n".
 					"Der Link zum Bestätigen des Newsletter Empfangs f. 1st-touch-opt-in:\n".
 					"{SUBSCRIBE_URL}\n".
+					"\n".
+					"Ihre bei uns gespeicherten Daten:\n".
+					"\n".
+					"{MEMO}\n".
+
 					"\n".
 					"Viel Spass mit tellmatic! :-)\n";
 
@@ -259,7 +267,6 @@ if ($check) {
 				"f7_errmsg"=>"",
 				"f8_errmsg"=>"",
 				"f9_errmsg"=>""
-
 				),
 				$new_adr_grp);
 	}//demo

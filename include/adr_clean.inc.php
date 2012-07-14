@@ -83,6 +83,9 @@ if (((!empty($set) && $set!="delete") || $blacklist==1) && $ac>0) { // wenn min 
 		$QUEUE=new tm_Q();
 		$_MAIN_MESSAGE.="<br>".___("Historie ausgewählter Adressen werden gelöscht.");
 	}
+	if ($set=="check") {
+		$_MAIN_MESSAGE.="<br>".___("Ausgewählte Adressen werden zur automatischen Prüfung vorgemerkt.");
+	}
 //adressids holen ud in adr_id_arr speichern
 	$adr_id_arr=$ADDRESS->getAdrID(0,$search);
 	//adrarray durchwandern
@@ -150,11 +153,29 @@ if ($set=="delete") {// && $status!="delete_all"
 	if ($status>0) $_MAIN_MESSAGE.="<br>".sprintf(___("%s Einträge aus der Gruppe %s mit dem Status %s wurden gelöscht."),"<b>".$ac."</b>","<b>".$GRP[0]['name']."</b>","<b>".$STATUS['adr']['status'][$search['status']]."</b>");
 }
 
+if ($set=="check") {
+	$ADDRESS->markRecheck(0,1,$search);
+	if ($status==0) $_MAIN_MESSAGE.="<br>".sprintf(___("%s Einträge aus der Gruppe %s wurden zur Prüfung vorgemerkt."),"<b>".$ac."</b>","<b>".$GRP[0]['name']."</b>");
+	if ($status>0) $_MAIN_MESSAGE.="<br>".sprintf(___("%s Einträge aus der Gruppe %s mit dem Status %s wurden zur Prüfung vorgemerkt."),"<b>".$ac."</b>","<b>".$GRP[0]['name']."</b>","<b>".$STATUS['adr']['status'][$search['status']]."</b>");
+}
 
 
 //uebersicht anzeigen!
-	//adr_grp_id
-	$_MAIN_OUTPUT.="<br><b>".___("Übersicht").":</b><br><br>";
+$_MAIN_OUTPUT.="<div class=\"adr_summary\">";#ccdddd
+$_MAIN_OUTPUT.=tm_icon("information.png",___("Übersicht"),___("Übersicht"))."&nbsp;<b>".___("Übersicht").":</b>";
+$entrys_all=$ADDRESS->countADR();//anzahl eintraege, alles
+$_MAIN_OUTPUT.="<br>".sprintf(___("%s Adressen Gesamt"),"<b>".$entrys_all."</b>");
+//recheck
+$search_recheck=Array();
+$search_recheck['recheck']=1;
+$entrys_recheck=$ADDRESS->countADR(0,$search_recheck);//anzahl eintraege die zur pruefung markiert sind
+if ($entrys_recheck>0) $_MAIN_OUTPUT.="<br>".sprintf(___("%s Adressen sind zur Prüfung vorgemerkt"),"<b>".$entrys_recheck."</b>");
+//inaktiv
+$search_inaktiv=Array();
+$search_inaktiv['aktiv']='0';
+$entrys_inaktiv=$ADDRESS->countADR(0,$search_inaktiv);//anzahl eintraege die zur pruefung markiert sind
+if ($entrys_inaktiv>0) $_MAIN_OUTPUT.="<br>".sprintf(___("%s Adressen sind deaktiviert"),"<b>".$entrys_inaktiv."</b>");
+$_MAIN_OUTPUT.="<br><br></div><br>";
 	$AG=$ADDRESS->getGroup();
 	$agc=count($AG);
 	for ($agcc=0;$agcc<$agc;$agcc++) {
@@ -172,6 +193,19 @@ if ($set=="delete") {// && $status!="delete_all"
 		$_MAIN_OUTPUT.=sprintf(___("%s Adressen"),"<b>".$ac."</b>");
 		$_MAIN_OUTPUT.= "<a href=\"".$tm_URL."/".$showGroupUrlPara_."\" title=\"".___("Adressen anzeigen")."\">".tm_icon("eye.png",___("Adressen anzeigen"))."</a>";
 		$_MAIN_OUTPUT.="<div id=\"g_".$AG[$agcc]['id']."\" style=\"border:1px dashed #eeeeee; -moz-border-radius:2em 2em 2em 2em; padding:8px;\">";
+		$search_recheck_group=Array();
+		$search_recheck_group['recheck']=1;
+		$entrys_recheck_group=$ADDRESS->countADR($AG[$agcc]['id'],$search_recheck_group);//anzahl eintraege die zur pruefung markiert sind
+		if ($entrys_recheck_group>0) { 
+			$_MAIN_OUTPUT.="<div class=\"adr_summary\">";#ccdddd
+			$_MAIN_OUTPUT.="".sprintf(___("%s Adressen sind zur Prüfung vorgemerkt"),"<b>".$entrys_recheck_group."</b>");
+			$_MAIN_OUTPUT.="</div>";
+		}
+	//inaktiv
+	$search_inaktiv_group=Array();
+	$search_inaktiv_group['aktiv']='0';
+	$entrys_inaktiv_group=$ADDRESS->countADR($AG[$agcc]['id'],$search_inaktiv_group);//anzahl eintraege die zur pruefung markiert sind
+	if ($entrys_inaktiv_group>0) $_MAIN_OUTPUT.="<br>".sprintf(___("%s Adressen sind deaktiviert"),"<b>".$entrys_inaktiv_group."</b>");
 		//per adr status:
 		$asc=count($STATUS['adr']['status']);
 		for ($ascc=1; $ascc<=$asc; $ascc++) {
@@ -181,12 +215,11 @@ if ($set=="delete") {// && $status!="delete_all"
 			$search['status']=$ascc;
 			$ac=$ADDRESS->countADR($AG[$agcc]['id'],$search);
 			if ($ac>0) {
-				$_MAIN_OUTPUT.="<b>".$ac."</b>".
+				$_MAIN_OUTPUT.="<br><b>".$ac."</b>".
 								"&nbsp;".tm_icon($STATUS['adr']['statimg'][$ascc],$STATUS['adr']['status'][$ascc]).
 								"&nbsp;".$STATUS['adr']['status'][$ascc].
 								"&nbsp;(".$STATUS['adr']['descr'][$ascc].")";
 				$_MAIN_OUTPUT.= "<a href=\"".$tm_URL."/".$showGroupStatusUrlPara_."\" title=\"".___("Adressen anzeigen")."\">".tm_icon("eye.png",___("Adressen anzeigen"))."</a>";
-				$_MAIN_OUTPUT.= "<br>";
 			}
 		}
 		$_MAIN_OUTPUT.="</div>";
