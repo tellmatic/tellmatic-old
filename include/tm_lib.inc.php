@@ -272,6 +272,8 @@ if (!$tm_config) {
 /***********************************************************/
 
 	require_once ($tm_includepath."/Classes.inc.php");
+	#require_once ($tm_includepath."/phphtmlparser/html2text.inc");
+	//wird bisher nur beim versenden in send_it.php benoetigt, und deshalb auch nur dort eingebunden!
 
 /***********************************************************/
 //config aus db holen
@@ -331,7 +333,7 @@ if (!$tm_config) {
 //Tellmatic Name
 /***********************************************************/
 	$ApplicationName="tellmatic";
-	$ApplicationVersion="1.0.7 Tellmatic";
+	$ApplicationVersion="1.0.7.1 Tellmatic";
 	$ApplicationDescr=___("Die Newsletter Maschine");
 	$ApplicationUrl="www.tellmatic.org";
 	$ApplicationText=$ApplicationName." v".$ApplicationVersion." - ".$ApplicationDescr." (".$ApplicationUrl.")";

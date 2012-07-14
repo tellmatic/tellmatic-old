@@ -51,10 +51,10 @@ if ($mc>0) {
 		$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Mail]['html'];
 		$_MAIN_OUTPUT.= $Mail[$mcc]['no'].".";
 		if ($Mail[$mcc]['to']==$ReturnPath) {
-			$_MAIN_OUTPUT.= "<img src=\"".$tm_iconURL."/status_offline.png\" border=\"0\" title=\"".___("Return Mail")."\">";
+			$_MAIN_OUTPUT.=  tm_icon("status_offline.png",___("Return Mail"));
 		}
 		if ($Mail[$mcc]['is_bouncemail']==1) {
-			$_MAIN_OUTPUT.= "<img src=\"".$tm_iconURL."/sport_soccer.png\" border=\"0\" title=\"".___("Bounce Mail erkannt")."\">";
+			$_MAIN_OUTPUT.=  tm_icon("sport_soccer.png",___("Bounce Mail erkannt"));
 		}
 		$_MAIN_OUTPUT.= "<div id=\"tt_bouncemail_list_".$mcc."\" class=\"tooltip\">";
 		$_MAIN_OUTPUT.= "NR  <b>".$Mail[$mcc]['no']."</b>";
@@ -68,18 +68,33 @@ if ($mc>0) {
 
 		$_MAIN_OUTPUT.= "<td valign=\"top\">";
 		$_MAIN_OUTPUT.= "<div>";
-		$_MAIN_OUTPUT.= "<a href=\"javascript:switchSection('tt_bouncemail_text_".$mcc."')\" title=\"".___("Text und Details anzeigen")."\"><img src=\"".$tm_iconURL."/page.png\" border=\"0\"></a>";
+		$_MAIN_OUTPUT.= "<a href=\"javascript:switchSection('tt_bouncemail_head_".$mcc."')\" title=\"".___("Text und Details anzeigen")."\">".tm_icon("page_white.png",___("Text und Details anzeigen"))."</a>";
+		$_MAIN_OUTPUT.= "&nbsp;";
+		$_MAIN_OUTPUT.= "<a href=\"javascript:switchSection('tt_bouncemail_text_".$mcc."')\" title=\"".___("E-Mail Header")."\">".tm_icon("page.png",___("E-Mail Header"))."</a>";
 		$_MAIN_OUTPUT.= "<font size=-1>";
 		$_MAIN_OUTPUT.= "".$Mail[$mcc]['subject']."";
 		$_MAIN_OUTPUT.= "</font>";
 		$_MAIN_OUTPUT.= "</div>";
 
+		//div fuer mailheader
+		$_MAIN_OUTPUT.= "<div id=\"tt_bouncemail_head_".$mcc."\">";
+		$_MAIN_OUTPUT.= "<br><b>".___("E-Mail-Header").":</b>";
+		#$_MAIN_OUTPUT.= "<br><br><font size=-2>".str_replace("\n","<br>",clear_text(substr(str_replace("<br>","\n",$Mail[$mcc]['header']),0,1024)))." ...............etc.</font>";
+		$_MAIN_OUTPUT.= "<br><font size=-2>".str_replace("\n","<br>",clear_text(str_replace("<br>","\n",display($Mail[$mcc]['header']))))."</font>";
+		$_MAIN_OUTPUT.= "</div>";
+
+		$_MAIN_OUTPUT.= "<script type=\"text/javascript\">switchSection('tt_bouncemail_head_".$mcc."');</script>";
+
+
+
 		//div fuer mailtext
 		$_MAIN_OUTPUT.= "<div id=\"tt_bouncemail_text_".$mcc."\">";
+		$_MAIN_OUTPUT.= "<br><b>".___("E-Mail-Body").":</b>";
 		$_MAIN_OUTPUT.= "<br>".$Mail[$mcc]['date']."";
 		$_MAIN_OUTPUT.= "<br>Von: ".$Mail[$mcc]['from']."";
 		$_MAIN_OUTPUT.= "<br>An: ".$Mail[$mcc]['to']."";
-		$_MAIN_OUTPUT.= "<br><br><font size=-2>".str_replace("\n","<br>",clear_text(substr(str_replace("<br>","\n",$Mail[$mcc]['body']),0,1024)))."...............</font>";
+		#$_MAIN_OUTPUT.= "<br><br><font size=-2>".str_replace("\n","<br>",clear_text(substr(str_replace("<br>","\n",$Mail[$mcc]['body']),0,1024)))."...............</font>";
+		$_MAIN_OUTPUT.= "<br><font size=-2><em>".str_replace("\n","<br>",display(substr(str_replace("<br>","\n",$Mail[$mcc]['body']),0,1024)))."</em>     ...etc</font>";
 		$_MAIN_OUTPUT.= "</div>";
 
 		$_MAIN_OUTPUT.= "<script type=\"text/javascript\">switchSection('tt_bouncemail_text_".$mcc."');</script>";
@@ -89,7 +104,7 @@ if ($mc>0) {
 		//wenn bounces .....
 		if (count($Mail[$mcc]['bounce'])) {
 			$_MAIN_OUTPUT.= "<div>";
-			$_MAIN_OUTPUT.= "<a href=\"javascript:switchSection('tt_bouncemail_adr_".$mcc."')\" title=\"".___("Adressen anzeigen")."\"><img src=\"".$tm_iconURL."/user_orange.png\" border=\"0\"></a>";
+			$_MAIN_OUTPUT.= "<a href=\"javascript:switchSection('tt_bouncemail_adr_".$mcc."')\" title=\"".___("Adressen anzeigen")."\">".tm_icon("user_orange.png",___("Adressen anzeigen"))."</a>";
 			$_MAIN_OUTPUT.= "</div>";
 			//div fuer adressen
 			$_MAIN_OUTPUT.= "<div id=\"tt_bouncemail_adr_".$mcc."\">";

@@ -89,6 +89,7 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 		$NL_Imagename1="nl_".date_convert_to_string($NL[0]['created'])."_1.jpg";
 		//attachement
 		$NL_Attachfile1=$tm_nlattachpath."/a".date_convert_to_string($NL[0]['created'])."_1.".$NL[0]['attm'];
+
 		//online:
 		$NL_Filename_P="nl_".date_convert_to_string($NL[0]['created'])."_p.html";
 		$NLONLINE_URL=$tm_URL_FE."/".$tm_nldir."/".$NL_Filename_P;
@@ -147,11 +148,22 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 		$email_obj->smtp_workstation="";
 		$email_obj->smtp_password=$SMTPPasswd;
 		$email_obj->smtp_pop3_auth_host="";
+		//important! max 1 rcpt to before waiting for ok, tarpiting!
+		$email_obj->maximum_piped_recipients=1;//sends only XX rcpt to before waiting for ok from server!
+		
 		if ($SMTPPopB4SMTP==1)
 		{
 			$email_obj->smtp_pop3_auth_host=$SMTPHost;
 		}
-		$email_obj->smtp_debug=0;
+		//debug
+		if (DEBUG) {
+			$email_obj->smtp_debug=1;
+			$email_obj->$smtp_html_debug=1;
+		} else {
+			$email_obj->smtp_debug=0;
+			$email_obj->$smtp_html_debug=0;
+		}
+
 		$email_obj->SetBulkMail=1;
 		$email_obj->smtp_html_debug=0;
 		$email_obj->mailer=$ApplicationText;
@@ -202,11 +214,14 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 		if ($massmail) {
 			//to fuer massenmailing
 			send_log(  "\n prepare Massmail");
+			//argh, this class forces us to add a to header which is definitely not needed if we have bcc or cc!!!
 			$To=$From;
 			$ToName="Newsletter";
 
-			send_log(  "\n   set To: Header $ToName ($To)");
-			$email_obj->SetEncodedEmailHeader("To",$To,$ToName);
+			#send_log(  "\n   set To: Header $ToName ($To)");
+			send_log(  "\n   TO: NOT SET, USING BCC");
+			//dont add to: header in massmails, only use bcc! but:
+			#$email_obj->SetEncodedEmailHeader("To",$To,$ToName);
 
 			send_log(  "\n prepare Template Vars for Massmail");
 			$BLINDIMAGE_URL=$tm_URL_FE."/news_blank.png.php?nl_id=".$Q[$qcc]['nl_id'];
@@ -260,7 +275,10 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 			$_Tpl_NL->setParseValue("F9","");
 			send_log(  "\n   render Template");
 			//Template rendern und body zusammenbauen
+			//render template. this will load the saved newsletter template and render it. this is useful if you edit your template with a texteditor and update via ftp etc 
 			$NLBODY=$_Tpl_NL->renderTemplate($NL_Filename_N);//$_Tpl_NL->renderTemplate($NL_Filename_N)//html
+			//alternative method: use data saved in db:
+			#$NLBODY=$_Tpl_NL->renderContent($NL[0]['body']);
 			$NLBODY_TEXT=$NEWSLETTER->convertNL2Text($NLBODY,$NL[0]['content_type']);
 		}//massmail
 
@@ -278,6 +296,7 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 			//schleife... max mails bcc
 			$bc=$hcc+$max_mails_bcc;
 			$BCC="";
+			$BCC_Arr=Array();
 			for ($bcc=$hcc;$bcc<$bc;$bcc++) {
 				if (isset($H[$bcc]['id'])) {
 						send_log(  "\n   $bcc : ");
@@ -452,6 +471,7 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 								if ($massmail) {
 									send_log(  " Massmailing, add BCC: ");
 									$BCC.=$ADR[0]['email'];
+									$BCC_Arr[$ADR[0]['email']]=$ADR[0]['email'];//create array required by message class.... grml
 									if ($bcc<($bc-1) && isset($H[($bcc+1)]['adr_id'])) {
 										$BCC.=",";
 									}
@@ -479,7 +499,9 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 
 				if ($massmail) {
 					send_log(  "\n\n BCC=".$BCC."\n\n");
-					$email_message->SetHeader("Bcc",$BCC);
+					##$email_message->SetEncodedEmailHeader("Bcc",$BCC,"");
+					#$email_message->SetHeader("Bcc",$BCC);
+					$email_message->SetMultipleEncodedEmailHeader('BCC', $BCC_Arr);
 					$email_message->SetHeader("Precedence","bulk");
 					$email_message->SetBulkMail(1);
 				}

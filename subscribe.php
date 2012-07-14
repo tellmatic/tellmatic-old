@@ -12,7 +12,6 @@
 /* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
 /********************************************************************************/
 
-
 //config einbinden
 include ("./include/tm_config.inc.php");
 
@@ -61,8 +60,10 @@ if ($doptin==1 && !empty($c) && !empty($email)) { // && checkEmailAdr($email,$EM
 				//template laden, vielen dank etc, Form_R.html R wie rechecked
 				//evtl mail an empfaenger, vielen dank etc... blabla
 			}//empty frm_id
+			#$MESSAGE.="Die Registrierung war erfolgreich.";
 			$MESSAGE.="OK";
 		} else {
+			#$OUTPUT.="Adresse wurde nicht  gefunden.";
 			$OUTPUT.="ERR 2";
 		}
 
@@ -71,7 +72,9 @@ if ($doptin==1 && !empty($c) && !empty($email)) { // && checkEmailAdr($email,$EM
 			$_Tpl_FRM->setTemplatePath($tm_tplpath);//set path for new template Form_0_os.html!
 		}
 	} else {
+		#$MESSAGE.="Sie haben eine ungültige E-Mail-Adresse eingegeben.";
 		$MESSAGE.="ERR 1";
+		#$MESSAGE.=$FRM[0]['email_errmsg'];
 	}//checkemail
 
 	$Form_Filename_OS="/Form_".$frm_id."_os.html";//meldung wenn subscribed
@@ -315,6 +318,7 @@ if ($frm_id>0 && $doptin!=1) {
 				//nein, wir zaehlen immer.... aber nur bei neuen, nicht bei update!
 					$FORMULAR->addSub($frm_id,$newADRID);
 				}
+				//$MESSAGE.="<br>Vielen Dank! Sie erhalten nun unseren Newsletter.";
 			}//check
 		}
 
@@ -412,6 +416,7 @@ if ($frm_id>0 && $doptin!=1) {
 		$OUTPUT.="na";
 	}//aktiv==1
 } else {
+	//$OUTPUT.="?";
 }//frm_id>0
 
 //anzeige

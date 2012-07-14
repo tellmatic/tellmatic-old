@@ -145,6 +145,37 @@ function getCSSDirectories($path) {
 	return $Return;
 }
 
+
+//removes empty indexes from array, needed sometime...
+//http://www.php.net/manual/en/function.array-splice.php
+function array_remove_empty($inarray) {
+      if (is_array($inarray)) {
+          foreach($inarray as $k=>$v) {
+              if (!(empty($v))) {
+                  $out[$k]=$v;
+              }
+          }
+          return $out;
+      } else {
+          return $inarray;
+      }
+}
+
+//unset array index and rehash the array! php has no native function for this, argh.
+//http://www.php.net/manual/en/function.array-splice.php
+//wwird function only accepts integer indexes....hmmmm
+function array_unset($array,$index) {
+  // unset $array[$index], shifting others values
+  $res=array();
+  $i=0;
+  foreach ($array as $item) {
+    if ($i!=$index)
+      $res[]=$item;
+    $i++;
+  }
+  return $res;
+}
+
 //calculate x,y coordinates from londitude $lon and latitude $lat depending on image size $width and $height
 function getlocationcoords($lat, $lon, $width, $height)
 {
@@ -869,7 +900,14 @@ function validate_email($email) {
 		$host=$mxhosts[0];
 		$Connect = fsockopen ( $host, 25 );
 		if ($Connect) {
+	        //aol hack
+	        /*
+	        do {
+					 $Out = fgets ( $Connect, 1024 );
+				} while (ereg("^220",$Out));
+	        */
 	        if (ereg("^220", $Out = fgets($Connect, 1024))) {
+	        //aol: if (ereg("^220", $Out)) {
 	           fputs ($Connect, "HELO ".$SMTPDomain."\r\n");
 	           $Out = fgets ( $Connect, 1024 );
 	           fputs ($Connect, "MAIL FROM: <{$email}>\r\n");

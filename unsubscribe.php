@@ -50,6 +50,9 @@ if ($check_mail[0] && $set=="unsubscribe") {
 	if (count($ADR)>0) {
 		//noch nicht abgemeldet?
 		if ($ADR[0]['status']!=11) {
+			/*
+			if ($ADR[0]['code']==$code) {
+			*/
 				//im author speichern wir den namen des newsletter etc.
 				$author="unsubscribed";
 				$NEWSLETTER=new tm_NL();
@@ -98,6 +101,12 @@ if ($check_mail[0] && $set=="unsubscribe") {
 					//sonstiger fehler
 					$FMESSAGE.= $MSG['unsubscribe']['error'];
 				}
+			/*
+			} else {//code=code
+				//code ungueltig
+				$FMESSAGE.= $MSG['unsubscribe']['error'];
+			}
+			*/
 		} else {//status!=11
 			//bereits abgemeldet
 			$FMESSAGE.= $MSG['unsubscribe']['already_unsubscribed'];

@@ -87,19 +87,19 @@ Class tm_Mail {
 			//alternative statt headerinfo etcie x header aus nach dnen wir ja auch unbedingt suchen wollen:
 			//enthaelt den kompletten header
 			$Mail[$cc]['header'] = imap_fetchheader($this->mbox, $i+1);
-			$to=$header->to[0]->mailbox."@".$header->to[0]->host;
+			$to = (isset($header->to) && isset($header->to[0]->mailbox) && isset($header->to[0]->host)) ? $header->to[0]->mailbox."@".$header->to[0]->host : "k.a.";//: '".display($header->to[0]->mailbox."@".$header->to[0]->host)."'";
 			$from=$header->from[0]->mailbox."@".$header->from[0]->host;
 
 			//wenn kein filter oder filter matched, TO
 			if (!isset($search['to']) || $search['to']==$to) {
-				$Mail[$cc]['to_box'] =  $header->to[0]->mailbox;
-				$Mail[$cc]['to_host'] =  $header->to[0]->host;
+				$Mail[$cc]['to_box'] = (isset($header->to[0]->mailbox)) ? $header->to[0]->mailbox : "k.a.";
+				$Mail[$cc]['to_host'] = (isset($header->to[0]->host)) ? $header->to[0]->host : "k.a.";
 				$Mail[$cc]['from_box'] =  $header->from[0]->mailbox;
 				$Mail[$cc]['from_host'] =  $header->from[0]->host;
 				$Mail[$cc]['to'] = $to;
 				$Mail[$cc]['from'] = $from;
-				$Mail[$cc]['subject'] =  $header->fetchsubject;
-				$Mail[$cc]['date'] = $header->Date;
+				$Mail[$cc]['subject'] = (isset($header->fetchsubject)) ? $header->fetchsubject : "no Subject";
+				$Mail[$cc]['date'] = (isset($header->Date)) ? $header->Date : "no Date";
 				#$Mail[$cc]['id'] = $header->message_id;
 				$Mail[$cc]['no'] = utrim($header->Msgno);
 				$Mail[$cc]['size'] = $header->Size;

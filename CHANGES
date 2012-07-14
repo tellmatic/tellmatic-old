@@ -10,6 +10,12 @@
 /* check Homepage for Updates and more Infos                                    */
 /* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
 /********************************************************************************/
+*+*+*+*+*+*+*+*+*+*+*+ CHANGES V1.0.7.1  +*+*+*+*+*+*+*+*+*+*+*+*
+	01.12.2007
+	- small fixes
+	- removed the sideeffect that sends a copy of each message to admin when bcc is used.
+	- setting rcptto: limit for smtp to 1 before waiting for OK. Removes problems when tarpiting is used on the Mailserver.
+	
 *+*+*+*+*+*+*+*+*+*+*+ CHANGES V1.0.7  +*+*+*+*+*+*+*+*+*+*+*+*
 	16.11.2007
 	In short: 

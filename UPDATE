@@ -12,7 +12,17 @@
 /********************************************************************************/
 
 UPDATE
-*+*+*+*+*+*+*+*+*+*+*+ 1.0.7
+*+*+*+*+*+*+*+*+*+*+*+ 1.0.7.1
+--en
+	copy newer files and don't forget to set path in send_it.php after updating if you plan to use cronjobs!
+	To update earlier Versions than 1.0.7 please follow instructions for update to 1.0.7
+	
+--de
+	Kopieren Sie die neuen Dateien auf Ihren Server. Vergessen Sie nihct den Pfad in send_it.php anzupassen wenn Cronjobs genutzt werden sollen-
+	Zum Update auf 1.0.7.1 von einer frueheren Verison als 1.0.7 befolgen Sie bitte die Anweisungen fuer 1.0.7
+
+UPDATE
+*+*+*+*+*+*+*+*+*+*+*+ 1.0.7 
 --en
 A new installation is recommended.
 

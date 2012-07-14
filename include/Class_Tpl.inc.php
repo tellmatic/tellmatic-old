@@ -43,16 +43,23 @@ class tm_Template{
           $output.="Error: Die Datei ".$this->file." existiert nicht!";
       } else {
 	      $handle = fopen ($this->file, 'r');
-	   	   while (!feof($handle)){
-	  	        $buffer = fgets($handle, 4096);
-	  	        $output .= $buffer;
-	  	    }
-	  	    foreach($this->replace_str as $val){
-	  	        $output = str_replace('{'.$this->replace_str[$val].'}', $this->value[$val], $output);
-	  	    }
-	  	    fclose ($handle);
+   	   while (!feof($handle)){
+  	        $buffer = fgets($handle, 4096);
+  	        $output .= $buffer;
+  	    }
+  	    $output=$this->renderContent($output);
+  	    fclose ($handle);
   	   }
     return $output;
+  }
+  
+  # Text rendern
+  function renderContent($content){
+  	    foreach($this->replace_str as $val){
+  	        $content = str_replace('{'.$this->replace_str[$val].'}', $this->value[$val], $content);
+			//echo '{'.$this->replace_str[$val].'} = '.$this->value[$val]."<br>";
+  	    }
+	return $content;
   }
 }
 

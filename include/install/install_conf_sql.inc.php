@@ -56,8 +56,7 @@ CREATE TABLE ".$tm_tablePrefix."adr (
   KEY code (code),
   KEY adr_siteid_status (siteid,`status`),
   KEY adr_siteid_email (siteid,email),
-  KEY adr_siteid_id (id,siteid),
-  FULLTEXT KEY email_2 (email)
+  KEY adr_siteid_id (id,siteid)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 ";
 

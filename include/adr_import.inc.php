@@ -156,40 +156,40 @@ if ($set=="import") {
 
 	if ($check && $delete!=1) {
 		$IMPORT_MESSAGE.="<br>".___("Status für neue Adressen: ");
-		$IMPORT_MESSAGE.= "<img src=\"".$tm_iconURL."/".$STATUS['adr']['statimg'][$status_new]."\" border=\"0\"   title=\"".$STATUS['adr']['descr'][$status_new]."\" alt=\"".$STATUS['adr']['descr'][$status_new]."\">";
+		$IMPORT_MESSAGE.=tm_icon($STATUS['adr']['statimg'][$status_new],$STATUS['adr']['descr'][$status_new]);
 		$IMPORT_MESSAGE.= "  ".$STATUS['adr']['status'][$status_new]."  (".$STATUS['adr']['descr'][$status_new].")";
 
 		$IMPORT_MESSAGE.="<br>".___("Status für bestehende Adressen: ");
 		if ($status_ex>0) {
-			$IMPORT_MESSAGE.= "<img src=\"".$tm_iconURL."/".$STATUS['adr']['statimg'][$status_ex]."\" border=\"0\"   title=\"".$STATUS['adr']['descr'][$status_ex]."\" alt=\"".$STATUS['adr']['descr'][$status_ex]."\">";
+		$IMPORT_MESSAGE.=tm_icon($STATUS['adr']['statimg'][$status_ex],$STATUS['adr']['descr'][$status_ex]);
 			$IMPORT_MESSAGE.= "  ".$STATUS['adr']['status'][$status_ex]."  (".$STATUS['adr']['descr'][$status_ex].")";
 		} else {
 			$IMPORT_MESSAGE.= " ".___("Keine Änderung");
 		}
 
 		if ($check_double==1) {
-			$IMPORT_MESSAGE.= "<br><img src=\"".$tm_iconURL."/key_go.png\" border=\"0\">";
+			$IMPORT_MESSAGE.="<br>".tm_icon("key_go.png",___("Adressen werden auf Eindeutigkeit geprüft."));
 			$IMPORT_MESSAGE.= "&nbsp;".___("Adressen werden auf Eindeutigkeit geprüft.");
 		} else {
-			$IMPORT_MESSAGE.= "<br><img src=\"".$tm_iconURL."/key_delete.png\" border=\"0\">";
+			$IMPORT_MESSAGE.="<br>".tm_icon("key_delete.png",___("Adressen werden nicht auf Eindeutigkeit geprüft."));
 			$IMPORT_MESSAGE.= "&nbsp;".___("Adressen werden nicht auf Eindeutigkeit geprüft.");
 		}
 
 
 		if ($aktiv_new==1) {
-			$IMPORT_MESSAGE.= "<br><img src=\"".$tm_iconURL."/tick.png\" border=\"0\">";
+			$IMPORT_MESSAGE.="<br>".tm_icon("tick.png",___("Aktiv"));
 			$IMPORT_MESSAGE.= "&nbsp;".___("Neue Adressen sind aktiv.");
 		} else {
-			$IMPORT_MESSAGE.= "<br><img src=\"".$tm_iconURL."/cancel.png\" border=\"0\">";
+			$IMPORT_MESSAGE.="<br>".tm_icon("cancel.png",___("Inaktiv"));
 			$IMPORT_MESSAGE.= "&nbsp;".___("Neue Adressen sind inaktiv.");
 		}
 
 		if ($aktiv_existing==1) {
-			$IMPORT_MESSAGE.= "<br><img src=\"".$tm_iconURL."/tick.png\" border=\"0\">";
+			$IMPORT_MESSAGE.="<br>".tm_icon("tick.png",___("Aktiv"));
 			$IMPORT_MESSAGE.= "&nbsp;".___("Bestehende Adressen werden aktiviert.");
 		}
 		if ($aktiv_existing==0) {
-			$IMPORT_MESSAGE.= "<br><img src=\"".$tm_iconURL."/cancel.png\" border=\"0\">";
+			$IMPORT_MESSAGE.="<br>".tm_icon("cancel.png",___("Inaktiv"));
 			$IMPORT_MESSAGE.= "&nbsp;".___("Bestehende Adressen werden de-aktiviert.");
 		}
 
