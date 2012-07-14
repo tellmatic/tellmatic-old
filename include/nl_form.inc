@@ -4,8 +4,8 @@
 /* tellmatic, the newslettermachine                                             */
 /* tellmatic, die Newslettermaschine                                            */
 /* 2006/7 by Volker Augustin, multi.art.studio Hanau                            */
-/* Contact/Kontakt: mnl@multiartstudio.com                                      */
-/* Homepage: www.tellmatic.de                                                   */
+/* Contact/Kontakt: info@tellmatic.org                                      */
+/* Homepage: www.tellmatic.org                                                   */
 /* leave this header in file!                                                   */
 /* diesen Header nicht loeschen!                                                */
 /* check Homepage for Updates and more Infos                                    */
@@ -23,6 +23,7 @@ $Form->new_Form($FormularName,$_SERVER["PHP_SELF"],"post","_self");
 //$this->set_FormStyle($FormularName,"font-size:10pt;font-color=red;");
 ////$Form->set_FormStyleClass($FormularName,"mForm");
 ////$Form->set_FormInputStyleClass($FormularName,"mFormText","mFormTextFocus");
+$Form->set_FormJS($FormularName," onSubmit=\"switchSection('div_loader');\" ");
 //add a Description
 $Form->set_FormDesc($FormularName,___("Neue Newslettergruppe erstellen"));
 $Form->set_FormType($FormularName,"multipart/form-data");
@@ -232,7 +233,10 @@ $_MAIN_OUTPUT.= "</tr>";
 
 $_MAIN_OUTPUT.= "<tr>";
 $_MAIN_OUTPUT.= "<td valign=top colspan=2>";
-$_MAIN_OUTPUT.= ___("Text")."<br>";
+$_MAIN_OUTPUT.= ___("Text")."&nbsp;&nbsp;&nbsp;";
+$_MAIN_OUTPUT.= "(<a href=\"javascript:toggleEditor('".$InputName_Descr."')\">";
+$_MAIN_OUTPUT.= ___("Editor Ein/Aus");
+$_MAIN_OUTPUT.= "&nbsp;<img src=\"".$mnl_iconURL."/wand.png\" border=\"0\" title=\"".___("Editor Ein/Aus")."\" alt=\"".___("Editor Ein/Aus")."\"></a>)<br>";
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Descr]['html'];
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "</tr>";

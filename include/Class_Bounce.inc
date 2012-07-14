@@ -4,8 +4,8 @@
 /* tellmatic, the newslettermachine                                             */
 /* tellmatic, die Newslettermaschine                                            */
 /* 2006/7 by Volker Augustin, multi.art.studio Hanau                            */
-/* Contact/Kontakt: mnl@multiartstudio.com                                      */
-/* Homepage: www.tellmatic.de                                                   */
+/* Contact/Kontakt: info@tellmatic.org                                      */
+/* Homepage: www.tellmatic.org                                                   */
 /* leave this header in file!                                                   */
 /* diesen Header nicht loeschen!                                                */
 /* check Homepage for Updates and more Infos                                    */
@@ -128,15 +128,14 @@ Class mBounce {
 			//und nach ; semikolon ;
 			//< und > wegmachen....
 			$line=str_replace("<","",$line);
-			$line=str_replace(">","",$line);
-			//trim
-			$line=utrim(clear_text($line));
+    		$line=str_replace(">","",$line);
+					
+    		//doppelpunkt auch filtern
+    		$line=str_replace(":","",$line);
+			$line=utrim($line);
 			//for each regex_body as $regex... etc
 			//wenn email syntax korrekt, also wenn es wirklich einen email ist in dieser zeile....
 			//checkemailadr($email,1)//1==nur syntax
-			//oder
-			//$regex="([-!#\$%&'*+./0-9=?A-Z^_`a-z{|}~])+@([-!#\$%&'*+/0-9=?A-Z^_`a-z{|}~]+\\.)+[a-zA-Z]{2,6}";
-			// ^^^^^^^^^ findet auch adresen innerhalb des textes!
 			if (checkemailadr($line,1)) {
     	       $Bounce[$bounce_count] = $line;
     	       $bounce_count++;

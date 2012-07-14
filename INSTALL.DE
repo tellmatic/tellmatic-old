@@ -3,8 +3,8 @@
 /* tellmatic, the newslettermachine                                             */
 /* tellmatic, die Newslettermaschine                                            */
 /* 2006/7 by Volker Augustin, multi.art.studio Hanau                            */
-/* Contact/Kontakt: mnl@multiartstudio.com                                      */
-/* Homepage: www.tellmatic.de                                                   */
+/* Contact/Kontakt: info@tellmatic.org                                      */
+/* Homepage: www.tellmatic.org                                                   */
 /* leave this header in file!                                                   */
 /* diesen Header nicht loeschen!                                                */
 /* check Homepage for Updates and more Infos                                    */
@@ -19,7 +19,7 @@ Update:
 
 Hinweise:
 
-	siehe FAQ http://www.tellmatic.de/?c=faq
+	siehe FAQ http://www.tellmatic.org/?c=faq
 
 Installation:
 
@@ -65,6 +65,6 @@ Installation:
 		*/1 * * * * /pfad/zu/php-cli-binary /pfad/zu/include/send_it.php
 	'index.php' aufrufen, Name und Passwort eingeben , Fertig, viel Spass!
 
-Bei Fragen und Anregungen besuchen Sie bitte die Homepage www.tellmatic.de oder schicken eine E-Mail. Dort gibt es auch einen Weblog und ein Forum :) Feedback ist jederzeit willkommen!
+Bei Fragen und Anregungen besuchen Sie bitte die Homepage www.tellmatic.org oder schicken eine E-Mail. Dort gibt es auch einen Weblog und ein Forum :) Feedback ist jederzeit willkommen!
 
 EOF

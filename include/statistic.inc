@@ -4,8 +4,8 @@
 /* tellmatic, the newslettermachine                                             */
 /* tellmatic, die Newslettermaschine                                            */
 /* 2006/7 by Volker Augustin, multi.art.studio Hanau                            */
-/* Contact/Kontakt: mnl@multiartstudio.com                                      */
-/* Homepage: www.tellmatic.de                                                   */
+/* Contact/Kontakt: info@tellmatic.org                                      */
+/* Homepage: www.tellmatic.org                                                   */
 /* leave this header in file!                                                   */
 /* diesen Header nicht loeschen!                                                */
 /* check Homepage for Updates and more Infos                                    */
@@ -283,7 +283,7 @@ if ($set=="adr") {
 //Statistik fuer Formulare
 /////////////////////////////////////
 if ($set=="form") {
-	$_MAIN_OUTPUT.="<a href=\"http://www.tellmatic.de/?c=donate\" target=\"_blank\">".___("Diese Funktion ist leider noch nicht implementiert. Bitte unterst&uuml;tzen Sie die Entwicklung von Tellmatic.")."</a>";
+	$_MAIN_OUTPUT.="<a href=\"http://www.tellmatic.org/?c=donate\" target=\"_blank\">".___("Diese Funktion ist leider noch nicht implementiert. Bitte unterst&uuml;tzen Sie die Entwicklung von Tellmatic.")."</a>";
 }
 
 $_MAIN_OUTPUT.= "<br><br><br><br>";

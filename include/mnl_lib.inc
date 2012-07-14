@@ -4,8 +4,8 @@
 /* tellmatic, the newslettermachine                                             */
 /* tellmatic, die Newslettermaschine                                            */
 /* 2006/7 by Volker Augustin, multi.art.studio Hanau                            */
-/* Contact/Kontakt: mnl@multiartstudio.com                                      */
-/* Homepage: www.tellmatic.de                                                   */
+/* Contact/Kontakt: info@tellmatic.org                                      */
+/* Homepage: www.tellmatic.org                                                   */
 /* leave this header in file!                                                   */
 /* diesen Header nicht loeschen!                                                */
 /* check Homepage for Updates and more Infos                                    */
@@ -18,6 +18,19 @@ if (!isset($mnl_config)) {
 
 if (!$mnl_config) {
 
+	//uncomment the next line if your php is running as cgi and http authentication does not work:
+	//list($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']) = explode(':' , base64_decode(substr($_SERVER['HTTP_AUTHORIZATION'], 6)));
+	/*
+	and  create a textfile named '.htaccess' in your tellmatic install-directory:
+	<IfModule mod_rewrite.c>
+	RewriteEngine on
+	RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization},L]
+	</IfModule>
+	*/
+	// !! mod_rewrite must be enabled !!
+	//not tested! source/from: http://www.besthostratings.com/articles/http-auth-php-cgi.html
+	
+		
 	//siteid //achtung, siteid aendern heisst komplett neuer datenstamm... es muessen auch user angelegt werden.... oehm... nicht aendern!!!
 	//$mnl_siteid="mnl";
 	define("MNL_SITEID","mnl");
@@ -39,6 +52,8 @@ if (!$mnl_config) {
 	if (PHP5) ini_set('zend.ze1_compatibility_mode', '1');
 
 
+	if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {  $php_windows=true; } else {  $php_windows=false; }
+	define("PHPWIN",$php_windows);
 	@ini_set("max_execution_time","300");
 	@ini_set("ignore_user_abort","1");
 
@@ -73,7 +88,7 @@ if (!$mnl_config) {
 
 	//filedir, filepath!
 	
-	//pfad
+	//pfade
 	$mnl_nlpath=$mnl_docroot."/".$mnl_dir."/".$mnl_nldir;
 	//pfad verzeichnis fuer gespeicherte newsletter-bilder unterhalb von $mnl_nldir:
 	$mnl_nlimgpath=$mnl_docroot."/".$mnl_dir."/".$mnl_nlimgdir;
@@ -84,9 +99,11 @@ if (!$mnl_config) {
 	$mnl_datapath=$mnl_docroot."/".$mnl_dir."/".$mnl_datadir;
 	//pfad f. logfiles
 	$mnl_logpath=$mnl_docroot."/".$mnl_dir."/".$mnl_logdir;
-	
+	//pfad zur docu
 	$mnl_docpath=$mnl_docroot."/".$mnl_dir."/".$mnl_docdir;
-	
+	//pfad zu bildern, interne
+	$mnl_imgpath=$mnl_docroot."/".$mnl_dir."/".$mnl_imgdir;
+	//URLs
 	$mnl_URL=$mnl_Domain."/".$mnl_dir;
 	$mnl_imgURL=$mnl_URL."/".$mnl_imgdir;
 	$mnl_iconURL=$mnl_URL."/".$mnl_icondir;
@@ -94,6 +111,8 @@ if (!$mnl_config) {
 	//includes
 	$mnl_path=$mnl_docroot."/".$mnl_dir;
 	$mnl_includepath=$mnl_path."/".$mnl_includedir;
+
+	//templates
 	$mnl_tplpath=$mnl_path."/".$mnl_tpldir;
 	 
 	$row_bgcolor="#ffffff";
@@ -136,22 +155,17 @@ if (!$mnl_config) {
 	//eigene errorhandler funktion
 	set_error_handler("userErrorHandler");
 	
+	//eigene gettext emulation:
+	define("DEFAULT_LOCALE", 'de');
+	require_once($mnl_includepath."/GetText.inc");
+	
+	
 	//funktionen
 	require_once ($mnl_includepath."/Functions.inc");
 	
 
-	// define constants for phpgettext
-	define("PROJECT_DIR", $mnl_path);
-	define("LOCALE_DIR", PROJECT_DIR .'/locale');
-	define("DEFAULT_LOCALE", 'unknown123');//should no exists
-	//phpgettext	
-	require_once ($mnl_includepath."/gettext/gettext.inc");
-	require_once($mnl_includepath."/gettext/streams.php");
-	require_once($mnl_includepath."/gettext/gettext.php");
-
-	//gettext!
-	$LANGUAGES=Array(	'lang' => Array('de','en','es','fr','it',),
-										'text' => Array('Deutsch','English','Espanol (not translated yet)','France (not translated yet)','Italiano (coming soon ;-)',),
+	$LANGUAGES=Array(	'lang' => Array('de','en','it',),
+										'text' => Array('Deutsch','English','Italiano',),
 									);
 	$supported_locales = $LANGUAGES['lang'];//array('en', 'de');
 
@@ -202,9 +216,9 @@ if (!$mnl_config) {
 	$EMAILCHECK['subscribe'][3]="Syntax, MX/DNS + Validate";
 
 	$ApplicationName="tellmatic";
-	$ApplicationVersion="1.0.4.1 Tellmatic";
+	$ApplicationVersion="1.0.5 Tellmatic";
 	$ApplicationDescr=___("Die Newsletter Maschine");
-	$ApplicationUrl="www.tellmatic.de";
+	$ApplicationUrl="www.tellmatic.org";
 	$ApplicationText=$ApplicationName." v".$ApplicationVersion." - ".$ApplicationDescr." (".$ApplicationUrl.")";
 	
 	//compress output

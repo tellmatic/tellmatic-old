@@ -98,7 +98,7 @@ if ($set=="connect") {
 		$mc=count($mailno);
 		if ($mc>0) {
 			include_once ($mnl_includepath."/bounce_filter_form_head.inc");//formularokpf und felder
-			//include_once ($mnl_includepath."/bounce_filter_list.inc");//liste der durchsuchten emails, ausgelagert und zusammengefasst in list!
+			#include_once ($mnl_includepath."/bounce_filter_list.inc");//liste der durchsuchten emails, ausgelagert und zusammengefasst in list!
 			include_once ($mnl_includepath."/bounce_filter_adr_list.inc");//liste der aressen mit checkboxen
 			include_once ($mnl_includepath."/bounce_filter_form.inc");//render formular! aktion waehlen etc
 		} else {

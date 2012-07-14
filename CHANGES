@@ -3,15 +3,32 @@
 /* tellmatic, the newslettermachine                                             */
 /* tellmatic, die Newslettermaschine                                            */
 /* 2006/7 by Volker Augustin, multi.art.studio Hanau                            */
-/* Contact/Kontakt: mnl@multiartstudio.com                                      */
-/* Homepage: www.tellmatic.de                                                   */
+/* Contact/Kontakt: info@tellmatic.org                                      */
+/* Homepage: www.tellmatic.org                                                   */
 /* leave this header in file!                                                   */
 /* diesen Header nicht loeschen!                                                */
 /* check Homepage for Updates and more Infos                                    */
 /* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
 /********************************************************************************/
 
-*+*+*+*+*+*+*+*+*+*+*+ CHANGES V1.0.4  +*+*+*+*+*+*+*+*+*+*+*+*
+*+*+*+*+*+*+*+*+*+*+*+ CHANGES V1.0.5  +*+*+*+*+*+*+*+*+*+*+*+*
+	21.05.2007 - some bugfixes and enhancements
+	changes in 1.0.4.2:
+		- Install:
+			- select language
+			- check DB Connection
+			- some more checks
+			- check if php runs as cgi, throw a warning!
+			- create example data
+		- trackingimage (blindimage), uses now img/mylogo.png or 4x7pixel blank png if not exists instead of 1x1 pixel webbug
+		- select top X in status
+		- new, much faster gettext emulation using plain text .po files!
+		- serverinfo now displays some more or less useful debug infos
+		- toggle wysiwyg on/off link
+		- tinymce - updated from 2.0.6.x to 2.1.0
+		- emailcheck , new, better regex
+
+*+*+*+*+*+*+*+*+*+*+*+ CHANGES V1.0.4.1  +*+*+*+*+*+*+*+*+*+*+*+*
 	30.03.2007 - a new bugfix-release....
 	bugs in 1.0.4, fixed for 1.0.4.1:
 		- send_it.php had a typo ... it used the wrong template for personal mailings. fixed!

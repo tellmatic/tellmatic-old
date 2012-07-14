@@ -4,8 +4,8 @@
 /* tellmatic, the newslettermachine                                             */
 /* tellmatic, die Newslettermaschine                                            */
 /* 2006/7 by Volker Augustin, multi.art.studio Hanau                            */
-/* Contact/Kontakt: mnl@multiartstudio.com                                      */
-/* Homepage: www.tellmatic.de                                                   */
+/* Contact/Kontakt: info@tellmatic.org                                      */
+/* Homepage: www.tellmatic.org                                                   */
 /* leave this header in file!                                                   */
 /* diesen Header nicht loeschen!                                                */
 /* check Homepage for Updates and more Infos                                    */
@@ -15,7 +15,10 @@
 /**functions**/
 
 function ___($s) {
-	return __($s);
+	//return $s;//disabled
+	//return _($s);//native gettext
+	//return __($s);//php_gettext emulation
+	return translate($s);//eigene gettext emulation!
 }
 
 function getMessages() {
@@ -667,10 +670,9 @@ function checkemailadr($email,$level=2) {
 	
 	if ($level>=1) {
 		//syntax
-		//$regex="([-!#\$%&'*+./0-9=?A-Z^_`a-z{|}~])+@([-!#\$%&'*+/0-9=?A-Z^_`a-z{|}~]+\\.)+[a-zA-Z]{2,6}";
-		// ^^^^^^^^^ findet auch adresen innerhalb des textes!
-		
-		$regex="^[0-9a-z]([-_.]?[0-9a-z])*@[0-9a-z]([-.]?[0-9a-z])*\\.[a-z]{2,4}$";
+		//$regex="^[0-9a-z]([-_.]?[0-9a-z])*@[0-9a-z]([-.]?[0-9a-z])*\\.[a-z]{2,4}$"; // hat probleme mit a.-b.cde@x-yz.td
+		//2007-05-03		: http://www.markussipila.info/pub/emailvalidator.php?action=validate
+		$regex="^[a-z0-9,!#\$%&'\*\+/=\?\^_`\{\|}~-]+(\.[a-z0-9,!#\$%&'\*\+/=\?\^_`\{\|}~-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*\.([a-z]{2,})$";
 		//if(ereg ("<($regex)>", $email, $email_V))
 		//if (eregi("^[0-9a-z]([-_.]?[0-9a-z])*@[0-9a-z]([-.]?[0-9a-z])*\\.[a-z]{2,4}$", $email, $check)) {  
 		if (eregi("$regex", $email, $check)) {  
@@ -857,4 +859,18 @@ function gen_rec_files_array ($path,$selected="",$recpath="",$extension="",$addc
 	}
 }
 
+if (PHPWIN && !function_exists('getmxrr')) {
+	//see: http://www.php.net/manual/de/function.getmxrr.php
+	function getmxrr($hostname, &$mxhosts)
+	{
+	    $mxhosts = array();
+	    exec('%SYSTEMDIRECTORY%\\nslookup.exe -q=mx '.escapeshellarg($hostname), $result_arr);
+	    foreach($result_arr as $line)
+	    {
+	      if (preg_match("/.*mail exchanger = (.*)/", $line, $matches))
+	          $mxhosts[] = $matches[1];
+	    }
+	    return( count($mxhosts) > 0 );
+	}
+}
 ?>

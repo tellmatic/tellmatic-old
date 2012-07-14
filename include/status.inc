@@ -4,8 +4,8 @@
 /* tellmatic, the newslettermachine                                             */
 /* tellmatic, die Newslettermaschine                                            */
 /* 2006/7 by Volker Augustin, multi.art.studio Hanau                            */
-/* Contact/Kontakt: mnl@multiartstudio.com                                      */
-/* Homepage: www.tellmatic.de                                                   */
+/* Contact/Kontakt: info@tellmatic.org                                      */
+/* Homepage: www.tellmatic.org                                                   */
 /* leave this header in file!                                                   */
 /* diesen Header nicht loeschen!                                                */
 /* check Homepage for Updates and more Infos                                    */
@@ -40,17 +40,23 @@ $showgrpURLPara->addParam("act","adr_grp_list");
 $showadrURLPara_=$showadrURLPara->getAllParams();
 $showgrpURLPara_=$showgrpURLPara->getAllParams();
 
+$InputName_TopX="topx";
+$show_top_x=getVar("topx");
+if (empty($show_top_x)) {
+	$show_top_x=5;
+}
+include_once ($mnl_includepath."/status_form.inc");
 
 
-
-$_MAIN_OUTPUT.="<br><center><b>".sprintf(___("TOP %s"),"5")."</b><br><table border=0 ><tr><td width=50% valign=top align=left>";
+$_MAIN_OUTPUT.="<center><h1>".sprintf(___("TOP %s"),$show_top_x)."</h1>";
+$_MAIN_OUTPUT.="<table border=0 ><tr><td width=50% valign=top align=left>";
 
 //NL Views
-$_MAIN_OUTPUT.="<b>".sprintf(___("TOP %s - Newsletter"),"5")."</b>";
-$_MAIN_OUTPUT.="<br><b>".___("Views")."</b>";
+$_MAIN_OUTPUT.="<h2>".sprintf(___("TOP %s - Newsletter"),$show_top_x)."</h2>";
+$_MAIN_OUTPUT.="<b>".___("Views")."</b>";
 $shownlURLPara->addParam("act","statistic");
 $shownlURLPara->addParam("set","nl");
-$NL=$NEWSLETTER->getNL(0,0,5,0,0,"views",1);
+$NL=$NEWSLETTER->getNL(0,0,$show_top_x,0,0,"views",1);
 $nc=count($NL);
 for ($ncc=0;$ncc<$nc;$ncc++) {
 	if (!empty($NL[$ncc]['views'])) {
@@ -62,7 +68,7 @@ for ($ncc=0;$ncc<$nc;$ncc++) {
 
 //NL - Clicks
 $_MAIN_OUTPUT.="<br><b>".___("Klicks")."</b>";
-$NL=$NEWSLETTER->getNL(0,0,5,0,0,"clicks",1);
+$NL=$NEWSLETTER->getNL(0,0,$show_top_x,0,0,"clicks",1);
 $nc=count($NL);
 for ($ncc=0;$ncc<$nc;$ncc++) {
 	if (!empty($NL[$ncc]['clicks'])) {
@@ -74,11 +80,11 @@ for ($ncc=0;$ncc<$nc;$ncc++) {
 
 //FORMS
 
-$_MAIN_OUTPUT.="<b>".sprintf(___("TOP %s - Formulare"),"5")."</b>";
-$_MAIN_OUTPUT.="<br><b>".___("Anmeldungen")."</b>";
+$_MAIN_OUTPUT.="<h2>".sprintf(___("TOP %s - Formulare"),$show_top_x)."</h2>";
+$_MAIN_OUTPUT.="<b>".___("Anmeldungen")."</b>";
 $showformURLPara->addParam("act","statistic");
 $showformURLPara->addParam("set","form");
-$FRM=$FORMULAR->getForm(0,0,5,0,"subscriptions",1);
+$FRM=$FORMULAR->getForm(0,0,$show_top_x,0,"subscriptions",1);
 $fc=count($FRM);
 for ($fcc=0;$fcc<$fc;$fcc++) {
 	if (!empty($FRM[$fcc]['subscriptions'])) {
@@ -92,9 +98,9 @@ for ($fcc=0;$fcc<$fc;$fcc++) {
 //LESER - Views
 $_MAIN_OUTPUT.="</td><td width=50% valign=top align=left>";
 
-$_MAIN_OUTPUT.="<b>".sprintf(___("TOP %s - Abonnenten"),"5")."</b>";
-$_MAIN_OUTPUT.="<br><b>".___("Views")."</b>";
-$ADR=$ADDRESS->getAdr(0,0,5,0,Array(),"views",1);
+$_MAIN_OUTPUT.="<h2>".sprintf(___("TOP %s - Abonnenten"),$show_top_x)."</h2>";
+$_MAIN_OUTPUT.="<b>".___("Views")."</b>";
+$ADR=$ADDRESS->getAdr(0,0,$show_top_x,0,Array(),"views",1);
 $ac=count($ADR);
 for ($acc=0;$acc<$ac;$acc++) {
 	if (!empty($ADR[$acc]['views'])) {
@@ -106,7 +112,7 @@ for ($acc=0;$acc<$ac;$acc++) {
 }
 //LESER - Clicks
 $_MAIN_OUTPUT.="<br><b>".___("Klicks")."</b>";
-$ADR=$ADDRESS->getAdr(0,0,5,0,Array(),"clicks",1);
+$ADR=$ADDRESS->getAdr(0,0,$show_top_x,0,Array(),"clicks",1);
 $ac=count($ADR);
 for ($acc=0;$acc<$ac;$acc++) {
 	if (!empty($ADR[$acc]['clicks'])) {
@@ -118,7 +124,7 @@ for ($acc=0;$acc<$ac;$acc++) {
 }
 //LESER - NL
 $_MAIN_OUTPUT.="<br><b>".___("Anz. empfangene NL")."</b>";
-$ADR=$ADDRESS->getAdr(0,0,5,0,Array(),"newsletter",1);
+$ADR=$ADDRESS->getAdr(0,0,$show_top_x,0,Array(),"newsletter",1);
 $ac=count($ADR);
 for ($acc=0;$acc<$ac;$acc++) {
 	if (!empty($ADR[$acc]['newsletter'])) {
@@ -129,16 +135,15 @@ for ($acc=0;$acc<$ac;$acc++) {
 	}
 }
 $_MAIN_OUTPUT.="</td></tr>".
-						"<tr><td colspan=2 align=center><font size=-1>(".sprintf(___("Die TOP %s Liste  z&auml;hlt auch doppelte Klicks und Views!"),"5").")</font></td></tr>".
+						"<tr><td colspan=2 align=center><font size=-1>(".sprintf(___("Die TOP %s Liste  z&auml;hlt auch doppelte Klicks und Views!"),$show_top_x).")</font></td></tr>".
 						"</table></center>";
 
 
 
 //Gesamt nach Status
 
-$_MAIN_OUTPUT.="<br><br>";
 
-$_MAIN_OUTPUT.="<br><center><b>".___("Gesamtstatus")."</b><br><table border=0><tr><td width=50% valign=top align=left>";
+$_MAIN_OUTPUT.="<br><center><h1>".___("Gesamtstatus")."</h1><br><table border=0><tr><td width=50% valign=top align=left>";
 
 //Newsletter:
 $NG=$NEWSLETTER->getGroup();

@@ -4,8 +4,8 @@
 /* tellmatic, the newslettermachine                                             */
 /* tellmatic, die Newslettermaschine                                            */
 /* 2006/7 by Volker Augustin, multi.art.studio Hanau                            */
-/* Contact/Kontakt: mnl@multiartstudio.com                                      */
-/* Homepage: www.tellmatic.de                                                   */
+/* Contact/Kontakt: info@tellmatic.org                                      */
+/* Homepage: www.tellmatic.org                                                   */
 /* leave this header in file!                                                   */
 /* diesen Header nicht loeschen!                                                */
 /* check Homepage for Updates and more Infos                                    */
@@ -24,6 +24,7 @@ $Form->new_Form($FormularName,$_SERVER["PHP_SELF"],"post","_self");
 //$this->set_FormStyle($FormularName,"font-size:10pt;font-color=red;");
 ////$Form->set_FormStyleClass($FormularName,"mForm");
 ////$Form->set_FormInputStyleClass($FormularName,"mFormText","mFormTextFocus");
+$Form->set_FormJS($FormularName," onSubmit=\"switchSection('div_loader');\" ");
 //add a Description
 $Form->set_FormDesc($FormularName,___("Adressdatenbank bereinigen"));
 //variable content aus menu als hidden field!

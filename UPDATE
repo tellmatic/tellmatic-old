@@ -3,8 +3,8 @@
 /* tellmatic, the newslettermachine                                             */
 /* tellmatic, die Newslettermaschine                                            */
 /* 2006/7 by Volker Augustin, multi.art.studio Hanau                            */
-/* Contact/Kontakt: mnl@multiartstudio.com                                      */
-/* Homepage: www.tellmatic.de                                                   */
+/* Contact/Kontakt: info@tellmatic.org                                      */
+/* Homepage: www.tellmatic.org                                                   */
 /* leave this header in file!                                                   */
 /* diesen Header nicht loeschen!                                                */
 /* check Homepage for Updates and more Infos                                    */
@@ -12,6 +12,15 @@
 /********************************************************************************/
 
 UPDATE
+
+*+*+*+*+*+*+*+*+*+*+*+ 1.0.5
+--en:
+Update to 1.0.5:
+	Just copy files over your current version.
+
+--de:
+Update auf Version 1.0.5:
+	Aktualisieren Sie die installiere Version mit der neuen Version indem Sie die neueren Dateien auf den Server kopieren.
 
 *+*+*+*+*+*+*+*+*+*+*+ 1.0.4.1
 --en:
@@ -22,7 +31,7 @@ Update from 1.0.4 to 1.0.4.1:
 --de:
 Update von 1.0.4 auf Version 1.0.4.1:
 	Aktualisieren Sie die installiere Version von send_it.php im Verzeichnis 'include' mit der neuen Version.
-	Oder verfahren Sie wie im Update fuer 1.0.4 beschrieben.
+	Verfahren Sie ggf. wie im Update fuer 1.0.4 beschrieben.
 
 
 *+*+*+*+*+*+*+*+*+*+*+ 1.0.4

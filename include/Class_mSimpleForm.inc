@@ -4,8 +4,8 @@
 /* tellmatic, the newslettermachine                                             */
 /* tellmatic, die Newslettermaschine                                            */
 /* 2006/7 by Volker Augustin, multi.art.studio Hanau                            */
-/* Contact/Kontakt: mnl@multiartstudio.com                                      */
-/* Homepage: www.tellmatic.de                                                   */
+/* Contact/Kontakt: info@tellmatic.org                                      */
+/* Homepage: www.tellmatic.org                                                   */
 /* leave this header in file!                                                   */
 /* diesen Header nicht loeschen!                                                */
 /* check Homepage for Updates and more Infos                                    */
@@ -135,6 +135,17 @@ class mSimpleForm {
 		if($this->check_FormExists($formname))
 		{
 			$this->FORM[$formname]['desc']=$desc;
+			$Return=true;
+		}
+		return $Return;
+	}
+//set JSAction
+	function set_FormJS($formname,$js)
+	{
+		$Return=false;
+		if($this->check_FormExists($formname))
+		{
+			$this->FORM[$formname]['js']=$js;
 			$Return=true;
 		}
 		return $Return;
@@ -392,6 +403,18 @@ class mSimpleForm {
 		return $Return;
 	}
 
+	//set INPUT Javascriptaction
+	function set_InputJS($formname,$name,$js)
+	{
+		$Return=false;
+		if($this->check_FormExists($formname))
+		{
+			$this->INPUT[$formname][$name]['js']=$js;
+			$Return=true;
+		}
+		return $Return;
+	}
+
 	function sort_Input($formname)
 	{
 		//echo "before sorting:<p>";print_r($this->INPUT[$formname]);echo "</p><hr>";
@@ -428,6 +451,7 @@ class mSimpleForm {
 		$this->set_FormStyleClass($formname,"");
 		$this->set_FormInputStyle($formname,"","");
 		$this->set_FormInputStyleClass($formname,"","");
+		$this->set_FormJS($formname,"");
 		$Return=true;
 		}
 		return $Return;
@@ -453,6 +477,7 @@ class mSimpleForm {
 			$this->set_InputStyle($formname,$name,"","");
 			$this->set_InputStyleClass($formname,$name,"","");
 			$this->set_InputTag($formname,$name,"","");
+			$this->set_InputJS($formname,$name,"");
 			$Return=true;
 		}
 		return $Return;
@@ -474,7 +499,7 @@ class mSimpleForm {
 					$this->INPUT[$formname][$name]['html'] .= "</label>\n";
 				}
 				$InputStyleClass="";
-				$InputOnAction="";
+				$InputOnAction=$this->INPUT[$formname][$name]['js'];
 				//1st use the assigned class
 				if (!empty($this->INPUT[$formname][$name]['class']))
 				{
@@ -807,6 +832,7 @@ class mSimpleForm {
 				$this->FORM[$formname]['head'] .=" enctype=\"".$this->FORM[$formname]['type']."\"";
 			}
 			$this->FORM[$formname]['head'] .= $FormStyleClass;
+			$this->FORM[$formname]['head'] .= $this->FORM[$formname]['js'];
 			$this->FORM[$formname]['head'] .=">\n";
 			$Return=true;
 		}

@@ -4,8 +4,8 @@
 /* tellmatic, the newslettermachine                                             */
 /* tellmatic, die Newslettermaschine                                            */
 /* 2006/7 by Volker Augustin, multi.art.studio Hanau                            */
-/* Contact/Kontakt: mnl@multiartstudio.com                                      */
-/* Homepage: www.tellmatic.de                                                   */
+/* Contact/Kontakt: info@tellmatic.org                                      */
+/* Homepage: www.tellmatic.org                                                   */
 /* leave this header in file!                                                   */
 /* diesen Header nicht loeschen!                                                */
 /* check Homepage for Updates and more Infos                                    */
@@ -16,8 +16,8 @@
 ?>
 <html>
 <head>
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF8">
-<meta name="author" content="Volker">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">
+<meta name="author" content="Volker Augustin">
 <meta name="Publisher" content="multi.art.studio Hanau">
 <meta name="Copyright" content="2007">
 <meta name="Page-topic" content="Newsletter">
@@ -38,29 +38,66 @@
 <?php
 
 //Daten ermitteln
-$MESSAGE="";
+$MESSAGE="<h1>tellmatic installation</h1>";
+$MESSAGE.="<a href=\"README\" target=\"_blank\">README</a>&nbsp;-&nbsp;INSTALL.<a href=\"INSTALL.DE\" target=\"_blank\">DE</a>/<a href=\"INSTALL.EN\" target=\"_blank\">EN</a>
+&nbsp;&nbsp;<a href=\"UPDATE\" target=\"_blank\">UPDATE</a>&nbsp;&nbsp;<a href=\"CHANGES\" target=\"_blank\">CHANGES</a>&nbsp;&nbsp;<a href=\"http://www.tellmatic.org/?c=faq\" target=\"_blank\">FAQ</a>
+";
 $mnl_docroot=$_SERVER["DOCUMENT_ROOT"];
 $mnl_Domain="http://".$_SERVER["HTTP_HOST"];
 $self=$_SERVER["PHP_SELF"];
 $pathinfo=pathinfo($self);
-$mnl_dir=$pathinfo['dirname'];
 
+$mnl_dir=$pathinfo['dirname'];
 //ersten slash killen!!! sonst klappt das nich mit php_self, da doppelslash und das raffen manche browser nich!
 if (substr($mnl_dir, 0,1)=="/") {
 	$mnl_dir=substr($mnl_dir, 1,strlen($mnl_dir));
 }
-
 
 if (empty($mnl_dir)) {
 	$mnl_dir=".";
 }
 
 $mnl_includedir="include";
+$mnl_tpldir="tpl";
+$mnl_imgdir="img";
+$mnl_icondir="img/icons";
+$mnl_nldir="files/newsletter";
+$mnl_nlimgdir="files/newsletter/images";
+$mnl_nlattachdir="files/attachements";
+$mnl_formdir="files/forms";
+$mnl_datadir="files/import_export";
+$mnl_logdir="files/log";
+$mnl_docdir="doc";
+
+//Paths	
 $mnl_path=$mnl_docroot."/".$mnl_dir;
 $mnl_includepath=$mnl_path."/".$mnl_includedir;
+$mnl_nlpath=$mnl_docroot."/".$mnl_dir."/".$mnl_nldir;
+$mnl_nlimgpath=$mnl_docroot."/".$mnl_dir."/".$mnl_nlimgdir;
+$mnl_nlattachpath=$mnl_docroot."/".$mnl_dir."/".$mnl_nlattachdir;
+$mnl_formpath=$mnl_docroot."/".$mnl_dir."/".$mnl_formdir;
+$mnl_datapath=$mnl_docroot."/".$mnl_dir."/".$mnl_datadir;
+$mnl_logpath=$mnl_docroot."/".$mnl_dir."/".$mnl_logdir;
+$mnl_tplpath=$mnl_docroot."/".$mnl_dir."/".$mnl_tpldir;
+//URLs
+$mnl_URL=$mnl_Domain."/".$mnl_dir;
+$mnl_imgURL=$mnl_URL."/".$mnl_imgdir;
+$mnl_iconURL=$mnl_URL."/".$mnl_icondir;
+
+/* problems on some servers.... whyever, if includeing a file on installation from tellmatic include path doesnt work... correctly , on bug in tellmatic! , e.g. strato-webspaces do so
 require_once ($mnl_includepath."/Errorhandling.inc");
 require_once ($mnl_includepath."/Class_mSimpleForm.inc");
 require_once ($mnl_includepath."/Functions.inc");
+*/
+/* use relative directory instead.... should work everywhere */
+
+//check if php runs on windows!
+if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {  $php_windows=true; } else {  $php_windows=false; }
+define("PHPWIN",$php_windows);
+	
+require_once ("./include/Errorhandling.inc");
+require_once ("./include/Class_mSimpleForm.inc");
+require_once ("./include/Functions.inc");
 
 define("MNL_SITEID","mnl");
 
@@ -78,7 +115,6 @@ if (!empty($$InputName_DBTablePrefix)) {
 }
 
 
-
 $InputName_Submit="submit";
 $InputName_Reset="reset";
 
@@ -87,6 +123,9 @@ $$InputName_Name=getVar($InputName_Name);
 if (empty($$InputName_Name)) {
 	$$InputName_Name="admin";
 }
+
+$InputName_Lang="lang";//sprache
+$$InputName_Lang=getVar($InputName_Lang);
 
 $InputName_EMail="email";//name
 $$InputName_EMail=getVar($InputName_EMail);
@@ -135,10 +174,25 @@ $$InputName_SMTPDomain=getVar($InputName_SMTPDomain);
 
 $check=true;
 
+$php_sapi=php_sapi_name();
+$php_os=php_uname();//PHP_OS
+
+$MESSAGE.="<p>Sie benutzen PHP Version <em>".phpversion()."</em>".
+							"<br>You are using PHP Version <em>".phpversion()."</em>".
+							"<br>PHP Sapi Name: <em>".$php_sapi."</em>".
+							"<br>OS: <em>".$php_os." :: ".PHP_OS."</em>".
+							"<br>DocRoot: <em>".$mnl_docroot."</em>".
+							"<br>Verzeichnis: <em>".$mnl_dir."</em>".
+							"<br>Installationspfad: <em>".$mnl_path."</em>".
+						"</p>";
+
+
 if (version_compare(phpversion(), "5.0", ">=")) {
 	$usePhp5=true; 
-	$MESSAGE.="<br><font size=2 color=red><b>ACHTUNG! Sie benutzen PHP5. Weitere Details finden Sie den den Dateien README und INSTALL.
-							<br>You are using PHP5. More Details you can find in the README and INSTALL files.</b></font><br>";
+	/*
+	$MESSAGE.="<br><font size=2 color=red><b>ACHTUNG! Sie benutzen PHP5. Weitere Details finden Sie den den Dateien README und INSTALL."
+							"<br>You are using PHP5. More Details you can find in the README and INSTALL files.</b></font><br>";
+	*/
 } else {
 	$usePhp5=false;
 }
@@ -146,37 +200,113 @@ define("PHP5",$usePhp5);
 
 if (PHP5) ini_set('zend.ze1_compatibility_mode', '1');
 
-if (!function_exists('imap_open')) {
-	$MESSAGE.="<br><font size=2 color=red><b>ACHTUNG! Die Funktion imap_open() existiert nicht. Weitere Details finden Sie den den Dateien README und INSTALL.
-							<br>The imap_open() function does not exist. More Details you can find in the README and INSTALL files.</b></font><br>";
-	//no error
-}
 
-/*
-if (!is_writeable($mnl_path)) {
-	$MESSAGE.="<br><font size=2 color=red><b>ACHTUNG! $mnl_path ist Schreibgeschuetzt. Weitere Details finden Sie den den Dateien README und INSTALL 
-							<br>$mnl_path ist write protected. More Details you can find in the README and INSTALL files.</b></font><br>";
+$ERR_MESSAGE="";
+
+if (version_compare(phpversion(), "4.3", "<")) {
+	$MESSAGE.="<p><font color=red><b>Fehler / Error</b><br>ACHTUNG! Sie verwenden PHP Version < 4.3. Tellmatic benötigt mindestens Version 4.3.
+							<br>You are using PHP Version < 4.3. Tellmatic requires at least Version 4.3</font></p>";
 	$check=false;
 }
-*/
 
-if (!is_writeable($mnl_includepath)) {
-	$MESSAGE.="<br><font size=2 color=red><b>ACHTUNG! $mnl_includepath ist Schreibgeschuetzt. Weitere Details finden Sie den den Dateien README und INSTALL 
-							<br>$mnl_includepath ist write protected. More Details you can find in the README and INSTALL files.</b></font><br>";
-	$check=false;
-}
+if ($check) {
+
+	//check for windows
+	if (PHPWIN) {
+		$MESSAGE.="<p><font color=red><b>Achtung / Warning</b><br>PHP l&auml;uft unter Windows. Weitere Details finden Sie den den Dateien README und INSTALL oder der FAQ.
+								<br>PHP is running on windows. More Details you can find in the README and INSTALL files or FAQ.</font></p>";
+	}
+	//check if php is running as cgi
+	if (ereg("cgi",$php_sapi)) {
+		$MESSAGE.="<p><font color=red><b>Achtung / Warning</b><br>PHP l&auml;uft als CGI. Weitere Details finden Sie den den Dateien README und INSTALL oder der FAQ.
+								<br>PHP is running as cgi. More Details you can find in the README and INSTALL files or FAQ.</font></p>";
+		//no error
+	}
+	
+	if (!function_exists('imap_open')) {
+		$MESSAGE.="<p><font color=red><b>Achtung / Warning</b><br>Die Funktion imap_open() existiert nicht. Bouncemanagement und Mailbox wird nicht funktionieren. Weitere Details finden Sie den den Dateien README und INSTALL oder der FAQ.
+								<br>The imap_open() function does not exist. Bouncemanagement and Mailbox will not work without it. More Details you can find in the README and INSTALL files or FAQ.</font></p>";
+		//no error
+	}
+
+
+	
+	/*
+	if (!is_writeable($mnl_path)) {
+		$MESSAGE.="<p><font color=red><b>ACHTUNG! $mnl_path ist Schreibgeschuetzt. Weitere Details finden Sie den den Dateien README und INSTALL";
+		$MESSAGE.="<br>$mnl_path ist write protected. More Details you can find in the README and INSTALL files.</b></font></p>";
+		$check=false;
+	}
+	*/
+	
+	if (!is_writeable($mnl_includepath)) {
+		$ERR_MESSAGE.="<p><font color=red>ACHTUNG! $mnl_includepath ist Schreibgeschuetzt. Weitere Details finden Sie den den Dateien README und INSTALL oder der FAQ"; 
+		$ERR_MESSAGE.="<br>$mnl_includepath ist write protected. More Details you can find in the README and INSTALL files or FAQ.</font></p>";
+		$check=false;
+	}
+	if (!is_writeable($mnl_datapath)) {
+		$ERR_MESSAGE.="<p><font color=red>Keine Schreibrechte f&uuml;r $mnl_datapath</font>";
+		$ERR_MESSAGE.="<br><font color=red>No write permissions for $mnl_datapath</font></p>";
+		$check=false;
+	}
+	if (!is_writeable($mnl_nlpath)) {
+		$ERR_MESSAGE.="<p><font color=red>Keine Schreibrechte f&uuml;r $mnl_nlpath</font>";
+		$ERR_MESSAGE.="<br><font color=red>No write permissions for $mnl_nlpath</font></p>";
+		$check=false;
+	}
+	if (!is_writeable($mnl_nlattachpath)) {
+		$ERR_MESSAGE.="<p><font color=red>Keine Schreibrechte f&uuml;r $mnl_nlattachpath</font>";
+		$ERR_MESSAGE.="<br><font color=red>No write permissions for $mnl_nlattachpath</font></p>";
+		$check=false;
+	}
+	if (!is_writeable($mnl_nlimgpath)) {
+		$ERR_MESSAGE.="<p><font color=red>Keine Schreibrechte f&uuml;r $mnl_nlimgpath</font>";
+		$ERR_MESSAGE.="<br><font color=red>No write permissions for $mnl_nlimgpath</font></p>";
+		$check=false;
+	}
+	if (!is_writeable($mnl_logpath)) {
+		$ERR_MESSAGE.="<p><font color=red>Keine Schreibrechte f&uuml;r $mnl_logpath</font>";
+		$ERR_MESSAGE.="<br><font color=red>No write permissions for $mnl_logpath</font></p>";
+		$check=false;
+	}
+	if (!is_writeable($mnl_formpath)) {
+		$ERR_MESSAGE.="<p><font color=red>Keine Schreibrechte f&uuml;r $mnl_formpath</font>";
+		$ERR_MESSAGE.="<br><font color=red>No write permissions for $mnl_formpath</font></p>";
+		$check=false;
+	}
+
+	if (!$check) {
+		$MESSAGE.="<p><font color=red><b>Fehlende Berechtigungen: / Missing permissions:</b></font>".$ERR_MESSAGE."</p>";
+		$ERR_MESSAGE="";
+	}
+
+} // check
 
 if ($set=="save" && $check) {
 	//$check=true;
 	//checkinput
-	if (empty($name)) {$check=false;$MESSAGE.="<br>Bitte Benutzernamen angeben / Please enter username";}
-	if (empty($pass)) {$check=false;$MESSAGE.="<br>Kein Passwort angegeben / Please enter password";}
-	if ($pass!=$pass2) {$check=false;$MESSAGE.="<br>Bitte 2x das gleiche Passwort angeben / Please repeat the pasword";}
-	if (empty($email)) {$check=false;$MESSAGE.="<br>E-Mail sollte nicht leer sein. / E-mail should not be empty";}
-	if (!checkemailadr($email,2)) {$check=false;$MESSAGE.="<br>E-Mail hat ein falsches Format oder Domain ist nicht gueltig. / E-mali is invalid";}
-	if (empty($db_host) || empty($db_port) || empty($db_name) || empty($db_user) || empty($db_pass)) {$check=false;$MESSAGE.="<br>Daten fuer den Zugriff auf die Datenbank sind nicht vollstaendig. / Data for database are not complete.";}
-//	if (empty($smtp_host) || empty($smtp_domain) || empty($smtp_user) || empty($smtp_pass)) {$check=false;$MESSAGE.="<br>Daten fuer den Zugriff auf den SMTP-Server sind nicht vollstaendig.";}
+	if (empty($name)) {$check=false;$ERR_MESSAGE.="<br>Bitte Benutzernamen angeben / Please enter username";}
+	if (empty($pass)) {$check=false;$ERR_MESSAGE.="<br>Kein Passwort angegeben / Please enter password";}
+	if ($pass!=$pass2) {$check=false;$ERR_MESSAGE.="<br>Bitte 2x das gleiche Passwort angeben / Please repeat the pasword";}
+	if (empty($email)) {$check=false;$ERR_MESSAGE.="<br>E-Mail sollte nicht leer sein. / E-mail should not be empty";}
+	if (!checkemailadr($email,1)) {$check=false;$ERR_MESSAGE.="<br>E-Mail <em>$email</em> hat ein falsches Format oder Domain ist nicht g&uuml;ltig. / E-mail is invalid";}
+	if (empty($db_host) || empty($db_port) || empty($db_name) || empty($db_user) || empty($db_pass)) {$check=false;$ERR_MESSAGE.="<br>Daten f&uuml;r den Zugriff auf die Datenbank sind nicht vollst&auml;ndig. / Data for database are not complete.";}
+	//	if (empty($smtp_host) || empty($smtp_domain) || empty($smtp_user) || empty($smtp_pass)) {$check=false;$MESSAGE.="<br>Daten fuer den Zugriff auf den SMTP-Server sind nicht vollstaendig.";}
 
+	if (!$check) {
+		$MESSAGE.="<p><font color=red><b>Eingabefehler: / Input error:</b>".$ERR_MESSAGE."</font></p>";
+		$ERR_MESSAGE="";
+	}
+
+	if ($check) {
+	    if(!@mysql_connect($db_host.":".$db_port, $db_user, $db_pass)) {
+			$MESSAGE.="<p><font color=red><b>Datenbankfehler / Database error:</b><br>Es konnte keine Verbindung zur Datenbank aufgebaut werden.<br>Connection to the Database could not be established.<br>";
+			$MESSAGE.="<pre>".mysql_error()."</pre>";
+			$MESSAGE.="</font></p>";
+			$check=false;
+    	}
+	}
+	
 	if ($check) {
 	
 		//create directories!
@@ -197,7 +327,8 @@ if ($set=="save" && $check) {
 		$MNL["DB"]["Port"]=$db_port;
 		$MNL["DB"]["User"]=$db_user;
 		$MNL["DB"]["Pass"]=$db_pass;
-		include_once ($mnl_includepath."/Classes.inc");
+		//include_once ($mnl_includepath."/Classes.inc");
+		include_once ("./include/Classes.inc");
 
 		//$sql=stripslashes(file_get_contents($mnl_includepath."/mnl.sql"));
 $sql[0]['name']=" adr Adressen ";
@@ -411,6 +542,7 @@ CREATE TABLE ".$mnl_tablePrefix."nl (
   author varchar(128) default NULL,
   editor varchar(64) default NULL,
   grp_id int(11) NOT NULL default '0',
+  content_type varchar(12) NOT NULL default 'html',
   attm varchar(255) default NULL,
   siteid varchar(64) NOT NULL default '',
   PRIMARY KEY  (id),
@@ -511,28 +643,7 @@ CREATE TABLE ".$mnl_tablePrefix."frm_s (
 ) TYPE=MyISAM
 ";
 
-/*
 
-    if(!@mysql_connect(MYSQL_HOST, MYSQL_USER, MYSQL_PASS)) {
-        echo "Es konnte keine Verbindung aufgebaut werden";
-    }
-
-    echo "Verbindung wurde aufgebaut<br />\n";
-
-    if(!mysql_select_db(MYSQL_DATABASE)) {
-        echo "Konnte Datenbank nicht benutzen.<br />\n";
-        echo "Der Grund dafür: ".mysql_error()."\n";
-    }
-
-    echo "Die Datenbank wurde ausgewählt";
-
-    // Hier kann man jetzt MySQL-Querys senden
-    $sqls = array("tu was", "mach dies", "und das");
-    foreach($sqls as $sql) {
-        $result = mysql_query($sql) OR die(mysql_error());
-    }
-
-*/
 		$checkDB=false;
 		$DB=new ConnectDB();
 		$sc=count($sql);
@@ -643,6 +754,180 @@ require valid-user
 
 			$MESSAGE.="<br>.htaccess Dateien wurden geschrieben.";
 
+			$MESSAGE.="<br><br>Beispieldaten werden hinzugefuegt / Adding examples.";
+
+//nl gruppe
+		$NEWSLETTER=new mnlNL();
+		
+		$NEWSLETTER->addGrp(Array("name"=>"NL Group 1", "descr"=>"zum testen / for testings", "aktiv"=>1));
+		$NEWSLETTER->addGrp(Array("name"=>"NL Group 2", "descr"=>"zum testen / for testings", "aktiv"=>0));
+//nl: personal, massmailing
+		$body="
+					Hallo {F0} {F1} {F2}<br>
+					<br>
+					Attachement-URL<br>
+					{ATTACH1_URL}<br>
+					Attachement mit Link<br>
+					{ATTACH1} {ATTACH1_URL} {CLOSELINK}<br>
+					<br>
+					Link-URL<br>
+					{LINK1_URL}<br>
+					<br>
+					Link mit Link<br>
+					{LINK1}{LINK1_URL}{CLOSELINK}<br>
+					<br>
+					Bild-URL<br>
+					{IMAGE1_URL}<br>
+					<br>
+					Bild<br>
+					{IMAGE1}<br>
+					<br>
+					Bild mit Link<br>
+					{LINK1}{IMAGE1}{CLOSELINK}<br>
+					<br>
+					Online-URL<br>
+					{NLONLINE_URL}<br>
+					<br>
+					Online Link<br>
+					{NLONLINE} {NLONLINE_URL} {CLOSELINK}<br>
+					<br>
+					Ihre bei uns gespeicherten Daten:<br>
+					{F3}, {F4}, {F5}, {F6}, {F7}, {F8}, {F9}<br>
+					Die email mit der Sie bei unserem Newsletter angemeldet sind lautet: {EMAIL}<br>
+					Wenn Sie unseren Newsleter nicht mehr erhalten moechten, koennen Sie sich<br>
+					{UNSUBSCRIBE_URL}<br>
+					{UNSUBSCRIBE}HIER{CLOSELINK} abmelden.<br>
+					{UNSUBSCRIBE}{UNSUBSCRIBE_URL}{CLOSELINK}<br>
+					<br>
+					Url zum Blindimage:<br>
+					 {BLINDIMAGE_URL}<br>
+					<br>
+					Blindimage:<br>
+					{BLINDIMAGE}<br>
+					Der Link zum Bestaetigen des Newsletter Empfangs f. 1st-touch-opt-in:<br>
+					{SUBSCRIBE_URL}<br>
+					<br>
+					{SUBSCRIBE}{SUBSCRIBE_URL}{CLOSELINK}<br>
+					<br>
+					viel Spass mit tellmatic! :-)<br>
+					";
+		$NEWSLETTER->addNL(
+								Array(
+									"subject"=>"Newsletter 1", 
+									"body"=>$body, 
+									"aktiv"=>1,
+									"status"=>1, 
+									"massmail"=>0, 
+									"link"=>"http://www.tellmatic.org", 
+									"created"=>date("Y-m-d H:i:s"), 
+									"author"=>"example", 
+									"grp_id"=>1,
+									"attm"=>""
+									)
+								);
+
+//adr gruppe
+		$ADDRESS=new mnlADR();	
+		
+		$ADDRESS->addGrp(Array("name"=>"ADR Group 1", "descr"=>"zum testen / for testings", "aktiv"=>1));
+		$ADDRESS->addGrp(Array("name"=>"ADR Group 2", "descr"=>"zum testen / for testings", "aktiv"=>0));
+//adr : ok, bounce
+			$code=rand(111111,999999); 
+			$new_adr_grp[0]=1;
+			$ADDRESS->addAdr(Array(
+					"email"=>"test@tellmatic.org",
+					"aktiv"=>1, 
+					"created"=>date("Y-m-d H:i:s"),
+					"author"=>"example", 
+					"status"=>3, 
+					"code"=>$code, 
+					"f0"=>"Herr",
+					"f1"=>"Telly",
+					"f2"=>"Tellmatic",
+					"f3"=>"",
+					"f4"=>"",
+					"f5"=>"",
+					"f6"=>"",
+					"f7"=>"",
+					"f8"=>"",
+					"f9"=>"" 
+					),
+					$new_adr_grp);
+					
+			$code=rand(111111,999999); 
+			$new_adr_grp[0]=1;
+			$ADDRESS->addAdr(Array(
+					"email"=>"bounce@tellmatic.org",
+					"aktiv"=>1, 
+					"created"=>date("Y-m-d H:i:s"),
+					"author"=>"example", 
+					"status"=>1,
+					"code"=>$code,
+					"f0"=>"Herr",
+					"f1"=>"Tello",
+					"f2"=>"Bounce",
+					"f3"=>"",
+					"f4"=>"",
+					"f5"=>"",
+					"f6"=>"",
+					"f7"=>"",
+					"f8"=>"",
+					"f9"=>"" 
+					),
+					$new_adr_grp);
+
+
+//form
+		$FORMULAR=new mnlFRM();
+		$new_adr_grp[0]=1;
+		$FORMULAR->addForm(Array(
+				"name"=>"Form 1",
+				"descr"=>"zum testen / for testing",
+				"aktiv"=>1, 
+				"created"=>date("Y-m-d H:i:s"),
+				"author"=>"example",
+				"double_optin"=>0,
+				"f0"=>"Anrede",
+				"f1"=>"Name",
+				"f2"=>"Name2",
+				"f3"=>"",
+				"f4"=>"",
+				"f5"=>"",
+				"f6"=>"",
+				"f7"=>"",
+				"f8"=>"",
+				"f9"=>"",
+				"f0_type"=>"select",
+				"f1_type"=>"text",
+				"f2_type"=>"text",
+				"f3_type"=>"text",
+				"f4_type"=>"text",
+				"f5_type"=>"text",
+				"f6_type"=>"text",
+				"f7_type"=>"text",
+				"f8_type"=>"text",
+				"f9_type"=>"text",
+				"f0_required"=>1,
+				"f1_required"=>1,
+				"f2_required"=>1,
+				"f3_required"=>0,
+				"f4_required"=>0,
+				"f5_required"=>0,
+				"f6_required"=>0,
+				"f7_required"=>0,
+				"f8_required"=>0,
+				"f9_required"=>0, 
+				"f0_value"=>"Frau;Herr;Firma", 
+				"f1_value"=>"", 
+				"f2_value"=>"", 
+				"f3_value"=>"", 
+				"f4_value"=>"", 
+				"f5_value"=>"", 
+				"f6_value"=>"", 
+				"f7_value"=>"", 
+				"f8_value"=>"", 
+				"f9_value"=>""),
+				$new_adr_grp);
 			
 			$MESSAGE.= "Herzlichen Glueckwunsch,<br>
 					<br>Die Installation der Tellmatic Newslettermaschine auf ".$mnl_Domain."/".$mnl_dir." war erfogreich.<br>
@@ -650,6 +935,9 @@ require valid-user
 					und melden sich mit Ihrem Benutzernamen und Passwort an.<br>";
 					
 			$MESSAGE_TEXT=str_replace("<br>","\n",$MESSAGE);
+			$MESSAGE_TEXT=strip_htmltags($MESSAGE_TEXT);
+			$MESSAGE_TEXT=strip_tags($MESSAGE_TEXT);
+
 			@mail($email,
 					"Tellmatic Installation",
 					$MESSAGE_TEXT,
@@ -675,7 +963,7 @@ if ($set!="save" || !$check) {
 	//$this->set_FormStyle($FormularName,"font-size:10pt;font-color=red;");
 	////$Form->set_FormStyleClass($FormularName,"mForm");
 	//add a Description
-	$Form->set_FormDesc($FormularName,"mNL Installation");
+	$Form->set_FormDesc($FormularName,"Tellmatic Installation");
 	$Form->new_Input($FormularName,"set", "hidden", "save");
 	//////////////////
 	//add inputfields and buttons....
@@ -687,7 +975,7 @@ if ($set!="save" || !$check) {
 	$Form->set_InputDesc($FormularName,$InputName_Name,"Benutzername");
 	$Form->set_InputReadonly($FormularName,$InputName_Name,false);
 	$Form->set_InputOrder($FormularName,$InputName_Name,1);
-	$Form->set_InputLabel($FormularName,$InputName_Name,"Benutzername:<br>");
+	$Form->set_InputLabel($FormularName,$InputName_Name,"Benutzername: / Username:<br>");
 
 	//pass
 	$Form->new_Input($FormularName,$InputName_Pass,"password", $$InputName_Pass);
@@ -696,7 +984,7 @@ if ($set!="save" || !$check) {
 	$Form->set_InputDesc($FormularName,$InputName_Pass,"Passwort");
 	$Form->set_InputReadonly($FormularName,$InputName_Pass,false);
 	$Form->set_InputOrder($FormularName,$InputName_Pass,2);
-	$Form->set_InputLabel($FormularName,$InputName_Pass,"Passwort:<br>");
+	$Form->set_InputLabel($FormularName,$InputName_Pass,"Passwort: / Password:<br>");
 
 	//pass2
 	$Form->new_Input($FormularName,$InputName_Pass2,"password", $$InputName_Pass2);
@@ -705,16 +993,31 @@ if ($set!="save" || !$check) {
 	$Form->set_InputDesc($FormularName,$InputName_Pass2,"Passwort");
 	$Form->set_InputReadonly($FormularName,$InputName_Pass2,false);
 	$Form->set_InputOrder($FormularName,$InputName_Pass2,3);
-	$Form->set_InputLabel($FormularName,$InputName_Pass2,"Passwort wiederholen:<br>");
+	$Form->set_InputLabel($FormularName,$InputName_Pass2,"Passwort wiederholen: / Repeat Password<br>");
+
+
+	//lang
+	$Form->new_Input($FormularName,$InputName_Lang,"select", "");
+	$Form->set_InputDefault($FormularName,$InputName_Lang,$$InputName_Lang);
+	$Form->set_InputStyleClass($FormularName,$InputName_Lang,"mFormSelect","mFormSelectFocus");
+	$Form->set_InputDesc($FormularName,$InputName_Lang,"Sprache / Language");
+	$Form->set_InputReadonly($FormularName,$InputName_Lang,false);
+	$Form->set_InputOrder($FormularName,$InputName_Lang,3);
+	$Form->set_InputLabel($FormularName,$InputName_Lang,"Sprache / Language<br>");
+	$Form->set_InputSize($FormularName,$InputName_Lang,0,1);
+	$Form->set_InputMultiple($FormularName,$InputName_Lang,false);
+	//add Data
+	$Form->add_InputOption($FormularName,$InputName_Lang,"de","de - Deutsch");
+	$Form->add_InputOption($FormularName,$InputName_Lang,"en","en - English");
 
 	//email
 	$Form->new_Input($FormularName,$InputName_EMail,"text", $$InputName_EMail);
 	$Form->set_InputStyleClass($FormularName,$InputName_EMail,"mFormText","mFormTextFocus");
 	$Form->set_InputSize($FormularName,$InputName_EMail,40,40);
-	$Form->set_InputDesc($FormularName,$InputName_EMail,"e-Mail");
+	$Form->set_InputDesc($FormularName,$InputName_EMail,"E-Mail");
 	$Form->set_InputReadonly($FormularName,$InputName_EMail,false);
 	$Form->set_InputOrder($FormularName,$InputName_EMail,4);
-	$Form->set_InputLabel($FormularName,$InputName_EMail,"e-Mail:<br>");
+	$Form->set_InputLabel($FormularName,$InputName_EMail,"E-Mail:<br>");
 
 
 	//dbs
@@ -769,7 +1072,7 @@ if ($set!="save" || !$check) {
 	$Form->set_InputDesc($FormularName,$InputName_DBTablePrefix,"Tabellen Prefix");
 	$Form->set_InputReadonly($FormularName,$InputName_DBTablePrefix,false);
 	$Form->set_InputOrder($FormularName,$InputName_DBTablePrefix,10);
-	$Form->set_InputLabel($FormularName,$InputName_DBTablePrefix,"Tabellen Prefix:<br>");
+	$Form->set_InputLabel($FormularName,$InputName_DBTablePrefix,"Tabellen Prefix: / Table prefix:<br>");
 
 	//smtp
 	$Form->new_Input($FormularName,$InputName_SMTPHost,"text", $$InputName_SMTPHost);
@@ -787,7 +1090,7 @@ if ($set!="save" || !$check) {
 	$Form->set_InputDesc($FormularName,$InputName_SMTPUser,"SMTP Username");
 	$Form->set_InputReadonly($FormularName,$InputName_SMTPUser,false);
 	$Form->set_InputOrder($FormularName,$InputName_SMTPUser,12);
-	$Form->set_InputLabel($FormularName,$InputName_SMTPUser,"SMTP Username:<br>");
+	$Form->set_InputLabel($FormularName,$InputName_SMTPUser,"SMTP Benutzername: / SMTP Username:<br>");
 
 	//smtp
 	$Form->new_Input($FormularName,$InputName_SMTPPass,"password", $$InputName_SMTPPass);
@@ -796,7 +1099,7 @@ if ($set!="save" || !$check) {
 	$Form->set_InputDesc($FormularName,$InputName_SMTPPass,"SMTP Passwort");
 	$Form->set_InputReadonly($FormularName,$InputName_SMTPPass,false);
 	$Form->set_InputOrder($FormularName,$InputName_SMTPPass,13);
-	$Form->set_InputLabel($FormularName,$InputName_SMTPPass,"SMTP Passwort:<br>");
+	$Form->set_InputLabel($FormularName,$InputName_SMTPPass,"SMTP Passwort: / SMTP Password:<br>");
 
 	//smtp
 	$Form->new_Input($FormularName,$InputName_SMTPDomain,"text", $$InputName_SMTPDomain);
@@ -828,15 +1131,6 @@ if ($set!="save" || !$check) {
 
 $MESSAGE.=$Form->get_Form($FormularName);
 }
-
-
-$MESSAGE.="<br><br><a href=\"README\" target=\"_blank\">README</a>&nbsp;-&nbsp;INSTALL.<a href=\"INSTALL.DE\" target=\"_blank\">DE</a>/<a href=\"INSTALL.EN\" target=\"_blank\">EN</a>
-&nbsp;&nbsp;<a href=\"UPDATE\" target=\"_blank\">UPDATE</a>&nbsp;&nbsp;<a href=\"CHANGES\" target=\"_blank\">CHANGES</a>&nbsp;&nbsp;<a href=\"http://www.tellmatic.org/?c=faq\" target=\"_blank\">FAQ</a>
-";
-$MESSAGE.="<br><br>INFOS:<br><br>DocRoot: ".$mnl_docroot;
-$MESSAGE.="<br>Verzeichnis: ".$mnl_dir;
-$MESSAGE.="<br>Installationspfad: ".$mnl_path;
-
 
 echo "<div id=\"main\" class=\"main\">".$MESSAGE."</div>";
 ?>

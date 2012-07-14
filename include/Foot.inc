@@ -4,8 +4,8 @@
 /* tellmatic, the newslettermachine                                             */
 /* tellmatic, die Newslettermaschine                                            */
 /* 2006/7 by Volker Augustin, multi.art.studio Hanau                            */
-/* Contact/Kontakt: mnl@multiartstudio.com                                      */
-/* Homepage: www.tellmatic.de                                                   */
+/* Contact/Kontakt: info@tellmatic.org                                      */
+/* Homepage: www.tellmatic.org                                                   */
 /* leave this header in file!                                                   */
 /* diesen Header nicht loeschen!                                                */
 /* check Homepage for Updates and more Infos                                    */
@@ -34,14 +34,13 @@ $doc_root=$_SERVER["DOCUMENT_ROOT"];
 $host=$_SERVER["HTTP_HOST"];
 $self=$_SERVER["PHP_SELF"];
 $pathinfo=pathinfo($self);
-$_FOOT.= "<br>mnl_Domain=: ".$host;
-$_FOOT.= "<br>mnl_docroot=: ".$doc_root;
-$_FOOT.= "<br>mnl_dir=: ".$pathinfo['dirname'];
-$_FOOT.= "<br><br><a href=\"javascript:switchSection('div_debug');\">(X) ".___("Fenster schliessen")."</a>";
-$_FOOT.= "<br><font size=-3 color=\"#eeeeee\">&copy; volker augustin 2006/7</font>";
-$_FOOT.= "</div>"; 
-$_FOOT.= "<div>".$ApplicationText."&nbsp;<br>&copy;&nbsp;2007&nbsp;-&nbsp;Volker Augustin&nbsp;</div>"; 
-echo "<div>".$ApplicationText."&nbsp;<br>&copy;&nbsp;2007&nbsp;-&nbsp;Volker Augustin&nbsp;</div>";
+$_FOOT.= "<br>Domain=: ".$host;
+$_FOOT.= "<br>Docroot=: ".$doc_root;
+$_FOOT.= "<br>Dir=: ".$pathinfo['dirname'];
+$_FOOT.= "<br><br><a href=\"javascript:switchSection('div_debug');\">(X) ".___("Fenster schliessen")."</a><br><br>";
+//$_FOOT.= "<br><font color=\"#ff0000\">&copy; volker augustin 2006/7</font><br>";
+$_FOOT.= $ApplicationText."&nbsp;<br>&copy;&nbsp;2006/2007&nbsp;-&nbsp;Volker Augustin&nbsp;"; 
+$_FOOT.= "</div>";
 
 //new Template
 $_Tpl_Foot=new mTemplate();

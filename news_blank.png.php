@@ -4,8 +4,8 @@
 /* tellmatic, the newslettermachine                                             */
 /* tellmatic, die Newslettermaschine                                            */
 /* 2006/7 by Volker Augustin, multi.art.studio Hanau                            */
-/* Contact/Kontakt: mnl@multiartstudio.com                                      */
-/* Homepage: www.tellmatic.de                                                   */
+/* Contact/Kontakt: info@tellmatic.org                                      */
+/* Homepage: www.tellmatic.org                                                   */
 /* leave this header in file!                                                   */
 /* diesen Header nicht loeschen!                                                */
 /* check Homepage for Updates and more Infos                                    */
@@ -38,17 +38,37 @@ if (checkid($nl_id)) {
 	}
 }	
 
-//bild generieren, png 1x1px
-$Width	=	1;
-$Height	=	1;
-$Image = ImageCreate($Width,$Height); 
-$White = ImageColorAllocate($Image, 255,255,255); 
-$FC_=$White; 
-$BG_=$White; 
-$TC=$BG_; 
-ImageColorTransparent($Image, $TC); 
-ImageFill($Image, 0, 0, $BG_); 
-Imageinterlace($Image, 1); 
+//alternativ: eigenes bild aus png erzeugen und einblenden:
+/*geht, jedoch ohne transparenz im png....*/
+if (file_exists($mnl_imgpath."/mylogo.png")) {
+	$ImageIn  = imagecreatefrompng($mnl_imgpath."/mylogo.png");
+	$width=ImageSX($ImageIn);
+	$height=ImageSY($ImageIn);
+	$ImageOut = imagecreatetruecolor($width,$height);
+	//$BGColor = imagecolorallocate($ImageOut, 255, 255, 255);
+	$BGColor = imagecolorresolve($ImageOut, 255, 255, 255);
+	ImageColorTransparent($Image, $BGColor); 
+	imagefilledrectangle($ImageOut, 0, 0, $width, $height, $BGColor);
+	//Imageinterlace($ImageOut, 1);
+	imagecopy($ImageOut, $ImageIn, 0, 0, 0, 0, $width, $height);
+	//imagetruecolortopalette($ImageOut, false, 250);
+	imagealphablending($ImageOut, FALSE);
+	imagesavealpha($ImageOut, TRUE);
+	$Image=$ImageOut;
+} else {
+//bild generieren, png 4x7px
+	$width	=	4;
+	$height	=	7;
+	$Image = ImageCreate($width,$height); 
+	$White = ImageColorAllocate($Image, 255,255,255); 
+	$FC=$White; 
+	$BG=$White; 
+	$TC=$BG; 
+	ImageColorTransparent($Image, $TC); 
+	ImageFill($Image, 0, 0, $BG); 
+	Imageinterlace($Image, 1); 
+}
+
 Header("content-type: image/png"); 
 ImagePNG($Image); 
 ImageDestroy($Image); 

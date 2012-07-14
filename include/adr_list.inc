@@ -4,8 +4,8 @@
 /* tellmatic, the newslettermachine                                             */
 /* tellmatic, die Newslettermaschine                                            */
 /* 2006/7 by Volker Augustin, multi.art.studio Hanau                            */
-/* Contact/Kontakt: mnl@multiartstudio.com                                      */
-/* Homepage: www.tellmatic.de                                                   */
+/* Contact/Kontakt: info@tellmatic.org                                      */
+/* Homepage: www.tellmatic.org                                                   */
 /* leave this header in file!                                                   */
 /* diesen Header nicht loeschen!                                                */
 /* check Homepage for Updates and more Infos                                    */
@@ -91,9 +91,15 @@ $mSTDURL->addParam("offset",0);
 $mSTDURL->addParam("limit",$limit);
 $mSTDURL->addParam("st",$sortType);
 $mSTDURL->addParam("si",$sortIndex);
-$mSTDURL->addParam("email",$email);
-$mSTDURL->addParam("f0_9",$f0_9);
-$mSTDURL->addParam("status",$status);
+if (isset($email)) {
+	$mSTDURL->addParam("email",$email);
+}
+if (isset($f0_9)) {
+	$mSTDURL->addParam("f0_9",$f0_9);
+}
+if (isset($status)) {
+	$mSTDURL->addParam("status",$status);
+}
 $mSTDURL->addParam("adr_grp_id",$adr_grp_id);
 if ($set=="search") {
 	$mSTDURL->addParam("set",$set);

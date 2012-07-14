@@ -4,8 +4,8 @@
 /* tellmatic, the newslettermachine                                             */
 /* tellmatic, die Newslettermaschine                                            */
 /* 2006/7 by Volker Augustin, multi.art.studio Hanau                            */
-/* Contact/Kontakt: mnl@multiartstudio.com                                      */
-/* Homepage: www.tellmatic.de                                                   */
+/* Contact/Kontakt: info@tellmatic.org                                      */
+/* Homepage: www.tellmatic.org                                                   */
 /* leave this header in file!                                                   */
 /* diesen Header nicht loeschen!                                                */
 /* check Homepage for Updates and more Infos                                    */
@@ -36,7 +36,7 @@ for ($scc=1; $scc<=$sc; $scc++)//0
 $_MAIN_OUTPUT.= "</div><br><br>";
 $_MAIN_OUTPUT.= "<script type=\"text/javascript\">
 <!--	
-switchSection('legende'); 
+//switchSection('legende'); 
 -->
 </script>";
 

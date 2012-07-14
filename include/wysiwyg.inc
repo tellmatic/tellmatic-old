@@ -4,8 +4,8 @@
 /* tellmatic, the newslettermachine                                             */
 /* tellmatic, die Newslettermaschine                                            */
 /* 2006/7 by Volker Augustin, multi.art.studio Hanau                            */
-/* Contact/Kontakt: mnl@multiartstudio.com                                      */
-/* Homepage: www.tellmatic.de                                                   */
+/* Contact/Kontakt: info@tellmatic.org                                      */
+/* Homepage: www.tellmatic.org                                                   */
 /* leave this header in file!                                                   */
 /* diesen Header nicht loeschen!                                                */
 /* check Homepage for Updates and more Infos                                    */
@@ -33,6 +33,7 @@ tinyMCE.init({
 	force_br_newlines : true,
    force_p_newlines : false,
 	browsers : "msie,gecko",
+	language : "'.$LOGIN->USER['lang'].'",
 	plugins : "table,advimage,advhr,insertdatetime,preview,searchreplace,contextmenu,paste,directionality",
 	theme_advanced_buttons1_add : "fontselect,fontsizeselect",
 	theme_advanced_buttons2_add : ",separator,forecolor,backcolor,separator,insertdate,inserttime,preview",
@@ -50,6 +51,15 @@ tinyMCE.init({
    theme_advanced_resize_horizontal : false,
    theme_advanced_resizing : true
 	});
+	
+function toggleEditor(id) {
+	var elm = document.getElementById(id);
+
+	if (tinyMCE.getInstanceById(id) == null)
+		tinyMCE.execCommand("mceAddControl", false, id);
+	else
+		tinyMCE.execCommand("mceRemoveControl", false, id);
+}
 </script>
 <!-- /TinyMCE -->
 ';
