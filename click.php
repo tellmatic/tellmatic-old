@@ -13,7 +13,6 @@
 /********************************************************************************/
 
 include("./include/mnl_config.inc");
-
 //aufruf: click.php?h_id=&nl_id=&a_id=
 
 $h_id=getVar("h_id");
@@ -40,6 +39,7 @@ if (checkid($nl_id)) {
 		}
 		//header...
 		header("Location: ".$NL[0]['link'].""); /* Browser umleiten */
+		exit;
 	} else {
 		//wenn inaktiv!
 		//header("Location: ".$mnl_Domain.""); /* Browser umleiten */

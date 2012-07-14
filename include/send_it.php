@@ -53,9 +53,12 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 		//Newsletter holen
 		$LOG.=  "\n get nl";
 		$NL=$NEWSLETTER->getNL($Q[$qcc]['nl_id']);
+		
+		
 		//status fuer nl auf 3=running setzen
 		$LOG.=  "\n set nl status=3";
 		$NEWSLETTER->setStatus($NL[0]['id'],3);//versand gestartet
+
 
 		//wenn q status==2, neu... dann mail an admin das versenden gestartet wurde....
 		if ($Q[$qcc]['status']==2) {
@@ -66,15 +69,14 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 			$ReportMail_HTML="";
 			//$created_date=strftime("%d-%m-%Y %H:%M:%S",mk_microtime($Q[$qcc]['created']));
 			$created_date=$Q[$qcc]['created'];
-			$ReportMail_HTML.="<br><b>".$created_date."</b>
-									<br>Der Versand des Newsletter <b>".$NL[0]['subject']."</b> an die Gruppe <b>".$G[0]['name']."</b> wurde gestartet.
-									<br>The Mailing for Newsletter <b>".$NL[0]['subject']."</b> to Group <b>".$G[0]['name']."</b> started.
-									<br>
-									<br>erstellt (nur versand vorbereitet): /created (prepared): ".$created_date."
-									<br>Versand terminiert fuer: / Send at: ".$Q[$qcc]['send_at']."
-									<br>Gestartet: / Started: ".date("Y-m-d H:i:s")."
-									<br>Logfile: ".$mnl_URL."/".$mnl_logdir."/".$logfilename."
-									";
+			$ReportMail_HTML.="<br><b>".$created_date."</b>".
+									"<br>Der Versand des Newsletter <b>".$NL[0]['subject']."</b> an die Gruppe <b>".$G[0]['name']."</b> wurde gestartet.".
+									"<br>The Mailing for Newsletter <b>".$NL[0]['subject']."</b> to Group <b>".$G[0]['name']."</b> started.".
+									"<br>".
+									"<br>erstellt (nur versand vorbereitet): /created (prepared): ".$created_date.
+									"<br>Versand terminiert fuer: / Send at: ".$Q[$qcc]['send_at'].
+									"<br>Gestartet: / Started: ".date("Y-m-d H:i:s").
+									"<br>Logfile: ".$mnl_URL."/".$mnl_logdir."/".$logfilename;
 			@SendMail($From,$From,$From,$From,$ReportMail_Subject,clear_text($ReportMail_HTML),$ReportMail_HTML);
 		}
 		//
@@ -87,6 +89,13 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 		$NL_Imagename1="nl_".date_convert_to_string($NL[0]['created'])."_1.jpg";
 		//attachement
 		$NL_Attachfile1=$mnl_nlattachpath."/a".date_convert_to_string($NL[0]['created'])."_1.".$NL[0]['attm'];
+
+
+		//online:
+		$NL_Filename_P="nl_".date_convert_to_string($NL[0]['created'])."_p.html";
+		$NLONLINE_URL=$mnl_URL."/".$mnl_nldir."/".$NL_Filename_P;
+		$NLONLINE="<a href=\"".$NLONLINE_URL."\" target=\"_blank\">";
+
 
 		//template values
 		$IMAGE1="";
@@ -134,7 +143,7 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 
 		//emailobjekt vorbereiten, wird dann kopiert, hier globale einstellungen
 		$email_obj=new smtp_message_class;
-		$email_obj->default_charset="UTF-8";
+		$email_obj->default_charset=$encoding;
 		$email_obj->authentication_mechanism="LOGIN";
 		$email_obj->localhost=$SMTPDomain;
 		$email_obj->smtp_host=$SMTPHost;
@@ -213,7 +222,7 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 			$BLINDIMAGE_URL=$mnl_URL."/news_blank.png.php?nl_id=".$Q[$qcc]['nl_id'];
 			$UNSUBSCRIBE_URL=$mnl_URL."/unsubscribe.php?nl_id=".$Q[$qcc]['nl_id'];
 
-			$SUBSCRIBE_URL=$mnl_URL."/subscribe.php?doptin=1";
+			$SUBSCRIBE_URL=$mnl_URL."/subscribe.php?doptin=1&c=&email=";
 			$SUBSCRIBE="<a href=\"".$SUBSCRIBE_URL."\" target=\"_blank\">";
 			$LOG.=  "\n   Subscribe (touch/double optin): ".$SUBSCRIBE_URL;
 			
@@ -239,7 +248,8 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 			$_Tpl_NL->setParseValue("BLINDIMAGE", $BLINDIMAGE);
 			$_Tpl_NL->setParseValue("UNSUBSCRIBE", $UNSUBSCRIBE);
 			$_Tpl_NL->setParseValue("SUBSCRIBE", $SUBSCRIBE);
-
+			$_Tpl_NL->setParseValue("NLONLINE", $NLONLINE);
+			
 			$_Tpl_NL->setParseValue("IMAGE1_URL", $IMAGE1_URL);
 			$_Tpl_NL->setParseValue("LINK1_URL", $LINK1_URL);
 			$_Tpl_NL->setParseValue("ATTACH1_URL", $ATTACH1_URL);
@@ -410,6 +420,7 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 									$_Tpl_NL->setParseValue("BLINDIMAGE", $BLINDIMAGE);
 									$_Tpl_NL->setParseValue("UNSUBSCRIBE", $UNSUBSCRIBE);
 									$_Tpl_NL->setParseValue("SUBSCRIBE", $SUBSCRIBE);
+									$_Tpl_NL->setParseValue("NLONLINE", $NLONLINE);
 
 									$_Tpl_NL->setParseValue("IMAGE1_URL", $IMAGE1_URL);
 									$_Tpl_NL->setParseValue("LINK1_URL", $LINK1_URL);
@@ -601,18 +612,17 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 			*/
 			$created_date=$Q[$qcc]['created'];
 			$sent_date=$created;
-			$ReportMail_HTML.="<br><b>".$sent_date."</b>
-									<br>Der Versand des Newsletter <b>".$NL[0]['subject']."</b> an die Gruppe <b>".$G[0]['name']."</b> ist abgeschlossen.
-									<br>The Mailing for Newsletter <b>".$NL[0]['subject']."</b> to Group <b>".$G[0]['name']."</b> is finished.
-									<br><ul>
-									Adressen/s:".$hc."
-									<br>Gesendet/Sent: ".$hc_ok."
-									<br>Fehler/Errors:".$hc_fail."
-									<br>versendet am/sent at: ".$sent_date."
-									<br>erstellt (nur versand vorbereitet)/created (prepared): ".$created_date."
-									<br>Log: ".$mnl_URL."/".$mnl_logdir."/".$logfilename."
-									</ul>
-									";
+			$ReportMail_HTML.="<br><b>".$sent_date."</b>".
+									"<br>Der Versand des Newsletter <b>".$NL[0]['subject']."</b> an die Gruppe <b>".$G[0]['name']."</b> ist abgeschlossen.".
+									"<br>The Mailing for Newsletter <b>".$NL[0]['subject']."</b> to Group <b>".$G[0]['name']."</b> is finished.".
+									"<br><ul>".
+									"Adressen/s:".$hc.
+									"<br>Gesendet/Sent: ".$hc_ok.
+									"<br>Fehler/Errors:".$hc_fail.
+									"<br>versendet am/sent at: ".$sent_date.
+									"<br>erstellt (nur versand vorbereitet)/created (prepared): ".$created_date.
+									"<br>Log: ".$mnl_URL."/".$mnl_logdir."/".$logfilename.
+									"</ul>";
 			@SendMail($From,$From,$From,$From,$ReportMail_Subject,clear_text($ReportMail_HTML),$ReportMail_HTML);
 		}
 //	}//q status 2 o 3
@@ -624,13 +634,34 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 	update_file($mnl_logpath,$logfilename,$LOG);
 
 	//a http refresh may work
-	echo "<html><head><META HTTTP-EQUIV=\"Refresh\" CONTENT=\"33; URL=".$mnl_Domain.$_SERVER["PHP_SELF"]."\"></head><body bgcolor=\"#ffffff\">Die Seite wird in 33 Sekunden automatisch neu geladen<br>";
+	echo "<html>\n".
+			"<head>\n".
+			"<meta http-equiv=\"refresh\" content=\"66; URL=".$mnl_Domain.$_SERVER["PHP_SELF"]."\">\n".
+			"</head>\n".
+			"<body bgcolor=\"#ffffff\">\n".
+			sprintf(___("Die Seite wird in %s Sekunden automatisch neu geladen."),"66").
+			"<br>\n".
+			___("Klicken Sie auf 'Neu laden' wenn Sie diese Seite erneut aufrufen wollen.").
+			"<a href=\"".$mnl_Domain.$_SERVER["PHP_SELF"]."\"><br>".
+			___("Neu laden").
+			"</a>";
 	echo $LOG;
-	echo "<html>";
 }//$qcc
 if ($qc==0) {
-	echo "<html><head><META HTTTP-EQUIV=\"Refresh\" CONTENT=\"33; URL=".$mnl_Domain.$_SERVER["PHP_SELF"]."\"></head><body bgcolor=\"#ffffff\">Die Seite wird in 33 Sekunden automatisch neu geladen<br>";
-	echo "<html>";
+	echo "<html>\n".
+			"<head>\n".
+			"<meta http-equiv=\"refresh\" content=\"66; URL=".$mnl_Domain.$_SERVER["PHP_SELF"]."\">\n".
+			"</head>\n".
+			"<body bgcolor=\"#ffffff\">\n".
+			___("Zur Zeit gibt es keine zu verarbeitenden Versandauftraege.").
+			"<br>\n".
+			sprintf(___("Die Seite wird in %s Sekunden automatisch neu geladen."),"66").
+			"<br>\n".
+			___("Klicken Sie auf 'Neu laden' wenn Sie diese Seite erneut aufrufen wollen.").
+			"<a href=\"".$mnl_Domain.$_SERVER["PHP_SELF"]."\"><br>".
+			___("Neu laden").
+			"</a>";
 }
+	echo "\n</body>\n</html>";
 
 ?>

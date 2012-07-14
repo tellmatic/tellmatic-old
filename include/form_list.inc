@@ -87,70 +87,27 @@ $statURLPara->addParam("act","statistic");
 $statURLPara->addParam("set","frm");
 
 $_MAIN_OUTPUT="<table border=\"0\" cellpadding=\"1\" cellspacing=\"1\" width=100%>";
-$_MAIN_OUTPUT.= "<thead>
-						<tr>
-						<td><b>".___("ID")."</b>
-						<a href=\"".$mnl_URL."/".$sortURLPara_."&si=id&st=0\">".$img_arrowup."</a>
-						<a href=\"".$mnl_URL."/".$sortURLPara_."&si=id&st=1\">".$img_arrowdown."</a>
-						</td>
-						<td><b>".___("Name")."</b>
-						<a href=\"".$mnl_URL."/".$sortURLPara_."&si=name&st=0\">".$img_arrowup."</a>
-						<a href=\"".$mnl_URL."/".$sortURLPara_."&si=name&st=1\">-</a>
-						</td>
-						<td><b>".___("Beschreibung")."</b>
-						</td>
-<!--
-						<td><b>f0</b>
-						<a href=\"".$mnl_URL."/".$sortURLPara_."&si=f0&st=0\">".$img_arrowup."</a>
-						<a href=\"".$mnl_URL."/".$sortURLPara_."&si=f0&st=1\">".$img_arrowdown."</a>
-						</td>
-						<td><b>f1</b>
-						<a href=\"".$mnl_URL."/".$sortURLPara_."&si=f1&st=0\">".$img_arrowup."</a>
-						<a href=\"".$mnl_URL."/".$sortURLPara_."&si=f1&st=1\">".$img_arrowdown."</a>
-						</td>
-						<td><b>f2</b>
-						<a href=\"".$mnl_URL."/".$sortURLPara_."&si=f2&st=0\">".$img_arrowup."</a>
-						<a href=\"".$mnl_URL."/".$sortURLPara_."&si=f2&st=1\">".$img_arrowdown."</a>
-						</td>
-						<td><b>f3</b>
-						<a href=\"".$mnl_URL."/".$sortURLPara_."&si=f3&st=0\">".$img_arrowup."</a>
-						<a href=\"".$mnl_URL."/".$sortURLPara_."&si=f3&st=1\">".$img_arrowdown."</a>
-						</td>
-						<td><b>f4</b>
-						<a href=\"".$mnl_URL."/".$sortURLPara_."&si=f4&st=0\">".$img_arrowup."</a>
-						<a href=\"".$mnl_URL."/".$sortURLPara_."&si=f4&st=1\">".$img_arrowdown."</a>
-						</td>
-						<td><b>f5</b>
-						<a href=\"".$mnl_URL."/".$sortURLPara_."&si=f5&st=0\">".$img_arrowup."</a>
-						<a href=\"".$mnl_URL."/".$sortURLPara_."&si=f5&st=1\">".$img_arrowdown."</a>
-						</td>
-						<td><b>f6</b>
-						<a href=\"".$mnl_URL."/".$sortURLPara_."&si=f6&st=0\">".$img_arrowup."</a>
-						<a href=\"".$mnl_URL."/".$sortURLPara_."&si=f6&st=1\">".$img_arrowdown."</a>
-						</td>
-						<td><b>f7</b>
-						<a href=\"".$mnl_URL."/".$sortURLPara_."&si=f7&st=0\">".$img_arrowup."</a>
-						<a href=\"".$mnl_URL."/".$sortURLPara_."&si=f7&st=1\">".$img_arrowdown."</a>
-						</td>
-						<td><b>f8</b>
-						<a href=\"".$mnl_URL."/".$sortURLPara_."&si=f8&st=0\">".$img_arrowup."</a>
-						<a href=\"".$mnl_URL."/".$sortURLPara_."&si=f8&st=1\">".$img_arrowdown."</a>
-						</td>
-						<td><b>f9</b>
-						<a href=\"".$mnl_URL."/".$sortURLPara_."&si=f9&st=0\">".$img_arrowup."</a>
-						<a href=\"".$mnl_URL."/".$sortURLPara_."&si=f9&st=1\">".$img_arrowdown."</a>
-						</td>
--->
-						<td>".___("Gruppen")."</td>
-						<td><b>".___("Aktiv")."</b>
-						<a href=\"".$mnl_URL."/".$sortURLPara_."&si=aktiv&st=0\">".$img_arrowup."</a>
-						<a href=\"".$mnl_URL."/".$sortURLPara_."&si=aktiv&st=1\">".$img_arrowdown."</a>
-						</td>
-						<td>...</td>
-						</tr>
-						</thead>
-						<tbody>
-						";
+$_MAIN_OUTPUT.= "<thead>".
+						"<tr>".
+						"<td><b>".___("ID")."</b>".
+						"<a href=\"".$mnl_URL."/".$sortURLPara_."&si=id&st=0\">".$img_arrowup."</a>".
+						"<a href=\"".$mnl_URL."/".$sortURLPara_."&si=id&st=1\">".$img_arrowdown."</a>".
+						"</td>".
+						"<td><b>".___("Name")."</b>".
+						"<a href=\"".$mnl_URL."/".$sortURLPara_."&si=name&st=0\">".$img_arrowup."</a>".
+						"<a href=\"".$mnl_URL."/".$sortURLPara_."&si=name&st=1\">-</a>".
+						"</td>".
+						"<td><b>".___("Beschreibung")."</b>".
+						"</td>".
+						"<td>".___("Gruppen")."</td>".
+						"<td><b>".___("Aktiv")."</b>".
+						"<a href=\"".$mnl_URL."/".$sortURLPara_."&si=aktiv&st=0\">".$img_arrowup."</a>".
+						"<a href=\"".$mnl_URL."/".$sortURLPara_."&si=aktiv&st=1\">".$img_arrowdown."</a>".
+						"</td>".
+						"<td>...</td>".
+						"</tr>".
+						"</thead>".
+						"<tbody>";
 
 for ($acc=0;$acc<$ac;$acc++) {
 	if ($acc%2==0) {$bgcolor=$row_bgcolor;} else {$bgcolor=$row_bgcolor2;}
@@ -216,22 +173,21 @@ for ($acc=0;$acc<$ac;$acc++) {
 	if ($FRM[$acc]['double_optin']==1) {
 		$_MAIN_OUTPUT.=  "&nbsp;<img src=\"".$mnl_iconURL."/arrow_refresh_small.png\" border=\"0\">".___("Double-Opt-In");
 	}
-	$_MAIN_OUTPUT.= "<br><b>".$FRM[$acc]['name']."</b>
-							<font size=-1><br>".$FRM[$acc]['descr']."
-							<br><br>".sprintf(___("Anmeldungen: %s"),$FRM[$acc]['subscriptions'])."
-							<br><br>f0= ".$FRM[$acc]['f0']." &nbsp; [".$FRM[$acc]['f0_value']."]
-							<br>f1= ".$FRM[$acc]['f1']." &nbsp; [".$FRM[$acc]['f1_value']."]
-							<br>f2= ".$FRM[$acc]['f2']." &nbsp; [".$FRM[$acc]['f2_value']."]
-							<br>f3= ".$FRM[$acc]['f3']." &nbsp; [".$FRM[$acc]['f3_value']."]
-							<br>f4= ".$FRM[$acc]['f4']." &nbsp; [".$FRM[$acc]['f4_value']."]
-							<br>f5= ".$FRM[$acc]['f5']." &nbsp; [".$FRM[$acc]['f5_value']."]
-							<br>f6= ".$FRM[$acc]['f6']." &nbsp; [".$FRM[$acc]['f6_value']."]
-							<br>f7= ".$FRM[$acc]['f7']." &nbsp; [".$FRM[$acc]['f7_value']."]
-							<br>f8= ".$FRM[$acc]['f8']." &nbsp; [".$FRM[$acc]['f8_value']."]
-							<br>f9= ".$FRM[$acc]['f9']." &nbsp; [".$FRM[$acc]['f9_value']."]
-							<br><br>".sprintf(___("Erstellt am: %s von %s"),$created_date,$author)."
-							<br>".sprintf(___("Bearbeitet am: %s von %s"),$updated_date,$editor)."
-							";
+	$_MAIN_OUTPUT.= "<br><b>".$FRM[$acc]['name']."</b>".
+							"<font size=-1><br>".$FRM[$acc]['descr'].
+							"<br><br>".sprintf(___("Anmeldungen: %s"),$FRM[$acc]['subscriptions']).
+							"<br><br>f0= ".$FRM[$acc]['f0']." &nbsp; [".$FRM[$acc]['f0_value']."]".
+							"<br>f1= ".$FRM[$acc]['f1']." &nbsp; [".$FRM[$acc]['f1_value']."]".
+							"<br>f2= ".$FRM[$acc]['f2']." &nbsp; [".$FRM[$acc]['f2_value']."]".
+							"<br>f3= ".$FRM[$acc]['f3']." &nbsp; [".$FRM[$acc]['f3_value']."]".
+							"<br>f4= ".$FRM[$acc]['f4']." &nbsp; [".$FRM[$acc]['f4_value']."]".
+							"<br>f5= ".$FRM[$acc]['f5']." &nbsp; [".$FRM[$acc]['f5_value']."]".
+							"<br>f6= ".$FRM[$acc]['f6']." &nbsp; [".$FRM[$acc]['f6_value']."]".
+							"<br>f7= ".$FRM[$acc]['f7']." &nbsp; [".$FRM[$acc]['f7_value']."]".
+							"<br>f8= ".$FRM[$acc]['f8']." &nbsp; [".$FRM[$acc]['f8_value']."]".
+							"<br>f9= ".$FRM[$acc]['f9']." &nbsp; [".$FRM[$acc]['f9_value']."]".
+							"<br><br>".sprintf(___("Erstellt am: %s von %s"),$created_date,$author).
+							"<br>".sprintf(___("Bearbeitet am: %s von %s"),$updated_date,$editor);
 	$_MAIN_OUTPUT.= "<br><br>".___("Anmeldungen &uuml;ber dieses Formular werden in die folgenden Gruppen eingeordnet:")."<br>";
 	$_MAIN_OUTPUT.= "<ul>";
 

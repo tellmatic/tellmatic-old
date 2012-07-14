@@ -41,13 +41,14 @@ if ($set=="save") {
 	$USER=new mnlCFG();
 
 	if ($check) {
-		$USER->setPasswd($_SERVER['PHP_AUTH_USER'],$pass);//	MNL_SITEID,$PHP_AUTH_USER,$PHP_AUTH_PW; 
+		$USER->setPasswd($LOGIN->USER['name'],$pass);//	MNL_SITEID,$PHP_AUTH_USER,$PHP_AUTH_PW; 
 		$pwchanged=1;
 	} else {
 		$_MAIN_MESSAGE.="<br>".___("Das Passwort wurde nicht ge&auml;ndert.");
 	}
-	$USER->setStyle($_SERVER['PHP_AUTH_USER'],$style);
-	$USER->setLang($_SERVER['PHP_AUTH_USER'],$lang);
+	
+	$USER->setStyle($LOGIN->USER['name'],$style);
+	$USER->setLang($LOGIN->USER['name'],$lang);
 
 
 	header('Location: '.$mnl_URL."/?act=user&pwchanged=".$pwchanged."&cryptpw=".crypt($LOGIN->USER['passwd']));

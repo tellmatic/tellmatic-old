@@ -13,18 +13,87 @@
 
 UPDATE
 
-Update to 1.0.3:
-	
-	Erstellen Sie eine Sicherheitskopie ihrer aktuellen Installation!
+*+*+*+*+*+*+*+*+*+*+*+ 1.0.4.1
+--en:
+Update from 1.0.4 to 1.0.4.1:
+	Just copy include/send_it.php over your current version.
+	See also notes for updating 1.0.4
+
+--de:
+Update von 1.0.4 auf Version 1.0.4.1:
+	Aktualisieren Sie die installiere Version von send_it.php im Verzeichnis 'include' mit der neuen Version.
+	Oder verfahren Sie wie im Update fuer 1.0.4 beschrieben.
+
+
+*+*+*+*+*+*+*+*+*+*+*+ 1.0.4
+--en:
+Update from 1.0.3(a) to 1.0.4:
+
 	Please make a backup of your current installation!
-	
-	Kopieren Sie Tellmatic 1.0.3 auf Ihren Server. Sie koennen die vorhandene Installation ueberschreiben. 
+	Please copy Tellmatic-1.0.4 to your server.
+	If you already edited some of the Templates for your needs, please dont copy over.
+
+--de:
+Update von 1.0.3(a) auf Version 1.0.4:
+
+	Erstellen Sie eine Sicherheitskopie ihrer aktuellen Installation!
+	Kopieren Sie Tellmatic 1.0.4 auf Ihren Server. Sie koennen die vorhandene Installation ueberschreiben. 
 	Sollten Sie bereits die Templates fuer Formulare angepasst haben, kopieren Sie diese Dateien nicht.
+
+
+*+*+*+*+*+*+*+*+*+*+*+ 1.0.3a
+--en:
+Update from 1.0.3 to 1.0.3-a:
+
+	Please make a backup of your current installation!
+	Please copy Tellmatic-1.0.3a to your server.
+	If you already edited some of the Templates for your needs, please dont copy over.
+
+--de:
+Update von 1.0.3 auf Version 1.0.3-a:
+
+	Erstellen Sie eine Sicherheitskopie ihrer aktuellen Installation!
+	Kopieren Sie Tellmatic 1.0.3a auf Ihren Server. Sie koennen die vorhandene Installation ueberschreiben. 
+	Sollten Sie bereits die Templates fuer Formulare angepasst haben, kopieren Sie diese Dateien nicht.
+
+
+*+*+*+*+*+*+*+*+*+*+*+ 1.0.3a
+--en:
+Update to 1.0.3-a from previous version:
+	see below
+
+--de:
+Update auf 1.0.3-a von einer früheren Version:
+	siehe unten
+	
+*+*+*+*+*+*+*+*+*+*+*+ 1.0.3
+--en:
+Update to 1.0.3 from previous version:
+
+	Please make a backup of your current installation!
 	Please copy Tellmatic-1.0.3 to your server.
 	If you already edited some of the Templates for your needs, please dont copy over.
+
+	Please add field 'lang' to the tellmatic usertable:
+	SQL:
+		ALTER TABLE `[prefix_]user` ADD `lang` VARCHAR( 8 ) DEFAULT 'de' NOT NULL AFTER `style` ; 
+		ALTER TABLE `user` ADD INDEX ( `lang` ) ;
+		After adding the field, please update your default-value for users:
+		UPDATE `[prefix_]user` SET lang='de';
+		
+		International users may use:
+		UPDATE `[prefix_]user` SET lang='en';
+
+	done.
+
+--de:
+Update auf 1.0.3 von einer früheren Version:
+	
+	Erstellen Sie eine Sicherheitskopie ihrer aktuellen Installation!
+	Kopieren Sie Tellmatic 1.0.3 auf Ihren Server. Sie koennen die vorhandene Installation ueberschreiben. 
+	Sollten Sie bereits die Templates fuer Formulare angepasst haben, kopieren Sie diese Dateien nicht.
 	
 	Bitte legen Sie das Feld mit dem Namen 'lang' in der Benutzertabelle von Tellmatic an:
-	Please add field 'lang' to the tellmatic usertable:
 	SQL:
 		ALTER TABLE `[prefix_]user` ADD `lang` VARCHAR( 8 ) DEFAULT 'de' NOT NULL AFTER `style` ; 
 		ALTER TABLE `user` ADD INDEX ( `lang` ) ;
@@ -33,9 +102,9 @@ Update to 1.0.3:
 	After adding the field, please update your default-value for users:
 		UPDATE `[prefix_]user` SET lang='de';
 		
-		international users may use:
+		International users may use:
 		UPDATE `[prefix_]user` SET lang='en';
 
-	done.
+	fertig.
 
 EOF

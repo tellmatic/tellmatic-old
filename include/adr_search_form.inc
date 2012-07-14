@@ -34,7 +34,7 @@ $Form->new_Input($FormularName,"set", "hidden", "search");
 //add inputfields and buttons....
 //////////////////
 //EMAIL
-$Form->new_Input($FormularName,$InputName_Name,"text", $$InputName_Name);
+$Form->new_Input($FormularName,$InputName_Name,"text","");
 $Form->set_InputStyleClass($FormularName,$InputName_Name,"mFormText","mFormTextFocus");
 $Form->set_InputSize($FormularName,$InputName_Name,12,256);
 $Form->set_InputDesc($FormularName,$InputName_Name,___("Suche nach e-Mail"));

@@ -4,869 +4,1244 @@
 #
 #, fuzzy
 msgid	""
-msgstr	"Project-Id-Version: PACKAGE VERSION\n"
-	"POT-Creation-Date: 2007-03-24 19:05+0100\n"
-	"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-	"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-	"Language-Team: LANGUAGE <LL@li.org>\n"
+msgstr	"Project-Id-Version: Tellmatic 1.x\n"
+	"POT-Creation-Date: 2007-03-26 06:23+0200\n"
+	"PO-Revision-Date: 2007-03-26 06:23+0200\n"
+	"Last-Translator: Volker Augustin <info@tellmatic.org>\n"
+	"Language-Team: Italian <info@tellmatic.org>\n"
 	"MIME-Version: 1.0\n"
-	"Content-Type: text/plain; charset=CHARSET\n"
-	"Content-Transfer-Encoding: ENCODING\n"
+	"Content-Type: text/plain; charset=UTF-8\n"
+	"Content-Transfer-Encoding: 8bit\n"
 
+#: ../include/adm_set.inc:15 ../include/adm_set_form.inc:27
 msgid	"Systemeinstellungen aendern"
 msgstr	"Edit system-settings"
 
+#: ../include/adm_set_form.inc:42
 msgid	"Erscheint als Absender-name in der E-Mail"
 msgstr	"Will shown as sender-name in your mailings."
 
+#: ../include/adm_set_form.inc:51
 msgid	"Erscheint als Absender-E-Mail-Adresse in der E-Mail"
 msgstr	"Will shown as sender-address in you mailings."
 
+#: ../include/adm_set_form.inc:96
 msgid	"Nachricht bei Anmeldung"
 msgstr	"Notify on subscription"
 
+#: ../include/adm_set_form.inc:106
 msgid	"Nachricht bei Abmeldung"
 msgstr	"Notify on unsubscribe"
 
+#: ../include/adm_set_form.inc:115
 msgid	"E-Mail-Adresse fuer Benachrichtigungen"
 msgstr	"E-mail for notifications"
 
+#: ../include/adm_set_form.inc:124
 msgid	"Return-Path, Adresse fuer E-Mail Fehlermeldungen"
 msgstr	"Return-path-address for bounce-messages"
 
+#: ../include/adm_set_form.inc:133 ../include/adm_set_form.inc:358
 msgid	"SMTP Servername / IP-Adresse"
 msgstr	"SMTP hostname or IP-address"
 
+#: ../include/adm_set_form.inc:142 ../include/adm_set_form.inc:367
 msgid	"SMTP Benutzername"
 msgstr	"SMTP username"
 
+#: ../include/adm_set_form.inc:151 ../include/adm_set_form.inc:376
 msgid	"SMTP Passwort"
 msgstr	"SMTP password"
 
+#: ../include/adm_set_form.inc:160 ../include/adm_set_form.inc:385
 msgid	"SMTP Domain"
 msgstr	"SMTP domain"
 
+#: ../include/adm_set_form.inc:170
 msgid	"Maximale Anzahl Sendeversuche pro Adresse"
 msgstr	"Max. delivery-errors per address"
 
+#: ../include/adm_set_form.inc:188
 msgid	"Maximale Anzahl Mails pro Durchgang"
 msgstr	"Max. mails per run"
 
+#: ../include/adm_set_form.inc:211
 msgid	"Maximale Anzahl BCC-Adressen pro Mail fuer Massenmailing"
 msgstr	"Max. BCC-addresses per mail, for massmailings"
 
+#: ../include/adm_set_form.inc:228 ../include/adr_form.inc:186
+#: ../include/adr_grp_form.inc:69 ../include/form_form.inc:539
+#: ../include/nl_form.inc:132 ../include/nl_grp_form.inc:88
+#: ../include/queue_form.inc:145
 msgid	"Speichern"
 msgstr	"Save"
 
+#: ../include/adm_set_form.inc:236 ../include/adm_set_form.inc:238
+#: ../include/adr_form.inc:194 ../include/adr_form.inc:196
+#: ../include/adr_search_form.inc:147 ../include/adr_search_form.inc:149
+#: ../include/bounce_filter_form_head.inc:100
+#: ../include/bounce_mail_form_head.inc:77
+#: ../include/bounce_mail_form_head.inc:79 ../include/form_form.inc:547
+#: ../include/nl_form.inc:140 ../include/nl_form.inc:142
+#: ../include/nl_grp_form.inc:96 ../include/nl_grp_form.inc:98
+#: ../include/queue_form.inc:153 ../include/user_form.inc:98
+#: ../include/user_form.inc:100
 msgid	"Reset"
 msgstr	"Reset Values"
 
+#: ../include/adm_set_form.inc:257
 msgid	"Absender- und Antwort-Adresse"
 msgstr	"Sender- and reply-address"
 
+#: ../include/adm_set_form.inc:257
 msgid	"E-Mail (name@domain.tld)"
 msgstr	"E-mail (name@domain.tld)"
 
+#: ../include/adm_set_form.inc:266
 msgid	"Absender-Name"
 msgstr	"Sender-name"
 
+#: ../include/adm_set_form.inc:275
 msgid	"Return-Path, E-Mail fuer Fehlermeldungen"
 msgstr	"Return-path-address for bounce-messages"
 
+#: ../include/adm_set_form.inc:285
 msgid	"Pr&uuml;fung der E-Mail-Adressen, Intern + Versand"
 msgstr	"E-mail-validation (internal)"
 
+#: ../include/adm_set_form.inc:294
 msgid	"Pr&uuml;fung der E-Mail-Adressen bei Anmeldung"
 msgstr	"E-mail-validation (forms/subscriptions)"
 
+#: ../include/adm_set_form.inc:303
 msgid	"Benachrichtigung bei Neuanmeldung (subscribe)"
 msgstr	"Notify on subscriptions"
 
+#: ../include/adm_set_form.inc:312
 msgid	"Benachrichtigung bei Abmeldung (unsubscribe)"
 msgstr	"Notify on unsubscribe"
 
+#: ../include/adm_set_form.inc:321
 msgid	"Benachrichtigungen gehen an (name@domain.tld)"
 msgstr	"Notifications goes to (name@domain.tld)"
 
+#: ../include/adm_set_form.inc:330
 msgid	"Maximale Versuche pro E-Mail (Gesamt)"
 msgstr	"Max. delivery-errors per mail (total)"
 
+#: ../include/adm_set_form.inc:339
 msgid	"Maximale Anzahl Mails pro Sendevorgang"
 msgstr	"Max. mails per run"
 
+#: ../include/adm_set_form.inc:348
 msgid	"Maximale Anzahl Adressen pro Mail im BCC-Header f&uuml;r "
 	"Massenmailing"
 msgstr	"Max. addresses in BCC-header per mail, for massmailings"
 
+#: ../include/adm_set.inc:76
 msgid	"Absender-Adresse sollte nicht leer sein"
 msgstr	"Sender-address should not be empty."
 
+#: ../include/adm_set.inc:77
 msgid	"Absender E-Mail hat ein falsches Format oder Domain ist nicht "
 	"g&uuml;ltig"
 msgstr	"Sender-address is invalid."
 
+#: ../include/adm_set.inc:78
 msgid	"Absender-Name sollte nicht leer sein"
 msgstr	"Sender-name should not be empty."
 
+#: ../include/adm_set.inc:79
 msgid	"E-Mail f&uuml;r Fehlermeldungen sollte nicht leer sein"
 msgstr	"Return-path-address should not be empty."
 
+#: ../include/adm_set.inc:80
 msgid	"E-Mail f&uuml;r Fehlermeldungen hat ein falsches Format oder Domain "
 	"ist nicht g&uuml;ltig"
 msgstr	"Return-path-address is invalid."
 
+#: ../include/adm_set.inc:81
 msgid	"E-Mail f&uumlr Benachrichtigungen sollte nicht leer sein"
 msgstr	"Notification-address should not be empty."
 
+#: ../include/adm_set.inc:82
 msgid	"E-Mail f&uuml;r Benachrichtigungen bei An-/Abmeldungen hat ein "
 	"falsches Format oder Domain ist nicht g&uuml;ltig"
 msgstr	"Notification-address ininvalid."
 
+#: ../include/adm_set.inc:131
 msgid	"Die Einstellungen wurden gespeichert und sind ab sofort g&uuml;ltig"
 msgstr	"Settings saved."
 
+#: ../include/Menu.inc:205 ../include/Menu.inc:206 ../include/Menu.inc:214
+#: ../include/Menu.inc:215 ../include/adm_set.inc:161
 msgid	"Serverinfo"
 msgstr	"Serverinfo"
 
+#: ../include/adr_clean.inc:15 ../include/adr_clean_form.inc:28
 msgid	"Adressdatenbank bereinigen"
 msgstr	"Clean up addresses"
 
+#: ../include/adr_clean_form.inc:40
 msgid	"Filtern nach E-Mail"
 msgstr	"Filter e-mail address"
 
+#: ../include/adr_clean_form.inc:49 ../include/adr_clean_form.inc:68
+#: ../include/nl_form.inc:190 ../include/nl_list.inc:232
 msgid	"Gruppe"
 msgstr	"Group"
 
+#: ../include/adr_clean_form.inc:89 ../include/adr_search_form.inc:104
 msgid	"Suche nach Adress-Status"
 msgstr	"Search for status"
 
+#: ../include/adr_clean_form.inc:98
 msgid	"Alle fehlerhaften Adressen"
 msgstr	"All failed or errorness addresses"
 
+#: ../include/adr_clean_form.inc:110
 msgid	"Aktion"
 msgstr	"Action"
 
+#: ../include/adr_clean_form.inc:117 ../include/adr_list_legende.inc:24
+#: ../include/bounce_mail_form_head.inc:65 ../include/form_list_legende.inc:34
+#: ../include/nl_grp_list_legende.inc:28 ../include/nl_list_legende.inc:47
+#: ../include/queue_list_legende.inc:25
 msgid	"Loeschen"
 msgstr	"Delete"
 
+#: ../include/adr_clean_form.inc:125
 msgid	"Aktion Ausfuehren"
 msgstr	"Do it"
 
+#: ../include/adr_clean_form.inc:151
 #, c-format
 msgid	"E-Mail (leer = alle! ; wildcard = '*' oder '%'"
 msgstr	"E-mail (empty = alle! ; wildcard = '*' oder '%'"
 
+#: ../include/adr_clean_form.inc:158
 msgid	"aus der Gruppe:"
 msgstr	"From group:"
 
+#: ../include/adr_clean_form.inc:166
 msgid	"mit dem Status:"
 msgstr	"with status:"
 
+#: ../include/adr_clean.inc:54 ../include/adr_clean.inc:70
+#: ../include/adr_clean.inc:79 ../include/adr_clean.inc:99
 #, c-format
 msgid	"%s Eintr&auml;ge aus der Gruppe %s mit dem Status %s wurden "
 	"gel&ouml;scht."
 msgstr	"%s entries from group %s with status %s have been deleted."
 
+#: ../include/adr_clean.inc:108
 msgid	"&Uuml;bersicht"
 msgstr	"Overview"
 
+#: ../include/adr_clean.inc:115 ../include/adr_grp_list.inc:151
 #, c-format
 msgid	"%s Adressen"
 msgstr	"%s addresses"
 
+#: ../include/adr_edit.inc:15 ../include/adr_list.inc:275
 msgid	"Adresse bearbeiten"
 msgstr	"Edit address"
 
+#: ../include/adr_edit.inc:64
 msgid	"E-Mail darf nicht leer sein."
 msgstr	"E-mail should not be empty."
 
+#: ../include/adr_edit.inc:66
 msgid	"E-Mail ist nicht korrekt oder Domain ist nicht g&uuml;tig."
 msgstr	"E-mail in invalid."
 
+#: ../include/adr_edit.inc:89
 #, c-format
 msgid	"Adresse %s wurde bearbeitet."
 msgstr	"Address %s edited."
 
+#: ../include/Menu.inc:133 ../include/Menu.inc:142
+#: ../include/adr_export_form.inc:24
 msgid	"Adressen in eine CSV-Datei exportieren"
 msgstr	"Export addresses to CSV-file."
 
+#: ../include/adr_export_form.inc:37 ../include/adr_form.inc:59
+#: ../include/adr_import_form.inc:47 ../include/form_form.inc:78
+#: ../include/queue_form.inc:68
 msgid	"Gruppen waehlen, STRG/CTRL gedrueckt halten und klicken f. "
 	"Mehrfachauswahl"
 msgstr	"Select groups, hold CTRL-key to select multiple groups."
 
+#: ../include/adr_export_form.inc:56
 msgid	"Nur Adressen mit diesem Status exportieren"
 msgstr	"Expport only addresses with selected status"
 
+#: ../include/adr_export_form.inc:98 ../include/nl_list.inc:344
 msgid	"Gruppe:"
 msgstr	"Group:"
 
+#: ../include/adr_export_form.inc:104
 msgid	"Adressen mit folgendem Status:"
 msgstr	"Addresses with status:"
 
+#: ../include/adr_export.inc:15
 msgid	"Adressen exportieren (CSV-Export)"
 msgstr	"Export addresses to CSV-file"
 
+#: ../include/adr_export.inc:42 ../include/adr_list.inc:75
 #, c-format
 msgid	"gew&auml;hlte Gruppe: %s"
 msgstr	"Selected group: %s"
 
+#: ../include/adr_export.inc:43
 #, c-format
 msgid	"Exportiere %s"
 msgstr	"Exporting %s"
 
+#: ../include/adr_export.inc:44
 #, c-format
 msgid	"%s Eintr&auml;ge gefunden."
 msgstr	"%s entries found."
 
+#: ../include/adr_export.inc:68 ../include/adr_import.inc:50
 #, c-format
 msgid	"Datei gespeichert unter: %s"
 msgstr	"Files saved as: %s"
 
+#: ../include/adr_form.inc:27
 msgid	"Neue Adresse erstellen"
 msgstr	"Create new addess"
 
+#: ../include/adr_form.inc:40 ../include/adr_form.inc:216
+#: ../include/adr_list.inc:156
 msgid	"E-Mail"
 msgstr	"E-mail"
 
+#: ../include/adr_form.inc:50 ../include/adr_form.inc:230
+#: ../include/adr_grp_form.inc:53 ../include/adr_grp_list.inc:86
+#: ../include/adr_list.inc:165 ../include/adr_list_legende.inc:20
+#: ../include/bounce_filter_adr_list.inc:67
+#: ../include/bounce_filter_adr_list.inc:96 ../include/form_form.inc:50
+#: ../include/form_form.inc:60 ../include/form_form.inc:577
+#: ../include/form_list.inc:103 ../include/form_list_legende.inc:29
+#: ../include/nl_form.inc:87 ../include/nl_form.inc:171
+#: ../include/nl_grp_form.inc:53 ../include/nl_grp_form.inc:125
+#: ../include/nl_grp_list.inc:80 ../include/nl_grp_list_legende.inc:21
+#: ../include/nl_list_legende.inc:41
 msgid	"Aktiv"
 msgstr	"Active"
 
+#: ../include/Menu.inc:187 ../include/Menu.inc:196 ../include/adr_form.inc:79
+#: ../include/adr_form.inc:239 ../include/adr_list.inc:160
+#: ../include/adr_list_legende.inc:26 ../include/adr_search_form.inc:107
+#: ../include/nl_list.inc:228 ../include/queue_list.inc:130
+#: ../include/queue_list_legende.inc:27 ../include/status.inc:15
 msgid	"Status"
 msgstr	"Status"
 
+#: ../include/Menu.inc:35 ../include/Menu.inc:44 ../include/Menu.inc:87
+#: ../include/Menu.inc:96 ../include/adr_form.inc:223
+#: ../include/adr_list.inc:164 ../include/form_list.inc:102
+#: ../include/queue_form.inc:185
 msgid	"Gruppen"
 msgstr	"Groups"
 
+#: ../include/adr_grp_edit.inc:15 ../include/adr_grp_list.inc:136
+#: ../include/adr_grp_list.inc:176
 msgid	"Adressgruppe bearbeiten"
 msgstr	"Edit address-group"
 
+#: ../include/adr_grp_edit.inc:35 ../include/adr_grp_new.inc:36
+#: ../include/nl_grp_edit.inc:40 ../include/nl_grp_new.inc:40
 msgid	"Name der Gruppe sollte nicht leer sein."
 msgstr	"Name of group should not be empty."
 
+#: ../include/adr_grp_edit.inc:39
 #, c-format
 msgid	"Adressgruppe %s wurde aktualisiert."
 msgstr	"Address-group %s edited."
 
+#: ../include/adr_grp_form.inc:27
 msgid	"Neue Adressgruppe erstellen"
 msgstr	"Create new address-group"
 
+#: ../include/adr_grp_form.inc:39 ../include/adr_grp_form.inc:98
+#: ../include/adr_grp_list.inc:82 ../include/form_form.inc:40
+#: ../include/form_form.inc:568 ../include/form_list.inc:96
+#: ../include/nl_grp_form.inc:40 ../include/nl_grp_form.inc:117
+#: ../include/nl_grp_list.inc:76
 msgid	"Name"
 msgstr	"Name"
 
+#: ../include/adr_grp_form.inc:63 ../include/adr_grp_form.inc:117
+#: ../include/adr_grp_list.inc:84 ../include/form_form.inc:69
+#: ../include/form_form.inc:596 ../include/form_list.inc:100
+#: ../include/nl_grp_form.inc:63 ../include/nl_grp_form.inc:136
+#: ../include/nl_grp_list.inc:78
 msgid	"Beschreibung"
 msgstr	"Description"
 
+#: ../include/adr_grp_form.inc:111 ../include/adr_grp_list.inc:132
+#: ../include/adr_grp_list.inc:148 ../include/nl_grp_form.inc:130
+#: ../include/nl_grp_list.inc:125 ../include/nl_grp_list.inc:141
 msgid	"Diese Gruppe ist die Standardgruppe"
 msgstr	"This is the default-group."
 
+#: ../include/adr_grp_form.inc:111 ../include/nl_grp_form.inc:130
 msgid	"Standardgruppe! Kann nicht de-aktiviert werden."
 msgstr	"Default-group! Can not be de-activated."
 
+#: ../include/adr_grp_list.inc:15
 msgid	"Adressgruppen verwalten"
 msgstr	"Manage address-groups"
 
+#: ../include/adr_grp_list.inc:28 ../include/adr_list.inc:60
+#: ../include/form_list.inc:31 ../include/nl_grp_list.inc:28
+#: ../include/nl_list.inc:31
 msgid	"Eintrag wurde aktiviert."
 msgstr	"Entry was activated."
 
+#: ../include/adr_grp_list.inc:30 ../include/adr_list.inc:62
+#: ../include/form_list.inc:33 ../include/nl_grp_list.inc:30
+#: ../include/nl_list.inc:33
 msgid	"Eintrag wurde de-aktiviert."
 msgstr	"Entry de-activated."
 
+#: ../include/adr_grp_list.inc:35 ../include/nl_grp_list.inc:35
 msgid	"Neue Standardgruppe wurde definiert."
 msgstr	"New dafault-group assigned."
 
+#: ../include/adr_grp_list.inc:39 ../include/adr_list.inc:67
+#: ../include/form_list.inc:38 ../include/nl_grp_list.inc:39
+#: ../include/nl_list.inc:38 ../include/queue_list.inc:68
 msgid	"Eintrag wurde gel&ouml;scht."
 msgstr	"Entry has been deleted"
 
+#: ../include/adr_grp_list.inc:43
 msgid	"Eintrag und die zugeordneten Adressen wurden gel&ouml;scht."
 msgstr	"Entry and dedicated addresses deleted."
 
+#: ../include/adr_grp_list.inc:141 ../include/adr_list.inc:226
+#: ../include/form_list.inc:167 ../include/nl_grp_list.inc:134
+#: ../include/nl_list.inc:329 ../include/statistic.inc:185
 msgid	"(aktiv)"
 msgstr	"(active)"
 
+#: ../include/adr_grp_list.inc:144 ../include/adr_list.inc:229
+#: ../include/form_list.inc:170 ../include/nl_grp_list.inc:137
+#: ../include/nl_list.inc:332 ../include/statistic.inc:188
 msgid	"(inaktiv)"
 msgstr	"(inactive)"
 
+#: ../include/adr_grp_list.inc:148 ../include/adr_grp_list_legende.inc:19
+#: ../include/nl_grp_list.inc:141 ../include/nl_grp_list_legende.inc:20
 msgid	"Standardgruppe"
 msgstr	"Default-group"
 
+#: ../include/adr_grp_list.inc:161 ../include/adr_list.inc:266
+#: ../include/form_list.inc:216 ../include/nl_grp_list.inc:154
+#: ../include/nl_list.inc:434
 msgid	"aktivieren/de-aktivieren"
 msgstr	"activate/de-activate"
 
+#: ../include/adr_grp_list.inc:177
 msgid	"Neue Adresse in dieser Gruppe anlegen"
 msgstr	"Create new address in this group"
 
+#: ../include/adr_grp_list.inc:178
 msgid	"Alle Adressen in dieser Gruppe anzeigen"
 msgstr	"Show all addresses in this group"
 
+#: ../include/adr_grp_list.inc:179 ../include/adr_grp_list_legende.inc:25
+#: ../include/adr_list.inc:276 ../include/adr_list_legende.inc:23
+#: ../include/form_list.inc:237 ../include/form_list_legende.inc:33
+#: ../include/nl_list.inc:453 ../include/nl_list_legende.inc:46
 msgid	"Statistik anzeigen"
 msgstr	"Show statistics"
 
+#: ../include/adr_grp_list.inc:186
 #, c-format
 msgid	"Adressgruppe %s als Standard definieren."
 msgstr	"Make address-group %s the default-group"
 
+#: ../include/adr_grp_list.inc:186
 msgid	"Diese Adressgruppe als Standardgruppe"
 msgstr	"Make this address-group the default-group"
 
+#: ../include/adr_grp_list.inc:189
 #, c-format
 msgid	"Adressgruppe %s loeschen und Adressen dieser Gruppe der "
 	"Standardgruppe zuordnen und Verknuepfungen zu Formularen aufheben?"
 msgstr	"Delete addressgroup %s and de-reference subscription-forms? Members "
 	"of this group will be assigned to the default-group."
 
+#: ../include/adr_grp_list.inc:189
 msgid	"Adressgruppe loeschen"
 msgstr	"Delete address-group"
 
+#: ../include/adr_grp_list.inc:191
 #, c-format
 msgid	"Adressgruppe %s UND Adressen dieser Gruppe loeschen?"
 msgstr	"Delete address-group %s and ALL addresses inn this group?"
 
+#: ../include/adr_grp_list.inc:191
 msgid	"Adressgruppe und Adressen loeschen"
 msgstr	"Delete group and addresses"
 
+#: ../include/adr_grp_list_legende.inc:16 ../include/adr_list_legende.inc:16
+#: ../include/form_list_legende.inc:16 ../include/nl_grp_list_legende.inc:16
+#: ../include/nl_list_legende.inc:16 ../include/queue_list_legende.inc:16
 msgid	"Legende / Status"
 msgstr	"Legend / Status"
 
+#: ../include/adr_grp_list_legende.inc:18 ../include/adr_list_legende.inc:19
+#: ../include/form_list_legende.inc:19 ../include/nl_grp_list_legende.inc:19
+#: ../include/nl_list_legende.inc:19 ../include/queue_list_legende.inc:19
 msgid	"Legende"
 msgstr	"Legend"
 
+#: ../include/adr_grp_list_legende.inc:19
+#: ../include/nl_grp_list_legende.inc:20
 msgid	"Standardgruppe (kann nicht de-aktiviert und gel&ouml;scht werden)"
 msgstr	"Default-group! Can not be deactivated or deleted."
 
+#: ../include/adr_grp_list_legende.inc:20
 msgid	"Gruppe ist Aktiv"
 msgstr	"Group is active"
 
+#: ../include/adr_grp_list_legende.inc:21
 msgid	"Gruppe ist Inaktiv"
 msgstr	"Group is inactive"
 
+#: ../include/adr_grp_list_legende.inc:21
+#: ../include/nl_grp_list_legende.inc:22
 msgid	"Gruppe ist Aktiv/Inaktiv (Klick=Deaktivieren/Aktivieren)"
 msgstr	"Group is active/inactive (click=deactivate/activate)"
 
+#: ../include/adr_grp_list_legende.inc:22 ../include/adr_list_legende.inc:22
+#: ../include/form_list_legende.inc:31 ../include/nl_grp_list_legende.inc:23
+#: ../include/nl_list.inc:444 ../include/nl_list.inc:447
+#: ../include/nl_list_legende.inc:43
 msgid	"Bearbeiten"
 msgstr	"Edit"
 
+#: ../include/adr_grp_list_legende.inc:23
 msgid	"Adresse in dieser Gruppe erstellen"
 msgstr	"Create member in this group"
 
+#: ../include/adr_grp_list_legende.inc:24
 msgid	"Adressen dieser Gruppe anzeigen"
 msgstr	"Show members"
 
+#: ../include/adr_grp_list_legende.inc:24
 msgid	"Adressen dieser Gruppe anzeigen, Anzahl der Adressen in dieser Gruppe"
 msgstr	"Show addesses in group, count"
 
+#: ../include/adr_grp_list_legende.inc:26
+#: ../include/nl_grp_list_legende.inc:27
 msgid	"Diese Gruppe als Standardgruppe definieren"
 msgstr	"Make this group the default-group"
 
+#: ../include/adr_grp_list_legende.inc:27
 msgid	"Gruppe loeschen und Adressen der Standardgruppe zuordnen"
 msgstr	"Delete address-group and re-assign members to the default-group"
 
+#: ../include/adr_grp_list_legende.inc:27
 msgid	"Gruppe l&ouml;schen und Adressen der Standardgruppe zuordnen"
 msgstr	"Delete address-group and re-assign members to the default-group"
 
+#: ../include/adr_grp_list_legende.inc:28
 msgid	"Gruppe loeschen und Adressen der Gruppe loeschen"
 msgstr	"Delete address-group and dedicated addresses"
 
+#: ../include/adr_grp_list_legende.inc:28
 msgid	"Gruppe l&ouml;schen und Adressen der Gruppe l&ouml;schen (Adressen "
 	"werden komplett gel&ouml;scht und auch aus allen anderen Gruppen "
 	"entfernt!)"
 msgstr	"Delete address-group and dedicated addresses. (Addresses and all "
 	"group-references will be deleted)"
 
+#: ../include/adr_grp_new.inc:15
 msgid	"neue Adressgruppe erstellen"
 msgstr	"Create new address-group"
 
+#: ../include/adr_grp_new.inc:40
 #, c-format
 msgid	"Neue Addressgruppe %s wurde erstellt."
 msgstr	"New address-group %s has been created."
 
+#: ../include/adr_import_form.inc:24
 msgid	"Addressen aus CSV-Datei importieren"
 msgstr	"Import addresses from CSV-file"
 
+#: ../include/adr_import_form.inc:38 ../include/nl_form.inc:41
 msgid	"HTML-Vorlage hochladen"
 msgstr	"Upload HTML-file"
 
+#: ../include/adr_import_form.inc:67
 msgid	"Adress-Status f. neue Adressen"
 msgstr	"Status for new addresses"
 
+#: ../include/adr_import_form.inc:83
 msgid	"Adress-Status f. existierende Adressen"
 msgstr	"New status for existing addresses"
 
+#: ../include/adr_import_form.inc:90
 msgid	"Keine Aenderungen"
 msgstr	"No changes"
 
+#: ../include/adr_import_form.inc:100
 msgid	"Adressen Importieren"
 msgstr	"Import addresses"
 
+#: ../include/adr_import_form.inc:127
 msgid	"Gruppen:"
 msgstr	"Groups:"
 
+#: ../include/adr_import_form.inc:132
 msgid	"CSV-Datei:"
 msgstr	"CSV-file:"
 
+#: ../include/adr_import_form.inc:138
 msgid	"Status f. neue Adressen:"
 msgstr	"Status for new entries:"
 
+#: ../include/adr_import_form.inc:144
 msgid	"Status bei Update:"
 msgstr	"Status on update:"
 
+#: ../include/adr_import.inc:15
 msgid	"Adressen importieren (CSV-Import)"
 msgstr	"Import addresses from CSV-file"
 
+#: ../include/adr_import.inc:54
 msgid	"CSV-Datei konnte nicht hochgeladen werden."
 msgstr	"CSV-file could not be uploaded."
 
+#: ../include/adr_import.inc:58
 #, c-format
 msgid	"Die CSV-Datei darf nur eine Gr&ouml;sse von %s Byte besitzen."
 msgstr	"The CSV-file should have a maximum size of %s bytes."
 
+#: ../include/adr_import.inc:62
 msgid	"Die CSV-Datei besitzt eine ung&uuml;ltige Endung."
 msgstr	"CSV-file has unknown or invalid extension."
 
+#: ../include/adr_import.inc:66
 msgid	"Keine CSV-Datei zum Hochladen angegeben."
 msgstr	"No CSV-file for upload were was selected."
 
+#: ../include/adr_import.inc:71
 msgid	"Status f&uuml;r neue Adressen: "
 msgstr	"Status for new addresses"
 
+#: ../include/adr_import.inc:75
 msgid	"Status f&uuml;r bestehende Adressen: "
 msgstr	"New status for existing addresses"
 
+#: ../include/adr_import.inc:80
 msgid	"Keine &Auml;nderung"
 msgstr	"No changes"
 
+#: ../include/adr_import.inc:93
 #, c-format
 msgid	"Importiere Datei %s"
 msgstr	"Importing file %s"
 
+#: ../include/adr_import.inc:154
 #, c-format
 msgid	"%s Eintr&auml;ge gefunden!"
 msgstr	"%s entries found."
 
+#: ../include/adr_import.inc:156
 #, c-format
 msgid	"%s existiert nicht!"
 msgstr	"%s not exists!"
 
+#: ../include/adr_import.inc:227
 #, c-format
 msgid	"Zeile %s: E-Mail %s existiert Bereits und wurde aktualisiert und ggf "
 	"in Neue Gruppen eingetragen."
 msgstr	"Line %s: E-mail %s already exists and has been updated and added to "
 	"additional groups if not already a member."
 
+#: ../include/adr_import.inc:266
 #, c-format
 msgid	"Zeile %s: E-Mail %s hat ein falsches Format."
 msgstr	"Line: %s: E-mail %s is invalid"
 
+#: ../include/adr_import.inc:271
 #, c-format
 msgid	"Es wurden %s von %s Eintr&auml;gen importiert und in die "
 	"gew&auml;hlten Gruppen eingetragen."
 msgstr	"%s from %s entries imported and added to selected groups."
 
+#: ../include/adr_import.inc:272
 #, c-format
 msgid	"%s Eintr&auml;ge waren Fehlerhaft und wurden NICHT importiert."
 msgstr	"%s entries failed, not imported/added."
 
+#: ../include/adr_import.inc:273
 #, c-format
 msgid	"%s Eintraege sind bereits vorhanden und wurden aktualisiert."
 msgstr	"%s entries already exists and have been updated."
 
+#: ../include/adr_list.inc:15
 msgid	"Adressen verwalten"
 msgstr	"Manage addresses"
 
+#: ../include/adr_list.inc:232
 #, c-format
 msgid	"Status: %s"
 msgstr	"Status: %s"
 
+#: ../include/adr_list.inc:243
 msgid	"Mitglied in den Gruppen:"
 msgstr	"Member of group(s):"
 
+#: ../include/adr_list.inc:277 ../include/adr_list_legende.inc:24
 msgid	"Adresse loeschen"
 msgstr	"Delete address"
 
+#: ../include/adr_list_legende.inc:21 ../include/bounce_filter_adr_list.inc:70
+#: ../include/bounce_filter_adr_list.inc:99
+#: ../include/form_list_legende.inc:30 ../include/nl_grp_list_legende.inc:22
+#: ../include/nl_list_legende.inc:42
 msgid	"Inaktiv"
 msgstr	"Inactive"
 
 msgid	"Adresse ist Aktiv/Inaktiv (Click=Deaktivieren/Aktivieren)"
 msgstr	"Address is active/inactive (Click=activate/deactivate)"
 
+#: ../include/adr_list_legende.inc:23 ../include/form_list_legende.inc:33
+#: ../include/nl_list.inc:453 ../include/nl_list_legende.inc:46
+#: ../include/statistic.inc:15
 msgid	"Statistik"
 msgstr	"Statistics"
 
+#: ../include/adr_new.inc:15
 msgid	"Neue Adresse eintragen"
 msgstr	"Enter new address"
 
+#: ../include/adr_new.inc:64
 msgid	"E-Mail sollte nicht leer sein."
 msgstr	"E-mail should not be e mpty."
 
+#: ../include/adr_new.inc:66
 msgid	"E-Mail ist nicht korrekt oder Domain ist nicht g&uuml;ltig."
 msgstr	"E-mail is invalid"
 
+#: ../include/adr_new.inc:126
 msgid	"E-Mail existiert bereits. Die Daten wurden aktualisiert."
 msgstr	"E-mail already exists. Data saved and updated."
 
+#: ../include/adr_new.inc:151
 #, c-format
 msgid	"Neue Adresse %s wurde angelegt."
 msgstr	"New address %s created."
 
+#: ../include/adr_search_form.inc:27
 msgid	"Adressen suchen und filtern"
 msgstr	"Search and filter addresses"
 
+#: ../include/adr_search_form.inc:40
 msgid	"Suche nach e-Mail"
 msgstr	"Search/filter for email"
 
+#: ../include/adr_search_form.inc:49
 msgid	"Suche in den Feldern F0-F9"
 msgstr	"Search in F0-F9"
 
+#: ../include/adr_search_form.inc:59
 msgid	"Suche nach Gruppenzugehoerigkeit"
 msgstr	"Search for group-members"
 
+#: ../include/adr_search_form.inc:81
 msgid	"Author, angemeldet ueber Formular"
 msgstr	"Author, subscribed via form..."
 
+#: ../include/adr_search_form.inc:84
 msgid	"angemeldet ueber"
 msgstr	"subscribed via"
 
+#: ../include/adr_search_form.inc:113
 msgid	"Egal"
 msgstr	"doesn't matter"
 
+#: ../include/adr_search_form.inc:124
 msgid	"Maximale Anzahl Eintraege die auf einmal angezeigt werden."
 msgstr	"Max. entries shown at once."
 
+#: ../include/adr_search_form.inc:127
 msgid	"zeige max."
 msgstr	"show max."
 
+#: ../include/Menu.inc:105 ../include/Menu.inc:114
+#: ../include/adr_search_form.inc:132 ../include/adr_search_form.inc:133
+#: ../include/adr_search_form.inc:134 ../include/adr_search_form.inc:135
+#: ../include/adr_search_form.inc:136 ../include/bounce_mail_list.inc:55
 msgid	"Adressen"
 msgstr	"Addresses"
 
+#: ../include/adr_search_form.inc:139
 msgid	"Suchen"
 msgstr	"Search"
 
+#: ../include/bounce_filter_adr_list.inc:32
+#: ../include/bounce_mail_list.inc:156
 #, c-format
 msgid	"Es wurden %s Mails durchsucht."
 msgstr	"%s mails have been searched."
 
+#: ../include/bounce_filter_adr_list.inc:80
+#: ../include/bounce_filter_adr_list.inc:104
 msgid	"Unbekannt / nicht in der Datenbank"
 msgstr	"Unknown, not in database"
 
+#: ../include/bounce_filter_adr_list.inc:112
 msgid	"Markierung fuer alle angezeigten Adressen umkehren"
 msgstr	"Invert selection"
 
+#: ../include/bounce_filter_adr_list.inc:112
 msgid	"Alle ausw&auml;hlen / Markierung f&uuml;r alle angezeigten Adressen "
 	"umkehren"
 msgstr	"Select all / invert selection"
 
+#: ../include/bounce_filter_form_head.inc:44
+#: ../include/bounce_filter_form_head.inc:54
+#: ../include/bounce_mail_form_head.inc:44
 msgid	"Auswaehlen"
 msgstr	"Select"
 
+#: ../include/bounce_filter_form_head.inc:66
+#: ../include/bounce_filter_form_head.inc:79
+#: ../include/bounce_filter_form_head.inc:92
+#: ../include/bounce_mail_form_head.inc:56
+#: ../include/bounce_mail_form_head.inc:69
 msgid	"Aktion ausfuehren"
 msgstr	"Do it"
 
+#: ../include/bounce_filter_form_head.inc:72
 msgid	"Mails nicht loeschen"
 msgstr	"Do not delete mails"
 
+#: ../include/bounce_filter_form_head.inc:73
 msgid	"Mails loeschen"
 msgstr	"Delete mails"
 
+#: ../include/bounce_filter_form_head.inc:85
 msgid	"Adressen automatisch bearbeiten"
 msgstr	"Automagic address-management"
 
+#: ../include/bounce_filter_form_head.inc:86
 msgid	"Adressen als Fehlerhaft markieren"
 msgstr	"Mark addresses as failed"
 
+#: ../include/bounce_filter_form_head.inc:87
 msgid	"Adressen abmelden und deaktivieren"
 msgstr	"Unsubscribe and deactivate addresses"
 
+#: ../include/bounce_filter_form_head.inc:88
 msgid	"Adressen deaktivieren"
 msgstr	"Deactivate addresses"
 
+#: ../include/bounce_filter_form_head.inc:89
 msgid	"Adressen loeschen"
 msgstr	"Delete addresses"
 
+#: ../include/bounce_host_form.inc:27 ../include/bounce_mail_form_head.inc:27
 msgid	"Host waehlen"
 msgstr	"Select host"
 
+#: ../include/bounce_host_form.inc:42
 msgid	"Host auswaehlen"
 msgstr	"Select host"
 
+#: ../include/bounce_host_form.inc:53
 msgid	"Anzahl Mails die uebersprungen werden."
 msgstr	"Offset"
 
+#: ../include/bounce_host_form.inc:77
 msgid	"max. Anzahl Mails die durchsucht/angezeigt werden."
 msgstr	"Max. mails search through."
 
+#: ../include/bounce_host_form.inc:100
 msgid	"Nur Bouncemails anzeigen"
 msgstr	"Only bounce-messages"
 
+#: ../include/bounce_host_form.inc:110
 msgid	"Nur E-Mails an die Fehleradresse anzeigen"
 msgstr	"Show only mails to return-path-address"
 
+#: ../include/bounce_host_form.inc:115
 msgid	"Verbinden und e-Mails abrufen"
 msgstr	"Connect and get mails."
 
+#: ../include/bounce_host_form.inc:143
 msgid	"Host"
 msgstr	"Host"
 
+#: ../include/bounce_host_form.inc:146
 msgid	"Offset"
 msgstr	"Offset"
 
+#: ../include/bounce_host_form.inc:149
 msgid	"Limit"
 msgstr	"Limit"
 
+#: ../include/bounce_host_form.inc:153
 msgid	"Nur Bouncemails"
 msgstr	"Only bounce-messages"
 
+#: ../include/bounce_host_form.inc:154
 msgid	"Nur Returnmails"
 msgstr	"Only return-mails"
 
+#: ../include/bounce.inc:15
 msgid	"Bounce Management"
 msgstr	"Bounce-management"
 
+#: ../include/bounce.inc:87
 #, c-format
 msgid	"Verbindung zum Server %s wird aufgebaut..."
 msgstr	"Connecting Server %s ..."
 
+#: ../include/bounce.inc:91
 #, c-format
 msgid	"Servermeldung: %s"
 msgstr	"Server says: %s"
 
+#: ../include/bounce.inc:105
 msgid	"Es wurden keine Mails zum Bearbeiten ausgew&auml;hlt."
 msgstr	"No mails selected."
 
+#: ../include/bounce.inc:114
 msgid	"L&ouml;sche Mail."
 msgstr	"Delete mail."
 
+#: ../include/bounce.inc:120
 msgid	"Mailbox aufr&auml;umen, als gel&ouml;scht markierte Mails wurden "
 	"entfernt."
 msgstr	"Clean up mailbox. All messages marked for deletion were purged."
 
+#: ../include/bounce.inc:126
 msgid	"Es wurden keine Mails zum L&ouml;schen ausgew&auml;hlt."
 msgstr	"No mails selected for deletion."
 
+#: ../include/bounce.inc:142
 #, c-format
 msgid	"%s Adressen zum Bearbeiten ausgew&auml;hlt."
 msgstr	"%s addresses selected for maipulation."
 
+#: ../include/bounce.inc:151
 #, c-format
 msgid	"Die Adresse %s wurde geloescht."
 msgstr	"The address %s has been deleted"
 
+#: ../include/bounce.inc:156
 #, c-format
 msgid	"Die Adresse %s wurde als Fehlerhaft markiert."
 msgstr	"The address %s has been marked as failed and errorness."
 
+#: ../include/bounce.inc:161
 #, c-format
 msgid	"Die Adresse %s wurde deaktiviert."
 msgstr	"The address %s has been deactivated."
 
+#: ../include/bounce.inc:167
 #, c-format
 msgid	"Die Adresse %s wurde abgemeldet und deaktivert."
 msgstr	"The address %s has been unsubscribed and deactivated."
 
+#: ../include/bounce.inc:175
 #, c-format
 msgid	"Fehler: %s von max. %s"
 msgstr	"Errors: %s from max %s"
 
+#: ../include/bounce.inc:184
 #, c-format
 msgid	"Als fehlerhaft markiert und deaktivert (Sendefehler >%s)"
 msgstr	"Mark as failed (Delivery-errors > %s)"
 
+#: ../include/bounce.inc:195
 msgid	"ist bereits abgemeldet (unsubscribed)."
 msgstr	"is aleady unsubscribed"
 
+#: ../include/bounce.inc:201
 #, c-format
 msgid	"%s ist nicht bekannt."
 msgstr	"%s is unknown"
 
+#: ../include/bounce.inc:205
 msgid	"Es wurden keine Adressen zum Bearbeiten ausgew&auml;hlt."
 msgstr	"No addresses were selected."
 
+#: ../include/bounce_mail_form_head.inc:63
 msgid	"Nach Adressen dursuchen und bearbeiten, Mails loeschen"
 msgstr	"Search for addresses, delete mails"
 
+#: ../include/bounce_mail_form_head.inc:64
 msgid	"Nach Adressen durchsuchen und bearbeiten"
 msgstr	"Search for addresses and edit."
 
+#: ../include/bounce_mail_list.inc:42
 #, c-format
 msgid	"Gesamt: %s Mails"
 msgstr	"Total: %s mails"
 
+#: ../include/bounce_mail_list.inc:53
 msgid	"Betreff / Text"
 msgstr	"Subject / text"
 
+#: ../include/bounce_mail_list.inc:87
 msgid	"Return Mail"
 msgstr	"Return-mail"
 
+#: ../include/bounce_mail_list.inc:90
 msgid	"Bounce Mail erkannt"
 msgstr	"Bounce-mail detected"
 
+#: ../include/bounce_mail_list.inc:104
 msgid	"Text und Details anzeigen"
 msgstr	"Show text and details"
 
+#: ../include/Menu.inc:106 ../include/Menu.inc:115
+#: ../include/bounce_mail_list.inc:125
 msgid	"Adressen anzeigen"
 msgstr	"Show addresses"
 
+#: ../include/bounce_mail_list.inc:144
 msgid	"Markierung fuer alle angezeigten E-Mails umkehren"
 msgstr	"Invert selection for selected E-mails"
 
+#: ../include/bounce_mail_list.inc:144
 msgid	"Alle ausw&auml;hlen / Markierung f&uuml;r alle angezeigten E-Mails "
 	"umkehren"
 msgstr	"Select all / Invert selection"
 
+#: ../include/Menu.inc:233 ../include/Menu.inc:242 ../include/docu.inc:15
 msgid	"Hilfe / Dokumentation"
 msgstr	"Help / Documentation"
 
+#: ../include/Foot.inc:23
 #, c-format
 msgid	"Benutzer Speicher: %s Byte"
 msgstr	"Used memory: %s bytes"
 
+#: ../include/Foot.inc:25
 #, c-format
 msgid	"Bearbeitungszeit: %s Sekunden"
 msgstr	"Processint-time: %s seconds"
 
+#: ../include/Foot.inc:26
 #, c-format
 msgid	"Max. Upload: %s Byte"
 msgstr	"Max. upload: %s bytes"
 
+#: ../include/Foot.inc:27
 #, c-format
 msgid	"Speicherlimit: %s"
 msgstr	"Memory-limit: %s bytes"
 
+#: ../include/Foot.inc:28
 #, c-format
 msgid	"Max. POST Data: %s"
 msgstr	"Max. POST-data: %s bytes"
 
+#: ../include/Foot.inc:29
 #, c-format
 msgid	"Max. Ausf&uuml;hrungszeit: %s Sekunden"
 msgstr	"Max. execution time: %s seconds"
 
+#: ../include/Foot.inc:30
 #, c-format
 msgid	"%s Mails pro Durchlauf"
 msgstr	"%s mails per run"
 
+#: ../include/Foot.inc:40
 msgid	"Fenster schliessen"
 msgstr	"Close window"
 
+#: ../include/form_edit.inc:15
 msgid	"Formluar bearbeiten"
 msgstr	"Edit form"
 
+#: ../include/form_edit.inc:130 ../include/form_new.inc:131
 msgid	"Name sollte nicht leer sein."
 msgstr	"Name should not be emty."
 
+#: ../include/form_edit.inc:183
 #, c-format
 msgid	"Formular %s wurde bearbeitet."
 msgstr	"Form %s edited"
 
+#: ../include/form_form.inc:27
 msgid	"neues Formular erstellen"
 msgstr	"Create new form"
 
+#: ../include/form_form.inc:191 ../include/form_form.inc:207
+#: ../include/form_form.inc:223 ../include/form_form.inc:239
+#: ../include/form_form.inc:255 ../include/form_form.inc:271
+#: ../include/form_form.inc:287 ../include/form_form.inc:303
+#: ../include/form_form.inc:319 ../include/form_form.inc:335
 msgid	"Typ waehlen"
 msgstr	"Select type"
 
+#: ../include/form_form.inc:356 ../include/form_form.inc:365
+#: ../include/form_form.inc:374 ../include/form_form.inc:383
+#: ../include/form_form.inc:392 ../include/form_form.inc:401
+#: ../include/form_form.inc:410 ../include/form_form.inc:419
+#: ../include/form_form.inc:428 ../include/form_form.inc:437
 msgid	"Pflichtfeld"
 msgstr	"required field"
 
+#: ../include/form_form.inc:448 ../include/form_form.inc:457
+#: ../include/form_form.inc:466 ../include/form_form.inc:475
+#: ../include/form_form.inc:484 ../include/form_form.inc:493
+#: ../include/form_form.inc:502 ../include/form_form.inc:511
+#: ../include/form_form.inc:520 ../include/form_form.inc:529
 msgid	"Werte, (Trennzeichen ; (Semikolon)"
 msgstr	"Values (Delimitor is ; (semicolon))"
 
+#: ../include/form_form.inc:549
 msgid	"Eingaben zuruecksetzen"
 msgstr	"Reset values"
 
+#: ../include/form_form.inc:586
 msgid	"Double Opt-in"
 msgstr	"Double-opt-in"
 
+#: ../include/form_form.inc:599
 msgid	"Gruppe(n)"
 msgstr	"Group(s)"
 
+#: ../include/form_form.inc:607
 msgid	"Fn / Pflichtfeld / Typ / Name"
 msgstr	"FN / required / type / name"
 
+#: ../include/form_form.inc:614 ../include/form_form.inc:622
+#: ../include/form_form.inc:630 ../include/form_form.inc:638
+#: ../include/form_form.inc:646 ../include/form_form.inc:654
+#: ../include/form_form.inc:662 ../include/form_form.inc:670
+#: ../include/form_form.inc:678 ../include/form_form.inc:686
 msgid	" Name "
 msgstr	" Name"
 
+#: ../include/form_form.inc:615 ../include/form_form.inc:623
+#: ../include/form_form.inc:631 ../include/form_form.inc:639
+#: ../include/form_form.inc:647 ../include/form_form.inc:655
+#: ../include/form_form.inc:663 ../include/form_form.inc:671
+#: ../include/form_form.inc:679 ../include/form_form.inc:687
 msgid	" Werte "
 msgstr	" Values"
 
+#: ../include/form_list.inc:15
 msgid	"Formulare verwalten"
 msgstr	"Manage subscription forms"
 
+#: ../include/form_list.inc:42 ../include/nl_list.inc:79
 msgid	"Eintrag wurde kopiert."
 msgstr	"Copied entry."
 
+#: ../include/form_list.inc:154 ../include/form_list.inc:174
+#: ../include/form_list_legende.inc:20
 msgid	"Double-Opt-In"
 msgstr	"Double-opt-in"
 
+#: ../include/form_list.inc:162 ../include/form_list.inc:235
 msgid	"Formular bearbeiten"
 msgstr	"Edit form"
 
+#: ../include/form_list.inc:191
 msgid	"Anmeldungen &uuml;ber dieses Formular werden in die folgenden "
 	"Gruppen eingeordnet:"
 msgstr	"Members subscribing with this form weill become a member of the "
 	"groups:"
 
+#: ../include/form_list.inc:226
 #, c-format
 msgid	"Dynamische Onlineversion anzeigen: %s"
 msgstr	"Show dynamic online-version: %s"
 
+#: ../include/form_list.inc:229
 #, c-format
 msgid	"Template anzeigen: %s"
 msgstr	"Show template: %s"
 
+#: ../include/form_list.inc:233
 #, c-format
 msgid	"Statische Onlineversion anzeigen: %s"
 msgstr	"Show static online-version: %s"
 
+#: ../include/form_list.inc:236 ../include/form_list_legende.inc:32
 msgid	"Formular kopieren"
 msgstr	"Copy form"
 
+#: ../include/form_list.inc:238
 #, c-format
 msgid	"Formular %s loeschen"
 msgstr	"Delete form %s"
 
+#: ../include/form_list.inc:238
 msgid	"Formular loeschen"
 msgstr	"Delete form"
 
+#: ../include/form_list_legende.inc:20
 msgid	"Double-Opt-In aktiviert"
 msgstr	"Double-opt-in is active"
 
+#: ../include/form_list_legende.inc:23 ../include/nl_list_legende.inc:28
 msgid	"Online"
 msgstr	"Online"
 
+#: ../include/form_list_legende.inc:23
 msgid	"Dynamische Onlineversion anzeigen:"
 msgstr	"Show dynamic online-version:"
 
+#: ../include/form_list_legende.inc:25
 msgid	"Template"
 msgstr	"Template"
 
+#: ../include/form_list_legende.inc:25
 msgid	"Template anzeigen:"
 msgstr	"Show template:"
 
 msgid	"Formular ist Aktiv/Inaktiv (Click=Deaktivieren/Aktivieren)"
 msgstr	"Form is active/inactive (Click=deactivate/activate)"
 
+#: ../include/form_list_legende.inc:32 ../include/nl_list.inc:450
 msgid	"Kopieren"
 msgstr	"Copy"
 
+#: ../include/form_list_legende.inc:34
 msgid	"Formular l&oumlschen"
 msgstr	"Delete form"
 
+#: ../include/form_new.inc:15
 msgid	"neues Formluar erstellen"
 msgstr	"Create new form"
 
+#: ../include/form_new.inc:183
 #, c-format
 msgid	"Neues Formular %s wurde erstellt."
 msgstr	"New form %s created."
 
+#: ../include/Header.inc:74
 msgid	"Bitte warten..."
 msgstr	"Please wait..."
 
+#: ../include/Header.inc:74
 msgid	"Seite wird geladen"
 msgstr	"Page is loading"
 
+#: ../include/Header.inc:82
 msgid	"Achtung! Ein Abbruch des Ladevorgangs kann zu Datenverlust und "
 	"ungew&uuml;nschten Nebeneffekten f&uuml;hren. Bitte tun Sie dies auf "
 	"Ihr eigenes Risiko."
 msgstr	"Please do not interrupt. This can mislead in misfunctions of "
 	"Tellmatic. Please so it on your own risk."
 
+#: ../include/Index.inc:22
 msgid	"Bitte geben Sie Ihren Benutzernamen und Passwort ein"
 msgstr	"Please enter username and password"
 
@@ -879,428 +1254,580 @@ msgstr	"Hello world"
 msgid	"Tsch&uuml;ss"
 msgstr	"Bye bye"
 
+#: ../include/Main.inc:15
 msgid	"Bitte aus dem Men&uuml; w&auml;hlen."
 msgstr	"Please choose from menu"
 
+#: ../include/Main.inc:21
 msgid	"ACHTUNG! /install.php existiert! Die Datei install.php bitte nach "
 	"erfolgreicher Installation verschieben oder l&aouml;schen!"
 msgstr	"Attention! /install.php exists! Please delete or move to a safe "
 	"place after successful installation."
 
+#: ../include/Main.inc:25
 #, c-format
 msgid	"ACHTUNG! %s ist nicht Schreibgesch&uuml;tzt"
 msgstr	"Attention! %s is not write-protected"
 
+#: ../include/Main.inc:27
 #, c-format
 msgid	"Rechte f&uuml;r %s wurden ge&auml;ndert!"
 msgstr	"Permissions for %s changed!"
 
+#: ../include/Main.inc:29
 #, c-format
 msgid	"Rechte f&uuml;r %s konnten nicht ge&auml;ndert werden! Bitte "
 	"&auml;ndern Sie diese manuell."
 msgstr	"Permissions for %s could not be changed! Please change permissions "
 	"manually."
 
+#: ../include/Main.inc:32
 msgid	"Rechte f&uuml;r mnl_config.inc wurden ge&auml;ndert!"
 msgstr	"Permissions for mnl_config.inc changed!"
 
+#: ../include/Main.inc:34
 msgid	"Rechte f&uuml;r mnl_config.inc konnten nicht ge&auml;ndert werden! "
 	"Bitte &auml;ndern Sie diese manuell."
 msgstr	"Permissions for mnl_config.inc could not be changed! Please remove "
 	"write-permissions manually."
 
+#: ../include/Main.inc:38 ../include/Main.inc:41 ../include/Main.inc:44
+#: ../include/Main.inc:47 ../include/Main.inc:50 ../include/Main.inc:53
 #, c-format
 msgid	"Keine Schreibrechte f&uuml;r %s"
 msgstr	"No write-permissions for %s"
 
+#: ../include/Main.inc:57 ../include/Main.inc:60 ../include/Main.inc:63
 #, c-format
 msgid	"ACHTUNG! %s ist nicht Passwortgesch&uuml;tzt"
 msgstr	"Attention! %s is not password-protected (.htaccess missing)"
 
+#: ../include/Main.inc:79
 msgid	"Passwort wurde gespeichert und ist ab sofort g&uuml;ltig!"
 msgstr	"Password changed"
 
+#: ../include/Menu.inc:22 ../include/Menu.inc:31 ../include/Menu_old.inc:21
 msgid	"Aktuelle Meldungen ein-/ausblenden"
 msgstr	"Show / hide messages"
 
+#: ../include/Stats.inc:19 ../include/Stats.inc:61 ../include/Stats.inc:83
+#: ../include/Stats.inc:102 ../include/mnl_lib.inc:217
+#: ../include/mnl_lib.inc:259 ../include/mnl_lib.inc:281
+#: ../include/mnl_lib.inc:300
 msgid	"Neu"
 msgstr	"New"
 
+#: ../include/Stats.inc:20 ../include/mnl_lib.inc:218
 msgid	"OK"
 msgstr	"Ok"
 
+#: ../include/Stats.inc:21 ../include/mnl_lib.inc:219
 msgid	"Bestaetigt"
 msgstr	"Confirmed"
 
+#: ../include/Stats.inc:22 ../include/mnl_lib.inc:220
 msgid	"Angezeigt"
 msgstr	"Viewed"
 
+#: ../include/Stats.inc:23 ../include/Stats.inc:66 ../include/mnl_lib.inc:221
+#: ../include/mnl_lib.inc:264
 msgid	"Warten"
 msgstr	"Waiting"
 
+#: ../include/Stats.inc:26 ../include/mnl_lib.inc:224
 msgid	"Fehler C"
 msgstr	"Error C"
 
+#: ../include/Stats.inc:27 ../include/mnl_lib.inc:225
 msgid	"Fehler A"
 msgstr	"Error A"
 
+#: ../include/Stats.inc:28 ../include/mnl_lib.inc:226
 msgid	"Fehler S"
 msgstr	"Errors S"
 
+#: ../include/Stats.inc:29 ../include/Stats.inc:43 ../include/mnl_lib.inc:227
+#: ../include/mnl_lib.inc:241
 msgid	"Abgemeldet"
 msgstr	"Unsubscribed"
 
+#: ../include/Stats.inc:30 ../include/mnl_lib.inc:228
 msgid	"Touch"
 msgstr	"Touch"
 
+#: ../include/Stats.inc:33 ../include/mnl_lib.inc:231
 msgid	"Neuanmeldung"
 msgstr	"New subscription"
 
+#: ../include/Stats.inc:34 ../include/mnl_lib.inc:232
 msgid	"manuell Eingetragen, Syntax Gepr&uuml;ft, Senden OK"
 msgstr	"manually enetered, syntax checked"
 
 msgid	"Best&auml;tigt, Double Opt-In"
 msgstr	"Confirmed (double-opt-in)"
 
+#: ../include/Stats.inc:36 ../include/mnl_lib.inc:234
 msgid	"Rechecked, NL/Blindimage angezeigt"
 msgstr	"Rechecked, NL/Blindimage displayed"
 
+#: ../include/Stats.inc:37 ../include/mnl_lib.inc:235
 msgid	"Warten auf Best&auml;tigung (Double-Opt-IN)"
 msgstr	"Waiting for confirmation (double-opt-in)"
 
+#: ../include/Stats.inc:38 ../include/Stats.inc:39 ../include/mnl_lib.inc:236
+#: ../include/mnl_lib.inc:237
 msgid	"undefiniert"
 msgstr	"undefined"
 
+#: ../include/Stats.inc:40 ../include/mnl_lib.inc:238
 msgid	"Fehler beim versenden, Status/Aktiv wurde ge&auml;ndert vor dem "
 	"versenden!"
 msgstr	"Error on delivery, status/active may changed before delivery"
 
+#: ../include/Stats.inc:41 ../include/mnl_lib.inc:239
 msgid	"Fehlerhafte Adresse o. Rueckl&auml;ufer"
 msgstr	"Failed or errorness address"
 
+#: ../include/Stats.inc:42 ../include/mnl_lib.inc:240
 msgid	"Fehler beim versenden, neuer Versuch"
 msgstr	"Error on delivery, trying again next time"
 
+#: ../include/Stats.inc:44 ../include/mnl_lib.inc:242
 msgid	"1st-Touch-Opt-In"
 msgstr	"1st-touch-opt-in"
 
+#: ../include/Stats.inc:62 ../include/mnl_lib.inc:260
 msgid	"Queued"
 msgstr	"Queued"
 
+#: ../include/Stats.inc:63 ../include/Stats.inc:106 ../include/mnl_lib.inc:261
+#: ../include/mnl_lib.inc:304
 msgid	"Versand"
 msgstr	"Delivery"
 
+#: ../include/Stats.inc:64 ../include/mnl_lib.inc:262
 msgid	"Gesendet"
 msgstr	"Sent"
 
+#: ../include/Stats.inc:65 ../include/mnl_lib.inc:263
 msgid	"Archiv"
 msgstr	"Archiv"
 
+#: ../include/Stats.inc:68 ../include/mnl_lib.inc:266
 msgid	"Keine Versandauftr&auml;ge oder Historie f. dieses Newsletter"
 msgstr	"New delivery jobs or history (recipients-list) for this newsletter."
 
+#: ../include/Stats.inc:69 ../include/mnl_lib.inc:267
 msgid	"In der Warteschlange"
 msgstr	"Queued"
 
+#: ../include/Stats.inc:70 ../include/mnl_lib.inc:268
 msgid	"Versand gestartet"
 msgstr	"Delivery started"
 
+#: ../include/Stats.inc:71 ../include/Stats.inc:92 ../include/mnl_lib.inc:269
+#: ../include/mnl_lib.inc:290
 msgid	"Versendet"
 msgstr	"Sent"
 
+#: ../include/Stats.inc:72 ../include/mnl_lib.inc:270
 msgid	"Archiviert - Qs wurden gel&ouml;scht"
 msgstr	"Archived, Qs have been deleted"
 
+#: ../include/Stats.inc:73 ../include/mnl_lib.inc:271
 msgid	"Versand vorbereitet, Warten auf Versand (terminiert)"
 msgstr	"Q prepared, waiting for delivery"
 
+#: ../include/Stats.inc:84 ../include/mnl_lib.inc:282
 msgid	"Gestartet"
 msgstr	"Started"
 
+#: ../include/Stats.inc:85 ../include/mnl_lib.inc:283
 msgid	"Running"
 msgstr	"Running"
 
+#: ../include/Stats.inc:86 ../include/Stats.inc:103 ../include/mnl_lib.inc:284
+#: ../include/mnl_lib.inc:301
 msgid	"Fertig"
 msgstr	"Finished"
 
+#: ../include/Stats.inc:87 ../include/Stats.inc:93 ../include/mnl_lib.inc:285
+#: ../include/mnl_lib.inc:291
 msgid	"Angehalten"
 msgstr	"Stopped"
 
+#: ../include/Stats.inc:90 ../include/mnl_lib.inc:288
 msgid	"Wird versendet"
 msgstr	"Delivering"
 
+#: ../include/Stats.inc:91 ../include/mnl_lib.inc:289
 msgid	"In Arbeit"
 msgstr	"In progress"
 
+#: ../include/Stats.inc:104 ../include/mnl_lib.inc:302
 msgid	"View"
 msgstr	"View"
 
+#: ../include/Stats.inc:105 ../include/mnl_lib.inc:303
 msgid	"Fehler"
 msgstr	"Error"
 
+#: ../include/Stats.inc:107 ../include/mnl_lib.inc:305
 msgid	"Abbruch"
 msgstr	"Cancel"
 
+#: ../include/Stats.inc:109 ../include/mnl_lib.inc:307
 msgid	"Warten auf Versand"
 msgstr	"Waiting for delivery"
 
+#: ../include/Stats.inc:110 ../include/mnl_lib.inc:308
 msgid	"Versendet, OK"
 msgstr	"Sent, Ok"
 
+#: ../include/Stats.inc:111 ../include/mnl_lib.inc:309
 msgid	"Versendet, angezeigt"
 msgstr	"Sent, viewed"
 
+#: ../include/Stats.inc:112 ../include/mnl_lib.inc:310
 msgid	"Versendet, Fehler"
 msgstr	"Sent, Error"
 
+#: ../include/Stats.inc:113 ../include/mnl_lib.inc:311
 msgid	"Wird in diesem Moment versendet!!!"
 msgstr	"Sending!"
 
+#: ../include/Stats.inc:114 ../include/mnl_lib.inc:312
 msgid	"Abgebrochen, Q gel&ouml;scht"
 msgstr	"Canceled, Q was deleted"
 
+#: ../include/mnl_lib.inc:325
 msgid	"the newsletter machine"
 msgstr	"the newsletter machine"
 
+#: ../include/nl_edit.inc:15 ../include/nl_list.inc:323
+#: ../include/nl_list.inc:444 ../include/nl_list.inc:447
 msgid	"Newsletter bearbeiten"
 msgstr	"Edit newsletter"
 
+#: ../include/nl_edit.inc:60 ../include/nl_new.inc:55
 msgid	"Betreff sollte nicht leer sein."
 msgstr	"Subject should not be empty"
 
+#: ../include/nl_edit.inc:90
 #, c-format
 msgid	"Newsletter %s wurde aktualisiert."
 msgstr	"Newsletter %s sent."
 
+#: ../include/nl_edit.inc:91 ../include/nl_new.inc:78
 msgid	"Der Newsletter wurde gespeichert unter:"
 msgstr	"Newsletter saved as:"
 
+#: ../include/nl_form.inc:27 ../include/nl_grp_form.inc:27
+#: ../include/nl_grp_new.inc:15
 msgid	"Neue Newslettergruppe erstellen"
 msgstr	"Create new newsletter"
 
+#: ../include/nl_form.inc:49
 msgid	"Bild hochladen"
 msgstr	"Upload image"
 
+#: ../include/nl_form.inc:57
 msgid	"Anhang hochladen"
 msgstr	"Upload attachement"
 
+#: ../include/nl_form.inc:68
 msgid	"Erscheint als Betreff in der e-Mail"
 msgstr	"Subject of e-mail"
 
+#: ../include/nl_form.inc:77 ../include/nl_form.inc:199
+#: ../include/nl_list_legende.inc:39
 msgid	"Link"
 msgstr	"Link"
 
+#: ../include/nl_form.inc:97 ../include/nl_form.inc:181
 msgid	"Massenmailing (BCC)"
 msgstr	"Massmail (BCC)"
 
+#: ../include/nl_form.inc:106
 msgid	"Newsletter-Text"
 msgstr	"Newsletter-text"
 
+#: ../include/nl_form.inc:115
 msgid	"Newsletter-Gruppe waehlen"
 msgstr	"Select newsletter-group"
 
+#: ../include/nl_form.inc:162
 msgid	"Betreff"
 msgstr	"Subject"
 
+#: ../include/nl_form.inc:208
 msgid	"Bild"
 msgstr	"Image"
 
+#: ../include/nl_form.inc:217
 msgid	"HTML"
 msgstr	"HTML"
 
+#: ../include/nl_form.inc:226
 msgid	"Anhang"
 msgstr	"Attachement"
 
+#: ../include/nl_form.inc:235
 msgid	"Text"
 msgstr	"Text"
 
+#: ../include/nl_grp_edit.inc:15 ../include/nl_grp_list.inc:129
+#: ../include/nl_grp_list.inc:169
 msgid	"Newslettergruppe bearbeiten"
 msgstr	"Edit newsletter-group"
 
+#: ../include/nl_grp_edit.inc:44
 #, c-format
 msgid	"Newslettergruppe %s wurde aktualisiert."
 msgstr	"Newsletter-group %s updated"
 
+#: ../include/nl_grp_form.inc:72 ../include/nl_grp_form.inc:81
 msgid	"Farbe: Auswaehlen und klicken um Farbe zu uebernehmen"
 msgstr	"Color: choose and click to select color"
 
+#: ../include/nl_grp_list.inc:15
 msgid	"Newslettergruppen verwalten"
 msgstr	"Manage newsletter-groups"
 
+#: ../include/Menu.inc:53 ../include/Menu.inc:62
+#: ../include/nl_grp_list.inc:144 ../include/queue_form.inc:172
+#: ../include/queue_list.inc:126
 msgid	"Newsletter"
 msgstr	"Newsletter"
 
+#: ../include/nl_grp_list.inc:170
 msgid	"Neuen Newsletter in dieser Gruppe erstellen"
 msgstr	"Create newsletter in this group"
 
+#: ../include/nl_grp_list.inc:171
 msgid	"Alle Newsletter in dieser Gruppe anzeigen"
 msgstr	"Show all newsletter in this group"
 
+#: ../include/nl_grp_list.inc:179
 #, c-format
 msgid	"Newslettergruppe %s als Standard definieren"
 msgstr	"Make newsletter-group %s the default-group"
 
+#: ../include/nl_grp_list.inc:179
 msgid	"Diese Newslettergruppe als Standardgruppe"
 msgstr	"Make this newsletter-group the default-group"
 
+#: ../include/nl_grp_list.inc:182
 #, c-format
 msgid	"Newslettergruppe %s loeschen und Newsletter dieser Gruppe der "
 	"Standardgruppe zuordnen?"
 msgstr	"Delete newsletter-group %s  and assign newsletter to default-group?"
 
+#: ../include/nl_grp_list.inc:182
 msgid	"Newslettergruppe loeschen"
 msgstr	"Delete newsletter-group"
 
+#: ../include/nl_grp_list_legende.inc:24
 msgid	"Newsletter in dieser Gruppe erstellen"
 msgstr	"Create newsletter in this group"
 
+#: ../include/nl_grp_list_legende.inc:25
 msgid	"Newsletter dieser Gruppe anzeigen"
 msgstr	"Show all newsletter in this group"
 
+#: ../include/nl_grp_list_legende.inc:25
 msgid	"Newsletter dieser Gruppe anzeigen, Anzahl der Newsletter in dieser "
 	"Gruppe"
 msgstr	"Show newsletter in this group, count"
 
+#: ../include/nl_grp_list_legende.inc:27
 msgid	"als Standardgruppe"
 msgstr	"as default-group"
 
+#: ../include/nl_grp_list_legende.inc:28
 msgid	"Gruppe l&ouml;schen und Newsletter der Standardgruppe zuordnen"
 msgstr	"Delete group and assign newsleter to default-group"
 
+#: ../include/nl_grp_new.inc:44
 #, c-format
 msgid	"Neue Newslettergruppe %s wurde erstellt."
 msgstr	"New newsletter-group %s created"
 
+#: ../include/nl_list.inc:15
 msgid	"Newsletter verwalten"
 msgstr	"Manage newsletter"
 
+#: ../include/nl_list.inc:44
 msgid	"Bild wurde gel&ouml;scht."
 msgstr	"Image deleted."
 
+#: ../include/nl_list.inc:46
 msgid	"Bild konnte nicht gel&ouml;scht werden."
 msgstr	"Image could not be deleted."
 
+#: ../include/nl_list.inc:53
 msgid	"HTML Datei wurde gel&ouml;scht."
 msgstr	"HTML-file deleted."
 
+#: ../include/nl_list.inc:55
 msgid	"HTML Datei konnte nicht gel&ouml;scht werden."
 msgstr	"HTML-file could not be deleted."
 
+#: ../include/nl_list.inc:62
 msgid	"Anhang wurde gel&ouml;scht."
 msgstr	"Attachement deleted."
 
+#: ../include/nl_list.inc:64
 msgid	"Anhang konnte nicht gel&ouml;scht werden."
 msgstr	"Attachement could not be deleted."
 
+#: ../include/nl_list.inc:75
 #, c-format
 msgid	"%s Queues fuer diese Newsletter wurden geloescht."
 msgstr	"%s queue-entries for this newsletter were deleted."
 
+#: ../include/nl_list.inc:83
 msgid	"Eintrag und dazugeh&ouml;rige Dateien wurde kopiert."
 msgstr	"Entry and files copied."
 
+#: ../include/nl_list.inc:111
 #, c-format
 msgid	"Gew&auml;hlte Gruppe: %s"
 msgstr	"Selected Group: %s"
 
+#: ../include/nl_list.inc:314 ../include/nl_list.inc:335
+#: ../include/nl_list_legende.inc:20
 msgid	"Massenmailing"
 msgstr	"Massmailing"
 
+#: ../include/nl_list.inc:316 ../include/nl_list.inc:337
+#: ../include/nl_list_legende.inc:21
 msgid	"personalisierter Newsletter"
 msgstr	"Personal newsleter"
 
+#: ../include/nl_list.inc:376
 msgid	"Bearbeiten / Aktionen anzeigen"
 msgstr	"Edit / Show actions"
 
+#: ../include/nl_list.inc:390
 msgid	"Neue Q"
 msgstr	"New queue"
 
+#: ../include/nl_list.inc:390
 msgid	"Versandauftrag anlegen"
 msgstr	"Create delivery-job"
 
+#: ../include/nl_list.inc:395
 msgid	"Alle Q-Eintraege fuer diesen Newsletter loeschen? Achtung es werden "
 	"auch laufende Sendeauftraege geloescht!"
 msgstr	"Delete all Q-entries for this newsletter? All delivery-jobs will be "
 	"canceled and deleted too."
 
+#: ../include/nl_list.inc:395
 msgid	"Q fuer dieses Newsletter loeschen"
 msgstr	"Delete Q for this newsletter"
 
+#: ../include/nl_list.inc:395
 msgid	"Versandauftr&auml;ge l&ouml;schen"
 msgstr	"Delete delivery-jobs"
 
+#: ../include/nl_list.inc:396
 msgid	"Q fuer dieses Newsletter anzeigen"
 msgstr	"Show Q for this newsletter"
 
+#: ../include/nl_list.inc:396
 msgid	"Versandauftr&auml;ge anzeigen"
 msgstr	"Show delivery-jobs"
 
+#: ../include/nl_list.inc:401 ../include/queue_send.inc:15
 msgid	"Newsletter versenden"
 msgstr	"Send newsletter"
 
+#: ../include/nl_list.inc:401
 msgid	"Versand starten"
 msgstr	"Start delivery"
 
+#: ../include/nl_list.inc:408
 msgid	"Template des Newsletter anzeigen: "
 msgstr	"Show template for newsletter:"
 
+#: ../include/nl_list.inc:408
 msgid	"Template anzeigen"
 msgstr	"Show template"
 
+#: ../include/nl_list.inc:412
 msgid	"Onlineversion des Newsletter anzeigen: "
 msgstr	"Show online-version of this newsletter:"
 
+#: ../include/nl_list.inc:412
 msgid	"Onlineversion anzeigen"
 msgstr	"Show online-version"
 
+#: ../include/nl_list.inc:416
 msgid	"Bild fuer diesen Newsletter anzeigen: "
 msgstr	"Show image for this newsletter:"
 
+#: ../include/nl_list.inc:416 ../include/nl_list_legende.inc:30
 msgid	"Bild anzeigen"
 msgstr	"Show image"
 
+#: ../include/nl_list.inc:417 ../include/nl_list_legende.inc:31
 msgid	"Bild loeschen"
 msgstr	"Delete image"
 
+#: ../include/nl_list.inc:417
 msgid	"Bild l&ouml;schen"
 msgstr	"Delete image"
 
+#: ../include/nl_list.inc:421 ../include/nl_list_legende.inc:36
 msgid	"HTML-Datei anzeigen"
 msgstr	"Show HTML-file"
 
+#: ../include/nl_list.inc:422
 msgid	"HTML Datei loeschen"
 msgstr	"Delete HTML-file"
 
+#: ../include/nl_list.inc:422
 msgid	"HTML-Datei l&ouml;schen"
 msgstr	"Delete HTML-file"
 
+#: ../include/nl_list.inc:426
 msgid	"Anhang fuer diesen Newsletter laden"
 msgstr	"Load attachement for this newsletter"
 
+#: ../include/nl_list.inc:426 ../include/nl_list_legende.inc:33
 msgid	"Anhang anzeigen"
 msgstr	"Show attachement"
 
+#: ../include/nl_list.inc:427 ../include/nl_list_legende.inc:34
 msgid	"Anhang loeschen"
 msgstr	"Delete attachement"
 
+#: ../include/nl_list.inc:427 ../include/nl_list_legende.inc:34
 msgid	"Anhang l&ouml;schen"
 msgstr	"Delete attachement"
 
+#: ../include/nl_list.inc:431
 msgid	"Link anzeigen"
 msgstr	"Go to link"
 
+#: ../include/nl_list.inc:436
 msgid	"Deaktivieren"
 msgstr	"Deactivate"
 
+#: ../include/nl_list.inc:438
 msgid	"Aktivieren"
 msgstr	"Activate"
 
+#: ../include/nl_list.inc:442
 msgid	"Newsletter loeschen"
 msgstr	"Delete newsletter"
 
+#: ../include/nl_list.inc:442
 msgid	"L&ouml;schen"
 msgstr	"Delete"
 
+#: ../include/nl_list.inc:444
 msgid	"Der Newsletter wurde bereits versendet, wollen Sie ihn wirklich "
 	"bearbeiten? Es wird empfohlen eine Kopie zu erstellen und diese zu "
 	"bearbeiten."
@@ -1308,577 +1835,1080 @@ msgstr	"This newsletter was already sent. Do you really want to edit? It is "
 	"recommended to copy the newsletter and edit a copy (using this one "
 	"as a template)."
 
+#: ../include/nl_list.inc:450 ../include/nl_list_legende.inc:44
 msgid	"Newsletter kopieren"
 msgstr	"Coipy newsletter"
 
+#: ../include/nl_list.inc:451 ../include/nl_list_legende.inc:45
 msgid	"Newsletter und Dateien kopieren"
 msgstr	"Copy newsletter and files"
 
+#: ../include/nl_list.inc:451
 msgid	"Kopieren(+Dateien)"
 msgstr	"Copy(+files)"
 
+#: ../include/nl_list_legende.inc:20
 msgid	"Massenmailing (per BCC:, kein feedback)"
 msgstr	"Masmailing (send via BCC, no feedback)"
 
+#: ../include/nl_list_legende.inc:22
 msgid	"Queue-Eintrag hinzufuegen, zum Versenden vorbereiten"
 msgstr	"Add Queue-entry, prepare for delivery."
 
+#: ../include/nl_list_legende.inc:22
 msgid	"Queue-Eintrag hinzuf&uuml;gen, zum Versenden vorbereiten"
 msgstr	"Add Queue-entry, prepare for delivery."
 
+#: ../include/nl_list_legende.inc:23
 msgid	"Alle Queue-Eintraege loeschen"
 msgstr	"Delete all Q-entries"
 
+#: ../include/nl_list_legende.inc:23
 msgid	"Alle Queue-Eintr&auml;ge f&uuml;r diesen Newsletter l&ouml;schen"
 msgstr	"Delete all queue-entries for this newsletter"
 
+#: ../include/nl_list_legende.inc:24
 msgid	"Queue-Eintraege fuer Newsletter anzeigen"
 msgstr	"Show Q-entries for newsletter"
 
+#: ../include/nl_list_legende.inc:24
 msgid	"Queue-Eintraege f&uuml;r Newsletter anzeigen"
 msgstr	"Show Q-entries for newsletter"
 
+#: ../include/nl_list_legende.inc:25
 msgid	"Versenden"
 msgstr	"Send"
 
+#: ../include/nl_list_legende.inc:28
 msgid	"Onlineversion des Newsletter anzeigen"
 msgstr	"Show online-version of newsletter"
 
+#: ../include/nl_list_legende.inc:30
 msgid	"verkn&uuml;pftes Bild anzeigen"
 msgstr	"Show linked image"
 
+#: ../include/nl_list_legende.inc:31
 msgid	"verkn&uuml;pftes Bild l&ouml;schen"
 msgstr	"Show linked image"
 
+#: ../include/nl_list_legende.inc:36
 msgid	"verkn&uuml;pfte HTML Datei anzeigen"
 msgstr	"Show linked HTML-file"
 
+#: ../include/nl_list_legende.inc:37
 msgid	"HTML-Datei loeschen"
 msgstr	"Delete HTML-file"
 
+#: ../include/nl_list_legende.inc:37
 msgid	"verkn&uuml;pfte HTML-Datei l&ouml;schen"
 msgstr	"Show linked HTML-file"
 
+#: ../include/nl_list_legende.inc:39
 msgid	"verkn&uuml;pften Link anzeigen"
 msgstr	"Got to link"
 
 msgid	"Newsletter ist Aktiv/Inaktiv (Click=Deaktivieren/Aktivieren)"
 msgstr	"Newsletter is active/inactive (Click=deaktivate/activate)"
 
+#: ../include/nl_list_legende.inc:44
 msgid	"Newsletter kopieren (ohne Dateien)"
 msgstr	"Copy newsletter (w/o files)"
 
+#: ../include/nl_list_legende.inc:47
 msgid	"Newsletter l&ouml;schen"
 msgstr	"Delete newsletter"
 
 msgid	"neuen Newsletter erstellen"
 msgstr	"Create new newsletter"
 
+#: ../include/nl_new.inc:77
 #, c-format
 msgid	"Neuer Newsletter %s wurde erstellt."
 msgstr	"New newsletter %s created."
 
+#: ../include/nl_upload.inc:47
 msgid	"HTML-Datei erfolgreich hochgeladen."
 msgstr	"HTML-file uplaoded successfully."
 
+#: ../include/nl_upload.inc:51
 msgid	"HTML-Code wurde angef&uuml;gt."
 msgstr	"HTML-Code appended."
 
+#: ../include/nl_upload.inc:56
 msgid	"HTML-Datei konnte nicht hochgeladen werden."
 msgstr	"HTML-file could not be uploaded."
 
+#: ../include/nl_upload.inc:60
 #, c-format
 msgid	"Die HTML-Datei darf nur eine Gr&ouml;sse von %s Byte haben."
 msgstr	"The HTML-file should have a mximum size of %s bytes."
 
+#: ../include/nl_upload.inc:64
 msgid	"Die HTML-Datei besitzt eine ung&uuml;ltige Endung."
 msgstr	"The HTML-file has an invalid extension."
 
+#: ../include/nl_upload.inc:82
 msgid	"BILD-Datei erfolgreich hochgeladen."
 msgstr	"Image-file successfully uploaded."
 
+#: ../include/nl_upload.inc:86 ../include/nl_upload.inc:129
 msgid	"gespeichert unter:"
 msgstr	"saved as: "
 
+#: ../include/nl_upload.inc:90
 msgid	"BILD-Datei konnte nicht hochgeladen werden."
 msgstr	"Image-file could not be uploaded."
 
+#: ../include/nl_upload.inc:94
 #, c-format
 msgid	"Die BILD-Datei darf nur eine Gr&ouml;sse von %s Byte besitzen."
 msgstr	"The image-file should have a mximum size of %s bytes"
 
+#: ../include/nl_upload.inc:98
 msgid	"Die BILD-Datei besitzt eine ung&uuml;ltige Endung."
 msgstr	"The image-file has an invalid extension."
 
+#: ../include/nl_upload.inc:125
 msgid	"Anhang erfolgreich hochgeladen."
 msgstr	"Attachement uploaded successfully."
 
+#: ../include/nl_upload.inc:133
 msgid	"Anhang konnte nicht hochgeladen werden."
 msgstr	"Attachement could not be uploaded."
 
+#: ../include/nl_upload.inc:137
 #, c-format
 msgid	"Der Anhang Datei darf nur eine Gr&ouml;sse von %s Byte haben."
 msgstr	"The attachement should have a mximum size of %s bytes."
 
+#: ../include/pager.inc:25
 msgid	"Zurueck"
 msgstr	"Previous"
 
+#: ../include/pager.inc:30
 #, c-format
 msgid	"Eintrag %s bis %s von %s"
 msgstr	"Entry %s to %s from %s"
 
+#: ../include/pager.inc:35
 msgid	"Vor"
 msgstr	"Next"
 
+#: ../include/queue_form.inc:27
 msgid	"neuen Q erstellen"
 msgstr	"Create new Q"
 
+#: ../include/queue_form.inc:40
 msgid	"Newsletter waehlen"
 msgstr	"Select Newsletter"
 
+#: ../include/queue_form.inc:55
 msgid	"(Massenmailing)"
 msgstr	"(Massmailing)"
 
+#: ../include/queue_form.inc:57
 msgid	"(personalisiert)"
 msgstr	"(personal)"
 
+#: ../include/queue_form.inc:94
 msgid	"Versandliste sofort aktivieren"
 msgstr	"Create recipients-list"
 
+#: ../include/queue_form.inc:103
 msgid	"Datum des terminierten Versands"
 msgstr	"Date to send:"
 
+#: ../include/queue_form.inc:114
 msgid	"Stunde"
 msgstr	"Hour"
 
+#: ../include/queue_form.inc:131
 msgid	"Minute"
 msgstr	"Minute"
 
+#: ../include/queue_form.inc:182
 msgid	"versenden an:"
 msgstr	"Send to:"
 
+#: ../include/queue_form.inc:191
 msgid	"Versand starten am:"
 msgstr	"Delivery starts at:"
 
+#: ../include/queue_form.inc:203
 msgid	"Versandliste sofort erstellen"
 msgstr	"Create recipients-list"
 
+#: ../include/queue_list.inc:15
 msgid	"Newsletter Warteschlange (Q)"
 msgstr	"Newsletter Queue (Q)"
 
+#: ../include/queue_list.inc:74
 msgid	"Logfile wurde gel&ouml;scht."
 msgstr	"Logfile deleted"
 
+#: ../include/queue_list.inc:76
 msgid	"Logfile konnte nicht gel&ouml;scht werden."
 msgstr	"Logfile could not be deleted"
 
+#: ../include/queue_list.inc:83
 #, c-format
 msgid	"gew&auml;hltes Newsletter: %s"
 msgstr	"Selected newsletter: %s"
 
+#: ../include/queue_list.inc:208
 msgid	"Newsletter an gewaehlte Gruppe versenden"
 msgstr	"Send newsletter to selected group"
 
+#: ../include/queue_list.inc:212
 #, c-format
 msgid	"Versand startet: %s"
 msgstr	"Sent at: %s"
 
+#: ../include/queue_list.inc:233 ../include/statistic.inc:266
 #, c-format
 msgid	"Erstellt am: %s"
 msgstr	"Created: %s"
 
+#: ../include/queue_list.inc:234
 #, c-format
 msgid	"Versand startet am/um: %s"
 msgstr	"Delivery starts at: %s"
 
+#: ../include/queue_list.inc:235
 #, c-format
 msgid	"Erstellt von: %s"
 msgstr	"Author: %s"
 
+#: ../include/queue_list.inc:269
 #, c-format
 msgid	"Q ID: %s starten ?"
 msgstr	"Start Q with ID: %s ?"
 
+#: ../include/queue_list.inc:269
 msgid	"Q erneut starten und fortfahren"
 msgstr	"Continue Queue"
 
+#: ../include/queue_list.inc:273
 #, c-format
 msgid	"Q ID: %s anhalten und Versand stoppen?"
 msgstr	"Stop Q with ID: %s and halt delivery?"
 
+#: ../include/queue_list.inc:273
 msgid	"Q stoppen"
 msgstr	"Stop Q"
 
+#: ../include/queue_list.inc:279
 msgid	"Logfile anzeigen (nicht vollstaendig)"
 msgstr	"Show logfile (not complete)"
 
+#: ../include/queue_list.inc:281 ../include/queue_list_legende.inc:20
 msgid	"Logfile anzeigen"
 msgstr	"Show logfile"
 
+#: ../include/queue_list.inc:282
 #, c-format
 msgid	"Logfile fuer Q %s loeschen?"
 msgstr	"Delete logfile for Q %s?"
 
+#: ../include/queue_list.inc:282 ../include/queue_list_legende.inc:21
 msgid	"Logfile loeschen"
 msgstr	"Delete logfile"
 
+#: ../include/queue_list.inc:287
 #, c-format
 msgid	"Q ID: %s loeschen?"
 msgstr	"Delete Q with ID: %s ?"
 
+#: ../include/queue_list.inc:287
 msgid	"Q loeschen"
 msgstr	"Delete Q"
 
+#: ../include/queue_list_legende.inc:21
 msgid	"Logfile l&ouml;schen"
 msgstr	"Delete logfile"
 
+#: ../include/queue_list_legende.inc:22
 msgid	"Diesen Eintrag versenden"
 msgstr	"Send this entry"
 
+#: ../include/queue_list_legende.inc:23
 msgid	"Anhalten"
 msgstr	"Stop"
 
+#: ../include/queue_list_legende.inc:24
 msgid	"Fortfahren"
 msgstr	"Continue"
 
+#: ../include/queue_list_legende.inc:25
 msgid	"Q l&ouml;schen"
 msgstr	"Delete Q"
 
+#: ../include/queue_new.inc:15
 msgid	"Newsletter zur Warteschlange (Q) hinzufuegen"
 msgstr	"Add newsletter to Queue"
 
+#: ../include/queue_new.inc:79
 #, c-format
 msgid	"F&uuml;r die Gruppe %s existieren bereits %s neue Eintr&auml;ge. "
 	"Nicht hinzugef&uuml;gt!"
 msgstr	"Group %s already has %s new jobs, nothing added."
 
+#: ../include/queue_new.inc:85
 #, c-format
 msgid	"F&uuml;r die Gruppe %s existieren bereits %s gestartete/wartende "
 	"Eintr&auml;ge. Nicht hinzugef&uuml;gt!"
 msgstr	"Group %s already has %s started/waiting jobs, nothing added."
 
+#: ../include/queue_new.inc:91
 #, c-format
 msgid	"F&uuml;r die Gruppe %s existieren bereits %s laufende Eintr&auml;ge. "
 	"Nicht hinzugef&uuml;gt!"
 msgstr	"Group %s already has %s running jobs, nothing added."
 
+#: ../include/queue_new.inc:118
 #, c-format
 msgid	"In der  Gruppe %s existieren keine g&uuml;ltigen Adressen. Nicht "
 	"hinzugef&uuml;gt!"
 msgstr	"Group %s has no valid entries, nothing added."
 
+#: ../include/queue_new.inc:120
 #, c-format
 msgid	"In der  Gruppe %s existieren %s g&uuml;ltige Adressen. Gruppe "
 	"hinzugef&uuml;gt!"
 msgstr	"Group %s has %s valid entries, group added."
 
+#: ../include/queue_new.inc:147
 msgid	"Neuer Eintrag wurde erstellt."
 msgstr	"New entry has been created."
 
+#: ../include/queue_new.inc:154
 msgid	"Keine Gruppe(n) gew&auml;hlt. Nichts hinzugef&uuml;gt"
 msgstr	"No group selected, nothing added."
 
+#: ../include/queue_send.inc:46
 msgid	"Empf&auml;ngerliste wird generiert."
 msgstr	"Creating recipients-list."
 
+#: ../include/queue_send.inc:109
 msgid	"Der Versand wurde gestartet!"
 msgstr	"Delievery started."
 
+#: ../include/statistic.inc:44
 #, c-format
 msgid	"Statistik f&uuml;r Newsletter %s"
 msgstr	"Statistics for newslette %s"
 
+#: ../include/statistic.inc:49
 #, c-format
 msgid	"%s Sendeauftr&auml;ge insgesamt:"
 msgstr	"%s delivery-jobs  (total):"
 
+#: ../include/statistic.inc:67
 #, c-format
 msgid	"Versand an insgesamt %s Adressen:"
 msgstr	"Delivered to a total of %s addresses:"
 
+#: ../include/statistic.inc:81
 msgid	"Details:"
 msgstr	"Details:"
 
+#: ../include/statistic.inc:122
 #, c-format
 msgid	"Statistik f&uuml;r Adressgruppe %s"
 msgstr	"Statistics for address-group %s"
 
+#: ../include/statistic.inc:126
 #, c-format
 msgid	"Insgesamt %s Adressen:"
 msgstr	"Total %s addresses:"
 
+#: ../include/statistic.inc:181
 #, c-format
 msgid	"Statistik fuer Adresse %s"
 msgstr	"Statistics for address %s"
 
+#: ../include/statistic.inc:191
 msgid	"Gespeicherte Daten:"
 msgstr	"Saved data:"
 
+#: ../include/statistic.inc:220
 msgid	"Status:"
 msgstr	"Status:"
 
+#: ../include/statistic.inc:236
 msgid	"Sendeauftr&auml;ge insgesamt:"
 msgstr	"Delivery-jobs (total):"
 
+#: ../include/statistic.inc:251
 msgid	"Versand-Details:"
 msgstr	"Delievery-details"
 
+#: ../include/statistic.inc:269
 #, c-format
 msgid	"Q Versand (start): %s"
 msgstr	"Q Delievery (started): %s"
 
+#: ../include/statistic.inc:273
 #, c-format
 msgid	"Versendet: %s"
 msgstr	"Sent at: %s"
 
+#: ../include/statistic.inc:286
 msgid	"Diese Funktion ist leider noch nicht implementiert. Bitte "
 	"unterst&uuml;tzen Sie die Entwicklung von Tellmatic."
 msgstr	"This functions is not implemented yet. Please support development of "
 	"Tellmatic"
 
+#: ../include/status.inc:46
 #, c-format
 msgid	"TOP %s"
 msgstr	"TOP %s"
 
+#: ../include/status.inc:49
 #, c-format
 msgid	"TOP %s - Newsletter"
 msgstr	"TOP %s newsletter"
 
+#: ../include/status.inc:50 ../include/status.inc:96
 msgid	"Views"
-msgstr	"Angezeigt"
+msgstr	"Views"
 
+#: ../include/status.inc:64 ../include/status.inc:108
 msgid	"Klicks"
 msgstr	"Clicks"
 
+#: ../include/status.inc:77
 #, c-format
 msgid	"TOP %s - Formulare"
 msgstr	"TOP %s forms"
 
+#: ../include/status.inc:78
 msgid	"Anmeldungen"
 msgstr	"Subscriptions"
 
+#: ../include/status.inc:95
 #, c-format
 msgid	"TOP %s - Abonnenten"
 msgstr	"TOP %s subscribes"
 
+#: ../include/status.inc:120
 msgid	"Anz. empfangene NL"
 msgstr	"Newsletters received"
 
+#: ../include/status.inc:141
 msgid	"Gesamtstatus"
 msgstr	"Status"
 
+#: ../include/status.inc:153 ../include/status.inc:175
 #, c-format
 msgid	"%s Newsletter"
 msgstr	"%s newsletter"
 
+#: ../include/status.inc:153 ../include/status.inc:175
 #, c-format
 msgid	"%s Gruppen"
 msgstr	"%s groups"
 
+#: ../include/status.inc:154
 #, c-format
 msgid	"Insgesamt %s Mails im Versand:"
 msgstr	"Total %s mails in delivery"
 
+#: ../include/user_form.inc:27
 msgid	"Benutzereinstellungen aendern"
 msgstr	"Edit user-settings"
 
+#: ../include/user_form.inc:42 ../include/user_form.inc:51
+#: ../include/user_form.inc:138
 msgid	"Passwort"
 msgstr	"Password"
 
+#: ../include/user_form.inc:60 ../include/user_form.inc:129
 msgid	"Layout / Style"
 msgstr	"Layout / Style"
 
+#: ../include/user_form.inc:75 ../include/user_form.inc:119
 msgid	"Sprache"
 msgstr	"Language"
 
+#: ../include/user_form.inc:90
 #, c-format
 msgid	"Einstellungen fuer Benutzer %s aendern"
 msgstr	"Edit settings for %s"
 
+#: ../include/user_form.inc:147
 msgid	"Passwort wiederholen"
 msgstr	"Repeat password"
 
+#: ../include/user.inc:15
 msgid	"Benutzereinstellungen &auml;ndern"
 msgstr	"Edit user-settings"
 
+#: ../include/user.inc:37
 msgid	"Kein Passwort angegeben."
 msgstr	"No password given."
 
+#: ../include/user.inc:38
 #, c-format
 msgid	"Passwort sollte mindestens %s Zeichen haben."
 msgstr	"The password should be minimum %s characters in length."
 
+#: ../include/user.inc:39
 msgid	"Bitte geben Sie zweimal das gleiche Passwort an."
 msgstr	"Please enter your password twice"
 
+#: ../include/user.inc:47
 msgid	"Das Passwort wurde nicht ge&auml;ndert."
 msgstr	"The password has not been changed"
 
+#: ../include/Welcome.inc:15 ../include/Welcome.inc:17
 #, c-format
 msgid	"Willkommen bei %s"
 msgstr	"Welcome to %s"
 
+#: ../include/adr_list_legende.inc:21
 msgid	"Adresse ist Aktiv/Inaktiv (Klick=Deaktivieren/Aktivieren)"
 msgstr	"Addess is active/inactive (Click=deactivate/activate)"
 
+#: ../include/Stats.inc:35 ../include/mnl_lib.inc:233
 msgid	"Best&auml;tigt, Double-Opt-In"
 msgstr	"Confirmed double-opt-in"
 
+#: ../include/nl_list_legende.inc:42
 msgid	"Newsletter ist Aktiv/Inaktiv (Klick=Deaktivieren/Aktivieren)"
 msgstr	"Newsletter is active/inactive (Click=deactivate/activate)"
 
+#: ../include/nl_new.inc:15
 msgid	"Neuen Newsletter erstellen"
 msgstr	"Create new newsletter"
 
+#: ../include/Menu.inc:36 ../include/Menu.inc:45
 msgid	"Newsletter-Gruppen anzeigen"
 msgstr	"Show newsletter-groups"
 
+#: ../include/Menu.inc:37 ../include/Menu.inc:46
 msgid	"Hier verwalten Sie Ihre Newslettergruppen"
 msgstr	"Here you manage your newsletter-groups"
 
+#: ../include/Menu.inc:44 ../include/Menu.inc:53 ../include/Menu.inc:96
+#: ../include/Menu.inc:105
 msgid	"Neue Gruppe"
 msgstr	"New group"
 
+#: ../include/Menu.inc:45 ../include/Menu.inc:54
 msgid	"Neue Newsletter-Gruppe anlegen"
 msgstr	"Create new newsletter-group"
 
+#: ../include/Menu.inc:46 ../include/Menu.inc:55
 msgid	"Hier erstellen Sie eine neue Newslettergruppe"
 msgstr	"Here you create a new newsletter-group"
 
+#: ../include/Menu.inc:54 ../include/Menu.inc:63
 msgid	"Newsletter anzeigen"
 msgstr	"Show newsletter"
 
+#: ../include/Menu.inc:55 ../include/Menu.inc:64
 msgid	"Hier verwalten Sie Ihre Newsletter"
 msgstr	"Here you manage your newsletters"
 
+#: ../include/Menu.inc:62 ../include/Menu.inc:71
 msgid	"Neuer Newsletter"
 msgstr	"New newsletter"
 
+#: ../include/Menu.inc:63 ../include/Menu.inc:72
 msgid	"Neuen Newsletter anlegen"
 msgstr	"Create new newsletter"
 
+#: ../include/Menu.inc:64 ../include/Menu.inc:73
 msgid	"Hier erstellen Sie einen neuen Newsletter"
 msgstr	"Here you create a new newsletter"
 
+#: ../include/Menu.inc:71 ../include/Menu.inc:80
 msgid	"Neue Queue"
 msgstr	"New delivery-job (Q)"
 
+#: ../include/Menu.inc:72 ../include/Menu.inc:81
 msgid	"neuen Newsletter in die Queue / Warteschlange eintragen"
 msgstr	"Add newsletter to queue"
 
+#: ../include/Menu.inc:73 ../include/Menu.inc:82
 msgid	"Hier bereiten Sie den Versand Ihres Newsletter vor"
 msgstr	"Here you prepare youre newsletter for delivery"
 
+#: ../include/Menu.inc:88 ../include/Menu.inc:97
 msgid	"Adress-Gruppen anzeigen"
 msgstr	"Show address-groups"
 
+#: ../include/Menu.inc:89 ../include/Menu.inc:98
 msgid	"Hier verwalten Sie Ihre AdressGruppen"
 msgstr	"Here you manage your address-groups"
 
+#: ../include/Menu.inc:97 ../include/Menu.inc:106
 msgid	"Neue Adress-Gruppe anlegen"
 msgstr	"Create new address-group"
 
+#: ../include/Menu.inc:98 ../include/Menu.inc:107
 msgid	"Hier erstellen Sie eine neue Adress-Gruppe"
 msgstr	"Here you create a new address-group"
 
+#: ../include/Menu.inc:107 ../include/Menu.inc:116
 msgid	"Hier k&ouml;nnen Sie Ihre Adressen suchen, anzeigen und bearbeiten"
 msgstr	"Here you can search, list and edit addresses"
 
+#: ../include/Menu.inc:114 ../include/Menu.inc:123
 msgid	"Neue Adresse"
 msgstr	"New address"
 
+#: ../include/Menu.inc:115 ../include/Menu.inc:124
 msgid	"Neue Adresse anlegen"
 msgstr	"Create new address"
 
+#: ../include/Menu.inc:116 ../include/Menu.inc:125
 msgid	"Hier erfassen Sie Adressen manuell"
 msgstr	"Here you can enter addresses manually"
 
+#: ../include/Menu.inc:123 ../include/Menu.inc:132
 msgid	"CSV-Import"
 msgstr	"Import from CSV"
 
+#: ../include/Menu.inc:124 ../include/Menu.inc:133
 msgid	"Adressen aus einer CSV-Datei importieren"
 msgstr	"Import addresses from CSV-file"
 
+#: ../include/Menu.inc:125 ../include/Menu.inc:134
 msgid	"Importieren Sie Ihre Adressbest&auml;nde aus einer CSV-Datei"
 msgstr	"Import addresses from CSV-file"
 
+#: ../include/Menu.inc:132 ../include/Menu.inc:141
 msgid	"CSV-Export"
 msgstr	"Export to CSV"
 
+#: ../include/Menu.inc:134 ../include/Menu.inc:143
 msgid	"Exportieren Sie Ihre Adressbest&uuml;nde in eine CSV-Datei"
 msgstr	"Export addresses to CSV-file"
 
+#: ../include/Menu.inc:141 ../include/Menu.inc:142 ../include/Menu.inc:150
+#: ../include/Menu.inc:151
 msgid	"Bounce-Management"
 msgstr	"Bounce-management"
 
+#: ../include/Menu.inc:143 ../include/Menu.inc:152
 msgid	"Verwalten Sie fehlgeschlagene E-Mails und R&uuml;ckl&auml;ufer"
 msgstr	"Manage bounce-messages and errorness or failed addresses"
 
+#: ../include/Menu.inc:150 ../include/Menu.inc:151 ../include/Menu.inc:159
+#: ../include/Menu.inc:160
 msgid	"Datenbank bereinigen"
 msgstr	"Clean up address-database"
 
+#: ../include/Menu.inc:152 ../include/Menu.inc:161
 msgid	"Datenbank aufr&auml;umen und Adressbest&auml;nde s&auml;ubern"
 msgstr	"Clean up address-database"
 
+#: ../include/Menu.inc:164 ../include/Menu.inc:173
 msgid	"Formulare"
 msgstr	"Forms"
 
+#: ../include/Menu.inc:165 ../include/Menu.inc:174
 msgid	"Formulare anzeigen"
 msgstr	"Show forms"
 
+#: ../include/Menu.inc:166 ../include/Menu.inc:175 ../include/Menu.inc:184
 msgid	"Hier verwalten Sie Ihre Anmeldeformulare"
 msgstr	"Here you manage your subscription-forms"
 
+#: ../include/Menu.inc:173 ../include/Menu.inc:182
 msgid	"Neues Formular"
 msgstr	"New form"
 
+#: ../include/Menu.inc:174 ../include/Menu.inc:183
 msgid	"Neues Formular erstellen"
 msgstr	"Create a new form"
 
+#: ../include/Menu.inc:188 ../include/Menu.inc:197
 msgid	"Aktueller Status"
 msgstr	"Current status"
 
+#: ../include/Menu.inc:189 ../include/Menu.inc:198
 msgid	"Hier sehen Sie den aktuellen Status"
 msgstr	"Current status"
 
+#: ../include/Menu.inc:196 ../include/Menu.inc:205
 msgid	"Einstellungen"
 msgstr	"Settings"
 
+#: ../include/Menu.inc:197 ../include/Menu.inc:206
 msgid	"Grundeinstellungen"
 msgstr	"Main-settings"
 
+#: ../include/Menu.inc:198 ../include/Menu.inc:207
 msgid	"Globale Einstellungen f&uuml;r Tellmatic"
 msgstr	"Global settings for Tellmatic"
 
+#: ../include/Menu.inc:207 ../include/Menu.inc:216
 msgid	"Hier sehen Sie einige zus&auml;tzliche Informationen"
 msgstr	"Here you see some additional informations"
 
+#: ../include/Menu.inc:214 ../include/Menu.inc:215 ../include/Menu.inc:223
+#: ../include/Menu.inc:224
 msgid	"manueller Versand"
 msgstr	"Send manually"
 
+#: ../include/Menu.inc:216 ../include/Menu.inc:225
 msgid	"Hier versenden Sie Ihre Newsletter manuell"
 msgstr	"Here you can send manually"
 
+#: ../include/Menu.inc:223 ../include/Menu.inc:232
 msgid	"Abmelden"
 msgstr	"Unsubscribe"
 
+#: ../include/Menu.inc:224 ../include/Menu.inc:233
 msgid	"Abmeldeformular"
 msgstr	"Unsubscription-form"
 
+#: ../include/Menu.inc:225 ../include/Menu.inc:234
 msgid	"Hier gelangen Sie zum Abmeldeformular"
 msgstr	"Go to unsubscription-form"
 
+#: ../include/Menu.inc:232 ../include/Menu.inc:241
 msgid	"Dokumentation"
 msgstr	"Documentation"
 
+#: ../include/Menu.inc:234 ../include/Menu.inc:243
 msgid	"Hier wird Ihnen geholfen"
 msgstr	"Here you get help"
 
+#: ../include/Menu.inc:246 ../include/Menu.inc:247 ../include/Menu.inc:255
+#: ../include/Menu.inc:256
 msgid	"Benutzereinstellungen"
 msgstr	"User-settings"
 
+#: ../include/Menu.inc:248 ../include/Menu.inc:257
 msgid	"Hier &auml;ndern Sie Ihre pers&ouml;nlichen Einstellungen"
 msgstr	"Here you can change your personal preferences"
 
+#: ../include/form_list_legende.inc:30
 msgid	"Formular ist Aktiv/Inaktiv (Klick=Deaktivieren/Aktivieren)"
-msgstr	""
+msgstr	"Form ist active/inactive (Click=deactivate/activate)"
+
+msgid	"Zur Zeit gibt es keine zu verarbeitenden VersandauftrÃÂ¤ge."
+msgstr	"At the moment there are no delivery jobs"
+
+#: ../include/send_it.php:630 ../include/send_it.php:646
+#, c-format
+msgid	"Die Seite wird in %s Sekunden automatisch neu geladen."
+msgstr	"This page will be reloade in %s seconds automagical"
+
+#: ../include/send_it.php:632 ../include/send_it.php:648
+msgid	"Klicken Sie auf 'Neu laden' wenn Sie diese Seite erneut aufrufen "
+	"wollen."
+msgstr	"Click on 'Reload' to reload this page"
+
+#: ../include/send_it.php:634 ../include/send_it.php:650
+msgid	"Neu laden"
+msgstr	"Reload"
+
+#: ../include/Welcome.inc:17 ../include/Welcome.inc:30
+#, c-format
+msgid	"Aktuell verfÃÂ¼gbare Version: %s"
+msgstr	"Current available version: %s"
+
+#: ../include/status.inc:132
+#, c-format
+msgid	"Die TOP %s Liste  z&auml;hlt auch doppelte Klicks und Views!"
+msgstr	"The TOP %s list also counts duplicate clicks and views!"
+
+#: ../include/statistic.inc:50 ../include/statistic.inc:237
+msgid	"Auftragsstatus:"
+msgstr	"Job-status"
+
+#: ../include/statistic.inc:68 ../include/statistic.inc:146
+msgid	"Versandstatus:"
+msgstr	"Delivery-status"
+
+#: ../include/statistic.inc:152
+#, c-format
+msgid	"Versand von %s"
+msgstr	"Delivery of %s"
+
+#: ../include/statistic.inc:95
+#, c-format
+msgid	"Versand an Gruppe %s"
+msgstr	"Deliver to address-groupÃÂ¼: %s"
+
+#: ../include/adr_list.inc:236 ../include/statistic.inc:223
+#, c-format
+msgid	"erstellt am: %s von: %s"
+msgstr	"Created at %s from %s"
+
+#: ../include/adr_list.inc:237 ../include/statistic.inc:224
+#, c-format
+msgid	"bearbeitet am: %s von %s"
+msgstr	"Edited at %s from %s"
+
+#: ../include/adr_list.inc:238 ../include/statistic.inc:225
+#, c-format
+msgid	"Newsletter Aktuell: %s"
+msgstr	"Newsletter (actual): %s"
+
+#: ../include/adr_list.inc:239 ../include/bounce_filter_adr_list.inc:75
+#: ../include/statistic.inc:226
+#, c-format
+msgid	"Newsletter Gesamt: %s"
+msgstr	"Total newsletter: %s"
+
+#: ../include/adr_list.inc:240 ../include/bounce_filter_adr_list.inc:76
+#: ../include/nl_list.inc:352 ../include/statistic.inc:227
+#, c-format
+msgid	"Views: %s"
+msgstr	"Views: %s"
+
+#: ../include/adr_list.inc:241 ../include/bounce_filter_adr_list.inc:77
+#: ../include/nl_list.inc:353 ../include/statistic.inc:228
+#, c-format
+msgid	"Clicks: %s"
+msgstr	"Clicks: %s"
+
+#: ../include/adr_list.inc:242 ../include/bounce_filter_adr_list.inc:78
+#: ../include/statistic.inc:229
+#, c-format
+msgid	"Sendefehler: %s"
+msgstr	"Send-errors: %s"
+
+#: ../include/statistic.inc:260
+msgid	"an Adressgruppe"
+msgstr	"to address-group"
+
+#: ../include/queue_send.inc:97
+#, c-format
+msgid	"Es wurden %s Adressen aus der Gruppe %s eingetragen"
+msgstr	"%s addresses from group %s inserted."
+
+#: ../include/queue_send.inc:99
+#, c-format
+msgid	"%s Adressen wurden uebersprungen (inaktiv, abgemeldet, fehlerhaft)."
+msgstr	"%s addresses skipped (inactive, unsubscribed, errorness or failed)"
+
+#: ../include/queue_send.inc:101
+#, c-format
+msgid	"%s Adressen wurden uebersprungen (bereits eingetragen)."
+msgstr	"%s addresses skipped (already exists)"
+
+#: ../include/queue_list.inc:238
+msgid	"Adressen: "
+msgstr	"Addresses: "
+
+#: ../include/queue_list.inc:239
+msgid	"Wartend: "
+msgstr	"Waiting: "
+
+#: ../include/queue_list.inc:240
+msgid	"Gesendet: "
+msgstr	"Sent: "
+
+#: ../include/queue_list.inc:241
+msgid	"Fehler: "
+msgstr	"Errors: "
+
+#: ../include/queue_list.inc:242
+msgid	"versendet am: "
+msgstr	"sent at: "
+
+#: ../include/queue_list.inc:243
+msgid	"Angezeigt: "
+msgstr	"Viewed: "
+
+#: ../include/nl_new.inc:80
+msgid	"Template:"
+msgstr	"Template:"
+
+#: ../include/nl_edit.inc:95 ../include/nl_new.inc:82
+msgid	"Online:"
+msgstr	"Online"
+
+#: ../include/nl_upload.inc:52
+msgid	"Datei gespeichert unter:"
+msgstr	"Files saved as:"
+
+#: ../include/nl_list.inc:220 ../include/queue_list.inc:124
+msgid	"Datum"
+msgstr	"Date"
+
+#: ../include/nl_list.inc:224
+msgid	"Titel"
+msgstr	"Title"
+
+#: ../include/form_list.inc:189 ../include/nl_list.inc:342
+#, c-format
+msgid	"Erstellt am: %s von %s"
+msgstr	"Created at %s from %s"
+
+#: ../include/form_list.inc:190 ../include/nl_list.inc:343
+#, c-format
+msgid	"Bearbeitet am: %s von %s"
+msgstr	"Edited at %s from %s"
+
+#: ../include/nl_list.inc:351
+#, c-format
+msgid	"Link: %s"
+msgstr	"Link: %s"
+
+#: ../include/nl_list.inc:354
+msgid	"Versand an:"
+msgstr	"Deliver to:"
+
+#: ../include/nl_form.inc:249
+#, c-format
+msgid	"%s enth&auml;lt das hochgeladene Bild 'img src' | %s enth&auml;lt "
+	"nur die URL zum Bild"
+msgstr	"%s contains the uploaded image 'img src' | %s contains onle the url."
+
+#: ../include/nl_form.inc:250
+#, c-format
+msgid	"%s enth&auml;lt den angegebenen Link 'a href' | %s enth&auml;lt nur "
+	"die URL des Links"
+msgstr	"%s contains the link 'a href' | %s contains only the url."
+
+#: ../include/nl_form.inc:251
+#, c-format
+msgid	"%s enth&auml;lt den Link zum Attachement 'a href' |  %s enth&auml;lt "
+	"nur die URL zum Attachement"
+msgstr	"%s contains the link to the attachement 'a href' | %s contains only "
+	"the url."
+
+#: ../include/nl_form.inc:252
+#, c-format
+msgid	"%s enth&auml;lt den Link zum abmelden |   %s enth&auml;lt nur die "
+	"URL zum Abmeldeformular"
+msgstr	"%s contains the link to unsubscribe 'a href' | %s contains only the "
+	"url."
+
+#: ../include/nl_form.inc:253
+#, c-format
+msgid	"%s enth&auml;lt den Link zur Onlineversion 'a href' |  %s "
+	"enth&auml;lt nur die URL zur Onlineversion"
+msgstr	"%s contains the link to the online version of your newsletter 'a "
+	"href' | %s contains only the url."
+
+#: ../include/nl_form.inc:254
+#, c-format
+msgid	"%s enth&auml;lt das schliessende TAG '/a' fuer die Links"
+msgstr	"%s contains the closing tag for links '/a'."
+
+#: ../include/nl_form.inc:255
+msgid	"Nur f&uuml; personalisierten Newsleter:"
+msgstr	"Only available for personal mailings: (no massmailing/BCC)"
+
+#: ../include/nl_form.inc:256
+#, c-format
+msgid	"%s enth&auml;lt ein 1x1 Pixel grosses transparentes PNG-Bild "
+	"(f&uuml;r View-Tracking, nur HTML-Mails)"
+msgstr	"%s contains a 1x1 pixel size transparent png-image for view-tracking"
+
+#: ../include/nl_form.inc:257
+#, c-format
+msgid	"%s enth&auml;lt die e-Mailadresse des Empfaengers"
+msgstr	"%s contains the e-mail-address of the subscriber."
+
+#: ../include/nl_form.inc:258
+#, c-format
+msgid	"%s bis %s enth&auml;lt die Felder aus den Formularen/Adressen"
+msgstr	"%s to %s contains the field-values from your addresses."
+
+#: ../include/nl_form.inc:259
+#, c-format
+msgid	"%s enth&auml;lt den kompletten Link 'a href' zum Aktivierungslink "
+	"('(1st)-Touch-Opt-In) | %s enth&auml;lt nur die URL"
+msgstr	"%s contains the link 'a href' for 1st-touch-opt-in subscriptions | "
+	"%s contains only the url."
+
+#: ../include/nl_list.inc:355
+#, c-format
+msgid	"insgesamt %s Adressen"
+msgstr	"total %s addresses"
+
+#: ../include/nl_list.inc:356
+#, c-format
+msgid	"Wartend: %s"
+msgstr	"Waiting: %s"
+
+#: ../include/nl_list.inc:357
+#, c-format
+msgid	"Gesendet: %s"
+msgstr	"Sent: %s"
+
+#: ../include/nl_list.inc:358
+#, c-format
+msgid	"Fehler: %s"
+msgstr	"Errors: %s"
+
+#: ../include/nl_list.inc:359
+#, c-format
+msgid	"Angezeigt: %s"
+msgstr	"Viewed: %s"
+
+#: ../include/nl_edit.inc:93
+msgid	"Vorlage:"
+msgstr	"Template:"
+
+#: ../include/Main.inc:80
+msgid	"Achtung! Passwort muss in include/.htpasswd manuell angepasst werden."
+msgstr	"Attention! Password must be changed manually in the .htusers file"
+
+#: ../include/Main.inc:94
+msgid	"Informationen ausblenden"
+msgstr	"Hide information"
+
+#: ../include/form_list.inc:92
+msgid	"ID"
+msgstr	"ID"
+
+#: ../include/form_list.inc:178
+#, c-format
+msgid	"Anmeldungen: %s"
+msgstr	"Subscriptions: %s"
+
+#: ../include/bounce_filter_adr_list.inc:33
+#: ../include/bounce_mail_list.inc:157
+#, c-format
+msgid	"%s Mails ergaben einen Treffer."
+msgstr	"%s mails matched."
+
+#: ../include/bounce_filter_adr_list.inc:34
+#, c-format
+msgid	"Es wurden aus %s Adressen %s (eindeutige) potentiell fehlerhafte "
+	"Adressen erkannt."
+msgstr	"%s of %s addresses were detected as errorness or failed"
+
+#: ../include/bounce_filter_adr_list.inc:42
+msgid	"Adresse"
+msgstr	"Address"
+
+#: ../include/bounce_filter_adr_list.inc:43
+msgid	"Details"
+msgstr	"Details"
+
+#: ../include/bounce_mail_list.inc:158
+#, c-format
+msgid	"Es wurden aus %s Adressen %s potentiell Fehlerhafte Adressen erkannt."
+msgstr	"%s of %s addresses were detected as maybe failed or errorness."
+
+#: ../include/queue_list.inc:128
+msgid	"Adressgruppe"
+msgstr	"Address-group"
+
+#: ../include/send_it.php:644
+msgid	"Zur Zeit gibt es keine zu verarbeitenden Versandauftraege."
+msgstr	"At the moment there are no delivery-jobs"
+
+#: ../include/Menu.inc:21
+msgid	"Startseite"
+msgstr	"Home"
+
+#: ../include/Menu.inc:23
+msgid	"Zur Startseite"
+msgstr	"Go to starting page"
+
+#: ../include/mnl_lib.inc:213
+msgid	"Die Newsletter Maschine"
+msgstr	"the newsletter machine"

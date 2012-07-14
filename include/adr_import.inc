@@ -31,7 +31,7 @@ pt_register("POST","file");
 
 if ($set=="import") {
 	$created=date("Y-m-d H:i:s");
-	$author=$_SERVER['PHP_AUTH_USER'];
+	$author=$LOGIN->USER['name'];
 	$CSV_Filename="import_".date_convert_to_string($created).".csv";
 
 	$check=false;
@@ -81,7 +81,7 @@ if ($set=="import") {
 	}
 
 //datei einlesen
-	$author=$_SERVER['PHP_AUTH_USER'];
+	$author=$LOGIN->USER['name'];
 	$code=0;
 	$lines=0;
 

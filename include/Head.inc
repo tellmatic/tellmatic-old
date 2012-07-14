@@ -13,7 +13,7 @@
 /********************************************************************************/
 
 $_SITEID=MNL_SITEID;
-$_USER=$_SERVER["PHP_AUTH_USER"];
+$_USER=$LOGIN->USER['name'];
 
 //new Template
 $_Tpl_Head=new mTemplate();

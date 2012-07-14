@@ -48,8 +48,8 @@
 					$_MAIN_MESSAGE.= "<ul>".$_FILES["file"]["name"];
 					$_MAIN_MESSAGE.= " / ".$_FILES["file"]["size"]." Byte";
 					$_MAIN_MESSAGE.= ", ".$_FILES["file"]["type"];
-					$_MAIN_MESSAGE.= "<br>".___("HTML-Code wurde angef&uuml;gt.")."
-											<br>".___("Datei gespeichert unter:")." <a href=\"".$mnl_nldir."/".$NL_Filename."\" target=\"_preview\">".$mnl_nldir."/".$NL_Filename."</a>";
+					$_MAIN_MESSAGE.= "<br>".___("HTML-Code wurde angef&uuml;gt.").
+											"<br>".___("Datei gespeichert unter:")." <a href=\"".$mnl_nldir."/".$NL_Filename."\" target=\"_preview\">".$mnl_nldir."/".$NL_Filename."</a>";
 					$_MAIN_MESSAGE.= "</ul>";
 					$uploaded_html=true;
 				} else {
@@ -203,8 +203,11 @@
 	$NLONLINE_URL=$mnl_URL."/".$mnl_nldir."/".$NL_Filename_P;
 	$NLONLINE="<a href=\"".$NLONLINE_URL."\" target=\"_blank\">";
 
-	$SUBSCRIBE_URL=$mnl_URL."/subscribe.php?doptin=1";
+	$SUBSCRIBE_URL=$mnl_URL."/subscribe.php?doptin=1&c=&email=";
 	$SUBSCRIBE="<a href=\"".$SUBSCRIBE_URL."\" target=\"_blank\">";
+
+	//$SUBSCRIBE_URL="#";
+	//$SUBSCRIBE="<a href=\"".$SUBSCRIBE_URL."\" target=\"_self\">";
 
 	// ---> $body_p
 	//new Template
@@ -216,7 +219,7 @@
 	$_Tpl_NL->setParseValue("NLONLINE", $NLONLINE);
 	$_Tpl_NL->setParseValue("BLINDIMAGE", $BLINDIMAGE);
 	$_Tpl_NL->setParseValue("UNSUBSCRIBE", $UNSUBSCRIBE);
-	$_Tpl_NL->setParseValue("SUBSCRIBE", $UNSUBSCRIBE);
+	$_Tpl_NL->setParseValue("SUBSCRIBE", $SUBSCRIBE);
 
 	$_Tpl_NL->setParseValue("IMAGE1_URL", $IMAGE1_URL);
 	$_Tpl_NL->setParseValue("LINK1_URL", $LINK1_URL);

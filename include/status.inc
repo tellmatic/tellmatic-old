@@ -128,9 +128,9 @@ for ($acc=0;$acc<$ac;$acc++) {
 		$_MAIN_OUTPUT.="<br>".($acc+1).".) <a href=\"".$mnl_URL."/".$showadrURLPara_."\">".$ADR[$acc]['email']."</a> (".$ADR[$acc]['newsletter'].")";
 	}
 }
-$_MAIN_OUTPUT.="</td></tr>
-						<tr><td colspan=2 align=center><font size=-1>(".sprintf(___("Die TOP %s Liste  z&auml;hlt auch doppelte Klicks und Views!"),"5")."</font></td></tr>
-						</table></center>";
+$_MAIN_OUTPUT.="</td></tr>".
+						"<tr><td colspan=2 align=center><font size=-1>(".sprintf(___("Die TOP %s Liste  z&auml;hlt auch doppelte Klicks und Views!"),"5").")</font></td></tr>".
+						"</table></center>";
 
 
 
@@ -155,12 +155,11 @@ $_MAIN_OUTPUT.="<br><br>".sprintf(___("Insgesamt %s Mails im Versand:"),$hc);
 $hsc=count($STATUS['h']['status']);
 for ($hscc=1; $hscc<=$hsc; $hscc++)//0
 {
-	$_MAIN_OUTPUT.="<br>
-						&nbsp;&nbsp;&nbsp;".$QUEUE->countH(0,0,0,0,$hscc)."
-							&nbsp;<img src=\"".$mnl_iconURL."/".$STATUS['h']['statimg'][$hscc]."\" border=\"0\">
-							&nbsp;".$STATUS['h']['status'][$hscc]." 
-							&nbsp;(".$STATUS['h']['descr'][$hscc].")
-							";
+	$_MAIN_OUTPUT.="<br>".
+						"&nbsp;&nbsp;&nbsp;".$QUEUE->countH(0,0,0,0,$hscc).
+							"&nbsp;<img src=\"".$mnl_iconURL."/".$STATUS['h']['statimg'][$hscc]."\" border=\"0\">".
+							"&nbsp;".$STATUS['h']['status'][$hscc].
+							"&nbsp;(".$STATUS['h']['descr'][$hscc].")";
 }
 $_MAIN_OUTPUT.="</td><td width=50% valign=top align=left>";
 
@@ -180,16 +179,15 @@ for ($ascc=1; $ascc<=$asc; $ascc++)//0
 	$search['status']=$ascc;
 	$showadrURLPara->addParam("status",$ascc);
 	$showadrURLPara_=$showadrURLPara->getAllParams();
-	$_MAIN_OUTPUT.="<br>
-						&nbsp;&nbsp;&nbsp;<a href=\"".$mnl_URL."/".$showadrURLPara_."\">".$ADDRESS->countADR(0,$search)."</a>
-							&nbsp;<img src=\"".$mnl_iconURL."/".$STATUS['adr']['statimg'][$ascc]."\" border=\"0\">
-							&nbsp;".$STATUS['adr']['status'][$ascc]." 
-							&nbsp;(".$STATUS['adr']['descr'][$ascc].")
-							";
+	$_MAIN_OUTPUT.="<br>".
+						"&nbsp;&nbsp;&nbsp;<a href=\"".$mnl_URL."/".$showadrURLPara_."\">".$ADDRESS->countADR(0,$search)."</a>".
+							"&nbsp;<img src=\"".$mnl_iconURL."/".$STATUS['adr']['statimg'][$ascc]."\" border=\"0\">".
+							"&nbsp;".$STATUS['adr']['status'][$ascc].
+							"&nbsp;(".$STATUS['adr']['descr'][$ascc].")	";
 }
-$_MAIN_OUTPUT.="</td></tr>
-					</table>
-					</center>";
+$_MAIN_OUTPUT.="</td></tr>".
+					"</table>".
+					"</center>";
 
 $_MAIN_OUTPUT.= "<br><br><br><br>";
 ?>

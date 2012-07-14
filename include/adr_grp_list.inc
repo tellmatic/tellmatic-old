@@ -75,21 +75,20 @@ $statURLPara->addParam("act","statistic");
 $statURLPara->addParam("set","adrg");
 
 $_MAIN_OUTPUT="<table border=\"0\" cellpadding=\"1\" cellspacing=\"1\" width=100%>";
-$_MAIN_OUTPUT.= "<thead>
-						<tr>
-						<td><b>&nbsp;</b>
-						</td>
-						<td><b>".___("Name")."</b>
-						</td>
-						<td><b>".___("Beschreibung")."</b>
-						</td>
-						<td><b>".___("Aktiv")."</b>
-						</td>
-						<td>...</td>
-						</tr>
-						</thead>
-						<tbody>
-						";
+$_MAIN_OUTPUT.= "<thead>".
+						"<tr>".
+						"<td><b>&nbsp;</b>".
+						"</td>".
+						"<td><b>".___("Name")."</b>".
+						"</td>".
+						"<td><b>".___("Beschreibung")."</b>".
+						"</td>".
+						"<td><b>".___("Aktiv")."</b>".
+						"</td>".
+						"<td>...</td>".
+						"</tr>".
+						"</thead>".
+						"<tbody>";
 
 for ($accg=0;$accg<$acg;$accg++) {
 	if ($accg%2==0) {$bgcolor=$row_bgcolor;} else {$bgcolor=$row_bgcolor2;}

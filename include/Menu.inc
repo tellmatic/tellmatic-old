@@ -17,11 +17,22 @@ $MENU=Array(
 						'name'=>'Tellmatic',
 						'links' => Array( 
 									0 => Array(
+										'link' => $_SERVER["PHP_SELF"],
+										'name' => ___("Startseite"),
+										'description' => ___("Aktuelle Meldungen ein-/ausblenden"),
+										'text' => ___("Zur Startseite"),
+										'icon' => 'house.png',
+										'target' => '_self',
+										'indent' => '0',
+										),
+									1 => Array(
 										'link' => "javascript:switchSection('main_info')",
 										'name' => date("Y-m-d H:i:s"),
 										'description' => ___("Aktuelle Meldungen ein-/ausblenden"),
 										'text' => date("Y-m-d H:i:s"),
 										'icon' => 'information.png',
+										'target' => '_self',
+										'indent' => '0',
 										),
 									),
 						),
@@ -34,6 +45,8 @@ $MENU=Array(
 										'description' => ___("Newsletter-Gruppen anzeigen"),
 										'text' => ___("Hier verwalten Sie Ihre Newslettergruppen"),
 										'icon' => 'book.png',
+										'target' => '_self',
+										'indent' => '0',
 										),
 									1 => Array(
 										'link' => $_SERVER["PHP_SELF"]."?act=nl_grp_new",
@@ -41,6 +54,8 @@ $MENU=Array(
 										'description' => ___("Neue Newsletter-Gruppe anlegen"),
 										'text' => ___("Hier erstellen Sie eine neue Newslettergruppe"),
 										'icon' => 'book_add.png',
+										'target' => '_self',
+										'indent' => '16',
 										),
 									2 => Array(
 										'link' => $_SERVER["PHP_SELF"]."?act=nl_list",
@@ -48,6 +63,8 @@ $MENU=Array(
 										'description' => ___("Newsletter anzeigen"),
 										'text' => ___("Hier verwalten Sie Ihre Newsletter"),
 										'icon' => 'newspaper.png',
+										'target' => '_self',
+										'indent' => '0',
 										),
 									3 => Array(
 										'link' => $_SERVER["PHP_SELF"]."?act=nl_new",
@@ -55,13 +72,17 @@ $MENU=Array(
 										'description' => ___("Neuen Newsletter anlegen"),
 										'text' => ___("Hier erstellen Sie einen neuen Newsletter"),
 										'icon' => 'newspaper_add.png',
+										'target' => '_self',
+										'indent' => '16',
 										),
 									4 => Array(
-										'link' => $_SERVER["PHP_SELF"]."?act=nl_grp_list",
+										'link' => $_SERVER["PHP_SELF"]."?act=queue_new",
 										'name' => ___("Neue Queue"),
 										'description' => ___("neuen Newsletter in die Queue / Warteschlange eintragen"),
 										'text' => ___("Hier bereiten Sie den Versand Ihres Newsletter vor"),
 										'icon' => 'hourglass_add.png',
+										'target' => '_self',
+										'indent' => '0',
 										),
 
 									),
@@ -76,6 +97,8 @@ $MENU=Array(
 										'description' => ___("Adress-Gruppen anzeigen"),
 										'text' => ___("Hier verwalten Sie Ihre AdressGruppen"),
 										'icon' => 'group.png',
+										'target' => '_self',
+										'indent' => '0',
 										),
 									1 => Array(
 										'link' => $_SERVER["PHP_SELF"]."?act=adr_grp_new",
@@ -83,6 +106,8 @@ $MENU=Array(
 										'description' => ___("Neue Adress-Gruppe anlegen"),
 										'text' => ___("Hier erstellen Sie eine neue Adress-Gruppe"),
 										'icon' => 'group_add.png',
+										'target' => '_self',
+										'indent' => '16',
 										),
 									2 => Array(
 										'link' => $_SERVER["PHP_SELF"]."?act=adr_list",
@@ -90,6 +115,8 @@ $MENU=Array(
 										'description' => ___("Adressen anzeigen"),
 										'text' => ___("Hier k&ouml;nnen Sie Ihre Adressen suchen, anzeigen und bearbeiten"),
 										'icon' => 'vcard.png',
+										'target' => '_self',
+										'indent' => '0',
 										),
 									3 => Array(
 										'link' => $_SERVER["PHP_SELF"]."?act=adr_new",
@@ -97,6 +124,8 @@ $MENU=Array(
 										'description' => ___("Neue Adresse anlegen"),
 										'text' => ___("Hier erfassen Sie Adressen manuell"),
 										'icon' => 'vcard_add.png',
+										'target' => '_self',
+										'indent' => '16',
 										),
 									4 => Array(
 										'link' => $_SERVER["PHP_SELF"]."?act=adr_import",
@@ -104,6 +133,8 @@ $MENU=Array(
 										'description' => ___("Adressen aus einer CSV-Datei importieren"),
 										'text' => ___("Importieren Sie Ihre Adressbest&auml;nde aus einer CSV-Datei"),
 										'icon' => 'vcard_add.png',
+										'target' => '_self',
+										'indent' => '0',
 										),
 									5 => Array(
 										'link' => $_SERVER["PHP_SELF"]."?act=adr_export",
@@ -111,20 +142,8 @@ $MENU=Array(
 										'description' => ___("Adressen in eine CSV-Datei exportieren"),
 										'text' => ___("Exportieren Sie Ihre Adressbest&uuml;nde in eine CSV-Datei"),
 										'icon' => 'cake.png',
-										),
-									6 => Array(
-										'link' => $_SERVER["PHP_SELF"]."?act=bounce",
-										'name' => ___("Bounce-Management"),
-										'description' => ___("Bounce-Management"),
-										'text' => ___("Verwalten Sie fehlgeschlagene E-Mails und R&uuml;ckl&auml;ufer"),
-										'icon' => 'sport_soccer.png',
-										),
-									7 => Array(
-										'link' => $_SERVER["PHP_SELF"]."?act=adr_clean",
-										'name' => ___("Datenbank bereinigen"),
-										'description' => ___("Datenbank bereinigen"),
-										'text' => ___("Datenbank aufr&auml;umen und Adressbest&auml;nde s&auml;ubern"),
-										'icon' => 'database_refresh.png',
+										'target' => '_self',
+										'indent' => '0',
 										),
 									),
 							),
@@ -137,6 +156,8 @@ $MENU=Array(
 										'description' => ___("Formulare anzeigen"),
 										'text' => ___("Hier verwalten Sie Ihre Anmeldeformulare"),
 										'icon' => 'application_form.png',
+										'target' => '_self',
+										'indent' => '0',
 										),
 									1 => Array(
 										'link' => $_SERVER["PHP_SELF"]."?act=form_new",
@@ -144,10 +165,26 @@ $MENU=Array(
 										'description' => ___("Neues Formular erstellen"),
 										'text' => ___("Hier verwalten Sie Ihre Anmeldeformulare"),
 										'icon' => 'application_form_add.png',
+										'target' => '_self',
+										'indent' => '16',
 										),
 								),
 						),
 					4 => Array(
+						'name'=>'Tools',
+						'links' => Array( 
+									0 => Array(
+										'link' => $_SERVER["PHP_SELF"]."?act=filemanager",
+										'name' => ___("Filemanager"),
+										'description' => ___("Filemanager"),
+										'text' => ___("Filemanager from myftphp.sf.net - thx to Knittl"),
+										'icon' => 'folder_wrench.png',
+										'target' => '_self',
+										'indent' => '0',
+										),
+								),
+						),
+					5 => Array(
 						'name'=>'Verwaltung',
 						'links' => Array( 
 									0 => Array(
@@ -156,20 +193,26 @@ $MENU=Array(
 										'description' => ___("Aktueller Status"),
 										'text' => ___("Hier sehen Sie den aktuellen Status"),
 										'icon' => 'report.png',
+										'target' => '_self',
+										'indent' => '0',
 										),
 									1 => Array(
-										'link' => $_SERVER["PHP_SELF"]."?act=adm_set",
-										'name' => ___("Einstellungen"),
-										'description' => ___("Grundeinstellungen"),
-										'text' => ___("Globale Einstellungen f&uuml;r Tellmatic"),
-										'icon' => 'computer.png',
+										'link' => $_SERVER["PHP_SELF"]."?act=bounce",
+										'name' => ___("Bounce-Management"),
+										'description' => ___("Bounce-Management"),
+										'text' => ___("Verwalten Sie fehlgeschlagene E-Mails und R&uuml;ckl&auml;ufer"),
+										'icon' => 'sport_soccer.png',
+										'target' => '_self',
+										'indent' => '0',
 										),
 									2 => Array(
-										'link' => "javascript:switchSection('div_debug');",
-										'name' => ___("Serverinfo"),
-										'description' => ___("Serverinfo"),
-										'text' => ___("Hier sehen Sie einige zus&auml;tzliche Informationen"),
-										'icon' => 'information.png',
+										'link' => $_SERVER["PHP_SELF"]."?act=adr_clean",
+										'name' => ___("Datenbank bereinigen"),
+										'description' => ___("Datenbank bereinigen"),
+										'text' => ___("Datenbank aufr&auml;umen und Adressbest&auml;nde s&auml;ubern"),
+										'icon' => 'database_refresh.png',
+										'target' => '_self',
+										'indent' => '0',
 										),
 									3 => Array(
 										'link' => "include/send_it.php",
@@ -177,6 +220,8 @@ $MENU=Array(
 										'description' => ___("manueller Versand"),
 										'text' => ___("Hier versenden Sie Ihre Newsletter manuell"),
 										'icon' => 'email_go.png',
+										'target' => '_blank',
+										'indent' => '0',
 										),
 									4 => Array(
 										'link' => "unsubscribe.php",
@@ -184,17 +229,12 @@ $MENU=Array(
 										'description' => ___("Abmeldeformular"),
 										'text' => ___("Hier gelangen Sie zum Abmeldeformular"),
 										'icon' => 'door_out.png',
-										),
-									5 => Array(
-										'link' => "http://www.tellmatic.org",
-										'name' => ___("Dokumentation"),
-										'description' => ___("Hilfe / Dokumentation"),
-										'text' => ___("Hier wird Ihnen geholfen"),
-										'icon' => 'help.png',
+										'target' => '_blank',
+										'indent' => '0',
 										),
 								),
 						),
-					5 => Array(
+					6 => Array(
 						'name'=>'Benutzer',
 						'links' => Array( 
 									0 => Array(
@@ -203,10 +243,34 @@ $MENU=Array(
 										'description' => ___("Benutzereinstellungen"),
 										'text' => ___("Hier &auml;ndern Sie Ihre pers&ouml;nlichen Einstellungen"),
 										'icon' => 'user_edit.png',
+										'target' => '_self',
+										'indent' => '0',
+										),
+									1 => Array(
+										'link' => "http://www.tellmatic.org",
+										'name' => ___("Dokumentation"),
+										'description' => ___("Hilfe / Dokumentation"),
+										'text' => ___("Hier wird Ihnen geholfen"),
+										'icon' => 'help.png',
+										'target' => '_blank',
+										'indent' => '0',
 										),
 								),
 						),
-
+					7 => Array(
+						'name'=>'Admin',
+						'links' => Array( 
+									0 => Array(
+										'link' => $_SERVER["PHP_SELF"]."?act=adm_set",
+										'name' => ___("Einstellungen"),
+										'description' => ___("Grundeinstellungen"),
+										'text' => ___("Globale Einstellungen f&uuml;r Tellmatic"),
+										'icon' => 'computer.png',
+										'target' => '_self',
+										'indent' => '0',
+										),
+								),
+						),
 				);
 				//
 
@@ -234,17 +298,13 @@ for ($mtcc=0;$mtcc<$mtc;$mtcc++) {
 	$_MENU_ENTRY="";
 	$mlc=count($MENU[$mtcc]['links']);
 	for ($mlcc=0;$mlcc<$mlc;$mlcc++) {
-		$_NAME=$MENU[$mtcc]['links'][$mlcc]['name'];
-		$_LINK=$MENU[$mtcc]['links'][$mlcc]['link'];
-		$_DESCRIPTION=$MENU[$mtcc]['links'][$mlcc]['description'];
-		$_TEXT=$MENU[$mtcc]['links'][$mlcc]['text'];
-		$_ICON=$MENU[$mtcc]['links'][$mlcc]['icon'];
-
-		$_Tpl_Menu_Entry->setParseValue("_NAME", $_NAME);
-		$_Tpl_Menu_Entry->setParseValue("_DESCRIPTION", $_DESCRIPTION);
-		$_Tpl_Menu_Entry->setParseValue("_TEXT", $_TEXT);
-		$_Tpl_Menu_Entry->setParseValue("_LINK", $_LINK);
-		$_Tpl_Menu_Entry->setParseValue("_ICON", $_ICON);
+		$_Tpl_Menu_Entry->setParseValue("_NAME", $MENU[$mtcc]['links'][$mlcc]['name']);
+		$_Tpl_Menu_Entry->setParseValue("_DESCRIPTION", $MENU[$mtcc]['links'][$mlcc]['description']);
+		$_Tpl_Menu_Entry->setParseValue("_TEXT", $MENU[$mtcc]['links'][$mlcc]['text']);
+		$_Tpl_Menu_Entry->setParseValue("_LINK", $MENU[$mtcc]['links'][$mlcc]['link']);
+		$_Tpl_Menu_Entry->setParseValue("_ICON", $MENU[$mtcc]['links'][$mlcc]['icon']);
+		$_Tpl_Menu_Entry->setParseValue("_TARGET", $MENU[$mtcc]['links'][$mlcc]['target']);
+		$_Tpl_Menu_Entry->setParseValue("_INDENT", $MENU[$mtcc]['links'][$mlcc]['indent']);
 
 		$_MENU_ENTRY.=$_Tpl_Menu_Entry->renderTemplate("Menu_entry.html");
 	}

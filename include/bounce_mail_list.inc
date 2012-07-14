@@ -46,18 +46,17 @@ if ($mc>0) {
 	//$_MAIN_OUTPUT .= "<br>Mail Nr. ".($offset+1)." bis Nr. ".($offset+$mc).".";
 	
 	$_MAIN_OUTPUT.="<table border=\"0\" cellpadding=\"1\" cellspacing=\"1\" width=100%>";
-	$_MAIN_OUTPUT.= "<thead>
-							<tr>
-							<td style=\"width:80px;\">&nbsp;
-							</td>
-							<td style=\"width:240px;\"><b>".___("Betreff / Text")."</b>
-							</td>
-							<td><b>".___("Adressen")."</b>
-							</td>
-							</tr>
-							</thead>
-							<tbody>
-							";
+	$_MAIN_OUTPUT.= "<thead>".
+							"<tr>".
+							"<td style=\"width:80px;\">&nbsp;".
+							"</td>".
+							"<td style=\"width:240px;\"><b>".___("Betreff / Text")."</b>".
+							"</td>".
+							"<td><b>".___("Adressen")."</b>".
+							"</td>".
+							"</tr>".
+							"</thead>".
+							"<tbody>";
 	for ($mcc=0;$mcc<$mc;$mcc++) {
 
 		//hier zaehlen wir dann die bounces aus dem array bounce im mailarray.....
@@ -154,9 +153,9 @@ if ($mc>0) {
 	$bctotal=count($Bounces);
 	$Bounces=unify_array($Bounces);
 	$bc=count($Bounces);		
-	$_MAIN_OUTPUT.="<br>".sprintf(___("Es wurden %s Mails durchsucht."),$mc)." 
-								<br>".sprintf(___("%s Mails ergaben einen Treffer."),$bcmatch)." 
-								<br>".sprintf(___("Es wurden aus %s Adressen %s potentiell Fehlerhafte Adressen erkannt."),$bctotal,$bc);
+	$_MAIN_OUTPUT.="<br>".sprintf(___("Es wurden %s Mails durchsucht."),$mc).
+								"<br>".sprintf(___("%s Mails ergaben einen Treffer."),$bcmatch).
+								"<br>".sprintf(___("Es wurden aus %s Adressen %s potentiell Fehlerhafte Adressen erkannt."),$bctotal,$bc);
 	
 }//mc>0
 

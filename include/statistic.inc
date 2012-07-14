@@ -47,19 +47,17 @@ if ($set=="nl") {
 	//countQ($nl_id=0,$grp_id=0,$status=0)
 	$qc=$QUEUE->countQ($nl_id);
 	$_MAIN_OUTPUT.="<br><br>".sprintf(___("%s Sendeauftr&auml;ge insgesamt:"),"<b>$qc</b>");
-	$_MAIN_OUTPUT.="<br>
-							&nbsp;&nbsp;&nbsp;".___("Auftragsstatus:");
+	$_MAIN_OUTPUT.="<br>&nbsp;&nbsp;&nbsp;".___("Auftragsstatus:");
 	$qsc=count($STATUS['q']['status']);
 	//countQ($nl_id=0,$grp_id=0,$status=0)
 	for ($qscc=1; $qscc<=$qsc; $qscc++) {
 		$qc=$QUEUE->countQ($nl_id,0,$qscc);
 		if ($qc>0) {
-			$_MAIN_OUTPUT.="<br>
-							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".$qc."
-							&nbsp;<img src=\"".$mnl_iconURL."/".$STATUS['q']['statimg'][$qscc]."\" border=\"0\">
-							&nbsp;".$STATUS['q']['status'][$qscc]." 
-							&nbsp;(".$STATUS['q']['descr'][$qscc].")
-							";	
+			$_MAIN_OUTPUT.="<br>".
+							"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".$qc.
+							"&nbsp;<img src=\"".$mnl_iconURL."/".$STATUS['q']['statimg'][$qscc]."\" border=\"0\">".
+							"&nbsp;".$STATUS['q']['status'][$qscc].
+							"&nbsp;(".$STATUS['q']['descr'][$qscc].")";	
 		}
 	}
 	$_MAIN_OUTPUT.="<br>";
@@ -67,18 +65,16 @@ if ($set=="nl") {
 	$hc=$QUEUE->countH(0,$nl_id);
 	//countH($q_id=0,$nl_id=0,$grp_id=0,$adr_id=0,$status=0)
 	$_MAIN_OUTPUT.="<br>".sprintf(___("Versand an insgesamt %s Adressen:"),"<b>$hc</b>");
-	$_MAIN_OUTPUT.="<br>
-							&nbsp;&nbsp;&nbsp;".___("Versandstatus:");
+	$_MAIN_OUTPUT.="<br>&nbsp;&nbsp;&nbsp;".___("Versandstatus:");
 	$hsc=count($STATUS['h']['status']);
 	for ($hscc=1; $hscc<=$hsc; $hscc++) {
 		$hc=$QUEUE->countH(0,$nl_id,0,0,$hscc);
 		if ($hc>0) {
-			$_MAIN_OUTPUT.="<br>
-							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".$hc."
-							&nbsp;<img src=\"".$mnl_iconURL."/".$STATUS['h']['statimg'][$hscc]."\" border=\"0\">
-							&nbsp;".$STATUS['h']['status'][$hscc]." 
-							&nbsp;(".$STATUS['h']['descr'][$hscc].")
-							";
+			$_MAIN_OUTPUT.="<br>".
+							"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".$hc.
+							"&nbsp;<img src=\"".$mnl_iconURL."/".$STATUS['h']['statimg'][$hscc]."\" border=\"0\">".
+							"&nbsp;".$STATUS['h']['status'][$hscc].
+							"&nbsp;(".$STATUS['h']['descr'][$hscc].")";
 		}
 	}
 	//Details, per Q, per Group, per Status
@@ -94,25 +90,22 @@ if ($set=="nl") {
 	$qc=count($Q);
 	for ($qcc=0;$qcc<$qc;$qcc++) {
 		$AG=$ADDRESS->getGroup($Q[$qcc]['grp_id']);
-		$_MAIN_OUTPUT.="<br>
-							<br>&nbsp;&nbsp;
-							".sprintf(___("Versand an Gruppe %s"),"<b>".$AG[0]['name']."</b>");
-		$_MAIN_OUTPUT.=":
-							&nbsp;<img src=\"".$mnl_iconURL."/".$STATUS['q']['statimg'][$Q[$qcc]['status']]."\" border=\"0\">
-							&nbsp;".$STATUS['q']['status'][$Q[$qcc]['status']]." 
-							&nbsp;(".$STATUS['q']['descr'][$Q[$qcc]['status']].")
-							";
+		$_MAIN_OUTPUT.="<br>".
+							"<br>&nbsp;&nbsp;".
+							sprintf(___("Versand an Gruppe %s"),"<b>".$AG[0]['name']."</b>");
+		$_MAIN_OUTPUT.=":&nbsp;<img src=\"".$mnl_iconURL."/".$STATUS['q']['statimg'][$Q[$qcc]['status']]."\" border=\"0\">".
+							"&nbsp;".$STATUS['q']['status'][$Q[$qcc]['status']].
+							"&nbsp;(".$STATUS['q']['descr'][$Q[$qcc]['status']].")";
 		//countH($q_id=0,$nl_id=0,$grp_id=0,$adr_id=0,$status=0)
 		$hsc=count($STATUS['h']['status']);
 		for ($hscc=1; $hscc<=$hsc; $hscc++) {
 			$hc=$QUEUE->countH($Q[$qcc]['id'],$Q[$qcc]['nl_id'],$AG[0]['id'],0,$hscc);
 			if ($hc>0) {
-				$_MAIN_OUTPUT.="<br>
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".$hc."
-								&nbsp;<img src=\"".$mnl_iconURL."/".$STATUS['h']['statimg'][$hscc]."\" border=\"0\">
-								&nbsp;".$STATUS['h']['status'][$hscc]." 
-								&nbsp;(".$STATUS['h']['descr'][$hscc].")
-								";	
+				$_MAIN_OUTPUT.="<br>".
+								"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".$hc.
+								"&nbsp;<img src=\"".$mnl_iconURL."/".$STATUS['h']['statimg'][$hscc]."\" border=\"0\">".
+								"&nbsp;".$STATUS['h']['status'][$hscc].
+								"&nbsp;(".$STATUS['h']['descr'][$hscc].")";	
 			}
 		}
 	}//for qcc
@@ -138,12 +131,11 @@ if ($set=="adrg") {
 			$search['status']=$ascc;
 			$ac=$ADDRESS->countADR($adr_grp_id,$search);
 			if ($ac>0) {
-				$_MAIN_OUTPUT.="<br>
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".$ac."
-								&nbsp;<img src=\"".$mnl_iconURL."/".$STATUS['adr']['statimg'][$ascc]."\" border=\"0\">
-								&nbsp;".$STATUS['adr']['status'][$ascc]." 
-								&nbsp;(".$STATUS['adr']['descr'][$ascc].")
-								";	
+				$_MAIN_OUTPUT.="<br>".
+								"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".$ac.
+								"&nbsp;<img src=\"".$mnl_iconURL."/".$STATUS['adr']['statimg'][$ascc]."\" border=\"0\">".
+								"&nbsp;".$STATUS['adr']['status'][$ascc].
+								"&nbsp;(".$STATUS['adr']['descr'][$ascc].")	";	
 			}
 		}
 	
@@ -151,31 +143,26 @@ if ($set=="adrg") {
 
 	//Q Status
 	
-	$_MAIN_OUTPUT.="<br>
-							<br>&nbsp;&nbsp;".___("Versandstatus:");
+	$_MAIN_OUTPUT.="<br><br>&nbsp;&nbsp;".___("Versandstatus:");
 	$Q=$QUEUE->getQ(0,0,0,0,$adr_grp_id);
 	//getQ($id=0,$offset=0,$limit=0,$nl_id=0,$grp_id=0,$status=0)
 	$qc=count($Q);
 	for ($qcc=0;$qcc<$qc;$qcc++) {
 		$NL=$NEWSLETTER->getNL($Q[$qcc]['nl_id']);
-		$_MAIN_OUTPUT.="<br>&nbsp;&nbsp;&nbsp;&nbsp;
-							".sprintf(___("Versand von %s"),"<b>".$NL[0]['subject']."</b>");
-		$_MAIN_OUTPUT.=":
-							&nbsp;<img src=\"".$mnl_iconURL."/".$STATUS['q']['statimg'][$Q[$qcc]['status']]."\" border=\"0\">
-							&nbsp;".$STATUS['q']['status'][$Q[$qcc]['status']]." 
-							&nbsp;(".$STATUS['q']['descr'][$Q[$qcc]['status']].")
-							";
+		$_MAIN_OUTPUT.="<br>&nbsp;&nbsp;&nbsp;&nbsp;".sprintf(___("Versand von %s"),"<b>".$NL[0]['subject']."</b>");
+		$_MAIN_OUTPUT.=":&nbsp;<img src=\"".$mnl_iconURL."/".$STATUS['q']['statimg'][$Q[$qcc]['status']]."\" border=\"0\">".
+							"&nbsp;".$STATUS['q']['status'][$Q[$qcc]['status']].
+							"&nbsp;(".$STATUS['q']['descr'][$Q[$qcc]['status']].")";
 		//countH($q_id=0,$nl_id=0,$grp_id=0,$adr_id=0,$status=0)
 		$hsc=count($STATUS['h']['status']);
 		for ($hscc=1; $hscc<=$hsc; $hscc++) {
 			$hc=$QUEUE->countH($Q[$qcc]['id'],$Q[$qcc]['nl_id'],$AG[0]['id'],0,$hscc);
 			if ($hc>0) {
-				$_MAIN_OUTPUT.="<br>
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".$hc."
-								&nbsp;<img src=\"".$mnl_iconURL."/".$STATUS['h']['statimg'][$hscc]."\" border=\"0\">
-								&nbsp;".$STATUS['h']['status'][$hscc]." 
-								&nbsp;(".$STATUS['h']['descr'][$hscc].")
-								";	
+				$_MAIN_OUTPUT.="<br>".
+								"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".$hc.
+								"&nbsp;<img src=\"".$mnl_iconURL."/".$STATUS['h']['statimg'][$hscc]."\" border=\"0\">".
+								"&nbsp;".$STATUS['h']['status'][$hscc].
+								"&nbsp;(".$STATUS['h']['descr'][$hscc].")";	
 			}
 		}
 	}//qcc	
@@ -232,15 +219,14 @@ if ($set=="adr") {
 
 	$_MAIN_OUTPUT.= " ".___("Status:")." <img src=\"".$mnl_iconURL."/".$STATUS['adr']['statimg'][$ADR[0]['status']]."\" border=\"0\">".$STATUS['adr']['status'][$ADR[0]['status']];
 	$nlc=$QUEUE->countH(0,0,0,$ADR[0]['id'],0);
-	$_MAIN_OUTPUT.= "<br>CODE: ".$ADR[0]['code']." &nbsp;
-							<br>".sprintf(___("erstellt am: %s von: %s"),$created_date,$author)."
-							<br>".sprintf(___("bearbeitet am: %s von %s"),$updated_date,$editor)."
-							<br>".sprintf(___("Newsletter Aktuell: %s"),$nlc)." 
-							<br>".sprintf(___("Newsletter Gesamt: %s"),$ADR[0]['newsletter'])." 
-							<br>".sprintf(___("Views: %s"),$ADR[0]['views'])."
-							<br>".sprintf(___("Clicks: %s"),$ADR[0]['clicks'])."
-							<br>".sprintf(___("Sendefehler: %s"),$ADR[0]['errors'])." &nbsp;
-							";
+	$_MAIN_OUTPUT.= "<br>CODE: ".$ADR[0]['code']." &nbsp;".
+							"<br>".sprintf(___("erstellt am: %s von: %s"),$created_date,$author).
+							"<br>".sprintf(___("bearbeitet am: %s von %s"),$updated_date,$editor).
+							"<br>".sprintf(___("Newsletter Aktuell: %s"),$nlc).
+							"<br>".sprintf(___("Newsletter Gesamt: %s"),$ADR[0]['newsletter']).
+							"<br>".sprintf(___("Views: %s"),$ADR[0]['views']).
+							"<br>".sprintf(___("Clicks: %s"),$ADR[0]['clicks']).
+							"<br>".sprintf(___("Sendefehler: %s"),$ADR[0]['errors'])." &nbsp;";
 
 
 
@@ -248,19 +234,16 @@ if ($set=="adr") {
 	//	function countH($q_id=0,$nl_id=0,$grp_id=0,$adr_id=0,$status=0) {	//countH($nl_id=0,$grp_id=0,$status=0)
 	$hc=$QUEUE->countH(0,0,0,$adr_id,0);
 	$_MAIN_OUTPUT.="<ul><b>$hc</b> ".___("Sendeauftr&auml;ge insgesamt:");
-	$_MAIN_OUTPUT.="<br>
-							<ul>".___("Auftragsstatus:")."<ul>";
+	$_MAIN_OUTPUT.="<br><ul>".___("Auftragsstatus:")."<ul>";
 	$hsc=count($STATUS['h']['status']);
 	//countQ($nl_id=0,$grp_id=0,$status=0)
 	for ($hscc=1; $hscc<=$hsc; $hscc++) {
 		$hc=$QUEUE->countH(0,0,0,$adr_id,$hscc);
 		if ($hc>0) {
-			$_MAIN_OUTPUT.="
-							&nbsp;".$hc."
-							&nbsp;<img src=\"".$mnl_iconURL."/".$STATUS['h']['statimg'][$hscc]."\" border=\"0\">
-							&nbsp;".$STATUS['h']['status'][$hscc]." 
-							&nbsp;(".$STATUS['h']['descr'][$hscc].")
-							<br>";	
+			$_MAIN_OUTPUT.="	&nbsp;".$hc.
+							"&nbsp;<img src=\"".$mnl_iconURL."/".$STATUS['h']['statimg'][$hscc]."\" border=\"0\">".
+							"&nbsp;".$STATUS['h']['status'][$hscc].
+							"&nbsp;(".$STATUS['h']['descr'][$hscc].")<br>";	
 		}
 	}
 	$_MAIN_OUTPUT.="</ul></ul></ul><br>";
@@ -273,13 +256,12 @@ if ($set=="adr") {
 		$G=$ADDRESS->getGroup($H[$hcc]['grp_id']);
 		$Q=$QUEUE->getQ($H[$hcc]['q_id']);
 		
-			$_MAIN_OUTPUT.="<b>".$NL[0]['subject']."</b><ul>
-						".___("an Adressgruppe")." <b>".$G[0]['name']."</b>:";
+			$_MAIN_OUTPUT.="<b>".$NL[0]['subject']."</b><ul>".
+						___("an Adressgruppe")." <b>".$G[0]['name']."</b>:";
 
-			$_MAIN_OUTPUT.="<br>&nbsp;<img src=\"".$mnl_iconURL."/".$STATUS['h']['statimg'][$H[$hcc]['status']]."\" border=\"0\">
-									&nbsp;".$STATUS['h']['status'][$H[$hcc]['status']]." 
-									&nbsp;(".$STATUS['h']['descr'][$H[$hcc]['status']].")
-									";
+			$_MAIN_OUTPUT.="<br>&nbsp;<img src=\"".$mnl_iconURL."/".$STATUS['h']['statimg'][$H[$hcc]['status']]."\" border=\"0\">".
+									"&nbsp;".$STATUS['h']['status'][$H[$hcc]['status']].
+									"&nbsp;(".$STATUS['h']['descr'][$H[$hcc]['status']].")";
 			//$_MAIN_OUTPUT.="<br>Erstellt am: ".strftime("%d-%m-%Y %H:%M:%S",mk_microtime($H[$hcc]['created']));
 			$_MAIN_OUTPUT.="<br>".sprintf(___("Erstellt am: %s"),$H[$hcc]['created']);
 			if (!empty($Q[0]['send_at'])) {

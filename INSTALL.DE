@@ -14,21 +14,12 @@
 INSTALL
 
 Update:
+
 	Siehe UPDATE
 
 Hinweise:
 
-	imap_open(). Die Funktion imap_open() sollte von Ihrem Server und PHP unterstuetzt werden wenn Sie das Bouncemanagement nutzen wollen. 
-						Falls eine Fehlermeldung bei der Installation angezeigt wird kann diese Funktion evtl nicht benutzt werden. 
-						Bitte wenden Sie sich an Ihren Provider.
-
-	PHP laeuft als CGI: 	HTTP-AUTH funktioniert nicht wenn php als cgi-version laeuft!
-			Aender Sie Index.inc::Zeile 22:
-				von $LOGIN->Login... 
-				auf #$LOGIN->Login...
-			und setzen Sie den Benutzernamen in der Datenbank auf '':
-				UPDATE `[prefix_]user` SET name='';
-
+	siehe FAQ http://www.tellmatic.de/?c=faq
 
 Installation:
 
@@ -44,9 +35,9 @@ Installation:
 	Alle Felder sind Pflichtangaben.
 	Die Einstellungen fuer SMTP/POP3 werden nicht auf Gueltigkeit ueberprueft!
 
-	Das Newsletter wird nun installiert. Die Verzeichnisse sowie die Konfigurationsdatei include/mnl_config.inc und die Tabellen in der Datenbank werden angelegt
+	Das Newsletter wird nun installiert. Die Konfigurationsdatei 'include/mnl_config.inc' und die Tabellen in der Datenbank wurden angelegt
 
-	Tellmatic erstellt die folgenden Verzeichnisse:
+	Tellmatic benoetigt ebenfalls Schreibrechte fuer die folgenden Verzeichnisse:
 		files/
 		files/forms
 		files/logs
@@ -58,7 +49,7 @@ Installation:
 	Wird eine Fehlermeldung ausgegeben, befolgen Sie bitte die Anweisungen.
 
 	Nach erfolgreicher Installation die Datei
-	install.php 
+	'install.php'
 	loeschen oder umbenennen bzw an einen sicheren Ort verschieben.
 
 	Die Schreibrechte fuer das Verzeichnis include koennen wieder entfernt werden. (0755 rwxr-xr-x oder 0555 r-xr-xr-x)
@@ -72,8 +63,8 @@ Installation:
 
 	Zum Versenden Cronjob erstellen: Aufruf von [user:passwort]@http://[domain]/[tellmatic-installdir]/include/send_it.php per wget (user/pw muss angegeben werden), 	oder per php CLI:
 		*/1 * * * * /pfad/zu/php-cli-binary /pfad/zu/include/send_it.php
-	index.php aufrufen, Name und Passwort eingeben , Fertig, viel Spass!
+	'index.php' aufrufen, Name und Passwort eingeben , Fertig, viel Spass!
 
-Bei Fragen und Anregungen besuchen Sie bitte die Homepage www.tellmatic.de oder schicken eine E-Mail
+Bei Fragen und Anregungen besuchen Sie bitte die Homepage www.tellmatic.de oder schicken eine E-Mail. Dort gibt es auch einen Weblog und ein Forum :) Feedback ist jederzeit willkommen!
 
 EOF

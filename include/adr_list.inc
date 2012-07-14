@@ -151,72 +151,25 @@ $statURLPara->addParam("set","adr");
 include($mnl_includepath."/pager.inc");
 
 $_MAIN_OUTPUT.="<table border=\"0\" cellpadding=\"1\" cellspacing=\"1\" width=100%>";
-$_MAIN_OUTPUT.= "<thead>
-						<tr>
-						<!--td><b>".___("ID/Detail_ID")."</b>
-						<a href=\"".$mnl_URL."/".$sortURLPara_."&si=id&st=0\">".$img_arrowup."</a>
-						<a href=\"".$mnl_URL."/".$sortURLPara_."&si=id&st=1\">".$img_arrowdown."</a>
-						</td-->
-						<td><b>".___("E-Mail")."</b>
-						<a href=\"".$mnl_URL."/".$sortURLPara_."&si=email&st=0\">".$img_arrowup."</a>
-						<a href=\"".$mnl_URL."/".$sortURLPara_."&si=email&st=1\">".$img_arrowdown."</a>
-						</td>
-<!--
-						<td><b>f0</b>
-						<a href=\"".$mnl_URL."/".$sortURLPara_."&si=f0&st=0\">".$img_arrowup."</a>
-						<a href=\"".$mnl_URL."/".$sortURLPara_."&si=f0&st=1\">".$img_arrowdown."</a>
-						</td>
-						<td><b>f1</b>
-						<a href=\"".$mnl_URL."/".$sortURLPara_."&si=f1&st=0\">".$img_arrowup."</a>
-						<a href=\"".$mnl_URL."/".$sortURLPara_."&si=f1&st=1\">".$img_arrowdown."</a>
-						</td>
-						<td><b>f2</b>
-						<a href=\"".$mnl_URL."/".$sortURLPara_."&si=f2&st=0\">".$img_arrowup."</a>
-						<a href=\"".$mnl_URL."/".$sortURLPara_."&si=f2&st=1\">".$img_arrowdown."</a>
-						</td>
-						<td><b>f3</b>
-						<a href=\"".$mnl_URL."/".$sortURLPara_."&si=f3&st=0\">".$img_arrowup."</a>
-						<a href=\"".$mnl_URL."/".$sortURLPara_."&si=f3&st=1\">".$img_arrowdown."</a>
-						</td>
-						<td><b>f4</b>
-						<a href=\"".$mnl_URL."/".$sortURLPara_."&si=f4&st=0\">".$img_arrowup."</a>
-						<a href=\"".$mnl_URL."/".$sortURLPara_."&si=f4&st=1\">".$img_arrowdown."</a>
-						</td>
-						<td><b>f5</b>
-						<a href=\"".$mnl_URL."/".$sortURLPara_."&si=f5&st=0\">".$img_arrowup."</a>
-						<a href=\"".$mnl_URL."/".$sortURLPara_."&si=f5&st=1\">".$img_arrowdown."</a>
-						</td>
-						<td><b>f6</b>
-						<a href=\"".$mnl_URL."/".$sortURLPara_."&si=f6&st=0\">".$img_arrowup."</a>
-						<a href=\"".$mnl_URL."/".$sortURLPara_."&si=f6&st=1\">".$img_arrowdown."</a>
-						</td>
-						<td><b>f7</b>
-						<a href=\"".$mnl_URL."/".$sortURLPara_."&si=f7&st=0\">".$img_arrowup."</a>
-						<a href=\"".$mnl_URL."/".$sortURLPara_."&si=f7&st=1\">".$img_arrowdown."</a>
-						</td>
-						<td><b>f8</b>
-						<a href=\"".$mnl_URL."/".$sortURLPara_."&si=f8&st=0\">".$img_arrowup."</a>
-						<a href=\"".$mnl_URL."/".$sortURLPara_."&si=f8&st=1\">".$img_arrowdown."</a>
-						</td>
-						<td><b>f9</b>
-						<a href=\"".$mnl_URL."/".$sortURLPara_."&si=f9&st=0\">".$img_arrowup."</a>
-						<a href=\"".$mnl_URL."/".$sortURLPara_."&si=f9&st=1\">".$img_arrowdown."</a>
-						</td>
--->
-						<td><b>".___("Status")."</b>
-						<a href=\"".$mnl_URL."/".$sortURLPara_."&si=status&st=0\">".$img_arrowup."</a>
-						<a href=\"".$mnl_URL."/".$sortURLPara_."&si=status&st=1\">".$img_arrowdown."</a>
-						</td>
-						<td>".___("Gruppen")."</td>
-						<td><b>".___("Aktiv")."</b>
-						<a href=\"".$mnl_URL."/".$sortURLPara_."&si=aktiv&st=0\">".$img_arrowup."</a>
-						<a href=\"".$mnl_URL."/".$sortURLPara_."&si=aktiv&st=1\">".$img_arrowdown."</a>
-						</td>
-						<td>...</td>
-						</tr>
-						</thead>
-						<tbody>
-						";
+$_MAIN_OUTPUT.= "<thead>".
+						"<tr>".
+						"<td><b>".___("E-Mail")."</b>".
+						"<a href=\"".$mnl_URL."/".$sortURLPara_."&si=email&st=0\">".$img_arrowup."</a>".
+						"<a href=\"".$mnl_URL."/".$sortURLPara_."&si=email&st=1\">".$img_arrowdown."</a>".
+						"</td>".
+						"<td><b>".___("Status")."</b>".
+						"<a href=\"".$mnl_URL."/".$sortURLPara_."&si=status&st=0\">".$img_arrowup."</a>".
+						"<a href=\"".$mnl_URL."/".$sortURLPara_."&si=status&st=1\">".$img_arrowdown."</a>".
+						"</td>".
+						"<td>".___("Gruppen")."</td>".
+						"<td><b>".___("Aktiv")."</b>".
+						"<a href=\"".$mnl_URL."/".$sortURLPara_."&si=aktiv&st=0\">".$img_arrowup."</a>".
+						"<a href=\"".$mnl_URL."/".$sortURLPara_."&si=aktiv&st=1\">".$img_arrowdown."</a>".
+						"</td>".
+						"<td>...</td>".
+						"</tr>".
+						"</thead>".
+						"<tbody>";
 
 for ($acc=0;$acc<$ac;$acc++) {
 	if ($acc%2==0) {$bgcolor=$row_bgcolor;} else {$bgcolor=$row_bgcolor2;}
@@ -278,26 +231,15 @@ for ($acc=0;$acc<$ac;$acc++) {
 
 	$_MAIN_OUTPUT.= sprintf(___("Status: %s"),"<img src=\"".$mnl_iconURL."/".$STATUS['adr']['statimg'][$ADR[$acc]['status']]."\" border=\"0\">".$STATUS['adr']['status'][$ADR[$acc]['status']]);
 	
-	$_MAIN_OUTPUT.= "<br><b>".$ADR[$acc]['email']."</b>
-							<br>CODE: ".$ADR[$acc]['code']." &nbsp;
-							<!--br>".$ADR[$acc]['f0']." &nbsp;
-							<br>".$ADR[$acc]['f1']." &nbsp;
-							<br>".$ADR[$acc]['f2']." &nbsp;
-							<br>".$ADR[$acc]['f3']." &nbsp;
-							<br>".$ADR[$acc]['f4']." &nbsp;
-							<br>".$ADR[$acc]['f5']." &nbsp;
-							<br>".$ADR[$acc]['f6']." &nbsp;
-							<br>".$ADR[$acc]['f7']." &nbsp;
-							<br>".$ADR[$acc]['f8']." &nbsp;
-							<br>".$ADR[$acc]['f9']." &nbsp;-->
-							<br>".sprintf(___("erstellt am: %s von: %s"),$created_date,$author)."
-							<br>".sprintf(___("bearbeitet am: %s von %s"),$updated_date,$editor)."
-							<br>".sprintf(___("Newsletter Aktuell: %s"),$nlc)." 
-							<br>".sprintf(___("Newsletter Gesamt: %s"),$ADR[$acc]['newsletter'])." 
-							<br>".sprintf(___("Views: %s"),$ADR[$acc]['views'])."
-							<br>".sprintf(___("Clicks: %s"),$ADR[$acc]['clicks'])."
-							<br>".sprintf(___("Sendefehler: %s"),$ADR[$acc]['errors'])." &nbsp;
-							";
+	$_MAIN_OUTPUT.= "<br><b>".$ADR[$acc]['email']."</b>".
+							"<br>CODE: ".$ADR[$acc]['code']." &nbsp;".
+							"<br>".sprintf(___("erstellt am: %s von: %s"),$created_date,$author).
+							"<br>".sprintf(___("bearbeitet am: %s von %s"),$updated_date,$editor).
+							"<br>".sprintf(___("Newsletter Aktuell: %s"),$nlc).
+							"<br>".sprintf(___("Newsletter Gesamt: %s"),$ADR[$acc]['newsletter']).
+							"<br>".sprintf(___("Views: %s"),$ADR[$acc]['views']).
+							"<br>".sprintf(___("Clicks: %s"),$ADR[$acc]['clicks']).
+							"<br>".sprintf(___("Sendefehler: %s"),$ADR[$acc]['errors'])."&nbsp;";
 	$_MAIN_OUTPUT.= "<br>".___("Mitglied in den Gruppen:");
 	$_MAIN_OUTPUT.= "<ul>";
 	$GRP=$ADDRESS->getGroup(0,$ADR[$acc]['id']);

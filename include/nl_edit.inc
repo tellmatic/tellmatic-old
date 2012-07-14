@@ -52,7 +52,7 @@ $NL=$NEWSLETTER->getNL($nl_id);
 
 $created=$NL[0]['created'];
 $updated=date("Y-m-d H:i:s");
-$author=$_SERVER['PHP_AUTH_USER'];
+$author=$LOGIN->USER['name'];
 
 $check=true;
 if ($set=="save") {
@@ -88,13 +88,12 @@ if ($set=="save") {
 									)
 									);
 		$_MAIN_MESSAGE.="<br>".sprintf(___("Newsletter %s wurde aktualisiert."),"'<b>".$subject."</b>'");
-		$_MAIN_MESSAGE.= "<br>".___("Der Newsletter wurde gespeichert unter:")."
-				<ul>
-				".___("Template:")." <a href=\"".$mnl_nldir."/".$NL_Filename_N."\" target=\"_preview\">".$mnl_nldir."/".$NL_Filename_N."</a>
-				<br>
-				".___("Online:")." <a href=\"".$mnl_nldir."/".$NL_Filename_P."\" target=\"_preview\">".$mnl_nldir."/".$NL_Filename_P."</a>
-				</ul>
-				";
+		$_MAIN_MESSAGE.= "<br>".___("Der Newsletter wurde gespeichert unter:").
+				"<ul>".
+				___("Vorlage:")." <a href=\"".$mnl_nldir."/".$NL_Filename_N."\" target=\"_preview\">".$mnl_nldir."/".$NL_Filename_N."</a>".
+				"<br>".
+				___("Online:")." <a href=\"".$mnl_nldir."/".$NL_Filename_P."\" target=\"_preview\">".$mnl_nldir."/".$NL_Filename_P."</a>".
+				"</ul>";
 
 		$action="nl_list";
 		include_once ($mnl_includepath."/nl_list.inc");

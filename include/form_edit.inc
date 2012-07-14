@@ -18,7 +18,7 @@ $_MAIN_MESSAGE.="";
 $set=getVar("set");
 $frm_id=getVar("frm_id");
 $created=date("Y-m-d H:i:s");
-$author=$_SERVER['PHP_AUTH_USER'];
+$author=$LOGIN->USER['name'];
 
 //field names for query
 $InputName_Group="adr_grp";//range from

@@ -67,7 +67,7 @@ if (!file_exists($mnl_logpath."/.htaccess")) {
 include_once ($mnl_includepath."/help_section.inc");
 include_once ($mnl_includepath."/".$action.".inc");
 
-$_MAIN_DESCR="<img src=\"".$mnl_iconURL."/help.png\" border=\"0\" onmouseover=\"javascript:switchSection('main_help');\">&nbsp;&nbsp;".$_MAIN_DESCR;
+$_MAIN_DESCR="<img src=\"".$mnl_iconURL."/help.png\" border=\"0\" onclick=\"javascript:switchSection('main_help');\">&nbsp;&nbsp;".$_MAIN_DESCR;
 
 if (!empty($_ERROR['html'])) {
 	$_MAIN_MESSAGE.="<hr noshade><br>".$_ERROR['html']."<br><hr noshade><br>";
@@ -76,24 +76,17 @@ if (!empty($_ERROR['html'])) {
 $pwchanged=getVar("pwchanged");
 $cryptpw=getVar("cryptpw");
 if ($pwchanged==1) {
-	$_MAIN_MESSAGE.="<br>".___("Passwort wurde gespeichert und ist ab sofort g&uuml;ltig!")."
-										<br>".___("Achtung! Passwort muss in include/.htpasswd manuell angepasst werden.")."
-										<br>crypt: <font color=red>".$cryptpw."</font>
-										";
+	$_MAIN_MESSAGE.="<br>".___("Passwort wurde gespeichert und ist ab sofort g&uuml;ltig!").
+										"<br>".___("Achtung! Passwort muss in include/.htpasswd manuell angepasst werden.").
+										"<br>crypt: <font color=red>".$cryptpw."</font>";
 }
 
 if (!empty($_MAIN_MESSAGE)) {
-	/*
-	$_MAIN_MESSAGE.="<br>";
-	$_MAIN_MESSAGE="<a href=\"javascript:switchSection('div_debug');\"><img src=\"".$mnl_iconURL."/information.png\" border=\"0\"></a>".$_MAIN_MESSAGE;
-	$_MAIN_MESSAGE.="<br>";
-	$_MAIN_MESSAGE.="<br>";
-	*/
-	$_MAIN_MESSAGE="<font size=-1>
-			<a href=\"javascript:switchSection('main_info')\">
-			<img src=\"".$mnl_iconURL."/exclamation.png\" border=\"0\">
-			(".___("Informationen ausblenden").")</a>
-			</font><br><br>".$_MAIN_MESSAGE;
+	$_MAIN_MESSAGE="<font size=-1>".
+			"<a href=\"javascript:switchSection('main_info')\">".
+			"<img src=\"".$mnl_iconURL."/exclamation.png\" border=\"0\">".
+			"(".___("Informationen ausblenden").")</a>".
+			"</font><br><br>".$_MAIN_MESSAGE;
 
 	//;setInterval(\"fadein('main_detail')\",25);
 	$_MAIN_MESSAGE.="<br><br>";

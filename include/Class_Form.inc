@@ -123,12 +123,12 @@ class mnlFRM {
 	}//setAktiv
 	
 	function copyForm($id) {
-		global $_SERVER;//, $mnl_siteid
+		global $LOGIN;//, $mnl_siteid
 	
 		$Return=false;
 		if (check_dbid($id)) {
 			$created=date("Y-m-d H:i:s");
-			$author=$_SERVER['PHP_AUTH_USER'];
+			$author=$LOGIN->USER['name'];
 			$FRM=$this->getForm($id);
 			$ADDRESS=new mnlADR();
 			$adr_grp=$ADDRESS->getGroupID(0,0,$id);

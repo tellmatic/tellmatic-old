@@ -215,29 +215,28 @@ $_MAIN_OUTPUT="";
 include($mnl_includepath."/pager.inc");
 				
 $_MAIN_OUTPUT.="<table border=\"0\" cellpadding=\"1\" cellspacing=\"1\" width=100%>";
-$_MAIN_OUTPUT.= "<thead>
-						<tr>
-						<td><b>".___("Datum")."</b>
-						<a href=\"".$mnl_URL."/".$sortURLPara_."&si=created&st=0\">".$img_arrowup."</a>
-						<a href=\"".$mnl_URL."/".$sortURLPara_."&si=created&st=1\">".$img_arrowdown."</a>
-						</td>
-						<td><b>".___("Titel")."</b>
-						<a href=\"".$mnl_URL."/".$sortURLPara_."&si=subject&st=0\">".$img_arrowup."</a>
-						<a href=\"".$mnl_URL."/".$sortURLPara_."&si=subject&st=1\">".$img_arrowdown."</a>
-						</td>
-						<td><b>".___("Status")."</b>
-						<a href=\"".$mnl_URL."/".$sortURLPara_."&si=status&st=0\">".$img_arrowup."</a>
-						<a href=\"".$mnl_URL."/".$sortURLPara_."&si=status&st=1\">".$img_arrowdown."</a>
-						</td>
-						<td><b>".___("Gruppe")."</b>
-						<a href=\"".$mnl_URL."/".$sortURLPara_."&si=grp_id&st=0\">".$img_arrowup."</a>
-						<a href=\"".$mnl_URL."/".$sortURLPara_."&si=grp_id&st=1\">".$img_arrowdown."</a>
-						</td>
-						<td>...</td>
-						</tr>
-						</thead>
-						<tbody>
-						";
+$_MAIN_OUTPUT.= "<thead>".
+						"<tr>".
+						"<td><b>".___("Datum")."</b>".
+						"<a href=\"".$mnl_URL."/".$sortURLPara_."&si=created&st=0\">".$img_arrowup."</a>".
+						"<a href=\"".$mnl_URL."/".$sortURLPara_."&si=created&st=1\">".$img_arrowdown."</a>".
+						"</td>".
+						"<td><b>".___("Titel")."</b>".
+						"<a href=\"".$mnl_URL."/".$sortURLPara_."&si=subject&st=0\">".$img_arrowup."</a>".
+						"<a href=\"".$mnl_URL."/".$sortURLPara_."&si=subject&st=1\">".$img_arrowdown."</a>".
+						"</td>".
+						"<td><b>".___("Status")."</b>".
+						"<a href=\"".$mnl_URL."/".$sortURLPara_."&si=status&st=0\">".$img_arrowup."</a>".
+						"<a href=\"".$mnl_URL."/".$sortURLPara_."&si=status&st=1\">".$img_arrowdown."</a>".
+						"</td>".
+						"<td><b>".___("Gruppe")."</b>".
+						"<a href=\"".$mnl_URL."/".$sortURLPara_."&si=grp_id&st=0\">".$img_arrowup."</a>".
+						"<a href=\"".$mnl_URL."/".$sortURLPara_."&si=grp_id&st=1\">".$img_arrowdown."</a>".
+						"</td>".
+						"<td>...</td>".
+						"</tr>".
+						"</thead>".
+						"<tbody>";
 
 for ($ncc=0;$ncc<$nc;$ncc++) {
 	
@@ -339,10 +338,9 @@ for ($ncc=0;$ncc<$nc;$ncc++) {
 	}
 
 	$_MAIN_OUTPUT.= "<br><img src=\"".$mnl_iconURL."/".$STATUS['nl']['statimg'][$NL[$ncc]['status']]."\" border=\"0\">&nbsp;".$STATUS['nl']['status'][$NL[$ncc]['status']];
-	$_MAIN_OUTPUT.= "<br><b>".$NL[$ncc]['subject']."</b>
-							<br>".sprintf(___("Erstellt am: %s von %s"),$created_date,$author)."
-							<br>".sprintf(___("Bearbeitet am: %s von %s"),$updated_date,$editor)."
-							";
+	$_MAIN_OUTPUT.= "<br><b>".$NL[$ncc]['subject']."</b>".
+							"<br>".sprintf(___("Erstellt am: %s von %s"),$created_date,$author).
+							"<br>".sprintf(___("Bearbeitet am: %s von %s"),$updated_date,$editor);
 	$_MAIN_OUTPUT.= "<br>".___("Gruppe:")." ";
 
 	$GRP=$NEWSLETTER->getGroup($NL[$ncc]['grp_id'],0);
@@ -350,17 +348,16 @@ for ($ncc=0;$ncc<$nc;$ncc++) {
 		$_MAIN_OUTPUT.= $GRP[0]['name'];
 	}
 	if ($hc>0) {
-		$_MAIN_OUTPUT.= "
-					<br>".sprintf(___("Link: %s"),$NL[$ncc]['link'])."
-					<br>".sprintf(___("Views: %s"),$NL[$ncc]['views'])."
-					<br>".sprintf(___("Clicks: %s"),$NL[$ncc]['clicks'])."
-					<br>".___("Versand an:")."<ul>
-					".sprintf(___("insgesamt %s Adressen"),$hc)."<br>
-					".sprintf(___("Wartend: %s"),$hc_new)."<br>
-					".sprintf(___("Gesendet: %s"),$hc_ok)."<br>
-					".sprintf(___("Fehler: %s"),$hc_fail)."<br>
-					".sprintf(___("Angezeigt: %s"),$hc_view)."
-					</ul>";
+		$_MAIN_OUTPUT.= "<br>".sprintf(___("Link: %s"),$NL[$ncc]['link']).
+					"<br>".sprintf(___("Views: %s"),$NL[$ncc]['views']).
+					"<br>".sprintf(___("Clicks: %s"),$NL[$ncc]['clicks']).
+					"<br>".___("Versand an:")."<ul>".
+					sprintf(___("insgesamt %s Adressen"),$hc)."<br>".
+					sprintf(___("Wartend: %s"),$hc_new)."<br>".
+					sprintf(___("Gesendet: %s"),$hc_ok)."<br>".
+					sprintf(___("Fehler: %s"),$hc_fail)."<br>".
+					sprintf(___("Angezeigt: %s"),$hc_view).
+					"</ul>";
 	}
 	$_MAIN_OUTPUT.= "</div>";
 	$_MAIN_OUTPUT.= "</td>";

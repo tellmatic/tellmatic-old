@@ -29,21 +29,20 @@ $bctotal=count($Bounces);
 $Bounces=unify_array($Bounces);
 $bc=count($Bounces);
 
-$_MAIN_OUTPUT.="<br>".sprintf(___("Es wurden %s Mails durchsucht."),$mc)." 
-								<br>".sprintf(___("%s Mails ergaben einen Treffer."),$bcmatch)." 
-								<br>".sprintf(___("Es wurden aus %s Adressen %s (eindeutige) potentiell fehlerhafte Adressen erkannt."),$bctotal,$bc);
+$_MAIN_OUTPUT.="<br>".sprintf(___("Es wurden %s Mails durchsucht."),$mc).
+								"<br>".sprintf(___("%s Mails ergaben einen Treffer."),$bcmatch).
+								"<br>".sprintf(___("Es wurden aus %s Adressen %s (eindeutige) potentiell fehlerhafte Adressen erkannt."),$bctotal,$bc);
 if ($bc) { //bc>0
 
 	
 	$_MAIN_OUTPUT.="<table border=\"0\" cellpadding=\"1\" cellspacing=\"1\" width=100%>";
-	$_MAIN_OUTPUT.= "<thead>
-							<tr>
-							<td></td>
-							<td>".___("Adresse")."</td>
-							<td>".___("Details")."</td>
-							</thead>
-							<tbody>
-							";
+	$_MAIN_OUTPUT.= "<thead>".
+							"<tr>".
+							"<td></td>".
+							"<td>".___("Adresse")."</td>".
+							"<td>".___("Details")."</td>".
+							"</thead>".
+							"<tbody>";
 	for ($bcc=0;$bcc<$bc;$bcc++) {
 	
 		$search['email']=$Bounces[$bcc];
@@ -72,12 +71,11 @@ if ($bc) { //bc>0
 	//			$_MAIN_OUTPUT.=  ___("(inaktiv)");
 			}
 			$_MAIN_OUTPUT.= "<br><img src=\"".$mnl_iconURL."/".$STATUS['adr']['statimg'][$ADR[0]['status']]."\" border=\"0\" title=\"".$STATUS['adr']['status'][$ADR[0]['status']]."\">&nbsp;".$STATUS['adr']['status'][$ADR[0]['status']];
-			$_MAIN_OUTPUT.= "<br>
-								<br>".sprintf(___("Newsletter Gesamt: %s"),$ADR[0]['newsletter'])." 
-								<br>".sprintf(___("Views: %s"),$ADR[0]['views'])."
-								<br>".sprintf(___("Clicks: %s"),$ADR[0]['clicks'])."
-								<br>".sprintf(___("Sendefehler: %s"),$ADR[0]['errors'])." &nbsp;
-								";
+			$_MAIN_OUTPUT.= "<br>".
+								"<br>".sprintf(___("Newsletter Gesamt: %s"),$ADR[0]['newsletter']).
+								"<br>".sprintf(___("Views: %s"),$ADR[0]['views']).
+								"<br>".sprintf(___("Clicks: %s"),$ADR[0]['clicks']).
+								"<br>".sprintf(___("Sendefehler: %s"),$ADR[0]['errors'])."&nbsp;";
 		} else {
 			$_MAIN_OUTPUT.= "<br>".___("Unbekannt / nicht in der Datenbank");
 		}

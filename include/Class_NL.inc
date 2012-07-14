@@ -194,11 +194,11 @@ class mnlNL {
 	}//setAktiv
 
 	function copyNL($id,$copyfiles=1) {
-		global $mnl_nlpath, $mnl_nlimgpath, $mnl_nlattachpath, $_SERVER;//, $mnl_siteid
+		global $mnl_nlpath, $mnl_nlimgpath, $mnl_nlattachpath, $LOGIN;//, $mnl_siteid
 		$Return=false;
 		if (check_dbid($id)) {
 			$created=date("Y-m-d H:i:s");
-			$author=$_SERVER['PHP_AUTH_USER'];
+			$author=$LOGIN->USER['name'];
 			$status=1;
 			$NL=$this->getNL($id,0,0,0,1);
 			$this->addNL(Array(

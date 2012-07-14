@@ -119,21 +119,20 @@ $statURLPara->addParam("act","statistic");
 $statURLPara->addParam("set","queue");
 
 $_MAIN_OUTPUT="<table border=\"0\" cellpadding=\"1\" cellspacing=\"1\" width=100%>";
-$_MAIN_OUTPUT.= "<thead>
-						<tr>
-						<td><b>".___("Datum")."</b>
-						</td>
-						<td><b>".___("Newsletter")."</b>
-						</td>
-						<td><b>".___("Adressgruppe")."</b>
-						</td>
-						<td><b>".___("Status")."</b>
-						</td>
-						<td>...</td>
-						</tr>
-						</thead>
-						<tbody>
-						";
+$_MAIN_OUTPUT.= "<thead>".
+						"<tr>".
+						"<td><b>".___("Datum")."</b>".
+						"</td>".
+						"<td><b>".___("Newsletter")."</b>".
+						"</td>".
+						"<td><b>".___("Adressgruppe")."</b>".
+						"</td>".
+						"<td><b>".___("Status")."</b>".
+						"</td>".
+						"<td>...</td>".
+						"</tr>".
+						"</thead>".
+						"<tbody>";
 
 
 
@@ -225,15 +224,14 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 	$_MAIN_OUTPUT.="<br>".sprintf(___("Versand startet am/um: %s"),"<b>".$send_at."</b>");
 	$_MAIN_OUTPUT.="<br>".sprintf(___("Erstellt von: %s"),"<b>".$Q[$qcc]['author']."</b>");
 	if ($Q[$qcc]['status']>1) {
-		$_MAIN_OUTPUT .="<br><ul>
-								".___("Adressen: ").$hc." 
-								<br>".___("Wartend: ").$hc_new." 
-								<br>".___("Gesendet: ").$hc_ok."
-								<br>".___("Fehler: ").$hc_fail."
-								<br>".___("versendet am: ").$sent_date."
-								<br>".___("Angezeigt: ").$hc_view."
-								</ul>
-								";
+		$_MAIN_OUTPUT .="<br><ul>".
+								___("Adressen: ").$hc.
+								"<br>".___("Wartend: ").$hc_new.
+								"<br>".___("Gesendet: ").$hc_ok.
+								"<br>".___("Fehler: ").$hc_fail.
+								"<br>".___("versendet am: ").$sent_date.
+								"<br>".___("Angezeigt: ").$hc_view.
+								"</ul>";
 	}
 	$_MAIN_OUTPUT.= "</div>";
 	

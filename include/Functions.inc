@@ -15,7 +15,33 @@
 /**functions**/
 
 function ___($s) {
-	return _($s);
+	return __($s);
+}
+
+function getMessages() {
+  $file_source = "http://www.tellmatic.org/MESSAGES";
+  if (($rh = fopen($file_source, 'rb')) === FALSE) { 
+  	return false; 
+  }
+  $ver="";
+  while (!feof($rh))  {
+	  $ver.=fread($rh, 1024);
+  }
+  fclose($rh);
+  return $ver;
+}
+
+function getCurrentVersion() {
+  $file_source = "http://www.tellmatic.org/CURRENT_VERSION";
+  if (($rh = fopen($file_source, 'rb')) === FALSE) { 
+  	return false; 
+  }
+  $ver="";
+  while (!feof($rh))  {
+	  $ver.=fread($rh, 1024);
+  }
+  fclose($rh);
+  return $ver;
 }
 
 function date_convert_to_string($date) {
@@ -333,10 +359,9 @@ function strip_htmltags($html) {
 
 
 
-function SendMail($From,$FromName,$To,$ToName,$Subject,$Text,$Html,$AttmFiles){
+function SendMail($From,$FromName,$To,$ToName,$Subject,$Text,$Html,$AttmFiles=Array()){
 	global $use_SMTPmail;
 	$return=false;
-
 	//Name darf nicht = email sein und auch kein komma enthalten, plaintext!
 	$ToName=str_replace($To,"",$ToName);
 	$ToName=clear_text($ToName);

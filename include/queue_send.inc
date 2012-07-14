@@ -93,12 +93,12 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 						$ac_fail++;
 				}//adr aktiv
 			}//for, adressen
-			$_MAIN_MESSAGE.="<br>&nbsp;&nbsp;&nbsp;&nbsp;
-				".sprintf(___("Es wurden %s Adressen aus der Gruppe %s eingetragen"),$ac_ok,$GRP[0]['name']);
-			$_MAIN_MESSAGE.="<br>&nbsp;&nbsp;&nbsp;&nbsp;
-				".sprintf(___("%s Adressen wurden uebersprungen (inaktiv, abgemeldet, fehlerhaft)."),$ac_fail);
-			$_MAIN_MESSAGE.="<br>&nbsp;&nbsp;&nbsp;&nbsp;
-				".sprintf(___("%s Adressen wurden uebersprungen (bereits eingetragen)."),$ac_double);
+			$_MAIN_MESSAGE.="<br>&nbsp;&nbsp;&nbsp;&nbsp;".
+				sprintf(___("Es wurden %s Adressen aus der Gruppe %s eingetragen"),$ac_ok,$GRP[0]['name']);
+			$_MAIN_MESSAGE.="<br>&nbsp;&nbsp;&nbsp;&nbsp;".
+				sprintf(___("%s Adressen wurden uebersprungen (inaktiv, abgemeldet, fehlerhaft)."),$ac_fail);
+			$_MAIN_MESSAGE.="<br>&nbsp;&nbsp;&nbsp;&nbsp;".
+				sprintf(___("%s Adressen wurden uebersprungen (bereits eingetragen)."),$ac_double);
 			//status der Q und NL auf gestartet setzen!
 			$NEWSLETTER->setStatus($Q[0]['nl_id'],6);
 			$QUEUE->setStatus($q_arr[$qcc],2);

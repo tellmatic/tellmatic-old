@@ -16,7 +16,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=<?php echo $encoding;?>">
 <meta name="application" content="<?php echo $ApplicationText; ?>">
 <meta name="author" content="Volker">
 <meta name="Publisher" content="multi.art.studio Hanau">

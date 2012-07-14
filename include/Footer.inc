@@ -15,8 +15,6 @@
 
 ?><script type="text/javascript">
 
-	switchSection("div_debug");
-	switchSection("main_info");
 /*
 	if (document.getElementById("head") && document.getElementById("head").style.MozOpacity) //if Firefox/ NS6+
 	setInterval("fadein('head')",5)
@@ -31,9 +29,10 @@
 	setInterval("fadein('menu')",5)
 */
 
+/*
 	if (document.getElementById("foot") && document.getElementById("foot").style.MozOpacity) //if Firefox/ NS6+
 	setInterval("fadein('foot')",5)
-
+*/
 	if (document.getElementById("main_head") && document.getElementById("main_head").style.MozOpacity) //if Firefox/ NS6+
 	setInterval("fadein('main_head')",25)
 /*
@@ -46,6 +45,9 @@
 */	
 	switchSection("sprechblase");
 	switchSection("div_loader");
+	switchSection("div_debug");
+	switchSection("main_info");
+
 	loaded();
 
 

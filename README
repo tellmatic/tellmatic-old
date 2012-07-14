@@ -27,10 +27,15 @@
 
 *+*+*+*+*+*+*+*+*+*+ INSTALLATION +*+*+*+*+*+*+*+*+*+*+*
 
-	Bitte INSTALL.DE lesen
-	Please read INSTALL.EN
+	Bitte INSTALL.DE / UPDATE / CHANGES lesen
+
+	Please read INSTALL.EN / UPDATE / CHANGES 
 
 	http://www.tellmatic.de/?c=doc
+
+	Sie benutzen PHP5? Tellmatic läuft nun auch mit php4+5
+
+	using PHP5? Tellmatic now works with php4+5
 		
 *+*+*+*+*+*+*+*+*+*+*+*+ TELLMATIC +*+*+*+*+*+*+*+*+*+*+*+*
 

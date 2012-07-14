@@ -14,6 +14,7 @@
 
 
 if (!file_exists("./include/mnl_config.inc")) {
+	echo phpinfo();
 	exit;
 }
 include_once ("include/mnl_config.inc");

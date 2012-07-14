@@ -29,6 +29,10 @@ $LOGIN->getUser($LOGIN->LoggedInUsername);
 //Sprache festlegen!
 require_once ($mnl_includepath."/Lang.inc");
 
+//Status definitionen einbinden..... war vorher mnl_lib, jetzt hier da abhaengig von der sprache :) sonst wirds nicht uebersetzt
+require_once ($mnl_includepath."/Stats.inc");
+
+//HTML-head
 require_once ($mnl_includepath."/Header.inc");
 
 //new Template

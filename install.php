@@ -50,12 +50,18 @@ if (substr($mnl_dir, 0,1)=="/") {
 	$mnl_dir=substr($mnl_dir, 1,strlen($mnl_dir));
 }
 
+
+if (empty($mnl_dir)) {
+	$mnl_dir=".";
+}
+
 $mnl_includedir="include";
 $mnl_path=$mnl_docroot."/".$mnl_dir;
 $mnl_includepath=$mnl_path."/".$mnl_includedir;
 require_once ($mnl_includepath."/Errorhandling.inc");
 require_once ($mnl_includepath."/Class_mSimpleForm.inc");
 require_once ($mnl_includepath."/Functions.inc");
+
 define("MNL_SITEID","mnl");
 
 $set=getVar("set");
@@ -129,11 +135,16 @@ $$InputName_SMTPDomain=getVar($InputName_SMTPDomain);
 
 $check=true;
 
-if (version_compare(phpversion(), "5.0", ">=")) { 
+if (version_compare(phpversion(), "5.0", ">=")) {
+	$usePhp5=true; 
 	$MESSAGE.="<br><font size=2 color=red><b>ACHTUNG! Sie benutzen PHP5. Weitere Details finden Sie den den Dateien README und INSTALL.
 							<br>You are using PHP5. More Details you can find in the README and INSTALL files.</b></font><br>";
-	//no error
+} else {
+	$usePhp5=false;
 }
+define("PHP5",$usePhp5);
+
+if (PHP5) ini_set('zend.ze1_compatibility_mode', '1');
 
 if (!function_exists('imap_open')) {
 	$MESSAGE.="<br><font size=2 color=red><b>ACHTUNG! Die Funktion imap_open() existiert nicht. Weitere Details finden Sie den den Dateien README und INSTALL.
@@ -141,11 +152,13 @@ if (!function_exists('imap_open')) {
 	//no error
 }
 
+/*
 if (!is_writeable($mnl_path)) {
 	$MESSAGE.="<br><font size=2 color=red><b>ACHTUNG! $mnl_path ist Schreibgeschuetzt. Weitere Details finden Sie den den Dateien README und INSTALL 
 							<br>$mnl_path ist write protected. More Details you can find in the README and INSTALL files.</b></font><br>";
 	$check=false;
 }
+*/
 
 if (!is_writeable($mnl_includepath)) {
 	$MESSAGE.="<br><font size=2 color=red><b>ACHTUNG! $mnl_includepath ist Schreibgeschuetzt. Weitere Details finden Sie den den Dateien README und INSTALL 
@@ -156,17 +169,18 @@ if (!is_writeable($mnl_includepath)) {
 if ($set=="save" && $check) {
 	//$check=true;
 	//checkinput
-	if (empty($name)) {$check=false;$MESSAGE.="<br>Bitte Benutzernamen angeben";}
-	if (empty($pass)) {$check=false;$MESSAGE.="<br>Kein Passwort angegeben";}
-	if ($pass!=$pass2) {$check=false;$MESSAGE.="<br>Bitte 2x das gleiche Passwort angeben";}
-	if (empty($email)) {$check=false;$MESSAGE.="<br>e-Mail sollte nicht leer sein.";}
-	if (!checkemailadr($email,2)) {$check=false;$MESSAGE.="<br>e-Mail hat ein falsches Format oder Domain ist nicht gueltig.";}
-	if (empty($db_host) || empty($db_port) || empty($db_name) || empty($db_user) || empty($db_pass)) {$check=false;$MESSAGE.="<br>Daten fuer den Zugriff auf die Datenbank sind nicht vollstaendig.";}
-	if (empty($smtp_host) || empty($smtp_domain) || empty($smtp_user) || empty($smtp_pass)) {$check=false;$MESSAGE.="<br>Daten fuer den Zugriff auf den SMTP-Server sind nicht vollstaendig.";}
+	if (empty($name)) {$check=false;$MESSAGE.="<br>Bitte Benutzernamen angeben / Please enter username";}
+	if (empty($pass)) {$check=false;$MESSAGE.="<br>Kein Passwort angegeben / Please enter password";}
+	if ($pass!=$pass2) {$check=false;$MESSAGE.="<br>Bitte 2x das gleiche Passwort angeben / Please repeat the pasword";}
+	if (empty($email)) {$check=false;$MESSAGE.="<br>E-Mail sollte nicht leer sein. / E-mail should not be empty";}
+	if (!checkemailadr($email,2)) {$check=false;$MESSAGE.="<br>E-Mail hat ein falsches Format oder Domain ist nicht gueltig. / E-mali is invalid";}
+	if (empty($db_host) || empty($db_port) || empty($db_name) || empty($db_user) || empty($db_pass)) {$check=false;$MESSAGE.="<br>Daten fuer den Zugriff auf die Datenbank sind nicht vollstaendig. / Data for database are not complete.";}
+//	if (empty($smtp_host) || empty($smtp_domain) || empty($smtp_user) || empty($smtp_pass)) {$check=false;$MESSAGE.="<br>Daten fuer den Zugriff auf den SMTP-Server sind nicht vollstaendig.";}
 
 	if ($check) {
 	
 		//create directories!
+		/* had problems on some servers... empty directories are included again..... doesnt chmod.... grrr
 		mkdir($mnl_path.'/files', 0777);
 		mkdir($mnl_path.'/files/log', 0777);
 		mkdir($mnl_path.'/files/import_export', 0777);		
@@ -174,6 +188,7 @@ if ($set=="save" && $check) {
 		mkdir($mnl_path.'/files/newsletter', 0777);
 		mkdir($mnl_path.'/files/newsletter/images', 0777);
 		mkdir($mnl_path.'/files/attachements', 0777);
+		*/
 	
 		//database
 		//wir setzen db variablen und testen connection zur db!
@@ -558,13 +573,13 @@ CREATE TABLE ".$mnl_tablePrefix."frm_s (
 				"aktiv"=>1,
 				"admin"=>1,
 				"style"=>"default",
-				"lang"=>"de"
+				"lang"=>"en"
 				));
 			$MESSAGE.="<br>...Benutzer '$name' wurde angelegt.";
 			$CONFIG->addCFG(Array(
 				"siteid"=>MNL_SITEID,
 				"name"=>"mNL_0",
-				"sender_name"=>"mNL Newsletter",
+				"sender_name"=>"Tellmatic",
 				"sender_email"=>$email,
 				"return_mail"=>$email,
 				"notify_mail"=>$email,
@@ -815,7 +830,9 @@ $MESSAGE.=$Form->get_Form($FormularName);
 }
 
 
-$MESSAGE.="<br><br><a href=\"README\" target=\"_blank\">README</a>&nbsp;-&nbsp;<a href=\"INSTALL\" target=\"_blank\">INSTALL</a>";
+$MESSAGE.="<br><br><a href=\"README\" target=\"_blank\">README</a>&nbsp;-&nbsp;INSTALL.<a href=\"INSTALL.DE\" target=\"_blank\">DE</a>/<a href=\"INSTALL.EN\" target=\"_blank\">EN</a>
+&nbsp;&nbsp;<a href=\"UPDATE\" target=\"_blank\">UPDATE</a>&nbsp;&nbsp;<a href=\"CHANGES\" target=\"_blank\">CHANGES</a>&nbsp;&nbsp;<a href=\"http://www.tellmatic.org/?c=faq\" target=\"_blank\">FAQ</a>
+";
 $MESSAGE.="<br><br>INFOS:<br><br>DocRoot: ".$mnl_docroot;
 $MESSAGE.="<br>Verzeichnis: ".$mnl_dir;
 $MESSAGE.="<br>Installationspfad: ".$mnl_path;

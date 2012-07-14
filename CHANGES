@@ -11,6 +11,63 @@
 /* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
 /********************************************************************************/
 
+*+*+*+*+*+*+*+*+*+*+*+ CHANGES V1.0.4  +*+*+*+*+*+*+*+*+*+*+*+*
+	30.03.2007 - a new bugfix-release....
+	bugs in 1.0.4, fixed for 1.0.4.1:
+		- send_it.php had a typo ... it used the wrong template for personal mailings. fixed!
+			users who have downloaded 1.0.4 before, should only update send_it.php
+			download from here: http://www.tellmatic.org/download/send_it.php.txt
+			and save it as send_it.php in the include-directory.
+		- install php contains a check for php5 and throws a message, not needed anymore.
+
+
+*+*+*+*+*+*+*+*+*+*+*+ CHANGES V1.0.4  +*+*+*+*+*+*+*+*+*+*+*+*
+	27.03.2007 - a new bugfix-release....
+	bugs in 1.0.3-a, fixed for 1.0.4:
+		- install.php: if mnldir is empty, use .
+		- subscribe.php: when a member has unsubscribed and subscribes again, the address is marked as new again , but leaves inactive, now it sets the address active again	
+		- fixed gettext implementation ... _() instead of __() was used by ___()
+		- Empty directories /files... etc. are included again, some people reported problems. In some cases PHP settings dont allow the script to create subdirectories or full chmod.
+		- In menu 'new delivery job' link was wrong.
+		- 'click.php' didnt redirect to the link. was a missing exit; after header()
+		- Onlineversion of newsletter was not shown, the variable was not parsed but preview was ok.
+		- Fixed some PHP-Warnings (undefined variables)
+		- Http reload in send_it.php didnt work
+		- Translations i German had broken Umlauts, was not charset UTF-8 and encoding 8-bit
+	
+	changes in 1.0.4:	
+		- re-ordered menu
+		- Default language after installation is now 'en' - english.
+		- Smtp user/passwd etc no more required for installation
+		- $_SERVER["PHP_AUTH_USER"] gets $LOGIN->USER['name']; AUTH_USER is only used now in the login method, so we can switch to session easily
+		- show phpinfo() if mnl_config does not exists. e.g. if index.php is called before installation :) so you can check the php version and settings.
+
+	new features in 1.0.4:
+		- Status now show a list of all Groups, and a + icon to show the details which are in a hidden div now, otherwise its sometime too much to view.
+		- included knittl's filemanager from myftphp and adapted to run with tellmatic :) its still very experimental. Please visit http://myftphp.sf.net to get the latest Version (Standalone).
+
+	known bugs in 1.0.4:
+		- still no PHP auth with cgi version, we need sessions here, but i am prepared, not a bug!
+		
+		please report any 'bugs'.
+	
+
+*+*+*+*+*+*+*+*+*+*+*+ CHANGES V1.0.3-a  +*+*+*+*+*+*+*+*+*+*+*+*
+	25.03.2007 - a small update
+	changes, new features and enhancements:
+		- Version checking: when you enter tellmatic, it shows the actual version available and latest news :) 
+			It is recommended to download and use the latest version if there is one available.
+		
+	bugs fixed:
+		- {BLINDIMAGE} was not in the list for variables creating or editing newsletters... nobody knew about the feature :O
+		- some strings were not detected by xgettext: warning: unterminated string literal, fixed and added to .po and .mo
+		- Class_Q.inc zeile 338 $mnl_siteid must be MNL_SITEID, i just forgot to copy this line to the release version ;-)
+		- Not all files in archiv had read permission for others. wysiwyg editor may not load or form for new address-groupwas not shown... , reported for some installations, depending on php user-permissions etc.
+		- Target was missing in Menu: was always _self, but should be _blank sometimes
+		- Menu is now indented
+		- HTML output for send_it.php was a bit broken, reload link was missing, 'html' at end of file should be '/body' and '/html'
+		- fixed/added links to readme, install , update in install.php
+		
 *+*+*+*+*+*+*+*+*+*+*+ CHANGES V1.0.3  +*+*+*+*+*+*+*+*+*+*+*+*
 	24.03.2007
 	changes, new features and enhancements:

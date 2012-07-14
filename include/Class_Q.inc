@@ -324,7 +324,7 @@ class mnlQ {
 			//versandliste, history h loeschen
 			/*
 			//historie loeschen? .....hmmmmm , nein, nur wenn nl oder adresse
-			$Query ="DELETE FROM ".mnlTABLE_NL_H." WHERE siteid='".$mnl_siteid."' AND q_id='".$id."'";
+			$Query ="DELETE FROM ".mnlTABLE_NL_H." WHERE siteid='".MNL_SITEID."' AND q_id='".$id."'";
 				if ($DB->Query($Query)) {
 					$Return=true;
 				} else {
@@ -335,7 +335,7 @@ class mnlQ {
 			//stattdessen markieren wir einen abbruch!
 			$Query ="UPDATE ".mnlTABLE_NL_H." 
 						SET status=6 
-						WHERE siteid='".$mnl_siteid."' 
+						WHERE siteid='".MNL_SITEID."' 
 						AND q_id='".$id."'
 						AND ( status=1 or status=5 )
 						";

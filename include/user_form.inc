@@ -87,7 +87,7 @@ for ($lcc=0;$lcc<$lc;$lcc++) {
 
 
 //submit button 
-$Form->new_Input($FormularName,$InputName_Submit,"submit",sprintf(___("Einstellungen fuer Benutzer %s aendern"),$_SERVER['PHP_AUTH_USER']));
+$Form->new_Input($FormularName,$InputName_Submit,"submit",sprintf(___("Einstellungen fuer Benutzer %s aendern"),$LOGIN->USER['name']));
 $Form->set_InputStyleClass($FormularName,$InputName_Submit,"mFormSubmit","mFormSubmitFocus");
 $Form->set_InputDesc($FormularName,$InputName_Submit,"");
 $Form->set_InputReadonly($FormularName,$InputName_Submit,false);

@@ -109,10 +109,13 @@ if ($set=="delete" && $status=="delete_all") { // && $doit==1
 	$AG=$ADDRESS->getGroup();
 	$agc=count($AG);
 	for ($agcc=0;$agcc<$agc;$agcc++) {
-		$_MAIN_OUTPUT.="<b>".$AG[$agcc]['name']."</b>: ";
+		$_MAIN_OUTPUT.= "<a  href=\"javascript:switchSection('g_".$AG[$agcc]['id']."')\" title=\"".___("Details")."\">";
+		$_MAIN_OUTPUT.="<img src=\"".$mnl_iconURL."/add.png\" border=\"0\" alt=\"".___("Details")."\" title=\"".___("Details")."\">";
+		$_MAIN_OUTPUT.="&nbsp;'<b>".$AG[$agcc]['name']."</b>'</a>&nbsp;&nbsp;";
 		//Gesamtstatus, anzahl per adr-status
 		$ac=$ADDRESS->countADR($AG[$agcc]['id']);
 		$_MAIN_OUTPUT.=sprintf(___("%s Adressen"),"<b>".$ac."</b>");
+		$_MAIN_OUTPUT.="<div id=\"g_".$AG[$agcc]['id']."\" style=\"border:1px dashed #eeeeee; -moz-border-radius:2em 2em 2em 2em; padding:8px;\">";
 		//per adr status:
 		$asc=count($STATUS['adr']['status']);
 		for ($ascc=1; $ascc<=$asc; $ascc++) {
@@ -120,17 +123,17 @@ if ($set=="delete" && $status=="delete_all") { // && $doit==1
 			$search['status']=$ascc;
 			$ac=$ADDRESS->countADR($AG[$agcc]['id'],$search);
 			if ($ac>0) {
-				$_MAIN_OUTPUT.="<br>
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>".$ac."</b>
-								&nbsp;<img src=\"".$mnl_iconURL."/".$STATUS['adr']['statimg'][$ascc]."\" border=\"0\">
-								&nbsp;".$STATUS['adr']['status'][$ascc]." 
-								&nbsp;(".$STATUS['adr']['descr'][$ascc].")
-								";	
+				$_MAIN_OUTPUT.="<b>".$ac."</b>".
+								"&nbsp;<img src=\"".$mnl_iconURL."/".$STATUS['adr']['statimg'][$ascc]."\" border=\"0\">".
+								"&nbsp;".$STATUS['adr']['status'][$ascc].
+								"&nbsp;(".$STATUS['adr']['descr'][$ascc].")<br>";	
 			}
 		}
-		$_MAIN_OUTPUT.="<br><br>";
+		$_MAIN_OUTPUT.="</div>";
+		$_MAIN_OUTPUT.= "<script type=\"text/javascript\">switchSection('g_".$AG[$agcc]['id']."');</script>";
+		$_MAIN_OUTPUT.="<br>";
 
 	}
-
+$_MAIN_OUTPUT.="<br>";
 include_once ($mnl_includepath."/adr_clean_form.inc");
 ?>

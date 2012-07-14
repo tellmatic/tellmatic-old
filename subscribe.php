@@ -222,6 +222,7 @@ if ($frm_id>0 && $doptin!=1) {
 					//update status wenn unsubscribed (11)! -- status: 1 , neu
 					if ($ADR[0]['status'] ==11) {
 						$ADDRESS->setStatus($ADR[0]['id'],1);
+						$ADDRESS->setAktiv($ADR[0]['id'],1);
 					}
 					
 					//

@@ -18,7 +18,7 @@ $_MAIN_MESSAGE.="";
 $set=getVar("set");
 $nl_id=0;
 $created=date("Y-m-d H:i:s");
-$author=$_SERVER['PHP_AUTH_USER'];
+$author=$LOGIN->USER['name'];
 
 //field names for query
 $InputName_File="file";//datei
@@ -75,13 +75,12 @@ if ($set=="save") {
 									)
 								);
 		$_MAIN_MESSAGE.="<br>".sprintf(___("Neuer Newsletter %s wurde erstellt."),"'<b>".$subject."</b>'");
-		$_MAIN_MESSAGE.= "<br>".___("Der Newsletter wurde gespeichert unter:")."
-				<ul>
-				".___("Template:")." <a href=\"".$mnl_nldir."/".$NL_Filename_N."\" target=\"_preview\">".$mnl_nldir."/".$NL_Filename_N."</a>
-				<br>
-				".___("Online:")." <a href=\"".$mnl_nldir."/".$NL_Filename_P."\"  target=\"_preview\">".$mnl_nldir."/".$NL_Filename_P."</a>
-				</ul>
-				";
+		$_MAIN_MESSAGE.= "<br>".___("Der Newsletter wurde gespeichert unter:").
+				"<ul>".
+				___("Template:")." <a href=\"".$mnl_nldir."/".$NL_Filename_N."\" target=\"_preview\">".$mnl_nldir."/".$NL_Filename_N."</a>".
+				"<br>".
+				___("Online:")." <a href=\"".$mnl_nldir."/".$NL_Filename_P."\"  target=\"_preview\">".$mnl_nldir."/".$NL_Filename_P."</a>".
+				"</ul>";
 		$action="nl_list";
 		include_once ($mnl_includepath."/nl_list.inc");
 	} else {

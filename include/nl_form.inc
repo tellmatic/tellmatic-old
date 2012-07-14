@@ -246,18 +246,18 @@ $_MAIN_OUTPUT.= "</tr>";
 
 $_MAIN_OUTPUT.= "</table>";
 $_MAIN_OUTPUT.= $Form->FORM[$FormularName]['foot'];
-$_MAIN_OUTPUT.= "
-						".sprintf(___("%s enth&auml;lt das hochgeladene Bild 'img src' | %s enth&auml;lt nur die URL zum Bild"),"<b>{IMAGE1}</b>","<b>{IMAGE1_URL}</b>")."<br>
-						".sprintf(___("%s enth&auml;lt den angegebenen Link 'a href' | %s enth&auml;lt nur die URL des Links"),"<b>{LINK1}</b>","<b>{LINK1_URL}</b>")."<br>
-						".sprintf(___("%s enth&auml;lt den Link zum Attachement 'a href' |  %s enth&auml;lt nur die URL zum Attachement"),"<b>{ATTACH1}</b>","<b>{ATTACH1_URL}</b>")."<br>
-						".sprintf(___("%s enth&auml;lt den Link zum abmelden |   %s enth&auml;lt nur die URL zum Abmeldeformular"),"<b>{UNSUBSCRIBE}</b>","<b>{UNSUBSCRIBE_URL}</b>")."<br>
-						".sprintf(___("%s enth&auml;lt den Link zur Onlineversion 'a href' |  %s enth&auml;lt nur die URL zur Onlineversion"),"<b>{NLONLINE}</b>","<b>{NLONLINE_URL}</b>")."<br>
-						".sprintf(___("%s enth&auml;lt das schliessende TAG '/a' fuer die Links"),"<b>{CLOSELINK}</b>")."<br>
-						<u>".___("Nur f&uuml; personalisierten Newsleter:")."</u><br>
-						".sprintf(___("%s enth&auml;lt die e-Mailadresse des Empfaengers"),"<b>{EMAIL}</b>")."<br>
-						".sprintf(___("%s bis %s enth&auml;lt die Felder aus den Formularen/Adressen"),"<b>{F0}</b>","<b>{F9}</b>")."<br>
-						".sprintf(___("%s enth&auml;lt den kompletten Link 'a href' zum Aktivierungslink ('(1st)-Touch-Opt-In) | %s enth&auml;lt nur die URL"),"<b>{SUBSCRIBE}</b>","<b>{SUBSCRIBE_URL}</b>")."<br>
-						";
+$_MAIN_OUTPUT.= sprintf(___("%s enth&auml;lt das hochgeladene Bild 'img src' | %s enth&auml;lt nur die URL zum Bild"),"<b>{IMAGE1}</b>","<b>{IMAGE1_URL}</b>")."<br>".
+						sprintf(___("%s enth&auml;lt den angegebenen Link 'a href' | %s enth&auml;lt nur die URL des Links"),"<b>{LINK1}</b>","<b>{LINK1_URL}</b>")."<br>".
+						sprintf(___("%s enth&auml;lt den Link zum Attachement 'a href' |  %s enth&auml;lt nur die URL zum Attachement"),"<b>{ATTACH1}</b>","<b>{ATTACH1_URL}</b>")."<br>".
+						sprintf(___("%s enth&auml;lt den Link zum abmelden |   %s enth&auml;lt nur die URL zum Abmeldeformular"),"<b>{UNSUBSCRIBE}</b>","<b>{UNSUBSCRIBE_URL}</b>")."<br>".
+						sprintf(___("%s enth&auml;lt den Link zur Onlineversion 'a href' |  %s enth&auml;lt nur die URL zur Onlineversion"),"<b>{NLONLINE}</b>","<b>{NLONLINE_URL}</b>")."<br>".
+						sprintf(___("%s enth&auml;lt das schliessende TAG '/a' fuer die Links"),"<b>{CLOSELINK}</b>")."<br>".
+						"<u>".___("Nur f&uuml; personalisierten Newsleter:")."</u><br>".
+						sprintf(___("%s enth&auml;lt ein 1x1 Pixel grosses transparentes PNG-Bild (f&uuml;r View-Tracking, nur HTML-Mails)"),"<b>{BLINDIMAGE}</b>")."<br>".
+						sprintf(___("%s enth&auml;lt die e-Mailadresse des Empfaengers"),"<b>{EMAIL}</b>")."<br>".
+						sprintf(___("%s bis %s enth&auml;lt die Felder aus den Formularen/Adressen"),"<b>{F0}</b>","<b>{F9}</b>")."<br>".
+						sprintf(___("%s enth&auml;lt den kompletten Link 'a href' zum Aktivierungslink ('(1st)-Touch-Opt-In) | %s enth&auml;lt nur die URL"),"<b>{SUBSCRIBE}</b>","<b>{SUBSCRIBE_URL}</b>")."<br>".
+						"";
 
 include_once ($mnl_includepath."/wysiwyg.inc");
 ?>

@@ -19,7 +19,7 @@ $set=getVar("set");
 $q_id=0;
 $nl_id=getVar("nl_id");
 $created=date("Y-m-d H:i:s");
-$author=$_SERVER['PHP_AUTH_USER'];
+$author=$LOGIN->USER['name'];
 $status=1;
 //field names for query
 

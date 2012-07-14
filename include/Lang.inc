@@ -22,7 +22,9 @@ $locale = (isset($LOGIN->USER['lang']))? $LOGIN->USER['lang'] : DEFAULT_LOCALE;
 T_setlocale(LC_MESSAGES, $locale);
 // Set the text domain as 'messages'
 $domain = 'tellmatic';
+
 T_bindtextdomain($domain, LOCALE_DIR);
 T_bind_textdomain_codeset($domain, $encoding);
+
 T_textdomain($domain);
 ?>

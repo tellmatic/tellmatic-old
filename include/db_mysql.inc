@@ -85,8 +85,9 @@ class DB_Sql {
         $this->halt("cannot use database ".$Database);
         return 0;
       }
+      mysql_query("SET NAMES 'utf8'");//utf8...
     }
-    
+
     return $this->Link_ID;
   }
 
