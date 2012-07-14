@@ -37,6 +37,9 @@ $$InputName_Massmail=getVar($InputName_Massmail);
 $InputName_Descr="body";
 $$InputName_Descr=getVar($InputName_Descr,0);//varname,slashes? 0=no add slashes
 
+$InputName_DescrText="body_text";//range from
+$$InputName_DescrText=getVar($InputName_DescrText,0);//varname,slashes? 0=dont add slashes
+
 $InputName_Aktiv="aktiv";
 $$InputName_Aktiv=getVar($InputName_Aktiv);
 
@@ -92,6 +95,7 @@ if ($set=="save") {
 									"id"=>$nl_id,
 									"subject"=>$subject,
 									"body"=>$body,
+									"body_text"=>$body_text,
 									"aktiv"=>$aktiv,
 									"massmail"=>$massmail,
 									"link"=>$link,
@@ -110,6 +114,8 @@ if ($set=="save") {
 				___("Vorlage:")." <a href=\"".$tm_URL_FE."/".$tm_nldir."/".$NL_Filename_N."\" target=\"_preview\">".$tm_nldir."/".$NL_Filename_N."</a>".
 				"<br>".
 				___("Online:")." <a href=\"".$tm_URL_FE."/".$tm_nldir."/".$NL_Filename_P."\" target=\"_preview\">".$tm_nldir."/".$NL_Filename_P."</a>".
+				"<br>".
+				___("Text:")." <a href=\"".$tm_URL_FE."/".$tm_nldir."/".$NL_Filename_T."\" target=\"_preview\">".$tm_nldir."/".$NL_Filename_T."</a>".
 				"</ul>";
 
 		$action="nl_list";
@@ -123,6 +129,7 @@ if ($set=="save") {
 	$NL=$NEWSLETTER->getNL($nl_id,0,0,0,1);
 	$subject=$NL[0]['subject'];
 	$body=strtr($NL[0]['body'], $trans);
+	$body_text=strtr($NL[0]['body_text'], $trans);
 	$aktiv=$NL[0]['aktiv'];
 	$massmail=$NL[0]['massmail'];
 	$link=$NL[0]['link'];

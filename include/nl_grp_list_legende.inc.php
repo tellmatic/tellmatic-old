@@ -17,7 +17,9 @@ $_MAIN_OUTPUT.="<br><b><a href=\"javascript:switchSection('legende')\" title=\""
 $_MAIN_OUTPUT.= "<div id=\"legende\" class=\"legende\">";
 
 $_MAIN_OUTPUT.= "<h3>".___("Legende")."</h3>";
+$_MAIN_OUTPUT.= "<strong>".___("Eigenschaften")."</strong><br>";
 $_MAIN_OUTPUT.= tm_icon("page_white_lightning.png",___("Standardgruppe"))."&nbsp;".___("Standardgruppe (kann nicht de-aktiviert und gelöscht werden)")."<br>";
+$_MAIN_OUTPUT.= "<br><strong>".___("Aktionen")."</strong><br>";
 $_MAIN_OUTPUT.= tm_icon("tick.png",___("Aktiv"));
 $_MAIN_OUTPUT.= tm_icon("cancel.png",___("Inaktiv"))."&nbsp;".___("Gruppe ist Aktiv/Inaktiv (Klick=Deaktivieren/Aktivieren)")."<br>";
 $_MAIN_OUTPUT.= tm_icon("pencil.png",___("Bearbeiten"))."&nbsp;".___("Bearbeiten")."<br>";

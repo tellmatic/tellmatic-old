@@ -40,6 +40,9 @@ $$InputName_Massmail=getVar($InputName_Massmail);
 $InputName_Descr="body";//range from
 $$InputName_Descr=getVar($InputName_Descr,0);//varname,slashes? 0=dont add slashes
 
+$InputName_DescrText="body_text";//range from
+$$InputName_DescrText=getVar($InputName_DescrText,0);//varname,slashes? 0=dont add slashes
+
 $InputName_Aktiv="aktiv";//range from
 $$InputName_Aktiv=getVar($InputName_Aktiv);
 
@@ -83,6 +86,7 @@ if ($set=="save") {
 								Array(
 									"subject"=>$subject,
 									"body"=>$body,
+									"body_text"=>$body_text,
 									"aktiv"=>$aktiv,
 									"status"=>$status,
 									"massmail"=>$massmail,
@@ -102,6 +106,8 @@ if ($set=="save") {
 				___("Template:")." <a href=\"".$tm_URL_FE."/".$tm_nldir."/".$NL_Filename_N."\" target=\"_preview\">".$tm_nldir."/".$NL_Filename_N."</a>".
 				"<br>".
 				___("Online:")." <a href=\"".$tm_URL_FE."/".$tm_nldir."/".$NL_Filename_P."\"  target=\"_preview\">".$tm_nldir."/".$NL_Filename_P."</a>".
+				"<br>".
+				___("Text:")." <a href=\"".$tm_URL_FE."/".$tm_nldir."/".$NL_Filename_T."\" target=\"_preview\">".$tm_nldir."/".$NL_Filename_T."</a>".
 				"</ul>";
 		$action="nl_list";
 		include_once (TM_INCLUDEPATH."/nl_list.inc.php");

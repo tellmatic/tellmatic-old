@@ -211,14 +211,14 @@ $_MAIN_OUTPUT.= "</tr>";
 //F, neu f0-9
 for ($fc=0;$fc<=9;$fc++) {
 	$FInputName="InputName_F".$fc;
-$_MAIN_OUTPUT.= "<tr>";
-$_MAIN_OUTPUT.= "<td valign=top>";
-$_MAIN_OUTPUT.= "F".$fc;
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "<td valign=top colspan=1 align=left>";
-$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$FInputName]['html'];
-$_MAIN_OUTPUT.= "</td>";
-$_MAIN_OUTPUT.= "</tr>";
+	$_MAIN_OUTPUT.= "<tr>";
+	$_MAIN_OUTPUT.= "<td valign=top>";
+	$_MAIN_OUTPUT.= "F".$fc;
+	$_MAIN_OUTPUT.= "</td>";
+	$_MAIN_OUTPUT.= "<td valign=top colspan=1 align=left>";
+	$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$$FInputName]['html'];
+	$_MAIN_OUTPUT.= "</td>";
+	$_MAIN_OUTPUT.= "</tr>";
 
 }
 

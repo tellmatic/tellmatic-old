@@ -92,8 +92,10 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 		}
 
 		//filenames zusammensetzen
-		//html datei
+		//html datei//template fuer html parts
 		$NL_Filename_N="nl_".date_convert_to_string($NL[0]['created'])."_n.html";
+		//text datei//template fuer textparts
+		$NL_Filename_T="nl_".date_convert_to_string($NL[0]['created'])."_t.txt";
 		//bild
 		$NL_Imagename1="nl_".date_convert_to_string($NL[0]['created'])."_1.jpg";
 		//attachement
@@ -181,7 +183,6 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 		$email_obj->SetEncodedEmailHeader("Reply-To",$C[0]['sender_email'],$C[0]['sender_name']);
 		$email_obj->SetHeader("Return-Path",$C[0]['return_mail']);
 		$email_obj->SetEncodedEmailHeader("Errors-To",$C[0]['return_mail'],$C[0]['return_mail']);
-		$email_obj->SetEncodedHeader("Subject",$NL[0]['subject']);
 
 		//H holen
 
@@ -284,13 +285,26 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 			$_Tpl_NL->setParseValue("F7","");
 			$_Tpl_NL->setParseValue("F8","");
 			$_Tpl_NL->setParseValue("F9","");
-			send_log(  "\n".date("Y-m-d H:i:s").":   render Template");
-			//Template rendern und body zusammenbauen
-			//render template. this will load the saved newsletter template and render it. this is useful if you edit your template with a texteditor and update via ftp etc 
-			$NLBODY=$_Tpl_NL->renderTemplate($NL_Filename_N);//$_Tpl_NL->renderTemplate($NL_Filename_N)//html
-			//alternative method: use data saved in db:
-			#$NLBODY=$_Tpl_NL->renderContent($NL[0]['body']);
-			$NLBODY_TEXT=$NEWSLETTER->convertNL2Text($NLBODY,$NL[0]['content_type']);
+			//add htmlpart! 
+			$NLBODY="";
+			if ($NL[0]['content_type']=="html" || $NL[0]['content_type']=="text/html") {
+					send_log(  "\n".date("Y-m-d H:i:s").":   render HTML Template: ".$NL_Filename_N);
+					//Template rendern und body zusammenbauen
+					//render template. this will load the saved newsletter template and render it. this is useful if you edit your template with a texteditor and update via ftp etc
+					$NLBODY=$_Tpl_NL->renderTemplate($NL_Filename_N);//html
+			}//if html text/html
+			//add textpart! 
+			//use body_text, if body_text is empty or "" or so, convert body to text, this is a fallback, the converting is broken due to wysiwyg and reconverting of e.g. german umlauts to html entitites :O
+			$NLBODY_TEXT="";
+			if ($NL[0]['content_type']=="text" || $NL[0]['content_type']=="text/html") {
+				#if (!empty($NL[0]['body_text']) && $NL[0]['body_text']!="") {
+					#$NLBODY_TEXT=$NL[0]['body_text'];
+					send_log(  "\n".date("Y-m-d H:i:s").":   render Text Template: ".$NL_Filename_T);
+					$NLBODY_TEXT=$_Tpl_NL->renderTemplate($NL_Filename_T);//text!
+				#} else {
+					#	$NLBODY_TEXT=$NEWSLETTER->convertNL2Text($NLBODY,$NL[0]['content_type']);
+					#}
+			}//if text text/html
 		}//massmail
 
 		//Schleife Versandliste h....
@@ -490,10 +504,25 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 									$_Tpl_NL->setParseValue("F7", $ADR[0]['f7']);
 									$_Tpl_NL->setParseValue("F8", $ADR[0]['f8']);
 									$_Tpl_NL->setParseValue("F9", $ADR[0]['f9']);
-									send_log(  "\n".date("Y-m-d H:i:s").":   render Template");
-									//Template rendern und body zusammenbauen
-									$NLBODY=$_Tpl_NL->renderTemplate($NL_Filename_N);//html
-									$NLBODY_TEXT=$NEWSLETTER->convertNL2Text($NLBODY,$NL[0]['content_type']);
+									//add htmlpart! 
+									$NLBODY="";
+									if ($NL[0]['content_type']=="html" || $NL[0]['content_type']=="text/html") {
+										send_log(  "\n".date("Y-m-d H:i:s").":   render HTML Template: ".$NL_Filename_N);
+										//Template rendern und body zusammenbauen
+										$NLBODY=$_Tpl_NL->renderTemplate($NL_Filename_N);//html
+									}
+									//add textpart! 
+									//use body_text, if body_text is empty or "" or so, convert body to text, this is a fallback, the converting is broken due to wysiwyg and reconverting of e.g. german umlauts to html entitites :O
+									$NLBODY_TEXT="";
+									if ($NL[0]['content_type']=="text" || $NL[0]['content_type']=="text/html") {
+										#if (!empty($NL[0]['body_text']) && $NL[0]['body_text']!="") {
+											#$NLBODY_TEXT=$NL[0]['body_text'];
+											send_log(  "\n".date("Y-m-d H:i:s").":   render Text Template: ".$NL_Filename_T);
+											$NLBODY_TEXT=$_Tpl_NL->renderTemplate($NL_Filename_T);//text!
+										#} else {
+										#	$NLBODY_TEXT=$NEWSLETTER->convertNL2Text($NLBODY,$NL[0]['content_type']);
+										#}
+									}//if text text/html
 								}
 
 								send_log(  "\n".date("Y-m-d H:i:s").":    create Mail, set To/From");
@@ -503,7 +532,7 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 								if (!$massmail) {
 
 									$SUBJ_search = array("{F0}","{F1}","{F2}","{F3}","{F4}","{F5}","{F6}","{F7}","{F8}","{F9}");
-									$SUBJ_replace = array($ADR[0]['f0'], $ADR[0]['f1'], $ADR[0]['f2'], $ADR[0]['f3'], $ADR[0]['f4'], $ADR[0]['f5'], $ADR[0]['f6'], $ADR[0]['f7'], $ADR[0]['f8'], $ADR[0]['f9'], );
+									$SUBJ_replace = array($ADR[0]['f0'], $ADR[0]['f1'], $ADR[0]['f2'], $ADR[0]['f3'], $ADR[0]['f4'], $ADR[0]['f5'], $ADR[0]['f6'], $ADR[0]['f7'], $ADR[0]['f8'], $ADR[0]['f9']);
 									$SUBJ = str_replace($SUBJ_search, $SUBJ_replace, $NL[0]['subject']);
 									send_log(  "\n".date("Y-m-d H:i:s").": subject=".$NL[0]['subject']." | parsed: ".$SUBJ);
 									$email_message->SetEncodedHeader("Subject",$SUBJ);
@@ -512,7 +541,7 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 									send_log(  "\n".date("Y-m-d H:i:s").": personal Mailing, add TO: ");
 									$To=$ADR[0]['email'];
 									$RCPT_Name_search = array("{F0}","{F1}","{F2}","{F3}","{F4}","{F5}","{F6}","{F7}","{F8}","{F9}");
-									$RCPT_Name_replace = array($ADR[0]['f0'], $ADR[0]['f1'], $ADR[0]['f2'], $ADR[0]['f3'], $ADR[0]['f4'], $ADR[0]['f5'], $ADR[0]['f6'], $ADR[0]['f7'], $ADR[0]['f8'], $ADR[0]['f9'], );
+									$RCPT_Name_replace = array($ADR[0]['f0'], $ADR[0]['f1'], $ADR[0]['f2'], $ADR[0]['f3'], $ADR[0]['f4'], $ADR[0]['f5'], $ADR[0]['f6'], $ADR[0]['f7'], $ADR[0]['f8'], $ADR[0]['f9']);
 									$RCPT_Name = str_replace($RCPT_Name_search, $RCPT_Name_replace, $NL[0]['rcpt_name']);
 									send_log(  "\n".date("Y-m-d H:i:s").": rcpt_name=".$NL[0]['rcpt_name']." | parsed: ".$RCPT_Name);
 									$ToName=$RCPT_Name;

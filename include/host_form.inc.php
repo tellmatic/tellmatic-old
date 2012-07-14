@@ -32,7 +32,7 @@ $Form->new_Input($FormularName,"h_id", "hidden", $h_id);
 
 //Name
 $Form->new_Input($FormularName,$InputName_Name,"text",display($$InputName_Name));
-$Form->set_InputJS($FormularName,$InputName_Name," onChange=\"flash('submit','#ff0000');\" onkeyup=\"RemoveInvalidChars(this, '[^A-Za-z0-9\ \_\.\-]');\"");
+$Form->set_InputJS($FormularName,$InputName_Name," onChange=\"flash('submit','#ff0000');\" onkeyup=\"RemoveInvalidChars(this, '[^A-Za-z0-9\ \_\.\-\@]');\"");
 $Form->set_InputStyleClass($FormularName,$InputName_Name,"mFormText","mFormTextFocus");
 $Form->set_InputSize($FormularName,$InputName_Name,48,256);
 $Form->set_InputDesc($FormularName,$InputName_Name,___("Name"));
@@ -42,7 +42,7 @@ $Form->set_InputLabel($FormularName,$InputName_Name,"");
 
 
 //HOSTName/IP
-$Form->new_Input($FormularName,$InputName_Host,"text",$$InputName_Host);
+$Form->new_Input($FormularName,$InputName_Host,"text",display($$InputName_Host));
 $Form->set_InputJS($FormularName,$InputName_Host," onChange=\"flash('submit','#ff0000');\" onkeyup=\"RemoveInvalidChars(this, '[^A-Za-z0-9\_\.\-]'); ForceLowercase(this);\"");
 $Form->set_InputStyleClass($FormularName,$InputName_Host,"mFormText","mFormTextFocus");
 $Form->set_InputSize($FormularName,$InputName_Host,48,256);
@@ -52,7 +52,7 @@ $Form->set_InputOrder($FormularName,$InputName_Host,1);
 $Form->set_InputLabel($FormularName,$InputName_Host,"");
 
 //Port
-$Form->new_Input($FormularName,$InputName_Port,"text",$$InputName_Port);
+$Form->new_Input($FormularName,$InputName_Port,"text",display($$InputName_Port));
 $Form->set_InputJS($FormularName,$InputName_Port," onChange=\"flash('submit','#ff0000');\" onkeyup=\"RemoveInvalidChars(this, '[^0-9]'); ForceLowercase(this);\"");
 $Form->set_InputStyleClass($FormularName,$InputName_Port,"mFormText","mFormTextFocus");
 $Form->set_InputSize($FormularName,$InputName_Port,8,8);
@@ -62,7 +62,7 @@ $Form->set_InputOrder($FormularName,$InputName_Port,1);
 $Form->set_InputLabel($FormularName,$InputName_Port,"");
 
 //Options
-$Form->new_Input($FormularName,$InputName_Options,"text",$$InputName_Options);
+$Form->new_Input($FormularName,$InputName_Options,"text",display($$InputName_Options));
 $Form->set_InputJS($FormularName,$InputName_Options," onChange=\"flash('submit','#ff0000');\" onkeyup=\"RemoveInvalidChars(this, '[^A-Za-z0-9\_\.\-]');\"");
 $Form->set_InputStyleClass($FormularName,$InputName_Options,"mFormText","mFormTextFocus");
 $Form->set_InputSize($FormularName,$InputName_Options,48,256);
@@ -90,7 +90,7 @@ $Form->add_InputOption($FormularName,$InputName_SMTPAuth,"CRAM-MD5","CRAM-MD5");
 #$Form->add_InputOption($FormularName,$InputName_SMTPAuth,"NTML","NTML");
 
 //SMTP-Domain
-$Form->new_Input($FormularName,$InputName_SMTPDomain,"text",$$InputName_SMTPDomain);
+$Form->new_Input($FormularName,$InputName_SMTPDomain,"text",display($$InputName_SMTPDomain));
 $Form->set_InputJS($FormularName,$InputName_SMTPDomain," onChange=\"flash('submit','#ff0000');\" onkeyup=\"RemoveInvalidChars(this, '[^A-Za-z0-9\_\.\-]');\"");
 $Form->set_InputStyleClass($FormularName,$InputName_SMTPDomain,"mFormText","mFormTextFocus");
 $Form->set_InputSize($FormularName,$InputName_SMTPDomain,48,256);
@@ -117,7 +117,7 @@ $Form->add_InputOption($FormularName,$InputName_Type,"pop3","POP3");
 $Form->add_InputOption($FormularName,$InputName_Type,"imap","IMAP4");
 
 //User
-$Form->new_Input($FormularName,$InputName_User,"text", $$InputName_User);
+$Form->new_Input($FormularName,$InputName_User,"text", display($$InputName_User));
 $Form->set_InputJS($FormularName,$InputName_User," onChange=\"flash('submit','#ff0000');\" onkeyup=\"RemoveInvalidChars(this, '[^A-Za-z0-9\_\.\-]');\"");
 $Form->set_InputStyleClass($FormularName,$InputName_User,"mFormText","mFormTextFocus");
 $Form->set_InputSize($FormularName,$InputName_User,48,256);
@@ -127,7 +127,7 @@ $Form->set_InputOrder($FormularName,$InputName_User,1);
 $Form->set_InputLabel($FormularName,$InputName_User,"");
 
 //passwd
-$Form->new_Input($FormularName,$InputName_Pass,"password", $$InputName_Pass);
+$Form->new_Input($FormularName,$InputName_Pass,"password", display($$InputName_Pass));
 $Form->set_InputJS($FormularName,$InputName_Pass," onChange=\"flash('submit','#ff0000');\" ");
 $Form->set_InputStyleClass($FormularName,$InputName_Pass,"mFormText","mFormTextFocus");
 $Form->set_InputSize($FormularName,$InputName_Pass,48,256);

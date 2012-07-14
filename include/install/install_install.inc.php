@@ -124,7 +124,9 @@ if ($check && $checkDB) {
 /***********************************************************/
 	$tm_config='<?php
 //domain
-define("TM_DOMAIN",\''.TM_DOMAIN.'\');
+$protocol = $_SERVER[\'HTTPS\'] ? "https://" : "http://";
+define("TM_DOMAIN",$protocol.\''.TM_DOMAINNAME.'\');
+
 //absoluter pfad , docroot
 define("TM_DOCROOT",\''.TM_DOCROOT.'\');
 //script verzeichnis

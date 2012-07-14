@@ -1090,4 +1090,56 @@ function getFiles($path) {
    } 
    return $response; 
 } 
+ 
+//taken from php.net/explode
+// tajhlande at gmail dot com
+//19-Jun-2007 05:28
+//While trying to use explode() to parse CSV formatted lines output by MS Excel, I found that if cells contained a comma, then explode() would not behave as desired.  So I wrote the following function, which obeys the double quote escaping format output by Excel.  Note that it is not sophisticated enough to handle delimiters or escapes that consist of more than one character.  I also have no idea how this code will perform when subjected to Unicode data.  Use at your own risk.
+// splits a string into an array of tokens, delimited by delimiter char
+// tokens in input string containing the delimiter character or the literal escape character are surrounded by a pair of escape characteres
+// a literal escape character is produced by the escape character appearing twice in sequence
+// default delimiter character and escape character are suitable for Excel-exported CSV formatted lines
+function splitWithEscape ($str, $delimiterChar = ',', $escapeChar = '"') {
+    $len = strlen($str);
+    $tokens = array();
+    $i = 0;
+    $inEscapeSeq = false;
+    $currToken = '';
+    while ($i < $len) {
+        $c = substr($str, $i, 1);
+        if ($inEscapeSeq) {
+            if ($c == $escapeChar) {
+                // lookahead to see if next character is also an escape char
+                if ($i == ($len - 1)) {
+                    // c is last char, so must be end of escape sequence
+                    $inEscapeSeq = false;
+                } else if (substr($str, $i + 1, 1) == $escapeChar) {
+                    // append literal escape char
+                    $currToken .= $escapeChar;
+                    $i++;
+                } else {
+                    // end of escape sequence
+                    $inEscapeSeq = false;
+                }
+            } else {
+                $currToken .= $c;
+            }
+        } else {
+            if ($c == $delimiterChar) {
+                // end of token, flush it
+                array_push($tokens, $currToken);
+                $currToken = '';
+            } else if ($c == $escapeChar) {
+                // begin escape sequence
+                $inEscapeSeq = true;
+            } else {
+                $currToken .= $c;
+            }
+        }
+        $i++;
+    }
+    // flush the last token
+    array_push($tokens, $currToken);
+    return $tokens;
+}
 ?>

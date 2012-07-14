@@ -272,7 +272,7 @@ $Form->set_InputLabel($FormularName,$InputName_CheckVersion,"");
 //Select existing Trackimage
 $Form->new_Input($FormularName,$InputName_TrackImageExisting,"select", "");
 $Form->set_InputJS($FormularName,$InputName_TrackImageExisting," onChange=\"flash('submit','#ff0000');\" ");
-$Form->set_InputDefault($FormularName,$InputName_TrackImageExisting,$C[0]['track_image']);
+$Form->set_InputDefault($FormularName,$InputName_TrackImageExisting,basename($C[0]['track_image']));
 $Form->set_InputStyleClass($FormularName,$InputName_TrackImageExisting,"mFormSelect","mFormSelectFocus");
 $Form->set_InputDesc($FormularName,$InputName_TrackImageExisting,___("Blind-/Tracking-Bild auswählen"));
 $Form->set_InputReadonly($FormularName,$InputName_TrackImageExisting,false);
@@ -291,7 +291,7 @@ foreach ($FileARRAY as $field) {
 $ic= count($FileARRAY);
 $Form->add_InputOption($FormularName,$InputName_TrackImageExisting,"_blank","-- BLANK --");
 for ($icc=0; $icc < $ic; $icc++) {
-	$Form->add_InputOption($FormularName,$InputName_TrackImageExisting,$FileARRAY[$icc]['filename'],$FileARRAY[$icc]['filename']);
+	$Form->add_InputOption($FormularName,$InputName_TrackImageExisting,basename($FileARRAY[$icc]['filename']),basename($FileARRAY[$icc]['filename']));
 }
 
 //upload new trackingimage

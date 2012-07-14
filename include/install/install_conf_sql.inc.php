@@ -270,6 +270,7 @@ CREATE TABLE ".$tm_tablePrefix."nl (
   subject varchar(255) collate utf8_bin NOT NULL default '',
   aktiv tinyint NOT NULL default '0',
   body longtext collate utf8_bin,
+  body_text longtext collate utf8_bin,
   link tinytext collate utf8_bin,
   created datetime default NULL,
   updated datetime default NULL,
@@ -440,6 +441,17 @@ CREATE TABLE ".$tm_tablePrefix."blacklist (
   siteid varchar(64) collate utf8_bin NOT NULL default '',
   PRIMARY KEY  (id),
   KEY type (type)
+) ENGINE=".$db_type."  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+";
+
+$sql[15]['name']=___("Tabelle")." '".$tm_tablePrefix."nl_attm' - ".___("Newsletter - Attachements");
+$sql[15]['sql']="
+CREATE TABLE ".$tm_tablePrefix."nl_attm (
+id INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+nl_id INT NOT NULL ,
+file VARCHAR( 255 ) NOT NULL ,
+site_id VARCHAR( 64 ) NOT NULL ,
+INDEX ( nl_id )
 ) ENGINE=".$db_type."  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 ";
 

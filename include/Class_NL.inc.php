@@ -28,7 +28,7 @@ class tm_NL {
 		$this->NL=Array();
 		$Query ="
 						SELECT
-						id, subject, body,
+						id, subject, body,body_text,
 						created, author, updated, editor,
 						link, status, massmail, clicks, views, attm, track_image,
 						grp_id, aktiv,
@@ -69,6 +69,7 @@ class tm_NL {
 			$this->NL[$ac]['subject']=$this->DB->Record['subject'];
 			if ($return_content==1) {
 				$this->NL[$ac]['body']=$this->DB->Record['body'];
+				$this->NL[$ac]['body_text']=$this->DB->Record['body_text'];
 			}
 			$this->NL[$ac]['status']=$this->DB->Record['status'];
 			$this->NL[$ac]['massmail']=$this->DB->Record['massmail'];
@@ -89,7 +90,7 @@ class tm_NL {
 		$Return=false;
 		$Query ="INSERT INTO ".TM_TABLE_NL."
 						(
-						subject,body,aktiv,
+						subject,body,body_text,aktiv,
 						created,author,updated,editor,
 						link,grp_id,status,attm,track_image,
 						massmail,clicks,views,
@@ -98,7 +99,7 @@ class tm_NL {
 						)
 						VALUES
 						(
-						'".dbesc($nl["subject"])."', '".dbesc($nl["body"])."', '".dbesc($nl["aktiv"])."',
+						'".dbesc($nl["subject"])."', '".dbesc($nl["body"])."', '".dbesc($nl["body_text"])."', '".dbesc($nl["aktiv"])."',
 						'".dbesc($nl["created"])."', '".dbesc($nl["author"])."', '".dbesc($nl["created"])."', '".dbesc($nl["author"])."',
 						'".dbesc($nl["link"])."','".dbesc($nl["grp_id"])."','".dbesc($nl["status"])."', '".dbesc($nl["attm"])."', '".dbesc($nl["track_image"])."',
 						'".dbesc($nl["massmail"])."', 0, 0,
@@ -119,6 +120,7 @@ class tm_NL {
 						updated='".dbesc($nl["created"])."',
 						editor='".dbesc($nl["author"])."',
 						body='".dbesc($nl["body"])."',
+						body_text='".dbesc($nl["body_text"])."',
 						aktiv='".dbesc($nl["aktiv"])."',
 						attm='".dbesc($nl["attm"])."',
 						track_image='".dbesc($nl["track_image"])."',

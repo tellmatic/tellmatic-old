@@ -1,3 +1,241 @@
+2008-10-09 Thursday 04:10  mcms09
+
+	Changed:
+		include/adm_set.inc.php (1.6), "Exp", lines: +2 -2
+
+	do not use copy
+
+2008-10-09 Thursday 04:03  mcms09
+
+	Changed:
+		include/Main.inc.php (1.5), "Exp", lines: +0 -2
+
+	dont check admin/tmp for now, not used yet
+
+2008-10-09 Thursday 03:56  mcms09
+
+	Changed:
+		include/install/install_conf.inc.php (1.8), "Exp", lines: +1 -0
+
+	define TM_DOMAINNAME
+
+2008-10-09 Thursday 03:12  mcms09
+
+	Changed:
+		include/install/install_conf.inc.php (1.7), "Exp", lines: +2 -1
+
+	check for protocol
+
+2008-10-09 Thursday 03:12  mcms09
+
+	Changed:
+		include/install/install_install.inc.php (1.8), "Exp", lines: +1 -1
+
+	use TM_DOMAINNAME to write configfile!
+
+2008-10-09 Thursday 03:02  mcms09
+
+	Changed:
+		include/install/install_examples.inc.php (1.4), "Exp", lines: +23 -3
+
+	body_text
+
+2008-10-09 Thursday 00:46  mcms09
+
+	Changed:
+		UPDATE (1.11), "Exp", lines: +8 -0
+
+	update instructions for 1.0.8.1
+
+2008-10-09 Thursday 00:46  mcms09
+
+	Changed:
+		CHANGES (1.9), "Exp", lines: +3 -1
+
+	changes for 1.0.8.1
+
+2008-10-08 Wednesday 23:29  mcms09
+
+	Changed:
+		include/install/install_install.inc.php (1.7), "Exp", lines: +3 -1
+
+	add check for protocol, write to and define in tm_config.inc.php
+
+2008-10-08 Wednesday 23:28  mcms09
+
+	Changed:
+		include/adr_import.inc.php (1.5), "Exp", lines: +6 -6
+
+	fixed bug: bulk emails not imported, delimiter within escapechars
+	breaks import, fixed:use splitWithEscape()
+
+2008-10-08 Wednesday 23:26  mcms09
+
+	Changed:
+		include/Functions.inc.php (1.7), "Exp", lines: +52 -0
+
+	added function splitWithEscape()
+
+2008-10-08 Wednesday 20:00  mcms09
+
+	Changed:
+		include/install/install_conf_sql.inc.php (1.12), "Exp", lines: +12 -0
+
+	nl:body_text, new table nl_attm
+
+2008-10-08 Wednesday 16:53  mcms09
+
+	Changed:
+		include/queue_vars.inc.php (1.4), "Exp", lines: +3 -0
+
+	fastmode
+
+2008-10-08 Wednesday 16:49  mcms09
+
+	Changed:
+		include/nl_grp_list_legende.inc.php (1.2), "Exp", lines: +2 -0
+		include/nl_list_legende.inc.php (1.4), "Exp", lines: +5 -3
+		include/queue_list_legende.inc.php (1.4), "Exp", lines: +4 -2
+
+	sort legende by properties,actions,status
+
+2008-10-08 Wednesday 16:45  mcms09
+
+	Changed:
+		include/adm_user_list_legende.inc.php (1.3), "Exp", lines: +2 -0
+		include/adr_grp_list_legende.inc.php (1.3), "Exp", lines: +2 -0
+		include/adr_list_legende.inc.php (1.3), "Exp", lines: +7 -7
+		include/bl_list_legende.inc.php (1.2), "Exp", lines: +4 -2
+		include/form_list_legende.inc.php (1.3), "Exp", lines: +2 -0
+		include/host_list_legende.inc.php (1.2), "Exp", lines: +4 -2
+
+	sort legende by properties,actions,status
+
+2008-10-08 Wednesday 16:44  mcms09
+
+	Changed:
+		include/host_form.inc.php (1.3), "Exp", lines: +7 -7
+
+	use display() to display values, allow @ sign in host name
+
+2008-10-08 Wednesday 16:43  mcms09
+
+	Changed:
+		include/adr_form.inc.php (1.3), "Exp", lines: +8 -8
+
+	Fix bug $$FInputName
+
+2008-10-08 Wednesday 16:42  mcms09
+
+	Changed:
+		include/adm_set.inc.php (1.5), "Exp", lines: +16 -9
+
+	use is_uploaded_file instead of copy
+
+2008-10-08 Wednesday 16:41  mcms09
+
+	Changed:
+		include/adm_set_form.inc.php (1.4), "Exp", lines: +2 -2
+
+	use basename()
+
+2008-10-08 Wednesday 16:40  mcms09
+
+	Changed:
+		include/news_blank.png.inc.php (1.2), "Exp", lines: +1 -1
+
+	add slash, filename contained a / before name, now with basename we
+	dont have that
+
+2008-10-08 Wednesday 16:39  mcms09
+
+	Changed:
+		include/nl_list.inc.php (1.5), "Exp", lines: +6 -0
+
+	link textpart template
+
+2008-10-08 Wednesday 16:38  mcms09
+
+	Changed:
+		include/nl_form.inc.php (1.5), "Exp", lines: +34 -6
+
+	body_text, use basename() for trackingimage, hide html/text textarea
+	by default, do not enable wysiwyg by default
+
+2008-10-08 Wednesday 16:35  mcms09
+
+	Changed:
+		include/nl_new.inc.php (1.5), "Exp", lines: +6 -0
+		include/nl_edit.inc.php (1.4), "Exp", lines: +7 -0
+
+	body_text
+
+2008-10-08 Wednesday 16:34  mcms09
+
+	Changed:
+		include/nl_upload.inc.php (1.3), "Exp", lines: +6 -1
+
+	write textpart template
+
+2008-10-08 Wednesday 16:33  mcms09
+
+	Changed:
+		include/send_it.php (1.14), "Exp", lines: +44 -15
+
+	use textpart template if nl is from type text or text/html
+
+2008-10-08 Wednesday 16:30  mcms09
+
+	Changed:
+		include/tm_version.inc.php (1.3), "Exp", lines: +1 -1
+
+	set version to 1.0.8.1
+
+2008-10-08 Wednesday 16:30  mcms09
+
+	Changed:
+		include/tm_lib.inc.php (1.14), "Exp", lines: +9 -1
+
+	check if we use 256 color icons, for msie
+
+2008-10-08 Wednesday 16:28  mcms09
+
+	Changed:
+		include/wysiwyg.inc.php (1.7), "Exp", lines: +11 -10
+
+	catch error in toggleEditor(), mode:none do not enable editor by
+	default!
+
+2008-10-08 Wednesday 16:25  mcms09
+
+	Changed:
+		UPDATE (1.9), "Exp", lines: +21 -1
+		UPDATE (1.10), "Exp", lines: +2 -2
+
+	update instructions for 1.0.8.1
+
+2008-10-08 Wednesday 16:25  mcms09
+
+	Changed:
+		CHANGES (1.8), "Exp", lines: +12 -1
+
+	changes for 1.0.8.1
+
+2008-10-08 Wednesday 16:24  mcms09
+
+	Changed:
+		include/Class_NL.inc.php (1.5), "Exp", lines: +5 -3
+
+	body_text
+
+2008-10-08 Wednesday 15:13  mcms09
+
+	Deleted:
+		files/forms/Form_1.html (1.3)
+		files/forms/Form_1_s.html (1.2)
+
+	removed
+
 2008-10-01 Wednesday 16:15  tag r-1-0-8-0
 
 2008-10-01 Wednesday 16:15  mcms09

@@ -179,7 +179,15 @@ if (!$tm_config) {
 	$tm_URL_FE=TM_DOMAIN."/".TM_DIR;//frontend!
 	$tm_imgURL=$tm_URL_FE."/".TM_IMGDIR;
 	$tm_iconURL=$tm_URL_FE."/".TM_ICONDIR;
-
+	/***********************************************************/
+	//check if we should use 256 colors png icons instead, for internet exploder.....
+	/***********************************************************/
+	if (file_exists(TM_INCLUDEPATH."/256")) {
+		define ("USE_256COL_ICONS",TRUE);
+		$tm_iconURL.="/256";
+	}else {
+		define ("USE_256COL_ICONS",FALSE);
+	}
 /***********************************************************/
 //Today
 //todays date//used e.g. for saving status and statistic images and reports etc

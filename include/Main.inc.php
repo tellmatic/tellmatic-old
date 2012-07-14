@@ -26,7 +26,6 @@ if (is_writeable(TM_INCLUDEPATH."/tm_config.inc.php")) {
 }
 
 if (!is_writeable(TM_PATH."/admin/tmp")) {
-	$_MAIN_MESSAGE.="<br><font size=2 color=red><b>".sprintf(___("Keine Schreibrechte für %s"),TM_PATH."/admin/tmp")."</b></font>";
 }
 if (!is_writeable($tm_datapath)) {
 	$_MAIN_MESSAGE.="<br><font size=2 color=red><b>".sprintf(___("Keine Schreibrechte für %s"),$tm_datapath)."</b></font>";
@@ -54,7 +53,6 @@ if (!is_writeable($tm_reportpath)) {
 }
 
 if (!file_exists(TM_PATH."/admin/tmp/.htaccess")) {
-	$_MAIN_MESSAGE.="<br><font size=2 color=red><b>".sprintf(___("ACHTUNG! %s ist nicht Passwortgeschützt"),TM_PATH."/admin/tmp/")."</b></font>";
 }
 if (!file_exists(TM_INCLUDEPATH."/.htaccess")) {
 	$_MAIN_MESSAGE.="<br><font size=2 color=red><b>".sprintf(___("ACHTUNG! %s ist nicht Passwortgeschützt"),TM_INCLUDEPATH)."</b></font>";

@@ -57,8 +57,8 @@ if ($check) {
 					"<br>\n".
 					"Ihre bei uns gespeicherten Daten:<br>\n".
 					"{F3}, {F4}, {F5}, {F6}, {F7}, {F8}, {F9}<br>\n".
-					"Die email mit der Sie bei unserem Newsletter angemeldet sind lautet: {EMAIL}<br>\n".
-					"Wenn Sie unseren Newsleter nicht mehr erhalten moechten, koennen Sie sich<br>\n".
+					"Die E-Mail-Adresse mit der Sie bei unserem Newsletter angemeldet sind lautet: {EMAIL}<br>\n".
+					"Wenn Sie unseren Newsletter nicht mehr erhalten möchten, koennen Sie sich<br>\n".
 					"{UNSUBSCRIBE_URL}<br>\n".
 					"{UNSUBSCRIBE}HIER{CLOSELINK} abmelden.<br>\n".
 					"{UNSUBSCRIBE}{UNSUBSCRIBE_URL}{CLOSELINK}<br>\n".
@@ -68,16 +68,36 @@ if ($check) {
 					"<br>\n".
 					"Blindimage:<br>\n".
 					"{BLINDIMAGE}<br>\n".
-					"Der Link zum Bestaetigen des Newsletter Empfangs f. 1st-touch-opt-in:<br>\n".
+					"Der Link zum Bestätigen des Newsletter Empfangs f. 1st-touch-opt-in:<br>\n".
 					"{SUBSCRIBE_URL}<br>\n".
 					"<br>\n".
 					"{SUBSCRIBE}{SUBSCRIBE_URL}{CLOSELINK}<br>\n".
 					"<br>\n".
 					"Viel Spass mit tellmatic! :-)<br>\n";
+					
+		$body_text="Hallo {F0} {F1} {F2}\n".
+					"\n".
+					"Attachement-URL\n".
+					"{ATTACH1_URL}\n".
+					"Link-URL\n".
+					"{LINK1_URL}\n".
+					"Online-URL\n".
+					"{NLONLINE_URL}\n".
+					"Ihre bei uns gespeicherten Daten:\n".
+					"{F3}, {F4}, {F5}, {F6}, {F7}, {F8}, {F9}\n".
+					"Die E-Mail-Adresse mit der Sie bei unserem Newsletter angemeldet sind lautet: {EMAIL}\n".
+					"Wenn Sie unseren Newsletter nicht mehr erhalten möchten, können Sie sich unter folgender URL abmelden:\n".
+					"{UNSUBSCRIBE_URL}\n".
+					"Der Link zum Bestätigen des Newsletter Empfangs f. 1st-touch-opt-in:\n".
+					"{SUBSCRIBE_URL}\n".
+					"\n".
+					"Viel Spass mit tellmatic! :-)\n";
+
 		$NEWSLETTER->addNL(
 								Array(
 									"subject"=>"Newsletter 1",
 									"body"=>$body,
+									"body_text"=>$body_text,
 									"aktiv"=>1,
 									"status"=>1,
 									"massmail"=>0,

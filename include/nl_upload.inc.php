@@ -24,6 +24,8 @@
 	$NL_Filename="nl_".date_convert_to_string($created).".html";
 	//komplettes newsletter raw, body+file
 	$NL_Filename_N="nl_".date_convert_to_string($created)."_n.html";
+	//komplettes newsletter raw, body+file
+	$NL_Filename_T="nl_".date_convert_to_string($created)."_t.txt";
 	//geparster Newsletter Online
 	$NL_Filename_P="nl_".date_convert_to_string($created)."_p.html";
 	//Bild 1
@@ -206,9 +208,12 @@
 	// 	vorher/nachher option?
 	//wir speichern nur ungeparsten content in der DB!!!! ---> $body
 	//und in einer Datei! als Template fuer den geparsten Newsletter
-
 	$body_tmp=stripslashes($body_tmp);
 	write_file($tm_nlpath,$NL_Filename_N,$body_tmp);
+	//template fuer textpart speichern
+	#$body_text_tmp=$body_text;
+	$body_text_tmp=stripslashes($body_text);
+	write_file($tm_nlpath,$NL_Filename_T,$body_text_tmp);
 	//wird nun zur onlineversion geparsed!
 	//geparster content, wird als nl file gespeichert nl+created bei new und update!
 	// ----> $body_tmp; --> Template ist $NL_Filename_N

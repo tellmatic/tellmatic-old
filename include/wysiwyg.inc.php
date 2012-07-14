@@ -24,10 +24,7 @@ $_MAIN_OUTPUT.='
 <script language="javascript" type="text/javascript" src="'.$tm_URL_FE.'/js/tinymce/jscripts/tiny_mce/tiny_mce_gzip.php"></script>
 <script language="javascript" type="text/javascript">
 tinyMCE.init({
-	mode : "textareas",
-	//prevent special charcter encoding: 
-	//important!
-	//entities : "",
+		mode : "none",
 	theme : "advanced",
 	remove_linebreaks : false,
 	relative_urls : false,
@@ -68,12 +65,16 @@ tinyMCE.init({
 	});
 
 function toggleEditor(id) {
-	var elm = document.getElementById(id);
-
-	if (tinyMCE.getInstanceById(id) == null)
-		tinyMCE.execCommand("mceAddControl", false, id);
-	else
-		tinyMCE.execCommand("mceRemoveControl", false, id);
+	//var elm = document.getElementById(id);
+	try {
+		if (tinyMCE.getInstanceById(id) == null) {
+			tinyMCE.execCommand("mceAddControl", false, id);
+		} else {
+			tinyMCE.execCommand("mceRemoveControl", false, id);
+		}
+	 } catch(e) {
+	 	alert ("Error, wysiwyg not loaded");
+	 }
 }
 </script>
 <!-- /TinyMCE -->

@@ -97,7 +97,7 @@ if ($create_track_image) {
 	if ($imagefilename!="_blank" && $imagefilename!="_global" ) {
 		$TrackImageType=strtolower(get_file_ext( $imagefilename ));
 		if ($TrackImageType=="jpeg") $TrackImageType="jpg";
-		$imagefile=$tm_nlimgpath.$imagefilename;
+		$imagefile=$tm_nlimgpath."/".$imagefilename;
 		//wenn die datei existiert:
 		if (file_exists($imagefile)) {
 			$Image=makeTrackImage($imagefile,$TrackImageType);

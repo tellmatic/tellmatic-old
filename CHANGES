@@ -11,8 +11,21 @@
 /* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
 /********************************************************************************/
 
+*+*+*+*+*+*+*+*+*+*+*+ CHANGES V1.0.8.1  +*+*+*+*+*+*+*+*+*+*+*+*
+	* New features/Changes:
+		- Legende: split attributes and actions/status
+		- Newsletter: Add Textparts! The HTML Code isnt converted to Text anymore, you should fill in textpart in the new Textarea. Textpart is saved in nl_[]_t.txt in files/newsletter and used as a template to parse uservars
+		- send_it.php: use Textpart template for textpart, do not convert html to text
+		- adm_set_form/nl_form: use basename trackimages
+	* Bugs fixed:
+		- adr_form.inc.php: bug in f0-f9 fields, fixed
+		- queue_send.inc.php: fastmode. not used yet, but defined.
+		- adr_import: bulk import did not work, lines dont get imported, fixed!
+		- adr_import: delimiter within excapecharacters destroys import, e.g. "test@tellmatic.org","herr","test,test", fixed!
+	
+		
 *+*+*+*+*+*+*+*+*+*+*+ CHANGES V1.0.8.0  +*+*+*+*+*+*+*+*+*+*+*+*
-	24.06.008 - 03-07-008, 01.09.2008:
+	24.06.008 - 03-07-008, 01.09.2008, released 01.10.2008
 
 		* New Features:
 	

@@ -105,10 +105,20 @@ $Form->new_Input($FormularName,$InputName_Descr,"textarea", $$InputName_Descr);
 $Form->set_InputJS($FormularName,$InputName_Descr," onChange=\"flash('submit','#ff0000');\" ");
 $Form->set_InputStyleClass($FormularName,$InputName_Descr,"mFormTextarea_Content","mFormTextareaFocus_Content");
 $Form->set_InputSize($FormularName,$InputName_Descr,180,50);
-$Form->set_InputDesc($FormularName,$InputName_Descr,___("Newsletter-Text"));
+$Form->set_InputDesc($FormularName,$InputName_Descr,___("Newsletter-Text")." (html)");
 $Form->set_InputReadonly($FormularName,$InputName_Descr,false);
 $Form->set_InputOrder($FormularName,$InputName_Descr,3);
 $Form->set_InputLabel($FormularName,$InputName_Descr,"");
+
+//Content
+$Form->new_Input($FormularName,$InputName_DescrText,"textarea", $$InputName_DescrText);
+$Form->set_InputJS($FormularName,$InputName_DescrText," onChange=\"flash('submit','#ff0000');\" ");
+$Form->set_InputStyleClass($FormularName,$InputName_DescrText,"mFormTextarea_Content","mFormTextareaFocus_Content");
+$Form->set_InputSize($FormularName,$InputName_DescrText,180,50);
+$Form->set_InputDesc($FormularName,$InputName_DescrText,___("Newsletter-Text")." (text)");
+$Form->set_InputReadonly($FormularName,$InputName_DescrText,false);
+$Form->set_InputOrder($FormularName,$InputName_DescrText,3);
+$Form->set_InputLabel($FormularName,$InputName_DescrText,"");
 
 //Gruppe
 $Form->new_Input($FormularName,$InputName_Group,"select", "");
@@ -119,7 +129,6 @@ $Form->set_InputDesc($FormularName,$InputName_Group,___("Newsletter-Gruppe waehl
 $Form->set_InputReadonly($FormularName,$InputName_Group,false);
 $Form->set_InputOrder($FormularName,$InputName_Group,6);
 $Form->set_InputLabel($FormularName,$InputName_Group,"");
-//$Form->set_InputValue($FormularName,$InputName_Group,"");
 $Form->set_InputSize($FormularName,$InputName_Group,0,1);
 $Form->set_InputMultiple($FormularName,$InputName_Group,false);
 //add Data
@@ -134,7 +143,7 @@ for ($accg=0; $accg<$acg; $accg++)
 //Select existing Trackimage
 $Form->new_Input($FormularName,$InputName_TrackImageExisting,"select", "");
 $Form->set_InputJS($FormularName,$InputName_TrackImageExisting," onChange=\"flash('submit','#ff0000');\" ");
-$Form->set_InputDefault($FormularName,$InputName_TrackImageExisting,$$InputName_TrackImageExisting);
+$Form->set_InputDefault($FormularName,$InputName_TrackImageExisting,basename($$InputName_TrackImageExisting));
 $Form->set_InputStyleClass($FormularName,$InputName_TrackImageExisting,"mFormSelect","mFormSelectFocus");
 $Form->set_InputDesc($FormularName,$InputName_TrackImageExisting,___("Blind-/Tracking-Bild auswählen"));
 $Form->set_InputReadonly($FormularName,$InputName_TrackImageExisting,false);
@@ -154,7 +163,7 @@ $ic= count($FileARRAY);
 $Form->add_InputOption($FormularName,$InputName_TrackImageExisting,"_global","-- GLOBAL --");
 $Form->add_InputOption($FormularName,$InputName_TrackImageExisting,"_blank","-- BLANK --");
 for ($icc=0; $icc < $ic; $icc++) {
-	$Form->add_InputOption($FormularName,$InputName_TrackImageExisting,$FileARRAY[$icc]['filename'],$FileARRAY[$icc]['filename']);
+	$Form->add_InputOption($FormularName,$InputName_TrackImageExisting,basename($FileARRAY[$icc]['filename']),basename($FileARRAY[$icc]['filename']));
 }
 
 //upload new trackingimage
@@ -339,11 +348,23 @@ $_MAIN_OUTPUT.= "</tr>";
 
 $_MAIN_OUTPUT.= "<tr>";
 $_MAIN_OUTPUT.= "<td valign=top colspan=2>";
-$_MAIN_OUTPUT.= tm_icon("layout.png",___("Text"))."&nbsp;".___("Text")."&nbsp;&nbsp;&nbsp;";
-$_MAIN_OUTPUT.= "(<a href=\"javascript:toggleEditor('".$InputName_Descr."')\">";
+$_MAIN_OUTPUT.= tm_icon("layout.png",___("Text"))."&nbsp;".___("HTML-Part")."&nbsp;&nbsp;&nbsp;";
+$_MAIN_OUTPUT.= "(<a href=\"javascript:switchSection('html_part');\" >show/hide</a>)";
+$_MAIN_OUTPUT.= "<div id=\"html_part\">";
+$_MAIN_OUTPUT.= "(<a href=\"javascript:toggleEditor('".$InputName_Descr."');\" >";
 $_MAIN_OUTPUT.= ___("Editor Ein/Aus");
 $_MAIN_OUTPUT.= "&nbsp;".tm_icon("wand.png",___("Editor Ein/Aus"))."</a>)<br>";
 $_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_Descr]['html'];
+$_MAIN_OUTPUT.= "</div>";
+$_MAIN_OUTPUT.= "</td>";
+$_MAIN_OUTPUT.= "</tr>";
+$_MAIN_OUTPUT.= "<tr>";
+$_MAIN_OUTPUT.= "<td valign=top colspan=2>";
+$_MAIN_OUTPUT.= tm_icon("page_white.png",___("Text"))."&nbsp;".___("Text-Part")."&nbsp;&nbsp;&nbsp;";
+$_MAIN_OUTPUT.= "(<a href=\"javascript:switchSection('text_part');\" >show/hide</a>)";
+$_MAIN_OUTPUT.= "<div id=\"text_part\">";
+$_MAIN_OUTPUT.= $Form->INPUT[$FormularName][$InputName_DescrText]['html'];
+$_MAIN_OUTPUT.= "</div>";
 $_MAIN_OUTPUT.= "</td>";
 $_MAIN_OUTPUT.= "</tr>";
 
@@ -370,4 +391,11 @@ $_MAIN_OUTPUT.= sprintf(___("%s enthält das hochgeladene Bild 'img src' | %s en
 						"";
 
 include_once (TM_INCLUDEPATH."/wysiwyg.inc.php");
+
+	$_MAIN_OUTPUT.= "
+		<script language=\"javascript\" type=\"text/javascript\">
+		switchSection('html_part');
+		switchSection('text_part');
+		</script>
+	";
 ?>

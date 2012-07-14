@@ -468,6 +468,12 @@ for ($ncc=0;$ncc<$nc;$ncc++) {
 			if (!$user_is_expert) $_MAIN_OUTPUT.=___("Template anzeigen");
 			$_MAIN_OUTPUT.= "</a>";
 		}
+		//link zur textversion
+		if (file_exists($tm_nlpath."/nl_".date_convert_to_string($NL[$ncc]['created'])."_t.txt")) {
+			$_MAIN_OUTPUT.= "<a class=\"list_edit_entry\" href=\"".$tm_URL_FE."/".$tm_nldir."/nl_".date_convert_to_string($NL[$ncc]['created'])."_t.txt\" target=\"_preview\" title=\"".___("Text-Template des Newsletter anzeigen: ").$tm_nldir."/nl_".date_convert_to_string($NL[$ncc]['created'])."_t.txt\">".tm_icon("page_white.png",___("Textversion anzeigen"))."&nbsp;";
+			if (!$user_is_expert) $_MAIN_OUTPUT.=___("Template anzeigen");
+			$_MAIN_OUTPUT.= "</a>";
+		}
 		//link zur geparsten onlineversion!
 		if (file_exists($tm_nlpath."/nl_".date_convert_to_string($NL[$ncc]['created'])."_p.html")) {
 			$_MAIN_OUTPUT.= "<a class=\"list_edit_entry\" href=\"".$tm_URL_FE."/".$tm_nldir."/nl_".date_convert_to_string($NL[$ncc]['created'])."_p.html\" target=\"_preview\" title=\"".___("Onlineversion des Newsletter anzeigen: ").$tm_nldir."/nl_".date_convert_to_string($NL[$ncc]['created'])."_p.html\">".tm_icon("world_go.png",___("Onlineversion anzeigen"))."&nbsp;";

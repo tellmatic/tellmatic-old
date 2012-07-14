@@ -19,7 +19,9 @@ define("DEMO",FALSE);
 //guess path
 /***********************************************************/
 define(TM_DOCROOT,realpath($_SERVER["DOCUMENT_ROOT"]));
-define("TM_DOMAIN","http://".$_SERVER["HTTP_HOST"]);
+$protocol = $_SERVER['HTTPS'] ? "https://" : "http://";
+define("TM_DOMAIN",$protocol.$_SERVER["HTTP_HOST"]);
+define("TM_DOMAINNAME",$_SERVER["HTTP_HOST"]);
 $self=$_SERVER["PHP_SELF"];
 $pathinfo=pathinfo($self);
 $tm_dir_tmp=$pathinfo['dirname'];

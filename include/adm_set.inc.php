@@ -111,20 +111,26 @@ if ($user_is_admin) {
 				if($_FILES["track_image_new"]["size"] <= $max_upload_size) {
 					// Alles OK -> Datei kopieren
 					$uploaded_track_image_new_name=$_FILES["track_image_new"]["name"];
-					if($check && copy($_FILES["track_image_new"]["tmp_name"], $tm_nlimgpath."/".$uploaded_track_image_new_name)) { //$_FILES["image"]["name"]
-						$_MAIN_MESSAGE.= "<br>".___("Track-BILD-Datei erfolgreich hochgeladen.");
-						$_MAIN_MESSAGE.= "<ul>".$_FILES["track_image_new"]["name"];
-						$_MAIN_MESSAGE.= " / ".$_FILES["track_image_new"]["size"]." Byte";
-						$_MAIN_MESSAGE.= ", ".$_FILES["track_image_new"]["type"];
-						$_MAIN_MESSAGE.= "<br>".___("gespeichert unter:")." <a href=\"".$tm_URL_FE."/".$tm_nlimgdir."/".$uploaded_track_image_new_name."\"  target=\"_preview\">".$tm_nlimgdir."/".$uploaded_track_image_new_name."</a>";
-						$_MAIN_MESSAGE.= "</ul>";
-						$uploaded_track_image_new=true;
+					if($check) {
+						//http://www.php.net/manual/en/features.file-upload.php, use basename to preserve filename for multiple uploaded files.... if needed ;)
+						if (move_uploaded_file($_FILES["track_image_new"]["tmp_name"], $tm_nlimgpath."/".$uploaded_track_image_new_name)) {
+							$_MAIN_MESSAGE.= "<br>".___("Track-BILD-Datei erfolgreich hochgeladen.");
+							$_MAIN_MESSAGE.= "<ul>".$_FILES["track_image_new"]["name"];
+							$_MAIN_MESSAGE.= " / ".$_FILES["track_image_new"]["size"]." Byte";
+							$_MAIN_MESSAGE.= ", ".$_FILES["track_image_new"]["type"];
+							$_MAIN_MESSAGE.= "<br>".___("gespeichert unter:")." <a href=\"".$tm_URL_FE."/".$tm_nlimgdir."/".$uploaded_track_image_new_name."\"  target=\"_preview\">".$tm_nlimgdir."/".$uploaded_track_image_new_name."</a>";
+							$_MAIN_MESSAGE.= "</ul>";
+							$uploaded_track_image_new=true;
+						} else {
+							$_MAIN_MESSAGE.= "<br>".___("Fehler beim kopieren.");
+							$_MAIN_MESSAGE.= "<br>".___("Tracker-BILD-Datei konnte nicht hochgeladen werden.");
+							$check=false;
+						}//copy
 					} else {
 						$_MAIN_MESSAGE.= "<br>".___("Tracker-BILD-Datei konnte nicht hochgeladen werden.");
-						$check=false;
-					}//copy
+					}//check
 				} else {
-					$_MAIN_MESSAGE.= "<br>".sprintf(___("Die Tracker-BILD-Datei darf nur eine GrÖsse von %s Byte besitzen."),$max_byte_size);
+					$_MAIN_MESSAGE.= "<br>".sprintf(___("Die Tracker-BILD-Datei darf nur eine Größe von %s Byte besitzen."),$max_byte_size);
 					$check=false;
 				}//max size
 			} else {
@@ -223,5 +229,6 @@ if ($user_is_admin) {
 		require_once (TM_INCLUDEPATH."/adm_set_form.inc.php");
 		$_MAIN_OUTPUT.="<br><br><a href=\"javascript:switchSection('div_debug');\">".tm_icon("information.png",___("Serverinfo"))."&nbsp;".___("Serverinfo")."</a>";
 	}
+
 }//user_is_admin
 ?>

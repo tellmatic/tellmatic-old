@@ -216,7 +216,7 @@ if ($set=="import") {
 		$lc=count($lines_bulk);
 		for ($lcc=0; $lcc<$lc; $lcc++) {
 			$row=$lines_bulk[$lcc];
-			$fields=explode($delimiter, $row);
+			$fields=splitWithEscape($row, $delimiter,'"');//escape char is "
 			if (isset($fields[0]) && !empty($fields[0])) {
 		    	$field_0=str_replace("\"","",trim($fields[0]));
 		    	$check_mail=checkEmailAdr($field_0,$EMailcheck_Import);
@@ -308,7 +308,7 @@ if ($set=="import") {
 			//zeilen auslesen bis limit erreicht
 			while(!feof($uf) && $lines_f < $import_limit_user) {
 				$row=fgets($uf, 4096);
-		    	$fields=explode($delimiter, $row);
+				$fields=splitWithEscape($row, $delimiter,'"');//escape char is "
 				//erstes feld, emil, muss gefuellt sein!
 				//adr in array speichern
 		    	if (isset($fields[0]) && !empty($fields[0])) {
@@ -373,17 +373,17 @@ if ($set=="import") {
 				}//isset fields[0]
 				$lines++;
 				$lines_f++;
-			}
+			}//while
 			unset($fields);
 			$IMPORT_MESSAGE.="<br>".sprintf(___("%s Einträge gefunden!"),$lines_f);
-	    } else {
+	    } else {//if uf, fopen
 			$IMPORT_MESSAGE.= "<br>".sprintf(___("Die Import-Datei %s konnte nicht geöffnet werden."),$tm_datapath."/".$CSV_Filename);
 		}
-	}
+	}//check && file exists
 
 //neue addressen anlegen
 	//wenn min. 1 adresse gefudnen wurde//lines=anzahl adressen
-	if ($check && $lines>0) { //!empty($adr_grp) &&
+	if ($lines>0) { //!empty($adr_grp) && // check nicht pruefen, sonst werden keine bulkadressen aus dem textfeld importiert
 		$ADDRESS=new tm_ADR();
 		$iok=0;
 		#$ifail=0;//oben!!! vor dem einlesen, da email check schon beim einlesen
