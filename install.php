@@ -57,7 +57,7 @@ if (isset($lang) && !empty($lang)) {
 	//check for memory, permissions etc
 	require_once(TM_INCLUDEPATH."/install/install_check_pre.inc.php");
 	//prepare registration message
-	$MESSAGE_REG=$ApplicationText."\n".
+	if (!DEMO) $MESSAGE_REG=$ApplicationText."\n".
 							"Date: ".$created."\n".
 							"PHPVersion: ".phpversion()."\n".
 							"PHP Sapi: ".$php_sapi."\n".
@@ -71,6 +71,21 @@ if (isset($lang) && !empty($lang)) {
 							"register_globals: ".ini_get("register_globals")."\n".
 							"safe_mode: ".ini_get("safe_mode")."\n".
 							"magic_quotes: ".ini_get("magic_quotes_gpc")."\n".
+							"lang: ".$lang."\n";
+	if (DEMO) $MESSAGE_REG=$ApplicationText."\n".
+							"Date: ".$created."\n".
+							"PHPVersion: ---demo---\n".
+							"PHP Sapi: ---demo---\n".
+							"OS: ---demo---\n".
+							"DocRoot: ---demo---\n".
+							"Domain: ".TM_DOMAIN."\n".
+							"Dir: ".TM_DIR."\n".
+							"Path: ---demo---\n".
+							"mem: ---demo---\n".
+							"exec_time: ---demo---\n".
+							"register_globals: ---demo---\n".
+							"safe_mode: ---demo---\n".
+							"magic_quotes: ---demo---\n".
 							"lang: ".$lang."\n";
 	//if pre check is ok
 	if ($check) {
@@ -123,7 +138,7 @@ if (isset($lang) && !empty($lang)) {
 		}//accept
 	}//check
 	//prepare info message
-	$MESSAGE_INFO="<hr><b>".___("Informationen")."</b><br>".___("PHP Version:")." <em>".phpversion()."</em>".
+	if (!DEMO) $MESSAGE_INFO="<hr><b>".___("Informationen")."</b><br>".___("PHP Version:")." <em>".phpversion()."</em>".
 							"<br>PHP Sapi: <em>".$php_sapi."</em>".
 							"<br>OS: <em>".$php_os.": ".PHP_OS."</em>".
 							"<br>DocRoot: <em>".TM_DOCROOT."</em>".
@@ -132,6 +147,16 @@ if (isset($lang) && !empty($lang)) {
 							"<br>".___("Installationspfad").": <em>".TM_PATH."</em>".
 							"<br>".___("zugewiesener Speicher für PHP").": <em>".$mem." Byte</em>".
 							"<br>".___("zugewiesene Ausführungszeit für PHP").": <em>".$exec_time." Sekunden</em>";
+	if (DEMO) $MESSAGE_INFO="<hr><b>".___("Informationen")."</b><br>".___("PHP Version:")." <em>---demo---</em>".
+							"<br>PHP Sapi: <em>---demo---</em>".
+							"<br>OS: <em>---demo---</em>".
+							"<br>DocRoot: <em>---demo---</em>".
+							"<br>".___("Domain").": <em>".TM_DOMAIN."</em>".
+							"<br>".___("Verzeichnis").": <em>".TM_DIR."</em>".
+							"<br>".___("Installationspfad").": <em>---demo---</em>".
+							"<br>".___("zugewiesener Speicher für PHP").": <em>---demo--- Byte</em>".
+							"<br>".___("zugewiesene Ausführungszeit für PHP").": <em>---demo--- Sekunden</em>";
+
 	//add info message to output
 	$MESSAGE.="<p>".$MESSAGE_INFO."</p>";
 }//lang

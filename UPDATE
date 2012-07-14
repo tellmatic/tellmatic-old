@@ -11,6 +11,21 @@
 /* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
 /********************************************************************************/
 
+*+*+*+*+*+*+*+*+*+*+*+ 1.0.8.4-fix01
+--en
+	Read the CHANGES file carefully! It contains the list of new features and changes with some more or less technical details!
+	To install from previous version than 1.0.8.4 follow instructions to update to 1.0.8.4.
+	Copy all new files from the package in  include/ (without subdirs) and include/install to your Tellmatic include directory.
+	The most important file is Class_Q.inc.php !
+	Done.
+
+--de
+	Lies die Datei CHANGES aufmerksam durch. Hier stehen nuetzlich Hinweise und einige technische Infos zu den Aenderungen!!!
+	Zum Update einer frueheren Verison als 1.0.8.4 befolge zuerst die Anweisungen fuer das Update auf 1.0.8.4
+	Kopiere alle neuen Dateien aus dem Archiv im Verzeichnis include/ (ohne Unterverzeichnisse) und include/install in das Tellmatic include-Verzeichnis.
+	Die wichtigste Datei ist die Class_Q.inc.php !
+	Fertig! Das wars.
+	 
 *+*+*+*+*+*+*+*+*+*+*+ 1.0.8.4
 --en
 	Read the CHANGES file carefully! It contains the list of new features and changes with some more or less technical details! 
@@ -28,13 +43,13 @@
 --de
 	Lies die Datei CHANGES aufmerksam durch. Hier stehen nuetzlich Hinweise und einige technische Infos zu den Aenderungen!!!
 	Sichere alle deine Daten und Datenbanken!
-	Zum Update auf 1.0.8.4 von einer frueheren Verison als 1.0.8.2 befolgen zuerst die Anweisungen fuer das Update auf 1.0.8.2
+	Zum Update auf 1.0.8.4 von einer frueheren Verison als 1.0.8.2 befolge zuerst die Anweisungen fuer das Update auf 1.0.8.2
 	Melde dich als Administrator in Tellmatic an und schreibe die Einstellungen fuer den SMTP Server und E-Mails bei den Einstellungen auf!
 	Sichere alle deine Daten und Datenbanken!
 	Kopieren die neuen Dateien auf den Server. Vergiss nicht den Pfad in den *.php Dateien in / und include/send_it.php anzupassen wenn Cronjobs genutzt werden sollen.
 	Sichere deine Datenbank! Jetzt!
 	Aktualisiere die Datenbank, s.u.
-	Melde dich ernet in Tellmatic an und erstelle einen neuen Standard-SMTP Host mit den Einstellungen die Du dir vorher ja aufgeschrieben hast.
+	Melde dich erneut in Tellmatic an und erstelle einen neuen Standard-SMTP Host mit den Einstellungen die Du dir vorher ja aufgeschrieben hast.
 	Aendere existierende SMTP Hosts ab und fuelle die leeren Felder mit sinnvollen Werten. Alle SMTP und E-Mail Einstellungen die vorher bei den Konfigurationseinstelungen fuer Tellmatic waren, sind nun in den Hosts abgelegt!
 	Das wars, viel Spass.
 	

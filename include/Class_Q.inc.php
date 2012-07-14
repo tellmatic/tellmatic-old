@@ -707,19 +707,19 @@ class tm_Q {
 				'".dbesc($h["created"])."' AS created,
 				'' as sent,
 				'".TM_SITEID."' as siteid
-			FROM ".TM_TABLE_ADR." 
+			FROM (".TM_TABLE_ADR.") 
 				/* join adresstable adr.id with groups references table adr_grp_ref.adr_id */
 				INNER JOIN ".TM_TABLE_ADR_GRP_REF." 
-					ON ".TM_TABLE_ADR.".id = ".TM_TABLE_ADR_GRP_REF.".adr_id 
+					ON (".TM_TABLE_ADR.".id = ".TM_TABLE_ADR_GRP_REF.".adr_id) 
 				/* join groupstable adr_grp.id with groups references table adr_grp_ref.grp_id  */
 				INNER JOIN ".TM_TABLE_ADR_GRP." 
-					ON ".TM_TABLE_ADR_GRP_REF.".grp_id = ".TM_TABLE_ADR_GRP.".id
-				/* join newsletter nl.id with queuetable nl_q.nl_id */
-				INNER JOIN ".TM_TABLE_NL." 
-					ON ".TM_TABLE_NL_Q.".nl_id = ".TM_TABLE_NL.".id
+					ON (".TM_TABLE_ADR_GRP_REF.".grp_id = ".TM_TABLE_ADR_GRP.".id)
 				/* join newsletterqueue nl_q.grp_id with groupstable adr_grp.id */
 				INNER JOIN ".TM_TABLE_NL_Q." 
-					ON ".TM_TABLE_ADR_GRP.".id = ".TM_TABLE_NL_Q.".grp_id
+					ON (".TM_TABLE_ADR_GRP.".id = ".TM_TABLE_NL_Q.".grp_id)
+				/* join newsletter nl.id with queuetable nl_q.nl_id */
+				INNER JOIN ".TM_TABLE_NL." 
+					ON (".TM_TABLE_NL_Q.".nl_id = ".TM_TABLE_NL.".id)
 				/* left join now adresstable adr.id with temporary historytable/recipientstable $tmp_tablename.adr_id */
 				LEFT JOIN ".$tmp_tablename." ON ".TM_TABLE_ADR.".id = ".$tmp_tablename.".adr_id 
 			WHERE 

@@ -20,8 +20,8 @@ $_MAIN_MESSAGE.="";
 	//anzahl adressen / how many addresses:
 	$max_adr=10;
 	//gruppen ids / group ids
-	$adr_grp[0]=101;
-	#$adr_grp[1]=1;
+	$adr_grp[0]=1;
+	#$adr_grp[1]=2;
 	#$adr_grp[2]=2;
 //CONFIG END
 
@@ -39,7 +39,7 @@ if (!DEMO && $user_is_admin) {
 	}
 	for ($adr_c=0;$adr_c<$max_adr;$adr_c++) {
 			$code=$adr_c+$rnd;
-			$email="test_".$adr_c."_".$code."@tellmatic.de";
+			$email="test_".$adr_c."_".$code."@tellmatic.org";
 			//random status?
 			#$status=rand(1,12);
 			//fixed status

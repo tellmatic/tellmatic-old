@@ -15,7 +15,7 @@
 $_MAIN_DESCR="Dateimanager";
 $_MAIN_MESSAGE.="";
 if (DEMO) $_MAIN_OUTPUT.=___("Demo! Dateimanager deaktiviert.");
-if (!DEMO) 	$_MAIN_OUTPUT.='
+if !(DEMO) 	$_MAIN_OUTPUT.='
 <iframe src="'.$tm_URL_FE.'/'.TM_INCLUDEDIR.'/myftphp/myftphp_4.php" align="middle" name="_filemanager" scrolling="no" marginheight="0px" marginwidth="0px" height="600" width="728" style="border:1px dashed grey; -moz-border-radius:2em 2em 2em 2em; padding: 4px"></iframe>
 ';
 ?>

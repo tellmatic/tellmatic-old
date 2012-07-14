@@ -91,7 +91,7 @@ if ($user_is_admin) {
 						$_MAIN_MESSAGE.= "<br>".___("Tracker-BILD-Datei konnte nicht hochgeladen werden.");
 					}//check
 				} else {
-					$_MAIN_MESSAGE.= "<br>".sprintf(___("Die Tracker-BILD-Datei darf nur eine Größe von %s Byte besitzen."),$max_byte_size);
+					$_MAIN_MESSAGE.= "<br>".sprintf(___("Die Tracker-BILD-Datei darf nur eine Größe von %s Byte besitzen."),$max_upload_size);
 					$check=false;
 				}//max size
 			} else {
@@ -105,8 +105,6 @@ if ($user_is_admin) {
 
 
 		//checkinput
-		$check_mail=checkEmailAdr($return_mail,$EMailcheck_Intern);
-		if (!empty($return_mail) && !$check_mail[0]) {$check=false;$_MAIN_MESSAGE.="<br>".___("Die E-Mail-Adresse für Fehlermeldungen ist nicht gültig.")." ".$check_mail[1];}
 		if (($notify_subscribe==1 || $notify_unsubscribe==1) && empty($notify_mail)) {$check=false;$_MAIN_MESSAGE.="<br>".___("Die E-Mail-Adresse für Benachrichtigungen darf nicht leer sein").".";}
 		$check_mail=checkEmailAdr($notify_mail,$EMailcheck_Intern);
 		if (!empty($notify_mail) && !$check_mail[0]) {$check=false;$_MAIN_MESSAGE.="<br>".___("Die E-Mail-Adresse für Benachrichtigungen bei An-/Abmeldungen ist nicht gültig.")." ".$check_mail[1];}

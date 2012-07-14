@@ -199,35 +199,7 @@ function getlocationcoords($lat, $lon, $width, $height)
    return array("x"=>round($x),"y"=>round($y));
 }
 
-//fetch ip address
-function getIP() {
-/* taken from: php-magazin 05-07 (de) S. 38, by C.Fraunholz */
-/* modified by vizzy for tellmatic */
-	if (!(isset($_SERVER['HTTP_VIA']) || isset($_SERVER['HTTP_CLIENT_IP']))) {
-		$ip = long2ip(ip2long($_SERVER['REMOTE_ADDR']));
-	} else { //PROXY!
-		$proxy_ip = long2ip(ip2long($_SERVER['REMOTE_ADDR']));
-		$token1 = (int) substr($_SERVER['HTTP_X_FORWARDED_FOR'],0,strpos($_SERVER['HTTP_X_FORWARDED_FOR'],"."));
-		$tokenc1="0.0.0.0";		
-		if (isset($_SERVER['HTTP_CLIENT_IP'])) {
-			$tokenc1 = (int) substr($_SERVER['HTTP_CLIENT_IP'],0,strpos($_SERVER['HTTP_CLIENT_IP'],"."));
-		} else {
-			if (isset($_SERVER['HTTP_VIA'])) {
-				$tokenc1 = (int) substr($_SERVER['HTTP_VIA'],0,strpos($_SERVER['HTTP_VIA'],"."));
-			}
-		}
-		if (!($token1 == 10 || $token1 == 192 || $token1 == 127 || $token1 == 224)) { // Proxy is nicht lokal (Firewall oder Transparent-Proxy)
-			$ip = long2ip(ip2long($_SERVER['HTTP_X_FORWARDED_FOR']));
-		} elseif(isset($_SERVER['HTTP_CLIENT_IP']) && !($tokenc1 == 10 || $tokenc1 == 192 || $tokenc1 == 127 || $tokenc1 == 224)) {
-			$ip = long2ip(ip2long($_SERVER['HTTP_CLIENT_IP']));
-		} else {
-			$ip = $proxy_ip;
-		}
-	}
-	$komma = strpos($ip,",");
-	if ($komma !== false) $ip = substr($ip,0,$komma);
-	return $ip;
-}
+
 
 //read file and put each line in an array
 function readFileInArray($file) {

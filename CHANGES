@@ -10,6 +10,27 @@
 /* check Homepage for Updates and more Infos                                    */
 /* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
 /********************************************************************************/
+*+*+*+*+*+*+*+*+*+*+*+ CHANGES V1.0.8.4-fix01  +*+*+*+*+*+*+*+*+*+*+*+*
+	02.02.2009
+	This is a bugfixed version of 1.0.8.4.
+	
+	*** Code changes:
+		- demo: do not show sensitive informations if demo is enabled.
+		- install_conf: define DEBUG_SQL/SMTP		
+
+	*** Bugs fixed:
+		- unknwon comlumn nl_q.nl_id when creating new Q's. This is related to new Mysql5 versions.
+			https://sourceforge.net/forum/forum.php?thread_id=2959431&forum_id=670073
+			https://sourceforge.net/forum/forum.php?thread_id=2958611&forum_id=675746
+			https://sourceforge.net/tracker2/?func=detail&aid=2556491&group_id=190396&atid=933192
+		- settings: Undefined variable: return_mail in include/adm_set.inc.php line 108, deleted, reply_to is now in hosts.
+			https://sourceforge.net/tracker2/?func=detail&aid=2555569&group_id=190396&atid=933192
+		- settings: Undefined variable: max_byte_size file include/adm_set.inc.php line 94, should be "max_upload_size"
+			https://sourceforge.net/tracker2/?func=detail&aid=2555583&group_id=190396&atid=933192
+		- fm: re-enabled old filemanager and fixed typo
+			https://sourceforge.net/tracker2/?func=detail&aid=2555582&group_id=190396&atid=933192
+		- maps: php_error: Undefined index: HTTP_CLIENT_IP file:/home/WWW/m000000/share/html/.tellmatic.de/.tm/include/Functions.inc.php line 210
+			https://sourceforge.net/tracker2/?func=detail&aid=2556469&group_id=190396&atid=933192
 *+*+*+*+*+*+*+*+*+*+*+ CHANGES V1.0.8.4  +*+*+*+*+*+*+*+*+*+*+*+*
 	29.01.2009
 	a lot has changed in this version. almost all known bugs were fixed. the gui gets enhanced and i added a lot of new features.

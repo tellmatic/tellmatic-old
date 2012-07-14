@@ -79,6 +79,105 @@ $$InputName_File=$Export_Filename;
 
 //export und gruppe gewaehlt?
 if ($set=="export" && $adr_grp_id>0) {
+/*
+
+
+exportiere
+	export_total adressen
+	ab export_offset
+		in paketen zu export_limit_run stueck
+
+export_total=anzahl adressen gesamt
+offset=anzahl eintraege die uebersprungen werden
+limit_usr=maximale anzahl zu exportierender adressen, benutzerdefiniert
+limit_run=anzahl adressen pro durchlauf
+run_max=Anzahl durchlaeufe zu je limit_run eintraege die maximal die noetig sind um export_total eintraege zu exportieren
+
+//wenn limit_usr angegeben ist, und kleiner oder gleich export_total(anzahl eintraege gesamt), dann setze export_total=limit_usr
+if (limit_usr > 0 && !empty && limit_usr <= export_total) export_total=limit_usr
+//wenn limit_usr kleiner der anzahl zu exportierender eintraege pro durchlauf, dann setze limit_run=limit_usr
+if (limit_usr < limit_run) limit_run=limit_usr
+//anzahl maximaler durchlaeufe
+run_max=(int)(export_total / limit_run)
+//schleife
+for (run=0; run <= run_max; run++)
+	//wenn anz durchlaeufe * limit_run >= export_total, limit anpassen!
+	if ( (run+1) * limit_run) >= export_total)
+		//limit_run justieren: gesamt - durchlaeufe * anzahl_pro_durchlauf
+		limit_run = export_total - ( run * limit_run)
+	if limit_run >0
+	//hole adressen
+	get(offset,limit_run)
+	offset +=limit_run
+//
+
+Beispiel:
+
+export_total=9999
+offset=0
+limit_run=500
+
+1)
+limit_usr=333
+--> export_total=333
+--> limit_run=333
+--> run_max=333/333=1
+run:0
+	--> 1*333= 333 OK
+	get(0,333)
+run:1
+	-->2*333>333 !
+		limit_run=333-1*333=0
+	get(333,0)
+
+2)
+limit_usr=666
+--> export_total=666
+--> limit_run=500
+--> run_max=666/500=1,xxxx
+run:0
+	--> 1*500< 666
+	get(0,500)
+run:1
+	--> 2*500> 666
+		limit_run=666-1*500=166
+	get(500,166)
+
+3)
+limit_usr=20000
+--> export_total=9999
+--> limit_run=3500
+--> run_max=9999/3500=2,xxxx
+run:0
+	--> 1*3500< 9999
+	get(0,3500)
+run:1
+	--> 2*3500< 9999
+	get(3500,3500)
+run:2
+	--> 3*3500> 9999
+		limit_run=9999-2*3500=9999-7000=2999
+	get(7000,2999)
+
+
+3)
+offset=5000
+limit_usr=20000
+--> export_total=9999
+--> limit_run=3500
+--> run_max=9999/3500=2,xxxx
+run:0
+	--> 1*3500< 9999
+	get(5000,3500)
+run:1
+	--> 2*3500< 9999
+	get(8500,3500)
+run:2
+	--> 3*3500> 9999
+		limit_run=9999-2*3500=9999-7000=2999
+	get(11000,2999)
+
+*/
 	//anzahl adressen die auf einmal in ein array gepackt und geschrieben werden sollen, abhaengig vom Speicher fuer PHP. wird definiert in tm_lib
 	$export_limit_run=$adr_row_limit;//default limit adressen im array pro durchgang
 	//addressen initialisieren
