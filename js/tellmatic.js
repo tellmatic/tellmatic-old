@@ -56,10 +56,14 @@ function checkQNewLimitOffset() {
 	    changefield.disabled = false;
 		var changefield=document.getElementById('usr_offset');
 	    changefield.disabled = false;
+		var changefield=document.getElementById('fastmode');
+	    changefield.disabled = false;
 	} else {
 		var changefield=document.getElementById('usr_limit');
 	    changefield.disabled = true;
 		var changefield=document.getElementById('usr_offset');
+	    changefield.disabled = true;
+		var changefield=document.getElementById('fastmode');
 	    changefield.disabled = true;
 	}
 }

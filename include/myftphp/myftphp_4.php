@@ -750,7 +750,7 @@ switch($a) {
 //$home = !empty($accounts[$session->_user()]['home']) ? $accounts[$session->_user()]['home'] : '.';
 
 //Tellmatic!
-$home = $tm_path."/files";
+$home = TM_PATH."/files";
 
 // is root existing?
 if(!(define('HOME', realpath($home))) || !is_dir($home)) {

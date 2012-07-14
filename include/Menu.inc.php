@@ -109,6 +109,18 @@ $MENU=Array(
 										'admin' => '0',
 										'manager' => '0',
 										),
+									5 => Array(
+										'js' => 0,
+										'link' => $_SERVER["PHP_SELF"]."?act=queue_list",
+										'name' => ___("Queue"),
+										'description' => ___("Queue / Warteschlange anzeigen"),
+										'text' => ___("Hier sehen Sie den Versandstatus Ihrer Newsletter"),
+										'icon' => 'hourglass.png',
+										'target' => '_self',
+										'indent' => '0',
+										'admin' => '1',
+										'manager' => '1',
+										),
 
 									),
 						),

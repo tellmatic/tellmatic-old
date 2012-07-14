@@ -11,6 +11,14 @@
 /* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
 /********************************************************************************/
 
+*+*+*+*+*+*+*+*+*+*+*+ CHANGES V1.0.7.4  +*+*+*+*+*+*+*+*+*+*+*+*
+	24.06.2008
+		- Menu: add Entry to watch complete Queue
+		- Installation: Fix Path-"Bug"
+		- Send: Fixed important Bug with undefined Array in Massmailings.
+		- Export: Fixed Bug with Delimiter
+		- Filemanager: fixed wrong Path using Constants
+
 *+*+*+*+*+*+*+*+*+*+*+ CHANGES V1.0.7.3  +*+*+*+*+*+*+*+*+*+*+*+*
 	12.12.2007
 		- changed $tm_ vars for internal dirs and paths to constants. 

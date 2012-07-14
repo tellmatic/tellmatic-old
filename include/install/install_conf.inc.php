@@ -14,7 +14,7 @@
 /***********************************************************/
 //guess path
 /***********************************************************/
-define(TM_DOCROOT,realpath(dirname(realpath(__FILE__))."/../../../"));
+define(TM_DOCROOT,realpath($_SERVER["DOCUMENT_ROOT"]));
 define("TM_DOMAIN","http://".$_SERVER["HTTP_HOST"]);
 $self=$_SERVER["PHP_SELF"];
 $pathinfo=pathinfo($self);

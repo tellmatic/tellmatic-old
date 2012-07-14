@@ -149,8 +149,8 @@ $_MAIN_MESSAGE.="<br>".sprintf(___("%s Adressen wurden übersprungen (inaktiv, f
 $_MAIN_MESSAGE.="<br>".sprintf(___("%s Adressen wurden übersprungen (bereits eingetragen)."),"<b>".$ac_total_double."</b>");
 $_MAIN_MESSAGE.="<br>".sprintf(___("Es wurden %s gültige Adressen für den Versand vorbereitet."),"<b>".$ac_total_ok."</b>");	
 
-$_MAIN_MESSAGE.="<br><br>".___("Der Versand wurde gestartet!");
-$action="nl_list";
+$_MAIN_MESSAGE.="<br><br>".___("Der Versand wurde vorbereitet!");
+#$action="queue_list";
 #require_once (TM_INCLUDEPATH."/nl_list.inc.php");
 //show q list instead
 require_once (TM_INCLUDEPATH."/queue_list.inc.php");

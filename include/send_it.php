@@ -521,6 +521,7 @@ for ($qcc=0;$qcc<$qc;$qcc++) {
 				//text/html part anfuegen:
 				send_log(  "\n".date("Y-m-d H:i:s").":    Newsletter is from type: '".$NL[0]['content_type']."'");
 				$parts=array();//array of partnumbers, returned by reference from createpart etc
+				$partids=array();//array of partnumbers, returned by reference from createpart etc
 				//we want mixed multipart, with alternative text/html and attachements, inlineimages and all that
 				//text part must be the first one!!!
 				if ($NL[0]['content_type']=="text" || $NL[0]['content_type']=="text/html") {
@@ -681,7 +682,7 @@ if ($qc==0) {
 			"<meta http-equiv=\"refresh\" content=\"66; URL=".TM_DOMAIN.$_SERVER["PHP_SELF"]."\">\n".
 			"</head>\n".
 			"<body bgcolor=\"#ffffff\">\n".
-			___("Zur Zeit gibt es keine zu verarbeitenden Versandauftraege.").
+			___("Zur Zeit gibt es keine zu verarbeitenden Versandaufträge.").
 			"<br>\n".
 			sprintf(___("Die Seite wird in %s Sekunden automatisch neu geladen."),"66").
 			"<br>\n".

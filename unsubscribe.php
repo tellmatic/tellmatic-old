@@ -13,7 +13,7 @@
 /********************************************************************************/
 
 //config einbinden
-include ("./include/tm_config.inc.php");
+require_once ("./include/tm_config.inc.php");
 
 //if unsubscribe.php is included in your script, please set $called_via_url=false; $_CONTENT holds the html output
 if (!isset($_CONTENT)) {$_CONTENT="";}
@@ -117,7 +117,7 @@ if ($check_mail[0] && $set=="unsubscribe") {
  $FMESSAGE.= "";
 }
 $email="";// !
-include_once(TM_INCLUDEPATH."/unsubscribe_form.inc.php");
+require_once(TM_INCLUDEPATH."/unsubscribe_form.inc.php");
 //new Template
 $_Tpl_FRM=new tm_Template();
 $_Tpl_FRM->setTemplatePath(TM_TPLPATH);

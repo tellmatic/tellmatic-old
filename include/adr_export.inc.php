@@ -144,7 +144,7 @@ if ($set=="export" && $adr_grp_id>0) {
 		} else {
 			if ($append!=1) {
 				//CSV Headline
-				$CSV="\"email\"$delimiter\"f0\"$delimiter\"f1\"$delimiter\"f2\"$delimiter\"f3\"$delimiter\"f4\"$delimiter\"f5\"$delimiter\"f6\"$delimiter\"f7\"$delimiter\"f8\"$delimiter\"f9\"$delimiter\"id\"$delimiter\"created\"$delimiter\"author\"$delimiter\"updated\"$delimiter\"editor\"$delimiter\"aktiv\"$delimiter\"status\"$delimiter\"code\"$delimiter\"errors\"$delimiter\"clicks\"$delimiter\"views\"$delimiter\"newsletter\"\n";
+				$CSV="\"email\"$delimiter\"f0\"$delimiter\"f1\"$delimiter\"f2\"$delimiter\"f3\"$delimiter\"f4\"$delimiter\"f5\"$delimiter\"f6\"$delimiter\"f7\"$delimiter\"f8\"$delimiter\"f9\"$delimiter\"id\"$delimiter\"created\"$delimiter\"author\"$delimiter\"updated\"$delimiter\"editor\"$delimiter\"aktiv\"$delimiter\"status\"$delimiter\"code\"$delimiter\"errors\"$delimiter\"clicks\"$delimiter\"views\"$delimiter\"newsletter\"$delimiter\"memo\"\n";
 				//write header
 				if (DEBUG) $_MAIN_MESSAGE.="<br>Schreibe CSV-Header";
 				fputs($fp,$CSV,strlen($CSV));
@@ -207,7 +207,7 @@ if ($set=="export" && $adr_grp_id>0) {
 							$CSV.="\"".$ADR[$acc]['clicks']."\"$delimiter";
 							$CSV.="\"".$ADR[$acc]['views']."\"$delimiter";
 							$CSV.="\"".$ADR[$acc]['newsletter']."\"$delimiter";
-							$CSV.="\"".$memo;
+							$CSV.="\"".$memo."\"$delimiter";
 							$CSV.="\n";
 							//free some memory ;-)
 							unset($ADR[$acc]);

@@ -21,9 +21,9 @@ $default_h_limit=round($max_execution_time/30*20000);//max 20k per 30 sec
 //wenn versandauftrag angelegt wird...:
 //user offset und limit
 //offset
-$InputName_Offset="usr_offset";//range from
+$InputName_Offset="usr_offset";
 $$InputName_Offset=getVar($InputName_Offset,0,0);//default 0
 //limit
-$InputName_Limit="usr_limit";//range from
+$InputName_Limit="usr_limit";
 $$InputName_Limit=getVar($InputName_Limit,0,$default_h_limit);//default ^^
 ?>

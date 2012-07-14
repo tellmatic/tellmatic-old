@@ -12,7 +12,7 @@
 /* Besuchen Sie die Homepage fuer Updates und weitere Infos                     */
 /********************************************************************************/
 
-include("./include/tm_config.inc.php");
+require_once ("./include/tm_config.inc.php");
 //aufruf: click.php?h_id=&nl_id=&a_id=
 
 $h_id=getVar("h_id");

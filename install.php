@@ -57,7 +57,7 @@ if (isset($lang) && !empty($lang)) {
 	//check for memory, permissions etc
 	require_once(TM_INCLUDEPATH."/install/install_check_pre.inc.php");
 	//prepare registration message
-	$MESSAGE_REG="Tellmatic v1.0.7\n".
+	$MESSAGE_REG=$ApplicationText."\n".
 							"Date: ".$created."\n".
 							"PHPVersion: ".phpversion()."\n".
 							"PHP Sapi: ".$php_sapi."\n".

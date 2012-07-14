@@ -335,7 +335,7 @@ if (!$tm_config) {
 //Tellmatic Name
 /***********************************************************/
 	$ApplicationName="tellmatic";
-	$ApplicationVersion="1.0.7.3 Tellmatic";
+	$ApplicationVersion="1.0.7.4 Tellmatic";
 	$ApplicationDescr=___("Die Newsletter Maschine");
 	$ApplicationUrl="www.tellmatic.org";
 	$ApplicationText=$ApplicationName." v".$ApplicationVersion." - ".$ApplicationDescr." (".$ApplicationUrl.")";

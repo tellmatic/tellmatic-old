@@ -13,7 +13,7 @@
 /********************************************************************************/
 
 //config einbinden
-include ("./include/tm_config.inc.php");
+require_once ("./include/tm_config.inc.php");
 
 //if subscribe.php is included in your script, please set frm_id to Form ID and $called_via_url=false; $_CONTENT holds the html output
 if (!isset($_CONTENT)) {$_CONTENT="";}
@@ -343,7 +343,7 @@ if ($frm_id>0 && $doptin!=1) {
 			$captcha_text = new Number( $captcha_code );
 			$FCAPTCHAIMG=$captcha_text->printNumber();
 
-			include_once(TM_INCLUDEPATH."/subscribe_form.inc.php");
+			require_once (TM_INCLUDEPATH."/subscribe_form.inc.php");
 
 			$_Tpl_FRM->setParseValue("FMESSAGE", $MESSAGE);
 			$_Tpl_FRM->setParseValue("FNAME", display($FRM[0]['name']));
